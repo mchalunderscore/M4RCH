@@ -1,0 +1,142 @@
+{
+  "schema": 1,
+  "date": "2026-10-05",
+  "return_sha256": "ab833a1279a10a2f79b2bc553f71947b435725b5ec8e6d6d17cc861416da0bee",
+  "hdmi_return_sha256": "987712000ee61b99be751a1ac72181442bd4201c61a17b22b503c54114ab2271",
+  "kernel": "7.1.3-arch-m4-exp-9e2899b686-ge9d2237cd064-dirty",
+  "migration_observed": false,
+  "wayland_qpainter_verified": true,
+  "boot_readable_by_alice": true,
+  "usb_right": {
+    "yubikey_both_orientations_mbps": 12,
+    "sandisk_both_orientations_mbps": 480,
+    "checked_new_file_bytes": 16777216,
+    "read_throughput_measured": false
+  },
+  "usb_left": {
+    "front": "disabled; no owner power indication or enumeration",
+    "rear": "data untested; occupied by AC"
+  },
+  "hdmi": "no signal; no HDMI DRM connector; only internal simple framebuffer",
+  "cpu_measurements": {
+    "p-single-1": {
+      "measurement": {
+        "workload": "SHA256 1MiB buffer repeated for 3 seconds",
+        "bytes": 9019850752,
+        "seconds": 3.0003450400000133,
+        "MiB_per_second": 2867.003589693791,
+        "affinity": [
+          0
+        ]
+      },
+      "before_temp": "82359",
+      "after_temp": "89437",
+      "peaks": {
+        "policy0": {
+          "cpuinfo_cur_freq_peak_khz": 3924000,
+          "scaling_cur_freq_peak_khz": 4512000
+        },
+        "policy1": {
+          "cpuinfo_cur_freq_peak_khz": 2592000,
+          "scaling_cur_freq_peak_khz": 2592000
+        },
+        "policy8": {
+          "cpuinfo_cur_freq_peak_khz": 3300000,
+          "scaling_cur_freq_peak_khz": 3300000
+        }
+      },
+      "escapes": 0,
+      "exit": 0
+    },
+    "e-single-1": {
+      "measurement": {
+        "workload": "SHA256 1MiB buffer repeated for 3 seconds",
+        "bytes": 5931794432,
+        "seconds": 3.0000563700000384,
+        "MiB_per_second": 1885.6312356557246,
+        "affinity": [
+          1
+        ]
+      },
+      "before_temp": "89437",
+      "after_temp": "83281",
+      "peaks": {
+        "policy0": {
+          "cpuinfo_cur_freq_peak_khz": 3924000,
+          "scaling_cur_freq_peak_khz": 4512000
+        },
+        "policy1": {
+          "cpuinfo_cur_freq_peak_khz": 2592000,
+          "scaling_cur_freq_peak_khz": 2592000
+        },
+        "policy8": {
+          "cpuinfo_cur_freq_peak_khz": 1260000,
+          "scaling_cur_freq_peak_khz": 1260000
+        }
+      },
+      "escapes": 0,
+      "exit": 0
+    },
+    "e-single-2": {
+      "measurement": {
+        "workload": "SHA256 1MiB buffer repeated for 3 seconds",
+        "bytes": 5930745856,
+        "seconds": 3.000122852000004,
+        "MiB_per_second": 1885.2561308379356,
+        "affinity": [
+          1
+        ]
+      },
+      "before_temp": "81437",
+      "after_temp": "84421",
+      "peaks": {
+        "policy0": {
+          "cpuinfo_cur_freq_peak_khz": 3468000,
+          "scaling_cur_freq_peak_khz": 3468000
+        },
+        "policy1": {
+          "cpuinfo_cur_freq_peak_khz": 2592000,
+          "scaling_cur_freq_peak_khz": 2592000
+        },
+        "policy8": {
+          "cpuinfo_cur_freq_peak_khz": 3096000,
+          "scaling_cur_freq_peak_khz": 3096000
+        }
+      },
+      "escapes": 0,
+      "exit": 0
+    },
+    "p-single-2": {
+      "measurement": {
+        "workload": "SHA256 1MiB buffer repeated for 3 seconds",
+        "bytes": 9017753600,
+        "seconds": 3.0001393699999994,
+        "MiB_per_second": 2866.533497075505,
+        "affinity": [
+          0
+        ]
+      },
+      "before_temp": "82812",
+      "after_temp": "88984",
+      "peaks": {
+        "policy0": {
+          "cpuinfo_cur_freq_peak_khz": 3924000,
+          "scaling_cur_freq_peak_khz": 4512000
+        },
+        "policy1": {
+          "cpuinfo_cur_freq_peak_khz": 2592000,
+          "scaling_cur_freq_peak_khz": 2592000
+        },
+        "policy8": {
+          "cpuinfo_cur_freq_peak_khz": 1260000,
+          "scaling_cur_freq_peak_khz": 1260000
+        }
+      },
+      "escapes": 0,
+      "exit": 0
+    }
+  },
+  "capacity_calibrated": false,
+  "idle": "NOP workaround retained; no active cpuidle or PSCI DT description",
+  "filesystem_note": "kit filename restored from FSCK0000.000 with exact manifest hash; cause not established"
+}

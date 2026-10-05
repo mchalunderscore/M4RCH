@@ -1,144 +1,116 @@
 # m4rch native work
 
-Work on the running **J614s / T6040** installation. This is a bidirectional
-handover: inspect, run bounded tests, then return a new `HANDOVER.md` and raw
-evidence on the SD ESP. Do not overwrite this incoming file with the return.
+Continue on J614s / T6040. Return your own `HANDOVER.md` and raw evidence in a
+new `/boot/m4rch-return-*.tar.gz`; preserve this incoming report.
 
-## Current facts
+## Established baseline
 
-- The owner reports no recurrence of the earlier ext4 incident through
-  repeated shutdowns and reboots. Record new failures if any; storage is not
-  the current investigation priority.
-- Right-port USB2/YubiKey enumeration, reconnect and authentication work.
-  Left ports are disabled in the current hardware description.
-- Twelve CPUs run with `schedutil`; all advertised capacity values were 1024.
-  One X11/AC benchmark pair gave 1,634 single-core with all CPUs versus 2,489
-  with P-only affinity. That is a placement hypothesis, not capacity calibration.
-- Prior sensor capture peaked at 114.25 C. Sensor interpretation and sustained
-  root-readable clocks remain to be checked before stronger load tests.
-- The owner will handle migration to the new m4rch packages and native desktop
-  checks. Verify what actually booted rather than assuming migration completed.
+The previous return confirms right-port YubiKey USB2 in both orientations,
+reconnects, SanDisk storage at 480 Mbit/s and a checked 16 MiB file write.
+Left-front has no enumeration or power indication with disabled nodes;
+left-rear data remains untested while it supplies AC. HDMI had no signal and
+no DRM connector; the connected simple framebuffer is the internal display.
+Wayland/QPainter compositing and Alice-readable `/boot` are verified. Package
+migration has not occurred: the old linux-t6040/arch-m4-config kernel is running.
 
-## Start and capture
+Both short P-core tests sampled 3.924 GHz while requesting 4.512 GHz. E reached
+2.592 GHz. The 1.52 P/E SHA256 throughput ratio is crypto-specific, not a
+scheduler capacity ratio. Active-desktop NOP-idle CPU sensors read about
+80–87 C; automatic fan targets/RPM rose to roughly 2300/2500. No calibrated
+T6040 thermal ceiling or proven throttling cause follows from those readings.
 
-The kit contains `collect.sh`, `m4rch-native-lab`, the existing benchmark and
-power helpers, checksums, and setup instructions. No helper loads drivers or
-writes sysfs, fan controls, governors, registers or boot arguments by default.
-Run in Alice's terminal, using the kit directory beside this file:
+## Source packet
+
+`/boot/source-review-415c9a4a052f.tar.gz` supplies the missing source context.
+Extract as Alice into a new directory under HOME, not over a source checkout:
 
 ```sh
-kit=/boot/cpu-tools-ID       # replace ID with the actual incoming kit
+review="$HOME/m4rch-review-$(date -u +%Y%m%dT%H%M%SZ)"
+mkdir -m 700 "$review"
+tar -xzf /boot/source-review-415c9a4a052f.tar.gz -C "$review"
+(cd "$review" && sha256sum -c SHA256SUMS)
+```
+
+`project/` supplies build recipes, locks, local patches and provenance;
+`wallace/` supplies pinned patches, DTS and harness. `linux-base/` is selected
+original source. `usb-result/` reconstructs final USB/PHY/SPMI sources and
+matches all five recorded final hashes. `cpu-result/` applies the pinned
+Wallace overflow correction. Read the packet README and manifest: this is
+selected-file reconstruction, not a complete copy of the running dirty kernel.
+Do not apply every Wallace patch or install anything from this packet blindly.
+
+## Clock decoding and placement
+
+Audit `cpu-result/drivers/cpufreq/apple-soc-cpufreq.c` against
+`wallace/dts/t6040-cpufreq.dtsi` and the new live DT capture. The T8112-compatible
+path reads a five-bit current pstate at status offset 0x50 and maps it through
+OPP levels. Verify the T6040 status layout and level table before interpreting
+3.924 GHz as thermal limiting. Generic fallback reads the command register;
+identify the actual matched compatible. Review target limits, boost handling,
+frequency invariance and energy-model/capacity use separately. Return source
+locations and a concrete explanation or the exact unresolved evidence.
+
+Run from Alice's terminal, substituting the actual incoming kit ID:
+
+```sh
+kit=/boot/cpu-tools-ID
 capture="$HOME/m4rch-native-$(date -u +%Y%m%dT%H%M%SZ)"
 mkdir -m 700 "$capture"
 sudo sh "$kit/collect.sh" snapshot --label baseline --output "$capture/baseline"
+sudo sh "$kit/run.sh" --cpus all --interval 0.25 --output "$capture/idle" -- sleep 60
 ```
 
-The collector checks the kit and records USB/Type-C state, selected live DT
-properties, driver bindings, kernel configuration/logs, CPU topology, clocks,
-idle states, thermal readings and fan data. Snapshots are root-owned/private;
-use sudo to inspect them. Missing commands and failed probes are evidence.
-Use `instructions.md` for setup and `native-agent-followup.md` for mount/session
-checks. Keep Alice Admin/alice, hostname t6040 and the requested login policy.
+The collector now includes performance-domains, cpufreq nodes and OPP tables.
+Record AC state and background load; compare the desktop with an owner-approved
+quiet console interval if convenient. Keep governors, fan ownership and limits.
+Use bounded, local workloads only after clock/sensor interpretation. Prefer
+compiled scalar/FP and memory tests over Python interpreter or crypto alone;
+record compiler/options, working set, affinity and identical start conditions.
+Repeat P/E in reversed order and use 0.25-second sampling. Do not force a
+capacity ratio or increase sustained loads while cooling remains unresolved.
 
-## USB2
+## Left USB2 source work
 
-Use the YubiKey and the available USB-C thumb drive. Name physical left ports
-`left-front` (toward the trackpad) and `left-rear` (toward the hinge). For each
-device/port, capture unplugged, connected in each orientation, and disconnected
-again. Wait about five seconds after each cable action. Example:
+The source gap is resolved. Audit `usb-result/drivers/phy/apple/t6040-usb2.c`,
+DWC3 cable lifecycle, TIPD and SPMI alongside `project/lib/hardware_profile.py`,
+its overlay, and pinned Wallace DTS. The kit's `macos-port-map.json` contains
+ADT resource metadata; Linux DT cells are big-endian, ADT bytes little-endian.
 
-```sh
-sudo sh "$kit/collect.sh" snapshot --label right-key-normal --output "$capture/right-key-normal"
-sudo sh "$kit/collect.sh" snapshot --label right-key-flipped --output "$capture/right-key-flipped"
-sudo sh "$kit/collect.sh" snapshot --label right-key-disconnected --output "$capture/right-key-disconnected"
-```
+Map distinct PHY banks, DART/stream IDs, power domains and connector endpoints
+for each left controller. Establish whether the right-port sequence is generic
+or contains port-specific assumptions. Preserve AC and the working right port.
+Return a reviewed candidate patch with prerequisites and rollback, or a precise
+list of remaining facts to collect. Do not enable nodes or poke registers merely
+to discover their meaning. Left-rear USB tests can wait until AC can remain on
+MagSafe or the owner explicitly chooses a brief battery test.
 
-Record LED/power, `lsusb -t` negotiated speed, driver binding, and whether HID
-access works as Alice. Let the owner exercise authentication without logging
-credentials. Repeat a few reconnects. Mark unavailable hubs/adapters as untested.
-For thumb-drive I/O, have the owner identify a disposable test filesystem and
-use a new test file there; do not write raw disks or internal macOS partitions.
-Report the device, byte count, elapsed time and read-back checksum.
+## Idle and HDMI
 
-Left-port observations will probably show no host: disabled nodes explain that
-and do not prove an electrical failure. Inspect the live DT and pinned Wallace
-USB2 provider before proposing left-port enablement. The optional
-`macos-port-map.json` supplies freshly observed IODeviceTree resource/routing
-metadata for comparison. Its ADT bytes are little-endian; do not parse them as
-Linux DT cells. It contains no firmware, tunable sequences or owner records.
-Map each controller, PHY
-bank, DART, power domain, PD/SPMI transport and connector endpoint separately.
-Do not copy the right port's addresses into a left-port node. Return a concrete
-source patch or the exact missing evidence; preserve the working right port.
+Keep `idle=nop arm64.nowfxt`. The previous audit found no live PSCI/cpuidle
+states and spin-table CPUs without hotplug shutdown support. T6040 is excluded
+from the pinned Apple idle driver; adding its compatible alone is insufficient.
+Audit full state preservation and early parking before proposing a candidate.
+PSCI-via-EFI requires coordinated resident m1n1/kernel work and enrollment;
+EFI presence alone proves neither implementation nor compatibility.
 
-## Idle
-
-Keep `idle=nop arm64.nowfxt` for this round. The cached current configuration
-already has `CPU_IDLE`, `ARM_PSCI_CPUIDLE` and `ARM_APPLE_CPUIDLE` enabled.
-In pinned Linux `e9d2237cd064`, `drivers/cpuidle/cpuidle-apple.c` excludes
-T6040; its fallback state calls plain WFI. Adding T6040 to that list alone
-would expose the state-loss problem we currently avoid.
-
-Compare the running driver's states/config/DT with that source. Audit state
-save/restore, fallback and hotplug/secondary CPU parking before suggesting a
-candidate. Capture EFI availability, PSCI nodes/method and any idle-state DT
-description. The PSCI-via-EFI RFC spans kernel, resident m1n1 and firmware
-handoff; it is not a kernel-only switch and would require a new enrolled bridge.
-Its example DT is T8103, so it does not establish T6040 support.
-
-Primary references (resolve and record exact revisions when using branches):
-
-- [Asahi idle source](https://github.com/AsahiLinux/linux/blob/asahi/drivers/cpuidle/cpuidle-apple.c)
-- [PSCI-via-EFI RFC](https://lists.openwall.net/linux-kernel/2026/07/08/539)
-- [m1n1 experiment](https://github.com/AsahiLinux/m1n1/tree/psci-via-efi)
-- [Kernel experiment](https://git.kernel.org/pub/scm/linux/kernel/git/sven/linux.git/log/?h=efi-psci)
-
-Return a compatibility assessment and bounded candidate plan. Do not activate
-untested WFI states or remove the idle workaround during the evidence run.
-
-## Scheduling and cooling
-
-First take an unchanged 60-second idle capture on AC:
-
-```sh
-sudo sh "$kit/run.sh" --cpus all --output "$capture/cooling-idle" -- sleep 60
-```
-
-Verify `cpuinfo_cur_freq` as root, MIDRs, policy membership, capacity values,
-sensor labels/units, fan targets/RPM and AC state. Keep the current governors,
-frequency limits and fan ownership. Stop sustained workloads if cooling looks
-abnormal or temperatures keep rising; return that evidence rather than tuning.
-
-After interpreting cooling, inspect the installed Geekbench binary's `--help`
-for local-result/upload controls. Use a local-only run or obtain the owner's
-authorization for public submission. Run the same single-core workload on one
-verified P CPU and one verified E CPU, repeat in reverse order after cooling,
-and retain monitoring output. Select explicit CPU IDs discovered with:
-
-```sh
-python3 "$kit/m4rch-cpu-benchmark" --inspect
-# Substitute a verified CPU ID and actual local-only workload invocation:
-# sudo sh "$kit/run.sh" --cpus CPU --output "$capture/p-single" -- WORKLOAD
-```
-
-Do not calibrate scheduler capacities from aggregate Geekbench scores. Compare
-matched per-workload throughput and clocks, then propose a measured SD-side
-capacity description with rollback. Keep all twelve CPUs for ordinary use.
+HDMI is recorded as unsupported in this running build. Do not spend another
+round changing KScreen/session settings without a native display-controller
+and connector path. No new HDMI action is required here.
 
 ## Return
 
-Write `$capture/HANDOVER.md` with the running versions/source commit, actual
-mount/session, USB matrix, idle findings, clock/cooling observations, exact
-changes and rollback, and the next patch or missing evidence. Distinguish
-executed tests from proposals. Include config/source diffs; keep firmware,
-disassembly and credentials out of the return bundle.
+Snapshots are root-owned/private. Include versions, source hashes, DT/driver
+findings, exact executed tests, patches and rollback; distinguish proposals
+from hardware results. No need to repeat the completed orientation/file tests.
 
 ```sh
+# Write your findings to "$capture/HANDOVER.md" first.
 stamp=$(date -u +%Y%m%dT%H%M%SZ)
 sudo sh "$kit/collect.sh" bundle --input "$capture" --output "/boot/m4rch-return-$stamp.tar.gz"
 sync
 ```
 
-The archive refuses existing output paths and symlinks. Publish only after
-the command succeeds. Keep the captured originals until the macOS agent has
-read the return. Do not change the enrolled loader for a routine SD update.
+The previous agent restored a kit file from `FSCK0000.000` with an exact hash
+match. Preserve recovery files and report any new recurrence; no filesystem
+repair is requested. Keep the incoming kit and captures until the return is
+reviewed. Routine SD updates do not require changing the enrolled loader.

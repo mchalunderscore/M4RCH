@@ -25,7 +25,9 @@ CELL_PROPERTIES = {"reg", "phandle", "linux,phandle", "power-domains", "interrup
                    "port-number", "cpu-idle-states", "capacity-dmips-mhz",
                    "memory-region", "psci-suspend-param", "entry-latency-us",
                    "exit-latency-us", "min-residency-us", "#power-domain-cells",
-                   "#phy-cells", "#address-cells", "#size-cells"}
+                   "#phy-cells", "#address-cells", "#size-cells",
+                   "performance-domains", "#performance-domain-cells",
+                   "operating-points-v2", "opp-hz", "opp-level", "opp-microvolt"}
 
 
 def read(path, limit=32768):
@@ -62,7 +64,7 @@ def device_tree(root):
         path = "/" if relative == "." else "/" + relative
         if not (path in ("/", "/chosen", "/aliases", "/psci") or
                 re.search(r"/(cpus|idle-states|psci[^/]*|usb[^/]*|phy[^/]*|dart[^/]*|spmi[^/]*|"
-                          r"usb-pd[^/]*|connector|pmgr[^/]*|power-domains)(/|$)", path)):
+                          r"usb-pd[^/]*|connector|pmgr[^/]*|power-domains|cpufreq[^/]*|opp-table[^/]*)(/|$)", path)):
             continue
         props = {}
         for name in sorted(names):

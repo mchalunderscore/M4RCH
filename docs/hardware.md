@@ -7,17 +7,25 @@ experimental configuration, not certification of every device or workload.
 | Device or function | Established behavior | Remaining work |
 | --- | --- | --- |
 | SD boot/root | Full m1n1 → U-Boot → SD GRUB → Linux boot; persistent ext4 and first-boot expansion; owner reports repeated boots/shutdowns without recurrence of the earlier ext4 incident | Original cause remains undetermined; investigate if new failures appear |
-| Internal display | Software-rendered KDE/X11, Firefox and compositing | Wayland/QPainter is configured but awaits a native session check; no GPU acceleration |
+| Internal display | Software-rendered KDE, Firefox; native Wayland with active QPainter compositing verified | No GPU acceleration |
 | Keyboard, trackpad, lighting | Native input and keyboard lighting have worked | Broader gestures/haptics and regression coverage |
 | Wi-Fi | Connection, routing and traffic | Roaming and long-duration reliability |
 | Bluetooth | Mouse input and AirPods Max A2DP playback | Headset microphone/duplex audio and broader devices |
-| Right USB-C | USB2 YubiKey 5C HID enumeration, unplug/replug and user-tested authentication | Other devices, hubs, both plug orientations and sustained high-speed transfers |
+| Right USB-C | USB2 YubiKey 5C at 12 Mbit/s and SanDisk storage at 480 Mbit/s in both orientations; reconnects and checked 16 MiB file write; earlier user-tested authentication | Hubs and sustained transfers; cached file read is not throughput evidence |
 | Left USB-C, USB3, Thunderbolt | Disabled in this implementation | Platform and PHY/host support |
 | Internal NVMe | Namespace/partition discovery and reads through the ANS-aware loader | Writes, sustained I/O, failure recovery and shutdown qualification |
 | CPU | Twelve cores online; three scaling policies using `schedutil` | Correct E/P scheduler capacities, safe idle, thermal/power qualification |
 | Fans/temperatures | SMC RPM, targets, limits and temperature keys exposed | Sensor interpretation and automatic-cooling behavior under sustained load |
 | Power | Battery/AC reporting and storage teardown | Battery energy decoding, physical shutdown/reboot qualification, suspend |
 | Internal audio, camera, brightness, external displays | No established functioning path | T6040/laptop support |
+
+The 5 October native return also verifies readable `/boot` and automatic fan
+response. A connected HDMI monitor received no signal; Linux exposed only
+the built-in simple framebuffer, with no HDMI DRM connector. Left-front USB
+produced no power indication or enumeration with disabled controller nodes;
+left-rear data tests were omitted because it supplied AC power.
+The [round-two evidence receipt](evidence/2026-10-05-native-round2.json)
+records these results without publishing the raw private captures.
 
 The known-good native package kit is `update-c1934fe10df6`; its
 [captured identifiers](evidence/2026-10-05-native-return.json) predate the
@@ -55,6 +63,13 @@ advertise capacity 1024. A first controlled-placement pair improved
 single-core Geekbench 7 from 1,634 to 2,489 with P-only affinity; it does not
 establish calibrated capacities or a permanent desktop policy.
 See [CPU experiments](cpu-performance.md).
+
+Two short local P-core SHA256 runs requested 4.512 GHz while the driver's
+current-state readback sampled 3.924 GHz; E-core readback reached 2.592 GHz.
+That gap needs T6040 status/OPP decoding review before attributing it to
+throttling. The repeatable 1.52 crypto throughput ratio is not a general
+scheduler capacity calibration. Automatic fan response was observed during
+an active-desktop NOP-idle capture at reported CPU temperatures of 80–87°C.
 
 Keep `idle=nop arm64.nowfxt`: T6040 safe WFI/WFIT support remains unresolved.
 Spinning idle CPUs consume power and thermal headroom. Do not re-enable

@@ -34,6 +34,10 @@ class NativeLabTests(unittest.TestCase):
             (node / "compatible").write_bytes(b"apple,t8103-dwc3\0")
             (node / "status").write_bytes(b"okay\0")
             (node / "reg").write_bytes(bytes.fromhex("0000000392280000"))
+            opp = sysfs / "firmware/devicetree/base/opp-table-1/opp19"
+            opp.mkdir(parents=True)
+            (opp / "opp-hz").write_bytes((4512000000).to_bytes(8, "big"))
+            (opp / "opp-level").write_bytes((19).to_bytes(4, "big"))
             calls = []
             def unavailable(argv):
                 calls.append(argv)
@@ -44,6 +48,7 @@ class NativeLabTests(unittest.TestCase):
             self.assertEqual(hardware["cmdline"], "idle=nop arm64.nowfxt")
             self.assertEqual(hardware["device_tree"]["/soc/usb@392280000"]["status"], ["okay"])
             self.assertEqual(hardware["device_tree"]["/soc/usb@392280000"]["reg"]["cells"], [3, 0x92280000])
+            self.assertEqual(hardware["device_tree"]["/opp-table-1/opp19"]["opp-level"]["cells"], [19])
             self.assertNotIn("CONFIG_OTHER=y", hardware["kernel_config"]["settings"])
             self.assertFalse(hardware["efi"]["present"])
             self.assertTrue((output / "COMPLETE").is_file())
