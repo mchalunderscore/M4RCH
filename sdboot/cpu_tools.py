@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Publish a small CPU experiment kit without rebuilding or installing a kernel."""
+"""Publish a native handover/diagnostic kit without replacing a kernel."""
 from __future__ import annotations
 
 import argparse
@@ -18,7 +18,19 @@ kit=$(CDPATH= cd -P "$(dirname "$0")" && pwd)
 (cd "$kit" && sha256sum -c SHA256SUMS) || exit 1
 exec python3 "$kit/m4rch-cpu-benchmark" "$@"
 '''
-README = b'''CPU placement and frequency experiments for the J614s
+COLLECTOR = b'''#!/bin/sh
+set -eu
+PATH=/usr/bin:/bin:/usr/sbin:/sbin
+export PATH
+kit=$(CDPATH= cd -P "$(dirname "$0")" && pwd)
+(cd "$kit" && sha256sum -c SHA256SUMS) || exit 1
+exec python3 "$kit/m4rch-native-lab" "$@"
+'''
+README = b'''Native USB and CPU investigation kit for the J614s
+
+Start with HANDOVER.md: it describes this round's evidence run and the return
+archive. Its cooling and idle safeguards take priority over the optional
+benchmark examples below.
 
 This kit changes no kernel, boot flags, Apple enrollment or fan settings.
 Run it from an Alice terminal in Linux. Replace KIT with this directory's
@@ -66,6 +78,9 @@ sudo tar -czf /boot/cpu-results.tar.gz -C "$HOME" cpu-default cpu-pcores
 The Python files are also installed by config-m4rch packages as
 m4rch-cpu-benchmark and m4rch-power-report. This standalone kit lets you
 try them on the current working kernel without a package transaction.
+
+HANDOVER.md adds the USB2, CPU idle, scheduling and cooling investigation.
+Use collect.sh for read-only snapshots and a private return archive.
 '''
 
 
@@ -79,7 +94,19 @@ def publish(project=PROJECT, out=None):
         "README.txt": README,
         "instructions.md": (project / "docs/native-agent-instructions.md").read_bytes(),
         "native-agent-followup.md": (project / "docs/native-agent-followup.md").read_bytes(),
+        "HANDOVER.md": (project / "HANDOVER.md").read_bytes(),
+        "m4rch-native-lab": (project / "sdboot/native_lab.py").read_bytes(),
+        "collect.sh": COLLECTOR,
     }
+    port_map = out / "macos-port-map.json"
+    if port_map.exists() or port_map.is_symlink():
+        if port_map.is_symlink() or not port_map.is_file():
+            raise ValueError("Mac port map must be a regular file")
+        data = port_map.read_bytes()
+        parsed = json.loads(data)
+        if parsed.get("schema") != 1 or parsed.get("model") != "Mac16,8":
+            raise ValueError("Mac port map is for a different target")
+        contents["macos-port-map.json"] = data
     hashes = {name: hashlib.sha256(data).hexdigest() for name, data in contents.items()}
     identity = hashlib.sha256(json.dumps(hashes, sort_keys=True).encode()).hexdigest()[:12]
     receipt = {"schema": 1, "kind": "j614s-cpu-experiment-tools", "identity": identity,
@@ -104,7 +131,7 @@ def publish(project=PROJECT, out=None):
         for name, data in contents.items():
             path = temporary / name
             path.write_bytes(data)
-            path.chmod(0o755 if name.startswith("m4rch-") or name == "run.sh" else 0o644)
+            path.chmod(0o755 if name.startswith("m4rch-") or name in ("run.sh", "collect.sh") else 0o644)
         temporary.chmod(0o755)
         temporary.rename(destination)
     finally:

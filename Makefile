@@ -47,7 +47,7 @@ check: FORCE
 	"$(PYTHON)" -m unittest discover -s tests -v
 
 help: FORCE
-	@printf '%s\n' 'Build (ordinary user):' '  make              Build the complete SD image (same as make image)' '  make kernel       Build the kernel and matching modules' '  make packages     Build a pacman update kit for installation in Linux' '  make loader       Build NVMe-aware and SD-only internal loaders' '  make cpu-tools    Publish a CPU benchmark and diagnostic kit'
+	@printf '%s\n' 'Build (ordinary user):' '  make              Build the complete SD image (same as make image)' '  make kernel       Build the kernel and matching modules' '  make packages     Build a pacman update kit for installation in Linux' '  make loader       Build NVMe-aware and SD-only internal loaders' '  make cpu-tools    Publish the native handover and CPU/USB diagnostic kit'
 	@printf '%s\n' '' 'Card and boot setup:' '  sudo make flash DISK=/dev/diskN    Erase and verify the SD card' '  sudo make diagnose DISK=/dev/diskN Read saved Linux logs' '  sudo make boot                    Prepare internal boot setup and enrollment' '  sudo make boot-safe               Prepare the SD-only fallback loader' '  sudo make boot-status             Inspect enrollment state'
 	@printf '%s\n' '' 'Checks:' '  make check        Run source tests and shell syntax checks' '  make verify       Verify built image and package artifacts' '  make smoke        Test the image in a disposable Linux VM'
 	@printf '%s\n' '' 'Variables:' '  PYTHON=python3    Python interpreter path for build and setup commands' '  DISK=/dev/diskN   Explicit SD card for flash or diagnose' '  REPLACE_PENDING=1 Allow boot staging to replace a verified pending loader' '' 'Install routine updates in Linux using the generated update kit.'

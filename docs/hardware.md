@@ -6,7 +6,7 @@ experimental configuration, not certification of every device or workload.
 
 | Device or function | Established behavior | Remaining work |
 | --- | --- | --- |
-| SD boot/root | Full m1n1 → U-Boot → SD GRUB → Linux boot; persistent ext4 and first-boot expansion | An earlier intermittent ext4 I/O incident remains unexplained |
+| SD boot/root | Full m1n1 → U-Boot → SD GRUB → Linux boot; persistent ext4 and first-boot expansion; owner reports repeated boots/shutdowns without recurrence of the earlier ext4 incident | Original cause remains undetermined; investigate if new failures appear |
 | Internal display | Software-rendered KDE/X11, Firefox and compositing | Wayland/QPainter is configured but awaits a native session check; no GPU acceleration |
 | Keyboard, trackpad, lighting | Native input and keyboard lighting have worked | Broader gestures/haptics and regression coverage |
 | Wi-Fi | Connection, routing and traffic | Roaming and long-duration reliability |

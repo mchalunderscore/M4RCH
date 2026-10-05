@@ -13,6 +13,8 @@ The [native-agent instructions](native-agent-instructions.md) and
 [follow-up](native-agent-followup.md) are operational handoff files for the
 current test installation and are included in `make cpu-tools` kits. Verify
 live devices and settings before applying them to another installation.
+The current [HANDOVER.md](../HANDOVER.md) sets the USB2/idle/scheduling work
+and the return-evidence protocol; the kit includes its read-only collector.
 
 Curated evidence receipts are retained in [evidence/](evidence/):
 
