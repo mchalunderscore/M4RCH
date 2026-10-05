@@ -32,6 +32,8 @@ class CpuToolsTests(unittest.TestCase):
                 self.assertEqual(hashlib.sha256((destination / name).read_bytes()).hexdigest(), digest)
             subprocess.run(["sh", "-n", str(destination / "run.sh")], check=True)
             subprocess.run(["sh", "-n", str(destination / "collect.sh")], check=True)
+            (source.parent / "HANDOVER.md").write_bytes((destination / "HANDOVER.md").read_bytes())
+            self.assertEqual(publish(source.parent, root / "out"), destination)
             original = destination
             port_map = root / "out/macos-port-map.json"
             port_map.write_text(json.dumps({"schema": 1, "model": "Mac16,8", "nodes": []}))

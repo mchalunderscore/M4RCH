@@ -96,5 +96,13 @@ sudo tar -czf /boot/cpu-results.tar.gz -C "$HOME" cpu-default cpu-pcores
 
 Measured T6040 E/P capacity descriptions may eventually improve scheduling
 from the SD side. Base-M4 or other-chip ratios are not calibration. Overlays
-must target only live CPUs after m1n1 prunes fused-off nodes. No guessed
-capacities, permanent governor or replacement idle workaround is installed.
+must target only live CPUs after m1n1 prunes fused-off nodes. No permanent governor or replacement idle workaround is installed.
+
+The owner-authorized next-boot trial now adds SD-only DT weights P=1024/E=864
+for this machine's twelve live CPUs. Pinned `arch_topology` multiplies weights
+by each policy's maximum frequency, predicting runtime P=1024/E=496.
+These provisional weights use short integer throughput measurements below
+CoreMark's official minimum duration; they are not calibrated silicon DMIPS.
+The [validation receipt](evidence/2026-10-05-capacity-trial.json) records the
+offline merge. Native acceptance and speedup remain unverified. The previous
+SD overlay and restore script are retained in `/boot/capacity-trial-01`.

@@ -92,4 +92,56 @@
             };
         };
     };
+    /* Provisional J614s scheduler capacities: P=1024, E=864 per MHz.
+     * With declared maximum OPPs4512/2592MHz, normalized P=1024/E~496.
+     * Provisional observed throughput weights, not silicon calibration.
+     * All12 CPUs must have values. No frequency, idle or power policy changes. */
+    fragment@7 {
+        target-path = "/cpus/cpu@0";
+        __overlay__ { capacity-dmips-mhz = <864>; };
+    };
+    fragment@8 {
+        target-path = "/cpus/cpu@1";
+        __overlay__ { capacity-dmips-mhz = <864>; };
+    };
+    fragment@9 {
+        target-path = "/cpus/cpu@10100";
+        __overlay__ { capacity-dmips-mhz = <1024>; };
+    };
+    fragment@10 {
+        target-path = "/cpus/cpu@10101";
+        __overlay__ { capacity-dmips-mhz = <1024>; };
+    };
+    fragment@11 {
+        target-path = "/cpus/cpu@10102";
+        __overlay__ { capacity-dmips-mhz = <1024>; };
+    };
+    fragment@12 {
+        target-path = "/cpus/cpu@10103";
+        __overlay__ { capacity-dmips-mhz = <1024>; };
+    };
+    fragment@13 {
+        target-path = "/cpus/cpu@10200";
+        __overlay__ { capacity-dmips-mhz = <1024>; };
+    };
+    fragment@14 {
+        target-path = "/cpus/cpu@10201";
+        __overlay__ { capacity-dmips-mhz = <1024>; };
+    };
+    fragment@15 {
+        target-path = "/cpus/cpu@10202";
+        __overlay__ { capacity-dmips-mhz = <1024>; };
+    };
+    fragment@16 {
+        target-path = "/cpus/cpu@10203";
+        __overlay__ { capacity-dmips-mhz = <1024>; };
+    };
+    fragment@17 {
+        target-path = "/cpus/cpu@2";
+        __overlay__ { capacity-dmips-mhz = <864>; };
+    };
+    fragment@18 {
+        target-path = "/cpus/cpu@3";
+        __overlay__ { capacity-dmips-mhz = <864>; };
+    };
 };

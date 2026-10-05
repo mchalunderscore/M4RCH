@@ -1,0 +1,91 @@
+{
+  "schema": 1,
+  "date": "2026-10-05",
+  "provisional": true,
+  "dt_weights": {
+    "P": 1024,
+    "E": 864
+  },
+  "expected_runtime": {
+    "P": 1024,
+    "E": 496
+  },
+  "validation": {
+    "provisional": true,
+    "dt_values": {
+      "/cpus/cpu@0": 864,
+      "/cpus/cpu@1": 864,
+      "/cpus/cpu@2": 864,
+      "/cpus/cpu@3": 864,
+      "/cpus/cpu@10100": 1024,
+      "/cpus/cpu@10101": 1024,
+      "/cpus/cpu@10102": 1024,
+      "/cpus/cpu@10103": 1024,
+      "/cpus/cpu@10200": 1024,
+      "/cpus/cpu@10201": 1024,
+      "/cpus/cpu@10202": 1024,
+      "/cpus/cpu@10203": 1024
+    },
+    "expected_normalized": {
+      "E": 496,
+      "P": 1024
+    },
+    "only_changed_properties": [
+      [
+        "/cpus/cpu@0",
+        "capacity-dmips-mhz"
+      ],
+      [
+        "/cpus/cpu@1",
+        "capacity-dmips-mhz"
+      ],
+      [
+        "/cpus/cpu@2",
+        "capacity-dmips-mhz"
+      ],
+      [
+        "/cpus/cpu@3",
+        "capacity-dmips-mhz"
+      ],
+      [
+        "/cpus/cpu@10100",
+        "capacity-dmips-mhz"
+      ],
+      [
+        "/cpus/cpu@10101",
+        "capacity-dmips-mhz"
+      ],
+      [
+        "/cpus/cpu@10102",
+        "capacity-dmips-mhz"
+      ],
+      [
+        "/cpus/cpu@10103",
+        "capacity-dmips-mhz"
+      ],
+      [
+        "/cpus/cpu@10200",
+        "capacity-dmips-mhz"
+      ],
+      [
+        "/cpus/cpu@10201",
+        "capacity-dmips-mhz"
+      ],
+      [
+        "/cpus/cpu@10202",
+        "capacity-dmips-mhz"
+      ],
+      [
+        "/cpus/cpu@10203",
+        "capacity-dmips-mhz"
+      ]
+    ],
+    "live_paths_verified": true,
+    "overlay_sha256": "1bdbddb59e72ce8e223966cb31978b102f788ce1d7178b4cb62e80b112f0e4b3",
+    "previous_overlay_sha256": "239269cdf6c9b8555af3322522e3a8fb57438feb663c33512945ab6cd78a323e"
+  },
+  "derivation": "Short CoreMark integer throughput, below official minimum duration; trial weights, not calibrated DMIPS",
+  "kernel_revision": "e9d2237cd064e6d086d938cd9c85e0c963cf7291",
+  "recovered_helper_recurrence": 2,
+  "clock_status_gap_explained": false
+}

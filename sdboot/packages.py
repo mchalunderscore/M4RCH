@@ -297,6 +297,8 @@ def _build_and_install(project, root, config, lock, kernel_dir, module_manifest,
     from boot import read_fdt
     merged_nodes = read_fdt(merged)
     sensors = peripheral_policy.check_overlay_nodes(merged_nodes)
+    import cpu_capacity
+    sensors["cpu_capacity"] = cpu_capacity.check_nodes(merged_nodes)
     import struct
     nvme = merged_nodes["/soc/nvme@44dcc0000"]
     if (nvme.get("reg") != struct.pack(">8I", 4, 0x4dcc0000, 0, 0x60000, 4, 0x09600000, 0, 0x4000)

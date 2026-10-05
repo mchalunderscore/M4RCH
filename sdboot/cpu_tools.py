@@ -99,6 +99,9 @@ def publish(project=PROJECT, out=None):
         "m4rch-native-lab": (project / "sdboot/native_lab.py").read_bytes(),
         "collect.sh": COLLECTOR,
     }
+    capacity = project / "sdboot/cpu_capacity.py"
+    if capacity.is_file():
+        contents["m4rch-verify-capacity"] = capacity.read_bytes()
     port_map = out / "macos-port-map.json"
     if port_map.exists() or port_map.is_symlink():
         if port_map.is_symlink() or not port_map.is_file():
@@ -108,6 +111,9 @@ def publish(project=PROJECT, out=None):
         if parsed.get("schema") != 1 or parsed.get("model") != "Mac16,8":
             raise ValueError("Mac port map is for a different target")
         contents["macos-port-map.json"] = data
+    contents["HANDOVER.md"] = re.sub(
+        rb"(?m)^kit=/boot/cpu-tools-[A-Za-z0-9]+$",
+        b"kit=/boot/cpu-tools-ID", contents["HANDOVER.md"])
     hashes = {name: hashlib.sha256(data).hexdigest() for name, data in contents.items()}
     identity = hashlib.sha256(json.dumps(hashes, sort_keys=True).encode()).hexdigest()[:12]
     # Resolve the delivered path after choosing the content identity. The
