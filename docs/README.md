@@ -7,6 +7,7 @@
 | [Architecture](architecture.md) | Internal loader, SD UEFI files, packages and boot policy |
 | [Development](development.md) | Source pins, validation and contribution workflow |
 | [CPU experiments](cpu-performance.md) | Controlled placement and clock/cooling captures |
+| [Left USB trial](left-usb-trial.md) | Both-left USB2 candidate, driver dependency and rollback |
 | [USB patch provenance](usb-patchset-provenance.md) | Upstream basis and local USB adaptations |
 
 The [native-agent instructions](native-agent-instructions.md) and

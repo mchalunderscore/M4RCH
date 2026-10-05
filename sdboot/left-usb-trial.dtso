@@ -1,0 +1,102 @@
+/dts-v1/;
+/plugin/;
+/* Optional J614s USB2 trial; requires the cable-mode-precedence driver. */
+/ {
+ compatible = "apple,j614s";
+ fragment@0 {
+  target-path = "/soc/power-management@508300000/power-controller@68";
+  left_spmi_pd: __overlay__ {
+
+  };
+ };
+ fragment@1 {
+  target-path = "/soc/power-management@508300000/power-controller@118";
+  left_rear_pd: __overlay__ {
+
+  };
+ };
+ fragment@2 {
+  target-path = "/soc/power-management@508300000/power-controller@120";
+  left_front_pd: __overlay__ {
+
+  };
+ };
+ fragment@3 {
+  target-path = "/soc";
+  __overlay__ {
+  left_rear_phy: phy@382a90000 {
+   compatible = "apple,t6040-atcphy";
+   reg = <3 0x82a90000 0 0x4000>, <3 0x82800000 0 0x4000>;
+   reg-names = "bank0", "bank1"; #phy-cells = <1>;
+   power-domains = <&left_rear_pd>; status = "okay";
+  };
+  left_front_phy: phy@38aa90000 {
+   compatible = "apple,t6040-atcphy";
+   reg = <3 0x8aa90000 0 0x4000>, <3 0x8a800000 0 0x4000>;
+   reg-names = "bank0", "bank1"; #phy-cells = <1>;
+   power-domains = <&left_front_pd>; status = "okay";
+  };
+  spmi@509188000 {
+   compatible = "apple,t6040-spmi", "apple,spmi";
+   reg = <5 0x09188000 0 0x4000>; power-domains = <&left_spmi_pd>;
+   #address-cells = <2>; #size-cells = <0>; status = "okay";
+   usb-pd@c {
+    compatible = "usbc,sn201202x,spmi"; reg = <0xc 0>;
+    connector {
+     compatible = "usb-c-connector"; power-role = "source"; data-role = "host";
+     port { left_rear_pd_ep: endpoint { remote-endpoint = <&left_rear_dwc_ep>; }; };
+    };
+   };
+   usb-pd@a {
+    compatible = "usbc,sn201202x,spmi"; reg = <0xa 0>;
+    connector {
+     compatible = "usb-c-connector"; power-role = "source"; data-role = "host";
+     port { left_front_pd_ep: endpoint { remote-endpoint = <&left_front_dwc_ep>; }; };
+    };
+   };
+  };
+  };
+ };
+ fragment@4 {
+  target-path = "/soc/iommu@382f00000";
+  __overlay__ {
+   status = "okay";
+  };
+ };
+ fragment@5 {
+  target-path = "/soc/iommu@382f80000";
+  __overlay__ {
+   status = "okay";
+  };
+ };
+ fragment@6 {
+  target-path = "/soc/usb@382280000";
+  __overlay__ {
+   status = "okay"; dr_mode = "host"; maximum-speed = "high-speed";
+   arch-m4,usb-wait-for-cable; usb-role-switch;
+   phys = <&left_rear_phy 3>; phy-names = "usb2-phy";
+   port { left_rear_dwc_ep: endpoint { remote-endpoint = <&left_rear_pd_ep>; }; };
+  };
+ };
+ fragment@7 {
+  target-path = "/soc/iommu@38af00000";
+  __overlay__ {
+   status = "okay";
+  };
+ };
+ fragment@8 {
+  target-path = "/soc/iommu@38af80000";
+  __overlay__ {
+   status = "okay";
+  };
+ };
+ fragment@9 {
+  target-path = "/soc/usb@38a280000";
+  __overlay__ {
+   status = "okay"; dr_mode = "host"; maximum-speed = "high-speed";
+   arch-m4,usb-wait-for-cable; usb-role-switch;
+   phys = <&left_front_phy 3>; phy-names = "usb2-phy";
+   port { left_front_dwc_ep: endpoint { remote-endpoint = <&left_front_pd_ep>; }; };
+  };
+ };
+};

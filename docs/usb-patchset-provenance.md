@@ -20,6 +20,10 @@ separate concern is proprietary-driver reverse engineering:
 - [experimental-usb2-phy-reset.patch](../patches/experimental-usb2-phy-reset.patch)
   derives shutdown operations, delays and ordering from static analysis of that
   Apple component. Implementation and binary analysis occurred together.
+- [experimental-dwc3-cable-mode-precedence.patch](../patches/experimental-dwc3-cable-mode-precedence.patch)
+  makes the existing explicit cable-event marker take precedence over an
+  inherited forced-device flag. It changes Linux probe policy, with no new
+  PHY register sequence. Both-left-port hardware behavior remains unverified.
 - [architecture.md](architecture.md#usb2) explains the Linux callback-order
   correction. The patch contains Linux C rather than an
   embedded Apple binary; that alone does not resolve provenance.

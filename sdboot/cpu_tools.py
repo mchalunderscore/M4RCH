@@ -102,6 +102,9 @@ def publish(project=PROJECT, out=None):
     capacity = project / "sdboot/cpu_capacity.py"
     if capacity.is_file():
         contents["m4rch-verify-capacity"] = capacity.read_bytes()
+    sampler = project / "sdboot/worker_sampler.c"
+    if sampler.is_file():
+        contents["m4rch-worker-sampler.c"] = sampler.read_bytes()
     port_map = out / "macos-port-map.json"
     if port_map.exists() or port_map.is_symlink():
         if port_map.is_symlink() or not port_map.is_file():

@@ -348,8 +348,12 @@ def _build_and_install(project, root, config, lock, kernel_dir, module_manifest,
                        "sha256": sha256(destination / grub_name), "inputs": grub["inputs"]}
     # Remove the generic kernel through pacman while its initramfs hooks remain
     # masked from the signed package bootstrap. Never delete package-owned files.
-    if subprocess.run(["chroot", root, "pacman", "-Q", "linux-aarch64"], stdout=subprocess.DEVNULL).returncode == 0:
-        run(["chroot", root, "pacman", "-R", "--noconfirm", "linux-aarch64"])
+    # Both stock packages are replaced by local packages below. In a fresh
+    # disposable build root, remove them explicitly: --noconfirm answers No
+    # to pacman's conflicting-package removal prompt during -U.
+    for stock in ("linux-aarch64", "grub"):
+        if subprocess.run(["chroot", root, "pacman", "-Q", stock], stdout=subprocess.DEVNULL).returncode == 0:
+            run(["chroot", root, "pacman", "-R", "--noconfirm", stock])
     # Local builds are intentionally unsigned; use a one-transaction config so
     # repository signatures and the final installation's policy stay required.
     conf = (root / "etc/pacman.conf").read_text()

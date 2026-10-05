@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "model": "Mac16,8",
+  "mapping": {
+    "left-front": {
+      "controller": "usb-drd1",
+      "location_id": 18874368,
+      "reported_link_bps": 5000000000,
+      "physical_observation": "owner connected drive to named socket",
+      "pd_physical_mapping": "not independently established"
+    },
+    "left-rear": {
+      "controller": "usb-drd0",
+      "location_id": 2097152,
+      "reported_link_bps": 5000000000,
+      "physical_observation": "owner connected drive to named socket",
+      "pd_physical_mapping": "not independently established"
+    }
+  }
+}

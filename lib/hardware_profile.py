@@ -107,6 +107,15 @@ USB_CABLE_FIXES = (
         "origin": "m4rch scoped deferred DWC3 core-probe resources and fresh retry context",
         "native_verified": False,
     },
+    {
+        "path": "patches/experimental-dwc3-cable-mode-precedence.patch",
+        "sha256": "1020f8da546f707e0deca7082694460f8120988401af04240b23e076269a3048",
+        "source": "drivers/usb/dwc3/dwc3-apple.c",
+        "base_source_sha256": "8714bbccc22861f21ab7a31cec4e9950611ab0bd443c281487bb4d246260da23",
+        "result_source_sha256": "52a5463188e0142515f98249a71da62f45553385e6552ae67dce96e81be1384d",
+        "origin": "m4rch explicit cable graph overrides inherited forced-device mode",
+        "native_verified": False,
+    },
 )
 
 # The PD transport selects registers with SPMI ZERO_WRITE and wakes the chip.
