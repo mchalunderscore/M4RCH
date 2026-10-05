@@ -1,0 +1,43 @@
+From b0cdce107543235c8a83c616a0d12aae4c5fc248 Mon Sep 17 00:00:00 2001
+From: Sven Peter <sven@svenpeter.dev>
+Date: Thu, 6 Aug 2026 17:10:05 +0200
+Subject: [PATCH] nvme: Set a DMA direction for commands correctly
+
+Setting the DMA direction for commands that don't do any transfer likely
+triggered the PRP NULL check for which we needed a chicken bit. That bit
+has disappeared starting with macOS 15 so let's just do this correctly
+instead.
+
+Signed-off-by: Sven Peter <sven@svenpeter.dev>
+---
+ src/nvme.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
+
+diff --git a/src/nvme.c b/src/nvme.c
+index 2ecc73ec7..1bb3e8be0 100644
+--- a/src/nvme.c
++++ b/src/nvme.c
+@@ -65,6 +65,9 @@
+ #define NVME_CMD_WRITE 0x01
+ #define NVME_CMD_READ  0x02
+ 
++#define NVMMU_TCB_DMA_FROM_DEVICE BIT(0)
++#define NVMMU_TCB_DMA_TO_DEVICE   BIT(1)
++
+ struct nvme_command {
+     u8 opcode;
+     u8 flags;
+@@ -221,7 +224,12 @@ static bool nvme_exec_command(struct nvme_queue *q, struct nvme_command *cmd, u6
+ 
+     memset(tcb, 0, sizeof(*tcb));
+     tcb->opcode = queue_cmd->opcode;
+-    tcb->dma_flags = 3; // always allow read+write to the PRP pages
++    if (!queue_cmd->prp1)
++        tcb->dma_flags = 0;
++    else if (queue_cmd->opcode & 1)
++        tcb->dma_flags = NVMMU_TCB_DMA_TO_DEVICE;
++    else
++        tcb->dma_flags = NVMMU_TCB_DMA_FROM_DEVICE;
+     tcb->slot_id = tag;
+     tcb->len = queue_cmd->cdw12;
+     tcb->prp1 = queue_cmd->prp1;

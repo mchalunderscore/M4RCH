@@ -1,0 +1,124 @@
+#!/usr/bin/env python3
+"""Publish a small CPU experiment kit without rebuilding or installing a kernel."""
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+from pathlib import Path
+import shutil
+import tempfile
+
+PROJECT = Path(__file__).resolve().parents[1]
+WRAPPER = b'''#!/bin/sh
+set -eu
+PATH=/usr/bin:/bin:/usr/sbin:/sbin
+export PATH
+kit=$(CDPATH= cd -P "$(dirname "$0")" && pwd)
+(cd "$kit" && sha256sum -c SHA256SUMS) || exit 1
+exec python3 "$kit/m4rch-cpu-benchmark" "$@"
+'''
+README = b'''CPU placement and frequency experiments for the J614s
+
+This kit changes no kernel, boot flags, Apple enrollment or fan settings.
+Run it from an Alice terminal in Linux. Replace KIT with this directory's
+absolute path, usually /boot/cpu-tools-ID. No installation is necessary.
+
+python3 KIT/m4rch-cpu-benchmark --inspect
+
+From the directory containing the same Geekbench binary used previously:
+sudo sh KIT/run.sh --cpus all --output "$HOME/cpu-default" -- ./geekbench7
+sudo sh KIT/run.sh --cpus performance --output "$HOME/cpu-pcores" -- ./geekbench7
+
+Both commands preserve the existing governors. Root lets the monitoring
+parent read cpuinfo_cur_freq, which Linux exposes with mode 0400. The workload
+still runs as Alice, and the capture belongs to Alice. An unprivileged null
+clock reading does not prove the attribute is absent. The second uses only the
+eight performance cores and measures their effect on the single-core score;
+its multicore score is an eight-core result. Keep all twelve cores for the
+normal multicore comparison. Choose a new output directory for every run.
+The workload output, including any result URL, stays in your terminal.
+
+Optional: after the first comparisons, test only the first P cluster with
+its governor temporarily set to performance; other policies are untouched:
+sudo sh KIT/run.sh --cpus p0 --output "$HOME/cpu-p0-default" -- ./geekbench7
+# After cooling to the same starting temperature:
+sudo sh KIT/run.sh --cpus p0 --governor performance \
+    --output "$HOME/cpu-p0-performance" -- ./geekbench7
+
+Compare those two four-core runs to isolate the governor's effect.
+The first native pair reported high CPU sensor readings. Inspect cooling and
+root-readable clocks before a governor experiment; native-agent-followup.md
+contains the next checks and instructions.md contains the full setup guide.
+The command still runs as the invoking non-root user. Governors are restored
+when it exits or receives Ctrl-C/SIGTERM. A forced kill or loss of power
+cannot run cleanup; metadata records the original governors, and reboot
+restores the normal boot policy. No frequency limits or fan controls are
+written. With idle=nop, increasing idle frequencies can increase heat.
+
+Use AC power, the same binary/version and comparable starting temperatures.
+Close busy background applications before each run. Each capture contains
+metadata.json, samples.jsonl and summary.json with CPU placement, requested
+and hardware-reported clocks, temperatures, fan RPM and power conditions.
+Copy the captures to /boot for reading from macOS, or archive them there:
+sudo tar -czf /boot/cpu-results.tar.gz -C "$HOME" cpu-default cpu-pcores
+
+The Python files are also installed by config-m4rch packages as
+m4rch-cpu-benchmark and m4rch-power-report. This standalone kit lets you
+try them on the current working kernel without a package transaction.
+'''
+
+
+def publish(project=PROJECT, out=None):
+    project = Path(project)
+    out = Path(out) if out is not None else project / "out/sdboot"
+    contents = {
+        "m4rch-cpu-benchmark": (project / "sdboot/cpu_benchmark.py").read_bytes(),
+        "m4rch-power-report": (project / "sdboot/peripheral_policy.py").read_bytes(),
+        "run.sh": WRAPPER,
+        "README.txt": README,
+        "instructions.md": (project / "docs/native-agent-instructions.md").read_bytes(),
+        "native-agent-followup.md": (project / "docs/native-agent-followup.md").read_bytes(),
+    }
+    hashes = {name: hashlib.sha256(data).hexdigest() for name, data in contents.items()}
+    identity = hashlib.sha256(json.dumps(hashes, sort_keys=True).encode()).hexdigest()[:12]
+    receipt = {"schema": 1, "kind": "j614s-cpu-experiment-tools", "identity": identity,
+               "files": hashes, "kernel_changed": False, "enrollment_required": False}
+    contents["manifest.json"] = (json.dumps(receipt, indent=2, sort_keys=True) + "\n").encode()
+    contents["SHA256SUMS"] = "".join(
+        hashlib.sha256(data).hexdigest() + "  " + name + "\n"
+        for name, data in sorted(contents.items())).encode()
+    out.mkdir(parents=True, exist_ok=True)
+    destination = out / ("cpu-tools-" + identity)
+    if destination.exists() or destination.is_symlink():
+        if (destination.is_symlink() or not destination.is_dir() or
+                {path.name for path in destination.iterdir()} != set(contents) or
+                any((destination / name).is_symlink() or
+                    not (destination / name).is_file() or
+                    (destination / name).read_bytes() != data
+                    for name, data in contents.items())):
+            raise ValueError("Published CPU kit changed; preserve it and choose a different output root")
+        return destination
+    temporary = Path(tempfile.mkdtemp(prefix=".cpu-tools-", dir=out))
+    try:
+        for name, data in contents.items():
+            path = temporary / name
+            path.write_bytes(data)
+            path.chmod(0o755 if name.startswith("m4rch-") or name == "run.sh" else 0o644)
+        temporary.chmod(0o755)
+        temporary.rename(destination)
+    finally:
+        if temporary.exists():
+            shutil.rmtree(temporary)
+    return destination
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--out", type=Path, help="output root, default out/sdboot")
+    args = parser.parse_args()
+    print(publish(out=args.out))
+
+
+if __name__ == "__main__":
+    main()

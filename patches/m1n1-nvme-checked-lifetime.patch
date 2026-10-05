@@ -1,0 +1,205 @@
+From: arch-m4 project
+Subject: [PATCH] nvme: prove RTKit sleep and preserve buffers after failed adoption
+
+The pinned rtkit_sleep returns bool but compares the boolean result from
+rtkit_switch_power_state with zero as though it were an errno; that can
+hide failed handshakes. Add an explicitly checked API without changing
+other callers. Only stop ASC after the RTKit power transition succeeds,
+and report whether ASC actually stopped.
+
+Once rtkit_boot starts, even an unsuccessful boot may have published DMA
+buffers. Keep all allocations alive and latch failures until reboot rather
+than following the inherited unchecked cleanup path. Latch shutdown errors
+as well, reject further initialization/I/O, and invalidate an old handoff
+when a new initialization is attempted.
+
+--- a/src/nvme.c
++++ b/src/nvme.c
+@@ -129,6 +129,8 @@
+ } nvme_type;
+ 
+ static bool nvme_initialized = false;
++static bool nvme_handoff_done;
++static bool nvme_handoff_failed;
+ static u8 nvme_die;
+ 
+ static asc_dev_t *nvme_asc = NULL;
+@@ -304,6 +306,12 @@
+ 
+ bool nvme_init(void)
+ {
++    if (nvme_handoff_failed) {
++        printf("nvme: failed ANS handoff is latched; reboot required\n");
++        return false;
++    }
++    /* A proxy retry may restart ANS after a later DT preparation failure. */
++    nvme_handoff_done = false;
+     if (nvme_initialized) {
+         printf("nvme: already initialized\n");
+         return true;
+@@ -389,12 +397,15 @@
+     if (!nvme_rtkit)
+         goto out_sart;
+ 
++    /* RTKit boot can publish DMA buffers even when its handshake fails.
++     * Until a complete successful handoff, do not free or reuse that state. */
++    nvme_handoff_failed = true;
+     if (!rtkit_boot(nvme_rtkit))
+-        goto out_rtkit;
++        goto out_unsafe;
+ 
+     if (poll32(nvme_base + NVME_BOOT_STATUS, 0xffffffff, NVME_BOOT_STATUS_OK, USEC_PER_SEC) < 0) {
+         printf("nvme: ANS did not boot correctly.\n");
+-        goto out_shutdown;
++        goto out_unsafe;
+     }
+ 
+     /* setup controller and NVMMU for linear submission queue */
+@@ -408,14 +419,14 @@
+     /* setup admin queue */
+     if (!nvme_ctrl_disable()) {
+         printf("nvme: timeout while waiting for CSTS.RDY to clear\n");
+-        goto out_shutdown;
++        goto out_unsafe;
+     }
+     write64_lo_hi(nvme_base + NVME_ASQ, (u64)adminq.cmds);
+     write64_lo_hi(nvme_base + NVME_ACQ, (u64)adminq.cqes);
+     write32(nvme_base + NVME_AQA, ((NVME_QUEUE_SIZE - 1) << 16) | (NVME_QUEUE_SIZE - 1));
+     if (!nvme_ctrl_enable()) {
+         printf("nvme: timeout while waiting for CSTS.RDY to be set\n");
+-        goto out_disable_ctrl;
++        goto out_unsafe;
+     }
+ 
+     /* setup IO queue */
+@@ -429,7 +440,7 @@
+     cmd.cdw11 = NVME_QUEUE_CONTIGUOUS;
+     if (!nvme_exec_command(&adminq, &cmd, NULL)) {
+         printf("nvme: create cq command failed\n");
+-        goto out_disable_ctrl;
++        goto out_unsafe;
+     }
+ 
+     memset(&cmd, 0, sizeof(cmd));
+@@ -441,7 +452,7 @@
+     cmd.cdw11 |= 1 << 16; // cq id for this sq
+     if (!nvme_exec_command(&adminq, &cmd, NULL)) {
+         printf("nvme: create sq command failed\n");
+-        goto out_delete_cq;
++        goto out_unsafe;
+     }
+ 
+     if (nvme_type == NVME_T8132) {
+@@ -453,26 +464,16 @@
+     }
+ 
+     nvme_initialized = true;
++    nvme_handoff_failed = false;
+     printf("nvme: initialized at 0x%lx\n", nvme_base);
+     return true;
+ 
+-out_delete_cq:
+-    memset(&cmd, 0, sizeof(cmd));
+-    cmd.opcode = NVME_ADMIN_CMD_DELETE_CQ;
+-    cmd.cdw10 = 1; // cq id
+-    if (!nvme_exec_command(&adminq, &cmd, NULL))
+-        printf("nvme: delete cq command failed\n");
+-out_disable_ctrl:
+-    nvme_ctrl_shutdown();
+-    nvme_ctrl_disable();
+-    nvme_poll_syslog();
+-out_shutdown:
+-    rtkit_sleep(nvme_rtkit);
+-    // Some machines call this ANS, some ANS2...
+-    pmgr_reset(nvme_die, "ANS");
+-    pmgr_reset(nvme_die, "ANS2");
+-out_rtkit:
+-    rtkit_free(nvme_rtkit);
++out_unsafe:
++    /* The coprocessor may still own these buffers. Deliberately retain them
++     * and refuse further NVMe use; a machine reboot resets the failed state. */
++    printf("nvme: ANS initialization failed; retaining DMA buffers\n");
++    return false;
++
+ out_sart:
+     sart_free(nvme_sart);
+ out_asc:
+@@ -557,8 +558,7 @@
+         printf("nvme: timeout while waiting for CSTS.RDY to clear\n");
+         return false;
+     }
+-    /* This pinned rtkit_sleep returns zero on success despite its bool type. */
+-    if (rtkit_sleep(nvme_rtkit) || asc_cpu_running(nvme_asc)) {
++    if (!rtkit_sleep_checked(nvme_rtkit)) {
+         printf("nvme: ANS did not enter the stopped state\n");
+         return false;
+     }
+@@ -579,15 +579,19 @@
+     return true;
+ }
+ 
+-static bool nvme_handoff_done;
+-
+ bool nvme_prepare_handoff(void)
+ {
+-    if (nvme_handoff_done)
++    if (nvme_handoff_failed)
++        return false;
++    if (nvme_handoff_done && !nvme_initialized)
+         return true;
+     printf("arch-m4 NVMe handoff v2: initializing ANS before UEFI\n");
+-    if (!nvme_init() || !nvme_shutdown_checked())
+-        return false;
++    if (!nvme_init())
++        return false;
++    nvme_handoff_failed = true;
++    if (!nvme_shutdown_checked())
++        return false;
++    nvme_handoff_failed = false;
+     nvme_handoff_done = true;
+     return true;
+ }
+@@ -604,7 +608,7 @@
+ {
+     struct nvme_command cmd;
+ 
+-    if (!nvme_initialized)
++    if (!nvme_initialized || nvme_handoff_failed)
+         return false;
+ 
+     memset(&cmd, 0, sizeof(cmd));
+@@ -619,7 +623,7 @@
+     struct nvme_command cmd;
+     u64 buffer_addr = (u64)buffer;
+ 
+-    if (!nvme_initialized)
++    if (!nvme_initialized || nvme_handoff_failed)
+         return false;
+ 
+     /* no need for 16K alignment here since the NVME page size is 4k */
+--- a/src/rtkit.c
++++ b/src/rtkit.c
+@@ -723,3 +723,13 @@
+     asc_cpu_stop(rtk->asc);
+     return 0;
+ }
++
++/* Checked alternative for callers that must prove ownership ended before
++ * releasing DMA buffers. Leave the historical rtkit_sleep API untouched. */
++bool rtkit_sleep_checked(rtkit_dev_t *rtk)
++{
++    if (!rtkit_switch_power_state(rtk, RTKIT_POWER_SLEEP))
++        return false;
++    asc_cpu_stop(rtk->asc);
++    return !asc_cpu_running(rtk->asc);
++}
+--- a/src/rtkit.h
++++ b/src/rtkit.h
+@@ -26,6 +26,7 @@
+                         iova_domain_t *dart_iovad, sart_dev_t *sart, bool sram);
+ bool rtkit_quiesce(rtkit_dev_t *rtk);
+ bool rtkit_sleep(rtkit_dev_t *rtk);
++bool rtkit_sleep_checked(rtkit_dev_t *rtk);
+ void rtkit_free(rtkit_dev_t *rtk);
+ 
+ bool rtkit_start_ep(rtkit_dev_t *rtk, u8 ep);

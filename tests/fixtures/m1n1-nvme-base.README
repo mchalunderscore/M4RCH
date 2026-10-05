@@ -1,0 +1,17 @@
+m1n1-nvme-base.c is an unmodified copy of src/nvme.c from:
+
+https://github.com/damsleth/m1n1/blob/16b1f61fd2a995f855da8909411d06005d1e2b35/src/nvme.c
+
+The file retains its SPDX-License-Identifier: MIT declaration. The upstream
+MIT license and copyright notice are included in m1n1-nvme-base.LICENSE.
+SHA-256: 061b3c6aea60387e90b368eff6c3beeab121a7f4f9e57ec85a4d6cd12a8f1702
+
+This fixture permits patch-application and compiled control-flow tests before
+the project's source cache exists. The tests verify its SHA-256 against the
+same pinned source identity enforced by lib/nvme_handoff.py during builds.
+
+The same pinned source also supplies m1n1-nvme-base.h,
+m1n1-rtkit-base.c and m1n1-rtkit-base.h. Their SPDX MIT declarations and
+upstream license remain intact. RTKit base/result hashes are pinned in
+lib/nvme_handoff.py so the compiled tests exercise the actual boolean
+power-transition implementation rather than a substitute API contract.

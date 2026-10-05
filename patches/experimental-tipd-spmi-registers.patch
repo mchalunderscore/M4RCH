@@ -1,0 +1,138 @@
+From: arch-m4 project
+Subject: [PATCH] usb: typec: tipd: correct SN201202x SPMI register accesses
+
+Backport the logical-register access details from Sasha Finkelstein and
+Alyssa Milburn's reviewed v6 SN201202x driver (2026-08-26):
+https://lists.openwall.net/linux-kernel/2026/08/26/982
+
+The read payload window is 0x20; writes use the separate 0xa0 window.
+The selector is read with the standard SPMI register-read command. Limit
+logical registers to seven bits and payloads to the device's 64-byte window.
+Propagate WAKEUP failures and report the failing probe stage.
+
+Retain Wallace's bounded polling transport and board description. The v6
+interrupt/completion implementation needs additional IRQ-controller work
+and is not imported here. Native VBUS/USB enumeration remains unverified.
+
+--- a/drivers/usb/typec/tipd/spmi.c
++++ b/drivers/usb/typec/tipd/spmi.c
+@@ -16,11 +16,11 @@
+  * a transfer first *selects* the logical register by writing its number to
+  * SPMI register 0 (SPMI "Register 0 Write"), waits for the select register to
+  * read back the requested number with its busy bit (BIT(7)) cleared, and then
+- * transfers the payload through a data window at SPMI register 0x20, in
+- * SPMI-extended chunks of up to 16 bytes with the window address
+- * auto-incrementing across chunks. This mirrors, byte for byte, the access
+- * that Apple's own AppleHPMARMSPMI::readRegs performs and that our m1n1
+- * bring-up code (t6040_hpm2.c) proved live against this hardware.
++ * reads payload through the SPMI window at 0x20 and writes through
++ * the distinct window at 0xa0, in chunks of up to 16 bytes with the window address
++ * auto-incrementing across chunks. The read window was exercised by Wallace
++ * bring-up; the separate write window and standard selector read follow
++ * Finkelstein and Milburn's reviewed SN201202x v6 driver.
+  *
+  * This regmap_bus reproduces that paging so core.c sees an ordinary flat
+  * 8-bit register map (tps6598x_regmap_config).
+@@ -40,7 +40,9 @@
+ 
+ /* SPMI-visible registers of the SN201202x paging interface. */
+ #define TPS_SPMI_REG_SELECT	0x00	/* which logical register is selected */
+-#define TPS_SPMI_REG_WINDOW	0x20	/* data window onto the selected reg */
++#define TPS_SPMI_REG_READ_WINDOW	0x20	/* selected register read window */
++#define TPS_SPMI_REG_WRITE_WINDOW	0xa0	/* selected register write window */
++#define TPS_SPMI_MAX_PAYLOAD	0x40
+ #define TPS_SPMI_SELECT_BUSY	BIT(7)	/* set while the selection settles */
+ 
+ /* Max payload per SPMI Extended Register Read/Write command. */
+@@ -54,12 +56,15 @@
+ 	int ret, i;
+ 	u8 sel;
+ 
++	if (reg >= 0x80)
++		return -EINVAL;
++
+ 	ret = spmi_register_zero_write(sdev, reg);
+ 	if (ret)
+ 		return ret;
+ 
+ 	for (i = 0; i < TPS_SPMI_SELECT_TRIES; i++) {
+-		ret = spmi_ext_register_read(sdev, TPS_SPMI_REG_SELECT, &sel, 1);
++		ret = spmi_register_read(sdev, TPS_SPMI_REG_SELECT, &sel);
+ 		if (ret)
+ 			return ret;
+ 		if (sel == reg)
+@@ -76,7 +81,7 @@
+ static int tps6598x_spmi_window_read(struct spmi_device *sdev, u8 *val,
+ 				     size_t len)
+ {
+-	u8 addr = TPS_SPMI_REG_WINDOW;
++	u8 addr = TPS_SPMI_REG_READ_WINDOW;
+ 	int ret;
+ 
+ 	while (len) {
+@@ -96,7 +101,7 @@
+ static int tps6598x_spmi_window_write(struct spmi_device *sdev, const u8 *val,
+ 				      size_t len)
+ {
+-	u8 addr = TPS_SPMI_REG_WINDOW;
++	u8 addr = TPS_SPMI_REG_WRITE_WINDOW;
+ 	int ret;
+ 
+ 	while (len) {
+@@ -119,7 +124,7 @@
+ 	struct spmi_device *sdev = context;
+ 	int ret;
+ 
+-	if (reg_size != 1)
++	if (reg_size != 1 || val_size > TPS_SPMI_MAX_PAYLOAD)
+ 		return -EINVAL;
+ 
+ 	ret = tps6598x_spmi_select(sdev, *(const u8 *)reg);
+@@ -136,7 +141,7 @@
+ 	struct spmi_device *sdev = context;
+ 	int ret;
+ 
+-	if (reg_size != 1)
++	if (reg_size != 1 || val_size > TPS_SPMI_MAX_PAYLOAD)
+ 		return -EINVAL;
+ 
+ 	ret = tps6598x_spmi_select(sdev, *(const u8 *)reg);
+@@ -174,7 +179,7 @@
+ {
+ 	const struct tipd_data *data;
+ 	struct regmap *regmap;
+-	int irq;
++	int irq, ret;
+ 
+ 	data = device_get_match_data(&sdev->dev);
+ 	if (!data)
+@@ -182,12 +187,13 @@
+ 
+ 	/*
+ 	 * The controller may be in an SPMI low-power state after a warm boot.
+-	 * WAKEUP before the first register access mirrors the proven m1n1
+-	 * bring-up order (wakeup -> read power state -> SSPS to S0); it is
+-	 * harmless if the part is already awake. Reaching S0 itself is left to
++	 * Issue WAKEUP before register access and abort probing on a bus error.
++	 * Reaching S0 itself is left to
+ 	 * cd321x_data.switch_power_state inside tps6598x_probe_common().
+ 	 */
+-	spmi_command_wakeup(sdev);
++	ret = spmi_command_wakeup(sdev);
++	if (ret)
++		return dev_err_probe(&sdev->dev, ret, "SPMI WAKEUP failed\n");
+ 
+ 	regmap = devm_regmap_init(&sdev->dev, &tps6598x_spmi_regmap_bus, sdev,
+ 				  &tps6598x_regmap_config);
+@@ -200,7 +206,10 @@
+ 	if (irq < 0)
+ 		irq = 0;	/* fall back to polling, like the I2C path */
+ 
+-	return tps6598x_probe_common(&sdev->dev, regmap, irq, data);
++	ret = tps6598x_probe_common(&sdev->dev, regmap, irq, data);
++	if (ret)
++		return dev_err_probe(&sdev->dev, ret, "SN201202x initialization failed\n");
++	return 0;
+ }
+ 
+ static void tps6598x_spmi_remove(struct spmi_device *sdev)

@@ -1,0 +1,144 @@
+{
+  "baseline_dtb_sha256": "1c9c4d5a01dda35e959f8f3fa89e5e6ab9dd26093f4af88d1a278f1c0d80cfc7",
+  "benchmark": {
+    "ac_or_battery_for_benchmark": "unknown",
+    "access": "read from browser UI",
+    "cores": 12,
+    "multi_core": 13490,
+    "reported_base_frequency_ghz": 4.51,
+    "single_core": 1792,
+    "url": "https://browser.geekbench.com/v7/cpu/553459",
+    "version": "Geekbench 7.0.0 Preview for Linux AArch64"
+  },
+  "cpu_nodes": {
+    "/cpus/cpu@0": {
+      "capacity_dmips_mhz": null,
+      "compatible": "apple,sawtooth",
+      "status": "okay"
+    },
+    "/cpus/cpu@1": {
+      "capacity_dmips_mhz": null,
+      "compatible": "apple,sawtooth",
+      "status": "okay"
+    },
+    "/cpus/cpu@10100": {
+      "capacity_dmips_mhz": null,
+      "compatible": "apple,everest",
+      "status": "okay"
+    },
+    "/cpus/cpu@10101": {
+      "capacity_dmips_mhz": null,
+      "compatible": "apple,everest",
+      "status": "okay"
+    },
+    "/cpus/cpu@10102": {
+      "capacity_dmips_mhz": null,
+      "compatible": "apple,everest",
+      "status": "okay"
+    },
+    "/cpus/cpu@10103": {
+      "capacity_dmips_mhz": null,
+      "compatible": "apple,everest",
+      "status": "okay"
+    },
+    "/cpus/cpu@10104": {
+      "capacity_dmips_mhz": null,
+      "compatible": "apple,everest",
+      "status": "okay"
+    },
+    "/cpus/cpu@10105": {
+      "capacity_dmips_mhz": null,
+      "compatible": "apple,everest",
+      "status": "disabled"
+    },
+    "/cpus/cpu@10200": {
+      "capacity_dmips_mhz": null,
+      "compatible": "apple,everest",
+      "status": "okay"
+    },
+    "/cpus/cpu@10201": {
+      "capacity_dmips_mhz": null,
+      "compatible": "apple,everest",
+      "status": "okay"
+    },
+    "/cpus/cpu@10202": {
+      "capacity_dmips_mhz": null,
+      "compatible": "apple,everest",
+      "status": "okay"
+    },
+    "/cpus/cpu@10203": {
+      "capacity_dmips_mhz": null,
+      "compatible": "apple,everest",
+      "status": "okay"
+    },
+    "/cpus/cpu@10204": {
+      "capacity_dmips_mhz": null,
+      "compatible": "apple,everest",
+      "status": "okay"
+    },
+    "/cpus/cpu@2": {
+      "capacity_dmips_mhz": null,
+      "compatible": "apple,sawtooth",
+      "status": "okay"
+    },
+    "/cpus/cpu@3": {
+      "capacity_dmips_mhz": null,
+      "compatible": "apple,sawtooth",
+      "status": "okay"
+    }
+  },
+  "date": "2026-10-05",
+  "limitations": [
+    "Live cpu_capacity requires next native capture.",
+    "Per-MHz capacities have not been measured on this M4 Pro.",
+    "Requested OPP statistics are not sustained hardware clock measurements.",
+    "No idle, fan, CPU hotplug, frequency bound, kernel or enrolled loader changes are part of the experiment."
+  ],
+  "policy_evidence": "out/sdboot/diagnostics/diagnostics-20261005T131004Z-38Bl1b/05-unplugged-final-drivers.txt",
+  "preserved_artifacts": {
+    "out/sdboot/hardware/experimental/boot/Image.gz": "61986136c1590aebcc8f73499f4e7cc596ed7ae55e537afbbcd73003447f46fd",
+    "out/sdboot/hardware/experimental/boot/kernel.config": "8c4cd1e29459bf2484fe017eb3a14e8c1067e3d787179e6a86b8b072472b81f5",
+    "out/sdboot/hardware/experimental/driver-tools/modules.tar.gz": "efe1b42a4a0b2e97d28c64f7a1533d01b60833a33b7ae5b6e4071d24f1755d4a",
+    "out/sdboot/loader.bin": "740dd0223732a01c079b821e5d85fca45b896409de5839ae4ea9b7f66aa35b18",
+    "out/sdboot/nvme-loader/loader.bin": "ec97c89c7b6b25de08060ef8e8d34cfa622742cc2974767e7cddd71dee1e9152"
+  },
+  "references": [
+    "https://docs.kernel.org/scheduler/sched-capacity.html",
+    "https://docs.kernel.org/admin-guide/pm/cpufreq.html",
+    "https://github.com/damsleth/wallace/blob/55f116dd0e0f28d1412c6be728a101f7d861c473/dts/t6040.dtsi",
+    "https://github.com/AsahiLinux/m1n1/blob/main/src/chickens.c"
+  ],
+  "saved_native_policy_map": {
+    "policy0": {
+      "class": "performance",
+      "cpus": [
+        0,
+        5,
+        6,
+        7
+      ],
+      "max_khz": 4512000
+    },
+    "policy1": {
+      "class": "efficiency",
+      "cpus": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "max_khz": 2592000
+    },
+    "policy8": {
+      "class": "performance",
+      "cpus": [
+        8,
+        9,
+        10,
+        11
+      ],
+      "max_khz": 4512000
+    }
+  },
+  "scope": "static source audit and existing native captures; no native performance improvement measured"
+}

@@ -1,0 +1,19 @@
+# A local, machine-specific configuration package, including firmware extracted
+# from this Mac. Do not publish the resulting package as a firmware distribution.
+pkgname=config-m4rch
+pkgver=@VERSION@
+pkgrel=1
+pkgdesc='m4rch desktop, initramfs, firmware and UEFI boot configuration'
+arch=('aarch64')
+license=('custom:local-machine-configuration')
+depends=('linux-m4rch' 'grub-m4rch>=2:2.16-1.1' 'mkinitcpio' 'e2fsprogs' 'gptfdisk' 'util-linux' 'python' 'sudo' 'sddm' 'networkmanager' 'bluez')
+provides=('arch-m4-config')
+conflicts=('arch-m4-config')
+replaces=('arch-m4-config')
+options=('!strip' '!debug' '!lto')
+backup=(@BACKUP@)
+source=('payload.tar.gz')
+sha256sums=('@PAYLOAD_SHA256@')
+package() {
+    cp -a "$srcdir/payload/." "$pkgdir/"
+}

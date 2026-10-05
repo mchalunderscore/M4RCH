@@ -1,0 +1,22 @@
+# Generated input hashes and version are substituted by sdboot/packages.py.
+# This recipe packages this project's verified, pinned kernel build. Compilation
+# remains `make kernel`; this is deliberately not advertised as an upstream
+# source-building Arch recipe.
+pkgname=linux-m4rch
+pkgver=@VERSION@
+pkgrel=1
+pkgdesc='m4rch Linux kernel and matching modules for J614s/T6040'
+arch=('aarch64')
+url='https://github.com/damsleth/linux'
+license=('GPL-2.0-only')
+depends=('coreutils' 'kmod')
+provides=('linux' 'linux-t6040')
+conflicts=('linux-aarch64' 'linux-t6040')
+replaces=('linux-t6040')
+options=('!strip' '!debug' '!lto')
+backup=('etc/modprobe.d/m4rch-drivers.conf')
+source=('payload.tar.gz')
+sha256sums=('@PAYLOAD_SHA256@')
+package() {
+    cp -a "$srcdir/payload/." "$pkgdir/"
+}

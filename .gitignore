@@ -1,0 +1,43 @@
+/cache/
+/out/
+/config.local.json
+__pycache__/
+*.pyc
+/sdboot/config.local.json
+
+# macOS and editor files
+.DS_Store
+._*
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+
+# Local credentials and generated boot/package artifacts
+.env
+.env.*
+*.img
+*.ext4
+*.itb
+*.bin
+*.dtb
+*.dtbo
+*.cpio*
+*.pkg.tar.*
+*.tar.gz
+*.zip
+*.ipsw
+*.dmg
+*.aea
+*.im4p
+*.im4m
+*.img4
+*.trustcache
+*.log
+*.heic
+*.HEIC
+
+# makepkg work directories
+/packages/*/src/
+/packages/*/pkg/

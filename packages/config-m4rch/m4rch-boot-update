@@ -1,0 +1,59 @@
+#!/bin/sh
+# All writes remain on this installation's SD ESP. No Apple policy or NVRAM.
+set -eu
+PATH=/usr/bin:/bin:/usr/sbin:/sbin
+export PATH
+. /etc/arch-m4/boot.conf
+fail() { printf 'm4rch-boot-update: %s\n' "$*" >&2; exit 1; }
+identity_fail() { fail 'Installed boot.conf does not match the mounted root and ESP. A direct pacman transaction may already have committed; ESP files are unchanged. Restore the prior boot.conf, reinstall with the generated kit install.sh, and run m4rch-boot-update before rebooting.'; }
+[ "$(id -u)" = 0 ] || fail 'Run as root.'
+if [ "${ARCH_M4_IMAGE_BUILD:-}" != 1 ]; then
+    mountpoint -q /boot || fail 'The SD ESP must be mounted at /boot before updating the kernel.'
+    source=$(findmnt -n -o SOURCE --target /boot)
+    [ "$(blkid -s PARTUUID -o value "$source" | tr 'A-Z' 'a-z')" = "$BOOT_PARTITION_UUID" ] || identity_fail
+    [ "$(findmnt -n -o FSTYPE --target /boot)" = vfat ] || fail '/boot must be FAT.'
+    source=$(findmnt -n -o SOURCE --target /)
+    [ "$(blkid -s UUID -o value "$source" | tr 'A-Z' 'a-z')" = "$ROOT_UUID" ] || identity_fail
+fi
+[ "${1:-}" != --check ] || exit 0
+release=$(cat /usr/lib/m4rch/kernel-release)
+case "$release" in ''|*[!A-Za-z0-9._+-]*) fail 'Invalid packaged kernel release.' ;; esac
+kernel=/usr/lib/modules/$release/vmlinuz
+[ -f "$kernel" ] && [ "$(cat "/usr/lib/modules/$release/pkgbase")" = linux-m4rch ] || fail 'Missing linux-m4rch kernel.'
+# Serialize package hooks and manual invocations; staging all files first means
+# a generator failure cannot replace a working boot entry.
+mkdir -p /run/lock /boot/EFI/BOOT /boot/grub /boot/dtbs
+exec 9>/run/lock/arch-m4-boot.lock
+flock -x 9
+stage=$(mktemp -d /boot/.arch-m4-update-XXXXXX)
+trap 'rm -rf "$stage"' 0 HUP INT TERM
+depmod "$release"
+mkinitcpio -c /etc/mkinitcpio.m4rch.conf -k "$release" -g "$stage/initramfs-linux-m4rch.img"
+cp "$kernel" "$stage/vmlinuz-linux-m4rch"
+cp /usr/lib/m4rch/board.dtbo "$stage/board.dtbo"
+# Render from the installed boot.conf, which the update kit preserves with
+# NoUpgrade even when a conflicting old package is removed first.
+# A new package may have been built with a fresh image UUID; never let that
+# silently redirect an existing installation's GRUB or early userspace.
+for identity in "$ROOT_UUID" "$BOOT_PARTITION_UUID"; do
+    case "$identity" in ''|*[!0-9a-f-]*) fail 'Invalid installed boot UUID.' ;; esac
+    [ "${#identity}" = 36 ] || fail 'Invalid installed boot UUID length.'
+done
+fat_hex=$(printf '%s' "$BOOT_PARTITION_UUID" | tr -d '-' | tr 'a-z' 'A-Z' | cut -c 1-8)
+fat_uuid=$(printf '%s' "$fat_hex" | sed 's/^\(....\)/\1-/')
+for name in grub.cfg grub-embedded.cfg; do
+    sed -e "s/@BOOT_FAT_UUID@/$fat_uuid/g" -e "s/@ROOT_UUID@/$ROOT_UUID/g" \
+        "/usr/share/m4rch/$name.in" >"$stage/$name"
+done
+grub-mkstandalone -O arm64-efi --modules='part_gpt fat search search_fs_uuid normal configfile linux gzio efi_gop font echo' \
+    -o "$stage/BOOTAA64.EFI" "boot/grub/grub.cfg=$stage/grub-embedded.cfg"
+[ -s "$stage/BOOTAA64.EFI" ] && [ -s "$stage/initramfs-linux-m4rch.img" ] || fail 'Empty generated boot artifact.'
+sync
+# These are generated outputs. Their sources and hooks are tracked by pacman.
+# Do not reboot or remove the card during a kernel transaction.
+for name in vmlinuz-linux-m4rch initramfs-linux-m4rch.img; do mv -f "$stage/$name" "/boot/$name"; done
+mv -f "$stage/board.dtbo" /boot/dtbs/board.dtbo
+mv -f "$stage/grub.cfg" /boot/grub/grub.cfg
+mv -f "$stage/BOOTAA64.EFI" /boot/EFI/BOOT/BOOTAA64.EFI
+sync
+printf 'Updated SD UEFI boot files for %s; Apple enrollment is unchanged.\n' "$release"

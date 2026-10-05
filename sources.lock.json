@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "source_date_epoch": 1787145600,
+  "wallace": {
+    "url": "https://github.com/damsleth/wallace.git",
+    "revision": "55f116dd0e0f28d1412c6be728a101f7d861c473"
+  },
+  "linux": {
+    "url": "https://github.com/damsleth/linux.git",
+    "revision": "e9d2237cd064e6d086d938cd9c85e0c963cf7291"
+  },
+  "m1n1": {
+    "url": "https://github.com/damsleth/m1n1.git",
+    "revision": "16b1f61fd2a995f855da8909411d06005d1e2b35"
+  },
+  "rootfs": {
+    "url": "https://ca.us.mirror.archlinuxarm.org/os/multi/ArchLinuxARM-2026.08-aarch64-rootfs.tar.gz",
+    "filename": "ArchLinuxARM-2026.08-aarch64-rootfs.tar.gz",
+    "sha256": "42a4eeaa038994ffd31fa173256ef2f0ef511358eeb41b9ea1f8626391b9b319",
+    "signature": {
+      "url": "https://ca.us.mirror.archlinuxarm.org/os/multi/ArchLinuxARM-2026.08-aarch64-rootfs.tar.gz.sig",
+      "sha256": "0157d8cd6261c85205931c766b754d6d56112b28800666fb64add1de192ebe11"
+    },
+    "signer": "68B3537F39A313B3E574D06777193F152BDBE6A6"
+  },
+  "m1n1_pcie": {
+    "url": "https://github.com/AsahiLinux/m1n1.git",
+    "revision": "0f221fc739afa52eecb9148f77c2d447f276456e",
+    "path": "src/pcie.c",
+    "sha256": "a0144a7f105fe760af6883b89e4db6283943c29109a7d8a43538d085624a3286",
+    "patch": "patches/m1n1-t6040-pcie-upstream.patch",
+    "patch_sha256": "a6a439fdab8206f06df6b68295d8e9691782a6b1b8da90ae12cb36f5c844ec8a"
+  },
+  "m1n1_smp": {
+    "url": "https://github.com/AsahiLinux/m1n1.git",
+    "patch": "patches/m1n1-t6040-smp-ctrr.patch",
+    "patch_sha256": "26d741e739da0d6721101b03eaf75b1d19e5836af84e9a5caf0827f1801827ba",
+    "files": {
+      "src/kboot.c": "b17faafb13f5e841da0152fceba21fceb1bff2b898117119cb83681fd3f33566",
+      "src/cpu_regs.h": "4aad30b87a579015466168da12cba10b9490143b2225aea44cb01eff363f7d4c"
+    },
+    "revisions": [
+      "a735ea29aed4843c301d8d9665949b30a84d25df",
+      "442c7a28de0333c09badd96268d62c0eafe4550f",
+      "00b881435286527a0bfb0be41bece0302e697098"
+    ]
+  },
+  "linux_smp": {
+    "url": "https://github.com/torvalds/linux.git",
+    "revision": "baaa9b126b875b40ffd9356da52c7c871917e5bb",
+    "patch": "patches/linux-arm64-wfxt-override.patch",
+    "patch_sha256": "1dd10e47c0e02970ed095d268508f49ca73c00e0de871dc8b947d6dd19a9cc6e",
+    "files": {
+      "arch/arm64/kernel/pi/idreg-override.c": "304251aede163cab648147a37ec4cb581253ad306a3d3fe8161c025225314061",
+      "Documentation/admin-guide/kernel-parameters.txt": "3603da96e05df618bfd55b32540f53b3faad6abefe140f07389cc8ac083e6957"
+    }
+  },
+  "linux_trackpad": {
+    "patch": "patches/linux-j614s-trackpad-power.patch",
+    "overlay": "patches/t6040-j614s-trackpad-power.dtsi",
+    "basis": "J614s 25F84 AHT power actions; matched J514s/J614s pKW4 descriptors; Asahi active-low AFE reset mapping",
+    "gpio_api_revision": "6081dfc5239b1b7bb09490955be426b4bea16a9e",
+    "patch_sha256": "eddca96a302be7c1358d8d9584d75cc8ec5afde1c4e6231e737afa74e5d71532",
+    "overlay_sha256": "e6e41678be45b2661d588eff5c4f9fcd2c8de42d9a3d3bc04a5fafb8a6827068"
+  }
+}

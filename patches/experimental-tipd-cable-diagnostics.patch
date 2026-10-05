@@ -1,0 +1,82 @@
+From: arch-m4 project
+Subject: [PATCH] usb: typec: tipd: report cable transitions and PD event snapshots
+
+Type-C partner and source/host metadata do not show whether DATA_STATUS
+reported a USB data connection, or whether the DWC3 role callback ran.
+Report the existing worker snapshot and callback result on cable transitions.
+Also log each existing nonzero CD321x event after its normal status reads,
+so later same-role updates are visible. DATA_STATUS and POWER_STATUS remain
+cached unless the corresponding existing event requested a refresh.
+No PD register transactions, role requests or scheduling changes are added.
+
+Local diagnostics against the pinned Wallace SPMI transport plus the
+connector-device, register-window and partner-lifetime corrections.
+These logs do not measure physical connector VBUS.
+
+--- a/drivers/usb/typec/tipd/core.c
++++ b/drivers/usb/typec/tipd/core.c
+@@ -741,6 +741,7 @@
+ 					    struct cd321x, update_work);
+ 	struct tps6598x *tps = &cd321x->tps;
+ 	struct cd321x_status st;
++	int role_ret = 0;
+ 
+ 	guard(mutex)(&tps->lock);
+ 
+@@ -778,9 +779,12 @@
+ 		 (is_pd && memcmp(&st.partner_identity,
+ 				  &cd321x->cur_partner_identity, sizeof(struct usb_pd_identity))));
+ 
++	bool cable_changed = old_role != new_role ||
++		old_connected != new_connected || was_disconnected;
++
+ 	/* If we are switching from an active role, transition to USB_ROLE_NONE first */
+ 	if (old_role != USB_ROLE_NONE && (new_role != old_role || was_disconnected))
+-		usb_role_switch_set_role(tps->role_sw, USB_ROLE_NONE);
++		role_ret = usb_role_switch_set_role(tps->role_sw, USB_ROLE_NONE);
+ 
+ 	/* Process partner disconnection or change */
+ 	if (!new_connected || partner_changed) {
+@@ -806,8 +810,13 @@
+ 	power_supply_changed(tps->psy);
+ 
+ 	/* If the plug is disconnected, we are done */
+-	if (!new_connected)
++	if (!new_connected) {
++		if (cable_changed)
++			dev_info(tps->dev,
++				 "Type-C detach status=%#x data=%#x power=%#x role=%d->none result=%d\n",
++				 st.status, st.data_status, st.pwr_status, old_role, role_ret);
+ 		return;
++	}
+ 
+ 	/* Set up partner if we were previously disconnected (or changed). */
+ 	if (!tps->partner) {
+@@ -836,7 +845,11 @@
+ 	cd321x_typec_update_mode(tps, &st);
+ 
+ 	/* Launch the USB role switch */
+-	usb_role_switch_set_role(tps->role_sw, new_role);
++	role_ret = usb_role_switch_set_role(tps->role_sw, new_role);
++	if (cable_changed)
++		dev_info(tps->dev,
++			 "Type-C attach status=%#x data=%#x power=%#x role=%d->%d result=%d\n",
++			 st.status, st.data_status, st.pwr_status, old_role, new_role, role_ret);
+ 
+ 	power_supply_changed(tps->psy);
+ }
+@@ -911,6 +924,14 @@
+ 	if (event & APPLE_CD_REG_INT_DATA_STATUS_UPDATE)
+ 		if (!tps->data->read_data_status(tps))
+ 			goto err_unlock;
++
++	/* Log the existing event snapshot, including later same-role updates.
++	 * Data and power are cached unless their event bits requested a refresh.
++	 * No extra register transactions are needed for this diagnostic.
++	 */
++	dev_info(tps->dev,
++		 "Type-C event=%#llx status=%#x data=%#x power=%#x\n",
++		 (unsigned long long)event, status, tps->data_status, tps->pwr_status);
+ 
+ 	/* Can be called uncondtionally since it will check for any changes itself */
+ 	cd321x_connect(tps, status);

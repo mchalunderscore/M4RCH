@@ -1,0 +1,22 @@
+// SPDX-License-Identifier: GPL-2.0+ OR MIT
+/*
+ * J614s's PowerMethod=2 needs host AFE reset work between Will/Has.
+ * Its ADT function-afe-reset resolves to SMC key gp1c. Use Asahi's
+ * existing lowercase-gp GPIO provider, as on M3 Pro/Max, with pin 0x1c.
+ * Matched J514s/J614s ADTs use the same pKW4 base 0x10000 action.
+ * Follow J514s's ACTIVE_LOW binding: assert off=1, deassert on=0;
+ * the GPIO provider drives physical low/high respectively.
+ */
+&smc {
+	smc_gpio_low: gpio@67700000 {
+		compatible = "apple,smc-low-gpio";
+		gpio-controller;
+		#gpio-cells = <2>;
+	};
+};
+
+&mtp_hid {
+	multi-touch {
+		reset-gpios = <&smc_gpio_low 0x1c GPIO_ACTIVE_LOW>;
+	};
+};

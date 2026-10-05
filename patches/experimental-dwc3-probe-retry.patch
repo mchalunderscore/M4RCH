@@ -1,0 +1,59 @@
+From: arch-m4 project
+Subject: [PATCH] usb: dwc3-apple: release failed deferred-probe resources
+
+The cable-triggered initial core probe runs after the Apple glue is bound.
+Core errors unwind runtime PM and non-managed allocations, but their managed
+MMIO reservation and PHY references otherwise survive until glue removal.
+A following cable event then fails with EBUSY instead of retrying the core.
+
+Scope core-probe devres in a group, releasing it on error and retaining its
+resources on success. Reset only the embedded core structure so retry reacquires PHYs and does not
+retain readiness flags or accumulate host-port counts. Preserve the persistent glue allocation, reset, Apple MMIO,
+and role switch. This does not retry failed host initialization automatically.
+
+Local candidate against Linux e9d2237cd064e6d086d938cd9c85e0c963cf7291 plus
+Wallace force-host and arch-m4 cable-lifecycle patches.
+Native USB enumeration remains unverified.
+
+--- a/drivers/usb/dwc3/dwc3-apple.c
++++ b/drivers/usb/dwc3/dwc3-apple.c
+@@ -172,6 +172,7 @@
+ static int dwc3_apple_core_probe(struct dwc3_apple *appledwc)
+ {
+ 	struct dwc3_probe_data probe_data = {};
++	void *probe_group;
+ 	int ret;
+ 
+ 	lockdep_assert_held(&appledwc->lock);
+@@ -184,10 +185,29 @@
+ 	probe_data.skip_core_init_mode = true;
+ 	probe_data.properties = DWC3_DEFAULT_PROPERTIES;
+ 
++	/*
++	 * The initial core probe runs after the glue driver has bound. A failed
++	 * cable-triggered probe must release its managed resources now rather
++	 * than retaining its MMIO reservation until the glue driver is removed.
++	 * Keep the glue allocation, reset and Apple register mapping outside
++	 * this group so another cable event can safely retry the initial probe.
++	 */
++	probe_group = devres_open_group(appledwc->dev, NULL, GFP_KERNEL);
++	if (!probe_group)
++		return -ENOMEM;
++
+ 	ret = dwc3_core_probe(&probe_data);
+-	if (ret)
++	if (ret) {
++		devres_release_group(appledwc->dev, probe_group);
++
++		/* Core probe already unwinds runtime PM and non-managed resources. */
++		memset(&appledwc->dwc, 0, sizeof(appledwc->dwc));
++		appledwc->dwc.dev = appledwc->dev;
+ 		return ret;
+-
++	}
++
++	devres_close_group(appledwc->dev, probe_group);
++	devres_remove_group(appledwc->dev, probe_group);
+ 	appledwc->state = DWC3_APPLE_NO_CABLE;
+ 	return 0;
+ }

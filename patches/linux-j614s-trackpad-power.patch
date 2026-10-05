@@ -1,0 +1,172 @@
+Subject: [PATCH] HID: apple-dockchannel-hid: assert J614s active-low AFE reset
+
+The J614s MTP runtime accepts CBOR but cannot attach the AFE when Linux
+only sends the v2 power notifications. Its matching 25F84 MTP configuration
+contains power-sequence "function-afe-reset\0\x00\x32\x00\x01". The
+AppleHIDTransport AHTFunctionInfo parser decodes those bytes as enable and
+disable delays (milliseconds), followed by enable and disable function
+types (0=Low, 1=High). The function is called before its delay.
+
+For a CBOR firmware upload, macOS sets power off then on. Between the
+corresponding WillChange and HasChanged requests it calls the AHT High
+action, waits 50 ms, then calls Low on the next power-on transition. Those
+action names do not establish the physical GPIO polarity: pKW4 uses the
+SMC action command, whereas the GPIO provider uses the output command.
+
+The matching 25F84 J514s and J614s ADTs both encode function-afe-reset as
+pKW4 with base 0x10000, on lowercase keys gp19 and gp1c respectively.
+Asahi's t603x-j514-j516.dtsi binds gp19 as GPIO_ACTIVE_LOW. Follow that
+matched precedent: logically assert reset while powering off (physical
+Low), then deassert it on power-on (physical High). This corrects the
+earlier candidate's unsupported action-to-raw-level translation. Native
+J614s validation of this polarity correction is still required. The
+optional Min Power Off Ms property defaults to zero and is absent here.
+
+Resolve the optional multi-touch reset-gpios during probe, with GPIOD_ASIS,
+so provider deferral happens before interface enumeration and GPIO claiming
+does not alter the hardware. Gate the board-specific sequence on J614s,
+the firmware-bearing multi-touch child, and an accepted v2 request.
+Propagate GPIO errors instead of reporting a successful HasChanged.
+
+Use gpiod_set_value_cansleep and the existing SMC GPIO provider's output
+API; its lowercase gp family already supports M3 Pro/Max trackpads (Asahi
+commit 6081dfc5239b1b7bb09490955be426b4bea16a9e). This is not a claim that
+its GPIO command is byte-identical to macOS's pKW4 legacy action.
+
+Static evidence from matching 25F84 kernelcache.release.mac16j:
+  AHTFunctionInfo::init(raw)                     fffffe0009476364
+  AHTFunctionInfo::init(name, delays, types)     fffffe0009475420
+  AHTFunctionInfo::convertLegacyFunctionType    fffffe0009475938
+  AHTFunctionInfo::call                         fffffe0009476430
+  AppleHIDTransportInterface::setPowerGatedWillHas fffffe0009440a88
+  AppleHIDTransportInterface::setInterfacePower fffffe000943d234
+  AppleHIDTransportInterface::resetConfig       fffffe0009444b64
+
+Applies after Wallace's trackpad-firmware and v2 reset-contract patches.
+The device tree must provide multi-touch/reset-gpios on the SMC lowercase
+GPIO controller (gp1c, pin 28, GPIO_ACTIVE_LOW).
+
+--- a/drivers/hid/apple-dockchannel-hid/apple_dockchannel_hid.c
++++ b/drivers/hid/apple-dockchannel-hid/apple_dockchannel_hid.c
+@@ -12,6 +12,7 @@
+ #include <linux/device.h>
+ #include <linux/dma-mapping.h>
+ #include <linux/firmware.h>
++#include <linux/gpio/consumer.h>
+ #include <linux/hid.h>
+ #include <linux/mailbox/apple-dockchannel.h>
+ #include <linux/mailbox_client.h>
+@@ -32,6 +33,7 @@
+ 
+ #define COMMAND_TIMEOUT_MS	1000
+ #define START_TIMEOUT_MS	2000
++#define J614S_AFE_RESET_DELAY_MS	50
+ 
+ #define MAX_INTERFACES		16
+ 
+@@ -194,6 +196,8 @@
+ 	void __iomem *asc_base;
+ 	void __iomem *sram_base;
+ 	struct resource sram_res;
++
++	struct gpio_desc *mt_reset_gpio;
+ 
+ 	bool id_ready;
+ 	bool power_req_v1;
+@@ -452,6 +456,32 @@
+ 	u8 cmd[] = { CMD_ENABLE_INTERFACE, iface->index };
+ 
+ 	return dchid_comm_cmd(iface->dchid, cmd, sizeof(cmd));
++}
++
++/*
++ * J614s AHT power actions assert/deassert the active-low AFE reset.
++ * Use logical GPIO values: physical Low for OFF, High for ON; preserve
++ * the 50 ms OFF delay between accepted WillChange and HasChanged.
++ */
++static int dchid_host_power(struct dchid_iface *iface, int state)
++{
++	struct gpio_desc *reset = iface->dchid->mt_reset_gpio;
++	int ret;
++
++	if (!reset || strcmp(iface->name, "multi-touch"))
++		return 0;
++
++	if (state != PWR_STATE_OFF && state != PWR_STATE_ON)
++		return -EINVAL;
++
++	ret = gpiod_set_value_cansleep(reset, state == PWR_STATE_OFF);
++	if (ret)
++		return ret;
++
++	if (state == PWR_STATE_OFF)
++		msleep(J614S_AFE_RESET_DELAY_MS);
++
++	return 0;
+ }
+ 
+ /*
+@@ -485,6 +515,11 @@
+ 	if (!dchid->power_req_v1) {
+ 		ret = dchid_comm_cmd(dchid, &req, sizeof(req));
+ 		if (ret >= 0) {
++			ret = dchid_host_power(iface, state);
++			if (ret)
++				return dev_err_probe(dchid->dev, ret,
++						     "multi-touch host power failed\n");
++
+ 			req.phase = PWR_PHASE_HAS_CHANGED;
+ 			return dchid_comm_cmd(dchid, &req, sizeof(req));
+ 		}
+@@ -1158,6 +1193,39 @@
+ 	return 0;
+ }
+ 
++static int dchid_get_reset_gpio(struct dchid_dev *dchid)
++{
++	struct fwnode_handle *fwnode;
++	struct gpio_desc *reset;
++
++	/* The sequence and its delay have only been verified for this board. */
++	if (!of_machine_is_compatible("apple,j614s"))
++		return 0;
++
++	fwnode = device_get_named_child_node(dchid->dev, "multi-touch");
++	if (!fwnode)
++		return 0;
++
++	/* Only an interface receiving external firmware needs this sequence. */
++	if (!fwnode_property_present(fwnode, "firmware-name")) {
++		fwnode_handle_put(fwnode);
++		return 0;
++	}
++
++	reset = devm_fwnode_gpiod_get_optional(dchid->dev, fwnode, "reset",
++					      GPIOD_ASIS, "dchid-multi-touch-reset");
++	fwnode_handle_put(fwnode);
++	if (IS_ERR(reset))
++		return dev_err_probe(dchid->dev, PTR_ERR(reset),
++				     "failed to acquire multi-touch reset GPIO\n");
++
++	dchid->mt_reset_gpio = reset;
++	if (reset)
++		dev_info(dchid->dev, "J614s trackpad active-low host power sequence enabled\n");
++
++	return 0;
++}
++
+ static int dchid_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+@@ -1177,6 +1245,11 @@
+ 		return -ENOMEM;
+ 
+ 	dchid->dev = dev;
++	/* Resolve suppliers before mailbox callbacks or interface enumeration. */
++	ret = dchid_get_reset_gpio(dchid);
++	if (ret)
++		return ret;
++
+ 	mutex_init(&dchid->ifaces_lock);
+ 	platform_set_drvdata(pdev, dchid);
+ 

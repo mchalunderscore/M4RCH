@@ -1,0 +1,55 @@
+# Upstream commit pinned in source.json. It uses alpm 5 / libalpm 16, matching
+# this image's pacman 7.1. The v2.1.0 tag still targets libalpm 15.
+pkgname=paru-m4rch
+pkgver=2.1.0
+pkgrel=1
+pkgdesc='Feature packed AUR helper (pinned upstream build for libalpm 16)'
+arch=('aarch64')
+url='https://github.com/Morganamilo/paru'
+license=('GPL-3.0-or-later')
+depends=('git' 'pacman' 'libalpm.so')
+provides=("paru=${pkgver}")
+conflicts=('paru')
+replaces=('paru')
+makedepends=('rust' 'base-devel')
+backup=('etc/paru.conf')
+options=('!debug' '!lto')
+_commit=9ac3578807a87858651e81a02586ceb947686e7c
+source=("paru-$_commit.tar.gz" 'source.json')
+sha256sums=('fa1e2da402283f9584f98458c61ae8d0bb04c92b2cddb1d2727c8ce944da457e'
+            '1609ac357b06a433779fe5e72f3d18c7fdb19330e798a20f24fa6de604966d65')
+prepare() {
+    cd "paru-$_commit"
+    printf '%s  Cargo.lock\n' '10137b6b653655e5069618f1ca9071e4c104286d2a1deb7b7ea25a3eda2ea2e7' | sha256sum -c -
+    # Cargo verifies every registry archive against the pinned lockfile.
+    cargo fetch --locked --target aarch64-unknown-linux-gnu
+}
+build() {
+    cd "paru-$_commit"
+    PARU_VERSION="${pkgname}-${pkgver}" \
+        CARGO_PROFILE_RELEASE_LTO=thin CARGO_PROFILE_RELEASE_CODEGEN_UNITS=8 \
+        cargo build --frozen --release --target aarch64-unknown-linux-gnu
+}
+check() {
+    cd "paru-$_commit"
+    # Fail here for an ABI mismatch, before generating a distributable package.
+    target/aarch64-unknown-linux-gnu/release/paru --version
+}
+package() {
+    cd "paru-$_commit"
+    install -Dm755 target/aarch64-unknown-linux-gnu/release/paru "$pkgdir/usr/bin/paru"
+    install -Dm644 paru.conf "$pkgdir/etc/paru.conf"
+    install -Dm644 man/paru.8 "$pkgdir/usr/share/man/man8/paru.8"
+    install -Dm644 man/paru.conf.5 "$pkgdir/usr/share/man/man5/paru.conf.5"
+    install -Dm644 completions/bash "$pkgdir/usr/share/bash-completion/completions/paru"
+    install -Dm644 completions/zsh "$pkgdir/usr/share/zsh/site-functions/_paru"
+    install -Dm644 completions/fish "$pkgdir/usr/share/fish/vendor_completions.d/paru.fish"
+    install -Dm644 LICENSE "$pkgdir/usr/share/licenses/paru-m4rch/LICENSE"
+    for po in po/*.po; do
+        lang=${po##*/}
+        lang=${lang%.po}
+        install -dm755 "$pkgdir/usr/share/locale/$lang/LC_MESSAGES"
+        msgfmt -o "$pkgdir/usr/share/locale/$lang/LC_MESSAGES/paru.mo" "$po"
+    done
+    install -Dm644 "$srcdir/source.json" "$pkgdir/usr/share/doc/paru-m4rch/build-source.json"
+}

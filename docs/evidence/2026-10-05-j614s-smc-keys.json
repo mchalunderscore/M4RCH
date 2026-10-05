@@ -1,0 +1,52 @@
+{
+  "date_utc": "2026-10-05",
+  "machine": "J614s / Mac16,8 / T6040",
+  "macos_version": "27.0.1",
+  "macos_build": "26A434",
+  "probe": "read-fans.c using smcFanControl SMCOpen and SMCCall2; selectors read-key-info=9/read-bytes=5 only",
+  "hardware_writes": false,
+  "upstream_urls": [
+    "https://raw.githubusercontent.com/hholtmann/smcFanControl/master/smc-command/smc.c",
+    "https://raw.githubusercontent.com/hholtmann/smcFanControl/master/smc-command/smc.h",
+    "https://raw.githubusercontent.com/exelban/stats/master/Modules/Sensors/values.swift"
+  ],
+  "files": {
+    "smc.c": "13c0336cc51045de9f095d2e38bce6dc36dcccd145b3ff450b9c309768dbcf23",
+    "smc.h": "eda500485ba3663b8597acf88a09c9aa02fd2ed876bb4076ac776425ee8b5244",
+    "read-fans.c": "7665a3a0ca384d3b707acfabe81c018c1524b1316540d447aee557e168848f83",
+    "fans.txt": "a36ff66413484c07b11d0a6cb4635247974668b98de443f5094b1ccebe17503b",
+    "read-temperatures.c": "cd80c42f79f8529348363b76ad609db81db228d343905eb160c1ad81850cd275",
+    "temperatures.txt": "dd304ca3ff7189e522a15e535c8d1c34fddbb1897aeecfa619079cd2c55ea341",
+    "stats-values.swift": "265a0dd18a54d11ec5febf18c72ae7defbc96960d23fc65702117b8b85372504"
+  },
+  "raw_output": "FNum info_return=00000000 smc_result=0 size=1 type=ui8  attributes=128 read_return=00000000 read_result=0 bytes=02\nF0Ac info_return=00000000 smc_result=0 size=4 type=flt  attributes=132 read_return=00000000 read_result=0 bytes=00000000\nF0Mn info_return=00000000 smc_result=0 size=4 type=flt  attributes=132 read_return=00000000 read_result=0 bytes=00d01045\nF0Mx info_return=00000000 smc_result=0 size=4 type=flt  attributes=133 read_return=00000000 read_result=0 bytes=0090f445\nF0Tg info_return=00000000 smc_result=0 size=4 type=flt  attributes=212 read_return=00000000 read_result=0 bytes=00000000\nF0Md info_return=00000000 smc_result=0 size=1 type=ui8  attributes=208 read_return=00000000 read_result=0 bytes=03\nF1Ac info_return=00000000 smc_result=0 size=4 type=flt  attributes=132 read_return=00000000 read_result=0 bytes=00000000\nF1Mn info_return=00000000 smc_result=0 size=4 type=flt  attributes=132 read_return=00000000 read_result=0 bytes=00d01045\nF1Mx info_return=00000000 smc_result=0 size=4 type=flt  attributes=133 read_return=00000000 read_result=0 bytes=0090f445\nF1Tg info_return=00000000 smc_result=0 size=4 type=flt  attributes=212 read_return=00000000 read_result=0 bytes=00000000\nF1Md info_return=00000000 smc_result=0 size=1 type=ui8  attributes=208 read_return=00000000 read_result=0 bytes=03\nTH0x info_return=00000000 smc_result=0 size=4 type=flt  attributes=133 read_return=00000000 read_result=0 bytes=0078db41\nTB0T info_return=00000000 smc_result=0 size=4 type=flt  attributes=133 read_return=00000000 read_result=0 bytes=0000d041\nTCHP info_return=00000000 smc_result=0 size=4 type=flt  attributes=133 read_return=00000000 read_result=0 bytes=1809ee41\nTW0P info_return=00000000 smc_result=0 size=4 type=flt  attributes=133 read_return=00000000 read_result=0 bytes=646c0242\n",
+  "linux_manual_control_verified": false,
+  "temperature_probe_raw_output": "Te05 info_return=00000000 smc_result=0 size=4 type=flt  attributes=133 read_return=00000000 read_result=0 bytes=99d51042\nTe0S info_return=00000000 smc_result=0 size=4 type=flt  attributes=133 read_return=00000000 read_result=0 bytes=eb390e42\nTe09 info_return=00000000 smc_result=132 size=0 type=\u0000\u0000\u0000\u0000 attributes=0\nTe0H info_return=00000000 smc_result=132 size=0 type=\u0000\u0000\u0000\u0000 attributes=0\nTp01 info_return=00000000 smc_result=0 size=4 type=flt  attributes=133 read_return=00000000 read_result=0 bytes=00002042\nTp05 info_return=00000000 smc_result=0 size=4 type=flt  attributes=133 read_return=00000000 read_result=0 bytes=00002042\nTp09 info_return=00000000 smc_result=0 size=4 type=flt  attributes=133 read_return=00000000 read_result=0 bytes=00002042\nTp0D info_return=00000000 smc_result=0 size=4 type=flt  attributes=133 read_return=00000000 read_result=0 bytes=00002042\nTp0V info_return=00000000 smc_result=132 size=0 type=\u0000\u0000\u0000\u0000 attributes=0\nTp0Y info_return=00000000 smc_result=0 size=4 type=flt  attributes=133 read_return=00000000 read_result=0 bytes=00002042\nTp0b info_return=00000000 smc_result=0 size=4 type=flt  attributes=133 read_return=00000000 read_result=0 bytes=00002042\nTp0e info_return=00000000 smc_result=0 size=4 type=flt  attributes=133 read_return=00000000 read_result=0 bytes=00002042\nTg1U info_return=00000000 smc_result=0 size=4 type=flt  attributes=133 read_return=00000000 read_result=0 bytes=0120ef41\nTg1k info_return=00000000 smc_result=0 size=4 type=flt  attributes=133 read_return=00000000 read_result=0 bytes=0180ee41\nTg0K info_return=00000000 smc_result=0 size=4 type=flt  attributes=133 read_return=00000000 read_result=0 bytes=0020f141\nTg0L info_return=00000000 smc_result=0 size=4 type=flt  attributes=133 read_return=00000000 read_result=0 bytes=0020f141\nTg0d info_return=00000000 smc_result=0 size=4 type=flt  attributes=133 read_return=00000000 read_result=0 bytes=00e0f141\nTg0e info_return=00000000 smc_result=0 size=4 type=flt  attributes=133 read_return=00000000 read_result=0 bytes=00e0f141\nTg0j info_return=00000000 smc_result=0 size=4 type=flt  attributes=133 read_return=00000000 read_result=0 bytes=0100f041\nTg0k info_return=00000000 smc_result=0 size=4 type=flt  attributes=133 read_return=00000000 read_result=0 bytes=9a991142\nTm0p info_return=00000000 smc_result=132 size=0 type=\u0000\u0000\u0000\u0000 attributes=0\nTm1p info_return=00000000 smc_result=132 size=0 type=\u0000\u0000\u0000\u0000 attributes=0\nTm2p info_return=00000000 smc_result=132 size=0 type=\u0000\u0000\u0000\u0000 attributes=0\n",
+  "temperature_key_values_celsius": {
+    "Te05": 36.20859146118164,
+    "Te0S": 35.55656051635742,
+    "Tp01": 40.0,
+    "Tp05": 40.0,
+    "Tp09": 40.0,
+    "Tp0D": 40.0,
+    "Tp0Y": 40.0,
+    "Tp0b": 40.0,
+    "Tp0e": 40.0,
+    "Tg1U": 29.890626907348633,
+    "Tg1k": 29.812501907348633,
+    "Tg0K": 30.140625,
+    "Tg0L": 30.140625,
+    "Tg0d": 30.234375,
+    "Tg0e": 30.234375,
+    "Tg0j": 30.000001907348633,
+    "Tg0k": 36.400001525878906
+  },
+  "unavailable_temperature_keys": [
+    "Te09",
+    "Te0H",
+    "Tp0V",
+    "Tm0p",
+    "Tm1p",
+    "Tm2p"
+  ]
+}

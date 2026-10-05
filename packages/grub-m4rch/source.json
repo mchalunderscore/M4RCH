@@ -1,0 +1,87 @@
+{
+  "name": "grub",
+  "version": "2.16",
+  "epoch": 2,
+  "pkgrel": "1.1",
+  "package_version": "2:2.16-1.1",
+  "upstream": "https://gitlab.freedesktop.org/gnu-grub/grub",
+  "revision": "f10ad08fa2a02dce95774c1b5caee38254b30531",
+  "tag": "grub-2.16",
+  "fix_revision": "711110daccaf15df695b270d13f76b5bc84a64dd",
+  "fix_url": "https://gitlab.freedesktop.org/gnu-grub/grub/-/commit/711110daccaf15df695b270d13f76b5bc84a64dd",
+  "filename": "grub-2.16.tar.xz",
+  "url": "https://gitlab.freedesktop.org/api/v4/projects/26558/packages/generic/source-assets/grub-2.16/grub-2.16.tar.xz",
+  "sha256": "f0db0104927df0b9a48bc41b735c702936190d17eb2d73d3018fa77474a0cabe",
+  "upstream_blake2b": "74437966a70854ec29f3d80715ac3436f4340e6f69ccd084b8762dd36f80a30e707333d2102639372ce421b79179a1fa043cbb6a2d25e568d035b916b228fca1",
+  "efi_max_usable_address": "0xffffffffffff",
+  "additional_sources": [
+    {
+      "filename": "unifont-17.0.05.bdf.gz",
+      "url": "https://ftp.gnu.org/gnu/unifont/unifont-17.0.05/unifont-17.0.05.bdf.gz",
+      "sha256": "db0111c066edfe7583f0d77adbecbba463f00643a37dc3b9651ae9349543487f"
+    }
+  ],
+  "alarm_revision": "c1c4c53a48ac05adcda9539a10e2466b891e3ee7",
+  "alarm_pkgbuild_sha256": "153c7ce7bd7daf2b505ca18e81eee5406aba38744c14dccba890d155f0319fd0",
+  "makedepends": [
+    "autogen",
+    "device-mapper",
+    "freetype2",
+    "fuse3",
+    "gettext",
+    "git",
+    "help2man",
+    "libusb",
+    "python",
+    "rsync",
+    "sdl",
+    "texinfo",
+    "ttf-dejavu",
+    "wget",
+    "xz"
+  ],
+  "local_sources": [
+    {
+      "filename": "0001-00_header-add-GRUB_COLOR_-variables.patch",
+      "sha256": "5dee6628c48eef79812bb9e86ee772068d85e7fcebbd2b2b8d1e19d24eda9dab",
+      "url": "https://raw.githubusercontent.com/archlinuxarm/PKGBUILDs/c1c4c53a48ac05adcda9539a10e2466b891e3ee7/core/grub/0001-00_header-add-GRUB_COLOR_-variables.patch"
+    },
+    {
+      "filename": "0002-10_linux-detect-archlinux-initramfs.patch",
+      "sha256": "8488aec30a93e8fe66c23ef8c23aefda39c38389530e9e73ba3fbcc8315d244d",
+      "url": "https://raw.githubusercontent.com/archlinuxarm/PKGBUILDs/c1c4c53a48ac05adcda9539a10e2466b891e3ee7/core/grub/0002-10_linux-detect-archlinux-initramfs.patch"
+    },
+    {
+      "filename": "0003-support-dropins-for-default-configuration.patch",
+      "sha256": "b5d9fcd62ffb3c3950fdeb7089ec2dc2294ac52e9861980ad90a437dedbd3d47",
+      "url": "https://raw.githubusercontent.com/archlinuxarm/PKGBUILDs/c1c4c53a48ac05adcda9539a10e2466b891e3ee7/core/grub/0003-support-dropins-for-default-configuration.patch"
+    },
+    {
+      "filename": "0004-10_linux-add-archlinuxarm-s-default-kernel-path.patch",
+      "sha256": "bfa56cc7cb2e1650fcd19ecfe5b8d2d0aa7bbc4266a0a5fb1e5d4f60e4a7fa56",
+      "url": "https://raw.githubusercontent.com/archlinuxarm/PKGBUILDs/c1c4c53a48ac05adcda9539a10e2466b891e3ee7/core/grub/0004-10_linux-add-archlinuxarm-s-default-kernel-path.patch"
+    },
+    {
+      "filename": "grub.default",
+      "sha256": "7df3f5cb5df7d2dfb17f4c9b5c5dedc9519ddce6f8d2c6cd43d1be17cecb65cb",
+      "url": "https://raw.githubusercontent.com/archlinuxarm/PKGBUILDs/c1c4c53a48ac05adcda9539a10e2466b891e3ee7/core/grub/grub.default"
+    },
+    {
+      "filename": "grub.install",
+      "sha256": "b13045c9001ec618ed3d666501f14fee016b290b46234b09b8a67b30d0a0b419",
+      "url": "https://raw.githubusercontent.com/archlinuxarm/PKGBUILDs/c1c4c53a48ac05adcda9539a10e2466b891e3ee7/core/grub/grub.install"
+    },
+    {
+      "filename": "sbat.csv",
+      "sha256": "2448f41911a6c1eb80cdbccb72cc10721293ed4811c9526330f373e91df7a3f0",
+      "url": "https://raw.githubusercontent.com/archlinuxarm/PKGBUILDs/c1c4c53a48ac05adcda9539a10e2466b891e3ee7/core/grub/sbat.csv"
+    },
+    {
+      "filename": "0005-arm64-restore-high-memory.patch",
+      "sha256": "67882aca288c1be3ba8fae31fb804b6c45a3e49d1714099b47e209437268330a",
+      "url": "https://gitlab.freedesktop.org/gnu-grub/grub/-/commit/711110daccaf15df695b270d13f76b5bc84a64dd.patch"
+    }
+  ],
+  "package_name": "grub-m4rch",
+  "build_label": "grub-m4rch-2.16"
+}

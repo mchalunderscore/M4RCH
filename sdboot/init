@@ -1,0 +1,122 @@
+#!/bin/busybox sh
+# Native SD root. Validate identity and layout before modifying either GPT or ext4.
+PATH=/bin:/sbin
+export PATH
+mount -t devtmpfs devtmpfs /dev
+mount -t proc proc /proc
+mount -t sysfs sysfs /sys
+mount -t tmpfs tmpfs /run
+. /etc/sdboot.conf
+stop() {
+    echo "ARCHM4 STOP: $*"
+    while :; do setsid cttyhack sh; sleep 1; done
+}
+lower() { tr 'A-Z' 'a-z'; }
+root=
+for attempt in $(seq 1 30); do
+    for candidate in /dev/mmcblk*p2; do
+        [ -b "$candidate" ] || continue
+        [ "$(/sbin/blkid -p -s UUID -o value "$candidate")" = "$ROOT_UUID" ] || continue
+        [ -z "$root" ] || stop 'More than one matching SD root'
+        root=$candidate
+    done
+    [ -n "$root" ] && break
+    # The QEMU artifact is distinct and is never included in the production FIT.
+    if [ "$TESTING" = 1 ] && [ -b /dev/vda2 ]; then root=/dev/vda2; break; fi
+    sleep 1
+done
+[ -b "$root" ] || stop 'Native Arch SD root not found'
+disk=${root%p2}
+boot=${disk}p1
+if [ "$TESTING" = 1 ]; then disk=/dev/vda; boot=/dev/vda1; fi
+if [ "$TESTING" != 1 ]; then
+    case "$(tr '\000' '\n' </proc/device-tree/compatible)" in
+        *apple,j614s*) ;; *) stop 'Wrong machine' ;; esac
+    ancestor=$(readlink -f "/sys/class/block/${disk##*/}/device")
+    found=0
+    while [ "$ancestor" != / ] && [ -n "$ancestor" ]; do
+        if [ "$(cat "$ancestor/vendor" 2>/dev/null)" = 0x17a0 ] &&
+           [ "$(cat "$ancestor/device" 2>/dev/null)" = 0x9755 ]; then found=1; break; fi
+        ancestor=${ancestor%/*}
+    done
+    [ "$found" = 1 ] || stop 'Root is not on the GL9755 SD reader'
+fi
+[ "$(/sbin/blkid -p -s UUID -o value "$root")" = "$ROOT_UUID" ] || stop 'Wrong root UUID'
+[ "$(/sbin/blkid -p -s TYPE -o value "$root")" = ext4 ] || stop 'Root is not ext4'
+[ "$(/sbin/blkid -p -s LABEL -o value "$boot")" = ARCHBOOT ] || stop 'Missing ARCHBOOT'
+[ "$(/sbin/blkid -p -s TYPE -o value "$boot")" = vfat ] || stop 'Boot is not FAT'
+[ "$(/sbin/blockdev --getss "$disk")" = 512 ] || stop 'Unexpected logical sector size'
+count=0
+for entry in /sys/class/block/${disk##*/}*; do
+    [ -f "$entry/partition" ] && count=$((count + 1))
+done
+[ "$count" = 2 ] || stop 'Unexpected partition count'
+[ "$(cat "/sys/class/block/${boot##*/}/start")" = 2048 ] || stop 'Unexpected boot partition start'
+[ "$(cat "/sys/class/block/${boot##*/}/size")" = "$BOOT_SECTORS" ] || stop 'Unexpected boot partition size'
+root_start=$((2048 + BOOT_SECTORS))
+[ "$(cat "/sys/class/block/${root##*/}/start")" = "$root_start" ] || stop 'Unexpected root partition start'
+[ "$(/sbin/sfdisk --disk-id "$disk" | lower)" = "$DISK_GUID" ] || stop 'Wrong GPT disk GUID'
+[ "$(/sbin/sfdisk --part-uuid "$disk" 1 | lower)" = "$BOOT_PARTITION_UUID" ] || stop 'Wrong boot partition GUID'
+[ "$(/sbin/sfdisk --part-uuid "$disk" 2 | lower)" = "$ROOT_PARTITION_UUID" ] || stop 'Wrong root partition GUID'
+[ "$(/sbin/sfdisk --part-type "$disk" 1 | lower)" = c12a7328-f81f-11d2-ba4b-00a0c93ec93b ] || stop 'Wrong boot partition type'
+[ "$(/sbin/sfdisk --part-type "$disk" 2 | lower)" = 0fc63daf-8483-4772-8e79-3d69d8477de4 ] || stop 'Wrong root partition type'
+disk_sectors=$(cat "/sys/class/block/${disk##*/}/size")
+root_sectors=$(cat "/sys/class/block/${root##*/}/size")
+target_sectors=$((disk_sectors - root_start - 33))
+[ "$target_sectors" -ge "$root_sectors" ] || stop 'Card is smaller than the root partition'
+if [ "$target_sectors" -gt "$root_sectors" ]; then
+    echo 'ARCHM4: expanding native SD root to available card capacity'
+    /sbin/sgdisk -e "$disk" || stop 'Could not relocate backup GPT'
+    printf ',%s\n' "$target_sectors" | /sbin/sfdisk --no-reread --no-tell-kernel -N 2 "$disk" || stop 'Could not grow partition 2'
+    /sbin/blockdev --rereadpt "$disk" || stop 'Could not reload partition table'
+    # devtmpfs updates the existing partition nodes after BLKRRPART.
+    [ "$(cat "/sys/class/block/${root##*/}/size")" = "$target_sectors" ] || stop 'Partition size was not refreshed'
+fi
+/sbin/e2fsck -p "$root"
+result=$?
+case "$result" in 0|1) ;; *) stop "Root filesystem check failed: $result" ;; esac
+# ext4 can leave a short partial block group unused. Re-running resize2fs
+# after normal writes may then demand a forced check even though no capacity
+# was added. Record the partition capacity only after successful growth.
+# Reading this marker is safe after the filesystem check and needs no mount.
+grown_capacity=$(/sbin/debugfs -R 'cat /var/lib/arch-m4/root-capacity-sectors' "$root" 2>/dev/null)
+case "$grown_capacity" in ''|*[!0-9]*) grown_capacity=0 ;; esac
+if [ "$grown_capacity" != "$target_sectors" ]; then
+    /sbin/e2fsck -f -p "$root"
+    result=$?
+    case "$result" in 0|1) ;; *) stop "Forced root filesystem check failed: $result" ;; esac
+    /sbin/resize2fs "$root" || stop 'Could not grow ext4'
+fi
+mount -t ext4 -o rw,noatime "$root" /newroot || stop 'Could not mount root'
+if [ "$grown_capacity" != "$target_sectors" ]; then
+    for directory in /newroot/var /newroot/var/lib /newroot/var/lib/arch-m4; do
+        [ ! -L "$directory" ] || stop "Symlink at growth marker directory: $directory"
+        mkdir -p "$directory" || stop 'Could not create growth marker directory'
+    done
+    marker=/newroot/var/lib/arch-m4/root-capacity-sectors
+    [ ! -L "$marker" ] || stop 'Invalid growth marker destination'
+    [ ! -e "$marker" ] || [ -f "$marker" ] || stop 'Growth marker is not a regular file'
+    marker_stage=$(mktemp /newroot/var/lib/arch-m4/.capacity-XXXXXX) || stop 'Could not stage growth marker'
+    printf '%s\n' "$target_sectors" >"$marker_stage" || stop 'Could not record root capacity'
+    sync
+    mv "$marker_stage" "$marker" || stop 'Could not publish root capacity'
+    sync
+fi
+
+# The installed kernel package owns its module tree. Early userspace never
+# changes pacman's files: repair or upgrade the package if a generation differs.
+[ "$(uname -r)" = "$KERNEL_RELEASE" ] || stop 'Kernel and initramfs releases differ'
+release_dir=/newroot/usr/lib/modules/$KERNEL_RELEASE
+[ -d "$release_dir" ] && [ ! -L "$release_dir" ] || stop 'Matching linux-m4rch modules are not installed'
+[ "$(cat "$release_dir/pkgbase" 2>/dev/null)" = linux-m4rch ] || stop 'Modules are not owned by the expected kernel package'
+[ -f "$release_dir/modules.dep" ] || stop 'Kernel package module index is missing'
+mkdir -p /newroot/boot
+# systemd checks and mounts the exact boot PARTUUID from fstab. Mounting it
+# here would bypass the normal check-before-mount ordering for FAT.
+echo 'ARCHM4: native root ready; matching packaged modules found; starting systemd'
+mount --move /dev /newroot/dev
+mount --move /proc /newroot/proc
+mount --move /sys /newroot/sys
+mount --move /run /newroot/run
+exec switch_root /newroot /sbin/init
+stop 'switch_root returned'

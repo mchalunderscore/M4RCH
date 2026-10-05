@@ -1,0 +1,218 @@
+{
+  "archive_sha256": "8c2a0c014c6acfb9f1eab936b92b4a8d31943ebf1475b2dd15cb7b9149cd29c3",
+  "benchmark_version": "Geekbench 7.0.0 Preview for Linux AArch64",
+  "boot_permissions": {
+    "fresh_mount_tested": false,
+    "live_dmask": "0077",
+    "live_fmask": "0077",
+    "live_mode": "0700",
+    "persisted_dmask": "0022",
+    "persisted_fmask": "0133"
+  },
+  "corrections": {
+    "fat_remount": "Pinned fs/fat/inode.c ignores permission options during reconfiguration while returning success; fresh mount required.",
+    "hardware_frequency": "The Alice-run captures return null; cpufreq.c exports cpuinfo_cur_freq mode0400 and the driver implements get. Permission failure and absence were not distinguished by the collector."
+  },
+  "date": "2026-10-05",
+  "desktop_during_runs": "X11, compositing active through llvmpipe/GLX",
+  "limitations": [
+    "One sequential benchmark pair with unequal starting temperatures/background load.",
+    "P-only multicore result uses eight eligible cores rather than twelve.",
+    "No measured E/P capacity ratio; no scheduler or frequency-policy change installed.",
+    "Reported high CPU sensor values and modest automatic fan response require read-only follow-up; no throttling or fan failure established.",
+    "Wayland and fresh mount permissions await the next native boot."
+  ],
+  "live_cpu_capacity": {
+    "0": 1024,
+    "1": 1024,
+    "10": 1024,
+    "11": 1024,
+    "2": 1024,
+    "3": 1024,
+    "4": 1024,
+    "5": 1024,
+    "6": 1024,
+    "7": 1024,
+    "8": 1024,
+    "9": 1024
+  },
+  "multi_core_change_percent": 1.6,
+  "native_kernel": "7.1.3-arch-m4-exp-9e2899b686-ge9d2237cd064-dirty",
+  "preserved_boundary": "Kernel, enrolled internal loaders, all CPUs, governors, frequency bounds, fans and working USB remain unchanged.",
+  "runs": {
+    "default": {
+      "ac_values": [
+        "1"
+      ],
+      "affinity_escape_samples": 0,
+      "capture_uid": 1000,
+      "duration_seconds": 322.876,
+      "governors": {
+        "policy0": [
+          "schedutil"
+        ],
+        "policy1": [
+          "schedutil"
+        ],
+        "policy8": [
+          "schedutil"
+        ]
+      },
+      "hardware_frequency_readable_to_capture": false,
+      "metadata_sha256": "2894766b754f1378cbc1f0ef86dfd40aefc732d7dc98ad65d56ed3d8eeb31b87",
+      "multi_core": 12446,
+      "peaks": {
+        "hwmon": {
+          "hwmon0": {
+            "temp1_input_peak": 33100
+          },
+          "hwmon1": {},
+          "hwmon2": {
+            "fan1_input_peak": 2339,
+            "fan2_input_peak": 2531,
+            "temp10_input_peak": 94475,
+            "temp11_input_peak": 106859,
+            "temp12_input_peak": 80455,
+            "temp13_input_peak": 78878,
+            "temp14_input_peak": 95318,
+            "temp15_input_peak": 92176,
+            "temp16_input_peak": 74439,
+            "temp17_input_peak": 78055,
+            "temp18_input_peak": 40179,
+            "temp19_input_peak": 33099,
+            "temp1_input_peak": 2400,
+            "temp20_input_peak": 49840,
+            "temp21_input_peak": 56500,
+            "temp2_input_peak": -4000,
+            "temp3_input_peak": -4000,
+            "temp4_input_peak": 0,
+            "temp5_input_peak": -4000,
+            "temp6_input_peak": 0,
+            "temp7_input_peak": -4000,
+            "temp8_input_peak": -4000,
+            "temp9_input_peak": 76970
+          }
+        },
+        "policies": {
+          "policy0": {
+            "scaling_cur_freq_peak_khz": 4512000
+          },
+          "policy1": {
+            "scaling_cur_freq_peak_khz": 2592000
+          },
+          "policy8": {
+            "scaling_cur_freq_peak_khz": 4512000
+          }
+        }
+      },
+      "public_page_verified": "read from browser UI on 2026-10-05",
+      "samples": 160,
+      "samples_sha256": "e58d07bb80826c2c2285c0a441058253fa0a5713699d841e88757e755dec69d0",
+      "selected_cpus": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "single_core": 1634,
+      "url": "https://browser.geekbench.com/v7/cpu/555966"
+    },
+    "pcores": {
+      "ac_values": [
+        "1"
+      ],
+      "affinity_escape_samples": 0,
+      "capture_uid": 1000,
+      "duration_seconds": 251.886,
+      "governors": {
+        "policy0": [
+          "schedutil"
+        ],
+        "policy1": [
+          "schedutil"
+        ],
+        "policy8": [
+          "schedutil"
+        ]
+      },
+      "hardware_frequency_readable_to_capture": false,
+      "metadata_sha256": "36440e3490c2ff01720d4a178e46cc7731cba540dafa67cb63155dc36526c1c0",
+      "multi_core": 12646,
+      "peaks": {
+        "hwmon": {
+          "hwmon0": {
+            "temp1_input_peak": 34300
+          },
+          "hwmon1": {},
+          "hwmon2": {
+            "fan1_input_peak": 2422,
+            "fan2_input_peak": 2615,
+            "temp10_input_peak": 101760,
+            "temp11_input_peak": 114250,
+            "temp12_input_peak": 87034,
+            "temp13_input_peak": 84957,
+            "temp14_input_peak": 103056,
+            "temp15_input_peak": 100940,
+            "temp16_input_peak": 79338,
+            "temp17_input_peak": 81462,
+            "temp18_input_peak": 41859,
+            "temp19_input_peak": 34299,
+            "temp1_input_peak": 2400,
+            "temp20_input_peak": 53298,
+            "temp21_input_peak": 61290,
+            "temp2_input_peak": -4000,
+            "temp3_input_peak": -4000,
+            "temp4_input_peak": 0,
+            "temp5_input_peak": -4000,
+            "temp6_input_peak": 0,
+            "temp7_input_peak": -4000,
+            "temp8_input_peak": -4000,
+            "temp9_input_peak": 82269
+          }
+        },
+        "policies": {
+          "policy0": {
+            "scaling_cur_freq_peak_khz": 4512000
+          },
+          "policy1": {
+            "scaling_cur_freq_peak_khz": 2592000
+          },
+          "policy8": {
+            "scaling_cur_freq_peak_khz": 4512000
+          }
+        }
+      },
+      "public_page_verified": "read from browser UI on 2026-10-05",
+      "samples": 125,
+      "samples_sha256": "bf9b164579704da649743098cb4e24314d0c78978ec8b38ab63bb44627341716",
+      "selected_cpus": [
+        0,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "single_core": 2489,
+      "url": "https://browser.geekbench.com/v7/cpu/556006"
+    }
+  },
+  "single_core_change_percent": 52.3,
+  "verified_evidence_files": 32,
+  "wayland": {
+    "autologin_session": "plasma.desktop",
+    "compositor_environment": "KWIN_COMPOSE=Q",
+    "configured": true,
+    "native_session_tested": false
+  }
+}

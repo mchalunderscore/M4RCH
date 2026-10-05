@@ -1,0 +1,59 @@
+From: arch-m4 project
+Subject: [PATCH] usb: typec: tipd: initialize partners and retain their PD identity
+
+The Type-C class consumes all fields in typec_partner_desc and retains the
+identity pointer after registration. Initialize both descriptors so newly
+added callback and capability fields do not contain uninitialized stack data.
+
+The CD321x worker currently passes identity from its local status snapshot.
+Copy that identity into the persistent cur_partner_identity field before
+registering the partner, and pass the persistent address. The existing
+partner-change path unregisters the old partner before this field changes.
+
+Local correction against Linux e9d2237cd064e6d086d938cd9c85e0c963cf7291 plus
+Wallace 55f116dd0e0f28d1412c6be728a101f7d861c473's SPMI transport and the
+bus-neutral connector lookup patch. Native USB enumeration is unverified.
+
+--- a/drivers/usb/typec/tipd/core.c
++++ b/drivers/usb/typec/tipd/core.c
+@@ -342,7 +342,7 @@
+ 
+ static int tps6598x_connect(struct tps6598x *tps, u32 status)
+ {
+-	struct typec_partner_desc desc;
++	struct typec_partner_desc desc = {};
+ 	enum typec_pwr_opmode mode;
+ 	int ret;
+ 
+@@ -811,14 +811,16 @@
+ 
+ 	/* Set up partner if we were previously disconnected (or changed). */
+ 	if (!tps->partner) {
+-		struct typec_partner_desc desc;
++		struct typec_partner_desc desc = {};
+ 
+ 		desc.usb_pd = is_pd;
+ 		desc.accessory = TYPEC_ACCESSORY_NONE; /* XXX: handle accessories */
+ 		desc.identity = NULL;
+ 
+-		if (desc.usb_pd)
+-			desc.identity = &st.partner_identity;
++		if (desc.usb_pd) {
++			cd321x->cur_partner_identity = st.partner_identity;
++			desc.identity = &cd321x->cur_partner_identity;
++		}
+ 
+ 		tps->partner = typec_register_partner(tps->port, &desc);
+ 		if (IS_ERR(tps->partner)) {
+@@ -826,10 +828,8 @@
+ 			return;
+ 		}
+ 
+-		if (desc.identity) {
++		if (desc.identity)
+ 			typec_partner_set_identity(tps->partner);
+-			cd321x->cur_partner_identity = st.partner_identity;
+-		}
+ 	}
+ 
+ 	/* Update the TypeC MUX/PHY state */

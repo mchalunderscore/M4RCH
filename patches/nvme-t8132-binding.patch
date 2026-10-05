@@ -1,0 +1,18 @@
+From: Yureka Lilian <yureka@cyberchaos.dev>
+Subject: [PATCH] dt-bindings: nvme: Add apple,t8132-nvme-ans2 compatible
+
+Backport of 9dbada7ebff2bb68f4f1e44450c728b86805703b, moving the unchanged
+new compatible past this kernel's already present t8122 enum. Runtime
+NVMe and ANS register resources are unchanged by this binding patch.
+Source: https://cyberchaos.dev/yuka/linux/-/commit/9dbada7ebff2bb68f4f1e44450c728b86805703b
+
+--- a/Documentation/devicetree/bindings/nvme/apple,nvme-ans.yaml
++++ b/Documentation/devicetree/bindings/nvme/apple,nvme-ans.yaml
+@@ -13,6 +13,7 @@
+   compatible:
+     oneOf:
+       - const: apple,t8015-nvme-ans2
++      - const: apple,t8132-nvme-ans2
+       - items:
+           - enum:
+               - apple,t6020-nvme-ans2
