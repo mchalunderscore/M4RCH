@@ -18,7 +18,7 @@ class CpuToolsTests(unittest.TestCase):
             (source / "cpu_benchmark.py").write_text("print('benchmark fixture')\n")
             (source / "peripheral_policy.py").write_text("print('report fixture')\n")
             (source / "native_lab.py").write_text("print('lab fixture')\n")
-            (source.parent / "HANDOVER.md").write_text("work handover fixture\n")
+            (source.parent / "HANDOVER.md").write_text("work handover fixture\nkit=/boot/cpu-tools-ID\n")
             (source.parent / "docs").mkdir()
             (source.parent / "docs/native-agent-instructions.md").write_text("native handoff fixture\n")
             (source.parent / "docs/native-agent-followup.md").write_text("native follow-up fixture\n")
@@ -26,7 +26,7 @@ class CpuToolsTests(unittest.TestCase):
             self.assertEqual(publish(source.parent, root / "out"), destination)
             self.assertEqual((destination / "instructions.md").read_text(), "native handoff fixture\n")
             self.assertEqual((destination / "native-agent-followup.md").read_text(), "native follow-up fixture\n")
-            self.assertEqual((destination / "HANDOVER.md").read_text(), "work handover fixture\n")
+            self.assertEqual((destination / "HANDOVER.md").read_text(), "work handover fixture\nkit=/boot/" + destination.name + "\n")
             for line in (destination / "SHA256SUMS").read_text().splitlines():
                 digest, name = line.split("  ", 1)
                 self.assertEqual(hashlib.sha256((destination / name).read_bytes()).hexdigest(), digest)

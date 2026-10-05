@@ -50,10 +50,10 @@ identify the actual matched compatible. Review target limits, boost handling,
 frequency invariance and energy-model/capacity use separately. Return source
 locations and a concrete explanation or the exact unresolved evidence.
 
-Run from Alice's terminal, substituting the actual incoming kit ID:
+Run from Alice's terminal, using the incoming kit:
 
 ```sh
-kit=/boot/cpu-tools-ID
+kit=/boot/cpu-tools-e128c0f41b1d
 capture="$HOME/m4rch-native-$(date -u +%Y%m%dT%H%M%SZ)"
 mkdir -m 700 "$capture"
 sudo sh "$kit/collect.sh" snapshot --label baseline --output "$capture/baseline"

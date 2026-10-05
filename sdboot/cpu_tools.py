@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 from pathlib import Path
 import shutil
 import tempfile
@@ -109,6 +110,13 @@ def publish(project=PROJECT, out=None):
         contents["macos-port-map.json"] = data
     hashes = {name: hashlib.sha256(data).hexdigest() for name, data in contents.items()}
     identity = hashlib.sha256(json.dumps(hashes, sort_keys=True).encode()).hexdigest()[:12]
+    # Resolve the delivered path after choosing the content identity. The
+    # handover input participates in that identity; its rendered bytes are
+    # covered by the final manifest and checksums.
+    contents["HANDOVER.md"] = re.sub(
+        rb"(?m)^kit=/boot/cpu-tools-[A-Za-z0-9]+$",
+        ("kit=/boot/cpu-tools-" + identity).encode(), contents["HANDOVER.md"])
+    hashes = {name: hashlib.sha256(data).hexdigest() for name, data in contents.items()}
     receipt = {"schema": 1, "kind": "j614s-cpu-experiment-tools", "identity": identity,
                "files": hashes, "kernel_changed": False, "enrollment_required": False}
     contents["manifest.json"] = (json.dumps(receipt, indent=2, sort_keys=True) + "\n").encode()
