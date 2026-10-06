@@ -49,3 +49,50 @@ meson install -C ../gpu-mesa-build --no-rebuild
 Installation stays in the ignored workspace prefix. G16S discovery explicitly
 returns an unqualified-layout failure; this build does not prove rendering.
 `make check` in m4rch compiles/runs the metadata fixtures and parser regressions.
+
+## Maintained-kernel resource preflight
+
+`build-identify.py` accepts a maintained 7.1.3 source tree after the Wallace,
+SMP, trackpad and experimental-hardware patch stack has been reconstructed.
+It checks the final protected driver hashes before adding the leaf Rust module.
+Seed it with the running maintained config, not the Gravity offline config:
+
+```sh
+python3 experiments/t6040-gpu/build-identify.py out/gpu-maintained/linux-build \
+  --config out/gpu-maintained/maintained-running.config \
+  --receipt out/gpu-maintained/identify-build-inputs-final.json --jobs 4
+```
+
+The isolated release is 7.1.3-m4rch-gpu-id. This builds Image and matching
+modules; it does not install them, create an initramfs, edit GRUB or change DT.
+The script can safely repeat its Kconfig/Makefile additions. The leaf module
+matches only `m4rch,t6040-gpu-identify`, validates the exact named SGX resource,
+and returns before mapping when its default `read_ids=0` remains in force.
+`identify-preflight.dtsi` is a disabled candidate resource node without a power
+binding or the access-review acknowledgement. It must be compiled with the
+maintained board DT and explicitly reviewed before an isolated boot trial.
+
+The current Linux genpd report shows `gfx off-0`, with AFR/GPX on. Live boot ADT
+names gate 400 GFX-SGX and 402 GFX-BUSY; both have the no_ps flag. GFX-SGX's parent
+is GFX (386), whose group/offset matches existing ps_gfx. This is evidence for
+reviewing the parent path, not permission to access an unpowered SGX window.
+The first trial can validate the Rust-enabled kernel and resource-only probe
+without any GPU reads. Power/reset/clock qualification precedes ID reads, which
+also require both read_ids=1 and m4rch,id-access-reviewed=1. No firmware
+startup, MCC writes, rendering or display replacement is implemented.
+
+For a fresh native reconstruction, create disposable `linux` and `wallace`
+checkouts in a new workspace at the revisions in sources.lock.json, then run
+`python3 experiments/t6040-gpu/prepare-maintained.py WORKSPACE`. This copies
+Wallace's DT/patch inputs and applies the verified maintained driver stack; it
+refuses an existing linux-build. It does not rebuild or install the loader.
+
+On this Linux installation, `package-identify.py WORKSPACE` creates a separate
+linux-m4rch-gpu-id package from the built artifacts and installed maintained
+initramfs inputs. It requires `identify-build-inputs-final.json` and checks its
+source/config digests. The package has its own module tree, kernel file,
+initramfs hook, config and preset. It does not replace linux-m4rch. Packaging
+requires an ordinary user's native makepkg/fakeroot environment; the script
+does not install the package. Native installation also triggers the project's
+normal boot-update hook, so preserve normal boot backups and generate the trial
+initramfs explicitly with `mkinitcpio -p linux-m4rch-gpu-id`.

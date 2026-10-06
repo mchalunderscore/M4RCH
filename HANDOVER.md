@@ -21,9 +21,23 @@ docs/evidence/2026-10-06-gpu-native-build.json for scope and receipts. Full
 private captures/build logs/binaries are locally reachable under ignored
 out/gpu-native-20261006. The patches are not enabled by make kernel.
 
-Next: integrate the GPU identification source into the maintained 7.1.3 baseline
-while retaining USB/SME/WFI; validate SGX power, DT, mailbox and interrupt mapping.
-Only then stage a matched identification trial. Do not insmod the 7.1.13+ module
+Maintained 7.1.3 integration now builds: isolated Rust-enabled Image and
+matching leaf m4rch_gpu_identify.ko, with the protected USB/FB/cpufreq/WFI hashes
+retained. The build recipe explicitly excludes Asahi firmware startup and PMP/
+RTKit drivers newly defaulted by Rust. The read gate is u32 (0 disabled, 1 opt-in).
+Initial bool-parameter compile failure is preserved, followed by the fixed build.
+
+Next: validate SGX power/reset/clocks, DT, mailbox and interrupt mapping before
+actual identification reads. Linux genpd reports gfx off-0; boot ADT gate 400
+GFX-SGX has no_ps and parent GFX386; gate402 GFX-BUSY also has no_ps. Existing
+ps_gfx matches the parent metadata, but neither gate is a direct state register.
+See docs/evidence/2026-10-06-gpu-power-contract.json.
+
+The first Linux-to-Linux trial is Rust baseline/module-loading validation. It
+keeps the live boot DT, which has no GPU node, so there is no resource probe or
+GPU MMIO on this trial. The disabled candidate identify-preflight.dtsi compiles
+offline; do not substitute a captured live FDT across boots. A later resource/
+power trial needs the live loader DT contract qualified. Do not insmod the 7.1.13+ module
 into this boot or install unqualified firmware/packet layouts. A Linux-to-Linux
 trial must set GRUB default explicitly and retain the working matching fallback,
 because keyboard input in GRUB is unavailable.
@@ -32,3 +46,18 @@ Owner has configured phone-based Codex Remote, KDE autostart, autologin and
 SDDM at boot. This is a potential recovery path for display-only failures if
 the kernel, networking and Codex session remain alive; failure recovery has
 not been exercised. Keep the matched boot fallback for earlier hangs.
+
+
+Isolated trial is installed as linux-m4rch-gpu-id 7.1.3-1, release
+7.1.3-m4rch-gpu-id; it has a separate initramfs/package identity. See
+docs/evidence/2026-10-06-gpu-maintained-trial.json for hashes and checks.
+Normal kernel/initramfs match the pre-install backup byte for byte. GRUB has
+next_entry=m4rch-gpu-id with consume-before-boot logic; persistent default is
+normal entry0. GRUB's runtime environment consumption remains to be exercised.
+There was no reboot yet. Current maintained WFI is Y.
+
+After reboot: confirm uname -r, WFI Y, input/USB/network/display normal, and
+capture dmesg/config. Load m4rch_gpu_identify with default read_ids0 to test
+Rust/platform-driver registration, verify its parameter, then unload. With
+no live GPU node it should not bind/map/read any GPU resource. Treat this as
+a Rust-enabled baseline checkpoint, not hardware GPU identification or speedup.
