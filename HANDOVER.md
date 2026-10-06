@@ -61,3 +61,15 @@ capture dmesg/config. Load m4rch_gpu_identify with default read_ids0 to test
 Rust/platform-driver registration, verify its parameter, then unload. With
 no live GPU node it should not bind/map/read any GPU resource. Treat this as
 a Rust-enabled baseline checkpoint, not hardware GPU identification or speedup.
+
+
+First reboot update: normal 7.1.3-m4rch booted, WFI Y. next_entry remained
+m4rch-gpu-id, so the one-shot selection was not consumed. This is a boot-selection
+failure, not evidence that the trial kernel failed. No trial module was loaded
+into the normal kernel. See docs/evidence/2026-10-06-gpu-first-reboot.json.
+Replaced environment selection with direct GRUB default=2, explicitly requested
+by the owner because GRUB keyboard input is unavailable. Trial image/initramfs
+hashes verified before staging. This selection persists until restored to0;
+after the trial reaches userspace restore default0. If it hangs before recovery,
+macOS can set /grub/grub.cfg on the SD EFI partition back to default0. Both
+normal entries and matched fallback files remain present.
