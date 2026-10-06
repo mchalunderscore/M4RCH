@@ -115,3 +115,38 @@ and no_ps gates400/402 still need their exact role reviewed. Continue from
 Linux with captured ADT and pinned source; no macOS roundtrip is required for
 this checkpoint. Retain exact firmware barrier and keep read_ids0 until the
 remaining access qualification is explicit. No GPU firmware/DRM/rendering yet.
+
+
+Native raw GPU identification subsequently succeeded. Published loader PMGR
+recursion treats gates400/402 as virtual/no_ps, and powers parent GFX386/AFR385.
+Its initial ID path uses that power-enable without a separate clock/reset call.
+After the successful existing-provider power trial, this supported four bounded
+ID reads with GFX held on and both read_ids1 + ID-review acknowledgement set.
+Raw version/counts/clusters: 0x0a031100, 0x0011020a, 0x00040404, 0x400c0c02.
+Rust bound, read, then unmapped/unloaded; overlay removed; GFX returned off0.
+No firmware, DRM, interrupts, MCC programming, resets, clock/voltage changes.
+Native receipt: docs/evidence/2026-10-06-gpu-raw-identification.json.
+
+Variant/revision bit fields interpret as S/B1. Generation field is10, rejected
+by old generic regs.rs; never spoof G13/G14/G16G. G14X-style counts cross-check
+matches ADT two clusters/ten slots; enabled0x3db masks remain ADT evidence.
+Offline raw-id.py tests preserve those limits. ID overlay is separate, requiring
+--reviewed-id-reads in build-helper.py; hold GFX active for its entire lifetime.
+
+macOS-side next action before GPU firmware startup:
+1. Establish what boot-stub/OS firmware source supplies the Linux chosen
+   mBoot-18000.121.3 tag. Do not merely rewrite that property. Determine whether
+   a real compatible mBoot-18000.161.10 environment is available for J614s, or
+   qualify the precise .121.3 firmware-object/queue ABI instead.
+2. Return exact firmware/boot-stub provenance and any required real boot change
+   as a reversible candidate. Preserve the current working enrollment/fallback;
+   matching the version alone does not qualify G16S dual-cluster layouts.
+3. Use raw Linux captures plus native IDs for T6040-specific MCC/ASC/AIC and
+   memory handoff review. Do not import T8132 MCC/calibration or firmware objects
+   blindly. Keep the existing version barrier and T6040 no-startup guard.
+
+Linux has reached the resource/power/raw-ID milestone without another reboot.
+The current Rust trial remains usable; next default is normal kernel0. All test
+helpers are gone, GFX off0, WFI enabled. Full private native captures/build logs
+are available in the accompanying ESP return archive; shared source/evidence is
+on gpu/native-contract. No further firmware execution was attempted.

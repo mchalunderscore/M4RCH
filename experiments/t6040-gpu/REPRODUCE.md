@@ -132,3 +132,38 @@ See docs/evidence/2026-10-06-gpu-resource-bind.json and
 2026-10-06-gfx-genpd-trial.json for native receipts. Subsequent ID reads still
 need review; do not add the access acknowledgement merely because a parent
 domain can turn on.
+
+## Reviewed four-register native ID checkpoint
+
+The published pinned loader consumes SGX clock-gates through PMGR recursion.
+Its virtual/no_ps bit0x10 means gates400/402 have no direct writes: GFX-SGX400
+recurses to GFX386/AFR385; GFX-BUSY402 has no parent. This matches the tested
+existing GFX genpd path. The published initial GPU ID path has no separate
+reset/clock call. That review supported the bounded native four-register test
+while the GFX runtime consumer held the domain active. Clock ID315 remains raw
+metadata; this does not qualify performance/firmware clock programming.
+
+Build the separate acknowledgement-bearing overlay only after that review:
+
+```sh
+python3 experiments/t6040-gpu/build-helper.py out/gpu-maintained id-overlay --reviewed-id-reads
+```
+
+It is separate from the resource-only overlay. Native test order: exact GNU
+build-ID guard; GFX helper resume and confirm on; Rust module read_ids1; ID
+overlay insertion; capture four proposed ID words; unload Rust (unmap), remove
+overlay, unload GFX helper (suspend). Do not bind an opt-in ID node while GFX is
+off. Normal GRUB default0 and an ESP recovery note were saved before the test.
+No firmware startup, interrupts, MCC/clock/reset/voltage writes or render node.
+
+Native raw result: 0x0a031100, 0x0011020a, 0x00040404, 0x400c0c02. Variant/revision
+fields interpret as S/B1 using pinned Asahi regs.rs. Its old generic decoder
+rejects generation10; do not use it unchanged or relabel this chip as G13/G14.
+The older counts rule cross-check gives two clusters with ten slots each,
+consistent with ADT. Fused enabled masks remain ADT evidence, not MMIO-proven.
+raw-id.py and its tests keep these interpretation limits explicit.
+
+The next firmware-startup barrier is real: Linux stage2 mBoot-18000.121.3,
+where the pinned G16 implementation accepts only mBoot-18000.161.10. No version
+check was loosened. Aligning the boot-stub firmware or qualifying the precise
+older ABI requires boot-environment/firmware work before firmware execution.
