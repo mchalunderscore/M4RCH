@@ -90,7 +90,10 @@ class FlashWriteTests(unittest.TestCase):
         descriptor = os.open(self.disk, os.O_RDWR)
         dutil = Mock(spec=DiskUtil)
         summary = {"device": "disk4"}
-        with patch("card.os.open", return_value=descriptor) as opened:
+        # This Darwin-only flag is mocked alongside open; no device is opened.
+        exlock = getattr(os, "O_EXLOCK", 0x20)
+        with patch.object(card.os, "O_EXLOCK", exlock, create=True), \
+                patch("card.os.open", return_value=descriptor) as opened:
             with self.assertRaisesRegex(RuntimeError, "operation failed"):
                 with card.exclusive_disk(dutil, summary, {}) as stream:
                     self.assertEqual(stream.fileno(), descriptor)
@@ -99,7 +102,7 @@ class FlashWriteTests(unittest.TestCase):
         self.assertTrue(stream.closed)
         with self.assertRaises(OSError):
             os.fstat(descriptor)
-        opened.assert_called_once_with("/dev/rdisk4", os.O_RDWR | os.O_NOFOLLOW | os.O_EXLOCK | os.O_NONBLOCK)
+        opened.assert_called_once_with("/dev/rdisk4", os.O_RDWR | os.O_NOFOLLOW | exlock | os.O_NONBLOCK)
         self.assertEqual(dutil.assert_unchanged.call_count, 2)
         dutil.run.assert_called_once_with("unmountDisk", "disk4")
 
