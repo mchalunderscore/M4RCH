@@ -88,3 +88,30 @@ remains available. See docs/evidence/2026-10-06-gpu-trial-boot.json.
 Next: qualify the power/reset/clock path and a live loader resource-node handoff
 before resource-only binding, then opt-in IDs. Existing GFX is off; no_ps gates
 400/402 are not direct PMGR state registers. Retain firmware-version barrier.
+
+
+Further native Linux progress, same trial boot:
+- Temporary metadata-only OF overlay populated a dedicated simple-bus subtree.
+  Rust read_ids0 bound to 288000000.gpu-preflight and validated the exact named
+  SGX resource. GFX stayed off0. Driver and overlay removed; node/device gone.
+- Existing registered GFX provider was exercised with of_genpd_add_device and
+  standard runtime-PM calls. No invented phandle, direct GPU mappings, resets,
+  clocks or firmware calls. genpd went off0 -> on -> off0, runtime suspend0;
+  consumer and helper removed. Source PMGR callback polls actual state0xf.
+- Owner confirms desktop/input/USB/networking still normal. WFI Y, normal GRUB
+  default0. Exact running/build GNU build ID matched before each native test.
+
+Receipts: docs/evidence/2026-10-06-gpu-resource-bind.json and
+2026-10-06-gfx-genpd-trial.json. Sources and reproducible W=1 builds:
+experiments/t6040-gpu/{resource-overlay,gfx-power-test}, build-helper.py.
+Initial unaligned FDT rejected before adding nodes; aligned overlay required
+explicit subtree population to create the child device. Both failures cleaned
+up and were corrected. External helper sets expected persistent out-of-tree
+kernel taint; no new BUG/Oops/panic from these tests.
+
+These tests qualify resource-only binding and parent-domain runtime power,
+not safe GPU MMIO, reset/clock sequencing or firmware startup. Raw clock ID315
+and no_ps gates400/402 still need their exact role reviewed. Continue from
+Linux with captured ADT and pinned source; no macOS roundtrip is required for
+this checkpoint. Retain exact firmware barrier and keep read_ids0 until the
+remaining access qualification is explicit. No GPU firmware/DRM/rendering yet.

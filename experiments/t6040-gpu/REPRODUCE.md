@@ -96,3 +96,39 @@ requires an ordinary user's native makepkg/fakeroot environment; the script
 does not install the package. Native installation also triggers the project's
 normal boot-update hook, so preserve normal boot backups and generate the trial
 initramfs explicitly with `mkinitcpio -p linux-m4rch-gpu-id`.
+
+## Temporary native resource and parent-power tests
+
+Both helpers build separately against the successfully booted trial kernel:
+
+```sh
+python3 experiments/t6040-gpu/build-helper.py out/gpu-maintained resource-overlay
+python3 experiments/t6040-gpu/build-helper.py out/gpu-maintained gfx-power-test
+```
+
+Neither command loads a module. Native tests used exact running/build GNU build-ID
+agreement, temporary loads and unconditional cleanup. Raw logs remain in ignored
+out/gpu-maintained. Never load these into a different kernel just because the
+release string looks similar.
+
+resource-overlay adds a new simple-bus subtree with only the bounded named SGX
+resource. It explicitly populates only that subtree. Embedded FDT must be eight-
+byte aligned; the initial unaligned trial was rejected before adding nodes.
+Load the Rust driver explicitly with read_ids0 before the overlay, then unload
+the Rust driver before removing the overlay. There is no power/clock/reset
+binding and no access-review flag. Native driver binding, off GFX state, and
+complete node/module removal were verified. No GPU mapping or reads occurred.
+
+The gfx-power-test helper looks up the existing registered GFX provider by its
+reviewed DT path, checks the offset/size/label/cell-count, and uses
+of_genpd_add_device plus normal runtime-PM APIs. It invents no phandle and calls
+no SGX/reset/clock/firmware APIs. Native genpd states were off0 -> on -> off0;
+runtime suspend returned0 and the consumer was removed. This exercises PMGR
+writes through the existing driver, not direct GPU MMIO. It does not establish
+GPU reset/clock/ID access semantics or firmware readiness. The external helper
+sets the expected out-of-tree kernel taint; that persists after unloading.
+
+See docs/evidence/2026-10-06-gpu-resource-bind.json and
+2026-10-06-gfx-genpd-trial.json for native receipts. Subsequent ID reads still
+need review; do not add the access acknowledgement merely because a parent
+domain can turn on.
