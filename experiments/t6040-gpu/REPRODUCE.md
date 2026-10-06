@@ -207,3 +207,27 @@ the exact C function against the independent decoder. Window containment and
 Mach-O segment parsing do not qualify firmware register roles or shared ABI.
 Keep payload bytes and private captures out of Git; only derived metadata is
 committed. The full startup barrier remains in place.
+
+## Native ASC preflight and staged initial-message probe
+
+The current boot receipts record two read-only ASC status reads and a temporary
+apple-mailbox registration (IRQs requested disabled). Live phandles must be
+resolved from the boot's AIC node; do not reuse numeric phandles across boots.
+Raw preflight overlay/build logs are local under out/gpu-port/mailbox-preflight.
+
+The asc-status source needs the existing qualified GFX power hold; compiling
+it does not power the device. The asc-hello source owns its own matching genpd
+consumer and is disabled by default. Its experimental start path keeps all
+resources/module text pinned until reboot, even with successful stop readback.
+Do not force-remove it. No actual start attempt has run at this checkpoint.
+
+```sh
+make -C "$PORT_WORK/linux-build" LLVM=1 KERNELRELEASE=7.1.3-m4rch-gpu-port LOCALVERSION= M="$HELLO_BUILD" W=1 modules
+sudo python3 experiments/t6040-gpu/run-asc-hello.py "$PORT_WORK"
+```
+
+HELLO_BUILD must contain asc-hello.c and its Makefile. The launcher requires a
+stage-receipt.json recording the exact current boot ID, kernel-notes SHA256 and
+module SHA256, with a natively verified default-gate refusal. Its dry-run only
+checks guards. Actual --run requires saved work and a reboot afterward. It is
+an initial-message observation, not a full RTKit handshake or graphics test.

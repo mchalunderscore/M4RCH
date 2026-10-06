@@ -245,9 +245,9 @@ both clusters have 11 steps. It is not installed. Apply after the original
 T6040 metadata loader patch. See REPRODUCE.md for validation commands.
 
 Complete ADT bus-window translation now audited: SGX windows are
-0x288000000+0x3758000 and 0x288d00000+0x16c000. Ten of the donor builder's
-11 offset requirements exceed the second window. First-window containment alone
-is not proof of their firmware mapping. T6040 MCC's four 32 MiB windows translate
+0x288000000+0x3758000 and 0x288d00000+0x16c000. Ten offset requirements exceed the second raw SGX window. This is not a donor
+builder failure: its Linux DT resource order is ASC then the first SGX window.
+First-window containment alone is not proof of the firmware register roles. T6040 MCC's four 32 MiB windows translate
 to 0x220000000, 0x222000000, 0x224000000, 0x226000000. The donor MCC base
 0x2201c4000 is contained, so it is a plausible candidate, not a proven wrong
 address; its role and mapping size still need qualification.
@@ -265,3 +265,50 @@ single-cluster serializer constants and chip 0x8132 fields, qualify register
 slot roles and mailbox/IRQ mappings, then prepare a guarded firmware-handshake
 candidate. Do not remove the T6040 startup barrier solely because power/ID and
 metadata tests pass. Continuous shallow WFI stays enabled.
+
+## ASC/mailbox preflight and staged first-message probe — 2026-10-06
+
+Latest native results: ASC at 0x28a600000 reads control 0, status 0x6a.
+The low status bits are 2, satisfying the donor's stopped-state check.
+Only registers +0x44/+0x48 were read while the known GFX/AFR domains were on.
+The helper unloaded, GFX returned to off-0, no new kernel fault signatures.
+
+The gfx-asc ADT IRQ list [1502,1501,1504,1503] maps under the matched ASC
+convention to send-empty 1501, send-not-empty 1502, recv-empty 1503,
+recv-not-empty 1504. Its mailbox window is 0x28a608000+0x4000.
+A temporary node bound to apple-mailbox. Required send/receive IRQs were
+requested disabled (NO_AUTOEN); no client/message/start was used. Overlay and
+platform device removed cleanly. This proves registration, not IRQ delivery.
+
+Correction: Gravity's Linux GPU DT orders reg resources ASC then SGX. The
+builder's second resource is the large first raw SGX window, not raw SGX
+window 1. Earlier wording that it necessarily selected the smaller window was
+wrong. There remains a genuine fixed 64 MiB iomap requirement in the full
+bootstrap, versus our 0x3758000 resource; the first-message helper bypasses
+that rendering bootstrap entirely.
+
+Read-only captures show reserved ttbs/pagetables/l2/handoff currently all zero.
+Do not treat those as an already initialized firmware root. The boot TEXT
+segment is declared separately by gfx-asc segment-ranges (<QQQI4x records).
+Its 393,216 bytes differ from b000 TEXT in 339 bytes (versus 232,249 for a000),
+with differences confined to two pages; their semantics are not yet proven.
+DATA remains an exact b000 match. These are local RAM snapshots, not execution.
+
+A separately built asc-hello module is STAGED, NOT RUN. Its default run_gate=0
+was rejected natively before power/mapping. A guarded launcher dry-run passes.
+It uses only the known genpd provider, ASC start/stop control, and standard
+ASC FIFO registers. With explicit run_gate=1 it observes one incoming message
+for at most four seconds, sends no reply, requests a core stop, and retains
+mappings/power/module reference until reboot even if stop readback succeeds.
+It publishes no new firmware-addressable allocations, writes no SGX/handoff
+registers or initialization objects, and submits no GPU work. Missing firmware
+prerequisites may produce no message; this is not a full handshake test.
+A hang is possible. Owner must save work and be ready to reboot afterward.
+Do not force-remove asc_hello. Normal GRUB recovery remains default 0.
+
+After owner readiness:
+  sudo python3 experiments/t6040-gpu/run-asc-hello.py out/gpu-port --run
+Review out/gpu-port/asc-hello/{attempt.json,live-dmesg.txt,after-start-dmesg.txt}
+before a normal reboot. The launcher is bound to this boot ID, build and module
+hash; it refuses retry after an attempt. A later boot requires new qualification.
+Main asahi_m4 T6040 normal-startup guard remains unchanged. Continuous WFI Y.

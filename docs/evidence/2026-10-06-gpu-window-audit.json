@@ -196,6 +196,7 @@
       ]
     }
   ],
-  "donor_second_window_rejections": 10,
-  "qualification": "Address containment only. No firmware role, register safety, IRQ semantics or initialization ABI inferred. No reads/writes performed."
+  "qualification": "Address containment only. No firmware role, register safety, IRQ semantics or initialization ABI inferred. No reads/writes performed.",
+  "raw_second_sgx_window_rejections": 10,
+  "linux_resource_order_note": "Corrected interpretation: donor DT orders ASC then SGX, so the second Linux resource is the first raw SGX window. The raw second-window rejection count is NOT a donor startup failure."
 }

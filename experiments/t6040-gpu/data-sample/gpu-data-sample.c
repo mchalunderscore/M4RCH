@@ -30,7 +30,13 @@ static int __init sample_init(void)
  int ret;
  if (!of_machine_is_compatible("apple,j614s") ||
      !of_machine_is_compatible("apple,t6040")) return -ENODEV;
- if ((SAMPLE_BYTES != 0x4000 && SAMPLE_BYTES != 0x138000) || SAMPLE_BASE != 0x10001d44000ULL)
+ /* Exact ranges from the qualified current boot; harness must match boot ID. */
+ if (!((SAMPLE_BASE == 0x10001d44000ULL && (SAMPLE_BYTES == 0x4000 || SAMPLE_BYTES == 0x138000)) ||
+       (SAMPLE_BASE == 0x105fffb8000ULL && SAMPLE_BYTES == 0x4000) ||
+       (SAMPLE_BASE == 0x105fff78000ULL && SAMPLE_BYTES == 0x40000) ||
+       (SAMPLE_BASE == 0x105fff74000ULL && SAMPLE_BYTES == 0x4000) ||
+       (SAMPLE_BASE == 0x105fff70000ULL && SAMPLE_BYTES == 0x4000) ||
+       (SAMPLE_BASE == 0x10000be4000ULL && SAMPLE_BYTES == 0x60000)))
   return -EINVAL;
  /* Never sample allocatable Linux RAM or a mixed System RAM range. */
  if (region_intersects(SAMPLE_BASE, SAMPLE_BYTES,
