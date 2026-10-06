@@ -225,3 +225,43 @@ Next implementation requirements, before enabling T6040 normal startup:
 
 The bounded boot-provided gfx-data RAM snapshot is not identified as an executable
 firmware image or proof of a compatible ABI. Its raw bytes stay local.
+
+## Further Linux-only preparation — 2026-10-06
+
+No macOS switch is required merely because the firmware tag differs. Offline
+work continues; any eventual macOS capture needs a concrete method, not an
+assumption that ordinary IORegistry exposes live firmware queues.
+
+The stub version is an explicit M4RCH pin in stub-inputs.lock.json and
+lib/firmware.py, following Wallace's pinned J614s 26.5.2/25F84 corpus. Main
+macOS updates do not update that separately provisioned stub.
+
+New incremental loader patch gravity-bootloader-t6040-cluster-metadata.patch
+emits independent grouped cluster steps in experimental m4rch properties.
+The GPU remains disabled; no masks, power calibration or firmware slot layout
+are invented. The exact C function compiled for AArch64 and executed offline
+against this boot's tables. All 132 cells match the independent Python decoder;
+both clusters have 11 steps. It is not installed. Apply after the original
+T6040 metadata loader patch. See REPRODUCE.md for validation commands.
+
+Complete ADT bus-window translation now audited: SGX windows are
+0x288000000+0x3758000 and 0x288d00000+0x16c000. Ten of the donor builder's
+11 offset requirements exceed the second window. First-window containment alone
+is not proof of their firmware mapping. T6040 MCC's four 32 MiB windows translate
+to 0x220000000, 0x222000000, 0x224000000, 0x226000000. The donor MCC base
+0x2201c4000 is contained, so it is a plausible candidate, not a proven wrong
+address; its role and mapping size still need qualification.
+
+FTAB/Mach-O analysis identifies the reserved gfx-data snapshot exactly as the
+stub firmware b000 __DATA segment: all 1,277,952 bytes match, including all
+58,592 nonzero bytes. a000 differs in 424 bytes. FTAB tags are not interpreted
+as cluster IDs. Stub RTKit is 3255.120.11; main RTKit is 3514.0.15, whose data
+layout includes a new __DATA_SHARED_RO segment and a smaller __DATA segment.
+This is strong loaded-data provenance, not a qualified initialization ABI.
+Raw firmware is retained locally only; metadata reports are in docs/evidence.
+
+Remaining work: identify G16S initialization object/queue layouts, replace
+single-cluster serializer constants and chip 0x8132 fields, qualify register
+slot roles and mailbox/IRQ mappings, then prepare a guarded firmware-handshake
+candidate. Do not remove the T6040 startup barrier solely because power/ID and
+metadata tests pass. Continuous shallow WFI stays enabled.

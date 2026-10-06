@@ -188,3 +188,22 @@ The minimal initial framework subset adds DRM post-open/owned scatterlist APIs,
 a bounded RAM iosys mapping, and the G16 RTKit interfaces. Build failures may
 identify further required backports; successful configuration is not compilation.
 This does not install a package, create a GPU node, or load/execute firmware.
+
+## Cluster metadata and static firmware/window audits
+
+After applying gravity-bootloader-t6040-metadata.patch to the pinned loader,
+apply gravity-bootloader-t6040-cluster-metadata.patch. This emits experimental
+metadata and leaves the GPU disabled. Nothing is installed by these commands.
+
+```sh
+make -C "$GPU_LOADER" ARCH=aarch64-linux-gnu- build/kboot_gpu.o
+python3 experiments/t6040-gpu/check-cluster-metadata.py --loader "$GPU_LOADER" --adt "$BOOT_ADT"
+python3 experiments/t6040-gpu/audit-windows.py "$BOOT_ADT" --output /tmp/window-audit.json
+python3 experiments/t6040-gpu/firmware-layout.py "$LOCAL_GFX_IM4P_PAYLOAD" --output /tmp/firmware-layout.json
+```
+
+The cluster harness requires this board's 16-row/two-table capture and compares
+the exact C function against the independent decoder. Window containment and
+Mach-O segment parsing do not qualify firmware register roles or shared ABI.
+Keep payload bytes and private captures out of Git; only derived metadata is
+committed. The full startup barrier remains in place.
