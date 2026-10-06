@@ -13,6 +13,7 @@ def parse(data):
         nonlocal budget
         budget-=1
         if depth>64 or budget<0:raise ValueError('ADT tree limit')
+        start=offset
         properties,children=struct.unpack('<II',take(8))
         if properties>4096 or children>4096:raise ValueError('ADT count limit')
         props={}
@@ -25,7 +26,12 @@ def parse(data):
         name=props.get('name',b'').split(b'\0')[0].decode('ascii')
         if '/' in name:raise ValueError('Invalid node name')
         path=parent+'/'+name if parent else '/'+name
-        if path in result:raise ValueError('Duplicate ADT path')
+        if path in result:
+            if path.rstrip('/').endswith(('/chosen', '/sgx', '/arm-io')) or '/sgx/' in path:
+                raise ValueError('Ambiguous GPU contract node: '+path)
+            # Preserve repeated siblings; selected GPU nodes must remain unique.
+            path += '@adt-offset-%x' % start
+            if path in result:raise ValueError('ADT disambiguation collision')
         result[path]=props
         for _ in range(children):node(path.rstrip('/'),depth+1)
     node('',0);return result

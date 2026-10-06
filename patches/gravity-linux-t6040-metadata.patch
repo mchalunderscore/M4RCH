@@ -1,0 +1,135 @@
+diff --git a/drivers/gpu/drm/asahi/asahi_m4.rs b/drivers/gpu/drm/asahi/asahi_m4.rs
+index e7223e0c5..a80be7d6d 100644
+--- a/drivers/gpu/drm/asahi/asahi_m4.rs
++++ b/drivers/gpu/drm/asahi/asahi_m4.rs
+@@ -7,6 +7,7 @@
+ 
+ mod float;
+ mod g16;
++mod g16_profile;
+ mod g16_alloc;
+ mod g16_compute;
+ mod g16_drm;
+@@ -27,7 +28,8 @@
+ use kernel::io::Io;
+ use kernel::{c_str, device::Core, devres::Devres, io::mem::IoMem, of, platform, prelude::*};
+ 
+-const SGX_SIZE: usize = 0x4000000;
++// Identification only needs the window through ID_CLUSTERS.
++const SGX_SIZE: usize = 0xd04020;
+ const ID_VERSION: usize = 0xd04000;
+ const ID_COUNTS_1: usize = 0xd04010;
+ const ID_COUNTS_2: usize = 0xd04014;
+@@ -42,18 +44,29 @@ struct M4Gpu {
+     OF_TABLE,
+     MODULE_OF_TABLE,
+     <M4Gpu as platform::Driver>::IdInfo,
+-    [(of::DeviceId::new(c_str!("apple,agx-t8132")), ())]
++    [
++        (of::DeviceId::new(c_str!("apple,agx-t8132")), 0x8132),
++        (of::DeviceId::new(c_str!("apple,agx-t6040")), 0x6040),
++    ]
+ );
+ 
+ impl platform::Driver for M4Gpu {
+-    type IdInfo = ();
++    type IdInfo = u32;
+     const OF_ID_TABLE: Option<of::IdTable<Self::IdInfo>> = Some(&OF_TABLE);
+ 
+     fn probe(
+         pdev: &platform::Device<Core>,
+-        _info: Option<&Self::IdInfo>,
++        info: Option<&Self::IdInfo>,
+     ) -> impl PinInit<Self, Error> {
+         let dev = pdev.as_ref();
++        let chip_id = *info.ok_or(ENODEV)?;
++        let metadata = g16_profile::profile(chip_id).ok_or(ENODEV)?;
++        let enabled = metadata.enabled_cores().ok_or(EINVAL)?;
++        dev_info!(dev, "GPU metadata: chip={:#x} variant={:?} clusters={} slots/cluster={} enabled={} window={:#x} (captured masks; not MMIO-verified)\n", metadata.chip, metadata.variant, metadata.masks.len(), metadata.slots_per_cluster, enabled, metadata.register_bytes);
++        if !metadata.normal_startup_implemented && *module_parameters::probe_only.value() == 0 {
++            dev_err!(dev, "T6040 firmware execution is not implemented\n");
++            return Err(ENOTSUPP);
++        }
+         if !(11..=g16_tvb::MAX_BLOCKS).contains(module_parameters::tvb_max_blocks.value()) {
+             return Err(EINVAL);
+         }
+@@ -86,6 +99,11 @@ fn probe(
+                 "Probe-only driver; GPU firmware execution is disabled\n"
+             );
+         }
++        // T6040 identification must not use T8132 power/MCC/firmware builders.
++        if chip_id == 0x6040 {
++            dev_info!(dev, "T6040 identification complete; no firmware or DRM startup\n");
++            return Ok(Self { _sgx: Some(sgx), _drm: None });
++        }
+         g16::validate_boot_resources(pdev)?;
+         let platform = g16_platform::Platform::new(dev)?;
+         let hwdata = platform.hwdata()?;
+@@ -123,7 +141,7 @@ fn probe(
+             description: "Maximum retained 128 KiB TVB blocks per context (11 through 6579)",
+         },
+         probe_only: u32 {
+-            default: 0,
++            default: 1,
+             description: "Identify the GPU without starting firmware or registering DRM",
+         },
+     },
+diff --git a/drivers/gpu/drm/asahi/g16_profile.rs b/drivers/gpu/drm/asahi/g16_profile.rs
+new file mode 100644
+index 000000000..cbe334f95
+--- /dev/null
++++ b/drivers/gpu/drm/asahi/g16_profile.rs
+@@ -0,0 +1,53 @@
++// SPDX-License-Identifier: GPL-2.0-only
++//! Metadata-only profiles. These do not qualify firmware objects or MCC writes.
++#[derive(Debug, PartialEq, Eq)]
++pub(crate) enum Variant { G, S }
++#[derive(Debug)]
++pub(crate) struct Profile {
++    pub chip: u32,
++    pub variant: Variant,
++    pub slots_per_cluster: u8,
++    pub masks: &'static [u32],
++    pub register_bytes: u64,
++    pub normal_startup_implemented: bool,
++}
++pub(crate) const T8132: Profile = Profile { chip: 0x8132, variant: Variant::G,
++    slots_per_cluster: 10, masks: &[0x3ff], register_bytes: 0x4000000,
++    normal_startup_implemented: true };
++// Observed board masks; other fuse configurations require their own capture.
++pub(crate) const T6040: Profile = Profile { chip: 0x6040, variant: Variant::S,
++    slots_per_cluster: 10, masks: &[0x3db, 0x3db], register_bytes: 0x3758000,
++    normal_startup_implemented: false };
++pub(crate) fn profile(chip: u32) -> Option<&'static Profile> {
++    match chip { 0x8132 => Some(&T8132), 0x6040 => Some(&T6040), _ => None }
++}
++impl Profile {
++    pub(crate) fn enabled_cores(&self) -> Option<u32> {
++        let valid = (1u32.checked_shl(self.slots_per_cluster.into())?).checked_sub(1)?;
++        if self.masks.is_empty() || self.masks.iter().any(|m| *m == 0 || *m & !valid != 0) { return None; }
++        Some(self.masks.iter().map(|m| m.count_ones()).sum())
++    }
++}
++#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
++pub(crate) struct Step { pub low_mhz: u32, pub high_mhz: u32,
++    pub low_index: usize, pub high_index: usize, pub core_voltage: u32, pub sram_voltage: u32 }
++/// Decode one cluster independently; caller supplies storage, with no power estimate.
++pub(crate) fn ladder(core: &[(u32,u32)], sram: &[(u32,u32)], out: &mut [Step]) -> Option<usize> {
++    if core.is_empty() || core.len() != sram.len() { return None; }
++    let mut first=0; let mut used=0;
++    while first<core.len() {
++        let mut last=first;
++        while last+1<core.len() && core[last+1].1==core[first].1 {last+=1;}
++        if used==out.len() || (first>0 && core[first].1<=core[first-1].1) {return None;}
++        let mut low=first; let mut high=first;
++        for i in first..=last {
++            if core[i].0!=sram[i].0 || core[i].0%1_000_000!=0 || sram[i].1!=sram[first].1 {return None;}
++            if core[i].0<core[low].0 {low=i;}
++            if core[i].0>core[high].0 {high=i;}
++        }
++        out[used]=Step {low_mhz:core[low].0/1_000_000,high_mhz:core[high].0/1_000_000,
++            low_index:low,high_index:high,core_voltage:core[first].1,sram_voltage:sram[first].1};
++        used+=1;first=last+1;
++    }
++    Some(used)
++}

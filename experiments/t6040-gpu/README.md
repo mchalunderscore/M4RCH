@@ -18,8 +18,7 @@ stay private in ignored output directories.
 `load-adt.py` uses the exact-kernel ADT helper to expose only loader-reserved
 System RAM as a read-only sysfs file. It validates build ID and kit checksums,
 captures the metadata, then unloads the module. `adt.py` decodes that metadata.
-The helper was built with W=1 and verified vermagic; native loading remains
-pending. No GPU state changes or new enrollment are needed for this capture.
+The helper was built with W=1 and verified vermagic; native read-only capture succeeded on the exact maintained build. No GPU state changes or new enrollment are needed for this capture.
 
 `patches/gravity-t6040-identify-only.patch` applies to the pinned Gravity source
 in `sources.json`. It adds a distinct T6040 match, bounds identification mapping
@@ -39,7 +38,7 @@ Known differences:
 | Performance tables | One table | Two independent 16-row tables |
 | Voltage groups | Eleven | Eleven in each table |
 | SGX register span | Identification maps 64 MiB | macOS translates about 55.3 MiB |
-| Firmware | Exact mBoot-18000.161.10 check | Linux loader's actual version still to capture |
+| Firmware | Exact mBoot-18000.161.10 check | Linux stage two is mBoot-18000.121.3 |
 | Mesa generation 16 | Asserts variant G | Needs explicit S support and layout audit |
 
 Current macOS firmware is not the Linux boot stub's firmware. Live physical
@@ -52,3 +51,43 @@ Public Gravity/Asahi sources and observed metadata are the inputs to this work;
 no Apple source, firmware disassembly or binary-derived control code is used.
 Derived kernel patch retains GPL-2.0-only provenance. Existing project USB work
 has separate provenance; this is not a repository-wide clean-room claim.
+
+## Native contract and offline builds (2026-10-06)
+
+The Linux boot ADT was captured using the guarded helper, which unloaded
+afterward. Its unrelated duplicate cpu-debug-interface siblings exposed a
+parser assumption: adt.py now retains both and rejects duplicated contract
+nodes. Both captured GPU performance tables exactly match the macOS evidence.
+The boot firmware is mBoot-18000.121.3, not the accepted .161.10 build; the exact
+firmware barrier is retained. GPU physical handoff regions are outside usable
+Linux RAM, but the required named GPU resources/alias are missing. No GPU MMIO
+was performed. WFI remains enabled.
+
+Three further patches are kept separate from the image recipe:
+
+- gravity-linux-t6040-metadata.patch: distinct metadata profile and generic
+  per-cluster ladder decoder plus guarded identification. Six Rust tests pass.
+- gravity-bootloader-t6040-metadata.patch: preserve live reservations, raw tables
+  and version metadata, leave the GPU node disabled; actual loader object builds.
+- gravity-mesa-t6040-metadata.patch: explicit S discovery/topology check, rejecting
+  unqualified S layouts before G16G initialization; C model tests pass.
+
+The pinned Gravity 7.1.13+ vmlinux and GPU .ko build successfully with warnings;
+Mesa shared Gallium/GBM/EGL libraries build into a private workspace prefix.
+These are not matched to the maintained 7.1.3-m4rch kernel and must not be
+loaded into it. Neither the loader nor desktop Mesa was replaced. The original
+identification-only patch remains an earlier candidate; its application receipt
+does not describe the expanded metadata patch.
+
+Rebuild instructions and the successful offline config are in REPRODUCE.md
+and configs/gravity-offline.config.
+
+Reviewed build receipts: docs/evidence/2026-10-06-gpu-native-build.json. Full
+captures/binaries/logs stay in ignored out/gpu-native-20261006 on this Linux
+checkout. Run make check for parser and compiled metadata regression tests.
+
+Next: integrate into the exact maintained source/config, qualify SGX power and
+Linux DT/IRQ/mailbox resources, then test native identification in a separate
+matched kernel. Firmware ABI comparison precedes startup or rendering. Keep
+Git changes on separate branches and exchange exact commits. Set any eventual
+trial GRUB entry as default before reboot: the owner cannot use its keyboard.
