@@ -295,8 +295,18 @@ def _build_and_install(project, root, config, lock, kernel_dir, module_manifest,
     run(["fdtoverlay", "-i", kernel_dir / "boot/t6040-j614s.dtb", "-o", merged,
          policy / "usr/lib/m4rch/board.dtbo"])
     from boot import read_fdt
+    baseline_nodes = read_fdt(merged)
+    # Retain the natively accepted both-left graph when publishing updates.
+    # Validate it against the capacity/right-only tree before packaging.
+    from left_usb_trial import combined_source
+    combined = workspace / "board-left-usb.dtso"
+    combined.write_text(combined_source((project / "sdboot/board.dtso").read_text(),
+                                        (project / "sdboot/left-usb-trial.dtso").read_text()))
+    run(["dtc", "-@", "-I", "dts", "-O", "dtb", "-o", policy / "usr/lib/m4rch/board.dtbo", combined])
+    run(["fdtoverlay", "-i", kernel_dir / "boot/t6040-j614s.dtb", "-o", merged,
+         policy / "usr/lib/m4rch/board.dtbo"])
     merged_nodes = read_fdt(merged)
-    sensors = peripheral_policy.check_overlay_nodes(merged_nodes)
+    sensors = peripheral_policy.check_overlay_nodes(merged_nodes, left_usb_baseline=baseline_nodes)
     import cpu_capacity
     sensors["cpu_capacity"] = cpu_capacity.check_nodes(merged_nodes)
     import struct
@@ -331,7 +341,10 @@ def _build_and_install(project, root, config, lock, kernel_dir, module_manifest,
         for file in (source, directory / "PKGBUILD"):
             shutil.copyfile(file, sources / file.name)
         packages.append("/tmp/arch-m4-packaging/" + name + "/" + result.name)
-        records[name] = {"version": version + "-1", "file": result.name, "sha256": sha256(result), "source_sha256": sha256(source)}
+        revision = re.search(r"(?m)^pkgrel=([0-9]+)$", recipe)
+        if revision is None:
+            raise ValueError("Package recipe needs a numeric pkgrel")
+        records[name] = {"version": version + "-" + revision.group(1), "file": result.name, "sha256": sha256(result), "source_sha256": sha256(source)}
     paru_package, records["paru-m4rch"] = build_paru(project, root, config, workspace, destination)
     packages.append(paru_package)
     # The ALARM 2.16 binary caps ARM64 allocations below 4 GiB, where Apple

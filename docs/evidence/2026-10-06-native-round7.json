@@ -1,0 +1,84 @@
+{
+  "schema": 1,
+  "archive_sha256": "06d8c0e8dbf96f968ed120bf88663f82ea7e042842b4eeaf526a7e2e8039fc36",
+  "verified_evidence_files": 255,
+  "continuous_capture": {
+    "samples": 720,
+    "validation_failures": 0,
+    "fan_mode_transition_bracket_boottime_s": [
+      660.781841,
+      661.78318
+    ],
+    "target_transition_bracket_boottime_s": [
+      661.782752,
+      662.781794
+    ],
+    "positive_rpm_bracket_boottime_s": [
+      663.781307,
+      664.781414
+    ],
+    "targets_rpm": [
+      2317,
+      2502
+    ],
+    "trigger": "unresolved; ordinary browsing/video/voice/window/USB activity was annotated",
+    "temperatures_fresh": true
+  },
+  "independent_clock_probes": {
+    "count": 28,
+    "max_largest_loop_GHz": {
+      "0": 3.932918809039818,
+      "8": 3.924358208955224
+    },
+    "controls_restored": true,
+    "new_trial_warnings": false,
+    "interpretation": "near3.924GHz in sampled windows including requests4512MHz; absolute ceiling not established",
+    "per_task_perf": false
+  },
+  "temperature_interpretation": {
+    "100C_stop": "agent-selected experimental bound, not qualified M4 throttle/safety limit",
+    "sensor_location": "unqualified",
+    "stopped_run_complete_score": false,
+    "peak_post_stop_sensor_C": 104.843,
+    "next": "same named keys under macOS, with thermal-pressure/frequency context; no arbitrary raised safe threshold"
+  },
+  "storage": {
+    "cache_flush_error": -84,
+    "write_io_error": true,
+    "boottime_s": [
+      304.216406,
+      304.241305
+    ],
+    "ext4_errors_count": 0,
+    "whole_medium_integrity_verified": false,
+    "exact_source_path": "drivers/mmc/core/sd.c sd_flush_cache -> sd_write_ext_reg at performance register offset+261",
+    "no_repair_or_destructive_test": true
+  },
+  "accepted_build_id": "40c433454ef265fcbdd50bac508cadfaad76f9d3",
+  "accepted_overlay_unchanged": true,
+  "scheduling_owner_evidence": "single-core improved from1500\u20132200 to steady~2600; attribution not isolated",
+  "macos_owner_benchmark_comparison": {
+    "owner_reported_version": "Geekbench 7.0.0",
+    "samples": 180,
+    "power": "AC Power, charged",
+    "smc_helper_failures": 0,
+    "fan_observation": "Both fan modes changed from 3 to 0; positive RPM appeared by the end of capture. Mode 3/zero RPM also occurs on macOS.",
+    "sensor_limits": "Tp0Y returned exactly 40 in 118 samples and below 10 in 34 samples; successful reads do not establish valid temperatures.",
+    "frequency_measurement": null,
+    "result_link_pending": false,
+    "capture_limits": "Collection began after owner started benchmark; no subtest boundaries. No safe thermal threshold inferred.",
+    "result": {
+      "url": "https://browser.geekbench.com/v7/cpu/559183",
+      "version": "Geekbench 7.0.0 for macOS AArch64",
+      "single_core": 3272,
+      "multi_core": 22419,
+      "os": "macOS 27.0.1 (Build 26A434)",
+      "model": "Mac16,8",
+      "cores": 12,
+      "reported_base_ghz": 4.51,
+      "power": "AC connected, owner confirmed",
+      "source": "Read from visible Geekbench result page through in-app browser; reported base frequency is not measured clock residency",
+      "powermetrics": "Not collected during this run"
+    }
+  }
+}

@@ -1,186 +1,132 @@
-# m4rch native capacity trial
+# T6040/G16S GPU bring-up — Gravity baseline
 
-The owner authorized this provisional capacity-only trial for the next boot.
-The SD `/dtbs/board.dtbo` now gives eight P CPUs DT weight 1024 and four E CPUs
-864. The pinned kernel's maximum-frequency normalization predicts runtime
-P=1024 and E=496. These are trial placement weights fitted to short integer
-measurements, not calibrated silicon DMIPS values or a promise of speedup.
+Focus on GPU now. Use `/boot/GPU0001`; work in
+`/home/alice/Documents/Codex/2026-10-05/he/outputs`. Preserve the working main
+kernel, WFI enabled, desktop and `/boot/MAIN0001` / `/boot/SMEK0001` rollback.
+No repeat of CPU validation or enrollment this round.
 
-Offline dtc/fdtoverlay validation changed exactly twelve capacity properties
-and confirmed every target against the live native CPU paths/classes. Kernel,
-initramfs, GRUB, resident loader, clock tables, governors, idle workarounds,
-USB resources and fan ownership are unchanged. No re-enrollment is required.
+## Accepted baseline
 
-## Verify this boot
+The maintained kernel return is verified: 563 manifest files, archive SHA256
+2231360d6e2a45472992d7d95681480641d45785fb30d5e429dcd308ca6d877d.
+Native `7.1.3-m4rch`, package7.1.3-2, build ID
+ce43447e60d7396e06667adb085c234c920ef10d passed the state/signal/ABI tests;
+owner confirms peripherals remain normal. WFI stays enabled. Prior actual
+4.512GHz and WFI power saving are established; this round's crypto comparison
+showed no meaningful performance-governor benefit. Keep schedutil. Native agent
+corrected LOAD.SH to fix OpenSSL buffer size: don't rerun the old unbounded kit
+script; its source/result is preserved in the returned archive.
 
-Use Alice's terminal. This kit has a read-only acceptance helper:
+## What macOS and source review establish
 
-```sh
-kit=/boot/cpu-tools-160e4b73d015
-capture="$HOME/m4rch-capacity-$(date -u +%Y%m%dT%H%M%SZ)"
-mkdir -m 700 "$capture"
-python3 "$kit/m4rch-verify-capacity" > "$capture/capacity.json"
-sudo sh "$kit/collect.sh" snapshot --label capacity-boot --output "$capture/baseline"
-```
+MACOS.JSN contains the selected current capture. This is G16S, two clusters,
+core masks0x3db/0x3db (8+8 enabled cores). Apple's raw num_cores20 describes slots;
+reported gpu-core-count16 and mask population agree. Don't report20 enabled.
+Both performance tables have16 rows and each groups into11 voltage steps;
+CONTRACT.PY preserves cluster-specific voltage/frequency rows and high/low
+indices. No relative-power calibration or max-power value is invented.
 
-Read the JSON even if the helper exits nonzero. It requires all twelve CPUs,
-correct MIDR classes and DT values, runtime P=1024/E=496, and unchanged maximum
-frequencies. If all remain 1024, inspect DT application, capacity parsing and
-cpufreq notifier completion before benchmarking. Include new dmesg warnings.
-The older package names remain expected until the owner chooses migration.
+Pinned public sources in SOURCES.JSN / SOURCE.TGZ:
+- GravityLinux/linux 3b85d81f656af14d0fc4bea3eef87fe040c424f9
+- GravityLinux/bootloader 950e6b7f268e71cf77889f27a760782bf898b651
+- GravityLinux/mesa 87ac51d411f0e58a9433567ec2666f457be89e1d
 
-If acceptance passes, run one bounded, unpinned local CPU workload and record
-where its executing thread spends time. Use the same workload/source/compiler
-as the prior comparison; capture before/after temperatures, AC and background
-load, and report placement without promising exclusive P-core residency.
-Keep all twelve cores online. Do not change clocks, governors or cooling.
+Critical mismatches: driver matches only apple,agx-t8132; GET_PARAMS reports
+0x8132/G/one cluster/ten slots; Platform rejects masks beyond10bits and uses
+T8132-specific MCC windows. Loader handles one table and inserts T8132 masks,
+37237mW and relative-power calibration. Firmware validation accepts only
+mBoot-18000.161.10 and a precise43-bit private VM contract. Current macOS reports
+mBoot-20457.1.29, but that is NOT evidence about the Linux boot stub.
+Mesa generation16 asserts variant G. Add S explicitly; do not spoof G or
+remove firmware checks to make a probe proceed. Shared ISA does not qualify
+all queue, tile-buffer, firmware-object, power or address-space layouts.
 
-## Rollback
+The Rust platform.rs and drm/mod.rs files are byte-identical to our pinned
+kernel source; that is encouraging for porting. The full driver/framework
+build still needs checking. Current kernel has CONFIG_RUST unset and no M4 GPU
+driver, so the Rust GPU patch cannot be insmod-ed into this existing kernel.
 
-The saved previous overlay and a hash-guarded restore script are in:
-`/boot/capacity-trial-01`. Restore from native Linux with:
+## Capture the actual Linux boot contract now
 
-```sh
-sudo sh /boot/capacity-trial-01/rollback.sh
-sync
-```
-
-Then reboot normally. The rollback script only replaces the SD overlay.
-From macOS, if Linux cannot boot, use the correctly mounted SD ESP:
-
-```sh
-cp /Volumes/ARCHBOOT/capacity-trial-01/board-before.dtbo /Volumes/ARCHBOOT/dtbs/board.dtbo
-sync
-```
-
-Use macOS Eject or `diskutil unmountDisk` before rebooting/removing the card.
-Do not rerun an older package kit's install script during this isolated trial:
-it may restore a previous overlay and mix changes. Preserve both artifacts.
-
-## Source and remaining investigations
-
-`capacity-trial-01` includes the exact source, validation receipt and pinned
-arch_topology/arm64 topology source. The generic capacity code multiplies raw
-DT weight by cpuinfo.max_freq after all CPU policies register, then normalizes
-and rebuilds scheduler domains. AMU configuration alone does not establish
-active frequency invariance. The earlier source-review packet remains on SD.
-
-Keep the 4.512 GHz request / 3.924 GHz status gap unresolved pending independent
-T6040 status/clock validation. The CPU driver's current-state readback is an
-OPP lookup, not an independent measured oscillator frequency. Software boost
-gating did not explain the gap in the return: top P OPPs were available and
-not marked turbo. Do not probe older chips' throttle registers.
-
-The return also caught an events worker using roughly half a core over five
-seconds; the callback was not identified. If it recurs, capture the executing
-workqueue callback. The retained kernel config has FTRACE disabled but
-PERF_EVENTS enabled, so start with the five-second software CPU-clock sampler:
+First verify kit SHA256 and run ordinary capture:
 
 ```sh
-cc -O2 -Wall -Wextra "$kit/m4rch-worker-sampler.c" -o "$capture/worker-sampler"
-# Set worker_pid to the current busy kworker PID found from interval CPU deltas.
-# sudo "$capture/worker-sampler" "$worker_pid" "$capture/worker-samples.jsonl"
-sudo cat /proc/kallsyms > "$capture/kallsyms.txt"
+OUT=/home/alice/Documents/Codex/2026-10-05/he/outputs/gpu-$(date -u +%Y%m%dT%H%M%SZ)
+mkdir "$OUT"
+(cd /boot/GPU0001 && sha256sum -c SUMS.TXT)
+sudo python3 /boot/GPU0001/COLLECT.PY --output "$OUT/baseline"
+sudo python3 /boot/GPU0001/LOADADT.PY --output "$OUT/boot-adt"
 ```
 
-The sampler requires a kworker PID, uses a private perf fd/ring and caps output.
-Resolve sample IP/callchain addresses against same-boot kallsyms and count the
-hot functions; exclude perf context-marker values. This may fail if software
-sampling/unwinding is unavailable: retain the exact error and do not rebuild
-or weaken kernel restrictions just to make it run. Native sampling is untested.
-The kallsyms capture contains privileged addresses; keep it private in the return.
+ADT.ko is built against the exact maintained kernel with verified vermagic and
+no W=1 warnings. LOADADT.PY checks the exact GNU build ID and kit hashes, refuses
+an already-loaded helper, and unloads its module in finally. The helper finds
+only the bootloader's phram-compatible reserved-memory node labelled adt,
+requires System RAM, maps it as cached RAM and exposes a read-only0400 sysfs
+file. It doesn't read GPU MMIO, write registers, start firmware or register DRM.
+No /dev/mem, arbitrary physical-address module parameters or MTD write surface.
 
-## Complete this session before returning
+If it refuses the reservation, preserve the failure and baseline FDT, inspect
+why System RAM/resource checks failed, and return a precise fix; don't bypass
+checks or substitute macOS addresses. ADT.PY bounds/parses raw metadata and
+selects chosen/arm-io/sgx fields. Raw FDT/ADT stay private in the return archive.
 
-Do capacity acceptance first, then gather the busy-worker trace and short
-placement/clock/cooling captures in the SAME boot. Runtime diagnostics, bounded
-tracing and workload compilation do not require re-enrollment or reboot. If a
-worker can be traced to a particular driver, inspect its supplied source and
-return a concrete candidate fix, not only another request to collect logs.
-Do not install a speculative driver or switch several policies at once.
+Resolve: exact Linux boot firmware identifier; both performance tables and
+SRAM rows; private VM base/size; existing GPU firmware/TTB/page-table/handoff
+reservations and whether their physical ranges are excluded from the Linux
+allocator; GPU node/status/aliases/reg names/power domain/mailbox/AIC resources.
+Compare with MACOS.JSN, but take live reservation addresses from this boot.
+If firmware is different, keep the exact version barrier and identify the
+specific ABI differences before extending it. No blanket allow-any version.
 
-`/boot/session-source-context` supplies pinned scheduler/AMU and
-workqueue context. Read it locally rather than spending the session resolving
-network fetch failures. Mark unresolved register semantics as unresolved;
-ordinary sysfs status readback still is not independent clock measurement.
+## Begin the actual source port in this session
 
-macOS attachment captures now independently map left-front to usb-drd1
-(controller 0x38a280000) and left-rear to usb-drd0 (0x382280000). Both showed
-the owner's drive at a reported 5 Gbit/s in macOS. See `/boot/usb-socket-map-20261005`
-for filtered ancestry captures and a summary; this is not Linux USB3 support.
-The hpm0/hpm1 assignments still rely on the ADT associations, not a separate
-PD attachment-state capture. Left-specific transport/repeater validation remains. Keep the working right port and AC unchanged.
-Do not enable left nodes as passive discovery. Keep NOP idle/hotplug safeguards.
+IDENTIFY.PAT is an identification-only patch against the pinned Gravity
+asahi_m4.rs; source/patch/result hashes are in SOURCES.JSN. Application verified;
+full Rust module build and native GPU register reads are NOT yet verified.
+It adds a distinct T6040 match, defaults probe_only1, maps only the window
+through the published ID offsets, and rejects T6040 probe_only0 before normal
+registration. T6040 returns before T8132 power/MCC/firmware builders.
+No rendering driver is installed or enabled by the ADT capture step.
 
-## Return and filesystem recovery
+1. Extract SOURCE.TGZ into a new ext4 working directory and verify SOURCES.JSN
+   hashes. It contains selected56 public files, not a complete kernel checkout.
+   Use full pinned checkouts when compiling. Review/apply IDENTIFY.PAT in the
+   Gravity checkout, not the installed kernel. Record Rust/bindgen/clang and
+   required Kconfig/framework differences. Produce actual compilation logs;
+   don't label patch application or Rust parsing as a successful module build.
+2. Implement a T6040 profile separately from T8132: chip/variant/cluster masks,
+   both independent performance ladders, register sizes and discovered MCC
+   routing. Keep table decoding generic and test both profiles offline.
+   MACOS.JSN already provides derived ladders without copying its live physical
+   firmware-memory allocations. Separate physical slots from fused active cores.
+3. Audit bootloader memory reservation/handoff against this boot's ADT. Define
+   the minimal T6040 metadata handoff patch and exact DT resources needed for
+   the identification probe. Review SGX power state/register ID layout before
+   actual MMIO: even an ID-only probe can fail on an unpowered window. Do not
+   start firmware or change the installed loader as part of this data capture.
+4. Audit Mesa's G16G selection and generation16 variant assertion. Prepare an
+   explicit G16S model/dispatch change with topology/layout tests, retaining
+   G16G behavior. Don't simply map S to G to bypass assertions. Build candidates
+   into a separate prefix, never overwrite working system Mesa yet.
 
-Both incoming kits had the same helper restored from a recovered FAT filename,
-with exact manifest hash matches. That recurrence is real but its cause is
-undetermined. Preserve recovered files; do not repair or reflash the card.
-The macOS agent saves rollback and verifies read-back, then unmounts the SD
-cleanly. Report whether the next kit arrives intact without another recovery.
+Proceed with code and offline builds as far as the captured contract permits;
+return concrete patches and build failures rather than only a new checklist.
+First hardware milestone: correctly identified G16S and validated memory
+contract. Then firmware boot/render node, headless buffer/shader/triangle tests,
+then desktop presentation. DCP display support is separate: headless rendering
+can be pursued before replacing the working simple framebuffer.
 
-Write your own `$capture/HANDOVER.md` with capacity acceptance, workload
-placement, temperatures/background work, changes and rollback status, then:
+Gravity open PR #5 (https://github.com/GravityLinux/linux/pull/5) adds a
+macOS ADT evidence collector for J614s PCIe/SD, not GPU enablement. No open
+T6040 GPU implementation was found in the inspected PR lists. Treat this as
+a public-work snapshot, not proof nobody is working privately on G16S.
 
-```sh
-stamp=$(date -u +%Y%m%dT%H%M%SZ)
-sudo sh "$kit/collect.sh" bundle --input "$capture" --output "/boot/m4rch-return-$stamp.tar.gz"
-sync
-```
+## Return
 
-## Both-left USB2 trial in this visit
-
-Charging stays on MagSafe. The owner authorized trying both left ports.
-Finish the capacity/worker measurements above, then proceed without a return
-handoff to macOS. `/boot/left-usb-trial-01` holds the combined capacity + left
-USB overlay, validation, source and a guarded activation/rollback helper.
-Its `deployment.json` identifies the exact matching pacman update directory.
-Install the matching kit with `sudo sh /boot/update-a622abf242aa/install.sh`,
-following its own rollback instructions. This migrates the old package names to m4rch names. Keep the
-working old kernel/module/boot rollback kit `/boot/update-c1934fe10df6`; its
-kernel payload matches the currently booted SD image. Save the current ESP
-boot files before installation. Do not remove the old kit to save space.
-
-After the install has completed successfully:
-
-```sh
-sudo python3 /boot/left-usb-trial-01/activate.py activate
-sync
-sudo reboot
-```
-
-The helper refuses a different SD ESP, unexpected overlay, mismatched kernel
-image, or missing matching kernel/modules provenance. One ordinary Linux
-reboot is needed to load this driver and device tree. Do not force-load modules
-built for a different running kernel. The resident m1n1/U-Boot bytes stay fixed.
-
-This adds a0 SPMI, HPM0/HPM1, two USB2 PHY providers, four DARTs, and the two
-controller/connector graphs. The driver now prioritizes explicit cable events
-over inherited forced-device mode. Right USB and the capacity weights remain
-unchanged. USB3, Thunderbolt, USB-C charging and role swaps are outside this
-trial. macOS confirmed physical drd socket mapping; the PD-to-socket mapping
-is provisional from ADT port numbers. PHY sequencing on these left instances
-is unverified. Log probe failures before changing transport or PHY registers.
-
-On the new kernel, collect `uname -r`, `pacman -Q linux-m4rch config-m4rch`,
-`journalctl -b -k`, `systemctl status m4rch-usb.service`, `lsusb -t`, and the
-collector snapshot. Test each left socket separately with YubiKey first,
-both orientations, boot-connected and reconnect; record LED and enumeration.
-Then try the thumb drive, both orientations, and only an explicitly created
-scratch file for transfer/hash testing. Repeat the right-port smoke test.
-Use kernel USB/Type-C messages and `/sys/class/typec` to distinguish PD attach
-from role-switch/PHY/controller failures. Do not infer enumeration from hubs.
-
-If either left path hangs or disrupts the working right port, restore the
-capacity-only overlay, retaining the newer kernel for diagnosis:
-
-```sh
-sudo python3 /boot/left-usb-trial-01/activate.py rollback
-sudo reboot
-```
-
-If Linux cannot start, macOS can restore the saved capacity overlay from the
-mounted ESP's `left-usb-trial-01/board-capacity.dtbo` to `dtbs/board.dtbo`.
-The package update's separate rollback is needed to restore the old kernel.
-Return CPU results and both USB trials together, including failed tests.
+Create `/boot/m4rch-return-gpu.tar.gz` and SHA256 sidecar, with HANDOVER.md,
+complete captures, source pins, patches, offline tests and build logs. Extract
+and verify an internal SHA256SUMS manifest. Record what is implemented, compiled,
+natively executed and still assumed separately. No CPU retuning, speaker/audio,
+suspend, GPU power-limit/voltage changes or desktop package replacement this round.
+Keep current GRUB selection and the working matched rollback untouched.

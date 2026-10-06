@@ -113,7 +113,7 @@ def check_build(config_path, dtb_path):
     return check_nodes(read_fdt(Path(dtb_path)))
 
 
-def check_overlay_nodes(nodes):
+def check_overlay_nodes(nodes, *, left_usb_baseline=None):
     """Check the merged SD DT separately, preserving the enrolled baseline."""
     result = check_nodes(nodes)
     for key in SOC_TEMPERATURE_KEYS:
@@ -127,11 +127,11 @@ def check_overlay_nodes(nodes):
         for prop, suffix in (("minimum", "Mn"), ("maximum", "Mx"), ("target", "Tg"), ("mode", "Md")):
             if props.get("apple,fan-" + prop) != f"F{index}{suffix}".encode() + b"\0":
                 raise ValueError(f"Verified J614s fan {index} {prop} key missing from SD overlay")
-    usb = check_usb_overlay(nodes)
+    usb = check_usb_overlay(nodes, left_usb_baseline=left_usb_baseline)
     return dict(result, soc_temperature_keys=list(SOC_TEMPERATURE_KEYS), usb=usb)
 
 
-def check_usb_overlay(nodes):
+def check_usb_overlay(nodes, *, left_usb_baseline=None):
     """Verify role events can reach the right controller after SD overlay merge.
 
     The legacy force-host property stays in the enrolled baseline. Its SD-only
@@ -148,8 +148,15 @@ def check_usb_overlay(nodes):
         raise ValueError("SD USB overlay must wait for cable events in USB2 host mode")
     if connector.get("data-role") != b"host\0" or connector.get("power-role") != b"source\0":
         raise ValueError("SD USB overlay must retain the right host/source connector")
+    left_result = None
+    if left_usb_baseline is not None:
+        try:
+            from .left_usb_trial import validate
+        except ImportError:
+            from left_usb_trial import validate
+        left_result = validate(left_usb_baseline, nodes)
     for path in ("/soc/usb@382280000", "/soc/usb@38a280000"):
-        if path in nodes and nodes[path].get("status") != b"disabled\0":
+        if left_result is None and path in nodes and nodes[path].get("status") != b"disabled\0":
             raise ValueError("SD USB overlay unexpectedly enables an unreviewed left port")
     endpoints = (USB_RIGHT + "/port/endpoint", USB_CONNECTOR + "/port/endpoint")
     handles = []
@@ -167,7 +174,7 @@ def check_usb_overlay(nodes):
         if _integer(nodes[path].get("remote-endpoint", b"")) != remote:
             raise ValueError("SD USB role graph must have reciprocal controller/connector endpoints")
     return {"port": "right", "maximum_speed": "high-speed", "wait_for_cable": True,
-            "native_device_enumeration_verified": False}
+            "native_device_enumeration_verified": False, "left": left_result}
 
 
 def read_runtime(sysfs=Path("/sys"), procfs=None):

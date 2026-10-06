@@ -1,0 +1,28 @@
+--- a/drivers/cpuidle/cpuidle-apple.c
++++ b/drivers/cpuidle/cpuidle-apple.c
+@@ -400,6 +400,7 @@
+ 	ct_cpuidle_enter();
+ 
+ 	switch(index) {
++	case STATE_WFI:
+ 	case STATE_PWRDOWN:
+ 		if (trace && experimental_t6040_idle_wfi_only) {
+ 			if (!continuous)
+@@ -489,8 +490,15 @@
+ 	int ret;
+ 
+ 	if (experimental_t6040_idle_continuous) {
+-		strscpy(apple_idle_driver.states[STATE_PWRDOWN].name, "Saved WFI");
+-		strscpy(apple_idle_driver.states[STATE_PWRDOWN].desc, "Software-saved WFI trial");
++		/* Only the saved-WFI trial uses this shallow state. Normal is unchanged. */
++		apple_idle_driver.states[STATE_WFI].enter = apple_enter_idle;
++		apple_idle_driver.states[STATE_WFI].enter_s2idle = apple_enter_idle;
++		apple_idle_driver.states[STATE_WFI].flags = CPUIDLE_FLAG_RCU_IDLE;
++		apple_idle_driver.states[STATE_WFI].exit_latency = 10;
++		apple_idle_driver.states[STATE_WFI].target_residency = 1;
++		strscpy(apple_idle_driver.states[STATE_WFI].name, "Saved WFI");
++		strscpy(apple_idle_driver.states[STATE_WFI].desc, "Software-saved WFI trial");
++		apple_idle_driver.state_count = 1;
+ 	}
+ 
+ 	ret = platform_driver_register(&apple_cpuidle_driver);

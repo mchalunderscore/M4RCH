@@ -1,0 +1,37 @@
+--- a/drivers/cpuidle/cpuidle-apple.c
++++ b/drivers/cpuidle/cpuidle-apple.c
+@@ -6,11 +6,18 @@
+  */
+ 
+ #include <linux/init.h>
++#include <linux/moduleparam.h>
+ #include <linux/cpuidle.h>
+ #include <linux/cpu_pm.h>
+ #include <linux/platform_device.h>
+ #include <linux/of.h>
+ #include <asm/cpuidle.h>
++
++/* Experimental J614s opt-in. Retention on T6040 is not yet qualified. */
++static bool experimental_t6040_idle;
++module_param_named(experimental_t6040_idle, experimental_t6040_idle, bool, 0400);
++MODULE_PARM_DESC(experimental_t6040_idle,
++		"Opt into experimental J614s/T6040 deep idle (default off)");
+ 
+ enum idle_state {
+ 	STATE_WFI,
+@@ -158,8 +165,14 @@
+ 	      of_machine_is_compatible("apple,t6030") ||
+ 	      of_machine_is_compatible("apple,t6031") ||
+ 	      of_machine_is_compatible("apple,t6032") ||
+-	      of_machine_is_compatible("apple,t6034")))
++	      of_machine_is_compatible("apple,t6034") ||
++	      (experimental_t6040_idle &&
++	       of_machine_is_compatible("apple,t6040") &&
++	       of_machine_is_compatible("apple,j614s"))))
+ 		return 0;
++
++	if (of_machine_is_compatible("apple,t6040"))
++		pr_warn("m4rch: experimental T6040 deep idle enabled; retention unqualified\n");
+ 
+ 	pdev = platform_device_register_simple("cpuidle-apple", -1, NULL, 0);
+ 	if (IS_ERR(pdev)) {

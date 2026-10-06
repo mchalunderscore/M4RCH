@@ -1,0 +1,18 @@
+{
+  "source_commit": "e9d2237cd064e6d086d938cd9c85e0c963cf7291",
+  "built_tests": [
+    "RUNSIG.PY",
+    "GUARD.PY",
+    "BUILD.JSN",
+    "PROBE",
+    "SSVORIG",
+    "SSVNEON",
+    "SSVSTRM",
+    "sve-test.S"
+  ],
+  "kernel_changed": false,
+  "VM_TPIDR2": "Exit0, all five TAP subtests skipped because SME absent; not hardware validation",
+  "native_tested": false,
+  "test_manifest_sha256": "278555cbc75505dc86d504a968ac2edf5c0235c9051e8e527e1e4140c7a37c9d",
+  "signal_variant_change": "NEON clobbers in SM=0, explicitly SMSTART immediately before PTRUE; SMSTOP before return"
+}

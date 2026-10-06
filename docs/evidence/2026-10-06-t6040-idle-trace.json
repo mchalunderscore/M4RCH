@@ -1,0 +1,78 @@
+{
+  "schema": 1,
+  "build_id": "8d6dd69d7b26087f4b0ea6a438be6f214d47d182",
+  "release": "7.1.3-m4rch",
+  "activation": "cpuidle_apple.experimental_t6040_idle=1 cpuidle_apple.experimental_t6040_idle_trace=1 nokaslr",
+  "normal_build_id": "539332b712a607b9f9c0bcd7bfa34d489149d1bb",
+  "kernel_sha256": "f004841f5a02609a87fa6e481e7943669871b238023b652de987e727383cbcb2",
+  "initramfs_sha256": "3d2cd022c56acb3f00c3bc1a99177c211ddec396dcde5f60e80a6ae052d6fca0",
+  "config_sha256": "ccf4d2cc8bd12107c56a5e451ccd678d2749756f9bebc918df113d2e19d58af6",
+  "modules_compatibility": "Compared 205 regular archive members: only modules.builtin.modinfo changed; all module binaries and dependency files identical. Normal initramfs retained.",
+  "normal_kernel_sha256": "4b0141318a5a823ee62d82e0ccb0383539895d26d3ea90213ee9bc791d3d3fba",
+  "native_tested": true,
+  "board_gate": [
+    "apple,t6040",
+    "apple,j614s"
+  ],
+  "default_off": true,
+  "deep_assembly_unchanged": false,
+  "build_passed": true,
+  "grub-normal.cfg_sha256": "f2460b8131afd46ab1cc223a76db46083854689df241cd733ab5b5dde156bde9",
+  "grub-trial.cfg_sha256": "15252ec3d1ce23b87ae99dec72c87db8d7e724780cffdfa801b699bede3a09d4",
+  "w1_compile_passed": true,
+  "original_deep_function_unchanged": true,
+  "trace_cpu": 4,
+  "maximum_deep_attempts": 1,
+  "trace_stages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "early_fault_frame": true,
+  "w1_warning_note": "Existing ESR class designated-initializer override warnings; no diagnostic format warnings.",
+  "source_tests_passed": 552,
+  "source_tests_skipped": 3,
+  "additional_collector_tests_passed": 2,
+  "final_patch_tests_passed": 2,
+  "assembly_review": {
+    "preserves_live_x0": true,
+    "stack_aligned": true,
+    "original_masks_retained": true,
+    "shadow_call_stack_disabled": true
+  },
+  "linked_instruction_sites": {
+    "ffffc000810dcd94": "x0, s3_5_c15_c5_0",
+    "ffffc000810dcdb0": "s3_5_c15_c5_0, x0",
+    "ffffc000810dcdcc": "wfi",
+    "ffffc000810dcde4": "x0, isr_el1",
+    "ffffc000810dce00": "x0, s3_5_c15_c5_0",
+    "ffffc000810dce1c": "s3_5_c15_c5_0, x0"
+  },
+  "native_outcome": {
+    "source": "owner boot photo IMG_0860",
+    "cpu": 4,
+    "task": "swapper/4",
+    "visible_stages": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "first_register_read_value": "0x0000000000000000",
+    "fault_pc": "0xffffc000810dcdb0",
+    "fault_lr": "0xffffc000810dcda8",
+    "fault_sp": "0xffffc00082057d10",
+    "fault_pstate": "0x00000000614000c9",
+    "fault_esr": "0x0000000002000000",
+    "matched_instruction": "msr s3_5_c15_c5_0, x0",
+    "matched_instruction_word": "0xd51df500",
+    "wfi_reached": false,
+    "conclusion": "Initial write to the existing Apple idle control register faults before DSB/WFI; read completed. Does not diagnose state retention or prove why the write is unavailable."
+  }
+}

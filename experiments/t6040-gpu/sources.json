@@ -1,0 +1,307 @@
+{
+  "schema": "m4rch.gravity-gpu-sources.v1",
+  "repositories": {
+    "linux": {
+      "url": "https://github.com/GravityLinux/linux",
+      "revision": "3b85d81f656af14d0fc4bea3eef87fe040c424f9"
+    },
+    "mesa": {
+      "url": "https://github.com/GravityLinux/mesa",
+      "revision": "87ac51d411f0e58a9433567ec2666f457be89e1d"
+    },
+    "bootloader": {
+      "url": "https://github.com/GravityLinux/bootloader",
+      "revision": "950e6b7f268e71cf77889f27a760782bf898b651"
+    }
+  },
+  "files": [
+    {
+      "repository": "linux",
+      "path": "Makefile",
+      "sha256": "8565c2fa8574b1cb2f4ae32acdcfcef4b946397df990fa50d26a75617fe6388d"
+    },
+    {
+      "repository": "linux",
+      "path": "arch/arm64/boot/dts/apple/t8132.dtsi",
+      "sha256": "677e0667606b0acbed6f231b922625b88a48cd2100f42f4f7e77562c102b728d"
+    },
+    {
+      "repository": "linux",
+      "path": "drivers/gpu/drm/Kconfig",
+      "sha256": "7afd87c1df870c20353092ee4a6a5865464040155fbd861fcb7db8d258246f92"
+    },
+    {
+      "repository": "linux",
+      "path": "drivers/gpu/drm/asahi/Kconfig",
+      "sha256": "d266f29834e5dab7504c75473cc40322c6937d0546874f5cddc876d049270e0a"
+    },
+    {
+      "repository": "linux",
+      "path": "drivers/gpu/drm/asahi/Makefile",
+      "sha256": "ee49dd106391bae32d98d7847c205dc7fc79c786d16e250370509edbd1bf9d4f"
+    },
+    {
+      "repository": "linux",
+      "path": "drivers/gpu/drm/asahi/alloc.rs",
+      "sha256": "4873ad827d368e5538ea7d82f203d8924ebb6743cb9da90483c1b6a74d8a4f63"
+    },
+    {
+      "repository": "linux",
+      "path": "drivers/gpu/drm/asahi/asahi.rs",
+      "sha256": "dcc8943d491103296988d529041bf070e24fe9db6e6a43a11f3c2264c9412a40"
+    },
+    {
+      "repository": "linux",
+      "path": "drivers/gpu/drm/asahi/asahi_m4.rs",
+      "sha256": "83121b03dbdb164c793b4da092a39f7eeeacbddef22bfe2596f6abb0032307c4"
+    },
+    {
+      "repository": "linux",
+      "path": "drivers/gpu/drm/asahi/buffer.rs",
+      "sha256": "77ca77e3e338b0713f4568dec1cdcb2e56161c73417bcf95c9d5ff07263ca356"
+    },
+    {
+      "repository": "linux",
+      "path": "drivers/gpu/drm/asahi/channel.rs",
+      "sha256": "833fdbbb2515d97cc84b5d4a131a7c51f9c03c0ff3da4ca6b145b48a20524bb3"
+    },
+    {
+      "repository": "linux",
+      "path": "drivers/gpu/drm/asahi/crashdump.rs",
+      "sha256": "d4f7b36efe91e65b2273b549631f9a58c387ca4a6695e0d5d68b650e89c55c5c"
+    },
+    {
+      "repository": "linux",
+      "path": "drivers/gpu/drm/asahi/debug.rs",
+      "sha256": "e1f778ee611ee37bb33e418510ee5b3a9837632ec0f8cc5a5827e9ccebc58037"
+    },
+    {
+      "repository": "linux",
+      "path": "drivers/gpu/drm/asahi/driver.rs",
+      "sha256": "7a81fbdbd582edff0d30346576d98d842a18977489300ac395928aab8b589a36"
+    },
+    {
+      "repository": "linux",
+      "path": "drivers/gpu/drm/asahi/event.rs",
+      "sha256": "191f7df430ff4cef9d702d47413fb51764f8d20445ee4f4ba0d0ae7eea96cbb1"
+    },
+    {
+      "repository": "linux",
+      "path": "drivers/gpu/drm/asahi/file.rs",
+      "sha256": "e880e91345476d8aa7a1ac7eb8118579c99d7cf3bfeb2888da2c52bcfa87a92e"
+    },
+    {
+      "repository": "linux",
+      "path": "drivers/gpu/drm/asahi/float.rs",
+      "sha256": "e6c2a8f3a574b8f3058f42b0ab2d359af78c67dc68b2bfdcc85bbe683d7edde1"
+    },
+    {
+      "repository": "linux",
+      "path": "drivers/gpu/drm/asahi/g16.rs",
+      "sha256": "605f15066d3abb5e65da9fe9505e21d4e9e3725a342a7a8cd9fd61e3e1923677"
+    },
+    {
+      "repository": "linux",
+      "path": "drivers/gpu/drm/asahi/g16_alloc.rs",
+      "sha256": "eb87244c06e503d059dec31fd05ae6ff276b2b99692d3515ed6449c9eacf1c3b"
+    },
+    {
+      "repository": "linux",
+      "path": "drivers/gpu/drm/asahi/g16_compute.rs",
+      "sha256": "43c79cf239b75490185a68fac805dedb1e7cbf47d3f5ad490a399f1cc1192687"
+    },
+    {
+      "repository": "linux",
+      "path": "drivers/gpu/drm/asahi/g16_drm.rs",
+      "sha256": "630f320e9759364ec3fef7314d2cee6d39be30e5f8680fdd6a0fc1b2c8b4202e"
+    },
+    {
+      "repository": "linux",
+      "path": "drivers/gpu/drm/asahi/g16_fw.rs",
+      "sha256": "507ef7a73541124ce249b21a1b26dafb245d069407acf5e2b81486c972527b20"
+    },
+    {
+      "repository": "linux",
+      "path": "drivers/gpu/drm/asahi/g16_notify.rs",
+      "sha256": "aa87cbe513f5f658348862696c40b513e44b18881c8ab70988d8e4113102f8bb"
+    },
+    {
+      "repository": "linux",
+      "path": "drivers/gpu/drm/asahi/g16_platform.rs",
+      "sha256": "a051ce1add8bd67fb925637bffa578818b64601f115ee784f123123ef97de3e3"
+    },
+    {
+      "repository": "linux",
+      "path": "drivers/gpu/drm/asahi/g16_power.rs",
+      "sha256": "d83adbed353e99627a237b63ac138b55c03b55cb1c639a5d85a092bfb858ad89"
+    },
+    {
+      "repository": "linux",
+      "path": "drivers/gpu/drm/asahi/g16_queue.rs",
+      "sha256": "167219617c4bae06f1ac8f3be9761b80eba66b8a5176de121601456a7975bcfd"
+    },
+    {
+      "repository": "linux",
+      "path": "drivers/gpu/drm/asahi/g16_render.rs",
+      "sha256": "718b2fd0492bd3cefe24a6daecf93f8b95cbdb93588f3a285902483b2cf600fa"
+    },
+    {
+      "repository": "linux",
+      "path": "drivers/gpu/drm/asahi/g16_runtime.rs",
+      "sha256": "b70b1d6a18124f48cdf24dff9b5df864fe56a21f75b25c06185943ad8864951d"
+    },
+    {
+      "repository": "linux",
+      "path": "drivers/gpu/drm/asahi/g16_stamp.rs",
+      "sha256": "59ce7ae92d9bfb4360c6cfccd1e2d1cf3231cf3f373c75c8802f6362efc441b1"
+    },
+    {
+      "repository": "linux",
+      "path": "drivers/gpu/drm/asahi/g16_tvb.rs",
+      "sha256": "d1480c396f5e1c353c225cbce38d76d2f5a69052647370669086ff6779434945"
+    },
+    {
+      "repository": "linux",
+      "path": "drivers/gpu/drm/asahi/g16_vm.rs",
+      "sha256": "042ff8b086f00bf9fee64199fd2414ae844508acfb07a1af9fb18e2bd609f4f6"
+    },
+    {
+      "repository": "linux",
+      "path": "drivers/gpu/drm/asahi/gem.rs",
+      "sha256": "f288b8c6c7a486e8dbeec97ccd68ae66c1bc08e322c546ede5abe43657da0a42"
+    },
+    {
+      "repository": "linux",
+      "path": "drivers/gpu/drm/asahi/gpu.rs",
+      "sha256": "180e48d6ad53349baa59ef34142bc10550fdde1494c86f631866470c9462717d"
+    },
+    {
+      "repository": "linux",
+      "path": "drivers/gpu/drm/asahi/initdata.rs",
+      "sha256": "e5aab61c6363faa8934d19208fae1787a37246f68057cba38a08b66e3345c019"
+    },
+    {
+      "repository": "linux",
+      "path": "drivers/gpu/drm/asahi/m4_mem.rs",
+      "sha256": "27b49efa2d7f9b16a89f9f9c8c1e16843e36c6e9a2dff463fccaa17927e25f9e"
+    },
+    {
+      "repository": "linux",
+      "path": "drivers/gpu/drm/asahi/m4_pgtable.rs",
+      "sha256": "bed5f5ea1dd022576aabad1f9940fd554b2b1655e445cdf1174397e90c0a3c2a"
+    },
+    {
+      "repository": "linux",
+      "path": "drivers/gpu/drm/asahi/m4_util.rs",
+      "sha256": "daaea0ea13fadec25ef667d8ad751164983c39186e1aa6aaa9f55323cc697bdb"
+    },
+    {
+      "repository": "linux",
+      "path": "drivers/gpu/drm/asahi/mem.rs",
+      "sha256": "d99266ff2c6b36f89091446efc32db00aaec539b2b9b5da583170612a3d20d3b"
+    },
+    {
+      "repository": "linux",
+      "path": "drivers/gpu/drm/asahi/microseq.rs",
+      "sha256": "780959512788cff5e74a6a6fc6a9c7d1306b81841481cf60f0a72cee8f302b93"
+    },
+    {
+      "repository": "linux",
+      "path": "drivers/gpu/drm/asahi/mmu.rs",
+      "sha256": "e87ed1cb70327029eb18b4708adfae639f7152ee850bf9702473bf49c894e6ec"
+    },
+    {
+      "repository": "linux",
+      "path": "drivers/gpu/drm/asahi/object.rs",
+      "sha256": "4066a68e3f949bf06c7f28f2f040894d656c7f24c1cd12bbba784b85b076ab90"
+    },
+    {
+      "repository": "linux",
+      "path": "drivers/gpu/drm/asahi/pgtable.rs",
+      "sha256": "a25a13fbcb41119ce77ed1f87e0002b8d92d4324ccd91a8005f3ba2d1b5ae230"
+    },
+    {
+      "repository": "linux",
+      "path": "drivers/gpu/drm/asahi/regs.rs",
+      "sha256": "13aaa8ddc0fbbf81544de2432545a6aff8e096d5507a76ca53eb864a76965446"
+    },
+    {
+      "repository": "linux",
+      "path": "drivers/gpu/drm/asahi/slotalloc.rs",
+      "sha256": "3d337c785ac42fac91cce6219c1009c9c6c41db43ab9b7b6505106f92360c844"
+    },
+    {
+      "repository": "linux",
+      "path": "drivers/gpu/drm/asahi/util.rs",
+      "sha256": "9865693ed5bbc946a7d7467be8ae9f6136def383c53af663ab253ff78b8abed9"
+    },
+    {
+      "repository": "linux",
+      "path": "drivers/gpu/drm/asahi/workqueue.rs",
+      "sha256": "6ddfcbdbf88dc6e4088c3c7516b8651874cdaaeedfc9bf54dd98bc3f60b95b1f"
+    },
+    {
+      "repository": "linux",
+      "path": "rust/kernel/drm/mod.rs",
+      "sha256": "9332df4f92b7da77d7f7a2eb98d0d2dd523c992dd27f537ccae9cc9f376a9acb"
+    },
+    {
+      "repository": "linux",
+      "path": "rust/kernel/of.rs",
+      "sha256": "6b1985bc0f8e0e9066e358fc14fb4fd8678e39794f897fc2cfca56e1bed46925"
+    },
+    {
+      "repository": "linux",
+      "path": "rust/kernel/platform.rs",
+      "sha256": "5d1abaaaed09475d811489d2c457cd0ef46823243d45f6dbd09e74c153daa085"
+    },
+    {
+      "repository": "linux",
+      "path": "scripts/min-tool-version.sh",
+      "sha256": "e57e2e87eedc00583e0823fd261152905b2a093f71c4f9a170ec6338ae7760e0"
+    },
+    {
+      "repository": "mesa",
+      "path": "src/asahi/ci/m4/README.md",
+      "sha256": "d9b4d1514de804412ab0cd1396da96aeb71b232028d9e85fb3cdd90a37bc4a4e"
+    },
+    {
+      "repository": "mesa",
+      "path": "src/asahi/drm-shim/README.m1n1-g16g.md",
+      "sha256": "8903e77d37603303c49a79f3374b33155f21431efced31da476caf048e5e71aa"
+    },
+    {
+      "repository": "mesa",
+      "path": "src/asahi/lib/agx_device.c",
+      "sha256": "f36db7c8eea7866a8fa1ef484a8109434352d92f7622f4c8a3f8c0568493bf42"
+    },
+    {
+      "repository": "mesa",
+      "path": "src/asahi/lib/agx_device.h",
+      "sha256": "59e31b0169e13564fd150991063778d810ceeb9eae2133e6e5bab84b497c4342"
+    },
+    {
+      "repository": "bootloader",
+      "path": "proxyclient/m1n1/agx/initdata.py",
+      "sha256": "813203661d7e853fa1264c0ec01e5b489cdf56b68e7508a41672d63a86423f9d"
+    },
+    {
+      "repository": "bootloader",
+      "path": "src/kboot.c",
+      "sha256": "9d966ef288caad3b4f1864cc872c953cbdc23fd76c6c27539d17f9f189bf8809"
+    },
+    {
+      "repository": "bootloader",
+      "path": "src/kboot_gpu.c",
+      "sha256": "76c6ea649afa5ecf082677d19a801379662dd0677a36e06fb8106229aa777383"
+    }
+  ],
+  "candidate_patch": {
+    "path": "patches/gravity-t6040-identify-only.patch",
+    "sha256": "1e01d15916f0b35573f0833f5506fa25e146c5c600f63f9bd19bf1d26beb4677",
+    "base_source_sha256": "83121b03dbdb164c793b4da092a39f7eeeacbddef22bfe2596f6abb0032307c4",
+    "result_source_sha256": "ad7cb844aae58eaee7c63671ffeffd15bd5cf4e864e864b2e26597266a548477",
+    "build_verified": false,
+    "native_verified": false
+  }
+}

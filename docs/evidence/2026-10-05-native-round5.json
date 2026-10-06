@@ -1,0 +1,98 @@
+{
+  "schema": 1,
+  "archive_sha256": "97d76942fd0d8e06e74f2b2031a9ca59e8b79875b6788c5309896b59b1f3fb83",
+  "evidence_files_verified": 139,
+  "optimized_kernel": {
+    "build_id": "40c433454ef265fcbdd50bac508cadfaad76f9d3",
+    "image_sha256": "bbf6868f13b6b71b480f03bed9d484abacde566f713ae4d1b5e545eb995ee726",
+    "update": "update-ebfd09807ee9",
+    "native_boot_accepted": true,
+    "usb_owner_smoke_passed": true,
+    "runtime_capacity": {
+      "P": 1024,
+      "E": 496
+    },
+    "controlled_speedup_established": false
+  },
+  "smc": {
+    "raw_and_hwmon_agree": true,
+    "baseline": {
+      "fan_modes": [
+        3,
+        3
+      ],
+      "fan_rpm": [
+        0,
+        0
+      ],
+      "temperatures_fresh": true
+    },
+    "optimized": {
+      "fan_modes": [
+        0,
+        0
+      ],
+      "fan_targets_rpm": [
+        2317,
+        2502
+      ],
+      "actual_rpm_varies": true,
+      "temperatures_fresh": true
+    },
+    "cause_of_boot_difference": "unresolved"
+  },
+  "clock": {
+    "capture_seconds": 30.083,
+    "samples": 16,
+    "p0_requested4512_status3924_samples": 3,
+    "p1_requested4512_status3924_samples": 2,
+    "status_source": "DVFS_STATUS offset0x50 bits9:5, OPP index lookup",
+    "hardware_cycle_measurement_available": false,
+    "persistent3924_limit_established": false
+  },
+  "geekbench_attempt": {
+    "complete_score": false,
+    "stopped_at_sensor_milliC": 100328,
+    "observed_seconds": 10.1195,
+    "fan_target_ramp_observed": false,
+    "physical_sensor_mapping_and_safe_limits_validated": false
+  },
+  "next_action": "read-only boot-state comparison, parser hardening; no new thermal workloads",
+  "macos_after_return_idle": {
+    "samples": 12,
+    "workload_added": false,
+    "writes": false,
+    "keys": {
+      "F0Ac": {
+        "min": 2308.4765625,
+        "max": 2323.375,
+        "distinct": 10
+      },
+      "F1Ac": {
+        "min": 2487.338623046875,
+        "max": 2522.138671875,
+        "distinct": 12
+      },
+      "F0Tg": {
+        "min": 2317.0,
+        "max": 2317.0,
+        "distinct": 1
+      },
+      "F1Tg": {
+        "min": 2502.0,
+        "max": 2502.0,
+        "distinct": 1
+      },
+      "F0Md": {
+        "min": 0,
+        "max": 0,
+        "distinct": 1
+      },
+      "F1Md": {
+        "min": 0,
+        "max": 0,
+        "distinct": 1
+      }
+    }
+  }
+}

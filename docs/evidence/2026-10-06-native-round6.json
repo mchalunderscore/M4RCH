@@ -1,0 +1,70 @@
+{
+  "schema": 1,
+  "archive_sha256": "393f09fefb96e9189a1ec34b8d3a844ed81edf52775cf4e9f930e622fe270fb6",
+  "verified_evidence_files": 109,
+  "kernel_build_id": "40c433454ef265fcbdd50bac508cadfaad76f9d3",
+  "kernel_and_overlay_unchanged": true,
+  "temporary_modules_unloaded": true,
+  "pmu": {
+    "fixed_cycles_and_instructions_native_verified": true,
+    "cpus": [
+      0,
+      1,
+      8
+    ],
+    "controls_restored": true,
+    "new_kernel_warnings": false,
+    "timer_hz": 1000000000,
+    "largest_loop_estimates_hz": {
+      "P0": 2867546495.927523,
+      "E": 1403374101.9500513,
+      "P1": 3470293108.001056
+    },
+    "limit": "brief CPU-wide EL1 intervals, not maximum clocks or per-task perf",
+    "full_perf_driver_available": false
+  },
+  "cooling": {
+    "early_and_post_pmu": {
+      "mode": [
+        3,
+        3
+      ],
+      "actual_and_target_rpm": [
+        0,
+        0
+      ],
+      "temperatures_fresh": true
+    },
+    "late": {
+      "mode": [
+        0,
+        0
+      ],
+      "targets_rpm": [
+        2317,
+        2502
+      ],
+      "actual_rpm_varies": true,
+      "temperatures_fresh": true,
+      "Tp0Y_range_C": [
+        80.75,
+        98.969
+      ]
+    },
+    "same_session_transition": true,
+    "transition_bracket_boottime_seconds": [
+      196.002,
+      707.521
+    ],
+    "diagnostic_fan_writes": false,
+    "trigger_and_adequacy": "unresolved"
+  },
+  "owner_geekbench": {
+    "approximate_single": 2500,
+    "approximate_multi": 14000,
+    "result_link": null,
+    "synchronized_trace": false,
+    "attribution": "owner reported; no causal speedup or thermal conclusion"
+  },
+  "next": "bounded continuous fixed-key/clock-policy trace; no PMU repeat or sustained workload"
+}

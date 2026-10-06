@@ -14,12 +14,15 @@ The [native-agent instructions](native-agent-instructions.md) and
 [follow-up](native-agent-followup.md) are operational handoff files for the
 current test installation and are included in `make cpu-tools` kits. Verify
 live devices and settings before applying them to another installation.
-The current [HANDOVER.md](../HANDOVER.md) sets the USB2/idle/scheduling work
-and the return-evidence protocol; the kit includes its read-only collector.
+The current [HANDOVER.md](../HANDOVER.md) describes the first opt-in T6040 idle
+trial, with separate GRUB images and macOS-accessible selection rollback.
+The accepted clock diagnostic and its rollback remain available.
 
 Curated evidence receipts are retained in [evidence/](evidence/):
 
 - [Initial CPU/source audit](evidence/2026-10-05-cpu-performance.json).
+- [Accepted left USB, capacity and cooling return](evidence/2026-10-05-native-round4.json).
+- [macOS SMC freshness comparison](evidence/2026-10-05-macos-smc-freshness.json).
 - [SMC key availability](evidence/2026-10-05-j614s-smc-keys.json).
 - [Native placement and desktop return](evidence/2026-10-05-native-return.json).
 

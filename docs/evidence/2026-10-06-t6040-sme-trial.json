@@ -1,0 +1,39 @@
+{
+  "build_id": "e10543ff16b474e749da6863e94aa8c205baaf87",
+  "release": "7.1.3-m4rch-sme",
+  "kernel_sha256": "50c80d2dbaae2315e6fa4a8aa420850f1212b3858d6f7b09a9d28693f07614f1",
+  "initrd_sha256": "4490e8189e422e94e6463da56fe6468903afa25ea085eddbe18b523bd5bf509a",
+  "native_tested": true,
+  "module_tree": {
+    "release": "7.1.3-m4rch-sme",
+    "module_tree_token": "25e0987a0e12bc40c9d60f4e5e3090a6a054a290cace0feddc9706ba77f543e3",
+    "module_files": 206,
+    "sha256": "4490e8189e422e94e6463da56fe6468903afa25ea085eddbe18b523bd5bf509a"
+  },
+  "source_commit": "e9d2237cd064e6d086d938cd9c85e0c963cf7291",
+  "config_arm64_sme": true,
+  "matching_modules_isolated": true,
+  "trial_kernel_path": "/SMEK0001/KERNEL",
+  "trial_initrd_path": "/SMEK0001/INITRD",
+  "test_kit": "/SMET0001",
+  "rollback": "m4rch-idle or m4rch-normal in grub.cfg",
+  "firmware_enrollment_changed": false,
+  "architectural_state_claim": "Upstream FPSIMD/SME save/restore path; native capability and integrity tests pending",
+  "return_sha256": "fc249a550f11b1d65d04e5d54d073c0f279522450d55275ea0f5ac70515778dc",
+  "internal_manifest_files_verified": 193,
+  "initial_workers_passed": 120,
+  "sme_vector_length_bytes": 64,
+  "all_cores_sme2": true,
+  "ordinary_sve_exposed": false,
+  "expanded_signal_test": "48 pass / 12 SSVE fail with idle disabled; harness conflates si_status signal numbers with exit codes; SIGILL hypothesis pending direct reproduction",
+  "native_reported_geekbench": {
+    "single": 2731,
+    "multi": 14374,
+    "url": "https://browser.geekbench.com/v7/cpu/563257/",
+    "versus_previous_percent": [
+      0.92,
+      0.38
+    ],
+    "causal_gain_established": false
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "model": "Mac16,8",
+  "macos": "ProductName:\t\tmacOS\nProductVersion:\t\t27.0.1\nBuildVersion:\t\t26A434",
+  "device_tree_nodes": 105,
+  "service_nodes": 407,
+  "prior_baseline_added_paths": [],
+  "prior_baseline_removed_paths": [],
+  "changed_resource_paths": [],
+  "capture_activity": "Read-only IORegistry queries; no audio/video activation or MMIO writes.",
+  "resources_sha256": "85bd6b6111c50b8cf5cd9be791400e88a379f5a2444acebac2cf97277e25c72a",
+  "driver_audit": "Pinned Linux tables: earlier/generic ADMAC/MCA/DCP and CS42L84; no T6040 compatibility proven."
+}

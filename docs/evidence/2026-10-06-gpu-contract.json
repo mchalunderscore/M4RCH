@@ -1,0 +1,563 @@
+{
+  "schema": "m4rch.gpu-contract.v1",
+  "compatible": "gpu,t6040",
+  "macos_boot_firmware": "mBoot-20457.1.29",
+  "linux_boot_firmware": "not captured here; do not substitute current macOS firmware",
+  "generation": 16,
+  "variant": "S",
+  "macos_gpu_configuration": {
+    "core_mask_list": [
+      987,
+      987
+    ],
+    "gpu_gen": 16,
+    "gpu_var": "S",
+    "is_sksm": 1,
+    "kickid_qid_mask": 127,
+    "kickid_qid_shift": 40,
+    "num_cores": 20,
+    "num_frags": 20,
+    "num_gps": 8,
+    "num_mgpus": 2,
+    "usc_gen": 3
+  },
+  "enabled_cores_from_masks": 16,
+  "macos_gpu_core_count": 16,
+  "performance_rows_per_table": 16,
+  "performance_table_count": 2,
+  "contiguous_core_voltage_groups": [
+    11,
+    11
+  ],
+  "core_tables": [
+    [
+      {
+        "frequency_hz": 0,
+        "voltage_raw": 125
+      },
+      {
+        "frequency_hz": 338000000,
+        "voltage_raw": 610
+      },
+      {
+        "frequency_hz": 618000000,
+        "voltage_raw": 660
+      },
+      {
+        "frequency_hz": 796000000,
+        "voltage_raw": 695
+      },
+      {
+        "frequency_hz": 924000000,
+        "voltage_raw": 725
+      },
+      {
+        "frequency_hz": 952000000,
+        "voltage_raw": 770
+      },
+      {
+        "frequency_hz": 1056000000,
+        "voltage_raw": 770
+      },
+      {
+        "frequency_hz": 1062000000,
+        "voltage_raw": 815
+      },
+      {
+        "frequency_hz": 1182000000,
+        "voltage_raw": 815
+      },
+      {
+        "frequency_hz": 1182000000,
+        "voltage_raw": 870
+      },
+      {
+        "frequency_hz": 1312000000,
+        "voltage_raw": 870
+      },
+      {
+        "frequency_hz": 1242000000,
+        "voltage_raw": 915
+      },
+      {
+        "frequency_hz": 1380000000,
+        "voltage_raw": 915
+      },
+      {
+        "frequency_hz": 1326000000,
+        "voltage_raw": 955
+      },
+      {
+        "frequency_hz": 1470000000,
+        "voltage_raw": 955
+      },
+      {
+        "frequency_hz": 1578000000,
+        "voltage_raw": 1025
+      }
+    ],
+    [
+      {
+        "frequency_hz": 0,
+        "voltage_raw": 125
+      },
+      {
+        "frequency_hz": 338000000,
+        "voltage_raw": 605
+      },
+      {
+        "frequency_hz": 618000000,
+        "voltage_raw": 645
+      },
+      {
+        "frequency_hz": 796000000,
+        "voltage_raw": 690
+      },
+      {
+        "frequency_hz": 924000000,
+        "voltage_raw": 720
+      },
+      {
+        "frequency_hz": 952000000,
+        "voltage_raw": 765
+      },
+      {
+        "frequency_hz": 1056000000,
+        "voltage_raw": 765
+      },
+      {
+        "frequency_hz": 1062000000,
+        "voltage_raw": 805
+      },
+      {
+        "frequency_hz": 1182000000,
+        "voltage_raw": 805
+      },
+      {
+        "frequency_hz": 1182000000,
+        "voltage_raw": 855
+      },
+      {
+        "frequency_hz": 1312000000,
+        "voltage_raw": 855
+      },
+      {
+        "frequency_hz": 1242000000,
+        "voltage_raw": 915
+      },
+      {
+        "frequency_hz": 1380000000,
+        "voltage_raw": 915
+      },
+      {
+        "frequency_hz": 1326000000,
+        "voltage_raw": 970
+      },
+      {
+        "frequency_hz": 1470000000,
+        "voltage_raw": 970
+      },
+      {
+        "frequency_hz": 1578000000,
+        "voltage_raw": 1040
+      }
+    ]
+  ],
+  "sram_tables": [
+    [
+      {
+        "frequency_hz": 0,
+        "voltage_raw": 810
+      },
+      {
+        "frequency_hz": 338000000,
+        "voltage_raw": 810
+      },
+      {
+        "frequency_hz": 618000000,
+        "voltage_raw": 810
+      },
+      {
+        "frequency_hz": 796000000,
+        "voltage_raw": 810
+      },
+      {
+        "frequency_hz": 924000000,
+        "voltage_raw": 810
+      },
+      {
+        "frequency_hz": 952000000,
+        "voltage_raw": 810
+      },
+      {
+        "frequency_hz": 1056000000,
+        "voltage_raw": 810
+      },
+      {
+        "frequency_hz": 1062000000,
+        "voltage_raw": 815
+      },
+      {
+        "frequency_hz": 1182000000,
+        "voltage_raw": 815
+      },
+      {
+        "frequency_hz": 1182000000,
+        "voltage_raw": 870
+      },
+      {
+        "frequency_hz": 1312000000,
+        "voltage_raw": 870
+      },
+      {
+        "frequency_hz": 1242000000,
+        "voltage_raw": 915
+      },
+      {
+        "frequency_hz": 1380000000,
+        "voltage_raw": 915
+      },
+      {
+        "frequency_hz": 1326000000,
+        "voltage_raw": 955
+      },
+      {
+        "frequency_hz": 1470000000,
+        "voltage_raw": 955
+      },
+      {
+        "frequency_hz": 1578000000,
+        "voltage_raw": 1025
+      }
+    ],
+    [
+      {
+        "frequency_hz": 0,
+        "voltage_raw": 810
+      },
+      {
+        "frequency_hz": 338000000,
+        "voltage_raw": 810
+      },
+      {
+        "frequency_hz": 618000000,
+        "voltage_raw": 810
+      },
+      {
+        "frequency_hz": 796000000,
+        "voltage_raw": 810
+      },
+      {
+        "frequency_hz": 924000000,
+        "voltage_raw": 810
+      },
+      {
+        "frequency_hz": 952000000,
+        "voltage_raw": 810
+      },
+      {
+        "frequency_hz": 1056000000,
+        "voltage_raw": 810
+      },
+      {
+        "frequency_hz": 1062000000,
+        "voltage_raw": 810
+      },
+      {
+        "frequency_hz": 1182000000,
+        "voltage_raw": 810
+      },
+      {
+        "frequency_hz": 1182000000,
+        "voltage_raw": 855
+      },
+      {
+        "frequency_hz": 1312000000,
+        "voltage_raw": 855
+      },
+      {
+        "frequency_hz": 1242000000,
+        "voltage_raw": 915
+      },
+      {
+        "frequency_hz": 1380000000,
+        "voltage_raw": 915
+      },
+      {
+        "frequency_hz": 1326000000,
+        "voltage_raw": 970
+      },
+      {
+        "frequency_hz": 1470000000,
+        "voltage_raw": 970
+      },
+      {
+        "frequency_hz": 1578000000,
+        "voltage_raw": 1040
+      }
+    ]
+  ],
+  "cluster_ladders": [
+    [
+      {
+        "frequency_high_mhz": 0,
+        "frequency_low_mhz": 0,
+        "index_high": 0,
+        "index_low": 0,
+        "core_voltage_raw": 125,
+        "sram_voltage_raw": 810
+      },
+      {
+        "frequency_high_mhz": 338,
+        "frequency_low_mhz": 338,
+        "index_high": 1,
+        "index_low": 1,
+        "core_voltage_raw": 610,
+        "sram_voltage_raw": 810
+      },
+      {
+        "frequency_high_mhz": 618,
+        "frequency_low_mhz": 618,
+        "index_high": 2,
+        "index_low": 2,
+        "core_voltage_raw": 660,
+        "sram_voltage_raw": 810
+      },
+      {
+        "frequency_high_mhz": 796,
+        "frequency_low_mhz": 796,
+        "index_high": 3,
+        "index_low": 3,
+        "core_voltage_raw": 695,
+        "sram_voltage_raw": 810
+      },
+      {
+        "frequency_high_mhz": 924,
+        "frequency_low_mhz": 924,
+        "index_high": 4,
+        "index_low": 4,
+        "core_voltage_raw": 725,
+        "sram_voltage_raw": 810
+      },
+      {
+        "frequency_high_mhz": 1056,
+        "frequency_low_mhz": 952,
+        "index_high": 6,
+        "index_low": 5,
+        "core_voltage_raw": 770,
+        "sram_voltage_raw": 810
+      },
+      {
+        "frequency_high_mhz": 1182,
+        "frequency_low_mhz": 1062,
+        "index_high": 8,
+        "index_low": 7,
+        "core_voltage_raw": 815,
+        "sram_voltage_raw": 815
+      },
+      {
+        "frequency_high_mhz": 1312,
+        "frequency_low_mhz": 1182,
+        "index_high": 10,
+        "index_low": 9,
+        "core_voltage_raw": 870,
+        "sram_voltage_raw": 870
+      },
+      {
+        "frequency_high_mhz": 1380,
+        "frequency_low_mhz": 1242,
+        "index_high": 12,
+        "index_low": 11,
+        "core_voltage_raw": 915,
+        "sram_voltage_raw": 915
+      },
+      {
+        "frequency_high_mhz": 1470,
+        "frequency_low_mhz": 1326,
+        "index_high": 14,
+        "index_low": 13,
+        "core_voltage_raw": 955,
+        "sram_voltage_raw": 955
+      },
+      {
+        "frequency_high_mhz": 1578,
+        "frequency_low_mhz": 1578,
+        "index_high": 15,
+        "index_low": 15,
+        "core_voltage_raw": 1025,
+        "sram_voltage_raw": 1025
+      }
+    ],
+    [
+      {
+        "frequency_high_mhz": 0,
+        "frequency_low_mhz": 0,
+        "index_high": 0,
+        "index_low": 0,
+        "core_voltage_raw": 125,
+        "sram_voltage_raw": 810
+      },
+      {
+        "frequency_high_mhz": 338,
+        "frequency_low_mhz": 338,
+        "index_high": 1,
+        "index_low": 1,
+        "core_voltage_raw": 605,
+        "sram_voltage_raw": 810
+      },
+      {
+        "frequency_high_mhz": 618,
+        "frequency_low_mhz": 618,
+        "index_high": 2,
+        "index_low": 2,
+        "core_voltage_raw": 645,
+        "sram_voltage_raw": 810
+      },
+      {
+        "frequency_high_mhz": 796,
+        "frequency_low_mhz": 796,
+        "index_high": 3,
+        "index_low": 3,
+        "core_voltage_raw": 690,
+        "sram_voltage_raw": 810
+      },
+      {
+        "frequency_high_mhz": 924,
+        "frequency_low_mhz": 924,
+        "index_high": 4,
+        "index_low": 4,
+        "core_voltage_raw": 720,
+        "sram_voltage_raw": 810
+      },
+      {
+        "frequency_high_mhz": 1056,
+        "frequency_low_mhz": 952,
+        "index_high": 6,
+        "index_low": 5,
+        "core_voltage_raw": 765,
+        "sram_voltage_raw": 810
+      },
+      {
+        "frequency_high_mhz": 1182,
+        "frequency_low_mhz": 1062,
+        "index_high": 8,
+        "index_low": 7,
+        "core_voltage_raw": 805,
+        "sram_voltage_raw": 810
+      },
+      {
+        "frequency_high_mhz": 1312,
+        "frequency_low_mhz": 1182,
+        "index_high": 10,
+        "index_low": 9,
+        "core_voltage_raw": 855,
+        "sram_voltage_raw": 855
+      },
+      {
+        "frequency_high_mhz": 1380,
+        "frequency_low_mhz": 1242,
+        "index_high": 12,
+        "index_low": 11,
+        "core_voltage_raw": 915,
+        "sram_voltage_raw": 915
+      },
+      {
+        "frequency_high_mhz": 1470,
+        "frequency_low_mhz": 1326,
+        "index_high": 14,
+        "index_low": 13,
+        "core_voltage_raw": 970,
+        "sram_voltage_raw": 970
+      },
+      {
+        "frequency_high_mhz": 1578,
+        "frequency_low_mhz": 1578,
+        "index_high": 15,
+        "index_low": 15,
+        "core_voltage_raw": 1040,
+        "sram_voltage_raw": 1040
+      }
+    ]
+  ],
+  "register_windows": [
+    {
+      "address": 10871635968,
+      "size": 58032128,
+      "source": "macOS IODeviceMemory translation"
+    },
+    {
+      "address": 10885267456,
+      "size": 1490944,
+      "source": "macOS IODeviceMemory translation"
+    }
+  ],
+  "memory_regions": {
+    "gpu-region": {
+      "base": 1125281136640,
+      "size": 16384
+    },
+    "gfx-shared-region": {
+      "base": 1125280874496,
+      "size": 262144
+    },
+    "gfx-shared-l2-region": {
+      "base": 1125280858112,
+      "size": 16384
+    },
+    "gfx-handoff": {
+      "base": 1125280841728,
+      "size": 16384
+    },
+    "gfx-data": {
+      "base": 1099541823488,
+      "size": 802816
+    },
+    "rtkit-private-vm-region": {
+      "base": 18446739675663040512,
+      "size": 137438953472
+    }
+  },
+  "gravity_t8132_mismatches": {
+    "chip": true,
+    "variant": true,
+    "single_cluster": true,
+    "ten_core_mask": true,
+    "eleven_voltage_groups": false,
+    "probe_window_64MiB": true
+  },
+  "limit": "Captured metadata only. No GPU MMIO, firmware execution, calibrated power table or Linux resource validation.",
+  "sources": {
+    "linux": {
+      "url": "https://github.com/GravityLinux/linux",
+      "revision": "3b85d81f656af14d0fc4bea3eef87fe040c424f9"
+    },
+    "mesa": {
+      "url": "https://github.com/GravityLinux/mesa",
+      "revision": "87ac51d411f0e58a9433567ec2666f457be89e1d"
+    },
+    "bootloader": {
+      "url": "https://github.com/GravityLinux/bootloader",
+      "revision": "950e6b7f268e71cf77889f27a760782bf898b651"
+    }
+  },
+  "candidate_patch": {
+    "path": "patches/gravity-t6040-identify-only.patch",
+    "sha256": "1e01d15916f0b35573f0833f5506fa25e146c5c600f63f9bd19bf1d26beb4677",
+    "base_source_sha256": "83121b03dbdb164c793b4da092a39f7eeeacbddef22bfe2596f6abb0032307c4",
+    "result_source_sha256": "ad7cb844aae58eaee7c63671ffeffd15bd5cf4e864e864b2e26597266a548477",
+    "build_verified": false,
+    "native_verified": false
+  },
+  "source_framework_comparison": {
+    "rust/kernel/platform.rs": "byte-identical to our e9d2237 source",
+    "rust/kernel/drm/mod.rs": "byte-identical to our e9d2237 source",
+    "full_driver_build_verified": false
+  },
+  "adt_capture_helper": {
+    "build_id": "ce43447e60d7396e06667adb085c234c920ef10d",
+    "vermagic": "7.1.3-m4rch SMP preempt mod_unload aarch64",
+    "W1_build_passed": true,
+    "native_verified": false,
+    "module_sha256": "90a2a0cf44b0c54a28cf29df5f2f8f5c601a9ad4dcbc1ae9fba1c53a4ed70a5f"
+  }
+}

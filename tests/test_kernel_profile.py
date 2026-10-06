@@ -32,7 +32,9 @@ class KernelProfileTests(unittest.TestCase):
                          "PCIE_APPLE", "HID_APPLE", "SECURITY_LANDLOCK", "VIRTIO_BLK"} <= builtins)
         self.assertTrue({"FUSE_FS", "OVERLAY_FS", "NVME_APPLE", "RTC_DRV_MACSMC",
                          "POWER_RESET_MACSMC", "USB_DWC3_APPLE"} <= modules)
-        self.assertTrue({"KVM", "VIRTUALIZATION", "ARM64_SME", "USB4_DEBUGFS_WRITE"} <= disabled)
+        self.assertTrue({"KVM", "VIRTUALIZATION", "USB4_DEBUGFS_WRITE"} <= disabled)
+        self.assertTrue({"ARM64_SVE", "ARM64_SME"} <= builtins)
+        self.assertIn("ARM64_SME", boot.DISABLED)
         self.assertFalse(builtins & modules or builtins & disabled or modules & disabled)
         self.assertEqual(kernel_profile.requirements(boot.REQUIRED, boot.DISABLED, "experimental-nvme"),
                          (builtins, modules, disabled))

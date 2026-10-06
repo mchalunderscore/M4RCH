@@ -1,0 +1,139 @@
+--- a/drivers/cpuidle/cpuidle-apple.c
++++ b/drivers/cpuidle/cpuidle-apple.c
+@@ -10,7 +10,32 @@
+ #include <linux/cpu_pm.h>
+ #include <linux/platform_device.h>
+ #include <linux/of.h>
++#include <linux/moduleparam.h>
++#include <linux/percpu.h>
+ #include <asm/cpuidle.h>
++
++/* Native-tested shallow saved WFI, limited to this board. No deep idle. */
++static bool t6040_saved_wfi;
++static bool saved_wfi = true;
++module_param(saved_wfi, bool, 0600);
++MODULE_PARM_DESC(saved_wfi, "J614s/T6040 software-saved shallow WFI (default on)");
++static DEFINE_PER_CPU(u64, saved_attempts);
++static DEFINE_PER_CPU(u64, saved_completed);
++static int saved_wfi_progress_get(char *buffer, const struct kernel_param *kp)
++{
++ unsigned int cpu;
++ int ret = 0;
++ for_each_online_cpu(cpu)
++  ret += scnprintf(buffer + ret, PAGE_SIZE - ret,
++                   "cpu%u attempts=%llu completed=%llu\n", cpu,
++                   READ_ONCE(per_cpu(saved_attempts, cpu)),
++                   READ_ONCE(per_cpu(saved_completed, cpu)));
++ return ret;
++}
++static const struct kernel_param_ops saved_wfi_progress_ops = {
++ .get = saved_wfi_progress_get,
++};
++module_param_cb(saved_wfi_progress, &saved_wfi_progress_ops, NULL, 0400);
+ 
+ enum idle_state {
+ 	STATE_WFI,
+@@ -57,6 +82,51 @@
+ 	".popsection\n"
+ );
+ 
++asm(
++	".pushsection .cpuidle.text, \"ax\"\n"
++	".type apple_cpu_saved_wfi, @function\n"
++	"apple_cpu_saved_wfi:\n"
++		"sub sp, sp, #256\n"
++		"stp x0, x1, [sp, #0]\n"
++		"stp x2, x3, [sp, #16]\n"
++		"stp x4, x5, [sp, #32]\n"
++		"stp x6, x7, [sp, #48]\n"
++		"stp x8, x9, [sp, #64]\n"
++		"stp x10, x11, [sp, #80]\n"
++		"stp x12, x13, [sp, #96]\n"
++		"stp x14, x15, [sp, #112]\n"
++		"stp x16, x17, [sp, #128]\n"
++		"stp x18, x19, [sp, #144]\n"
++		"stp x20, x21, [sp, #160]\n"
++		"stp x22, x23, [sp, #176]\n"
++		"stp x24, x25, [sp, #192]\n"
++		"stp x26, x27, [sp, #208]\n"
++		"stp x28, x29, [sp, #224]\n"
++		"str x30, [sp, #240]\n"
++		"dsb sy\n"
++		"wfi\n"
++		"ldp x0, x1, [sp, #0]\n"
++		"ldp x2, x3, [sp, #16]\n"
++		"ldp x4, x5, [sp, #32]\n"
++		"ldp x6, x7, [sp, #48]\n"
++		"ldp x8, x9, [sp, #64]\n"
++		"ldp x10, x11, [sp, #80]\n"
++		"ldp x12, x13, [sp, #96]\n"
++		"ldp x14, x15, [sp, #112]\n"
++		"ldp x16, x17, [sp, #128]\n"
++		"ldp x18, x19, [sp, #144]\n"
++		"ldp x20, x21, [sp, #160]\n"
++		"ldp x22, x23, [sp, #176]\n"
++		"ldp x24, x25, [sp, #192]\n"
++		"ldp x26, x27, [sp, #208]\n"
++		"ldp x28, x29, [sp, #224]\n"
++		"ldr x30, [sp, #240]\n"
++		"add sp, sp, #256\n"
++		"ret\n"
++	".popsection\n"
++);
++void apple_cpu_saved_wfi(void);
++
+ void apple_cpu_deep_wfi(void);
+ 
+ static __cpuidle int apple_enter_wfi(struct cpuidle_device *dev, struct cpuidle_driver *drv, int index)
+@@ -67,6 +137,22 @@
+ 
+ static __cpuidle int apple_enter_idle(struct cpuidle_device *dev, struct cpuidle_driver *drv, int index)
+ {
++ if (t6040_saved_wfi) {
++  if (!READ_ONCE(saved_wfi)) {
++   asm volatile("nop");
++   return index;
++  }
++  if (cpu_pm_enter())
++   return -1;
++  this_cpu_inc(saved_attempts);
++  ct_cpuidle_enter();
++  apple_cpu_saved_wfi();
++  ct_cpuidle_exit();
++  cpu_pm_exit();
++  this_cpu_inc(saved_completed);
++  return index;
++ }
++
+ 	/*
+ 	 * Deep WFI will clobber FP state, among other things.
+ 	 * The CPU PM notifier will take care of saving that and anything else
+@@ -139,6 +225,19 @@
+ 	struct platform_device *pdev;
+ 	int ret;
+ 
++	t6040_saved_wfi = of_machine_is_compatible("apple,t6040") &&
++			   of_machine_is_compatible("apple,j614s");
++	if (t6040_saved_wfi) {
++		/* Single shallow state: no 10ms selection gap or deep-register path. */
++		apple_idle_driver.states[STATE_WFI] = apple_idle_driver.states[STATE_PWRDOWN];
++		apple_idle_driver.states[STATE_WFI].target_residency = 1;
++		apple_idle_driver.states[STATE_WFI].enter_s2idle = NULL;
++		strscpy(apple_idle_driver.states[STATE_WFI].name, "Saved WFI");
++		strscpy(apple_idle_driver.states[STATE_WFI].desc, "Software-saved shallow WFI");
++		apple_idle_driver.state_count = 1;
++		apple_idle_driver.safe_state_index = STATE_WFI;
++	}
++
+ 	ret = platform_driver_register(&apple_cpuidle_driver);
+ 	if (ret)
+ 		return ret;
+@@ -146,7 +245,7 @@
+ 	if (!of_machine_is_compatible("apple,arm-platform"))
+ 		return 0;
+ 
+-	if (!(of_machine_is_compatible("apple,t8103") ||
++	if (!(t6040_saved_wfi || of_machine_is_compatible("apple,t8103") ||
+ 	      of_machine_is_compatible("apple,t8112") ||
+ 	      of_machine_is_compatible("apple,t8122") ||
+ 	      of_machine_is_compatible("apple,t6000") ||

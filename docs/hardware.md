@@ -12,29 +12,30 @@ experimental configuration, not certification of every device or workload.
 | Wi-Fi | Connection, routing and traffic | Roaming and long-duration reliability |
 | Bluetooth | Mouse input and AirPods Max A2DP playback | Headset microphone/duplex audio and broader devices |
 | Right USB-C | USB2 YubiKey 5C at 12 Mbit/s and SanDisk storage at 480 Mbit/s in both orientations; reconnects and checked 16 MiB file write; earlier user-tested authentication | Hubs and sustained transfers; cached file read is not throughput evidence |
-| Left USB-C, USB3, Thunderbolt | Disabled in this implementation | Platform and PHY/host support |
+| Left USB-C | Both sockets enumerate YubiKey; owner confirms storage in both orientations; left-rear hub and USB microphone work | Sustained transfers, left storage write integrity, startup latency |
+| USB3, Thunderbolt | No established device data path | PHY/host/altmode support |
 | Internal NVMe | Namespace/partition discovery and reads through the ANS-aware loader | Writes, sustained I/O, failure recovery and shutdown qualification |
-| CPU | Twelve cores online; three scaling policies using `schedutil` | Correct E/P scheduler capacities, safe idle, thermal/power qualification |
-| Fans/temperatures | SMC RPM, targets, limits and temperature keys exposed | Sensor interpretation and automatic-cooling behavior under sustained load |
+| CPU | Twelve cores; P/E capacity accepted; maintained SME/SME2 and all-core saved WFI passed native tests; owner reports actual 4.512GHz and WFI power savings | Sustained frequency residency, calibrated energy model and cooling qualification |
+| Fans/temperatures | Fresh raw/hwmon readings; round six shows same-session mode3/zero RPM to mode0/changing RPM | Transition trigger, sensor meaning and fan ramp; continuous trace pending |
 | Power | Battery/AC reporting and storage teardown | Battery energy decoding, physical shutdown/reboot qualification, suspend |
-| Internal audio, camera, brightness, external displays | No established functioning path | T6040/laptop support |
+| Internal microphones / camera | Read-only macOS baseline captured: ISP/DART, CS42L84 codec and AOP/low-power mic endpoints; Linux paths unverified | Identify the internal array route and bring up capture without enabling speakers |
+| Internal speakers | Playback remains disabled | Machine-specific protection model and fail-closed interlocks before playback |
+| Brightness / external displays | No established functioning path | T6040/laptop support |
 
-The 5 October native return also verifies readable `/boot` and automatic fan
-response. A connected HDMI monitor received no signal; Linux exposed only
-the built-in simple framebuffer, with no HDMI DRM connector. Left-front USB
-produced no power indication or enumeration with disabled controller nodes;
-left-rear data tests were omitted because it supplied AC power.
-The [round-two evidence receipt](evidence/2026-10-05-native-round2.json)
-records these results without publishing the raw private captures.
+The [round-four receipt](evidence/2026-10-05-native-round4.json) establishes
+native package migration to `7.1.3-m4rch` and `linux-m4rch`, `config-m4rch`,
+`grub-m4rch`, `paru-m4rch`, using `update-a622abf242aa`. Readable `/boot`,
+Wayland/QPainter and unchanged resident enrollment remain established.
+The combined left-USB/capacity overlay is `left-usb-trial-01`; new package
+builds retain that accepted both-left graph and validate inherited resources. The older kit `update-c1934fe10df6` remains rollback.
 
-The known-good native package kit is `update-c1934fe10df6`; its
-[captured identifiers](evidence/2026-10-05-native-return.json) predate the
-naming cleanup. Those results do not establish that a newly edited kernel
-has passed hardware tests.
-
-New builds use kernel release `7.1.3-m4rch` and packages `linux-m4rch`,
-`config-m4rch`, `grub-m4rch` and `paru-m4rch`. The captured baseline above
-predates that naming migration; its reported identifiers remain unchanged.
+Owner reports TONOR USB microphone, drawing tablet through a powered hub and
+AirPods Max USB audio working. Kernel logs corroborate TONOR `snd-usb-audio`
+and hub enumeration; tablet identity and audio quality are unqualified.
+Left-rear hub charging is supported by owner report and battery telemetry in
+one arrangement; general USB-C charging and role swaps remain unqualified.
+Built-in HDMI and USB-C display output still fail; only the internal DRM
+framebuffer connector is exposed.
 
 ## USB and storage
 
@@ -58,18 +59,22 @@ filesystems as a diagnostic step.
 | E cluster | `1,2,3,4` | 1.020–2.592 GHz |
 | Second P cluster | `8,9,10,11` | 1.260–4.512 GHz |
 
-CPU numbering is discovered from MIDRs, not assumed. All live cores currently
-advertise capacity 1024. A first controlled-placement pair improved
+CPU numbering is discovered from MIDRs, not assumed. The current provisional
+DT weights P=1024/E=864 normalize to accepted runtime P=1024/E=496. A first controlled-placement pair improved
 single-core Geekbench 7 from 1,634 to 2,489 with P-only affinity; it does not
 establish calibrated capacities or a permanent desktop policy.
-See [CPU experiments](cpu-performance.md).
+See [CPU experiments](cpu-performance.md). The sampled busy events worker is
+DRM XRGB8888 → XRGB2101010 conversion/copy, with 51 of 64 sample IPs in the
+conversion routine. The paired scalar candidate is compiled/tested offline
+but has not been installed or measured on the desktop.
 
 Two short local P-core SHA256 runs requested 4.512 GHz while the driver's
 current-state readback sampled 3.924 GHz; E-core readback reached 2.592 GHz.
 That gap needs T6040 status/OPP decoding review before attributing it to
 throttling. The repeatable 1.52 crypto throughput ratio is not a general
-scheduler capacity calibration. Automatic fan response was observed during
-an active-desktop NOP-idle capture at reported CPU temperatures of 80–87°C.
+scheduler capacity calibration. Earlier captures appeared to show fan response, but a later 491-sample
+capture froze every temperature, actual RPM and target value. Firmware cooling
+ownership and telemetry freshness require raw-read diagnosis.
 
 Keep `idle=nop arm64.nowfxt`: T6040 safe WFI/WFIT support remains unresolved.
 Spinning idle CPUs consume power and thermal headroom. Do not re-enable
@@ -79,7 +84,8 @@ Reported P-domain sensor peaks reached 114.25°C with fan peaks around
 2,400–2,600 RPM. SMC key labels are not calibrated mappings to individual
 cores; these readings require read-only investigation before governor or fan
 experiments. Manual fan control is disabled by default and is not qualified.
-macOS reported fan mode 3 while the Linux driver's manual mode uses 1;
+An earlier macOS capture reported mode 3; a later bounded capture returned
+mode 0 on both fans while actual RPM changed. The Linux manual mode uses 1;
 successful sysfs exposure does not establish safe ownership transitions.
 [Key availability](evidence/2026-10-05-j614s-smc-keys.json) and
 [native captures](evidence/2026-10-05-native-return.json) retain the evidence.
@@ -104,3 +110,32 @@ Use `sudo systemctl poweroff` for storage shutdown. Physical power-off has
 not been qualified by the latest capture. If the machine remains on, wait
 for filesystem teardown to complete before using the power button. Suspend
 targets and lid-triggered sleep remain disabled.
+
+The [round-five receipt](evidence/2026-10-05-native-round5.json) accepts the
+optimized framebuffer kernel and retained USB/capacity graph. Informal worker
+samples suggest reduced conversion cost, without a controlled speedup claim.
+Fresh raw sensors rule out a consistently reproduced hwmon freshness failure;
+boot-dependent fan modes and a stopped benchmark make cooling the next focus.
+
+The [round-six receipt](evidence/2026-10-06-native-round6.json) verifies fixed
+cycle/instruction probes on P0, E and P1 with restored controls. Full perf
+registration and maximum-clock qualification remain pending. Cooling changed
+within one boot, so the next capture traces its timing rather than repeating
+a boot matrix.
+
+Round seven recorded a Linux SD cache-flush error-84 and block I/O error,
+with ext4 errors_count0and verified return files. This neither establishes
+filesystem corruption nor certifies the medium; investigate the flush/host
+path independently before repeated update or storage-stress work.
+
+The owner confirms USB and Bluetooth audio working. This does not establish
+internal microphone/camera support. The J614s ADT labels speaker amplifiers
+`audio-control,sn012776`; protection settings from another model are not
+qualification for this machine. macOS discovery did not activate capture or playback.
+
+GPU work now targets Gravity's G16 implementation. This machine reports G16S,
+two clusters and sixteen enabled cores. See the
+[GPU bring-up scope](../experiments/t6040-gpu/README.md) and
+[captured contract](evidence/2026-10-06-gpu-contract.json). The identification
+patch is not active in the maintained kernel; firmware/render-node bring-up
+and Mesa G16S support remain unverified.

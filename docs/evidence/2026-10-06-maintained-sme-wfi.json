@@ -1,0 +1,28 @@
+{
+  "schema": "m4rch.maintained-sme-wfi.v1",
+  "receipt": {
+    "build_id": "ce43447e60d7396e06667adb085c234c920ef10d",
+    "release": "7.1.3-m4rch",
+    "package_version": "7.1.3-2",
+    "kernel_sha256": "3cd0d5cefc9e6f0882e19d94da27817d7b3221524780ebe5db545a01a82963ff",
+    "rollback_kernel_sha256": "50c80d2dbaae2315e6fa4a8aa420850f1212b3858d6f7b09a9d28693f07614f1",
+    "rollback_initrd_sha256": "4490e8189e422e94e6463da56fe6468903afa25ea085eddbe18b523bd5bf509a",
+    "rollback_module_token": "25e0987a0e12bc40c9d60f4e5e3090a6a054a290cace0feddc9706ba77f543e3"
+  },
+  "source_tests": {
+    "count": 594,
+    "skipped": 3,
+    "passed": true
+  },
+  "cpuidle_W1_object_compile": true,
+  "compatible_userspace_ABI_compile": true,
+  "native_combined_build_verified": false,
+  "default_idle_scope": [
+    "apple,t6040",
+    "apple,j614s"
+  ],
+  "runtime_parameter": "cpuidle_apple.saved_wfi",
+  "suspend_qualified": false,
+  "old_package_kernel_sha256": "4b0141318a5a823ee62d82e0ccb0383539895d26d3ea90213ee9bc791d3d3fba",
+  "maintained_patch_sha256": "5f4d85b5f6b43a7b52f2cf37ae2cb49632890c0cb01f37ba76e13196df04885e"
+}

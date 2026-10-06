@@ -45,6 +45,10 @@ Wayland's configured software backend still needs a native check. GPU
 acceleration, left USB-C ports, USB3, internal audio, camera and suspend are
 unfinished. See the [hardware status](docs/hardware.md) for precise limits.
 
+The maintained kernel includes SME/SME2 and a default-enabled shallow
+saved-WFI state for J614s/T6040, with a runtime disable switch. See
+[CPU support](docs/cpu-performance.md) for scope, controls and evidence.
+
 ## Build and boot
 
 Build on macOS with Python 3, Git, command-line developer tools and Apple

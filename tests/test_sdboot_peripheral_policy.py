@@ -321,3 +321,18 @@ class RuntimeSchedulingTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+class AcceptedLeftOverlayTests(unittest.TestCase):
+    def test_left_graph_requires_reference_and_rejects_resource_changes(self):
+        from tests.test_left_usb_trial import LeftUsbTrialTests
+        reference, merged = LeftUsbTrialTests().fixture()
+        right = usb_graph()
+        reference.update(copy.deepcopy(right))
+        merged.update(copy.deepcopy(right))
+        with self.assertRaisesRegex(ValueError, 'unreviewed left port'):
+            policy.check_usb_overlay(merged)
+        result = policy.check_usb_overlay(merged, left_usb_baseline=reference)
+        self.assertEqual(result['left']['ports']['left-front'], 'usb-drd1')
+        merged['/soc/spmi@509188000']['reg'] = b'wrong'
+        with self.assertRaisesRegex(ValueError, 'SPMI aperture'):
+            policy.check_usb_overlay(merged, left_usb_baseline=reference)

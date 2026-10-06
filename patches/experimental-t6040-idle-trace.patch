@@ -1,0 +1,183 @@
+--- a/drivers/cpuidle/cpuidle-apple.c
++++ b/drivers/cpuidle/cpuidle-apple.c
+@@ -7,6 +7,8 @@
+ 
+ #include <linux/init.h>
+ #include <linux/moduleparam.h>
++#include <linux/smp.h>
++#include <linux/bitops.h>
+ #include <linux/cpuidle.h>
+ #include <linux/cpu_pm.h>
+ #include <linux/platform_device.h>
+@@ -18,6 +20,27 @@
+ module_param_named(experimental_t6040_idle, experimental_t6040_idle, bool, 0400);
+ MODULE_PARM_DESC(experimental_t6040_idle,
+ 		"Opt into experimental J614s/T6040 deep idle (default off)");
++
++/* Trace one deep-idle attempt on CPU4; all other entries keep the nop fallback. */
++static bool experimental_t6040_idle_trace;
++module_param_named(experimental_t6040_idle_trace,
++		   experimental_t6040_idle_trace, bool, 0400);
++MODULE_PARM_DESC(experimental_t6040_idle_trace,
++		"Trace one J614s/T6040 CPU4 idle attempt (default off)");
++static bool t6040_trial;
++static bool trace_attempted;
++static unsigned long trace_seen;
++
++void m4rch_idle_checkpoint(unsigned int stage, u64 value);
++
++/* Called by the diagnostic assembly with ordinary AArch64 C ABI. */
++void __used noinline m4rch_idle_checkpoint(unsigned int stage, u64 value)
++{
++	if (stage > 9 || test_and_set_bit(stage, &trace_seen))
++		return;
++	pr_emerg("M4RCH_IDLE cpu=%u stage=%u value=%016llx\n",
++		 smp_processor_id(), stage, value);
++}
+ 
+ enum idle_state {
+ 	STATE_WFI,
+@@ -64,6 +87,82 @@
+ 	".popsection\n"
+ );
+ 
++asm(
++	".pushsection .cpuidle.text, \"ax\"\n"
++	".type m4rch_cpu_deep_wfi_trace, @function\n"
++	"m4rch_cpu_deep_wfi_trace:\n"
++		"str x30, [sp, #-16]!\n"
++		"stp x28, x29, [sp, #-16]!\n"
++		"stp x26, x27, [sp, #-16]!\n"
++		"stp x24, x25, [sp, #-16]!\n"
++		"stp x22, x23, [sp, #-16]!\n"
++		"stp x20, x21, [sp, #-16]!\n"
++		"stp x18, x19, [sp, #-16]!\n"
++
++		"str x0, [sp, #-16]!\n"
++		"mov x1, x0\n"
++		"mov x0, #3\n"
++		"bl m4rch_idle_checkpoint\n"
++		"ldr x0, [sp], #16\n"
++		"mrs x0, s3_5_c15_c5_0\n"
++		"str x0, [sp, #-16]!\n"
++		"mov x1, x0\n"
++		"mov x0, #4\n"
++		"bl m4rch_idle_checkpoint\n"
++		"ldr x0, [sp], #16\n"
++		"orr x0, x0, #(3L << 24)\n"
++		"msr s3_5_c15_c5_0, x0\n"
++
++		"str x0, [sp, #-16]!\n"
++		"mov x1, x0\n"
++		"mov x0, #5\n"
++		"bl m4rch_idle_checkpoint\n"
++		"ldr x0, [sp], #16\n"
++	"1:\n"
++		"dsb sy\n"
++		"wfi\n"
++
++		"str x0, [sp, #-16]!\n"
++		"mov x1, x0\n"
++		"mov x0, #6\n"
++		"bl m4rch_idle_checkpoint\n"
++		"ldr x0, [sp], #16\n"
++		"mrs x0, ISR_EL1\n"
++		"cbz x0, 1b\n"
++
++		"str x0, [sp, #-16]!\n"
++		"mov x1, x0\n"
++		"mov x0, #7\n"
++		"bl m4rch_idle_checkpoint\n"
++		"ldr x0, [sp], #16\n"
++		"mrs x0, s3_5_c15_c5_0\n"
++		"str x0, [sp, #-16]!\n"
++		"mov x1, x0\n"
++		"mov x0, #8\n"
++		"bl m4rch_idle_checkpoint\n"
++		"ldr x0, [sp], #16\n"
++		"bic x0, x0, #(1L << 24)\n"
++		"msr s3_5_c15_c5_0, x0\n"
++
++		"str x0, [sp, #-16]!\n"
++		"mov x1, x0\n"
++		"mov x0, #9\n"
++		"bl m4rch_idle_checkpoint\n"
++		"ldr x0, [sp], #16\n"
++		"ldp x18, x19, [sp], #16\n"
++		"ldp x20, x21, [sp], #16\n"
++		"ldp x22, x23, [sp], #16\n"
++		"ldp x24, x25, [sp], #16\n"
++		"ldp x26, x27, [sp], #16\n"
++		"ldp x28, x29, [sp], #16\n"
++		"ldr x30, [sp], #16\n"
++
++		"ret\n"
++	".popsection\n"
++);
++
++void m4rch_cpu_deep_wfi_trace(void);
++
+ void apple_cpu_deep_wfi(void);
+ 
+ static __cpuidle int apple_enter_wfi(struct cpuidle_device *dev, struct cpuidle_driver *drv, int index)
+@@ -74,19 +173,38 @@
+ 
+ static __cpuidle int apple_enter_idle(struct cpuidle_device *dev, struct cpuidle_driver *drv, int index)
+ {
++	bool trace = t6040_trial && experimental_t6040_idle_trace;
++
++	if (trace) {
++		if (smp_processor_id() != 4 || READ_ONCE(trace_attempted)) {
++			cpu_do_idle();
++			return STATE_WFI;
++		}
++		WRITE_ONCE(trace_attempted, true);
++		m4rch_idle_checkpoint(1, 0);
++	}
++
+ 	/*
+ 	 * Deep WFI will clobber FP state, among other things.
+ 	 * The CPU PM notifier will take care of saving that and anything else
+ 	 * that needs to be notified of the CPU powering down.
+ 	 */
+-	if (cpu_pm_enter())
++	if (cpu_pm_enter()) {
++		if (trace)
++			pr_emerg("M4RCH_IDLE CPU_PM_ENTER rejected; no WFI attempted\n");
+ 		return -1;
++	}
++	if (trace)
++		m4rch_idle_checkpoint(2, 0);
+ 
+ 	ct_cpuidle_enter();
+ 
+ 	switch(index) {
+ 	case STATE_PWRDOWN:
+-		apple_cpu_deep_wfi();
++		if (trace)
++			m4rch_cpu_deep_wfi_trace();
++		else
++			apple_cpu_deep_wfi();
+ 		break;
+ 	default:
+ 		WARN_ON(1);
+@@ -96,6 +214,8 @@
+ 	ct_cpuidle_exit();
+ 
+ 	cpu_pm_exit();
++	if (trace)
++		pr_emerg("M4RCH_IDLE CPU4 attempt returned after CPU_PM_EXIT\n");
+ 
+ 	return index;
+ }
+@@ -171,7 +291,9 @@
+ 	       of_machine_is_compatible("apple,j614s"))))
+ 		return 0;
+ 
+-	if (of_machine_is_compatible("apple,t6040"))
++	t6040_trial = of_machine_is_compatible("apple,t6040") &&
++		      of_machine_is_compatible("apple,j614s");
++	if (t6040_trial)
+ 		pr_warn("m4rch: experimental T6040 deep idle enabled; retention unqualified\n");
+ 
+ 	pdev = platform_device_register_simple("cpuidle-apple", -1, NULL, 0);

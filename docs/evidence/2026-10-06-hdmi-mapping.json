@@ -1,0 +1,20 @@
+{
+  "model": "Mac16,8",
+  "connection": "Owner confirms powered display directly on built-in HDMI, USB-C displays disconnected",
+  "hpd_path": "atc3-dpphy/AppleATCDPHDMIPort(atc3-dpphy)/Port-HDMI",
+  "hpd_transition": [
+    false,
+    true
+  ],
+  "changed_selected_nodes": 22,
+  "new_display_provider": "dcpext0",
+  "dcpext1_selected_changes": 0,
+  "edid_observed": true,
+  "kernel_change": false,
+  "interpretation": "Direct-HDMI attachment creates DCPEXT0 EPIC interfaces and asserts atc3 HDMI HPD. Resource/firmware compatibility with Linux remains unverified.",
+  "captures_sha256": {
+    "disconnected.plist": "7a4c9cb2fbf1832e514b019bfa310ad5b445937d1e1bd696706b5023b570aaf5",
+    "connected.plist": "b2a6c9a97cbf7313407df2c10f74b14bfec6fe77fabd64100e300ce042602666",
+    "delta.json": "28be6387ce5a82af72ed56a2a0f12ba6b1e823a9bab413adb41846b70d9b5c39"
+  }
+}

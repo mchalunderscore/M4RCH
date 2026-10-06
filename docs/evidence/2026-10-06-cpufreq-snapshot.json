@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "kernel_release": "7.1.3-m4rch",
+  "kernel_build_id": "539332b712a607b9f9c0bcd7bfa34d489149d1bb",
+  "compressed_image_sha256": "e247b5f6a11595eeb0101cb0aed56c9623f3a460ad3b195acf44bc64ffba57cd",
+  "modules_sha256": "890d1030a72754f6275ae729e46736d943662f6f8b99ef1547e5aa30c564d4e5",
+  "accepted_build_id": "40c433454ef265fcbdd50bac508cadfaad76f9d3",
+  "update_directory": "update-c3240ed1247f",
+  "hardware_identity": "d9e0c81eabefd2347ea478c00d87c616c56ecff3ed4820a87e4f3269bfee6494",
+  "interface": "/sys/kernel/debug/m4rch-cpufreq/policy*/snapshot",
+  "native_verified": false,
+  "read_apertures": {
+    "command": "0x20, 64-bit read",
+    "status": "0x50, 32-bit read, only when existing driver status mask is defined"
+  },
+  "config_modules_dtb_m1n1_unchanged": true,
+  "enrollment_required": false,
+  "test_limits": "Compiler/formatter/parser/package checks do not prove native boot, MMIO behavior or performance gain.",
+  "kernel_image_sha256": "4b0141318a5a823ee62d82e0ccb0383539895d26d3ea90213ee9bc791d3d3fba",
+  "accepted_kernel_image_sha256": "bbf6868f13b6b71b480f03bed9d484abacde566f713ae4d1b5e545eb995ee726",
+  "validation": {
+    "full_suite": {
+      "tests": 537,
+      "skipped": 3,
+      "result": "OK"
+    },
+    "final_focused_tests": 15,
+    "actual_formatter_cases": 6,
+    "driver_external_compile": "W=1 passed",
+    "pmu_external_compile": "W=1 passed; byte-identical to native accepted module",
+    "kernel_packages": "built; pacman file checks passed; provenance verified",
+    "native_tested": false
+  }
+}

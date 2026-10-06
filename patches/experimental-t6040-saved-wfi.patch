@@ -1,0 +1,109 @@
+--- a/drivers/cpuidle/cpuidle-apple.c
++++ b/drivers/cpuidle/cpuidle-apple.c
+@@ -27,6 +27,12 @@
+ 		   experimental_t6040_idle_trace, bool, 0400);
+ MODULE_PARM_DESC(experimental_t6040_idle_trace,
+ 		"Trace one J614s/T6040 CPU4 idle attempt (default off)");
++/* One WFI with a complete GPR frame; no Apple control-register access. */
++static bool experimental_t6040_idle_wfi_only;
++module_param_named(experimental_t6040_idle_wfi_only,
++                   experimental_t6040_idle_wfi_only, bool, 0400);
++MODULE_PARM_DESC(experimental_t6040_idle_wfi_only,
++                "One saved-register CPU4 WFI without CYC_OVRD access");
+ static bool t6040_trial;
+ static bool trace_attempted;
+ static unsigned long trace_seen;
+@@ -161,6 +167,56 @@
+ 	".popsection\n"
+ );
+ 
++asm(
++	".pushsection .cpuidle.text, \"ax\"\n"
++	".type m4rch_cpu_saved_wfi_trace, @function\n"
++	"m4rch_cpu_saved_wfi_trace:\n"
++		"sub sp, sp, #256\n"
++		"stp x0, x1, [sp, #0]\n"
++		"stp x2, x3, [sp, #16]\n"
++		"stp x4, x5, [sp, #32]\n"
++		"stp x6, x7, [sp, #48]\n"
++		"stp x8, x9, [sp, #64]\n"
++		"stp x10, x11, [sp, #80]\n"
++		"stp x12, x13, [sp, #96]\n"
++		"stp x14, x15, [sp, #112]\n"
++		"stp x16, x17, [sp, #128]\n"
++		"stp x18, x19, [sp, #144]\n"
++		"stp x20, x21, [sp, #160]\n"
++		"stp x22, x23, [sp, #176]\n"
++		"stp x24, x25, [sp, #192]\n"
++		"stp x26, x27, [sp, #208]\n"
++		"stp x28, x29, [sp, #224]\n"
++		"str x30, [sp, #240]\n"
++		"mov x0, #5\n"
++		"mov x1, #0\n"
++		"bl m4rch_idle_checkpoint\n"
++		"dsb sy\n"
++		"wfi\n"
++		"ldp x0, x1, [sp, #0]\n"
++		"ldp x2, x3, [sp, #16]\n"
++		"ldp x4, x5, [sp, #32]\n"
++		"ldp x6, x7, [sp, #48]\n"
++		"ldp x8, x9, [sp, #64]\n"
++		"ldp x10, x11, [sp, #80]\n"
++		"ldp x12, x13, [sp, #96]\n"
++		"ldp x14, x15, [sp, #112]\n"
++		"ldp x16, x17, [sp, #128]\n"
++		"ldp x18, x19, [sp, #144]\n"
++		"ldp x20, x21, [sp, #160]\n"
++		"ldp x22, x23, [sp, #176]\n"
++		"ldp x24, x25, [sp, #192]\n"
++		"ldp x26, x27, [sp, #208]\n"
++		"ldp x28, x29, [sp, #224]\n"
++		"ldr x30, [sp, #240]\n"
++		"add sp, sp, #256\n"
++		"ret\n"
++	".popsection\n"
++);
++
++void m4rch_cpu_saved_wfi_trace(void);
++
++
+ void m4rch_cpu_deep_wfi_trace(void);
+ 
+ void apple_cpu_deep_wfi(void);
+@@ -201,7 +257,11 @@
+ 
+ 	switch(index) {
+ 	case STATE_PWRDOWN:
+-		if (trace)
++		if (trace && experimental_t6040_idle_wfi_only) {
++			m4rch_idle_checkpoint(3, 0);
++			m4rch_cpu_saved_wfi_trace();
++			m4rch_idle_checkpoint(6, 0);
++		} else if (trace)
+ 			m4rch_cpu_deep_wfi_trace();
+ 		else
+ 			apple_cpu_deep_wfi();
+@@ -263,6 +323,14 @@
+ 
+ static int __init apple_cpuidle_init(void)
+ {
++	if (experimental_t6040_idle_wfi_only &&
++	    (!experimental_t6040_idle || !experimental_t6040_idle_trace ||
++	     !of_machine_is_compatible("apple,t6040") ||
++	     !of_machine_is_compatible("apple,j614s"))) {
++		pr_err("m4rch: saved WFI needs J614s/T6040 and both idle/trace opt-ins\n");
++		return -EINVAL;
++	}
++
+ 	struct platform_device *pdev;
+ 	int ret;
+ 
+@@ -293,6 +361,8 @@
+ 
+ 	t6040_trial = of_machine_is_compatible("apple,t6040") &&
+ 		      of_machine_is_compatible("apple,j614s");
++	if (t6040_trial && experimental_t6040_idle_wfi_only)
++		pr_warn("m4rch: CPU4 single saved WFI; CYC_OVRD untouched\n");
+ 	if (t6040_trial)
+ 		pr_warn("m4rch: experimental T6040 deep idle enabled; retention unqualified\n");
+ 

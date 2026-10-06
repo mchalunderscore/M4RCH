@@ -4,7 +4,7 @@
 # source-building Arch recipe.
 pkgname=linux-m4rch
 pkgver=@VERSION@
-pkgrel=1
+pkgrel=2
 pkgdesc='m4rch Linux kernel and matching modules for J614s/T6040'
 arch=('aarch64')
 url='https://github.com/damsleth/linux'

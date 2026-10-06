@@ -1,0 +1,16 @@
+{
+  "return_sha256": "d26c7a958dbbb3234d06099c840560db330475b9b442c833dfb351201824541c",
+  "manifest_files_verified": 2809,
+  "skipped_archive_link": "abi-source/tools/include/linux/pci_ids.h (unrelated dangling source include link, not installed/executed)",
+  "original_worker_sigill_confirmed": true,
+  "adapted_signal_workers_passed": 48,
+  "signal_frame_compat_exit_counts": {
+    "0": 64,
+    "4": 4
+  },
+  "frame_condition": "HWCAP_SVE absent, HWCAP2_SME present, vl=0, flags=0, size=16",
+  "kernel_state_handling_change_needed": false,
+  "I2C_APPLE_running_disabled": true,
+  "codec_module": "snd-soc-cs42l84",
+  "integrated_kernel_native_tested": false
+}

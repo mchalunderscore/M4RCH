@@ -1,0 +1,33 @@
+--- a/drivers/gpu/drm/drm_format_helper.c
++++ b/drivers/gpu/drm/drm_format_helper.c
+@@ -13,6 +13,7 @@
+ #include <linux/iosys-map.h>
+ #include <linux/module.h>
+ #include <linux/slab.h>
++#include <linux/unaligned.h>
+ 
+ #include <drm/drm_device.h>
+ #include <drm/drm_format_helper.h>
+@@ -1001,6 +1002,22 @@
+ 
+ static void drm_fb_xrgb8888_to_xrgb2101010_line(void *dbuf, const void *sbuf, unsigned int pixels)
+ {
++	if (IS_ENABLED(CONFIG_64BIT)) {
++		/* Expand two independent little-endian pixels without kernel SIMD. */
++		while (pixels >= 2) {
++			u64 pix = get_unaligned_le64(sbuf);
++
++			pix = ((pix & 0x000000ff000000ffULL) << 2) |
++			      ((pix & 0x0000ff000000ff00ULL) << 4) |
++			      ((pix & 0x00ff000000ff0000ULL) << 6);
++			pix |= (pix >> 8) & 0x00300c0300300c03ULL;
++			put_unaligned_le64(pix, dbuf);
++			sbuf += 8;
++			dbuf += 8;
++			pixels -= 2;
++		}
++	}
++
+ 	drm_fb_xfrm_line_32to32(dbuf, sbuf, pixels, drm_pixel_xrgb8888_to_xrgb2101010);
+ }
+ 
