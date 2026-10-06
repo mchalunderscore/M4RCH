@@ -1,0 +1,24 @@
+diff --git a/src/firmware.c b/src/firmware.c
+index 2b7476d..b77ce9f 100644
+--- a/src/firmware.c
++++ b/src/firmware.c
+@@ -201,6 +201,7 @@ const struct fw_version_info fw_versions[NUM_FW_VERSIONS] = {
+     [V26_3B2]    = {V26_3B2,    "26.3 beta2",  {26, 2, 98, 2}, 4, "iBoot-13822.80.406"},
+     [V26_3]      = {V26_3,      "26.3",        {26, 3, 0},     3, "iBoot-13822.81.10"},
+     [V26_4]      = {V26_4,      "26.4",        {26, 4, 0},     3, "mBoot-18000.101.7"},
++    [V26_5_2]    = {V26_5_2,    "26.5.2",      {26, 5, 2},     3, "mBoot-18000.121.3"},
+     [V26_6]      = {V26_6,      "26.6",        {26, 6, 0},     3, "mBoot-18000.160.17"},
+     [V26_6_2]    = {V26_6_2,    "26.6.2",      {26, 6, 2},     3, "mBoot-18000.161.10"},
+     // clang-format on
+diff --git a/src/firmware.h b/src/firmware.h
+index 72fe1fd..f49f9ff 100644
+--- a/src/firmware.h
++++ b/src/firmware.h
+@@ -184,6 +184,7 @@ enum fw_version {
+     V26_3B2,
+     V26_3,
+     V26_4,
++    V26_5_2,
+     V26_6,
+     V26_6_2,
+     NUM_FW_VERSIONS,

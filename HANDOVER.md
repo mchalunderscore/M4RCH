@@ -1,11 +1,11 @@
 # GPU source collaboration checkpoint — 2026-10-06
 
-Continue on branch gpu/native-contract. Exact maintained source/build pins are
-now shared in this repository. CURRENT: running7.1.3-m4rch-gpu-id; WFI Y,
-GFX off0. Next default3 is the separately installed guarded gpu-port trial.
-Normal fallback0 remains byte-identical. Reboot is the next required action.
-Earlier checkpoint notes below describe prior states; the final staging section
-and docs/evidence/2026-10-06-gpu-maintained-port.json are authoritative.
+Continue on branch gpu/native-contract. CURRENT: running 7.1.3-m4rch-gpu-port;
+continuous shallow WFI enabled, GFX off-0, normal recovery default 0.
+Full driver registration/unload, guarded startup refusal and powered ID-only
+probe passed. Owner reports normal operation. No GPU firmware has started and
+there is no acceleration. The current results below supersede historical
+checkpoint states and staged reboot instructions.
 
 The guarded ADT capture succeeded and unloaded its helper. Parser fix preserves
 duplicate unrelated siblings; unique contract nodes remain mandatory. Linux
@@ -189,3 +189,39 @@ recover an early kernel hang. Do not replace Apple enrollment/loader images.
 Receipt: docs/evidence/2026-10-06-gpu-maintained-port.json. Reproduce with
 prepare-maintained.py in a fresh workspace, then prepare-port.py --build and
 package-port.py. No macOS handoff is needed for this next native framework test.
+
+## Native full-framework results and firmware provenance — 2026-10-06
+
+The running build ID matches 2a100931b29c8c425aadee3140fe697f3b9722be.
+The full driver refuses normal T6040 startup before mapping resources. Its
+ID-only probe reads 0x0a031100, 0x0011020a, 0x00040404, 0x400c0c02,
+matching the leaf trial. Standard genpd power transitions off-0 -> on -> off-0.
+Temporary overlays/modules were removed. WFI remains enabled. Native receipts
+are in docs/evidence/2026-10-06-gpu-maintained-port.json; raw dmesg/captures
+remain local under out/gpu-port/reboot-trial.
+
+Read-only Linux inspection confirms the stub is macOS 26.5.2 / 25F84,
+with mBoot-18000.121.3 and G16S armfw_g16s.im4p. Main macOS Preboot
+reports 27.0.1 / 26A434. Their IM4P GFX payloads differ: stub 3,388,496
+bytes versus main 2,536,640 bytes. See the hash receipt in
+ docs/evidence/2026-10-06-gpu-firmware-comparison.json.
+Neither version difference alone proves an incompatible firmware ABI.
+A reference captured on main macOS must identify its actual firmware payload;
+it cannot silently qualify the different Linux-stub payload. No internal boot
+files or installed loaders were changed. Both Preboot mounts are unmounted.
+
+Offline loader lookup patch adds the observed 26.5.2 mBoot identifier; firmware.o
+and kboot_gpu.o compile. This only fixes identification, not startup qualification.
+
+Next implementation requirements, before enabling T6040 normal startup:
+- Replace G16 Platform's fixed single-cluster 0x3ff mask and 11-entry ladder
+  assumptions with the observed two-cluster masks/tables; validate serializers.
+- Resolve T6040 MCC mapping from its own ADT/reference, rather than using
+  g16_platform.rs MCC_BASE 0x2201c4000 from T8132.
+- Qualify mailbox/IRQ roles, UAT mappings and shared initialization structures
+  against the actual G16S firmware. The current exact .161.10 gate is retained.
+- Only then trial firmware handshake, with startup/crash evidence and cleanup;
+  command submission and Mesa rendering follow a successful handshake.
+
+The bounded boot-provided gfx-data RAM snapshot is not identified as an executable
+firmware image or proof of a compatible ABI. Its raw bytes stay local.

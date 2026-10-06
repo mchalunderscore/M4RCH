@@ -20,7 +20,7 @@
   "gpu_node_installed": false,
   "first_build_failure": "Missing Rust dma_fence_is_signaled helper; exact five-line helper backported",
   "gpu_compile_warnings": 14,
-  "runtime_tested": false,
+  "runtime_tested": true,
   "firmware_interpretation": "Different tag is unqualified, not demonstrated ABI incompatibility; owner macOS 27.0",
   "retained_firmware_guard": "mBoot-18000.161.10",
   "captured_os_firmware": "mBoot-18000.121.3",
@@ -57,5 +57,38 @@
       "bytes": 386448,
       "sha256": "3c5dae582e9a40551c47f4d37939edb315982647d91bb4cb21cfe43d341a79d3"
     }
+  },
+  "current_default": 0,
+  "owner_report": "Everything feels standard",
+  "native_guard": {
+    "kernel": "7.1.3-m4rch-gpu-port",
+    "load_command": "insmod /lib/modules/7.1.3-m4rch-gpu-port/kernel/drivers/gpu/drm/asahi/asahi_m4.ko probe_only=0",
+    "owner_report": "Everything feels standard",
+    "wfi_enabled": true,
+    "registered_then_unloaded": true,
+    "metadata_device_created": true,
+    "startup_refused": true,
+    "device_bound": false,
+    "probe_only": 0,
+    "firmware_started": false,
+    "gpu_mmio_performed": false,
+    "recovery_default": 0,
+    "cleanup_verified": true
+  },
+  "native_identification": {
+    "release": "7.1.3-m4rch-gpu-port",
+    "probe_only": 1,
+    "bound": true,
+    "raw_ids": [
+      "0x0a031100",
+      "0x0011020a",
+      "0x00040404",
+      "0x400c0c02"
+    ],
+    "matches_leaf_trial": true,
+    "firmware_started": false,
+    "drm_registered": false,
+    "power_sequence": "off-0 -> on -> off-0",
+    "cleanup_verified": true
   }
 }
