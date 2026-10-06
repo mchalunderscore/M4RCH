@@ -73,3 +73,18 @@ hashes verified before staging. This selection persists until restored to0;
 after the trial reaches userspace restore default0. If it hangs before recovery,
 macOS can set /grub/grub.cfg on the SD EFI partition back to default0. Both
 normal entries and matched fallback files remain present.
+
+
+Successful trial boot: 7.1.3-m4rch-gpu-id reached the desktop, WFI Y. Owner
+confirms desktop/input/USB/networking feel normal. Native modprobe read_ids0
+registered the Rust platform driver, with no bound GPU devices, and unloaded
+cleanly; no new dmesg lines during that load/unload. No GPU MMIO or firmware
+startup occurred. Framework module parameters have perm0 and are intentionally
+absent from sysfs; the attempted sysfs check was corrected using the explicit
+load command and framework source. No BUG/Oops/panic/call-trace signatures in
+captured boot log. This qualifies the Rust toolchain/kernel/module baseline,
+not GPU identification or performance. Normal GRUB default restored to0; trial
+remains available. See docs/evidence/2026-10-06-gpu-trial-boot.json.
+Next: qualify the power/reset/clock path and a live loader resource-node handoff
+before resource-only binding, then opt-in IDs. Existing GFX is off; no_ps gates
+400/402 are not direct PMGR state registers. Retain firmware-version barrier.
