@@ -133,20 +133,28 @@ matches ADT two clusters/ten slots; enabled0x3db masks remain ADT evidence.
 Offline raw-id.py tests preserve those limits. ID overlay is separate, requiring
 --reviewed-id-reads in build-helper.py; hold GFX active for its entire lifetime.
 
-macOS-side next action before GPU firmware startup:
-1. Establish what boot-stub/OS firmware source supplies the Linux chosen
-   mBoot-18000.121.3 tag. Do not merely rewrite that property. Determine whether
-   a real compatible mBoot-18000.161.10 environment is available for J614s, or
-   qualify the precise .121.3 firmware-object/queue ABI instead.
-2. Return exact firmware/boot-stub provenance and any required real boot change
-   as a reversible candidate. Preserve the current working enrollment/fallback;
-   matching the version alone does not qualify G16S dual-cluster layouts.
-3. Use raw Linux captures plus native IDs for T6040-specific MCC/ASC/AIC and
-   memory handoff review. Do not import T8132 MCC/calibration or firmware objects
-   blindly. Keep the existing version barrier and T6040 no-startup guard.
+Firmware qualification correction (owner runs macOS 27.0):
+The captured OS/stage-two firmware is mBoot-18000.121.3, while system/stage-one
+is mBoot-20457.1.29. macOS version alone therefore does not identify the firmware
+context used for this Linux boot. Boot-stub provenance remains to be established;
+these two tags are observations, not proof of an outdated installation.
+mBoot is bundled with macOS; do not propose an independent mBoot update or a
+downgrade. Gravity's exact .161.10 gate records its exercised firmware profile.
+No incompatible queue/object ABI has yet been demonstrated for our .121.3.
+Its loader lookup does not recognize .121.3, so unknown-version handling and
+firmware qualification are concrete implementation work, not a proven hardware
+incompatibility. Keep the gate and T6040 no-startup guard while reviewing this.
+
+Continue from Linux: reconstruct the maintained kernel in a separate workspace,
+port the guarded M4 driver and required framework APIs, compile without altering
+the current working kernel, and review ABI/source differences. No macOS roundtrip
+is required merely because the firmware strings differ. A macOS capture may
+later help establish exact provenance, but is not a prerequisite for this work.
+Use native IDs and ADT for T6040 MCC/ASC/AIC and memory handoff review; do not
+import T8132 calibration or firmware objects blindly.
 
 Linux has reached the resource/power/raw-ID milestone without another reboot.
 The current Rust trial remains usable; next default is normal kernel0. All test
 helpers are gone, GFX off0, WFI enabled. Full private native captures/build logs
-are available in the accompanying ESP return archive; shared source/evidence is
+are retained locally (an ESP return archive has not yet been assembled); shared source/evidence is
 on gpu/native-contract. No further firmware execution was attempted.

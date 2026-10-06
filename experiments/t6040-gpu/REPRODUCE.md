@@ -167,3 +167,24 @@ The next firmware-startup barrier is real: Linux stage2 mBoot-18000.121.3,
 where the pinned G16 implementation accepts only mBoot-18000.161.10. No version
 check was loosened. Aligning the boot-stub firmware or qualifying the precise
 older ABI requires boot-environment/firmware work before firmware execution.
+
+## Guarded full-driver compile on the maintained kernel
+
+Use a fresh reconstructed workspace, preserving the running leaf trial tree:
+
+```sh
+python3 experiments/t6040-gpu/prepare-port.py out/gpu-port/linux-build \
+  --donor out/gpu-native-20261006/linux-full \
+  --config out/gpu-maintained/maintained-running.config
+make -C out/gpu-port/linux-build LLVM=1 \
+  KERNELRELEASE=7.1.3-m4rch-gpu-port LOCALVERSION= -j4 Image modules
+```
+
+The donor is the pinned Gravity source with the checked-in T6040 metadata patch
+already applied. Preparation records copied source hashes in port-source.json,
+preserves maintained hardware driver hashes, disables the legacy Asahi/PMP
+paths, and retains both T6040 no-startup and exact firmware qualification guards.
+The minimal initial framework subset adds DRM post-open/owned scatterlist APIs,
+a bounded RAM iosys mapping, and the G16 RTKit interfaces. Build failures may
+identify further required backports; successful configuration is not compilation.
+This does not install a package, create a GPU node, or load/execute firmware.
