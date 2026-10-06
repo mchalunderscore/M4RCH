@@ -312,3 +312,27 @@ Review out/gpu-port/asc-hello/{attempt.json,live-dmesg.txt,after-start-dmesg.txt
 before a normal reboot. The launcher is bound to this boot ID, build and module
 hash; it refuses retry after an attempt. A later boot requires new qualification.
 Main asahi_m4 T6040 normal-startup guard remains unchanged. Continuous WFI Y.
+
+## First native G16S RTKit HELLO received — 2026-10-06
+
+The staged asc-hello trial RAN after owner readiness. Firmware emitted
+message 0x100000000c000c, metadata 0x10010000000000 approximately 2 ms after
+the start log. Local RTKit definitions decode endpoint 0, management type 1
+(HELLO), minimum protocol 12, maximum protocol 12. The host sent no reply.
+No SGX/handoff writes, initialization graph, firmware buffer allocation or GPU
+work submission occurred. This establishes firmware execution and initial
+mailbox reception, not a complete negotiated handshake or acceleration.
+
+ASC control changed back to 0; status 0x6e has low bits 2, satisfying the
+stopped-state readback. This is not a DMA-quiescence proof. asc_hello remains
+pinned at refcount 1, and its GFX power reference remains on until reboot.
+DO NOT force-remove the module or power domain. Continuous WFI remains Y.
+No new kernel fault signatures appeared. The launcher completed and saved
+before/live/after logs under out/gpu-port/asc-hello. Native decoded receipt is
+docs/evidence/2026-10-06-gpu-first-hello.json.
+
+REBOOT REQUIRED NOW. Default remains normal recovery entry 0. After reboot,
+verify module absence and normal peripherals, then prepare protocol-12 HELLO
+reply, endpoint-map/crash-buffer handling and acknowledged RTKit shutdown as
+the next bounded trial. Requalify the new boot's addresses and cold state;
+do not reuse this boot-specific launcher receipt or force a retry.
