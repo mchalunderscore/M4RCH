@@ -4,7 +4,7 @@
 No boot files, device tree nodes, or hardware state are changed.
 """
 from pathlib import Path
-import argparse, hashlib, json, shutil, subprocess, sys
+import argparse, hashlib, json, re, shutil, subprocess, sys
 REPO=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(REPO/'lib'))
 import hardware_profile
@@ -27,14 +27,18 @@ for f,h in protected.items():
 entry=(donor/'drivers/gpu/drm/asahi/asahi_m4.rs').read_text()
 if 'if !metadata.normal_startup_implemented' not in entry or 'if chip_id == 0x6040' not in entry:
  raise SystemExit('Required T6040 startup and probe guards missing')
-files=['rust/kernel/drm/file.rs','rust/kernel/drm/gem/shmem.rs','rust/kernel/io/mem.rs','rust/kernel/soc/apple/rtkit.rs','drivers/soc/apple/rtkit.c','drivers/soc/apple/rtkit-internal.h','include/linux/soc/apple/rtkit.h','include/uapi/drm/asahi_drm.h']
+profile=(donor/'drivers/gpu/drm/asahi/g16_profile.rs').read_text()
+if not re.search(r'const T6040: Profile = Profile \{[^}]*normal_startup_implemented: false',profile):raise SystemExit('T6040 normal startup must remain disabled')
+firmware=(donor/'drivers/gpu/drm/asahi/g16.rs').read_text()
+if 'if firmware.as_slice() != b"mBoot-18000.161.10\\0"' not in firmware:raise SystemExit('Exact firmware qualification guard missing')
+files=['rust/helpers/dma-fence.c','rust/kernel/drm/file.rs','rust/kernel/drm/gem/shmem.rs','rust/kernel/io/mem.rs','rust/kernel/soc/apple/rtkit.rs','drivers/soc/apple/rtkit.c','drivers/soc/apple/rtkit-internal.h','include/linux/soc/apple/rtkit.h','include/uapi/drm/asahi_drm.h']
 for f in (donor/'drivers/gpu/drm/asahi').rglob('*'):
  if f.is_file() and (f.suffix=='.rs' or f.name in ['Kconfig','Makefile']):files.append(str(f.relative_to(donor)))
 receipt={}
 for f in files:
  src=donor/f;dst=tree/f;dst.parent.mkdir(parents=True,exist_ok=True)
  receipt[f]={'before':sha(dst) if dst.exists() else None,'after':sha(src)}
- shutil.copyfile(src,dst)
+ if not dst.exists() or dst.read_bytes()!=src.read_bytes():shutil.copyfile(src,dst)
 parent=tree/'drivers/gpu/drm/Makefile';s=parent.read_text();line='obj-$(CONFIG_DRM_ASAHI_M4) += asahi/'
 if line not in s:parent.write_text(s+'\n'+line+'\n')
 shutil.copyfile(a.config,tree/'.config')

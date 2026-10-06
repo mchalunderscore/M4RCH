@@ -1,7 +1,11 @@
 # GPU source collaboration checkpoint — 2026-10-06
 
 Continue on branch gpu/native-contract. Exact maintained source/build pins are
-now shared in this repository; normal kernel, WFI and GRUB default are unchanged.
+now shared in this repository. CURRENT: running7.1.3-m4rch-gpu-id; WFI Y,
+GFX off0. Next default3 is the separately installed guarded gpu-port trial.
+Normal fallback0 remains byte-identical. Reboot is the next required action.
+Earlier checkpoint notes below describe prior states; the final staging section
+and docs/evidence/2026-10-06-gpu-maintained-port.json are authoritative.
 
 The guarded ADT capture succeeded and unloaded its helper. Parser fix preserves
 duplicate unrelated siblings; unique contract nodes remain mandatory. Linux
@@ -158,3 +162,30 @@ The current Rust trial remains usable; next default is normal kernel0. All test
 helpers are gone, GFX off0, WFI enabled. Full private native captures/build logs
 are retained locally (an ESP return archive has not yet been assembled); shared source/evidence is
 on gpu/native-contract. No further firmware execution was attempted.
+
+Guarded maintained full-driver compile/staging checkpoint:
+7.1.3-m4rch-gpu-port is separately packaged and installed. Build ID
+2a100931b29c8c425aadee3140fe697f3b9722be. Full Image/modules built and modpost
+passed. First attempt lacked Rust dma_fence_is_signaled; the exact helper was
+backported and compilation/linking passed. GPU compile emitted14 warnings
+(deprecated API and unused code), not a warning-free build. Protected USB,
+framebuffer, cpufreq, early-fault and WFI source hashes match the working stack.
+Config differs from the running Rust leaf trial only by replacing the leaf
+module with DRM_ASAHI_M4 and adding DRM scheduling/Rust RTKit/shmem support.
+T6040 startup remains false, exact firmware gate retained, no GPU DT node added.
+
+Matching initramfs /init, kernel release and package-ownership check verified.
+Normal kernel/initramfs/EFI loader/board overlay restored byte-identically after
+package hooks. Two unreferenced old trials IBATCH1 and ICONT001 were moved from
+the ESP to out/gpu-port/esp-retired with per-file hash verification. Normal and
+SME fallback files remain. Current running kernel is still the gpu-id trial.
+
+Next reboot target: GRUB default3, 7.1.3-m4rch-gpu-port. The first native test is
+framework boot stability and driver registration without a GPU node; no firmware
+startup or rendering. After successful userspace recovery, restore default0.
+If it fails before userspace, force off, boot macOS and change set default=3 to
+set default=0 in the SD EFI partition's grub/grub.cfg. Phone Remote cannot
+recover an early kernel hang. Do not replace Apple enrollment/loader images.
+Receipt: docs/evidence/2026-10-06-gpu-maintained-port.json. Reproduce with
+prepare-maintained.py in a fresh workspace, then prepare-port.py --build and
+package-port.py. No macOS handoff is needed for this next native framework test.
