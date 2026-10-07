@@ -1,3 +1,18 @@
+# Linux USB investigation: missing fixed-host role provider candidate
+
+See experiments/usb-role-provider/README.md. All three live DT controllers
+request usb-role-switch, but fixed-host DWC3 probe returns before registering
+it. Live role class empty; PD common probe requires graph provider and may
+returnEPROBE_DEFER there. Candidate patch now built W=1 against current kernel;
+NOT installed/loaded. Native exact failing stage/right-port causality remain
+unconfirmed. No live USB reset/unbind or extra GPU attempt. Next separate boot
+should qualify role/provider completion and physical ports BEFORE GPU testing.
+Protected maintained source/config/kernel/default unchanged. Full build/module
+receipt in docs/evidence/2026-10-07-usb-role-provider-candidate.json. Archive
+includes source patch/instructions; candidate module retained locally in out.
+
+---
+
 # USB port correction — right-port failure predates GPU trial
 
 User clarified YubiKey was connected to RIGHT port since boot a9112962, then

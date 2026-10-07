@@ -1,0 +1,10 @@
+{
+  "candidate_patch": "patches/experimental-t6040-fixed-host-role-switch.patch",
+  "kernel_release": "7.1.13-m4rch-gpu-contract",
+  "build": "External module LLVM=1 W=1, success",
+  "module_sha256": "53f89da02c1d4b524c934d9d44c15c4c2acb43d5484967a572721608d565533e",
+  "source_sha256": "7ca78866b27aa670134ded04820c26b7cabfb17640c410ee5cf3b307e0aa5b0c",
+  "installed": false,
+  "loaded": false,
+  "inference": "Missing fixed-host role registration explains an unsatisfied PD graph dependency; exact common-probe failing stage and right-port causality need native confirmation."
+}
