@@ -1,35 +1,30 @@
-# Allocations-enabled structural initialization batch
+# Experimental structural GPU initialization
 
-This experimental helper batches the relocated G16S object graph, cold RTKit
-boot, root publication and bounded response capture. Explicit zero opaque
-objects are fixtures, not valid production GPU configuration. It submits no
-rendering work. The register batch installs eleven candidate SGX descriptors
-using 24 read-only device pages, alongside the 21 object pages. Only qualified
-profile-A core/SRAM voltage columns are populated. Firmware may fault.
+Current GPUC002 helper publishes21 structural object pages and32 device pages.
+Slots33 Bumper and35 DFenderMGPUCfg use matching25G83 static mappings, qualified
+by five exact native reads. Only their two16KiB device pages are writable;
+other device leaves remain read-only. Hardware mask input is0xf6fdb at+0x2560,
+third word0 at+0x2568. Slot32 ScratchRam extent is0x20000 from the matching map.
+Opaque zero objects remain fixtures, not a complete production configuration.
+No rendering work is submitted.
 
-`build-root-envelope.py` generates its bytes from the tested parser fixture;
-it validates the maintained kernel source/configuration and records hashes.
-`run-root-envelope.py --graph --run` validates fresh captured ADT/kernel/firmware
-identity, performs the owned shadow allocation/walk, unloads that shadow-only
-instance, then publishes once in the cold firmware run. It stores firmware DATA
-and all object pages after stopping ASC. No automatic reboot.
+`build-root-envelope.py` validates the maintained kernel/config/source and
+records generated artifacts. `run-root-envelope.py --graph --run` checks fresh
+ADT/kernel/firmware identity, validates shadow allocation/walk, unloads the
+shadow-only instance, then publishes once after cold RTKit startup. Object
+and firmware DATA snapshots are captured after stopping ASC. No auto reboot.
+Published backing/mappings and power stay pinned until normal reboot; never
+force-unload them. A returned helper is not proof of full initialization.
 
-Published mappings, backing and power reference remain pinned until reboot.
-Never force unload. Pre-publication handshake-only cleanup uses the established
-acknowledgment/core-stop/empty-FIFO checks. A returned module, consumed pointer
-or modified status word is not evidence of initialization or rendering success.
+GPUC002 programmed the real Bumper mask (readback0xf6fdb/0/0) and passed the
+former slot35 null write. It stopped on a slot41 counter write-permission fault
+at+0x60, physical0x288e1f860. Current dense per-bank GPU virtual packing also
+needs replacement with SGX-relative virtual offsets: firmware later subtracts
+0xd10000 from slot29's virtual address. Review overlap permissions, complete
+TLBI coverage and qualified address ranges before the next cold trial.
 
-First native batch reached a null GFender descriptor access after root parsing;
-see docs/evidence/2026-10-07-gravity-gpu-native-graph-result.json.
-The subsequent read-only batch passed that access, set statusA+0x14 to one,
-and faulted on missing slot33 FenderRegsBumper at offsets0xa0/0xa4. See
-docs/evidence/2026-10-07-gravity-gpu-readonly-register-result.json.
-Mapped candidates are not individually validated merely because execution advanced.
-
-Current diagnostic variant adds one owned read-only RAM page for slot33. It
-contains the captured16-core mask0xf6fdb and is not a hardware Bumper mapping.
-The helper patches the descriptor physical field to that owned page before
-publication; hardware mask-programming input fields remain zero.22 object/RAM
-pages plus24 read-only device pages are mapped. The RAM-surrogate native run
-passed the mask consumer, then faulted writing missing slot35+0x1704.
-Do not convert the surrogate into a production register map.
+Earlier diagnostic RAM surrogate demonstrated only mask-consumer behavior;
+it has been removed from this real-bank variant. Earlier speculative bank
+scanner caused a system hang and remains quarantined. Do not rerun it.
+See docs/evidence/2026-10-07-gpuc002-real-register-result.json and its linked
+input source provenance/native captures. No GPU acceleration established.

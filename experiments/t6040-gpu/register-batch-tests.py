@@ -15,17 +15,20 @@ class BatchTests(unittest.TestCase):
   self.assertEqual(values[0],0x288d04000);self.assertEqual(values[2:],(0x8000,0x8000,0xd04000,0))
   self.assertEqual(values[1]%0x4000,0)
  def test_leaf_pages_are_disjoint_virtual_and_contained(self):
-  leaves=self.receipt['mmio_leaves'];self.assertEqual(len(leaves),24);self.assertEqual(self.receipt['mapped_pages'],46)
+  leaves=self.receipt['mmio_leaves'];self.assertEqual(len(leaves),32);self.assertEqual(self.receipt['mapped_pages'],53)
   start=int(self.receipt['base'],16)+len(self.data)
-  self.assertEqual([v['gpu_va'] for v in leaves],[start+i*0x4000 for i in range(24)])
-  self.assertTrue(all(v['readonly'] and v['physical']%0x4000==0 and 0x288000000<=v['physical']<0x28b758000 for v in leaves))
- def test_ram_surrogate_cannot_claim_native_register_identity(self):
-  r=self.receipt['ram_register_surrogate'];off=r['page_index']*0x4000
-  self.assertEqual(r['page_index'],21);self.assertTrue(r['readonly'])
-  self.assertEqual(struct.unpack_from('<III',self.data,off+0xa0),(0xf6fdb,0,0))
-  self.assertEqual(struct.unpack_from('<QQ',self.data,r['descriptor_physical_arena_offset']),(0x4000,int(self.receipt['base'],16)+off))
+  self.assertEqual([v['gpu_va'] for v in leaves],[start+i*0x4000 for i in range(32)])
+  self.assertTrue(all(v['physical']%0x4000==0 and 0x288000000<=v['physical']<0x28b758000 for v in leaves))
+ def test_real_banks_and_narrow_write_permissions(self):
+  self.assertNotIn('ram_register_surrogate',self.receipt)
+  writable=[v['physical'] for v in self.receipt['mmio_leaves'] if not v['readonly']]
+  self.assertEqual(writable,[0x288d44000,0x288e00000])
   h=next(o['arena_offset'] for o in self.receipt['objects'] if o['name']=='hardware')
-  self.assertEqual(struct.unpack_from('<QQ',self.data,h+0x2560),(0,0))
+  for slot,physical in [(33,0x288d44000),(35,0x288e00000)]:
+   values=struct.unpack_from('<QQIIQI',self.data,h+0x640+slot*0x28)
+   self.assertEqual(values[0],physical);self.assertEqual(values[2],0x4000);self.assertEqual(values[-1],1)
+  self.assertEqual(struct.unpack_from('<QQ',self.data,h+0x2560),(0xf6fdb,0))
+  self.assertEqual(len(self.data)//0x4000,21)
  def test_profile_a_columns_and_tail(self):
   h=next(o['arena_offset'] for o in self.receipt['objects'] if o['name']=='hardware')
   self.assertEqual(struct.unpack_from('<II',self.data,h+0x1008),(125,125))

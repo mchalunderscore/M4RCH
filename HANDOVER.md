@@ -1,3 +1,61 @@
+# GPUC002 real Bumper/DFender trial advances — 2026-10-07
+
+Boot e84612d6-9ed1-422a-ba2b-ede8da14bd43; unchanged GPU-contract kernel,
+original boot.bin/default/WFI. Received GPUC002 input checksum verification
+passed for all4 files; matching25G83 static map/provenance saved in
+ docs/evidence/gpuc002-input/. Apple source binaries were not supplied/needed.
+
+Fresh ADT translation/resources and kernel notes matched. Five exact reads
+completed using GFX genpd; no scan or host register writes. Bumper288d440a0=
+ffff6fdb,+a4=ff,+a8=0; low20bitsf6fdb matches16-core mask. DFender288e01704=0,
++1780=fe66. Helpers unloaded normally. Initial ADT sysfs-path typo stopped
+before GPU access; sampler unloaded; corrected path/validation then passed.
+
+NATIVE trial removed RAM surrogate. Slots33/35 now map real banks288d44000 /
+288e00000,4000 each, writable device leaves ONLY on those2 pages. Descriptor
+flags1; hardware+2560=f6fdb,+2568=0. Slot32 ScratchRam extent corrected from
+8000 to20000 using matching static map.21 object pages,32 device pages,2 tables.
+Cold RTKit/root publication, five-second capture, ASC stopped; backing pinned.
+Five serializer checks and matching-kernel module build passed.
+
+Readback after firmware: Bumper+a0=f6fdb,+a4=0,+a8=0. This confirms real mask
+programming, replacing the previous RAM-only diagnostic. Firmware mask globals
+18bb60=f6fdb,18bb70=3db,18bb80=f6c00. DFender reads unchanged0/fe66; execution
+passed earlier null slot35 write1704. User confirms all peripherals normal.
+
+NEXT fault: NEW2544-byte crashlog validfooter, PCfffffc000002b7f8,
+FARfffffc20001c7860, ESR9600004f (write permission),x12=70700777. Instructions
+load cached slot41 virtual18fa90, then STRW12[base,+60]. Physical target
+288e1f860 lies in HAL40 GFXCLKGENMGPU page288e1c000+4000. This is our deliberate
+read-only PTE stopping a write, not another null bank. Counter offset/role came
+from donor map; qualify exact target/access before granting its page write.
+Do not grant writes to the whole MMIO aperture. Keep scanner quarantined.
+
+ALSO prepare coherent MMIO virtual layout: captured2b9e4..2b9ec computes from
+slot29 virtual then subtractsD10000. Dense unrelated bank VAs used so far do
+not preserve SGX-relative arithmetic. Map qualified banks at a shared MMIO
+virtual base+their primarySGX offset, preserving sparse page ownership,
+no RAM overlap, shared-page permission unions and complete TLBI coverage.
+This can be prepared from Linux before next trial; no new macOS handoff needed
+merely to address the current PTE/layout issues. No further firmware start
+until NORMAL REBOOT; never force-unload/free published mappings.
+
+Evidence: docs/evidence/2026-10-07-gpuc002-real-register-result.json.
+Raw: out/gpu-gravity-contract/asc-graph-init/boot-e84612d6-9ed1-422a-ba2b-ede8da14bd43/
+and exact-register-read/boot-e84612d6-9ed1-422a-ba2b-ede8da14bd43/.
+Source-at-trial/ contains exact helper/fixture/module snapshots. No full GPU
+initialization, rendering or acceleration established. Apple binary-analysis
+provenance explicit; current result strengthens register roles, not clean-room.
+
+Return packet /boot/GPUC002/linux-return.tar.gz includes this document, current
+tracked repository (alignment recipes/pins/configs/patches/helpers), trial
+config/build receipts, raw data/object/log captures and checksums. Firmware TEXT
+code image remains local and is excluded to honor no Apple binaries; its hash,
+normalized contract and checked instruction words are included. No credentials,
+Apple driver/kernel binaries or full system images included.
+
+---
+
 # Bumper RAM diagnostic passes; real slot33/35 mappings needed — 2026-10-07
 
 Boot54817cb4-dc3e-46a6-99c3-432ea842b99e recovered from prior speculative-bank

@@ -83,16 +83,14 @@ def main():
     seed = work/'asc-graph-init/boot-e1e8db50-10f6-46b5-8d73-a593b7e2c611/boot.adt'
     graph_bytes, graph_receipt = register_batch.extend(graph_bytes,graph_receipt,seed.read_bytes())
     graph_pages = len(graph_bytes)//graph_plan.PAGE
-    if len(graph_bytes)%graph_plan.PAGE or graph_pages!=22:
+    if len(graph_bytes)%graph_plan.PAGE or graph_pages!=21:
         raise ValueError('Unexpected structural fixture geometry')
     header = '/* Explicit experimental zero-opaque fixture, NOT a complete render graph. */\n'
     header += f'#define ARENA_OBJECT_PAGES {graph_pages}U\n'
     header += f'#define GRAPH_MAPPED_PAGES {graph_receipt["mapped_pages"]}U\n'
-    header += f'#define RAM_REGISTER_PAGE {graph_receipt["ram_register_surrogate"]["page_index"]}U\n'
-    header += f'#define RAM_REGISTER_DESC_OFFSET {graph_receipt["ram_register_surrogate"]["descriptor_physical_arena_offset"]}U\n'
-    header += 'struct graph_mmio_leaf { u64 physical, gpu_va; };\n'
+    header += 'struct graph_mmio_leaf { u64 physical, gpu_va; bool writable; };\n'
     header += 'static const struct graph_mmio_leaf mmio_leaves[] = {\n'
-    header += ''.join(f' {{ {v["physical"]:#x}ULL, {v["gpu_va"]:#x}ULL }},\n' for v in graph_receipt['mmio_leaves'])
+    header += ''.join(f' {{ {v["physical"]:#x}ULL, {v["gpu_va"]:#x}ULL, {int(not v["readonly"])} }},\n' for v in graph_receipt['mmio_leaves'])
     header += '};\n'
     header += f'static const u8 graph_bytes[{len(graph_bytes)}] = {{\n'
     header += ''.join(f' [{i:#x}] = {value:#x},\n' for i,value in enumerate(graph_bytes) if value)
