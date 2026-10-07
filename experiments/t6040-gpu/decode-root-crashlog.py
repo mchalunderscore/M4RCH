@@ -35,6 +35,12 @@ while offset<size:
  elif tag==b'revC':
   if len(payload)<16:raise ValueError('Truncated version section')
   entry['text']=payload[16:].split(b'\0')[0].decode('utf-8',errors='replace')
+ elif tag==b'8grC':
+  # Exact packed layout from the pinned kernel rtkit-crashlog.c, size0x350.
+  if len(payload)<0x350:raise ValueError('Truncated register section')
+  entry['registers']={f'x{i}':hex(struct.unpack_from('<Q',payload,8+i*8)[0]) for i in range(31)}
+  for name,position in [('sp',0x100),('pc',0x108),('psr',0x110),('far',0x330),('esr',0x340)]:
+   entry[name]=hex(struct.unpack_from('<Q',payload,position)[0])
  elif tag==b'tscC':
   if len(payload)<8:raise ValueError('Truncated stack section')
   entry['task'],entry['unknown']=struct.unpack_from('<II',payload)
@@ -53,5 +59,5 @@ r={'boot_id':json.loads((w/'attempt.json').read_text())['boot_id'],
    'sections':sections,'expected_rejection':expected in messages,
    'parser_callsite_present':0xfffffc000002fa2c in stack,
    'crashlog_newly_written':before[start:start+size]!=after[start:start+size],
-   'qualification':'Expected rejection plus parser callsite corroborates firmware root consumption and successful interface comparison. This negative control does not establish complete initialization, queue execution or rendering.'}
+   'qualification':('Expected rejection plus parser callsite corroborates firmware root consumption and successful interface comparison. This negative control does not establish complete initialization, queue execution or rendering.' if expected in messages and 0xfffffc000002fa2c in stack else 'Structured crashlog decoding only; interpret registers/stack with matching instructions and independent object capture. No initialization or rendering success established.')}
 a.output.write_text(json.dumps(r,indent=2)+'\n');print(json.dumps({k:r[k] for k in ['crashlog_bytes','footer_valid','expected_rejection','parser_callsite_present','crashlog_newly_written']},indent=2))

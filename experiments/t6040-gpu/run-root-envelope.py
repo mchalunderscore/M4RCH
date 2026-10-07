@@ -39,7 +39,9 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('workspace', type=Path)
     p.add_argument('--run', action='store_true')
-    p.add_argument('--arena', action='store_true', help='Mapping/retirement only; never publish a root')
+    mode = p.add_mutually_exclusive_group()
+    mode.add_argument('--arena', action='store_true', help='Mapping/retirement only; never publish a root')
+    mode.add_argument('--graph', action='store_true', help='Batch structural initialization, allocations enabled; published memory pins until reboot')
     args = p.parse_args()
     work = args.workspace.resolve()
     build = work/'asc-root-envelope'
@@ -54,7 +56,7 @@ def main():
         name = line.split()[0]
         require(not (name.startswith('asc_') or name in ['asahi_m4', 'resource_overlay', 'gfx_power_test', 'gpu_data_sample', 'm4rch_gpu_adt']), 'Conflicting module: '+name)
     boot = Path('/proc/sys/kernel/random/boot_id').read_text().strip()
-    out = (work/'asc-arena-preflight' if args.arena else build)/('boot-'+boot)
+    out = (work/'asc-graph-init' if args.graph else work/'asc-arena-preflight' if args.arena else build)/('boot-'+boot)
     out.mkdir(exist_ok=True)
     require(not (out/'attempt.json').exists() and not (out/'result.json').exists(), 'Attempt already recorded for this boot; do not repeat')
     raw = capture(work/'adt-current/m4rch_gpu_adt.ko', '/sys/kernel/m4rch_gpu_adt/adt', out/'boot.adt', 'm4rch_gpu_adt')
@@ -107,7 +109,14 @@ def main():
     before = capture(work/'root-data-sample/gpu-data-sample.ko', '/sys/kernel/m4rch_gpu_data_sample/data', out/'data-before.bin', 'gpu_data_sample')
     (out/'dmesg-before.log').write_text(subprocess.check_output(['dmesg','--color=never'],text=True))
     os.sync()
-    selected = work/'asc-arena-preflight/asc-arena-preflight.ko' if args.arena else build/'asc-root-envelope.ko'
+    selected = work/'asc-graph-init/asc-graph-init.ko' if args.graph else work/'asc-arena-preflight/asc-arena-preflight.ko' if args.arena else build/'asc-root-envelope.ko'
+    if args.graph:
+        require(sha((work/'asc-graph-init/graph-before.bin').read_bytes()) == receipt['graph_fixture_sha256'], 'Graph fixture changed')
+        require(sha((work/'asc-graph-init/graph-receipt.json').read_bytes()) == receipt['graph_receipt_sha256'], 'Graph relocation receipt changed')
+        shadow = subprocess.run(['insmod',str(selected),'run_gate=1'],capture_output=True,text=True)
+        require(shadow.returncode == 0, 'Owned graph allocation/shadow walk failed: '+shadow.stderr)
+        subprocess.run(['rmmod','asc_graph_init'],check=True)
+        (out/'objects-before.bin').write_bytes((work/'asc-graph-init/graph-before.bin').read_bytes())
     result = subprocess.run(['insmod',str(selected),'run_gate=1' if args.arena else 'run_gate=2'],capture_output=True,text=True)
     logs = subprocess.check_output(['dmesg','--color=never'],text=True)
     (out/'dmesg-after.log').write_text(logs)
@@ -147,11 +156,11 @@ def main():
         os.sync()
         print('Arena preflight retired and unloaded; no pinned resources.' if unloaded else 'Arena preflight refused or retained resources; inspect evidence.')
         return
-    present = Path('/sys/module/asc_root_envelope').exists()
+    present = Path('/sys/module/asc_graph_init' if args.graph else '/sys/module/asc_root_envelope').exists()
     report['root_published'] = 'G16S root sent to EP32' in logs
-    report['mapping_or_publication_performed'] = 'installed previously-empty mapping slot' in logs
+    report['mapping_or_publication_performed'] = ('21 object pages mapped' in logs if args.graph else 'installed previously-empty mapping slot' in logs)
     report.update(load_returncode=result.returncode, stderr=result.stderr, module_present=present,
-                  reboot_required=present, interpretation='A transmitted root is not proof of consumption. Seek a newly written disabled-host-allocations rejection in the crashlog. Never force module unload.')
+                  reboot_required=present, interpretation=('Allocations-enabled structural fixture. A sent root/object change does not prove initialization or rendering readiness. Never force unload.' if args.graph else 'A transmitted root is not proof of consumption. Seek a newly written disabled-host-allocations rejection in the crashlog. Never force module unload.'))
     (out/'attempt.json').write_text(json.dumps(report,indent=2)+'\n')
     os.sync()
     # Sampler is read-only and independently unloadable; root probe stays pinned.
@@ -170,6 +179,24 @@ def main():
             if before[found:found+len(needle)] != needle:
                 report['new_rejection_offsets'].append(hex(found))
             cursor = found+1
+        (out/'attempt.json').write_text(json.dumps(report,indent=2)+'\n')
+    if args.graph and present:
+        snapshot=Path('/sys/kernel/m4rch_gpu_graph_trial/objects')
+        if snapshot.exists():
+            objects=snapshot.read_bytes()
+            initial=(out/'objects-before.bin').read_bytes()
+            require(len(objects)==len(initial),'Graph snapshot extent changed')
+            (out/'objects-after.bin').write_bytes(objects)
+            layout=json.loads((work/'asc-graph-init/graph-receipt.json').read_text())
+            report['object_changes']=[]
+            for obj in layout['objects']:
+                start=obj['arena_offset'];end=start+obj['reserved_bytes']
+                changed=[i-start for i in range(start,end) if initial[i]!=objects[i]]
+                report['object_changes'].append(dict(name=obj['name'],changed_bytes=len(changed),
+                    first_changed_offsets=[hex(i) for i in changed[:32]]))
+            report['objects_after_sha256']=sha(objects)
+        else:
+            report['object_snapshot_missing']=True
         (out/'attempt.json').write_text(json.dumps(report,indent=2)+'\n')
     os.sync()
     print('Probe returned. Inspect evidence; pinned backing requires reboot.' if present else 'Probe refused; inspect evidence before retrying.')

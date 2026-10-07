@@ -1,3 +1,75 @@
+# Native allocations-enabled GPU graph consumed; GFender mapping blocker — 2026-10-07
+
+Boot e1e8db50-10f6-46b5-8d73-a593b7e2c611, same GPU-contract kernel.
+Original working stage2cb3ab77... is installed; built-in input and GRUB display
+recovered after full power cycle. GRUB keyboard work deferred by user.
+
+BATCH EXECUTED: shadow allocation/walk, cold RTKit handshake/crashlog/ON,
+21 structural object pages plus2 owned tables, all16 relocated edges, writable
+firmware mappings, endpoints32/33, allocations-enabled root publication and
+five-second observation. Existing firmware root descriptors preserved. Native
+root globals contain matching main/statusA/statusB/RegionC pointers and G16S
+identifier; statusA+10 changed0->1. Complete object snapshots captured.
+
+Firmware progressed beyond root parsing and produced a NEW2160-byte structured
+crashlog (valid repeated footer), with PCfffffc0000029ea8, FAR10, ESR96000004,
+x9=0. Pinned instruction reads cached descriptor26 virtual address at18f838,
+then dereferences+10. Register-table audit names slot26 FenderRegsGFenderCfg.
+The explicit zero-opaque fixture intentionally lacked MMIO descriptors; this
+is a concrete missing mapping, not a hardware/firmware ABI rejection. No complete
+initialization, work submission or rendering established. StatusA+14 remains0.
+
+One additional READ-ONLY native sample at candidate288d04010 returned11020a;
+helper unloaded. Candidate is primarySGX288000000+d04000 (secondarySGX+4000),
+contained in both ADT apertures. Firmware extracts bits8..15=2 and bits16..19=1;
+consistent with topology, not full register-role/permissions proof. No SGX
+register writes by our host helper. GFX power held by retained graph.
+
+Raw capture: out/gpu-gravity-contract/asc-graph-init/
+boot-e1e8db50-10f6-46b5-8d73-a593b7e2c611/. Includes firmware DATA/TEXT, ADT,
+tables, all objects before/after, endpoint logs, Crg8 registers, source/artifact
+receipt and GFender candidate read. Evidence: docs/evidence/
+2026-10-07-gravity-gpu-native-graph-result.json and next-register-batch.json.
+Preflight Python hash-type mistake occurred BEFORE any graph insmod, separately
+archived with zero tables/noASC modules, fixed then fresh checks reran. No
+warm-wake retry was performed. Published graph refcount1 remains pinned, ASC
+control0/status6e. NEVER force unload/free mappings or release GFX power.
+
+NEXT: normal Linux reboot required before another GPU firmware start. Keep
+original boot bundle/current kernel/default/WFI. Build next useful batch from
+required MMIO mappings plus already-qualified shared graph fields. Device MMIO
+PTEs need device attributes, not shared-RAM attributes. Trace later mandatory
+slot consumers before mapping containment-only candidates. SGX relative offsets
+must use the correct primary base; do not blindly add them to second resource.
+Use docs/evidence/2026-10-07-gravity-gpu-next-register-batch.json. No macOS needed.
+Deferred writeup request saved in docs/gpu-variant-porting-notes.md: after16-core
+driver works, compare16/20-core variants with explicit evidence/provenance.
+
+---
+
+# Working input restored; allocations-enabled GPU batch prepared — 2026-10-07
+
+Full shutdown/power-on recovered GRUB display and built-in keyboard/trackpad,
+confirmed by user and by both Apple DockChannel input devices registering on
+boot e1e8db50-10f6-46b5-8d73-a593b7e2c611. /boot/boot.bin matches original
+cb3ab77bdac7f276b5331d8580a5ee1b81f8bd215c0cba1449391a73d790ef09.
+Bootloader input work is deferred; do not reinstall the failed MTP variant.
+
+GPU experiment now prepared: asc-graph-init publishes the entire structural
+fixture in one cold run (17 objects,16 relocated edges,21 object pages plus2
+owned tables). Shadow allocation/walk precedes live mapping. Read/write firmware
+PTEs; allocations-enabled G16S root; opaque contents explicitly zero; candidate
+page-table geometry/status fields. No donor T8132 MMIO descriptors, SGX register
+writes, queues, shaders or rendering commands. This is not a production init
+graph. User explicitly requests larger useful batches and accepts recoverable
+hangs. Run captures endpoint responses, firmware DATA, and all21 object pages.
+Every published resource pins until reboot, even if ASC stop succeeds; never
+force unload. Artifacts/source hashes in asc-root-envelope/build-receipt.json.
+Runner persists attempt intent before hardware changes. Current kernel/default
+and continuous WFI unchanged; no macOS work needed.
+
+---
+
 # Keyboard trial FAILED and stage 2 restored — 2026-10-07
 
 Boot 9a42112c-6d16-46a9-ae4c-77c0526fd868, same GPU-contract kernel.

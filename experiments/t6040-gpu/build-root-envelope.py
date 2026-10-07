@@ -68,6 +68,27 @@ def main():
     arena_pages = plan['arena_bytes']//graph_plan.PAGE + len(unknown)
     (arena/'arena-contract.h').write_text(f'/* Candidate mapping capacity only, no object contents. */\n#define ARENA_OBJECT_PAGES {arena_pages}U\n')
     targets['asc-arena-preflight'] = 'asc-arena-preflight.ko'
+    graph = work/'asc-graph-init'
+    graph.mkdir(exist_ok=True)
+    for name in ['Makefile','asc-graph-init.c','graph-map.h']:
+        shutil.copy2(KIT/'asc-graph-init'/name,graph/name)
+    shutil.copy2(out/'boot-contract.h',graph/'boot-contract.h')
+    spec = importlib.util.spec_from_file_location('parser_model', KIT/'emulate-init-parser.py')
+    parser_model = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(parser_model)
+    graph_bytes, graph_receipt = parser_model.graph_fixture(True)
+    graph_pages = len(graph_bytes)//graph_plan.PAGE
+    if len(graph_bytes)%graph_plan.PAGE or graph_pages!=21:
+        raise ValueError('Unexpected structural fixture geometry')
+    header = '/* Explicit experimental zero-opaque fixture, NOT a complete render graph. */\n'
+    header += f'#define ARENA_OBJECT_PAGES {graph_pages}U\n'
+    header += f'static const u8 graph_bytes[{len(graph_bytes)}] = {{\n'
+    header += ''.join(f' [{i:#x}] = {value:#x},\n' for i,value in enumerate(graph_bytes) if value)
+    header += '};\n'
+    (graph/'graph-contract.h').write_text(header)
+    (graph/'graph-before.bin').write_bytes(graph_bytes)
+    (graph/'graph-receipt.json').write_text(json.dumps(graph_receipt,indent=2)+'\n')
+    targets['asc-graph-init'] = 'asc-graph-init.ko'
     for tag in targets:
         subprocess.run(['make','-C',str(tree),'LLVM=1','KERNELRELEASE='+RELEASE,
                         'LOCALVERSION=','M='+str(work/tag),'W=1','modules'],check=True)
@@ -77,6 +98,9 @@ def main():
                    source_sha256={name:sha(out/name) for name in ['asc-root-envelope.c','root-map.h','boot-contract.h']},
                    arena_object_pages=arena_pages,arena_unknown_extent_marker_pages=unknown,
                    arena_source_sha256={name:sha(arena/name) for name in ['asc-arena-preflight.c','arena-map.h','arena-contract.h']},
+                   graph_object_pages=graph_pages,graph_fixture_sha256=sha(graph/'graph-before.bin'),
+                   graph_source_sha256={name:sha(graph/name) for name in ['asc-graph-init.c','graph-map.h','graph-contract.h']},
+                   graph_receipt_sha256=sha(graph/'graph-receipt.json'),
                    hardware_trial_performed=False,default_gate=0,preflight_gate=1,cold_publication_gate=2)
     (out/'build-receipt.json').write_text(json.dumps(receipt,indent=2)+'\n')
     print('Built matching isolated modules; no loading or firmware publication.')

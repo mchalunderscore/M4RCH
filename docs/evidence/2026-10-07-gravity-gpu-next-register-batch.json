@@ -1,0 +1,101 @@
+{
+  "scope": "Offline candidates, not installed or mapped",
+  "rows": [
+    {
+      "slot": 17,
+      "physical": "0x288000000",
+      "size": "0x20000",
+      "confidence": "donor relative offset plus T6040 aperture containment only",
+      "first_aperture_contained": true,
+      "second_aperture_contained": false
+    },
+    {
+      "slot": 26,
+      "physical": "0x288d04000",
+      "size": "0x8000",
+      "confidence": "single native configuration-word read supports role",
+      "first_aperture_contained": true,
+      "second_aperture_contained": true
+    },
+    {
+      "slot": 27,
+      "physical": "0x288d0d000",
+      "size": "0x1000",
+      "confidence": "donor relative offset plus T6040 aperture containment only",
+      "first_aperture_contained": true,
+      "second_aperture_contained": true
+    },
+    {
+      "slot": 28,
+      "physical": "0x288d58000",
+      "size": "0x8000",
+      "confidence": "donor relative offset plus T6040 aperture containment only",
+      "first_aperture_contained": true,
+      "second_aperture_contained": true
+    },
+    {
+      "slot": 29,
+      "physical": "0x288d10000",
+      "size": "0x4000",
+      "confidence": "donor relative offset plus T6040 aperture containment only",
+      "first_aperture_contained": true,
+      "second_aperture_contained": true
+    },
+    {
+      "slot": 31,
+      "physical": "0x288d40000",
+      "size": "0x4000",
+      "confidence": "donor relative offset plus T6040 aperture containment only",
+      "first_aperture_contained": true,
+      "second_aperture_contained": true
+    },
+    {
+      "slot": 32,
+      "physical": "0x288d60000",
+      "size": "0x8000",
+      "confidence": "donor relative offset plus T6040 aperture containment only",
+      "first_aperture_contained": true,
+      "second_aperture_contained": true
+    },
+    {
+      "slot": 40,
+      "physical": "0x288e1c000",
+      "size": "0x4000",
+      "confidence": "donor relative offset plus T6040 aperture containment only",
+      "first_aperture_contained": true,
+      "second_aperture_contained": true
+    },
+    {
+      "slot": 22,
+      "physical": "0x289000000",
+      "size": "0x8000",
+      "confidence": "donor relative offset plus T6040 aperture containment only",
+      "first_aperture_contained": true,
+      "second_aperture_contained": false
+    },
+    {
+      "slot": 39,
+      "physical": "0x288e08000",
+      "size": "0x8000",
+      "confidence": "donor relative offset plus T6040 aperture containment only",
+      "first_aperture_contained": true,
+      "second_aperture_contained": true
+    },
+    {
+      "slot": 41,
+      "physical": "0x288e1f800",
+      "size": "0x4000",
+      "confidence": "donor relative offset plus T6040 aperture containment only",
+      "first_aperture_contained": true,
+      "second_aperture_contained": true
+    }
+  ],
+  "important_base_correction": "Donor relative offsets must be assessed against primarySGX288000000. Adding0xd04000 to secondarySGX288d00000 is not the sampled address and exceeds that resource span.",
+  "next_steps": [
+    "Use qualified native slot26 as the first mandatory mapping; trace later mandatory slot consumers before selecting the rest of the batch",
+    "Use device-memory PTE attributes rather than shared-object RAM attributes",
+    "Preserve device-map lifetime and all backing after root publication",
+    "Carry observed two-cluster voltage geometry and known pointer fields into one useful next initialization batch; keep other fields explicit candidates"
+  ],
+  "unresolved": "Containment is not proof of peripheral identity, register access permissions or all required initialization values."
+}
