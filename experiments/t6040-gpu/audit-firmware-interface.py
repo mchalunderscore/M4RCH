@@ -30,7 +30,11 @@ if report['text_contract'] is not None:
               0xfcec:0xf0000be8,0xfcf0:0xf9426108,0xfcf4:0xf9400108,
               0xfcf8:0xf9535d09,0xfd04:0xf947012b,
               0x14d20:0xf9426288,0x14d24:0xf9400108,0x14d28:0xf9535d08,
-              0x14d48:0xf9471108}
+              0x14d48:0xf9471108,
+              0x33e0c:0xf0000ad4,0x33e10:0xf9426288,0x33e14:0xb9425109,
+              0x33e18:0x34000a69,0x14958:0xd0000bca,0x1495c:0xf942614a,
+              0x14960:0x394f814b,0x34da0:0xd0000ac8,0x34da4:0xf9426108,
+              0x34da8:0xf9400908,0x34db4:0xb9400109,0x34df4:0x3cc74101}
     assert all(word(k)==v for k,v in expected.items())
     report['qualified_sample_findings']={
         'root_interface':'Root first u64 loaded at 2f250; compared with reconstructed G16S identifier at 2f264; mismatch branches at 2f268.',
@@ -40,6 +44,9 @@ if report['text_contract'] is not None:
         'main_shared_object_block':'537c loads main pointer;5380 adds254;5384 dereferences block+18 (main26c).',
         'hardware_nested_object':'fcec/fcf0 load main from global18e4c0;fcf4 dereferences main+0 (hardware data);fcf8 dereferences hardware+26b8. fd04 reads nested+e00 as u64. Independent chain14d20/24/28 reaches the same object;14d48 reads indexed nested+e20. This corroborates the pointer and counter-like use, not full e40 extent or all semantics.',
         'region_c_packed_word':'2f2c8 supplies root+20 as x10;2f300 stores it at global195748.3888/388c load that global;3890 adds e51;3894 reads a 32-bit word. This confirms parent, offset and width, not host-write protocol.',
+        'main_250_gate':'33e0c/33e10 load main;33e14 reads u32+250;33e18 bypasses the following path when zero. Exact subsystem semantics unqualified.',
+        'main_3e0_byte':'14958/1495c load main;14960 reads one byte+3e0, then shifts/tests a selected bit. Initial value and ownership unqualified.',
+        'main_10_object':'34da0/34da4 load main;34da8 dereferences main+10;34db4 reads first u32 as a gate. Nonzero path copies eight qwords from offsets4..74, reaching84 bytes; full88-byte extent remains a document claim.',
         'unknown_main_240':'Unresolved. Matches15aa0/15b80/382c4/38380 refer to global146240 rather than the main object; they are not evidence for its extra field.'}
     report['instruction_checks']={hex(k):hex(v) for k,v in expected.items()}
 a.output.write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2))

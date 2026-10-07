@@ -38,6 +38,7 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('workspace', type=Path)
     p.add_argument('--run', action='store_true')
+    p.add_argument('--arena', action='store_true', help='Mapping/retirement only; never publish a root')
     args = p.parse_args()
     work = args.workspace.resolve()
     build = work/'asc-root-envelope'
@@ -52,9 +53,9 @@ def main():
         name = line.split()[0]
         require(not (name.startswith('asc_') or name in ['asahi_m4', 'resource_overlay', 'gfx_power_test', 'gpu_data_sample', 'm4rch_gpu_adt']), 'Conflicting module: '+name)
     boot = Path('/proc/sys/kernel/random/boot_id').read_text().strip()
-    out = build/('boot-'+boot)
+    out = (work/'asc-arena-preflight' if args.arena else build)/('boot-'+boot)
     out.mkdir(exist_ok=True)
-    require(not (out/'attempt.json').exists(), 'Attempt already recorded for this boot; do not repeat')
+    require(not (out/'attempt.json').exists() and not (out/'result.json').exists(), 'Attempt already recorded for this boot; do not repeat')
     raw = capture(work/'adt-current/m4rch_gpu_adt.ko', '/sys/kernel/m4rch_gpu_adt/adt', out/'boot.adt', 'm4rch_gpu_adt')
     tree = parse(raw)
     chosen = tree['/device-tree/chosen']
@@ -105,9 +106,31 @@ def main():
     before = capture(work/'root-data-sample/gpu-data-sample.ko', '/sys/kernel/m4rch_gpu_data_sample/data', out/'data-before.bin', 'gpu_data_sample')
     (out/'dmesg-before.log').write_text(subprocess.check_output(['dmesg','--color=never'],text=True))
     os.sync()
-    result = subprocess.run(['insmod',str(build/'asc-root-envelope.ko'),'run_gate=2'],capture_output=True,text=True)
+    selected = work/'asc-arena-preflight/asc-arena-preflight.ko' if args.arena else build/'asc-root-envelope.ko'
+    result = subprocess.run(['insmod',str(selected),'run_gate=1' if args.arena else 'run_gate=2'],capture_output=True,text=True)
     logs = subprocess.check_output(['dmesg','--color=never'],text=True)
     (out/'dmesg-after.log').write_text(logs)
+    if args.arena:
+        module_path = Path('/sys/module/asc_arena_preflight')
+        present = module_path.exists()
+        count = int((module_path/'refcnt').read_text()) if present else None
+        before_log = (out/'dmesg-before.log').read_text()
+        delta = logs[len(before_log):] if logs.startswith(before_log) else logs
+        retired = 'application-start-only retirement verified; normal unload allowed' in delta
+        unloaded = False
+        if present and result.returncode == 0 and count == 0 and retired:
+            subprocess.run(['rmmod','asc_arena_preflight'],check=True)
+            unloaded = True
+        final = subprocess.check_output(['dmesg','--color=never'],text=True)
+        (out/'dmesg-after-unload.log').write_text(final)
+        report.update(load_returncode=result.returncode,stderr=result.stderr,
+                      root_published=False,mapped_thirteen_pages='thirteen object pages mapped' in delta,
+                      retirement_verified=retired,unloaded=unloaded,reboot_required=present and not unloaded,
+                      interpretation='Allocation/mapping/retirement only; no root address sent or object reads established.')
+        (out/'attempt.json').write_text(json.dumps(report,indent=2)+'\n')
+        os.sync()
+        print('Arena preflight retired and unloaded; no pinned resources.' if unloaded else 'Arena preflight refused or retained resources; inspect evidence.')
+        return
     present = Path('/sys/module/asc_root_envelope').exists()
     report['root_published'] = 'G16S root sent to EP32' in logs
     report['mapping_or_publication_performed'] = 'installed previously-empty mapping slot' in logs

@@ -51,6 +51,12 @@ def main():
         shutil.copy2(KIT/'asc-root-envelope'/name,out/name)
     (out/'boot-contract.h').write_text('#define FW_DATA_BASE 0x10001d44000ULL\n#define FW_DATA_BYTES 0x138000ULL\n')
     targets['asc-root-envelope'] = 'asc-root-envelope.ko'
+    arena = work/'asc-arena-preflight'
+    arena.mkdir(exist_ok=True)
+    for name in ['Makefile','asc-arena-preflight.c','arena-map.h']:
+        shutil.copy2(KIT/'asc-arena-preflight'/name,arena/name)
+    shutil.copy2(out/'boot-contract.h',arena/'boot-contract.h')
+    targets['asc-arena-preflight'] = 'asc-arena-preflight.ko'
     for tag in targets:
         subprocess.run(['make','-C',str(tree),'LLVM=1','KERNELRELEASE='+RELEASE,
                         'LOCALVERSION=','M='+str(work/tag),'W=1','modules'],check=True)

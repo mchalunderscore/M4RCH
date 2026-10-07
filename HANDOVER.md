@@ -1,3 +1,44 @@
+# Full provisional arena preflight passed; clean teardown — 2026-10-07
+
+Boot541905c2-2712-49f1-a5a7-5269b8d26f6c. Retained root-reader probe cleared
+by reboot. Firmware initially cold; fresh ADT/text validation passed. New
+asc-arena-preflight allocated15 owned16KiB pages (two tables +13 object pages),
+checked42-bit PA bounds/leaf entries, preserved firmware root2 and installed
+only verified-empty borrowed child. START32/33 observed250ms, no messages.
+NO ROOT ADDRESS SENT. AP QUIESCED and IOP SLEEP ACKs, core stop6e and emptyFIFO
+passed; refcount0; normal unload removed child, invalidated13 VAs and freed
+backing/power. Read-only post-unload snapshots: reservedL2 allzero; NO owned
+page references in captured table/L2 reservations. No resources retained.
+This qualifies arena construction/retirement, not firmware object reads or
+initialized-graph teardown. Evidence2026-10-07-gravity-gpu-arena-preflight.json.
+
+Important correction to earlier raw-row caution: both independently decoded
+cluster tables collapse16 raw rows into11 contiguous voltage groups. Existing
+Python contract.ladder and Rust profile.ladder agree on all22 groups; generated
+wire core/SRAM columns independently checked and unused columns zero. Separate
+cluster voltages preserved. Earlier16-vs11 warning is NOT a row-count blocker;
+full profile A/B assignment/other power fields still need qualification. New
+build-cluster-voltage-wire.py emits offline inputs, no frequency assignment or
+power estimates. evidence2026-10-07-gravity-gpu-cluster-voltage-wire.json.
+Candidate hardware_voltages codec patches only the four documented arrays,
+preserving unknown fields;8 meaningful wire tests passed. Not driver-linked.
+
+Static straight-line pointer tracer produced296 access hints, NOT semantic
+proof. Manual/hash-pinned audit qualifies main+250 asu32 gate, main+3e0 asbyte
+bit-selection, and main+10 object pointer: firstu32 gate; enabled path copies
+128bytes starting+4, reaches84. Full88 extent remains document claim. Additional
+main240 field still unresolved. evidence2026-10-07-gravity-gpu-init-fields-audit.json.
+
+NEXT: continue full G16S graph construction/qualification before a positive
+publication trial. Do not merely enable allocations on a zero-pointer root.
+Main240, full pointer graph, channel/status objects, hardware register/MMIO
+contracts, voltage profiles and post-publication lifetimes remain explicit.
+ASC now sleeping6e; next firmware run needs normal reboot for cold state.
+NO cleanup reboot required; no kernel/package/default change. Shared runner
+--arena integration prepared but not separately exercised; native run used
+captured direct harness. Source experiments/t6040-gpu/asc-arena-preflight.
+Build all helpers via build-root-envelope.py. Same default1, WFI retained.
+
 # Native root-reader negative control PASSED — 2026-10-07
 
 Boot5e408089-cfa5-4406-b1be-44791905520a, same default1 GPU-contract kernel.

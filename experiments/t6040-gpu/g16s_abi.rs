@@ -108,6 +108,22 @@ pub fn voltages(clusters: &[[u32; 11]; 2]) -> [u8; 11 * 0x40] {
     out
 }
 
+/// Patch only candidate profile voltage arrays. Caller supplies every profile
+/// and retains responsibility for the remaining hardware-data contents.
+/// Low/high frequency to profile A/B assignment is not established here.
+pub fn hardware_voltages(out: &mut [u8], core: &[[[u32; 11]; 2]; 2],
+                         sram: &[[[u32; 11]; 2]; 2]) -> Option<()> {
+    const CORE: [usize; 2] = [0x1008, 0x1d1c];
+    const SRAM: [usize; 2] = [0x1408, 0x211c];
+    const BYTES: usize = 11 * 0x40;
+    if out.len() < SRAM[1] + BYTES { return None; }
+    for profile in 0..2 {
+        out[CORE[profile]..CORE[profile]+BYTES].copy_from_slice(&voltages(&core[profile]));
+        out[SRAM[profile]..SRAM[profile]+BYTES].copy_from_slice(&voltages(&sram[profile]));
+    }
+    Some(())
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -171,4 +187,25 @@ mod tests {
         assert_eq!(main_pointers(&mut short, [0; 5], 0), None);
         assert!(short.iter().all(|b| *b == 0xa5));
     }
+    #[test]
+    fn voltage_patch_keeps_profiles_clusters_and_unknown_bytes_distinct() {
+        let mut out = [0xa5; 0x3db4];
+        let core = [[[610;11],[605;11]], [[1025;11],[1040;11]]];
+        let sram = [[[810;11],[815;11]], [[1025;11],[1040;11]]];
+        assert_eq!(hardware_voltages(&mut out,&core,&sram),Some(()));
+        assert_eq!(get32(&out,0x1008),610); assert_eq!(get32(&out,0x100c),605);
+        assert_eq!(get32(&out,0x1d1c),1025); assert_eq!(get32(&out,0x1d20),1040);
+        assert_eq!(get32(&out,0x1408),810); assert_eq!(get32(&out,0x140c),815);
+        for offset in [0x1008,0x1408,0x1d1c,0x211c] {
+            for row in out[offset..offset+11*0x40].chunks_exact(0x40) {
+                assert!(row[8..].iter().all(|byte| *byte==0));
+            }
+        }
+        assert_eq!(&out[0x12c8..0x1408], &[0xa5;0x140]);
+        assert_eq!(&out[0x26b8..0x26c0], &[0xa5;8]);
+        let mut short = [0xa5;0x23db];
+        assert_eq!(hardware_voltages(&mut short,&core,&sram),None);
+        assert!(short.iter().all(|byte| *byte==0xa5));
+    }
+
 }
