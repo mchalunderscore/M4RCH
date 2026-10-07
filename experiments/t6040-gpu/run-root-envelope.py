@@ -125,7 +125,8 @@ def main():
         final = subprocess.check_output(['dmesg','--color=never'],text=True)
         (out/'dmesg-after-unload.log').write_text(final)
         report.update(load_returncode=result.returncode,stderr=result.stderr,
-                      root_published=False,expected_object_pages=receipt['arena_object_pages'],
+                      root_published=False,mapping_or_publication_performed=f"{receipt['arena_object_pages']} object pages mapped" in delta,
+                      expected_object_pages=receipt['arena_object_pages'],
                       mapped_expected_pages=f"{receipt['arena_object_pages']} object pages mapped" in delta,
                       retirement_verified=retired,unloaded=unloaded,reboot_required=present and not unloaded,
                       interpretation='Allocation/mapping/retirement only; no root address sent or object reads established.')

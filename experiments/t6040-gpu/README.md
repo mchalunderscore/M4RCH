@@ -96,7 +96,7 @@ trial GRUB entry as default before reboot: the owner cannot use its keyboard.
 
 `plan-init-graph.py` records17 objects and16 pointer edges. The root+c0 target
 has an unknown extent and receives no reservation in that plan. Known minimum
-extents require17 pages; status_b alone needs two.
+extents now require18 pages; both status_b and power need two.
 
 `assemble-init-graph.py` takes a JSON manifest containing `base` and `templates`
 (object name to binary path relative to the manifest). Every template must be
@@ -106,7 +106,16 @@ result unpublishable. It neither validates opaque contents nor discovers
 transitive pointers. `graph-tests.py` checks relocations, preservation, page
 separation, missing templates, undersized status data and address bounds.
 
-The native arena probe builds18 marker pages plus two tables, reserving one
-explicitly unqualified marker page for the unknown target. This checks backing
-capacity and retirement only. No candidate graph or root address is sent to
-firmware. The earlier13-page native result does not qualify the expanded trial.
+The completed native trial used18 marker pages plus two tables, reserving one
+explicitly unqualified marker page for the unknown target. Its clean retirement
+is recorded separately. The subsequently qualified power extent means a rebuilt
+probe would use19 marker pages plus two tables. Neither run publishes a graph.
+Do not request a reboot solely to repeat arena capacity testing; finish graph
+contracts first. The earlier13-page result and current18-page result remain
+capacity/retirement evidence only.
+
+The profile-A firmware parser independently confirms two cluster voltage
+columns and16 storage slots with0x40 stride. The offline voltage codec takes11
+candidate voltage groups and emits full0x400-byte arrays with unused slots
+zero. Profile A/B frequency assignment and profile-B semantics remain unknown;
+these candidate bytes are not part of the running driver.

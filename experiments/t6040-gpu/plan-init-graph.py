@@ -24,7 +24,7 @@ SPECS = [
     ('shared_3', 0x68, 'document'),
     ('shared_4', 0x800, 'document'),
     ('hardware_counters', 0xe40, 'document-extent-firmware-pointer'),
-    ('power', 0x40, 'firmware-access-minimum'),
+    ('power', 0x6564, 'firmware-access-minimum'),
     ('region_a', 0x14, 'firmware-access-minimum'),
     ('status_a', 0x20, 'firmware-access-minimum'),
     ('status_b', 0x48f8, 'firmware-access-minimum'),
@@ -69,8 +69,8 @@ def plan():
                     'Nested shared-object contents and transitive pointers',
                     'Actual arena GPU VA bounds/collisions, physical backing, PTE permissions',
                     'Cache publication, RTKit failure paths and mapping lifetime/teardown'],
-                native_preflight_coverage=dict(object_pages=13, expanded_plan_tested=False,
-                    note='Earlier native preflight covers only the previous13-page provisional arena.'),
+                native_preflight_coverage=dict(object_pages=18, expanded_plan_tested=False,
+                    note='Latest native preflight covers18 marker pages; new power minimum increases candidate with unknown-target marker to19 pages. No firmware object reads established.'),
                 qualification='Independent-page sizing plan only; unknown-size objects receive no reservation. No memory allocation, GPU addresses, firmware serialization or publication. Padding is not evidence of complete object extents.')
 
 if __name__ == '__main__':

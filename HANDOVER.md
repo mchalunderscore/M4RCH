@@ -1,3 +1,51 @@
+# Expanded native arena PASSED; profile-A voltage geometry qualified — 2026-10-07
+
+Boot 0ce64a9c-cdcd-4030-b5a8-684d085ba0b7, matching GPU-contract kernel.
+Fresh ADT, artifact hashes and normalized firmware TEXT passed. The shared
+runner now exercised natively: 18 object marker pages plus two tables (20
+owned pages). Existing firmware root2 preserved; empty child borrowed. All
+18 leaves mapped; endpoints32/33 started and observed for250ms with no traffic.
+NO ROOT ADDRESS SENT. AP QUIESCED/IOP SLEEP acknowledgments and core stop
+(control0/status6e) passed. Normal unload restored child and invalidated18 VAs.
+Post-unload table snapshots show zero borrowed L2 and no owned-page references.
+No retained probe/resources; no cleanup reboot needed. No firmware object
+read/full initialization/rendering proof. Kernel/default/WFI untouched.
+Evidence: docs/evidence/2026-10-07-gravity-gpu-expanded-arena-result.json.
+
+Original attempt.json incorrectly retained mapping_or_publication_performed=false
+from validation, despite mapped_expected_pages=true and logs proving mapping.
+Summary explains this; raw capture preserved; runner fixed for future attempts.
+
+New manually reviewed/hash-pinned parser-loop finding: profile A reads BOTH
+cluster columns, core1008/100c and SRAM1408/140c, with40-hex row stride across
+16 storage slots. It reads voltages even where frequency is zero. This confirms
+the separate-cluster geometry in the shared document. Do not confuse16 storage
+slots with the11 decoded voltage groups. Offline codec now emits full400-byte
+arrays, explicitly zeroing the remaining5 rows and unused14 columns, instead
+of leaving tail rows opaque. Four candidate hardware arrays use this geometry;
+profile-B consumer semantics and A/B group/frequency assignment remain unknown.
+Fresh ADT Python/Rust cross-check passed; standalone core+SRAM wire now800 bytes.
+Eight Rust codec tests passed, including tail-zero and opaque-field preservation.
+No running-driver change. Evidence: voltage-consumer-audit.json and
+voltage-storage-wire.json. Earlier580-byte standalone wire is superseded.
+
+Additional qualified power-object finding: main+471 target has a u32 write
+at6560 and an independent u32 read6420. Minimum extent is6564, TWO16KiB pages;
+earlier40-byte provisional minimum is superseded. Plan now requires18 known
+pages plus an unknown root+c0 marker would make19 candidate object pages. The
+completed18-page mapping trial remains valid for that capacity, but it does
+not establish this revised graph's extent/content correctness. Another
+arena-only reboot is unnecessary; carry this into the eventual full-graph
+trial. Five updated graph tests passed. Evidence: power-extent-audit.json and
+init-graph-power-revision.json.
+
+NEXT: finish explicit object contents/transitive pointers, channel/status
+contracts and T6040 hardware/register settings before positive initialization.
+Root+c0 target extent remains unknown. Full graph acceptance and rendering are
+still untested. ASC sleeping6e; a future firmware trial needs a normal reboot,
+but another arena-only repeat is unnecessary. No new positive trial ready yet;
+continue useful offline qualification before requesting another reboot.
+
 # Expanded graph/status qualification and next mapping trial — 2026-10-07
 
 Offline work only this round; no modules loaded or firmware started. WFI and

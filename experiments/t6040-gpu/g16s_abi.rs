@@ -99,9 +99,11 @@ pub fn register_list(address: u64, count: u32) -> Option<u64> {
     }
     Some((address >> 5) | ((count as u64) << 43))
 }
-/// Each table is 11 rows x 16 columns; only columns zero/one hold cluster data.
-pub fn voltages(clusters: &[[u32; 11]; 2]) -> [u8; 11 * 0x40] {
-    let mut out = [0; 11 * 0x40];
+/// Eleven candidate groups in16-slot storage; only columns zero/one hold data.
+/// Hash-pinned profile-A consumer reads all16 slots; remaining rows are zero.
+/// Assignment of decoded groups to the two frequency profiles is still unknown.
+pub fn voltages(clusters: &[[u32; 11]; 2]) -> [u8; 16 * 0x40] {
+    let mut out = [0; 16 * 0x40];
     for row in 0..11 {
         for cluster in 0..2 { put32(&mut out, row * 0x40 + cluster * 4, clusters[cluster][row]); }
     }
@@ -115,7 +117,7 @@ pub fn hardware_voltages(out: &mut [u8], core: &[[[u32; 11]; 2]; 2],
                          sram: &[[[u32; 11]; 2]; 2]) -> Option<()> {
     const CORE: [usize; 2] = [0x1008, 0x1d1c];
     const SRAM: [usize; 2] = [0x1408, 0x211c];
-    const BYTES: usize = 11 * 0x40;
+    const BYTES: usize = 16 * 0x40;
     if out.len() < SRAM[1] + BYTES { return None; }
     for profile in 0..2 {
         out[CORE[profile]..CORE[profile]+BYTES].copy_from_slice(&voltages(&core[profile]));
@@ -171,7 +173,9 @@ mod tests {
     #[test]
     fn voltage_columns_remain_distinct_and_unused_columns_zero() {
         let table = voltages(&[[700; 11], [800; 11]]);
-        for row in table.chunks_exact(0x40) {
+        assert_eq!(table.len(),0x400);
+        assert!(table[11*0x40..].iter().all(|b| *b==0));
+        for row in table[..11*0x40].chunks_exact(0x40) {
             assert_eq!(&row[..8], &[0xbc,2,0,0,0x20,3,0,0]);
             assert!(row[8..].iter().all(|v| *v == 0));
         }
@@ -201,9 +205,14 @@ mod tests {
                 assert!(row[8..].iter().all(|byte| *byte==0));
             }
         }
-        assert_eq!(&out[0x12c8..0x1408], &[0xa5;0x140]);
+        // Tail rows read by the profile-A consumer must not inherit opaque
+        // template bytes. Candidate profile-B arrays use the same geometry.
+        for offset in [0x1008,0x1408,0x1d1c,0x211c] {
+            assert!(out[offset+11*0x40..offset+16*0x40].iter().all(|b| *b==0));
+        }
+        assert_eq!(&out[0x251c..0x26b8], &[0xa5;0x19c]);
         assert_eq!(&out[0x26b8..0x26c0], &[0xa5;8]);
-        let mut short = [0xa5;0x23db];
+        let mut short = [0xa5;0x251b];
         assert_eq!(hardware_voltages(&mut short,&core,&sram),None);
         assert!(short.iter().all(|byte| *byte==0xa5));
     }

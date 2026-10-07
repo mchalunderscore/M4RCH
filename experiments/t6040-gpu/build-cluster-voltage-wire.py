@@ -40,9 +40,11 @@ for line in lines:
  c,row,low,high,li,hi,cv,sv=map(int,line.split());r=expected[c][row]
  if [low,high,li,hi,cv,sv]!=[r[k] for k in ['frequency_low_mhz','frequency_high_mhz','index_low','index_high','core_voltage_raw','sram_voltage_raw']]:raise ValueError('Independent decoder disagreement')
 wire=binary.read_bytes()
-for field,offset in [('core_voltage_raw',0),('sram_voltage_raw',0x2c0)]:
+for field,offset in [('core_voltage_raw',0),('sram_voltage_raw',0x400)]:
  for row in range(11):
   words=struct.unpack_from('<16I',wire,offset+row*0x40)
   if list(words[:2])!=[expected[c][row][field] for c in range(2)] or any(words[2:]):raise ValueError('Wire columns disagree with independent decoded input')
-r={'adt_sha256':hashlib.sha256(raw).hexdigest(),'raw_rows_per_cluster':count,'voltage_groups_per_cluster':[len(x) for x in expected],'cluster_ladders':expected,'wire_sha256':hashlib.sha256(wire).hexdigest(),'wire_bytes':len(wire),'rust_python_decoder_agreement':True,'wire_columns_checked':True,'qualification':'Two standalone candidate core/SRAM arrays only. No assignment to profiles A/B, full hardware construction, calibrated power table or firmware acceptance.'}
+ if any(wire[offset+11*0x40:offset+16*0x40]):raise ValueError('Unused storage slots are not zero')
+if len(wire)!=0x800:raise ValueError('Unexpected full storage extent')
+r={'storage_slots_per_array':16,'tail_slots_zero':True,'adt_sha256':hashlib.sha256(raw).hexdigest(),'raw_rows_per_cluster':count,'voltage_groups_per_cluster':[len(x) for x in expected],'cluster_ladders':expected,'wire_sha256':hashlib.sha256(wire).hexdigest(),'wire_bytes':len(wire),'rust_python_decoder_agreement':True,'wire_columns_checked':True,'qualification':'Two standalone candidate core/SRAM arrays only. No assignment to profiles A/B, full hardware construction, calibrated power table or firmware acceptance.'}
 (a.output/'receipt.json').write_text(json.dumps(r,indent=2)+'\n');print('Both decoders agree: 16 rows -> 11 groups per cluster; all wire columns verified.')

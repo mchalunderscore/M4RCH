@@ -46,7 +46,12 @@ if report['text_contract'] is not None:
               0x34044:0xb900151f,0x34048:0xb9001d1f,
               0x77b8:0xf0000c28,0x77bc:0xf9426908,0x77c0:0xb9401113,
               0x25220:0x90000b88,0x25224:0xf943a918,0x25228:0xb9468308,
-              0x25230:0xb9068308}
+              0x25230:0xb9068308,
+              0x11668:0x52800028,0x11670:0xb0000be9,0x11674:0xf9426129,
+              0x11678:0x9111c529,0x1167c:0xf9400129,
+              0x11680:0x528cac0a,0x11684:0xb82a6928,
+              0xc63c:0xd0000c15,0xc640:0xf94262a8,0xc644:0x9111c509,
+              0xc648:0xf9400129,0xc64c:0x528c840a,0xc650:0xb86a6929}
     assert all(word(k)==v for k,v in expected.items())
     report['qualified_sample_findings']={
         'root_interface':'Root first u64 loaded at 2f250; compared with reconstructed G16S identifier at 2f264; mismatch branches at 2f268.',
@@ -64,6 +69,7 @@ if report['text_contract'] is not None:
         'status_a_access_minimum':'3403c/40 load global18e3f0 (root+a8);34044/48 write u32 zero at14/1c after parser return. Minimum extent20; full extent and acceptance semantics remain unqualified.',
         'region_a_access_minimum':'2f270/74/78 copy initial16 root bytes at18e4c8, placing root+08 at18e4d0. 77b8/bc load that pointer;77c0 reads u32+10. Minimum extent14, not a complete region layout.',
         'extra_root_access_minimum':'25220/24 load global195750 (root+b8);25228/30 read/write u32+680. Minimum extent684, within document6a8. Root+c0 pointer is copied, but its target extent remains unresolved.',
+        'power_access_minimum':'11670/74 load main from18e4c0;11678/7c read pointer at main+471;11680 forms6560;11684 stores u32 one (11668) at power+6560. Independent c63c/40/44/48 load same pointer; c64c/50 read u32+6420. Minimum complete backing6564 (two16KiB pages), not the earlier40-byte provisional minimum. Semantics/full extent remain unknown.',
         'unknown_main_240':'Unresolved. Matches15aa0/15b80/382c4/38380 refer to global146240 rather than the main object; they are not evidence for its extra field.'}
     report['instruction_checks']={hex(k):hex(v) for k,v in expected.items()}
 a.output.write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2))
