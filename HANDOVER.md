@@ -35,7 +35,9 @@ external module build passed. Captured offline mask cases4 passed.
 
 NEXT productive hardware step: macOS/register-map source investigation to
 establish actual Bumper33/DFenderMGPUCfg35 addresses and access prerequisites.
-Focused request: docs/gpu-macos-register-map-request.md. Return complete46-name
+Focused request: docs/gpu-macos-register-map-request.md.
+Shared-boot bundle: /boot/GPUC001/register-map-handoff.tar.gz includes this
+handover, request, offline tools, native capture and failure evidence. Return complete46-name
 mapping table if feasible, not just one bank. Conservative offline inventory:
 210 locally resolved accesses across12 slots, with3 exact instruction anchors
 checked; audit-register-consumers.py and register-consumers.json. Not a full
