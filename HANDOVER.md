@@ -1,3 +1,34 @@
+# Application START and shutdown passed; table audit captured — 2026-10-07
+
+Current GPU-contract boot 9a7d7e28-5156-4a4b-aeb5-c24bbcd50c5a; WFI Y.
+Fresh metadata validated. Crashlog1, IOP/AP ON, START32/33, AP QUIESCED,
+IOP SLEEP, stop readback and normal unload passed. No retained probe resources.
+START transmission is verified; app readiness/work completion not established.
+No init graph, work submissions or new DMA addresses were supplied.
+
+Read-only snapshots captured ttbs/pagetables/l2/handoff and helpers unloaded.
+Offline 16 KiB, shifts36/25/14 traversal matches TEXT and DATA physical addresses.
+Candidate root/bundle share an absent top-level entry: real mapped backing is
+needed before publication. ttbs/l2/handoff snapshots zero. This is a limited
+snapshot audit, not allocation permission or complete collision/coherency proof.
+Neither interface identifier was found as contiguous bytes in older sampled
+TEXT/DATA; split instruction constants remain possible, so no ABI conclusion.
+
+NEXT: a normal reboot is needed for the next fresh-cold firmware experiment,
+NOT to clear pinned resources this time. Warm restart is unresolved; avoid
+replaying START from sleeping status6e. Prepared asc-app-observe starts32/33,
+observes up to250ms/32 messages without replies or init graph, then attempts
+acknowledged shutdown and conditional unload. Recapture/revalidate boot firmware
+DATA and matching kernel/module hashes. No kernel build or macOS handoff.
+Continue explicit G16S init-graph planning; do not enable donor T8132 bootstrap.
+Normal GPU startup stays gated. Owner "r" means rebooted and ready.
+
+Evidence docs/evidence/2026-10-07-gravity-gpu-app-start.json,
+2026-10-07-gravity-gpu-graph-samples.json and 2026-10-07-gravity-gpu-boot-table-audit.json.
+Offline walker experiments/t6040-gpu/audit-boot-tables.py. Next source
+experiments/t6040-gpu/asc-app-observe, built helper out/gpu-gravity-contract counterpart.
+Earlier checkpoints follow. Same default1 GPU-contract kernel retained.
+
 # Managed wake unresolved; application endpoint trial prepared — 2026-10-07
 
 Current GPU-contract boot df0ffd12-a6a3-4973-a4fe-f6923f80cf71; WFI Y.

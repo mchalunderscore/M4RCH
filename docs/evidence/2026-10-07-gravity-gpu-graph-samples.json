@@ -1,0 +1,31 @@
+{
+  "boot_id": "9a7d7e28-5156-4a4b-aeb5-c24bbcd50c5a",
+  "samples": [
+    {
+      "tag": "ttbs",
+      "address": 1125281136640,
+      "bytes": 16384,
+      "sha256": "4fe7b59af6de3b665b67788cc2f99892ab827efae3a467342b3bb4e3bc8e5bfe"
+    },
+    {
+      "tag": "pagetables",
+      "address": 1125280874496,
+      "bytes": 262144,
+      "sha256": "3879716693998e5712ced43cc0cd46936b845453ab81e1bfa1ea1fa6ac23fa84"
+    },
+    {
+      "tag": "l2",
+      "address": 1125280858112,
+      "bytes": 16384,
+      "sha256": "4fe7b59af6de3b665b67788cc2f99892ab827efae3a467342b3bb4e3bc8e5bfe"
+    },
+    {
+      "tag": "handoff",
+      "address": 1125280841728,
+      "bytes": 16384,
+      "sha256": "4fe7b59af6de3b665b67788cc2f99892ab827efae3a467342b3bb4e3bc8e5bfe"
+    }
+  ],
+  "helpers_unloaded": true,
+  "writes_performed": false
+}
