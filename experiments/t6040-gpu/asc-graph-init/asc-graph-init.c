@@ -19,6 +19,8 @@
 #define START BIT(4)
 #define EMPTY BIT(17)
 static unsigned int run_gate;
+static unsigned int observe_ms=30000;
+module_param(observe_ms,uint,0400);
 module_param(run_gate,uint,0400);
 static struct platform_device *consumer;
 static void __iomem *asc, *mbox;
@@ -154,6 +156,7 @@ static int __init hello_init(void)
  u32 appmap = 0;
  u8 apps_started = 0;
  u8 map_seen = 0;
+ if (observe_ms<5000 || observe_ms>60000) return -EINVAL;
  if ((run_gate!=1 && run_gate!=2) || !of_machine_is_compatible("apple,j614s") ||
      !of_machine_is_compatible("apple,t6040")) return -ENODEV;
  if (run_gate==1) {
@@ -248,7 +251,7 @@ static int __init hello_init(void)
    root_sent=true; /* pin even if delivery/consumption cannot be established */
    wmb();writeq(0x00810c2000100000ULL,mbox+0x800);writeq(32,mbox+0x808);
    pr_warn("m4rch graph-init: G16S root sent to EP32; host allocations enabled; structural fixture, NOT rendering readiness\n");
-   observe_until=jiffies+msecs_to_jiffies(5000);
+   observe_until=jiffies+msecs_to_jiffies(observe_ms);
    do {
     if (!(readl(mbox+0x114)&EMPTY)) {
      u64 msg=readq(mbox+0x830),meta=readq(mbox+0x838);

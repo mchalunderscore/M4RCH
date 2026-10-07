@@ -1,3 +1,38 @@
+# Empty-channel trial had no reported fatal event; longer observation built
+
+Boot0fed45ec-b07a-4e53-b7d5-c43f57baba0c. Gate1 passed, gate2 returned0;
+no post-publication mailbox messages in5seconds. DATA crashlog reservation
+containsEF fill, no validEHLC header. Fresh DATA sampler with explicitCPU
+cache invalidation yields byte-identical capture. Owned main_header/power/
+status changes establish firmware object writes. NOT proof of complete init,
+AFR completion, stable firmware execution, production queues or rendering.
+Raw capture and exact trial module match pinned build receipt. Sourceb8959fa.
+
+USB PROMOTION VERIFIED: installedpackage7.1.13-2, DWC3moduleSHA53f89da...
+and initrdSHAd612b96... match qualified promotion. Three role providers exist.
+Right PD2-0c failedENODEV at4.888074 BEFORE GPU activity. Normal targeted
+SPMI drivers_probe of only unbound2-0c succeeded at289.013380; user confirms
+right USB works and everything normal. Working left controllers untouched.
+Transient boot probe readiness remains unresolved, not a missing promotion or
+GPU-caused detach. Common probe collapses several stages intoENODEV; need
+VID/mode/power/status failure-specific diagnostics before persistent retries.
+No persistent retry policy installed. Keep all3-provider fix in future rebuilds.
+
+NEXT CANDIDATE BUILT: same47 objects/100 device leaves, no new mappings,
+commands or cursor advances. Observation30seconds (parameter bounded5..60s),
+1-second non-atomic owned-RAM snapshots; changed full frames archived. DATA
+read-only sampler invalidates CPU lines; TEXT/table samplers unchanged.
+Ten mapping tests,2 observer integrity tests andW=1 build pass. Current state
+already pinned/stopped: NORMAL LINUX REBOOT needed before another cold trial.
+Same default1/kernel/initrd; no macOS needed. Check USB baseline before GPU;
+if2-0c fails again, capture first then targeted normal reprobe; do not unbind
+working controllers. Run rebuilt run-root-envelope --graph --run after reboot.
+Evidence docs/evidence/2026-10-08-empty-channel-result.json and
+ docs/evidence/2026-10-08-long-channel-candidate.json. Candidate artifacts
+out/gpu-gravity-contract/long-channel-candidate. Never force-unload graph.
+
+---
+
 # Empty-channel structural batch prepared; normal Linux reboot needed
 
 Prior table-register trial recorded in commit8d6ccbb. New candidate provides

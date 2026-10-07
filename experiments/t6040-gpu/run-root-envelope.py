@@ -11,6 +11,8 @@ import os
 import re
 import struct
 import subprocess
+import threading
+from live_graph_observer import observe
 from pathlib import Path
 from adt import parse
 from firmware_text_contract import qualify
@@ -130,7 +132,19 @@ def main():
         require(shadow.returncode == 0, 'Owned graph allocation/shadow walk failed: '+shadow.stderr)
         subprocess.run(['rmmod','asc_graph_init'],check=True)
         (out/'objects-before.bin').write_bytes((work/'asc-graph-init/graph-before.bin').read_bytes())
-    result = subprocess.run(['insmod',str(selected),'run_gate=1' if args.arena else 'run_gate=2'],capture_output=True,text=True)
+    observer=None;done=threading.Event()
+    if args.graph:
+        layout=json.loads((work/'asc-graph-init/graph-receipt.json').read_text())
+        observer=threading.Thread(target=observe,args=(Path('/sys/kernel/m4rch_gpu_graph_trial/objects'),out/'live-objects',layout,done),daemon=True)
+        observer.start()
+    try:
+        result = subprocess.run(['insmod',str(selected),'run_gate=1' if args.arena else 'run_gate=2'],capture_output=True,text=True)
+    finally:
+        done.set()
+        if observer is not None:observer.join(timeout=5)
+    if args.graph:
+        observations=out/'live-objects/observations.json'
+        report['live_observation']=json.loads(observations.read_text()) if observations.exists() else {'error':'Observer did not produce a completed report'}
     logs = subprocess.check_output(['dmesg','--color=never'],text=True)
     (out/'dmesg-after.log').write_text(logs)
     (out/'interrupts-after.txt').write_text(Path('/proc/interrupts').read_text())

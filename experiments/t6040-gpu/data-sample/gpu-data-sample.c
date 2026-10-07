@@ -46,6 +46,18 @@ static int __init sample_init(void)
  if (!sample) return -ENOMEM;
  mapping = memremap(SAMPLE_BASE, SAMPLE_BYTES, MEMREMAP_WB);
  if (!mapping) { kvfree(sample); return -ENOMEM; }
+ /* Firmware DATA is not assumed CPU coherent. This sampler never writes it;
+  * no CPU writes to this reservation are performed by the sampler.
+  * Discard cached CPU lines before observing firmware-written contents.
+  * Keep table/TEXT sampler behavior unchanged in this isolated correction.
+  */
+ if (SAMPLE_BASE == 0x10001d44000ULL) {
+  unsigned long address;
+  for (address=(unsigned long)mapping;
+       address<(unsigned long)mapping+SAMPLE_BYTES;address+=16)
+   asm volatile("dc ivac, %0" :: "r"(address) : "memory");
+  asm volatile("dsb sy" ::: "memory");
+ }
  memcpy(sample, mapping, SAMPLE_BYTES);
  memunmap(mapping);
  directory = kobject_create_and_add("m4rch_gpu_data_sample", kernel_kobj);
