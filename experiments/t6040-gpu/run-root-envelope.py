@@ -63,7 +63,8 @@ def main():
     require(int.from_bytes(chosen['chip-id'], 'little') == 0x6040, 'Chip mismatch')
     for key, expected in {'gfx-shared-region-base':0x105fff78000, 'gfx-shared-region-size':0x40000,
                           'gfx-data-base':0x10001d44000, 'gfx-data-size':0x138000,
-                          'gpu-region-base':0x105fffb8000, 'gpu-region-size':0x4000}.items():
+                          'gpu-region-base':0x105fffb8000, 'gpu-region-size':0x4000,
+                          'gfx-shared-l2-region-base':0x105fff74000, 'gfx-shared-l2-region-size':0x4000}.items():
         require(int.from_bytes(sgx[key], 'little') == expected, 'Fresh ADT range mismatch: '+key)
     tables = capture(work/'sample-pagetables/gpu-data-sample.ko', '/sys/kernel/m4rch_gpu_data_sample/data', out/'pagetables.bin', 'gpu_data_sample')
     base = 0x105fff78000
@@ -78,8 +79,13 @@ def main():
             require(entry&3 == 3, 'Unexpected block descriptor')
             table = entry&0x3ffffffc000
         return table+(va&0x3fff)
-    require(translate(0xfffffc0000000000) == 0x10000be4000, 'TEXT mapping mismatch')
-    require(translate(0xfffffc0000060000) == 0x10001d44000, 'DATA mapping mismatch')
+    initial_tables_zero = not any(tables)
+    if not initial_tables_zero:
+        require(translate(0xfffffc0000000000) == 0x10000be4000, 'TEXT mapping mismatch')
+        require(translate(0xfffffc0000060000) == 0x10001d44000, 'DATA mapping mismatch')
+    # On a genuinely cold boot the firmware populates these tables during its
+    # handshake. The native probe checks the completed path before installing.
+
     require(struct.unpack_from('<Q',tables,16)[0] == 0, 'Candidate top-level slot occupied')
     text = capture(work/'root-text-sample/gpu-data-sample.ko', '/sys/kernel/m4rch_gpu_data_sample/data', out/'text.bin', 'gpu_data_sample')
     text_contract = qualify(text)
@@ -88,8 +94,8 @@ def main():
                          0x2f2b4:0xb9402d29,0x2f2b8:0x34003b49,0x2fa2c:0x94004f40}.items():
         require(struct.unpack_from('<I',text,offset)[0] == word, 'Parser instruction mismatch')
     require(text[0x5b768:].startswith(b'Host-mapped FW allocations are disabled'), 'Rejection string mismatch')
-    report = {'boot_id':boot, 'adt_sha256':sha(raw), 'tables_sha256':sha(tables),
-              'text_sha256':sha(text), 'text_contract':text_contract, 'run_requested':args.run, 'mapping_or_publication_performed':False}
+    report = {'boot_id':boot, 'adt_sha256':sha(raw), 'tables_sha256':sha(tables), 'initial_tables_zero':initial_tables_zero,
+              'text_sha256':sha(text), 'text_contract':text_contract, 'validated_build_receipt':receipt, 'run_requested':args.run, 'mapping_or_publication_performed':False}
     (out/'validation.json').write_text(json.dumps(report,indent=2)+'\n')
     if not args.run:
         print('Fresh metadata, table path and exact firmware parser validated; sampler helpers unloaded. No root mapping or firmware publication.')
@@ -103,6 +109,8 @@ def main():
     logs = subprocess.check_output(['dmesg','--color=never'],text=True)
     (out/'dmesg-after.log').write_text(logs)
     present = Path('/sys/module/asc_root_envelope').exists()
+    report['root_published'] = 'G16S root sent to EP32' in logs
+    report['mapping_or_publication_performed'] = 'installed previously-empty mapping slot' in logs
     report.update(load_returncode=result.returncode, stderr=result.stderr, module_present=present,
                   reboot_required=present, interpretation='A transmitted root is not proof of consumption. Seek a newly written disabled-host-allocations rejection in the crashlog. Never force module unload.')
     (out/'attempt.json').write_text(json.dumps(report,indent=2)+'\n')

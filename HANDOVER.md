@@ -1,3 +1,38 @@
+# Root-reader first boot: guarded refusal, correction ready — 2026-10-07
+
+Boot66756857-e512-4d3d-91c4-9e582b816cb5. Cold firmware table reservation
+initially ALL ZERO. First runner stopped before firmware start; sequencing
+corrected to map only AFTER HELLO/maps/crashlog/IOP ON/AP ON. Those handshakes
+then passed. Owned envelope pages allocated/shadow walk passed, but mapping
+refused because firmware table descriptors carry AF bit10: root105fff7c403,
+L1 105fff80403; TEXT leaf10000be44c3; DATA leaf20010001d444c3.
+NO bootstrap slot changed, NO root transmitted. This is not an interface or
+initialization failure; the old guard expected low bits3 instead of403.
+ASC stopped control0/status6e. Old failure path skipped retirement ACKs and
+pinned asc_root_envelope resources. NEVER force unload. Reboot required.
+
+Additional finding: after ON, root slot2=200105fff744cb points to the separate
+reserved page105fff74000; captured page is all zero. Old post-shutdown snapshots
+missed this live descriptor. Preserve it; do not replace slot2. Corrected helper
+borrows an empty child slot in that verified zero page instead. Fresh ADT checks
+its exact base/size. Any unexpected descriptor or nonzero child page refuses.
+Offline captured-table model walked proposed leaf/root, preserved root2 and
+restored the child page to zero. No native mapping has been attempted yet.
+
+Corrected helper rebuilt W=1 clean: allow only AF bit10 on table descriptors,
+retain exact addresses/type checks, verify valid leaf TEXT/DATA translations,
+require slot2 empty. root_prepare now runs after handshake. Prepublication
+refusals now attempt acknowledged AP QUIESCED/IOP SLEEP instead of immediately
+pinning. Publication still always pins until following reboot. Corrected helper
+not loaded on this sleeping/pinned boot. Next owner r: fresh validation then
+run-root-envelope.py --run, same kernel/default1. No macOS handoff/install.
+
+Evidence docs/evidence/2026-10-07-gravity-gpu-root-envelope-first-boot.json;
+raw samples/logs out/gpu-gravity-contract/asc-root-envelope/boot-66756857-....
+Original loaded-module SHA was not copied into per-boot receipt and its build
+receipt was overwritten during correction; do NOT assign new helper's hash to
+that run. Runner now preserves the complete validated build receipt per boot.
+
 # Minimal G16S root reader trial ready; reboot boundary — 2026-10-07
 
 Current boot38792891-2fb1-4c7c-92eb-84e6b530125b, same GPU-contract kernel.

@@ -141,7 +141,6 @@ static int __init hello_init(void)
  /* Refuse an old pending receive: this experiment needs a cold FIFO. */
  if (!(readl(mbox+0x114)&EMPTY)) {ret=-EBUSY;goto fail;}
  pr_info("m4rch ASC crashlog: cold control=%#x status=%#x; starting bounded poll\n",control,status);
- ret=root_prepare(true);if(ret)goto fail;
  started=true;writel(control|START,asc+0x44);readl(asc+0x44);
  limit=jiffies+msecs_to_jiffies(4000);
  do {
@@ -185,6 +184,7 @@ static int __init hello_init(void)
  } while(time_before(jiffies,limit));
  pr_info("m4rch ASC crashlog: message_received=%d hello_replied=%d endpoint_map=%d; requesting ASC core stop\n",got,replied,epmap);
  if (epmap && crashlog_boot() && power_ack(0xb,0xb,0x20)) {
+  ret=root_prepare(true);if(ret)goto retire_firmware;
   /* Start only the two advertised app endpoints. No init-root message. */
   if ((appmap&3)==3) {
    unsigned int ep;
@@ -214,6 +214,7 @@ static int __init hello_init(void)
    } while(time_before(jiffies,observe_until));
    pr_info("m4rch root-envelope: observation messages=%u; capture crashlog before reboot\n",observed);
   }
+retire_firmware:
   if (!root_sent) ap_quiesced=power_ack(0xb,0xb,0x10);
   if (ap_quiesced) iop_sleep=power_ack(6,7,1);
  }

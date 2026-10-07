@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: GPL-2.0-only */
 /* Minimal isolated root mapping: no donor main/hardware graph and no SGX writes.
  * Gate 1 allocates and walks owned shadow tables only. Gate 2 may publish one
- * previously empty bootstrap root entry while ASC is still cold/stopped.
+ * previously empty bootstrap root entry after the cold firmware boot handshake.
  */
 #include <linux/unaligned.h>
 #define ROOT_VA 0xfffffc2000100000ULL
@@ -10,7 +10,7 @@
 #define PA_MASK (GENMASK_ULL(41,14))
 #define FW_ROOT_RO (BIT_ULL(55) | BIT_ULL(10) | BIT_ULL(6) | 8ULL | 3ULL)
 static struct page *owned[3]; /* L1, L2, envelope; exactly 16 KiB each */
-static u64 *bootstrap;
+static u64 *bootstrap, *borrowed_l1, *target_page, *target_slot;
 static bool installed, root_sent;
 
 static void clean_page(void *ptr)
@@ -32,11 +32,13 @@ static void root_release(void)
  /* No unmapping/freeing once a root publication was sent to firmware. */
  if (root_sent) return;
  if (installed) {
-  WRITE_ONCE(bootstrap[(ROOT_VA>>36)&63],0);
-  clean_page(bootstrap);
+  WRITE_ONCE(*target_slot,0);
+  clean_page(target_page);
   invalidate_root_va();
   installed=false;
  }
+ if (borrowed_l1) {memunmap(borrowed_l1);borrowed_l1=NULL;}
+ target_page=NULL;target_slot=NULL;
  if (bootstrap) {memunmap(bootstrap);bootstrap=NULL;}
  for (i=0;i<ARRAY_SIZE(owned);i++)
   if (owned[i]) {__free_pages(owned[i],0);owned[i]=NULL;}
@@ -71,16 +73,42 @@ static int root_prepare(bool install)
   * by the harness; module additionally requires the existing TEXT table path. */
  if (region_intersects(TABLE_BASE,TABLE_BYTES,IORESOURCE_SYSTEM_RAM,IORES_DESC_NONE)!=REGION_DISJOINT)
   goto fail_root;
- bootstrap=memremap(TABLE_BASE,PAGE_SIZE,MEMREMAP_WB);
+ bootstrap=memremap(TABLE_BASE,TABLE_BYTES,MEMREMAP_WB);
  if (!bootstrap) {ret=-ENOMEM;goto fail_root;}
- if (READ_ONCE(bootstrap[0])!=((TABLE_BASE+PAGE_SIZE)|3ULL) ||
-     READ_ONCE(bootstrap[(ROOT_VA>>36)&63])) {ret=-EBUSY;goto fail_root;}
- WRITE_ONCE(bootstrap[(ROOT_VA>>36)&63],page_to_phys(owned[0])|3);
- clean_page(bootstrap);invalidate_root_va();installed=true;
- if (READ_ONCE(bootstrap[(ROOT_VA>>36)&63])!=(page_to_phys(owned[0])|3)) {
+ /* Validate the full boot TEXT/DATA path, not just the first pointer. */
+ if (((READ_ONCE(bootstrap[PAGE_SIZE/8])^((TABLE_BASE+2*PAGE_SIZE)|3ULL))&~BIT_ULL(10)) ||
+     (READ_ONCE(bootstrap[2*PAGE_SIZE/8])&3)!=3 ||
+     (READ_ONCE(bootstrap[2*PAGE_SIZE/8+24])&3)!=3 ||
+     (READ_ONCE(bootstrap[2*PAGE_SIZE/8])&PA_MASK)!=0x10000be4000ULL ||
+     (READ_ONCE(bootstrap[2*PAGE_SIZE/8+24])&PA_MASK)!=FW_DATA_BASE) {
+  pr_err("m4rch root-envelope: firmware TEXT/DATA table path refused\n");
+  ret=-EINVAL;goto fail_root;
+ }
+ if (((READ_ONCE(bootstrap[0])^((TABLE_BASE+PAGE_SIZE)|3ULL))&~BIT_ULL(10))) {
+  ret=-EBUSY;goto fail_root;
+ }
+ if (!READ_ONCE(bootstrap[(ROOT_VA>>36)&63])) {
+  target_page=bootstrap;target_slot=&bootstrap[(ROOT_VA>>36)&63];
+  WRITE_ONCE(*target_slot,page_to_phys(owned[0])|3);
+ } else {
+  /* Native cold ON installs this descriptor to the separate loader L2 page.
+   * Preserve it exactly and borrow only a currently empty child slot. */
+  if (READ_ONCE(bootstrap[(ROOT_VA>>36)&63])!=0x200105fff744cbULL ||
+      region_intersects(0x105fff74000ULL,PAGE_SIZE,IORESOURCE_SYSTEM_RAM,IORES_DESC_NONE)!=REGION_DISJOINT) {
+   ret=-EBUSY;goto fail_root;
+  }
+  borrowed_l1=memremap(0x105fff74000ULL,PAGE_SIZE,MEMREMAP_WB);
+  if (!borrowed_l1) {ret=-ENOMEM;goto fail_root;}
+  for (i=0;i<PAGE_SIZE/8;i++)
+   if (READ_ONCE(borrowed_l1[i])) {ret=-EBUSY;goto fail_root;}
+  target_page=borrowed_l1;target_slot=&borrowed_l1[(ROOT_VA>>25)&2047];
+  WRITE_ONCE(*target_slot,page_to_phys(owned[1])|3);
+ }
+ installed=true;clean_page(target_page);invalidate_root_va();
+ if (READ_ONCE(*target_slot)!=((borrowed_l1?page_to_phys(owned[1]):page_to_phys(owned[0]))|3)) {
   ret=-EIO;goto fail_root;
  }
- pr_info("m4rch root-envelope: installed previously-empty bootstrap slot %llu; existing slot0 unchanged\n",(ROOT_VA>>36)&63);
+ pr_info("m4rch root-envelope: installed previously-empty mapping slot; borrowed_L1=%d; firmware root descriptors preserved\n",!!borrowed_l1);
  return 0;
 fail_root:
  root_release();return ret;

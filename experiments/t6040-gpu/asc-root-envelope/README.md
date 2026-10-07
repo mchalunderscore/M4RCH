@@ -19,8 +19,12 @@ Gate 0 refuses. Gate 1 allocates three owned 16 KiB pages, constructs an isolate
 L1/L2/root shadow mapping, cleans caches, validates physical addresses against
 42-bit OAS, and frees all pages. It does not touch firmware tables or GPU MMIO.
 Gate 2 requires cold stopped status6a and an empty receive FIFO. It validates
-bootstrap slot0's existing table pointer, requires slot2 empty, then installs
-only slot2 using owned L1/L2/envelope pages. It sends the envelope to endpoint32
+bootstrap TEXT/DATA path after the IOP/AP ON handshake, permits only the
+observed AF bit10 on table descriptors, preserves firmware-populated slot2 (`200105fff744cb`) pointing to the
+separate reserved page105fff74000. That page must be entirely zero; the probe
+installs only its empty child slot pointing to the owned leaf table. If slot2
+is absent, it may instead install the owned L1 there. Unexpected descriptors
+or occupied child pages refuse. Existing firmware descriptors are preserved. It sends the envelope to endpoint32
 after the established crashlog/HELLO/maps/IOP ON/AP ON/START32+33 sequence.
 No main, hardware data, queues, shaders or SGX register writes are supplied.
 
