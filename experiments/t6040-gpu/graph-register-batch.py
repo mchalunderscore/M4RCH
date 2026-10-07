@@ -94,6 +94,9 @@ def extend(arena,receipt,raw):
             struct.pack_into('<I',result,hardware+0x1408+row*0x40+cluster*4,groups[cluster][row]['sram_voltage_raw'])
     # Captured J614s masks3db/3db; verified producer offsets and packed geometry.
     struct.pack_into('<QQ',result,hardware+0x2560,0x3db|(0x3db<<10),0)
+    from empty_channels import extend as empty_channels
+    result,receipt=empty_channels(result,receipt,leaves)
+    arena=result  # Expanded owned arena, after checking all device-leaf overlap.
     for obj in receipt['objects']:
         start=obj['arena_offset'];receipt_bytes=result[start:start+obj['input_bytes']]
         obj['input_sha256']=hashlib.sha256(receipt_bytes).hexdigest()

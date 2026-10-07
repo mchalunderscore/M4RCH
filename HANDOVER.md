@@ -1,3 +1,31 @@
+# Empty-channel structural batch prepared; normal Linux reboot needed
+
+Prior table-register trial recorded in commit8d6ccbb. New candidate provides
+13 independent zero RAM cursor pages and13 zero16KiB ring pages for work0..11
+and control12. Main+20+i*20 contains3 cursor pointers then ring pointer;
+cursor words at own page+0/+8/+10. No ring entries submitted or cursors advanced.
+Other channels13..16 unchanged/unqualified. This is a structural RAM surrogate,
+NOT hardware-backed work-channel state or production ring-capacity validation.
+Hardware cursor setup needs separate native SGX mapping and ownership work.
+
+Owned arena now47 pages;100 device leaves unchanged;147 mapped total.
+No MMIO/RAM overlap. Same narrowly qualified29 RW device pages unchanged.
+Ten tests pass; W=1 external build passes. Matching captured TEXT66ec actual
+code executed offline: empty check returns0, individually unequal cursor on
+each12 work channels returns1;48 pointer/cursor reads in empty case. No native
+publication of this candidate yet. Build/source receipts and graph/module kept
+out/gpu-gravity-contract/empty-channel-candidate; evidence
+ docs/evidence/2026-10-07-empty-channel-candidate.json.
+
+NEXT: normal Linux-to-Linux reboot, same regular default1 and promoted USB
+package7.1.13-2. Verify USB/input then rebuilt run-root-envelope --graph --run.
+Current graph backing pinned: never force-unload or warm-start another trial.
+No macOS needed for this structural qualification. Kernel/initramfs/bootloader
+not changed; candidate is external module only. Firmware init, AFR completion,
+all receive channels, rendering and production queues still unestablished.
+
+---
+
 # GPUC004 primary table-register routine returned; channel cursor NULL
 
 Boot3c210c1d-4b3d-4f02-bdb3-f642f19baf8c, regularGPUC001 and USB all3

@@ -15,7 +15,7 @@ class BatchTests(unittest.TestCase):
   self.assertEqual(values[0],0x288d04000);self.assertEqual(values[2:],(0x8000,0x8000,0xd04000,1))
   self.assertEqual(values[1]%0x4000,0)
  def test_leaf_pages_are_disjoint_virtual_and_contained(self):
-  leaves=self.receipt['mmio_leaves'];self.assertEqual(len(leaves),100);self.assertEqual(self.receipt['mapped_pages'],121)
+  leaves=self.receipt['mmio_leaves'];self.assertEqual(len(leaves),100);self.assertEqual(self.receipt['mapped_pages'],147)
   start=int(self.receipt['mmio_virtual_base'],16)
   self.assertEqual([v['gpu_va'] for v in leaves],sorted(set(v['gpu_va'] for v in leaves)))
   self.assertTrue(all(v['gpu_va']==start+v['physical']-0x288000000 for v in leaves if v['physical']<0x28b000000))
@@ -30,7 +30,7 @@ class BatchTests(unittest.TestCase):
    values=struct.unpack_from('<QQIIQI',self.data,h+0x640+slot*0x28)
    self.assertEqual(values[0],physical);self.assertEqual(values[2],0x4000);self.assertEqual(values[-1],1)
   self.assertEqual(struct.unpack_from('<QQ',self.data,h+0x2560),(0xf6fdb,0))
-  self.assertEqual(len(self.data)//0x4000,21)
+  self.assertEqual(len(self.data)//0x4000,47)
   self.assertTrue(next(v for v in self.receipt['mmio_leaves'] if v['physical']==0x288d08000)['readonly'])
  def test_relative_arithmetic_and_shared_clock_counter_page(self):
   d={v['slot']:v for v in self.receipt['mmio_descriptors']};base=int(self.receipt['mmio_virtual_base'],16)
@@ -65,6 +65,17 @@ class BatchTests(unittest.TestCase):
    self.assertFalse(leaves[(0x288000000+offset)&~0x3fff]['readonly'])
   for pa in (0x288000000,0x288008000,0x28800c000,0x288014000,0x288018000,0x28801c000):
    self.assertTrue(leaves[pa]['readonly'])
+ def test_empty_channels_are_owned_disjoint_and_zero(self):
+  h=next(o['arena_offset'] for o in self.receipt['objects'] if o['name']=='main')
+  base=int(self.receipt['base'],16);all_spans=[]
+  for i in range(13):
+   a,b,c,ring=struct.unpack_from('<4Q',self.data,h+0x20+i*0x20)
+   self.assertEqual((b,c),(a+8,a+16));self.assertEqual(ring,a+0x4000)
+   self.assertFalse(any(self.data[a-base:a-base+0x8000]))
+   all_spans.append((a,ring+0x4000))
+  for l,r in zip(all_spans,all_spans[1:]):self.assertLessEqual(l[1],r[0])
+  self.assertLessEqual(all_spans[-1][1],min(v['gpu_va'] for v in self.receipt['mmio_leaves']))
+  self.assertFalse(any(self.data[h+0x1c0:h+0x240]))
  def test_profile_a_columns_and_tail(self):
   h=next(o['arena_offset'] for o in self.receipt['objects'] if o['name']=='hardware')
   self.assertEqual(struct.unpack_from('<II',self.data,h+0x1008),(125,125))

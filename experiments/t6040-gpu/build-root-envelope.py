@@ -83,7 +83,7 @@ def main():
     seed = work/'asc-graph-init/boot-e1e8db50-10f6-46b5-8d73-a593b7e2c611/boot.adt'
     graph_bytes, graph_receipt = register_batch.extend(graph_bytes,graph_receipt,seed.read_bytes())
     graph_pages = len(graph_bytes)//graph_plan.PAGE
-    if len(graph_bytes)%graph_plan.PAGE or graph_pages!=21:
+    if len(graph_bytes)%graph_plan.PAGE or graph_pages!=47:
         raise ValueError('Unexpected structural fixture geometry')
     header = '/* Explicit experimental zero-opaque fixture, NOT a complete render graph. */\n'
     header += f'#define ARENA_OBJECT_PAGES {graph_pages}U\n'
