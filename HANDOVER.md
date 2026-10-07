@@ -1,3 +1,37 @@
+# Native root-reader negative control PASSED — 2026-10-07
+
+Boot5e408089-cfa5-4406-b1be-44791905520a, same default1 GPU-contract kernel.
+Fresh metadata/normalized firmware qualified. HELLO/maps/crashlog/IOP ON/AP ON
+passed. Existing root2 preserved; verified-zero borrowed L1 child mapped to
+owned leaf/envelope pages. START32/33 and root publication sent. EP1 crash
+notification10110001de4000 received. Newly written structured crashlog at
+DATA+a0000 contains EXACT expected rejection:
+Host-mapped FW allocations are disabled, but FW only supports enabled
+(init_data_addr=0xfffffc2000100000)!
+Stack includes fffffc000002fa2c, the qualified parser's disabled-allocation
+error callsite. Header declares5b0 bytes; sections bounded; terminal32-byte
+record exactly repeats opening header. Old kernel decoder treats footer's
+flags as section length and does not support that terminal form; offline
+script explicitly checks identical repeated header instead.
+
+This corroborates owned root mapping/cache visibility, message delivery, root
+consumption and G16S interface comparison. NOT full initialization, queues,
+rendering or GPU acceleration. Host stayed available for capture; user-visible
+peripheral status not independently asked this boot.
+
+ASC stopped control0/status6e. Deliberate rejection skipped power retirement;
+probe and mapping/backing/power remain pinned as designed. NEVER force unload.
+A normal reboot is now required to reclaim them and obtain another cold ASC.
+No new kernel/install/default change required. Next prepare enabled-host root
+with complete mapped pointer dependencies; do not merely set+2c=1 on this
+zero-pointer envelope. Full main/hardware graph and performance ladder
+conversion remain blockers before positive initialization trial.
+
+Evidence docs/evidence/2026-10-07-gravity-gpu-root-reader.json and
+2026-10-07-gravity-gpu-root-reader-crashlog.json. Offline decoder
+experiments/t6040-gpu/decode-root-crashlog.py; raw samples/logs under
+out/gpu-gravity-contract/asc-root-envelope/boot-5e408089-....
+
 # Root-reader first boot: guarded refusal, correction ready — 2026-10-07
 
 Boot66756857-e512-4d3d-91c4-9e582b816cb5. Cold firmware table reservation
