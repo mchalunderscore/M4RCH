@@ -1,0 +1,26 @@
+{
+  "boot_id": "68b3f4f7-4a75-441c-a0bd-0b38a8741034",
+  "samples": {
+    "text": {
+      "bytes": 393216,
+      "sha256": "f09648aa1dee7d1d1783649bc8d8321d31e5f2fb84240b588b45381932e93600",
+      "rtkit_strings": [
+        "RTKit-3255.160.4.release"
+      ],
+      "module_sha256": "05b925a08f88f841eee4f267cea127e64b5860dd6be7eb602385060f418cb46b"
+    },
+    "data": {
+      "bytes": 1277952,
+      "sha256": "3a5b8cc02d184f78c42df9bd0cb33c6645ee49b5e3e871c0d14b4535e87efd17",
+      "rtkit_strings": [],
+      "module_sha256": "b584dfb70fe9c921f2ad58a9605fa7a9d061e168d5c0a74930534bbabe562c49"
+    }
+  },
+  "hardware_actions": "Read-only reserved firmware RAM copies; no GPU MMIO, power or firmware start",
+  "kernel_release": "7.1.13-m4rch-gravity",
+  "kernel_build_id": "9bba3b6b0e916b0064d0a5fcc0e62cbaaa7237db",
+  "prior_probe_cleared": true,
+  "continuous_shallow_wfi": true,
+  "qualification": "Loaded TEXT exposes expected RTKit release; full-container byte identity and candidate shared-object ABI remain unqualified.",
+  "sample_helpers_unloaded": true
+}

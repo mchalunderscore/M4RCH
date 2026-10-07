@@ -1,3 +1,44 @@
+# Guarded Gravity GPU framework — staged reboot checkpoint, 2026-10-07
+
+NEXT BOOT: 7.1.13-m4rch-gpu-contract, isolated linux-m4rch-gpu-contract package.
+GRUB default 1 selects /GPUC001/vmlinuz and matching initramfs.img. Normal
+maintained 7.1.13-m4rch-gravity remains entry 0. No GPU node added and no GPU
+firmware/application startup allowed on T6040. Probe-only defaults to 1 and
+normal startup is explicitly refused before donor board-specific builders.
+
+Full LLVM/Rust Image/modules build and modpost passed. One upstream unused
+Rust RTKit import warning. All 39 files in the maintained baseline patch are
+byte-identical, including USB, WFI, framebuffer, NVMe and CPU changes. Native
+package installation generated the separate NVMe initramfs. Its root UUID,
+partition/bounds, release, package identity and NVMe dependencies were inspected.
+Package hooks also regenerated the normal initramfs; normal kernel is unchanged.
+No native trial boot or stability claim yet.
+
+After the previous handshake reboot: retained probe resources cleared; WFI Y.
+Read-only reserved TEXT/DATA samples captured and helpers unloaded normally.
+Loaded TEXT contains RTKit-3255.160.4.release, matching recorded 25G83 candidate.
+This is version-string evidence, not full-container byte identity or ABI proof.
+Seven candidate byte-codec tests and six existing topology/voltage tests pass.
+Candidate codec is independent of the live driver; unknown main fields preserved,
+queue prefetch/completion separated, cluster voltage columns distinct. Reference
+machine has 20 cores; retain our native 16-core masks 3db/3db.
+
+NEXT: reboot Linux normally; check maintained peripherals and WFI/SME on this
+Rust-enabled trial. Then load the guarded framework and qualify dynamic resource
+metadata/identification before planning RTKit crashlog/application startup and
+initialization graph. Do not jump to donor bootstrap or advertise acceleration.
+Verified teardown is a priority: completed donor Bootstrap Drop calls shutdown;
+raw Rust RtKit Drop only frees. Audit post-start constructor errors and test AP
+QUIESCED / IOP SLEEP shutdown before relying on reload without reboot. Old bounded
+ASC experiment intentionally retains resources after startup; never force unload.
+
+Rollback: copy /boot/GPUC001/grub-before.cfg to /boot/grub/grub.cfg and sync;
+normal maintained entry 0 remains present. No automatic reboot performed.
+Source recipe: experiments/t6040-gpu/gravity-contract; candidate codecs g16s_abi.rs.
+Receipts: docs/evidence/2026-10-07-gravity-gpu-contract-trial.json and
+2026-10-07-gravity-gpu-loaded-firmware.json. Build/logs out/gpu-gravity-contract.
+Earlier checkpoints below are historical.
+
 # GPU resumed: upgraded-firmware handshake passed — 2026-10-07
 
 Owner reports peripherals working after the promoted 7.1.13-m4rch-gravity
