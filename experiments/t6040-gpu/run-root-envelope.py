@@ -8,6 +8,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 import struct
 import subprocess
 from pathlib import Path
@@ -124,9 +125,23 @@ def main():
         final = subprocess.check_output(['dmesg','--color=never'],text=True)
         (out/'dmesg-after-unload.log').write_text(final)
         report.update(load_returncode=result.returncode,stderr=result.stderr,
-                      root_published=False,mapped_thirteen_pages='thirteen object pages mapped' in delta,
+                      root_published=False,expected_object_pages=receipt['arena_object_pages'],
+                      mapped_expected_pages=f"{receipt['arena_object_pages']} object pages mapped" in delta,
                       retirement_verified=retired,unloaded=unloaded,reboot_required=present and not unloaded,
                       interpretation='Allocation/mapping/retirement only; no root address sent or object reads established.')
+        (out/'attempt.json').write_text(json.dumps(report,indent=2)+'\n')
+        if unloaded:
+            table = capture(work/'sample-pagetables/gpu-data-sample.ko', '/sys/kernel/m4rch_gpu_data_sample/data', out/'tables-after-unload.bin', 'gpu_data_sample')
+            l2 = capture(work/'arena-l2-sample/gpu-data-sample.ko', '/sys/kernel/m4rch_gpu_data_sample/data', out/'l2-after-unload.bin', 'gpu_data_sample')
+            require(len(table)==0x40000 and len(l2)==0x4000, 'Unexpected post-unload table extent')
+            owned_pages = [int(pa,16) for pa in re.findall(r'owned page \d+ physical=(0x[0-9a-f]+)',delta)]
+            mask = ((1<<42)-1)&~0x3fff
+            references = [hex(word) for blob in (table,l2) for (word,) in struct.iter_unpack('<Q',blob)
+                          if (word & 3)==3 and (word & mask) in owned_pages]
+            report.update(post_unload_tables_sha256=sha(table),post_unload_l2_sha256=sha(l2),
+                          owned_page_count=len(owned_pages),owned_page_references=references,
+                          reserved_l2_zero=not any(l2),
+                          post_unload_verified=len(owned_pages)==receipt['arena_object_pages']+2 and not references and not any(l2))
         (out/'attempt.json').write_text(json.dumps(report,indent=2)+'\n')
         os.sync()
         print('Arena preflight retired and unloaded; no pinned resources.' if unloaded else 'Arena preflight refused or retained resources; inspect evidence.')

@@ -91,3 +91,22 @@ Linux DT/IRQ/mailbox resources, then test native identification in a separate
 matched kernel. Firmware ABI comparison precedes startup or rendering. Keep
 Git changes on separate branches and exchange exact commits. Set any eventual
 trial GRUB entry as default before reboot: the owner cannot use its keyboard.
+
+## Expanded offline graph and mapping trial (2026-10-07)
+
+`plan-init-graph.py` records17 objects and16 pointer edges. The root+c0 target
+has an unknown extent and receives no reservation in that plan. Known minimum
+extents require17 pages; status_b alone needs two.
+
+`assemble-init-graph.py` takes a JSON manifest containing `base` and `templates`
+(object name to binary path relative to the manifest). Every template must be
+explicit, including the unknown target. It preserves non-pointer bytes and
+relocates only the documented/qualified edges; its receipt always marks the
+result unpublishable. It neither validates opaque contents nor discovers
+transitive pointers. `graph-tests.py` checks relocations, preservation, page
+separation, missing templates, undersized status data and address bounds.
+
+The native arena probe builds18 marker pages plus two tables, reserving one
+explicitly unqualified marker page for the unknown target. This checks backing
+capacity and retirement only. No candidate graph or root address is sent to
+firmware. The earlier13-page native result does not qualify the expanded trial.

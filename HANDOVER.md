@@ -1,3 +1,41 @@
+# Expanded graph/status qualification and next mapping trial — 2026-10-07
+
+Offline work only this round; no modules loaded or firmware started. WFI and
+kernel/GRUB default remain unchanged. Current ASC remains sleeping6e after
+the earlier clean arena shutdown.
+
+Hash-pinned firmware audit now confirms root+a8/b0 status-pointer provenance.
+Status B (root+b0) is read at48f0 asu64: minimum extent48f8, at least TWO16KiB
+pages. Status A has u32 writes14/1c after parser return (minimum20). Region A
+(root+08) has u32 read10 (minimum14). Root+b8 object has u32 read/write680
+(minimum684, within standalone document6a8). Root+c0 pointer is copied but its
+target extent remains unknown. No claim that notification fields48e0/48e8
+are independently verified. Evidence: status-fields-audit.json.
+
+Expanded sizing plan:17 objects,16 pointer edges,278528 bytes (17 pages) of
+known minimum backing; root+c0 target explicitly unreserved. Earlier13-page
+native preflight does NOT cover this expanded plan. Offline assembler requires
+all17 explicit opaque templates, rejects missing/short inputs, preserves other
+bytes and relocates16 edges. Five boundary/preservation tests passed. Every
+output remains unpublishable: opaque contents/transitive pointers/full layouts
+and T6040 hardware contracts still require work. Conservative tracer now439
+hints; hints are not qualified semantic findings.
+
+NEXT REBOOT TRIAL READY: expanded arena probe compiled for the current matching
+GPU-contract kernel.18 marker object pages plus two tables (20 owned pages);
+one marker page for unknown root+c0 target is capacity testing ONLY. NO ROOT
+ADDRESS SENT. Same acknowledged retirement requirements. Updated runner records
+expected page count and post-unload table/L2 snapshots, verifies zero borrowed
+L2 and no references to any owned page. Expanded native trial NOT YET RUN.
+Build/module hashes: docs/evidence/2026-10-07-gravity-gpu-expanded-arena-preparation.json.
+
+Normal Linux reboot needed for fresh cold ASC; no new kernel/install/default
+change and no macOS handoff needed. After reboot run:
+sudo python experiments/t6040-gpu/run-root-envelope.py out/gpu-gravity-contract --arena --run
+Do not replay while ASC sleeping6e; do not force-unload a retained probe.
+This trial qualifies allocation/mapping cleanup, not initialized GPU firmware
+or acceleration. Full positive graph remains a later step.
+
 # Full provisional arena preflight passed; clean teardown — 2026-10-07
 
 Boot541905c2-2712-49f1-a5a7-5269b8d26f6c. Retained root-reader probe cleared

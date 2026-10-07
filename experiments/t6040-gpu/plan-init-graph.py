@@ -25,8 +25,14 @@ SPECS = [
     ('shared_4', 0x800, 'document'),
     ('hardware_counters', 0xe40, 'document-extent-firmware-pointer'),
     ('power', 0x40, 'firmware-access-minimum'),
+    ('region_a', 0x14, 'firmware-access-minimum'),
+    ('status_a', 0x20, 'firmware-access-minimum'),
+    ('status_b', 0x48f8, 'firmware-access-minimum'),
+    ('extra_root_1', None, 'firmware-root-pointer-target-extent-unknown'),
 ]
-EDGES = [('root', 0x18, 'main'), ('root', 0x20, 'region_c'),
+EDGES = [('root', 0x08, 'region_a'), ('root', 0xa8, 'status_a'),
+         ('root', 0xb0, 'status_b'), ('root', 0xc0, 'extra_root_1'),
+         ('root', 0x18, 'main'), ('root', 0x20, 'region_c'),
          ('root', 0xb8, 'extra_root'), ('main', 0, 'hardware'),
          ('main', 0x10, 'main_header'), ('main', 0x471, 'power'),
          ('hardware', 0x26b8, 'hardware_counters')]
@@ -37,15 +43,16 @@ def plan():
     objects = []
     cursor = 0
     for name, extent, evidence in SPECS:
-        reservation = (extent + PAGE - 1) // PAGE * PAGE
-        objects.append(dict(name=name, arena_offset=cursor, extent=extent,
+        reservation = (extent + PAGE - 1) // PAGE * PAGE if extent is not None else 0
+        objects.append(dict(name=name, arena_offset=cursor if extent is not None else None, extent=extent,
                             reserved_bytes=reservation, evidence=evidence))
         cursor += reservation
     by_name = {o['name']: o for o in objects}
     for parent, offset, target in EDGES:
         assert offset + 8 <= by_name[parent]['extent']
         assert target in by_name
-    for left, right in zip(objects, objects[1:]):
+    allocated = [o for o in objects if o['arena_offset'] is not None]
+    for left, right in zip(allocated, allocated[1:]):
         assert left['arena_offset'] + left['reserved_bytes'] <= right['arena_offset']
     return dict(page_bytes=PAGE, arena_bytes=cursor, objects=objects,
                 pointers=[dict(parent=p, byte_offset=o, target=t, width=8)
@@ -58,11 +65,13 @@ def plan():
                     'Full hardware layout and T6040 register descriptors/two-cluster voltage inputs',
                     'Region C complete extent, initialization values and host/firmware ownership',
                     'Power object complete extent and initialization values',
-                    'Root region A, status objects and other pointer dependencies',
+                    'Complete region A/status extents and contents; root+c0 target extent unknown',
                     'Nested shared-object contents and transitive pointers',
                     'Actual arena GPU VA bounds/collisions, physical backing, PTE permissions',
                     'Cache publication, RTKit failure paths and mapping lifetime/teardown'],
-                qualification='Independent-page sizing plan only. No memory allocation, GPU addresses, firmware serialization or publication. Padding is not evidence of complete object extents.')
+                native_preflight_coverage=dict(object_pages=13, expanded_plan_tested=False,
+                    note='Earlier native preflight covers only the previous13-page provisional arena.'),
+                qualification='Independent-page sizing plan only; unknown-size objects receive no reservation. No memory allocation, GPU addresses, firmware serialization or publication. Padding is not evidence of complete object extents.')
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)

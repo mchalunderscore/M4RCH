@@ -34,7 +34,19 @@ if report['text_contract'] is not None:
               0x33e0c:0xf0000ad4,0x33e10:0xf9426288,0x33e14:0xb9425109,
               0x33e18:0x34000a69,0x14958:0xd0000bca,0x1495c:0xf942614a,
               0x14960:0x394f814b,0x34da0:0xd0000ac8,0x34da4:0xf9426108,
-              0x34da8:0xf9400908,0x34db4:0xb9400109,0x34df4:0x3cc74101}
+              0x34da8:0xf9400908,0x34db4:0xb9400109,0x34df4:0x3cc74101,
+              0x2f270:0xf0000ae9,0x2f274:0x91132129,0x2f278:0x3d800120,
+              0x2f2c0:0xf0000ae9,0x2f2c4:0x91138129,
+              0x2f2cc:0xf0000aeb,0x2f2d0:0xa949352c,0x2f2d4:0xf901f96c,
+              0x2f2d8:0xf0000aeb,0x2f2dc:0xf907396d,
+              0x2f2e0:0xd0000b2b,0x2f2e4:0xa94a252c,0x2f2e8:0xf903a96c,
+              0x2f2ec:0xf0000aeb,0x2f2f0:0xf901e569,
+              0x35084:0xb0000ac9,0x35088:0xf9473929,0x3508c:0xf9647929,
+              0x3403c:0xd0000ad5,0x34040:0xf941faa8,
+              0x34044:0xb900151f,0x34048:0xb9001d1f,
+              0x77b8:0xf0000c28,0x77bc:0xf9426908,0x77c0:0xb9401113,
+              0x25220:0x90000b88,0x25224:0xf943a918,0x25228:0xb9468308,
+              0x25230:0xb9068308}
     assert all(word(k)==v for k,v in expected.items())
     report['qualified_sample_findings']={
         'root_interface':'Root first u64 loaded at 2f250; compared with reconstructed G16S identifier at 2f264; mismatch branches at 2f268.',
@@ -47,6 +59,11 @@ if report['text_contract'] is not None:
         'main_250_gate':'33e0c/33e10 load main;33e14 reads u32+250;33e18 bypasses the following path when zero. Exact subsystem semantics unqualified.',
         'main_3e0_byte':'14958/1495c load main;14960 reads one byte+3e0, then shifts/tests a selected bit. Initial value and ownership unqualified.',
         'main_10_object':'34da0/34da4 load main;34da8 dereferences main+10;34db4 reads first u32 as a gate. Nonzero path copies eight qwords from offsets4..74, reaching84 bytes; full88-byte extent remains a document claim.',
+        'root_status_provenance':'Copied root base18e4c8; 2f2c0/4 form rootcopy+18. 2f2d0 loads root+a8/b0 and stores pointers at globals18e3f0/18ee70. 2f2e4 loads root+b8/c0 and stores at195750/18e3c8. These identify parents, not complete object layouts.',
+        'status_b_access_minimum':'35084/88 load global18ee70 (root+b0);3508c reads u64 at+48f0. Minimum extent48f8, requiring at least two16KiB backing pages. Neither complete extent nor document notification fields48e0/48e8 are established.',
+        'status_a_access_minimum':'3403c/40 load global18e3f0 (root+a8);34044/48 write u32 zero at14/1c after parser return. Minimum extent20; full extent and acceptance semantics remain unqualified.',
+        'region_a_access_minimum':'2f270/74/78 copy initial16 root bytes at18e4c8, placing root+08 at18e4d0. 77b8/bc load that pointer;77c0 reads u32+10. Minimum extent14, not a complete region layout.',
+        'extra_root_access_minimum':'25220/24 load global195750 (root+b8);25228/30 read/write u32+680. Minimum extent684, within document6a8. Root+c0 pointer is copied, but its target extent remains unresolved.',
         'unknown_main_240':'Unresolved. Matches15aa0/15b80/382c4/38380 refer to global146240 rather than the main object; they are not evidence for its extra field.'}
     report['instruction_checks']={hex(k):hex(v) for k,v in expected.items()}
 a.output.write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2))

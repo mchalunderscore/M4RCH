@@ -2,6 +2,7 @@
 """Build isolated root-envelope probe and read-only samplers; never load modules."""
 import argparse
 import hashlib
+import importlib.util
 import json
 import shutil
 import subprocess
@@ -33,7 +34,8 @@ def main():
     targets = {}
     for tag, base, size in [('sample-pagetables',0x105fff78000,0x40000),
                             ('root-text-sample',0x10000be4000,0x60000),
-                            ('root-data-sample',0x10001d44000,0x138000)]:
+                            ('root-data-sample',0x10001d44000,0x138000),
+                            ('arena-l2-sample',0x105fff74000,0x4000)]:
         out = work/tag
         out.mkdir(exist_ok=True)
         for name in ['Makefile','gpu-data-sample.c']:
@@ -56,6 +58,15 @@ def main():
     for name in ['Makefile','asc-arena-preflight.c','arena-map.h']:
         shutil.copy2(KIT/'asc-arena-preflight'/name,arena/name)
     shutil.copy2(out/'boot-contract.h',arena/'boot-contract.h')
+    spec = importlib.util.spec_from_file_location('graph_plan', KIT/'plan-init-graph.py')
+    graph_plan = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(graph_plan)
+    plan = graph_plan.plan()
+    unknown = [o['name'] for o in plan['objects'] if o['extent'] is None]
+    # One marker page per unknown target for allocation testing ONLY. This is
+    # neither a complete-extent assertion nor a graph published to firmware.
+    arena_pages = plan['arena_bytes']//graph_plan.PAGE + len(unknown)
+    (arena/'arena-contract.h').write_text(f'/* Candidate mapping capacity only, no object contents. */\n#define ARENA_OBJECT_PAGES {arena_pages}U\n')
     targets['asc-arena-preflight'] = 'asc-arena-preflight.ko'
     for tag in targets:
         subprocess.run(['make','-C',str(tree),'LLVM=1','KERNELRELEASE='+RELEASE,
@@ -64,6 +75,8 @@ def main():
                    module_sha256=sha(out/'asc-root-envelope.ko'),
                    artifact_sha256={tag+'/'+module:sha(work/tag/module) for tag,module in targets.items()},
                    source_sha256={name:sha(out/name) for name in ['asc-root-envelope.c','root-map.h','boot-contract.h']},
+                   arena_object_pages=arena_pages,arena_unknown_extent_marker_pages=unknown,
+                   arena_source_sha256={name:sha(arena/name) for name in ['asc-arena-preflight.c','arena-map.h','arena-contract.h']},
                    hardware_trial_performed=False,default_gate=0,preflight_gate=1,cold_publication_gate=2)
     (out/'build-receipt.json').write_text(json.dumps(receipt,indent=2)+'\n')
     print('Built matching isolated modules; no loading or firmware publication.')
