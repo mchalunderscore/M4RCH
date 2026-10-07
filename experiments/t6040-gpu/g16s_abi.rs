@@ -126,6 +126,37 @@ pub fn hardware_voltages(out: &mut [u8], core: &[[[u32; 11]; 2]; 2],
     Some(())
 }
 
+/// Fields copied by the qualified firmware register-table consumer. Their
+/// donor names do not establish permission flags or T6040 register roles.
+pub struct RegisterDescriptor {
+    pub physical: u64,
+    pub gpu_va: u64,
+    pub size: u32,
+    pub stride: u32,
+    pub relative: u64,
+    pub flags: u32,
+}
+/// Patch the 0x24-byte copied prefix, preserving the final reserved word.
+/// This serializes a candidate; it never maps or accesses MMIO.
+pub fn hardware_register(out: &mut [u8], slot: usize, r: &RegisterDescriptor) -> Option<()> {
+    //52 is the maximum slot in the captured46-entry firmware table. The
+    //table has gaps; accepting an index here does not qualify an unused slot.
+    if slot > 52 || r.physical == 0 || r.size == 0 || r.stride == 0 { return None; }
+    let end = r.physical.checked_add(r.size as u64)?;
+    let va_end = r.gpu_va.checked_add(r.size as u64)?;
+    if end > (1u64<<42) || r.gpu_va < 0xfffffc2000000000 ||
+       va_end > 0xfffffc4000000000 { return None; }
+    let offset = 0x640 + slot * 0x28;
+    if out.len() < offset + 0x28 { return None; }
+    put64(out,offset,r.physical);
+    put64(out,offset+8,r.gpu_va);
+    put32(out,offset+0x10,r.size);
+    put32(out,offset+0x14,r.stride);
+    put64(out,offset+0x18,r.relative);
+    put32(out,offset+0x20,r.flags);
+    Some(())
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -215,6 +246,37 @@ mod tests {
         let mut short = [0xa5;0x251b];
         assert_eq!(hardware_voltages(&mut short,&core,&sram),None);
         assert!(short.iter().all(|byte| *byte==0xa5));
+    }
+
+    #[test]
+    fn register_descriptor_matches_firmware_prefix_and_preserves_reserved_word() {
+        let mut out=[0xa5;0x3db4];
+        let r=RegisterDescriptor {physical:0x2201c4000,gpu_va:0xfffffc2180200000,
+            size:0x60000,stride:0x18000,relative:0,flags:2};
+        assert_eq!(hardware_register(&mut out,3,&r),Some(()));
+        let off=0x640+3*0x28;
+        assert_eq!(&out[off..off+8],&r.physical.to_le_bytes());
+        assert_eq!(&out[off+8..off+16],&r.gpu_va.to_le_bytes());
+        assert_eq!(get32(&out,off+0x10),0x60000);
+        assert_eq!(get32(&out,off+0x14),0x18000);
+        assert_eq!(get32(&out,off+0x20),2);
+        assert_eq!(&out[off+0x24..off+0x28],&[0xa5;4]);
+        assert_eq!(&out[off-8..off],&[0xa5;8]);
+    }
+    #[test]
+    fn register_descriptor_rejects_bad_ranges_without_partial_writes() {
+        let mut out=[0xa5;0x3db4];
+        let mut r=RegisterDescriptor {physical:(1u64<<42)-1,gpu_va:0xfffffc2180200000,
+            size:0x4000,stride:0x4000,relative:0,flags:2};
+        assert_eq!(hardware_register(&mut out,3,&r),None);
+        r.physical=0x2201c4000;r.gpu_va=u64::MAX;
+        assert_eq!(hardware_register(&mut out,3,&r),None);
+        r.gpu_va=0xfffffc2180200000;
+        assert_eq!(hardware_register(&mut out,53,&r),None);
+        assert!(out.iter().all(|b| *b==0xa5));
+        let mut short=[0xa5;0xe87];
+        assert_eq!(hardware_register(&mut short,52,&r),None);
+        assert!(short.iter().all(|b| *b==0xa5));
     }
 
 }

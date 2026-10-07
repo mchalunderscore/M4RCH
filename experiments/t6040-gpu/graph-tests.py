@@ -22,9 +22,9 @@ class GraphTests(unittest.TestCase):
     def test_two_page_status_and_every_pointer_resolves(self):
         arena, receipt = a.assemble(fixture(), BASE)
         objects = {o['name']: o for o in receipt['objects']}
-        self.assertEqual(objects['status_b']['reserved_bytes'], 0x8000)
+        self.assertEqual(objects['status_b']['reserved_bytes'], 0x10000)
         self.assertEqual(objects['power']['reserved_bytes'], 0x8000)
-        self.assertEqual(len(arena), 19 * 0x4000)
+        self.assertEqual(len(arena), 21 * 0x4000)
         for edge in receipt['pointers']:
             position = objects[edge['parent']]['arena_offset'] + edge['byte_offset']
             self.assertEqual(struct.unpack_from('<Q', arena, position)[0],

@@ -27,7 +27,7 @@ SPECS = [
     ('power', 0x6564, 'firmware-access-minimum'),
     ('region_a', 0x14, 'firmware-access-minimum'),
     ('status_a', 0x20, 'firmware-access-minimum'),
-    ('status_b', 0x48f8, 'firmware-access-minimum'),
+    ('status_b', 0xe43c, 'firmware-access-minimum'),
     ('extra_root_1', None, 'firmware-root-pointer-target-extent-unknown'),
 ]
 EDGES = [('root', 0x08, 'region_a'), ('root', 0xa8, 'status_a'),
@@ -70,7 +70,7 @@ def plan():
                     'Actual arena GPU VA bounds/collisions, physical backing, PTE permissions',
                     'Cache publication, RTKit failure paths and mapping lifetime/teardown'],
                 native_preflight_coverage=dict(object_pages=18, expanded_plan_tested=False,
-                    note='Latest native preflight covers18 marker pages; new power minimum increases candidate with unknown-target marker to19 pages. No firmware object reads established.'),
+                    note='Latest native preflight covers18 marker pages; corrected power and status-B minimums require21 candidate object pages including the unknown-target marker. No native firmware object reads established.'),
                 qualification='Independent-page sizing plan only; unknown-size objects receive no reservation. No memory allocation, GPU addresses, firmware serialization or publication. Padding is not evidence of complete object extents.')
 
 if __name__ == '__main__':

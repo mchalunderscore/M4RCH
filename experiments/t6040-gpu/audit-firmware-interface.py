@@ -51,7 +51,12 @@ if report['text_contract'] is not None:
               0x11678:0x9111c529,0x1167c:0xf9400129,
               0x11680:0x528cac0a,0x11684:0xb82a6928,
               0xc63c:0xd0000c15,0xc640:0xf94262a8,0xc644:0x9111c509,
-              0xc648:0xf9400129,0xc64c:0x528c840a,0xc650:0xb86a6929}
+              0xc648:0xf9400129,0xc64c:0x528c840a,0xc650:0xb86a6929,
+              0x3218:0xf0000c4b,0x321c:0xf947396b,0x3220:0x529c868c,
+              0x3224:0x5298e50d,0x3228:0x8b0d016d,
+              0x3234:0xb94001ae,0x323c:0xb94005ad,0x3340:0xb86c696a,
+              0x3900:0xf0000c48,0x3904:0xf9473908,
+              0x3908:0x529c870a,0x390c:0xb86a6908}
     assert all(word(k)==v for k,v in expected.items())
     report['qualified_sample_findings']={
         'root_interface':'Root first u64 loaded at 2f250; compared with reconstructed G16S identifier at 2f264; mismatch branches at 2f268.',
@@ -65,7 +70,7 @@ if report['text_contract'] is not None:
         'main_3e0_byte':'14958/1495c load main;14960 reads one byte+3e0, then shifts/tests a selected bit. Initial value and ownership unqualified.',
         'main_10_object':'34da0/34da4 load main;34da8 dereferences main+10;34db4 reads first u32 as a gate. Nonzero path copies eight qwords from offsets4..74, reaching84 bytes; full88-byte extent remains a document claim.',
         'root_status_provenance':'Copied root base18e4c8; 2f2c0/4 form rootcopy+18. 2f2d0 loads root+a8/b0 and stores pointers at globals18e3f0/18ee70. 2f2e4 loads root+b8/c0 and stores at195750/18e3c8. These identify parents, not complete object layouts.',
-        'status_b_access_minimum':'35084/88 load global18ee70 (root+b0);3508c reads u64 at+48f0. Minimum extent48f8, requiring at least two16KiB backing pages. Neither complete extent nor document notification fields48e0/48e8 are established.',
+        'status_b_access_minimum':'Additional chain3218/1c loads root+b0 global;3224/28 adds c728;3234/3c reads two u32 words. 3340 reads u32+e434 via constant3220. Independent3900/04/08/0c reads u32+e438. Revised minimum e43c, FOUR16KiB pages; supersedes48f8 partial minimum. 35084/88 load global18ee70 (root+b0);3508c reads u64 at+48f0. Minimum extent48f8, requiring at least two16KiB backing pages. Neither complete extent nor document notification fields48e0/48e8 are established.',
         'status_a_access_minimum':'3403c/40 load global18e3f0 (root+a8);34044/48 write u32 zero at14/1c after parser return. Minimum extent20; full extent and acceptance semantics remain unqualified.',
         'region_a_access_minimum':'2f270/74/78 copy initial16 root bytes at18e4c8, placing root+08 at18e4d0. 77b8/bc load that pointer;77c0 reads u32+10. Minimum extent14, not a complete region layout.',
         'extra_root_access_minimum':'25220/24 load global195750 (root+b8);25228/30 read/write u32+680. Minimum extent684, within document6a8. Root+c0 pointer is copied, but its target extent remains unresolved.',

@@ -1,3 +1,63 @@
+# MTP keyboard stage-2 trial installed; reboot for GRUB input test — 2026-10-07
+
+Installed /boot/boot.bin SHA256:
+e67d38fabffc9c2d1e6414c9335fc896525d4cbc8b2b5481d3cb3dcd7f082758.
+Backup /boot/keyboard-trial/boot-before.bin SHA256:
+cb3ab77bdac7f276b5331d8580a5ee1b81f8bd215c0cba1449391a73d790ef09.
+Native ESP identity and backup/new-bundle readbacks passed. No reboot performed.
+Stage 1 unchanged; exact working stage-2 m1n1 retained. Existing GPU-contract
+kernel/default entry and continuous WFI unchanged. U-Boot remains based on
+Gravity a2f6913694ff26908c16948af3f8372429782263 (2026.07).
+
+Enabled DM_KEYBOARD/APPLE_KEYB/APPLE_MTP_KEYB and stdin=mtpkbd; USB/PCI remain
+disabled. Added two boot-only MTP nodes and five individually checked MMU
+windows for ASC, SRAM, mailbox and paired FIFO data. Every original baseline
+DT property is preserved. archnvme removes the two nodes from its separate
+handoff copy before applying the existing Linux overlay. The working Linux
+HID binding remains intact. Native compilation, resolved config, reviewed
+source hashes, component framing, DT preservation/removal checks passed.
+Keyboard behavior is NOT YET hardware-tested. See docs/boot-keyboard.md and
+docs/evidence/2026-10-07-boot-keyboard-trial.json. Exact installed receipt and
+rollback bundle are in /boot/keyboard-trial/.
+
+NEXT REBOOT: press an arrow key during the GRUB countdown; try moving between
+entries, then boot the same GPU-contract entry. Confirm Linux keyboard/trackpad,
+USB and networking. No re-enrollment or macOS work required unless boot fails.
+Rollback from Linux: sudo cp /boot/keyboard-trial/boot-before.bin /boot/boot.bin;
+sync. If necessary mount M4RCHESP from macOS and copy keyboard-trial/boot-before.bin
+over boot.bin there. Prior loader-alignment manifest identifies the BASE bundle,
+not this trial; use keyboard-trial/installed.json for its exact component hashes.
+
+GPU work: captured-firmware parser emulator now reproduces the observed disabled-
+allocation rejection (52 instructions, 26 root accesses) and returns from the
+root parser with allocations enabled (2223 instructions, 979 object accesses).
+All enabled-model accesses fit explicit templates. This is ONLY a bounded
+Unicorn model: RTKit receive substituted, pointer authentication omitted, zero
+opaque fixtures, no MMIO/real hardware initialization/rendering proof.
+Three regression tests pass, including deliberately reducing status B to two
+pages and observing the actual instruction's out-of-template access.
+Evidence: docs/evidence/2026-10-07-gravity-gpu-parser-{disabled,enabled}-model.json.
+
+IMPORTANT CORRECTION: status B requires at least e43c bytes, FOUR 16KiB pages,
+from pinned reads at c728/c72c/e434/e438. Combined with power minimum6564,
+there are20 known backing pages plus1 provisional unknown root+c0 marker:
+21 candidate object pages, plus2 owned table pages. Older19-page candidate
+claims below are superseded. Completed native18-page marker trial is still
+valid for its tested capacity. Five updated offline graph tests pass.
+Register-table audit independently qualifies the 0x28 descriptor stride and
+0x24 copied prefix; names/containment are not proof of T6040 register roles.
+
+GPU NEXT: prepare a batched allocations-enabled native structural-init probe
+with corrected backing and full evidence capture. No additional arena-only
+reboot. Keep every published page/mapping/power reference pinned until reboot,
+even on failure. Zero opaque objects are an explicit experimental fixture,
+not a complete production initialization graph. User accepts recoverable hangs
+and asks for larger useful test batches. The next keyboard reboot also provides
+a fresh GPU ASC; prepare/run the native graph probe in that boot once its
+artifact/fresh-boot checks pass. Do not repeat warm ASC wake in the current boot.
+
+---
+
 # Expanded native arena PASSED; profile-A voltage geometry qualified — 2026-10-07
 
 Boot 0ce64a9c-cdcd-4030-b5a8-684d085ba0b7, matching GPU-contract kernel.

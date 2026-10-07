@@ -1,0 +1,482 @@
+{
+  "text_contract": {
+    "raw_sha256": "6f7a286c5b9c843193c7dfb6bcaf0ad19485648b5a7628b95c4324f29eaa672d",
+    "normalized_sha256": "190cef1946a23dfbde180592629631c3b28d0509a17eb76108b7c9a52accd9ac",
+    "observed_variable_payloads": [
+      {
+        "offset": "0x59841",
+        "tag_bytes": "GKTS",
+        "payload_hex": "00229b727b0c035e"
+      },
+      {
+        "offset": "0x59924",
+        "tag_bytes": "ECAP",
+        "payload_hex": "469fd49b60adc837"
+      }
+    ],
+    "qualification": "Exact match outside two tagged eight-byte boot metadata payloads; tags and lengths are also checked. No instruction bytes excluded."
+  },
+  "data_sha256": "3a5b8cc02d184f78c42df9bd0cb33c6645ee49b5e3e871c0d14b4535e87efd17",
+  "adt_sha256": "2b612e900c35f0b842425fbe22fdc725f925ee7872352937a0534a1a7beb3fa8",
+  "register_table_sha256": "1cd874115d385cab17f2eba6ae57d8f7692b8f93c527178ea5000f6c5851844a",
+  "instruction_checks": {
+    "0x32ec0": "0xd2800008",
+    "0x32ec4": "0x90000ae9",
+    "0x32ec8": "0xf9426129",
+    "0x32ecc": "0xf940012a",
+    "0x32ed0": "0x9119014a",
+    "0x32ed4": "0xb00002ab",
+    "0x32ed8": "0x9104216b",
+    "0x32edc": "0x5280050c",
+    "0x32ee0": "0x90000aed",
+    "0x32ee4": "0x9139e1ad",
+    "0x32ee8": "0x14000004",
+    "0x32eec": "0x91004108",
+    "0x32ef0": "0xf10b811f",
+    "0x32ef4": "0x54000280",
+    "0x32ef8": "0xb868696e",
+    "0x32efc": "0x9bac7dcf",
+    "0x32f00": "0xf86f694f",
+    "0x32f04": "0xb4ffff4f",
+    "0x32f08": "0xf940012f",
+    "0x32f0c": "0x8b0e09ce",
+    "0x32f10": "0xd37df1ce",
+    "0x32f14": "0x8b0e01ef",
+    "0x32f18": "0x8b0e01ae",
+    "0x32f1c": "0x9116a1d0",
+    "0x32f20": "0xfd4329e0",
+    "0x32f28": "0xb94661f1",
+    "0x32f30": "0xf9432df1",
+    "0x32f38": "0x3dc191e0",
+    "0x32f40": "0x17ffffeb"
+  },
+  "hardware_record_base": "0x640",
+  "hardware_record_stride": "0x28",
+  "copied_record_bytes": 36,
+  "zero_physical_skips_record": true,
+  "fields": {
+    "offset_0": "u64 gate/copy; donor calls physical address",
+    "offset_8": "u64 copied; donor calls firmware virtual address",
+    "offset_10": "u64 copied; donor packs size/stride here",
+    "offset_18": "u64 copied; donor calls relative offset",
+    "offset_20": "u32 copied; flags semantics unqualified"
+  },
+  "slots": [
+    {
+      "slot": 26,
+      "name": "FenderRegsGFenderCfg",
+      "name_text_offset": "0x5bee7",
+      "raw_table_word_3": "0x200000",
+      "hardware_record_offset": "0xa50",
+      "firmware_cached_record": "0x18f830"
+    },
+    {
+      "slot": 27,
+      "name": "GMGIFAFRegisters",
+      "name_text_offset": "0x5bf0e",
+      "raw_table_word_3": "0x200000",
+      "hardware_record_offset": "0xa78",
+      "firmware_cached_record": "0x18f858"
+    },
+    {
+      "slot": 28,
+      "name": "CRERegisters",
+      "name_text_offset": "0x5bf31",
+      "raw_table_word_3": "0x200000",
+      "hardware_record_offset": "0xaa0",
+      "firmware_cached_record": "0x18f880"
+    },
+    {
+      "slot": 29,
+      "name": "FenderRegsGCPMS",
+      "name_text_offset": "0x5bf50",
+      "raw_table_word_3": "0x200000",
+      "hardware_record_offset": "0xac8",
+      "firmware_cached_record": "0x18f8a8"
+    },
+    {
+      "slot": 30,
+      "name": "FenderRegsKSMFE",
+      "name_text_offset": "0x5bf72",
+      "raw_table_word_3": "0x200000",
+      "hardware_record_offset": "0xaf0",
+      "firmware_cached_record": "0x18f8d0"
+    },
+    {
+      "slot": 31,
+      "name": "FenderRegsMCW",
+      "name_text_offset": "0x5bf94",
+      "raw_table_word_3": "0x200000",
+      "hardware_record_offset": "0xb18",
+      "firmware_cached_record": "0x18f8f8"
+    },
+    {
+      "slot": 32,
+      "name": "FenderRegsScratchRam",
+      "name_text_offset": "0x5bfb4",
+      "raw_table_word_3": "0x200000",
+      "hardware_record_offset": "0xb40",
+      "firmware_cached_record": "0x18f920"
+    },
+    {
+      "slot": 33,
+      "name": "FenderRegsBumper",
+      "name_text_offset": "0x5bfdb",
+      "raw_table_word_3": "0x200000",
+      "hardware_record_offset": "0xb68",
+      "firmware_cached_record": "0x18f948"
+    },
+    {
+      "slot": 34,
+      "name": "FenderRegsPRC",
+      "name_text_offset": "0x5bffe",
+      "raw_table_word_3": "0x200000",
+      "hardware_record_offset": "0xb90",
+      "firmware_cached_record": "0x18f970"
+    },
+    {
+      "slot": 35,
+      "name": "FenderRegsDFenderMGPUCfg",
+      "name_text_offset": "0x5c01e",
+      "raw_table_word_3": "0x200000",
+      "hardware_record_offset": "0xbb8",
+      "firmware_cached_record": "0x18f998"
+    },
+    {
+      "slot": 36,
+      "name": "FenderRegsDFenderPowerTransG16G",
+      "name_text_offset": "0x5c049",
+      "raw_table_word_3": "0x200000",
+      "hardware_record_offset": "0xbe0",
+      "firmware_cached_record": "0x18f9c0"
+    },
+    {
+      "slot": 37,
+      "name": "FenderRegsDFenderCSCfg",
+      "name_text_offset": "0x5c07b",
+      "raw_table_word_3": "0x200000",
+      "hardware_record_offset": "0xc08",
+      "firmware_cached_record": "0x18f9e8"
+    },
+    {
+      "slot": 38,
+      "name": "FenderRegsIVDM",
+      "name_text_offset": "0x5c0a4",
+      "raw_table_word_3": "0x200000",
+      "hardware_record_offset": "0xc30",
+      "firmware_cached_record": "0x18fa10"
+    },
+    {
+      "slot": 40,
+      "name": "GFXCLKGENMGPU",
+      "name_text_offset": "0x5c0c5",
+      "raw_table_word_3": "0x200000",
+      "hardware_record_offset": "0xc80",
+      "firmware_cached_record": "0x18fa60"
+    },
+    {
+      "slot": 41,
+      "name": "ThrtlStatCntrsRegisters",
+      "name_text_offset": "0x5c0e5",
+      "raw_table_word_3": "0x200000",
+      "hardware_record_offset": "0xca8",
+      "firmware_cached_record": "0x18fa88"
+    },
+    {
+      "slot": 52,
+      "name": "ThrtlStatCntrsCSRegisters",
+      "name_text_offset": "0x5c10f",
+      "raw_table_word_3": "0x200000",
+      "hardware_record_offset": "0xe60",
+      "firmware_cached_record": "0x18fc40"
+    },
+    {
+      "slot": 42,
+      "name": "AVMRControllerFastRegisters",
+      "name_text_offset": "0x5c13b",
+      "raw_table_word_3": "0x200000",
+      "hardware_record_offset": "0xcd0",
+      "firmware_cached_record": "0x18fab0"
+    },
+    {
+      "slot": 43,
+      "name": "FenderRegsAFRNIA",
+      "name_text_offset": "0x5c169",
+      "raw_table_word_3": "0x200000",
+      "hardware_record_offset": "0xcf8",
+      "firmware_cached_record": "0x18fad8"
+    },
+    {
+      "slot": 1,
+      "name": "TempSensorRegister",
+      "name_text_offset": "0x5c18c",
+      "raw_table_word_3": "0x200000",
+      "hardware_record_offset": "0x668",
+      "firmware_cached_record": "0x18f448"
+    },
+    {
+      "slot": 2,
+      "name": "PMPDoorbell",
+      "name_text_offset": "0x5c1b1",
+      "raw_table_word_3": "0x200000",
+      "hardware_record_offset": "0x690",
+      "firmware_cached_record": "0x18f470"
+    },
+    {
+      "slot": 39,
+      "name": "MTRRegisters",
+      "name_text_offset": "0x5c1cf",
+      "raw_table_word_3": "0x200000",
+      "hardware_record_offset": "0xc58",
+      "firmware_cached_record": "0x18fa38"
+    },
+    {
+      "slot": 14,
+      "name": "MTRPMSRegisters",
+      "name_text_offset": "0x5c1ee",
+      "raw_table_word_3": "0x200000",
+      "hardware_record_offset": "0x870",
+      "firmware_cached_record": "0x18f650"
+    },
+    {
+      "slot": 3,
+      "name": "MCacheRegisters",
+      "name_text_offset": "0x5c210",
+      "raw_table_word_3": "0x200000",
+      "hardware_record_offset": "0x6b8",
+      "firmware_cached_record": "0x18f498"
+    },
+    {
+      "slot": 0,
+      "name": "GPCAICSWInt",
+      "name_text_offset": "0x5c232",
+      "raw_table_word_3": "0x200000",
+      "hardware_record_offset": "0x640",
+      "firmware_cached_record": "0x18f420"
+    },
+    {
+      "slot": 4,
+      "name": "AICBankedRegisters",
+      "name_text_offset": "0x5c250",
+      "raw_table_word_3": "0x200000",
+      "hardware_record_offset": "0x6e0",
+      "firmware_cached_record": "0x18f4c0"
+    },
+    {
+      "slot": 5,
+      "name": "PMGRScratch",
+      "name_text_offset": "0x5c275",
+      "raw_table_word_3": "0x200000",
+      "hardware_record_offset": "0x708",
+      "firmware_cached_record": "0x18f4e8"
+    },
+    {
+      "slot": 6,
+      "name": "SpecialAgentIdleDie0",
+      "name_text_offset": "0x5c293",
+      "raw_table_word_3": "0x200000",
+      "hardware_record_offset": "0x730",
+      "firmware_cached_record": "0x18f510"
+    },
+    {
+      "slot": 7,
+      "name": "SpecialAgentIdleDie1",
+      "name_text_offset": "0x5c2ba",
+      "raw_table_word_3": "0x200000",
+      "hardware_record_offset": "0x758",
+      "firmware_cached_record": "0x18f538"
+    },
+    {
+      "slot": 9,
+      "name": "PushTelemetryDashboard",
+      "name_text_offset": "0x5c2e1",
+      "raw_table_word_3": "0x200000",
+      "hardware_record_offset": "0x7a8",
+      "firmware_cached_record": "0x18f588"
+    },
+    {
+      "slot": 11,
+      "name": "PushTelemetryDashboardConfigSpace",
+      "name_text_offset": "0x5c30a",
+      "raw_table_word_3": "0x200000",
+      "hardware_record_offset": "0x7f8",
+      "firmware_cached_record": "0x18f5d8"
+    },
+    {
+      "slot": 10,
+      "name": "PushTelemetryDashboardReadSpace",
+      "name_text_offset": "0x5c33e",
+      "raw_table_word_3": "0x200000",
+      "hardware_record_offset": "0x7d0",
+      "firmware_cached_record": "0x18f5b0"
+    },
+    {
+      "slot": 18,
+      "name": "AFRClkGenRegisters",
+      "name_text_offset": "0x5c370",
+      "raw_table_word_3": "0x200000",
+      "hardware_record_offset": "0x910",
+      "firmware_cached_record": "0x18f6f0"
+    },
+    {
+      "slot": 19,
+      "name": "AFRClkGenRegisters1",
+      "name_text_offset": "0x5c395",
+      "raw_table_word_3": "0x200000",
+      "hardware_record_offset": "0x938",
+      "firmware_cached_record": "0x18f718"
+    },
+    {
+      "slot": 20,
+      "name": "AFRRegisters",
+      "name_text_offset": "0x5c3bb",
+      "raw_table_word_3": "0x200000",
+      "hardware_record_offset": "0x960",
+      "firmware_cached_record": "0x18f740"
+    },
+    {
+      "slot": 22,
+      "name": "GFXCAXI2AFRegisters",
+      "name_text_offset": "0x5c3da",
+      "raw_table_word_3": "0x200000",
+      "hardware_record_offset": "0x9b0",
+      "firmware_cached_record": "0x18f790"
+    },
+    {
+      "slot": 12,
+      "name": "ANE0Registers",
+      "name_text_offset": "0x5c400",
+      "raw_table_word_3": "0x200000",
+      "hardware_record_offset": "0x820",
+      "firmware_cached_record": "0x18f600"
+    },
+    {
+      "slot": 13,
+      "name": "ANE1Registers",
+      "name_text_offset": "0x5c420",
+      "raw_table_word_3": "0x200000",
+      "hardware_record_offset": "0x848",
+      "firmware_cached_record": "0x18f628"
+    },
+    {
+      "slot": 15,
+      "name": "AONPTDSpace",
+      "name_text_offset": "0x5c440",
+      "raw_table_word_3": "0x200000",
+      "hardware_record_offset": "0x898",
+      "firmware_cached_record": "0x18f678"
+    },
+    {
+      "slot": 24,
+      "name": "DVFMMgpuRegisters",
+      "name_text_offset": "0x5c45e",
+      "raw_table_word_3": "0x200000",
+      "hardware_record_offset": "0xa00",
+      "firmware_cached_record": "0x18f7e0"
+    },
+    {
+      "slot": 23,
+      "name": "DVFMAFRRegisters",
+      "name_text_offset": "0x5c482",
+      "raw_table_word_3": "0x200000",
+      "hardware_record_offset": "0x9d8",
+      "firmware_cached_record": "0x18f7b8"
+    },
+    {
+      "slot": 47,
+      "name": "AFRDCPMS",
+      "name_text_offset": "0x5c4a5",
+      "raw_table_word_3": "0x200000",
+      "hardware_record_offset": "0xd98",
+      "firmware_cached_record": "0x18fb78"
+    },
+    {
+      "slot": 50,
+      "name": "DpwrMXURegisters",
+      "name_text_offset": "0x5c4c0",
+      "raw_table_word_3": "0x200000",
+      "hardware_record_offset": "0xe10",
+      "firmware_cached_record": "0x18fbf0"
+    },
+    {
+      "slot": 48,
+      "name": "PmgrMiscDie0",
+      "name_text_offset": "0x5c4e3",
+      "raw_table_word_3": "0x200000",
+      "hardware_record_offset": "0xdc0",
+      "firmware_cached_record": "0x18fba0"
+    },
+    {
+      "slot": 49,
+      "name": "PmgrMiscDie1",
+      "name_text_offset": "0x5c502",
+      "raw_table_word_3": "0x200000",
+      "hardware_record_offset": "0xde8",
+      "firmware_cached_record": "0x18fbc8"
+    },
+    {
+      "slot": 51,
+      "name": "GTIRegisters",
+      "name_text_offset": "0x5c521",
+      "raw_table_word_3": "0x200000",
+      "hardware_record_offset": "0xe38",
+      "firmware_cached_record": "0x18fc18"
+    },
+    {
+      "slot": 16,
+      "name": "PMCRegisters",
+      "name_text_offset": "0x5c540",
+      "raw_table_word_3": "0x200000",
+      "hardware_record_offset": "0x8c0",
+      "firmware_cached_record": "0x18f6a0"
+    }
+  ],
+  "active_mcc_mask": "0xf",
+  "mcc_candidates": [
+    {
+      "active_bit": 0,
+      "adt_reg_index": 12,
+      "parent_physical": "0x220000000",
+      "parent_bytes": "0x200000",
+      "candidate_physical": "0x2201c4000",
+      "candidate_bytes": "0x18000",
+      "role_qualified": false
+    },
+    {
+      "active_bit": 1,
+      "adt_reg_index": 13,
+      "parent_physical": "0x222000000",
+      "parent_bytes": "0x200000",
+      "candidate_physical": "0x2221c4000",
+      "candidate_bytes": "0x18000",
+      "role_qualified": false
+    },
+    {
+      "active_bit": 2,
+      "adt_reg_index": 14,
+      "parent_physical": "0x224000000",
+      "parent_bytes": "0x200000",
+      "candidate_physical": "0x2241c4000",
+      "candidate_bytes": "0x18000",
+      "role_qualified": false
+    },
+    {
+      "active_bit": 3,
+      "adt_reg_index": 15,
+      "parent_physical": "0x226000000",
+      "parent_bytes": "0x200000",
+      "candidate_physical": "0x2261c4000",
+      "candidate_bytes": "0x18000",
+      "role_qualified": false
+    }
+  ],
+  "meta_sw_interrupt": {
+    "addresses": [
+      "0x502414084",
+      "0x502414284"
+    ],
+    "raw_word": "0x80",
+    "semantics_qualified": false
+  },
+  "qualification": "Static firmware descriptor-copy geometry and slot names qualified; table unchanged across two captures. Candidate MCC subranges are derived from ADT parent windows plus donor offsets. Containment alone does not authorize register accesses or prove correct T6040 register roles. No hardware reads/writes, mappings or publication performed."
+}
