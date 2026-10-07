@@ -12,6 +12,8 @@ ROWS=[(17,0,0x21400),(26,0xd04000,0x8000),(27,0xd0d000,0x1000),
       (34,0xd4c000,0x200),(37,0xe40000,0x4000)]
 WRITABLE_SLOTS={26,29,31,33,34,35,37,41}
 WRITABLE_PAGES={0x288d04000,0x288d10000,0x288d40000,0x288d44000,0x288d4c000,0x288e00000,0x288e1c000,0x288e40000}
+PLATFORM_ROWS=[(0,0x502414000,0xfffffc2001a00000,0x4000),
+               (11,0x5003d8000,0xfffffc2001b18000,0x4000)]
 def extend(arena,receipt,raw):
     import json
     source=Path(__file__).resolve().parents[2]/'docs/evidence/gpuc002-input/agx-pio-map.json'
@@ -48,6 +50,17 @@ def extend(arena,receipt,raw):
                             'size':hex(size),'readonly':slot not in WRITABLE_SLOTS,'mapped_pages':length//PAGE,
                             'role_qualification':'matching25G83 static table and exact native reads; write semantics from captured firmware' if slot in WRITABLE_SLOTS else ('matching25G83 static table extent' if slot==32 else ('native configuration word supports address' if slot==26 else 'donor offset and aperture containment hypothesis'))})
 
+    platform_source=Path(__file__).resolve().parents[2]/'docs/evidence/gpuc003-input/platform-map.json'
+    platform_raw=platform_source.read_bytes();platform=json.loads(platform_raw)
+    if platform['apple_build']!='25G83' or platform['agx_version']!='353.14' or platform['macho_sha256']!='3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e':raise ValueError('Changed platform provenance')
+    qualified={r['slot']:(int(r['physical'],16),int(r['extent'],16)) for r in platform['resources']}
+    if base!=0xfffffc2000100000 or mmio_base!=0xfffffc2000200000:raise ValueError('Changed platform VA geometry')
+    for slot,physical,address,size in PLATFORM_ROWS:
+        if qualified.get(slot)!=(physical,size) or size!=PAGE or physical%PAGE or address%PAGE:raise ValueError('Changed platform resource')
+        if address>>25!=base>>25 or address<base+len(arena) or address in leaf_map or any(v['physical']==physical for v in leaf_map.values()):raise ValueError('Platform mapping overlap/outside L2')
+        struct.pack_into('<QQIIQI',result,hardware+0x640+slot*0x28,physical,address,size,size,0,1)
+        leaf_map[address]={'physical':physical,'gpu_va':address,'readonly':False}
+        descriptors.append({'slot':slot,'physical':hex(physical),'gpu_va':hex(address),'size':hex(size),'readonly':False,'mapped_pages':1,'mapping_class':'platform','role_qualification':'matching25G83 AGX constructor; firmware write consumers, platform ownership experimental'})
     leaves=[leaf_map[va] for va in sorted(leaf_map)]
     for descriptor in descriptors:
         pa=int(descriptor['physical'],16);end=pa+int(descriptor['size'],16)
@@ -66,9 +79,9 @@ def extend(arena,receipt,raw):
     for obj in receipt['objects']:
         start=obj['arena_offset'];receipt_bytes=result[start:start+obj['input_bytes']]
         obj['input_sha256']=hashlib.sha256(receipt_bytes).hexdigest()
-    receipt.update(device_access=True, static_map_sha256=hashlib.sha256(source_raw).hexdigest(), core_mask_input='0xf6fdb at hardware+0x2560; third word zero at+0x2568', arena_sha256=hashlib.sha256(result).hexdigest(),mmio_descriptors=descriptors,
+    receipt.update(device_access=True, platform_map_sha256=hashlib.sha256(platform_raw).hexdigest(), platform_mapping_class="Exact GPUC003 PA/VA pairs; no SGX-relative arithmetic for platform pages", static_map_sha256=hashlib.sha256(source_raw).hexdigest(), core_mask_input='0xf6fdb at hardware+0x2560; third word zero at+0x2568', arena_sha256=hashlib.sha256(result).hexdigest(),mmio_descriptors=descriptors,
                    mmio_leaves=leaves,mmio_virtual_base=hex(mmio_base),mapped_pages=len(arena)//PAGE+len(leaves),voltage_adt_sha256=hashlib.sha256(raw).hexdigest(),
                    voltage_input_sha256={k:hashlib.sha256(gpu[k]).hexdigest() for k in ['perf-states','perf-states-sram']},
                    voltage_assignment='Only qualified profile-A core/SRAM cluster columns populated; profile-B and frequency assignment unchanged',
-                   qualification='Experimental structural graph; eight exact-read/static-source-backed device pages writable; sparse coherent SGX-relative VAs; other bank hypotheses read-only. No complete hardware construction, write permissions, queue execution or rendering established.')
+                   qualification='Experimental structural graph; eight SGX pages plus two exact platform pages writable; sparse coherent SGX-relative VAs; other bank hypotheses read-only. No complete hardware construction, write permissions, queue execution or rendering established.')
     return bytes(result),receipt

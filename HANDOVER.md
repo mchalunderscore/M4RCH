@@ -1,3 +1,64 @@
+# GPUC003 platform accesses pass; recheck USB before next trial — 2026-10-07
+
+Boot710c3031-553b-4a76-b06f-bef667b4b2a1, same GPU-contract kernel/default/WFI.
+Display was recovered by disabling persisted KWin Zoom effect. Normal display
+scale remains2; no display/GPU/DCP/kernel changes were made for that fix here.
+GPUC003 kit hashes and private AGX hash/eleven instruction checks passed.
+
+Added exact platform class: slot0 PA502414000->VAfffffc2001a00000, slot11
+PA5003d8000->VAfffffc2001b18000, each4000 and writable. Existing SGX aperture
+checks and eight-page whitelist retained; no slots9/10 added.57 mapped VAs:
+21 object pages plus36 device leaves, two owned tables. Seven serialization
+tests, matching W=1 external build and independent kit receipt check passed.
+Native gate1 allocation/shadow walk unloaded normally before one gate2 cold
+firmware attempt. Build completion and module hashes verified before loading.
+
+Firmware advanced beyond slot0 andslot11. NEW2544-byte crash, validfooter,
+PCfffffc000002a3f0, FARfffffc20002040a0, ESR9600004f. STRX writes
+28040000e60050 to primarySGX slot17+40a0 (physical2880040a0) whose page is RO.
+Following STRX+40a8 uses1f4. Need narrow page write qualification next, not
+whole-primary aperture writes. Execution beyond3aa0c supports prior platform
+consumers passing; host did not read back AIC mask-clear or telemetry registers.
+
+AIC arithmetic cross-check: native2720/4096 IRQs, AIC3 config starts10000;
+SW_SET14000, SW_CLR14200, MASK_SET14400, MASK_CLR14600. Slot0+634/2000
+unmasks IRQ429. Metadata+84/+284/80 refers toIRQ1063. Before/afterIRQ snapshot
+Err=0; neither IRQ has a dedicated registered visible host counter, so do not
+claim absence of interrupts. No new IRQ storm/error log. ASC stopped, graph,
+power and all backing pinned; no force unload/warm start. No init/render proof.
+
+HOST QUALIFICATION CHANGED: user first reported everything normal, then noticed
+USB no longer working. Pre-GPU DCP baseline already had no USB controller/PHY
+modules or USB IRQ entries; post-trial drivers/bindings also absent. Causality
+unresolved. Stop hardware work. NEXT BOOT: verify USB, modules/bindings/logs
+before any GPU helper/power/firmware activity; compare fresh boot with this
+baseline. User intends to reboot and re-test. No automatic reboot issued.
+
+AFR offline lead:2a404 loads cachedslot20 AFRRegisters (18f748), then read/OR/
+write+0c and+i*10000 for i1..15. Matching private AGX constructor stores
+physical28b000000 toHAL20 field5be8 at89ea5b8..5c0; field208 receives40000.
+Adjacent stored addresses28b200000 and28b400000 suggest grouped resources.
+Do not assume40000 covers firmware's sixteen offsets; trace construction and
+firmware serialization/grouping before adding mappings. Binary is now locally
+available, so further static analysis can continue on Linux; no immediate macOS
+handoff required. Keep private binary/derived disassembly out of Git/archives.
+
+DCP baseline saved in /boot/DCP001/captures/dcp-20261007T211915Z-baseline-69ksjd24.
+Live selected DT contains no DCP/DISP/panel/crossbar nodes, only chosen framebuffer.
+DRM_APPLE disabled. Separate Kconfig candidate DRM_APPLE=m, AUDIO=n resolved;
+not compiled, installed or loaded. Maintained .config hash unchanged. See
+ docs/dcp001-preparation.md and /boot/DCP001/LINUX-HANDOVER.md. No DCP hardware
+attempt or framebuffer takeover. Keep first DCP startup separate from GPU tests.
+
+Evidence docs/evidence/2026-10-07-gpuc003-platform-result.json; raw native
+out/gpu-gravity-contract/asc-graph-init/boot-710c3031-553b-4a76-b06f-bef667b4b2a1.
+Return /boot/GPUC003/linux-return.tar.gz includes source, raw graph/data/ADT/logs,
+IRQ and USB diagnostics, receipts/check outputs; firmware TEXT code and private
+Apple binaries/derived disassembly excluded. Private DCP diagnostics returned
+separately underDCP001. Provenance is Apple binary analysis, not clean-room.
+
+---
+
 # Eight-page write batch passes MCW; platform mappings next — 2026-10-07
 
 Boot d7988335-efa2-43bf-a984-0f0f1427ca86. Kernel/default/bootloader/WFI unchanged.

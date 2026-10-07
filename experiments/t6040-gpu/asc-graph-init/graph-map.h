@@ -1,5 +1,5 @@
 /* SPDX-License-Identifier: GPL-2.0-only */
-/* Experimental structural graph mapping: no SGX register writes.
+/* Experimental structural graph mapping: firmware may write qualified device pages.
  * Gate 1 allocates and walks owned shadow tables only. Gate 2 may publish one
  * previously empty bootstrap root entry after the cold firmware boot handshake.
  */
@@ -75,15 +75,18 @@ static int root_prepare(bool install)
  }
  for (i=0;i<ARRAY_SIZE(mmio_leaves);i++) {
   u64 pa=mmio_leaves[i].physical,va=mmio_leaves[i].gpu_va;
-  if ((pa&~PA_MASK) || va!=GRAPH_MMIO_BASE+(pa-0x288000000ULL) ||
+  bool platform=(pa==0x502414000ULL && va==0xfffffc2001a00000ULL) ||
+                (pa==0x5003d8000ULL && va==0xfffffc2001b18000ULL);
+  bool sgx=pa>=0x288000000ULL && pa+PAGE_SIZE<=0x28b758000ULL &&
+           va==GRAPH_MMIO_BASE+(pa-0x288000000ULL);
+  if ((pa&~PA_MASK) || (va&(PAGE_SIZE-1)) || (!sgx && !platform) || (platform && !mmio_leaves[i].writable) ||
       (va>>25)!=(ROOT_VA>>25) || va<ROOT_VA+ARENA_OBJECT_PAGES*PAGE_SIZE ||
       ((i>0) && va<=mmio_leaves[i-1].gpu_va) ||
-      !(pa>=0x288000000ULL && pa+PAGE_SIZE<=0x28b758000ULL) ||
       region_intersects(pa,PAGE_SIZE,IORESOURCE_SYSTEM_RAM,IORES_DESC_NONE)!=REGION_DISJOINT)
    goto fail_root;
   if (mmio_leaves[i].writable && pa!=0x288d04000ULL && pa!=0x288d10000ULL &&
       pa!=0x288d40000ULL && pa!=0x288d44000ULL && pa!=0x288d4c000ULL &&
-      pa!=0x288e00000ULL && pa!=0x288e1c000ULL && pa!=0x288e40000ULL) goto fail_root;
+      pa!=0x288e00000ULL && pa!=0x288e1c000ULL && pa!=0x288e40000ULL && !platform) goto fail_root;
   l2[((va>>14)&2047)]=pa|(mmio_leaves[i].writable?FW_MMIO_RW:FW_MMIO_RO);
  }
  /* Explicit structural fixture, including allocations-enabled root and all
@@ -98,7 +101,7 @@ static int root_prepare(bool install)
  for (i=0;i<ARRAY_SIZE(mmio_leaves);i++)
   if (l2[(mmio_leaves[i].gpu_va>>14)&2047]!=(mmio_leaves[i].physical|(mmio_leaves[i].writable?FW_MMIO_RW:FW_MMIO_RO)))
    goto fail_root;
- pr_info("m4rch graph-init: %zu device leaves prepared (eight qualified pages writable); total mapped pages=%u\n",ARRAY_SIZE(mmio_leaves),GRAPH_MAPPED_PAGES);
+ pr_info("m4rch graph-init: %zu device leaves prepared (eight SGX plus two platform pages writable); total mapped pages=%u\n",ARRAY_SIZE(mmio_leaves),GRAPH_MAPPED_PAGES);
  pr_info("m4rch graph-init: shadow walk passed, root=%#llx interface=%#llx host_allocations=1\n",
          ROOT_VA,get_unaligned_le64(page_address(owned[2])));
  if (!install) return 0;

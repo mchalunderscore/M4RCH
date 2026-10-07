@@ -1,3 +1,13 @@
+## GPUC003 platform trial
+
+Current graph has 21 object pages and 36 device leaves (57 VAs). Ten device
+pages writable: previous eight SGX leaves and exact slot0/11 platform mappings.
+The native trial passed both platform consumers and stopped on a primary SGX
+slot17 write-permission fault at physical2880040a0. See
+`docs/evidence/2026-10-07-gpuc003-platform-result.json`. Later USB failure was
+reported; pre-trial baseline lacked USB drivers too. Check USB BEFORE further
+GPU activity on the next boot. Older sections below are historical.
+
 ## Current batch (2026-10-07)
 
 The current sparse graph maps 21 object pages and 34 device leaves (55 VAs)

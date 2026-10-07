@@ -77,7 +77,10 @@ def main():
         regs=list(struct.iter_unpack('<QQ',sgx['reg']))
         require(regs==[(0x88000000,0x3758000),(0x88d00000,0x16c000)],'SGX MMIO apertures differ')
         for leaf in layout.get('mmio_leaves',[]):
-            require((leaf['readonly'] or leaf['physical'] in (0x288d04000,0x288d10000,0x288d40000,0x288d44000,0x288d4c000,0x288e00000,0x288e1c000,0x288e40000)) and 0x288000000<=leaf['physical'] and leaf['physical']+0x4000<=0x28b758000,'Unqualified MMIO leaf range')
+            pa,va=leaf['physical'],leaf['gpu_va']
+            platform=(pa,va) in ((0x502414000,0xfffffc2001a00000),(0x5003d8000,0xfffffc2001b18000))
+            sgx=0x288000000<=pa and pa+0x4000<=0x28b758000 and va==0xfffffc2000200000+pa-0x288000000
+            require((platform and not leaf['readonly']) or (sgx and (leaf['readonly'] or pa in (0x288d04000,0x288d10000,0x288d40000,0x288d44000,0x288d4c000,0x288e00000,0x288e1c000,0x288e40000))),'Unqualified MMIO leaf range')
     tables = capture(work/'sample-pagetables/gpu-data-sample.ko', '/sys/kernel/m4rch_gpu_data_sample/data', out/'pagetables.bin', 'gpu_data_sample')
     base = 0x105fff78000
     def translate(va):
@@ -116,6 +119,7 @@ def main():
     (out/'attempt.json').write_text(json.dumps({'boot_id':boot,'stage':'about to load','reboot_may_be_required':True},indent=2)+'\n')
     before = capture(work/'root-data-sample/gpu-data-sample.ko', '/sys/kernel/m4rch_gpu_data_sample/data', out/'data-before.bin', 'gpu_data_sample')
     (out/'dmesg-before.log').write_text(subprocess.check_output(['dmesg','--color=never'],text=True))
+    (out/'interrupts-before.txt').write_text(Path('/proc/interrupts').read_text())
     os.sync()
     selected = work/'asc-graph-init/asc-graph-init.ko' if args.graph else work/'asc-arena-preflight/asc-arena-preflight.ko' if args.arena else build/'asc-root-envelope.ko'
     if args.graph:
@@ -128,6 +132,7 @@ def main():
     result = subprocess.run(['insmod',str(selected),'run_gate=1' if args.arena else 'run_gate=2'],capture_output=True,text=True)
     logs = subprocess.check_output(['dmesg','--color=never'],text=True)
     (out/'dmesg-after.log').write_text(logs)
+    (out/'interrupts-after.txt').write_text(Path('/proc/interrupts').read_text())
     if args.arena:
         module_path = Path('/sys/module/asc_arena_preflight')
         present = module_path.exists()
