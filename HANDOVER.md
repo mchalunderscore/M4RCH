@@ -1,3 +1,17 @@
+# USBR001 loader corrected after initramfs stop
+
+First trial stopped BEFORE candidate load: both hashes passed, but BusyBox
+insmod applet was absent. User restored original entry and booted successfully
+(12b4833d-bf5e-4958-8b7d-c668776f65d1). This is a packaging failure, not evidence
+of driver failure. Corrected initrd adds usr/bin/insmod -> kmod and invokes it.
+Extracted actual image kmod/insmod --help PASS; CPIO/init/module hashes checked.
+Fixed imageSHA8b308fe1760284fa10e8faa73d985ffef67ebc2f68d3faea854ccde6d54d4997.
+GRUB default3 reselected for authorized next USBR001 trial. Failed image/receipt
+preserved inUSBR001; original entry/module unchanged. No candidate live-loaded
+or promotion. Reboot normally when ready; qualify USB/PD before GPU activity.
+
+---
+
 # USBR001 staged as next GRUB default — 2026-10-07
 
 User authorized separate USB role-provider trial as default, promotion only
