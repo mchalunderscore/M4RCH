@@ -88,6 +88,7 @@ def main():
     header = '/* Explicit experimental zero-opaque fixture, NOT a complete render graph. */\n'
     header += f'#define ARENA_OBJECT_PAGES {graph_pages}U\n'
     header += f'#define GRAPH_MAPPED_PAGES {graph_receipt["mapped_pages"]}U\n'
+    header += f'#define GRAPH_MMIO_BASE {graph_receipt["mmio_virtual_base"]}ULL\n'
     header += 'struct graph_mmio_leaf { u64 physical, gpu_va; bool writable; };\n'
     header += 'static const struct graph_mmio_leaf mmio_leaves[] = {\n'
     header += ''.join(f' {{ {v["physical"]:#x}ULL, {v["gpu_va"]:#x}ULL, {int(not v["readonly"])} }},\n' for v in graph_receipt['mmio_leaves'])

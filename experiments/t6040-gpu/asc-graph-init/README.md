@@ -28,3 +28,11 @@ it has been removed from this real-bank variant. Earlier speculative bank
 scanner caused a system hang and remains quarantined. Do not rerun it.
 See docs/evidence/2026-10-07-gpuc002-real-register-result.json and its linked
 input source provenance/native captures. No GPU acceleration established.
+
+Current sparse variant: common MMIO base0xfffffc2000200000 plus SGX-relative
+offsets;32 unique device leaves,21 object pages. Aliased clock/counter page
+0x288e1c000 receives effective write permission; counter second page remains
+read-only. Explicit sparse TLBI loop replaces contiguous-range invalidation.
+Slot17 extent is0x21400 from matching static map. Native counter readback
+0x70700777 confirms its write; next fault is read-only slot31 MCW+0.
+See2026-10-07-gpu-sparse-counter-result.json and next-qualified-write-plan.json.

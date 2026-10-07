@@ -27,8 +27,9 @@ static void clean_page(void *ptr)
 static void invalidate_root_va(void)
 {
  unsigned int i;
- for (i=0;i<GRAPH_MAPPED_PAGES;i++) {
-  u64 operand=((ROOT_VA+i*PAGE_SIZE)>>12)&0x00000ffffffffffcULL;
+ for (i=0;i<ARENA_OBJECT_PAGES+ARRAY_SIZE(mmio_leaves);i++) {
+  u64 va=i<ARENA_OBJECT_PAGES?ROOT_VA+i*PAGE_SIZE:mmio_leaves[i-ARENA_OBJECT_PAGES].gpu_va;
+  u64 operand=(va>>12)&0x00000ffffffffffcULL;
   asm volatile(".arch armv8.4-a\n\ttlbi vaae1os, %0" :: "r"(operand) : "memory");
  }
  asm volatile("dsb sy" ::: "memory");
@@ -57,7 +58,7 @@ static int root_prepare(bool install)
  unsigned int i;
  int ret=-EINVAL;
  if (PAGE_SIZE!=0x4000 || ARENA_OBJECT_PAGES==0 ||
-     ((ROOT_VA>>14)&2047)+GRAPH_MAPPED_PAGES>2048) return -EINVAL;
+     ((ROOT_VA>>14)&2047)+ARENA_OBJECT_PAGES>2048 || GRAPH_MAPPED_PAGES!=ARENA_OBJECT_PAGES+ARRAY_SIZE(mmio_leaves)) return -EINVAL;
  for (i=0;i<ARRAY_SIZE(owned);i++) {
   u64 pa;
   owned[i]=alloc_pages(GFP_KERNEL|__GFP_ZERO,0);
@@ -74,11 +75,13 @@ static int root_prepare(bool install)
  }
  for (i=0;i<ARRAY_SIZE(mmio_leaves);i++) {
   u64 pa=mmio_leaves[i].physical,va=mmio_leaves[i].gpu_va;
-  if ((pa&~PA_MASK) || va!=ROOT_VA+(ARENA_OBJECT_PAGES+i)*PAGE_SIZE ||
+  if ((pa&~PA_MASK) || va!=GRAPH_MMIO_BASE+(pa-0x288000000ULL) ||
+      (va>>25)!=(ROOT_VA>>25) || va<ROOT_VA+ARENA_OBJECT_PAGES*PAGE_SIZE ||
+      ((i>0) && va<=mmio_leaves[i-1].gpu_va) ||
       !(pa>=0x288000000ULL && pa+PAGE_SIZE<=0x28b758000ULL) ||
       region_intersects(pa,PAGE_SIZE,IORESOURCE_SYSTEM_RAM,IORES_DESC_NONE)!=REGION_DISJOINT)
    goto fail_root;
-  if (mmio_leaves[i].writable && pa!=0x288d44000ULL && pa!=0x288e00000ULL) goto fail_root;
+  if (mmio_leaves[i].writable && pa!=0x288d44000ULL && pa!=0x288e00000ULL && pa!=0x288e1c000ULL) goto fail_root;
   l2[((va>>14)&2047)]=pa|(mmio_leaves[i].writable?FW_MMIO_RW:FW_MMIO_RO);
  }
  /* Explicit structural fixture, including allocations-enabled root and all
@@ -93,7 +96,7 @@ static int root_prepare(bool install)
  for (i=0;i<ARRAY_SIZE(mmio_leaves);i++)
   if (l2[(mmio_leaves[i].gpu_va>>14)&2047]!=(mmio_leaves[i].physical|(mmio_leaves[i].writable?FW_MMIO_RW:FW_MMIO_RO)))
    goto fail_root;
- pr_info("m4rch graph-init: %zu device leaves prepared (only Bumper/DFender pages writable); total mapped pages=%u\n",ARRAY_SIZE(mmio_leaves),GRAPH_MAPPED_PAGES);
+ pr_info("m4rch graph-init: %zu device leaves prepared (Bumper/DFender/shared counter-clock pages writable); total mapped pages=%u\n",ARRAY_SIZE(mmio_leaves),GRAPH_MAPPED_PAGES);
  pr_info("m4rch graph-init: shadow walk passed, root=%#llx interface=%#llx host_allocations=1\n",
          ROOT_VA,get_unaligned_le64(page_address(owned[2])));
  if (!install) return 0;

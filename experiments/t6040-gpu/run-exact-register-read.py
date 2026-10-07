@@ -15,7 +15,7 @@ sys.path.insert(0,str(Path(__file__).resolve().parent));import adt
 tree=adt.parse(raw);assert list(struct.iter_unpack('<QQQ',tree['/device-tree/arm-io']['ranges']))[0]==(0,0x200000000,0x480000000)
 assert list(struct.iter_unpack('<QQ',tree['/device-tree/arm-io/sgx']['reg']))==[(0x88000000,0x3758000),(0x88d00000,0x16c000)]
 (out/'dmesg-before.log').write_bytes(subprocess.check_output(['dmesg']))
-(out/'intent.json').write_text(json.dumps({'boot_id':out.name,'addresses':['0x288d440a0','0x288d440a4','0x288d440a8','0x288e01704','0x288e01780'],'module_sha256':hashlib.sha256((w/'exact-register-read/exact-register-read.ko').read_bytes()).hexdigest(),'power':'existing GFX genpd','writes':False},indent=2)+'\n')
+(out/'intent.json').write_text(json.dumps({'boot_id':out.name,'addresses':['0x288d440a0','0x288d440a4','0x288d440a8','0x288e01704','0x288e01780','0x288e1f860'],'module_sha256':hashlib.sha256((w/'exact-register-read/exact-register-read.ko').read_bytes()).hexdigest(),'power':'existing GFX genpd','writes':False},indent=2)+'\n')
 subprocess.run(['insmod',str(w/'gfx-power-test/gfx-power-test.ko')],check=True)
 try:
  subprocess.run(['insmod',str(w/'exact-register-read/exact-register-read.ko'),'run_gate=1'],check=True)

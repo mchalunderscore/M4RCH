@@ -25,12 +25,14 @@ static int sample(u64 base,const u32 *offsets,unsigned int count)
 }
 static int __init exact_init(void)
 {
- const u32 bumper[]={0xa0,0xa4,0xa8},dfender[]={0x1704,0x1780};
+ const u32 bumper[]={0xa0,0xa4,0xa8},dfender[]={0x1704,0x1780},counter[]={0x3860};
  int ret;
  if (run_gate!=1 || !of_machine_is_compatible("apple,j614s") ||
      !of_machine_is_compatible("apple,t6040")) return -ENODEV;
  ret=sample(0x288d44000ULL,bumper,ARRAY_SIZE(bumper));
- return ret?ret:sample(0x288e00000ULL,dfender,ARRAY_SIZE(dfender));
+ if (ret) return ret;
+ ret=sample(0x288e00000ULL,dfender,ARRAY_SIZE(dfender));
+ return ret?ret:sample(0x288e1c000ULL,counter,ARRAY_SIZE(counter));
 }
 static void __exit exact_exit(void) {}
 module_init(exact_init);module_exit(exact_exit);

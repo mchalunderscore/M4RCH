@@ -4,12 +4,13 @@ import struct,hashlib
 from pathlib import Path
 import adt,contract
 PAGE=0x4000
-ROWS=[(17,0,0x20000),(26,0xd04000,0x8000),(27,0xd0d000,0x1000),
+ROWS=[(17,0,0x21400),(26,0xd04000,0x8000),(27,0xd0d000,0x1000),
       (28,0xd58000,0x8000),(29,0xd10000,0x4000),(31,0xd40000,0x4000),
       (32,0xd60000,0x20000),(40,0xe1c000,0x4000),(22,0x1000000,0x8000),
       (39,0xe08000,0x8000),(41,0xe1f800,0x4000),
       (33,0xd44000,0x4000),(35,0xe00000,0x4000)]
-WRITABLE_SLOTS={33,35}
+WRITABLE_SLOTS={33,35,41}
+WRITABLE_PAGES={0x288d44000,0x288e00000,0x288e1c000}
 def extend(arena,receipt,raw):
     import json
     source=Path(__file__).resolve().parents[2]/'docs/evidence/gpuc002-input/agx-pio-map.json'
@@ -26,21 +27,30 @@ def extend(arena,receipt,raw):
     windows=[(pa+0x200000000,size) for pa,size in struct.iter_unpack('<QQ',gpu['reg'])]
     if windows!=[(0x288000000,0x3758000),(0x288d00000,0x16c000)]:raise ValueError('Changed SGX apertures')
     hardware=next(o for o in receipt['objects'] if o['name']=='hardware')['arena_offset']
-    base=int(receipt['base'],16);cursor=len(arena);leaves=[];descriptors=[];result=bytearray(arena)
+    base=int(receipt['base'],16);mmio_base=base+0x100000;leaf_map={};descriptors=[];result=bytearray(arena)
     for slot,relative,size in ROWS:
         physical=windows[0][0]+relative;page=physical&~(PAGE-1);offset=physical&(PAGE-1)
         length=(offset+size+PAGE-1)&~(PAGE-1)
         if not any(start<=page and page+length<=start+span for start,span in windows):raise ValueError('Uncontained MMIO page span')
-        address=base+cursor+offset
-        # Only the two mandatory producer banks receive write flags/device PTEs.
+        address=mmio_base+relative
+        # Only the qualified producer/counter banks receive write flags/device PTEs.
         struct.pack_into('<QQIIQI',result,hardware+0x640+slot*0x28,
                          physical,address,size,size,relative if slot not in (22,39,41) else 0,int(slot in WRITABLE_SLOTS))
         for off in range(0,length,PAGE):
-            leaves.append({'physical':page+off,'gpu_va':base+cursor+off,'readonly':slot not in WRITABLE_SLOTS})
+            pa=page+off;va=mmio_base+(pa-windows[0][0])
+            if not (base+len(arena)<=va and va+PAGE<=((base>>25)+1)<<25):raise ValueError('MMIO exceeds owned L2 or overlaps objects')
+            readonly=pa not in WRITABLE_PAGES
+            leaf={'physical':pa,'gpu_va':va,'readonly':readonly}
+            if va in leaf_map and leaf_map[va]!=leaf:raise ValueError('Conflicting physical/permission alias')
+            leaf_map[va]=leaf
         descriptors.append({'slot':slot,'physical':hex(physical),'gpu_va':hex(address),
                             'size':hex(size),'readonly':slot not in WRITABLE_SLOTS,'mapped_pages':length//PAGE,
                             'role_qualification':'matching25G83 static table and exact native reads; write semantics from captured firmware' if slot in WRITABLE_SLOTS else ('matching25G83 static table extent' if slot==32 else ('native configuration word supports address' if slot==26 else 'donor offset and aperture containment hypothesis'))})
-        cursor+=length
+
+    leaves=[leaf_map[va] for va in sorted(leaf_map)]
+    for descriptor in descriptors:
+        pa=int(descriptor['physical'],16);end=pa+int(descriptor['size'],16)
+        descriptor['effective_writable_pages']=[hex(v['physical']) for v in leaves if not v['readonly'] and v['physical']<end and v['physical']+PAGE>pa]
     count=int.from_bytes(gpu['perf-state-count'],'little');clusters=int.from_bytes(gpu['perf-state-table-count'],'little')
     if count!=16 or clusters!=2:raise ValueError('Changed voltage geometry')
     core=contract.tables(gpu['perf-states'],count,clusters);sram=contract.tables(gpu['perf-states-sram'],count,clusters)
@@ -56,8 +66,8 @@ def extend(arena,receipt,raw):
         start=obj['arena_offset'];receipt_bytes=result[start:start+obj['input_bytes']]
         obj['input_sha256']=hashlib.sha256(receipt_bytes).hexdigest()
     receipt.update(device_access=True, static_map_sha256=hashlib.sha256(source_raw).hexdigest(), core_mask_input='0xf6fdb at hardware+0x2560; third word zero at+0x2568', arena_sha256=hashlib.sha256(result).hexdigest(),mmio_descriptors=descriptors,
-                   mmio_leaves=leaves,mapped_pages=cursor//PAGE,voltage_adt_sha256=hashlib.sha256(raw).hexdigest(),
+                   mmio_leaves=leaves,mmio_virtual_base=hex(mmio_base),mapped_pages=len(arena)//PAGE+len(leaves),voltage_adt_sha256=hashlib.sha256(raw).hexdigest(),
                    voltage_input_sha256={k:hashlib.sha256(gpu[k]).hexdigest() for k in ['perf-states','perf-states-sram']},
                    voltage_assignment='Only qualified profile-A core/SRAM cluster columns populated; profile-B and frequency assignment unchanged',
-                   qualification='Experimental structural graph; only slots33/35 device pages writable; other bank hypotheses read-only. No complete hardware construction, write permissions, queue execution or rendering established.')
+                   qualification='Experimental structural graph; only Bumper/DFender and shared counter-clock page writable; sparse coherent SGX-relative VAs; other bank hypotheses read-only. No complete hardware construction, write permissions, queue execution or rendering established.')
     return bytes(result),receipt

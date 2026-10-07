@@ -1,3 +1,53 @@
+# Sparse SGX layout and counter writes pass; MCW next — 2026-10-07
+
+Boot60b99992-6e38-4dbf-9ed4-eae746b9463d; same kernel/default/boot.bin/WFI.
+Fresh ADT/kernel checks passed. Exact target288e1f860 read0 normally before
+firmware, using existing GFX genpd; prior five bank reads repeated successfully.
+
+NEW layout: MMIO VAfffffc2000200000 + primarySGX-relative physical offset.
+21 object pages,32 unique device leaves,53 total mappings,2 owned tables.
+Six tests cover sparse VA uniqueness/containment, slot29-D10000 normalization,
+shared40/41 page, second counter page remaining read-only, narrow write pages,
+profileA and binned masks. W=1 module build passed. Sparse TLBI invalidates all
+object/device VAs; sorted/deduplicated pages share one owned L2 and avoid RAM.
+Slot17 extent corrected to21400 from matching static record. Existing firmware
+root descriptors preserved. No whole-aperture mapping/write permission.
+
+Three writable physical pages ONLY: Bumper288d44000, DFender288e00000 and
+shared counter/clock288e1c000. HAL40 and slot41 refer to the same page/VA;
+effective permissions recorded per descriptor. Counter second page288e20000
+remains read-only. Firmware descriptor41 write flag set, no unrelated grants.
+
+NATIVE cold trial completed bounded observation and stopped ASC. Counter exact
+readback changed0->70700777, confirming real write and passing prior2b7f8
+fault. Real Bumper programming repeatedf6fdb/0/0. User confirms desktop/input,
+USB/networking all normal. No full initialization, queue/rendering success.
+
+NEXT fault: NEW2544-byte validfooter crashlog, PCfffffc000002d15c,
+FARfffffc2000f40000, ESR9600004f (write permission),x10=100051. Instructions
+load cached31 virtual18f900, read MCW+0, ANDffffe0ff, then store+0; next store+4.
+Physical288d40000 is matching static HAL31 MCW resource. Native read completed
+before denied write. This is another deliberately read-only mapping, not null
+address/ABI rejection. Need narrowly scoped MCW write permission next.
+
+Offline batch plan: docs/evidence/2026-10-07-gpu-next-qualified-write-plan.json
+lists captured write consumers in static-source banks to reduce one-bank-at-a-
+time reboots. Plan itself enables nothing. Evaluate exact offsets/access and
+size semantics before extending permissions; do not blanket-enable13 banks.
+Can continue from Linux; no macOS visit needed. NORMAL REBOOT REQUIRED before
+another firmware start: backing/mappings/power pinned; never force-unload.
+
+Evidence: docs/evidence/2026-10-07-gpu-sparse-counter-result.json. Raw capture
+under out/gpu-gravity-contract/asc-graph-init/boot-60b99992-6e38-4dbf-9ed4-eae746b9463d/
+and exact-register-read/boot-60b99992-6e38-4dbf-9ed4-eae746b9463d/. Source-at-trial
+preserves exact helper/fixture/module. All raw DATA/object/ADT/logs plus tracked
+source/alignment pins/configs/patches in /boot/GPUC002/linux-return.tar.gz.
+Firmware TEXT code image omitted per no Apple binaries request; exact hash,
+normalized contract and instruction-word checks supplied. Prior GPUC002 input
+kit preserved. No credentials, Apple driver binaries or system images.
+
+---
+
 # GPUC002 real Bumper/DFender trial advances — 2026-10-07
 
 Boot e84612d6-9ed1-422a-ba2b-ede8da14bd43; unchanged GPU-contract kernel,

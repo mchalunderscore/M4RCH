@@ -77,7 +77,7 @@ def main():
         regs=list(struct.iter_unpack('<QQ',sgx['reg']))
         require(regs==[(0x88000000,0x3758000),(0x88d00000,0x16c000)],'SGX MMIO apertures differ')
         for leaf in layout.get('mmio_leaves',[]):
-            require((leaf['readonly'] or leaf['physical'] in (0x288d44000,0x288e00000)) and 0x288000000<=leaf['physical'] and leaf['physical']+0x4000<=0x28b758000,'Unqualified MMIO leaf range')
+            require((leaf['readonly'] or leaf['physical'] in (0x288d44000,0x288e00000,0x288e1c000)) and 0x288000000<=leaf['physical'] and leaf['physical']+0x4000<=0x28b758000,'Unqualified MMIO leaf range')
     tables = capture(work/'sample-pagetables/gpu-data-sample.ko', '/sys/kernel/m4rch_gpu_data_sample/data', out/'pagetables.bin', 'gpu_data_sample')
     base = 0x105fff78000
     def translate(va):
