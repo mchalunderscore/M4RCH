@@ -1,3 +1,33 @@
+# G16S nested pointers qualified; explicit graph plan — 2026-10-07
+
+Offline captured-firmware audit now independently corroborates two more paths:
+main+0 -> hardware-data; hardware+26b8 -> nested counter object. fcec/fcf0
+loads main global18e4c0,fcf4 dereferences main,fcf8 loads nested pointer;
+fd04 reads nested+e00 u64. Independent14d20/24/28 chain reaches the same
+object and14d48 reads indexed+e20. Pointer and counter-like use confirmed;
+full e40 extent and counter semantics remain document claims.
+
+Root+20 -> Region C is stored at global195748 by2f300.3888/388c load that
+pointer,3890 adds e51,3894 reads u32. Confirms parent/offset/width, not the
+host-write protocol. main+240 remains unresolved:15aa0/15b80/382c4/38380
+matches are unrelated global146240 accesses. Do not use those as ABI evidence.
+All signatures verified against exact TEXT SHA in the executable audit.
+
+experiments/t6040-gpu/plan-init-graph.py produces an OFFLINE relative-arena
+plan:13 independently paged objects,12 pointer edges,212992 provisional bytes.
+No GPU VAs, physical allocations, firmware serialization or publication.
+Incomplete extents are labelled; topology stays J614s16 cores3db/3db.
+Plan includes explicit unresolved dependencies, including channels/status,
+hardware descriptors/voltages, main240, ownership and mapping lifetimes.
+Evidence docs/evidence/2026-10-07-gravity-gpu-init-graph-plan.json.
+
+Validation: graph bounds checks passed and rejected an out-of-parent pointer;
+all7 G16S wire-codec tests passed. Boot-table audit now verifies lengths and
+SHA256 for ALL snapshots before interpreting them; original translations
+reproduced. No live GPU changes or reboot requirement introduced. Continue
+qualifying object contents and constructing a T6040-specific allocation preflight;
+normal startup remains gated and warm wake unresolved.
+
 # Application observation passed; native firmware ABI corroboration — 2026-10-07
 
 Current GPU-contract boot 38792891-2fb1-4c7c-92eb-84e6b530125b; WFI Y.

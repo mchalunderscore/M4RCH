@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
 """Walk captured reserved UAT tables offline; no hardware access or writes."""
-import argparse,json,struct
+import argparse,hashlib,json,struct
 from pathlib import Path
 p=argparse.ArgumentParser(description=__doc__);p.add_argument('workspace',type=Path);p.add_argument('--output',type=Path,required=True);a=p.parse_args()
 w=a.workspace;receipt=json.loads((w/'graph-sample-receipt.json').read_text())
+# Validate every sample before interpreting or labelling it, not only table length.
+for sample in receipt['samples']:
+    captured = (w/('sample-'+sample['tag'])/'sample.bin').read_bytes()
+    if len(captured) != sample['bytes'] or hashlib.sha256(captured).hexdigest() != sample['sha256']:
+        raise ValueError('Sample integrity mismatch: ' + sample['tag'])
 region=next(r for r in receipt['samples'] if r['tag']=='pagetables')
 base=region['address'];data=(w/'sample-pagetables/sample.bin').read_bytes()
 assert len(data)==region['bytes']
