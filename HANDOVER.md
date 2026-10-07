@@ -1,3 +1,28 @@
+# Managed wake unresolved; application endpoint trial prepared — 2026-10-07
+
+Current GPU-contract boot df0ffd12-a6a3-4973-a4fe-f6923f80cf71; WFI Y.
+Cold HELLO/map/crashlog, IOP ON/AP ON, AP QUIESCED/IOP SLEEP passed again.
+INIT220 with ASC START unchanged and continuous GFX power reference still
+produced no messages in four seconds. Final control0/status48 failed stop.
+asc_managed_wake is pinned; REBOOT REQUIRED. Never force removal or retry here.
+This rules out START toggling or power release as the sole explanation, but
+does not establish why wake fails. No further blind wake variations queued.
+
+NEXT: normal reboot, same default1 kernel. Revalidate fresh ADT/build/module
+hashes. Prepared asc-app-start starts crashlog1, validates/echoes reserved DATA
+offer, establishes IOP/AP ON, then sends START to advertised application32/33.
+No root/init graph, command submissions or new DMA buffer. Then request AP
+QUIESCED/IOP SLEEP and attempt stop/conditional retirement. Capture all messages;
+pin on failure. This advances the GPU path without requiring warm wake first.
+Application readiness is not demonstrated by sending START alone: distinguish
+message transmission, firmware responses and future initialization acceptance.
+Full T6040 driver startup remains gated. Warm restart still requires investigation.
+
+Receipt docs/evidence/2026-10-07-gravity-gpu-managed-wake.json; raw logs
+out/gpu-gravity-contract/managed-wake-boot. Next source experiments/t6040-gpu/asc-app-start;
+matching helper out/gpu-gravity-contract/asc-app-start. No kernel rebuild/macOS
+handoff needed. Owner "r" means rebooted and ready. Earlier notes follow.
+
 # Cold retirement reproduced; managed wake next — 2026-10-07
 
 Current boot 666c136e-bee9-45f0-80a7-e30e6b4fe34a, GPU-contract kernel; WFI Y.
