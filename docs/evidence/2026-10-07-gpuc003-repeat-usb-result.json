@@ -123,7 +123,20 @@
   "usb_enumeration_equal": true,
   "usb_enumeration": "Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub\nBus 001 Device 002: ID 05e3:0610 Genesys Logic, Inc. Hub\nBus 001 Device 003: ID 05e3:0610 Genesys Logic, Inc. Hub\nBus 001 Device 004: ID 37d3:0201 TONOR TONOR TD510 Air S Mic\nBus 001 Device 005: ID 0b95:1790 ASIX Electronics Corp. AX88179 Gigabit Ethernet\nBus 001 Device 006: ID 343c:0000 xxxxxxxx USB Type-C Digital AV Adapter\nBus 002 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub\nBus 003 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub\nBus 004 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub\nBus 005 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub\nBus 006 Device 001: ID 1d6b:0003 Linux Foundation 3.0 root hub\n",
   "new_usb_failure_log_lines": [],
-  "qualification": "USB hardware present before trial unlike previous recovery boot, enumeration unchanged afterward, and user confirms normal operation. Does not exclude delayed faults.",
+  "qualification": "Attached hub devices remained enumerated through GPU trial. Later port-specific correction supersedes all-port interpretation: right-port YubiKey was missing before GPU activity; left-port passkey works.",
   "status": "Same primary slot17 write-permission fault; ASC stopped, graph pinned, next firmware start requires normal reboot.",
-  "user_functional_confirmation": "Everything normal: USB devices, desktop and built-in input"
+  "user_functional_confirmation": "Everything normal: USB devices, desktop and built-in input",
+  "port_correction": {
+    "user_report": "YubiKey connected to right port since boot, absent; moved to left port to use passkey. Left ports work, right does not.",
+    "pretrial_snapshot": "YubiKey not enumerated in lsusb-before although physically connected. Working hub/mic/Ethernet only proved their active bus.",
+    "provider_failure_before_gpu_seconds": 16.572,
+    "gpu_root_publication_seconds": 64.928,
+    "deferred_providers": [
+      "0-0a",
+      "0-0c",
+      "2-0c"
+    ],
+    "error": "tps6598x-spmi: SN201202x initialization failed",
+    "conclusion": "Right-port failure predates this GPU trial; unchanged device enumeration is not an all-port success test. Boot-time PD/controller initialization requires investigation."
+  }
 }

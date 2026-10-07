@@ -1,3 +1,23 @@
+# USB port correction — right-port failure predates GPU trial
+
+User clarified YubiKey was connected to RIGHT port since boot a9112962, then
+moved it to a left port to use passkey. Left ports work; right port does not.
+Pre-GPU lsusb snapshot already lacked that key. PD providers0-0a/0-0c/2-0c
+failed SN201202x initialization at16.572seconds; GPU publication was64.928.
+Live devices_deferred still lists all three, without driver bindings. Thus the
+right-port failure predates this GPU attempt. All six root hubs existing does
+not prove physical port functionality; unchanged attached hub enumeration only
+qualifies those devices. Earlier generic user confirmation is superseded by
+this specific port report. No controller/provider reset attempted.
+
+Next: investigate/reproduce boot-time PD initialization, including a known key
+on right BEFORE GPU work. Keep GPU resources pinned until normal reboot.
+Evidence2026-10-07-gpuc003-repeat-usb-result.json includes correction; raw late
+USB tree/log/deferred captures included in GPUC003 return. No Wallace comparison
+verified; similar symptom alone does not establish shared cause.
+
+---
+
 # GPUC003 repeated with working USB — 2026-10-07
 
 Boot a9112962-2426-4029-b412-6c4d74bf273e. User reports USB working after reboot.
