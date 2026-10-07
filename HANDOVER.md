@@ -1,3 +1,35 @@
+# GPU resumed: upgraded-firmware handshake passed — 2026-10-07
+
+Owner reports peripherals working after the promoted 7.1.13-m4rch-gravity
+kernel reboot. Continuous shallow WFI remains enabled. Internal NVMe remains
+the boot/root device; normal GRUB default 0 is retained.
+
+Fresh boot ADT confirms stage-two mBoot-18000.161.10 (26.6.2 / 25G83).
+ASC addresses, mailbox geometry and reserved TEXT/DATA extents match the
+previous capture. This is metadata evidence, not a payload-byte identity check.
+New standalone Discord ABI reference has unchanged numeric values but clearly
+separates channel-state and queue-pointer objects. Treat its layouts as candidate
+25G83/G16S contracts; author machine has 20 cores, ours has 16 (3db/3db).
+
+Current-kernel-built bounded ASC probe negotiated protocol 12 and received
+endpoint maps for 0, 1, 32, 33; both ACKs completed. No application endpoints
+started, no DMA addresses supplied, no GPU work submitted. Stop readback was
+control=0/status=0x6e. This does not prove DMA quiescence: power, mappings and
+module remain pinned until reboot. Never force module removal.
+
+NEXT: normal Linux reboot (not macOS required). Then qualify the 25G83 firmware
+payload/reserved mappings and prepare explicit G16S ABI serializers with
+separate channel-state/queue-pointer types, correct unaligned fields and our
+16-core topology. Before full rendering, establish RTKit crashlog/application
+endpoint lifecycle and firmware-accessible buffer teardown. Keep normal startup
+gated until those contracts are validated. Current maintained kernel has Rust
+GPU driver disabled; later integration requires a separately built trial kernel.
+Do not transplant donor single-cluster constants or claim acceleration yet.
+
+Evidence: docs/evidence/2026-10-07-gravity-gpu-handshake.json and
+2026-10-07-gpu-abi-reference.json. Raw logs and matching helper build are retained
+in ignored out/gpu-gravity-20261007. Earlier next-step notes below are historical.
+
 # Maintained Gravity kernel promoted; USB fixed — 2026-10-07
 
 Owner requested promotion despite first-boot USB regression. linux-m4rch is now

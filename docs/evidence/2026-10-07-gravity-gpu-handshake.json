@@ -1,0 +1,54 @@
+{
+  "stage": {
+    "release": "7.1.13-m4rch-gravity",
+    "boot_id": "1ef2d503-2249-45b7-a999-730666f6b2d7",
+    "kernel_notes_sha256": "4bdb4be6451c907455299c135b55d5bcc2e33f7c4c36ba4b07ea395274fd3733",
+    "module_sha256": "62539add9c9008881c33759fc09650c8de3d575c1c0ac72d0c639c83df023110",
+    "compiled": true,
+    "default_gate_refused": true,
+    "default_gate_stderr": "insmod: ERROR: could not insert module /home/alice/Desktop/m4rch/out/gpu-gravity-20261007/asc-enumerate/asc-enumerate.ko: No such device\n"
+  },
+  "attempt": {
+    "boot_id": "1ef2d503-2249-45b7-a999-730666f6b2d7",
+    "load_returncode": 0,
+    "stdout": "",
+    "stderr": "",
+    "module_present": true,
+    "reboot_required": true,
+    "interpretation": "Presence means the start path ran and resources are pinned. Inspect dmesg for message/stop results. Never force module removal."
+  },
+  "kernel_build_id": "9bba3b6b0e916b0064d0a5fcc0e62cbaaa7237db",
+  "stage2_iboot": "mBoot-18000.161.10",
+  "stub": "26.6.2 / 25G83",
+  "protocol": 12,
+  "advertised_endpoints": [
+    0,
+    1,
+    32,
+    33
+  ],
+  "hello_reply_completed": true,
+  "map_acknowledgements_completed": true,
+  "stop_readback": true,
+  "application_endpoints_started": false,
+  "gpu_work_submitted": false,
+  "reboot_required": true,
+  "limitation": "Stop-register readback does not establish DMA quiescence. Module, mappings and power remain pinned until reboot. Candidate ABI objects have not been validated.",
+  "owner_peripheral_report": "Peripherals now working after promoted-kernel reboot",
+  "dmesg": [
+    "[  416.682048] m4rch ASC enumerate: cold control=0x0 status=0x6a; starting bounded poll",
+    "[  416.683602] m4rch ASC enumerate: message=0x100000000c000c metadata=0x10010000000000",
+    "[  416.683605] m4rch ASC enumerate: HELLO_REPLY version 12 sent; no application endpoints started",
+    "[  416.685613] m4rch ASC enumerate: message=0x80000000000003 metadata=0x10120000000000",
+    "[  416.685616] m4rch ASC enumerate: endpoint-map base=0 bitmap=0x3 last=0; map received",
+    "[  416.685618] m4rch ASC enumerate: map ACK=0x80000000000001; no endpoints started",
+    "[  416.687595] m4rch ASC enumerate: message=0x88000100000003 metadata=0x10230000000000",
+    "[  416.687597] m4rch ASC enumerate: endpoint-map base=1 bitmap=0x3 last=1; map received",
+    "[  416.687599] m4rch ASC enumerate: map ACK=0x88000100000000; no endpoints started",
+    "[  416.687600] m4rch ASC enumerate: message_received=1 hello_replied=1 endpoint_map=1; requesting ASC core stop",
+    "[  416.689610] m4rch ASC enumerate: final control=0x0 status=0x6e stop_readback=1",
+    "[  416.689614] m4rch ASC enumerate: trial complete; resources pinned, reboot required; do not force module removal"
+  ],
+  "full_dmesg_sha256": "5fb39cc8480f8a7ea2cb3c0f40f0d0db136078ee244676dfd7eca242fd7c925d",
+  "local_workspace": "/home/alice/Desktop/m4rch/out/gpu-gravity-20261007/asc-enumerate"
+}
