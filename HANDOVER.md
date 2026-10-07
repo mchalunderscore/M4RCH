@@ -1,3 +1,37 @@
+# Speculative Bumper-bank scan hung machine; quarantined — 2026-10-07
+
+Failed boot583a2999-d384-4e7d-8760-efd842a6bc90; recovered automatically into
+54817cb4-dc3e-46a6-99c3-432ea842b99e, same GPU-contract kernel. No retained
+probe modules after reset. No kernel/default/stage2 change was made.
+
+Initial bounded host reads at288d000a0/a4 and288d01500/1514 returned0;
+known GFender control288d04010 returned11020a. Both helpers unloaded normally.
+An expanded read-only batch across15 candidate banks (secondarySGX+bank*4000,
+skip knownGFender, offsets+a0/+a4) then hung the entire laptop. User reports
+trackpad haptics stopped and automatic power cycle after about20seconds.
+
+Earlier bounded samples survive in the previous journal, but no failed-batch
+bank message does. Pstore empty. Exact triggering read and reset cause UNKNOWN.
+The first new bank in program order was288d08000, only a lead, not proven fault
+address. Do not infer a register-map identity from zeros or a bus hang. Read-only
+MMIO can still stall hardware; aperture containment is not an access guarantee.
+No firmware start or register writes by reader were attempted in this batch;
+GFX was resumed through the existing genpd provider.
+
+Scanner QUARANTINED: source.c.disabled, Makefile rejects build, failed module
+preserved as out/gpu-gravity-contract/bumper-candidate-read/
+failed-bank-batch.ko.disabled. Failed source/module hashes and post-reset logs:
+docs/evidence/2026-10-07-gravity-gpu-bumper-scan-hang.json. Do not rerun it.
+
+NEXT: obtain attributable physical Bumper mapping/access prerequisites, using
+source or macOS tracing rather than more speculative aperture scans. Slot33 and
+firmware+a0/+a4 consumer remain verified; physical bank does not. Larger batches
+remain appropriate where each register address/access prerequisite has evidence.
+Current reboot already cleared the failure; no additional reboot needed merely
+to recover. Keep original boot.bin, current default and continuous WFI.
+
+---
+
 # Read-only register batch advances; Bumper descriptor next — 2026-10-07
 
 Boot c6a64586-e1fb-4d69-802b-a9d066be2c7a, same GPU-contract kernel.
