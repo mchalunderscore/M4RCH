@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import os
 import platform
+from pathlib import Path
 import shutil
 import subprocess
 
@@ -14,6 +15,12 @@ def runtime():
         name = next((x for x in candidates if shutil.which(x)), None)
     if name not in ("container", "docker", "podman") or not shutil.which(name):
         raise ValueError("Install Apple container, Docker or Podman; optionally set RUNTIME=container|docker|podman")
+    if name == "container":
+        # Apple's CLI discovers plugins relative to its executable path. Nix
+        # profile symlinks lack libexec/container; prefer the real installation.
+        binary = Path(shutil.which(name)).resolve()
+        if (binary.parent.parent / "libexec/container").is_dir():
+            os.environ["PATH"] = str(binary.parent) + os.pathsep + os.environ.get("PATH", "")
     return name
 
 

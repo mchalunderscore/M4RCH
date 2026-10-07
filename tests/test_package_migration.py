@@ -70,7 +70,7 @@ class PackageMigrationTests(unittest.TestCase):
                 self.command(binaries, "mountpoint", "exit 0")
                 self.command(binaries, "sha256sum", "exit 0")
                 self.command(binaries, "findmnt", 'case "$*" in *FSTYPE*) echo vfat;; *--target\\ /) echo /dev/root;; *) echo /dev/esp;; esac')
-                self.command(binaries, "blkid", f'case "$*" in *PARTUUID*) echo {installed["BOOT_PARTITION_UUID"]};; *) echo {installed["ROOT_UUID"]};; esac')
+                self.command(binaries, "blkid", f'case "$*" in *PARTUUID*) echo {installed["BOOT_PARTITION_UUID"]};; */dev/esp*) echo A1B2-C3D4;; *) echo {installed["ROOT_UUID"]};; esac')
                 self.command(binaries, "flock", "exit 0")
                 self.command(binaries, "depmod", "exit 0")
                 self.command(binaries, "mkinitcpio", 'while [ "$1" != -g ]; do shift; done; printf initramfs >"$2"')

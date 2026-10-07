@@ -11,10 +11,6 @@
 #include <dt-bindings/phy/phy.h>
 #include <dt-bindings/spmi/spmi.h>
 
-/ {
-	model = "Apple MacBook Pro (M4 Pro) J614s [Arch experimental drivers]";
-};
-
 &ans_mbox { status = "okay"; };
 &ans_sart { status = "okay"; };
 &ans_nvme { status = "okay"; };

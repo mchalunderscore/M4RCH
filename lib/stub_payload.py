@@ -63,9 +63,9 @@ def load_lock():
     return lock
 
 
-def select_identity(manifest):
-    if manifest.get("ProductBuildVersion") != "25F84":
-        raise ValueError("Stub BuildManifest must be 25F84")
+def select_identity(manifest, build="25F84"):
+    if manifest.get("ProductBuildVersion") != build:
+        raise ValueError(f"Stub BuildManifest must be {build}")
     matches = [identity for identity in manifest["BuildIdentities"]
                if identity.get("ApBoardID") == "0x04"
                and identity.get("ApChipID") == "0x6040"
@@ -160,7 +160,7 @@ def copy_member(inputs, stage, lock, name, destination):
 
 
 def assemble(inputs, dmg, apple_manifest, source, stage, lock):
-    identity = select_identity(apple_manifest)
+    identity = select_identity(apple_manifest, lock["apple_build"])
     members = restore_members(identity)
     if not members <= lock["files"].keys():
         raise ValueError("Identity contains unlocked restore members")
@@ -180,7 +180,8 @@ def assemble(inputs, dmg, apple_manifest, source, stage, lock):
     copy_member(inputs, stage, lock, "usr/standalone/bootcaches.plist", "System/usr/standalone/bootcaches.plist")
     copy_member(inputs, stage, lock, "PlatformSupport.plist", cs + "/PlatformSupport.plist")
     system_version = plistlib.loads((inputs / "SystemVersion.plist").read_bytes())
-    if system_version.get("ProductBuildVersion") != "25F84" or system_version.get("ProductVersion") != "26.5.2":
+    if (system_version.get("ProductBuildVersion") != lock["apple_build"]
+            or system_version.get("ProductVersion") != lock["apple_version"]):
         raise ValueError("Unexpected stub SystemVersion")
     system_version["ProductUserVisibleVersion"] += " (stub)"
     (stage / cs / "SystemVersion.plist").write_bytes(plistlib.dumps(system_version))
@@ -201,8 +202,8 @@ def assemble(inputs, dmg, apple_manifest, source, stage, lock):
         copy_member(inputs, stage, lock, name, destination)
     copy_member(inputs, stage, lock, "BootabilityBundle/Restore/Firmware/Bootability.dmg.trustcache",
                 restore + "/Bootability/Bootability.trustcache")
-    if not dmg.is_file() or dmg.is_symlink() or sha256(dmg) != firmware.DMG_SHA256:
-        raise ValueError("Recovery BaseSystem must be the authenticated, decrypted 25F84 DMG")
+    if not dmg.is_file() or dmg.is_symlink() or sha256(dmg) != lock["base_system_dmg_sha256"]:
+        raise ValueError("Recovery BaseSystem must match the selected profile's decrypted DMG")
     target_dmg = stage / "Recovery/usr/standalone/firmware/arm64eBaseSystem.dmg"
     shutil.copyfile(dmg, target_dmg)
     target_dmg.chmod(0o644)

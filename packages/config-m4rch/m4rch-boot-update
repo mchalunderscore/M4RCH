@@ -1,5 +1,5 @@
 #!/bin/sh
-# All writes remain on this installation's SD ESP. No Apple policy or NVRAM.
+# All writes remain on this installation's identified ESP. No Apple policy or NVRAM.
 set -eu
 PATH=/usr/bin:/bin:/usr/sbin:/sbin
 export PATH
@@ -8,7 +8,7 @@ fail() { printf 'm4rch-boot-update: %s\n' "$*" >&2; exit 1; }
 identity_fail() { fail 'Installed boot.conf does not match the mounted root and ESP. A direct pacman transaction may already have committed; ESP files are unchanged. Restore the prior boot.conf, reinstall with the generated kit install.sh, and run m4rch-boot-update before rebooting.'; }
 [ "$(id -u)" = 0 ] || fail 'Run as root.'
 if [ "${ARCH_M4_IMAGE_BUILD:-}" != 1 ]; then
-    mountpoint -q /boot || fail 'The SD ESP must be mounted at /boot before updating the kernel.'
+    mountpoint -q /boot || fail 'The ESP must be mounted at /boot before updating the kernel.'
     source=$(findmnt -n -o SOURCE --target /boot)
     [ "$(blkid -s PARTUUID -o value "$source" | tr 'A-Z' 'a-z')" = "$BOOT_PARTITION_UUID" ] || identity_fail
     [ "$(findmnt -n -o FSTYPE --target /boot)" = vfat ] || fail '/boot must be FAT.'
@@ -39,8 +39,15 @@ for identity in "$ROOT_UUID" "$BOOT_PARTITION_UUID"; do
     case "$identity" in ''|*[!0-9a-f-]*) fail 'Invalid installed boot UUID.' ;; esac
     [ "${#identity}" = 36 ] || fail 'Invalid installed boot UUID length.'
 done
-fat_hex=$(printf '%s' "$BOOT_PARTITION_UUID" | tr -d '-' | tr 'a-z' 'A-Z' | cut -c 1-8)
-fat_uuid=$(printf '%s' "$fat_hex" | sed 's/^\(....\)/\1-/')
+if [ "${ARCH_M4_IMAGE_BUILD:-}" = 1 ]; then
+    # The image builder renders /boot before creating the FAT filesystem.
+    fat_hex=$(printf '%s' "$BOOT_PARTITION_UUID" | tr -d '-' | tr 'a-z' 'A-Z' | cut -c 1-8)
+    fat_uuid=$(printf '%s' "$fat_hex" | sed 's/^\(....\)/\1-/')
+else
+    fat_uuid=$(blkid -s UUID -o value "$(findmnt -n -o SOURCE --target /boot)")
+fi
+case "$fat_uuid" in ????-????) ;; *) fail 'Invalid FAT filesystem UUID.' ;; esac
+case "$fat_uuid" in *[!0-9A-Fa-f-]*) fail 'Invalid FAT filesystem UUID.' ;; esac
 for name in grub.cfg grub-embedded.cfg; do
     sed -e "s/@BOOT_FAT_UUID@/$fat_uuid/g" -e "s/@ROOT_UUID@/$ROOT_UUID/g" \
         "/usr/share/m4rch/$name.in" >"$stage/$name"
@@ -56,4 +63,4 @@ mv -f "$stage/board.dtbo" /boot/dtbs/board.dtbo
 mv -f "$stage/grub.cfg" /boot/grub/grub.cfg
 mv -f "$stage/BOOTAA64.EFI" /boot/EFI/BOOT/BOOTAA64.EFI
 sync
-printf 'Updated SD UEFI boot files for %s; Apple enrollment is unchanged.\n' "$release"
+printf 'Updated UEFI boot files for %s; Apple enrollment is unchanged.\n' "$release"

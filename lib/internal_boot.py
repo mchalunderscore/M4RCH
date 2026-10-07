@@ -24,8 +24,12 @@ def read_state(project):
     return state
 
 
-def resolve_partition(dutil, state):
+def resolve_partition(dutil, state, *, project):
     # Revalidates both the new partition and the complete retained macOS layout.
+    extension = card.checked_path(project, "out/internal-layout-extension.json")
+    if extension.exists():
+        import internal_layout
+        return internal_layout.resolve(dutil, state["partition"], extension)
     return internal_disk.validate_created(dutil, state["partition"])
 
 
@@ -116,7 +120,7 @@ def _create_roles(project, dutil, state):
     initial_uuid = receipt["initial_volume_uuid"]
     steps = ("data-role", "data-name", "System", "Preboot", "Recovery")
     while state["role_step"] < len(steps):
-        resolve_partition(dutil, state)
+        resolve_partition(dutil, state, project=project)
         container = container_for(dutil, receipt)
         current = _volumes(container)
         step = steps[state["role_step"]]
@@ -332,7 +336,7 @@ def ensure(project, source, expected, *, dutil=None):
         _create_roles(project, dutil, state)
     if state["phase"] != "payload":
         raise ValueError("Unknown interrupted first-install phase; retain state for inspection")
-    resolve_partition(dutil, state)
+    resolve_partition(dutil, state, project=project)
     container = container_for(dutil, state["partition"])
     if _volumes(container) != state["volumes"]:
         raise ValueError("Boot volumes changed before payload installation")

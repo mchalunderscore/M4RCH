@@ -62,7 +62,7 @@ def _resolve(project, dutil):
     old = internal_boot.read_state(project)
     if old.get("phase") != "ready":
         raise ValueError("Existing internal stub setup is incomplete; no new partition will be created")
-    internal_boot.resolve_partition(dutil, old)
+    internal_boot.resolve_partition(dutil, old, project=project)
     saved = old["identity"]
     identity = _identity(saved)
     if identity["platform_uuid"] != old["platform_uuid"]:
@@ -82,7 +82,8 @@ def _resolve(project, dutil):
     return old, identity, roles["roles"]
 
 
-def render(project, identity, boot, *, launcher=None, initial=False, owner_sha256=None):
+def render(project, identity, boot, *, launcher=None, initial=False, owner_sha256=None,
+           force_enrollment=False, stub_build=""):
     """Render an internal-only Recovery script with shell-safe validated data."""
     checked = _identity(identity)
     info = _info(Path(boot))
@@ -100,6 +101,10 @@ def render(project, identity, boot, *, launcher=None, initial=False, owner_sha25
     # Recovery script, not an automatic firmware redirect or host-side arming.
     values["AUTO_LAUNCH"] = "1" if launcher is not None else "0"
     values["INITIAL_ENROLLMENT"] = "1" if initial else "0"
+    values["FORCE_ENROLLMENT"] = "1" if force_enrollment else "0"
+    if (force_enrollment or stub_build) and not re.fullmatch(r"[0-9]{2}[A-Z][0-9]+", stub_build):
+        raise ValueError("Forced stub enrollment needs a bound Apple build")
+    values["STUB_BUILD"] = stub_build
     if owner_sha256 is None:
         if initial:
             raise ValueError("First enrollment requires the verified copied owner digest")
@@ -298,16 +303,20 @@ def _lock(out):
 def stage(project, out, *, replace_pending=False, nvme=False):
     """Low-level manual staging, retained for explicit recovery tooling."""
     with _lock(out):
+        stub_update = card.checked_path(out, "stub-upgrade-state.json")
+        if stub_update.exists() and json.loads(stub_update.read_text()).get("phase") not in ("complete", "rolled-back"):
+            raise ValueError("Finish or roll back the pending Apple stub upgrade before preparing another loader")
         return _stage(Path(project), Path(out), replace_pending=replace_pending, nvme=nvme)
 
 
 def _source(out, nvme):
-    source_dir = card.checked_path(out, "nvme-loader") if nvme else out
+    split = nvme == "stage1"
+    source_dir = card.checked_path(out, "split-loader" if split else ("internal-loader" if nvme == "internal" else "nvme-loader")) if nvme else out
     card.checked_path(source_dir, "loader-manifest.json")
     manifest = verify_manifest(source_dir / "loader-manifest.json")
-    if manifest.get("schema") != 1 or manifest.get("kind") != "j614s-sd-loader":
+    if manifest.get("schema") != 1 or manifest.get("kind") != ("j614s-stage1-loader" if split else ("j614s-internal-loader" if nvme == "internal" else "j614s-sd-loader")):
         raise ValueError("Expected a fixed j614s-sd-loader manifest")
-    if manifest.get("boot_protocol") != "uefi-arm64":
+    if manifest.get("boot_protocol") != ("m1n1-chainload" if split else "uefi-arm64"):
         raise ValueError("Build the current UEFI bridge with make loader before staging it")
     if nvme and not manifest.get("inputs", {}).get("nvme_handoff"):
         raise ValueError("Build the ANS-aware loader with make loader before staging it")
@@ -318,8 +327,15 @@ def _source(out, nvme):
     return source, expected
 
 
+def _check_stub_upgrade(out):
+    path = card.checked_path(out, "stub-upgrade-state.json")
+    if path.exists() and json.loads(path.read_text()).get("phase") not in ("complete", "rolled-back"):
+        raise ValueError("Finish or roll back the pending Apple stub upgrade before preparing another loader")
+
+
 def _stage(project, out, *, replace_pending=False, nvme=False, launcher=None, confirm=None):
     project, out = Path(project), Path(out)
+    _check_stub_upgrade(out)
     card.require_macos()
     if os.geteuid() != 0:
         raise ValueError("Staging the fixed SD loader requires sudo")
@@ -460,6 +476,7 @@ def prepare(project, out, *, replace_pending=False, nvme=True):
     recovery_launcher = _launcher_module()
     project, out = Path(project), Path(out)
     with _lock(out):
+        _check_stub_upgrade(out)
         source, expected = _source(out, nvme)  # Reject absent/unattested artifacts before disk access.
         dutil = DiskUtil()
         internal_boot.ensure(project, source, expected, dutil=dutil)

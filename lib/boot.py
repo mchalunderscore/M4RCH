@@ -304,7 +304,7 @@ def apply_smp_patch(directory, spec, patch):
             raise ValueError(f"SMP backport source differs from the pinned result: {name}")
 
 
-def check_m1n1(path):
+def check_m1n1(path, *, ctrr_error=b"FDT: couldn't add reservation for M4+ SMP-RO CTRR area"):
     binary = Path(path).read_bytes()
     if b"Waiting for proxy connection" in binary:
         raise ValueError("m1n1 includes an early proxy window")
@@ -314,7 +314,7 @@ def check_m1n1(path):
         raise ValueError("m1n1 includes the obsolete T6040 PCIe diagnostic")
     if b"Initializing t6040 PCIe controller" not in binary:
         raise ValueError("m1n1 has no T6040 PCIe controller support")
-    if b"FDT: couldn't add reservation for M4+ SMP-RO CTRR area" not in binary:
+    if ctrr_error not in binary:
         raise ValueError("m1n1 has no M4 SMP CTRR memory reservation")
 
 

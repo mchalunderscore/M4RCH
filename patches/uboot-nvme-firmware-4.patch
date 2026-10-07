@@ -1,0 +1,49 @@
+From b3f756587082dac42a828ed74b58f64ac4f336e5 Mon Sep 17 00:00:00 2001
+From: Janne Grunau <j@jannau.net>
+Date: Fri, 4 Sep 2026 21:22:42 +0200
+Subject: [PATCH] nvme: apple: Drop the PRP null check chicken bit
+
+Now that we program the DMA direction correctly the NULL check that used
+to make commands fail passes. Another side effect of this bit was that
+non-align buffers on the admin queue were silently allowed and that's
+been fixed now as well and we this don't need this chicken bit anymore.
+More importantly, starting with the firmware installed with macOS 15,
+which is required for M4 but can also be installed on the previous SoCs,
+the controller no longer exposes this control register and any access
+SErrors instead. Just drop the write entirely.
+
+Based on Linux kernel commit 8ce883fd068b ("nvme-apple: Drop the PRP
+null check chicken bit").
+
+Link: https://lore.kernel.org/asahi/20260806-b4-nvme-fwabi-v1-6-bde19ce8db04@kernel.org/
+Fixes: 50333c94f2de ("nvme: apple: Add driver for Apple NVMe storage controller")
+Signed-off-by: Janne Grunau <j@jannau.net>
+Link: https://patch.msgid.link/20260904-apple-nvme-fwabi-v1-4-f7ede661c469@jannau.net
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+ drivers/nvme/nvme_apple.c | 5 -----
+ 1 file changed, 5 deletions(-)
+
+diff --git a/drivers/nvme/nvme_apple.c b/drivers/nvme/nvme_apple.c
+index 54821f80c81d..948a56e518b1 100644
+--- a/drivers/nvme/nvme_apple.c
++++ b/drivers/nvme/nvme_apple.c
+@@ -26,8 +26,6 @@
+ #define ANS_BOOT_STATUS		0x01300
+ #define  ANS_BOOT_STATUS_OK	0xde71ce55
+ #define ANS_MODESEL		0x01304
+-#define ANS_UNKNOWN_CTRL	0x24008
+-#define  ANS_PRP_NULL_CHECK	(1 << 11)
+ #define ANS_LINEAR_SQ_CTRL	0x24908
+ #define  ANS_LINEAR_SQ_CTRL_EN	(1 << 0)
+ #define ANS_ASQ_DB		0x2490c
+@@ -257,9 +255,6 @@ static int apple_nvme_probe(struct udevice *dev)
+ 	writel(((ANS_MAX_QUEUE_DEPTH << 16) | ANS_MAX_QUEUE_DEPTH),
+ 	       priv->base + ANS_MAX_PEND_CMDS_CTRL);
+ 
+-	writel(readl(priv->base + ANS_UNKNOWN_CTRL) & ~ANS_PRP_NULL_CHECK,
+-	       priv->base + ANS_UNKNOWN_CTRL);
+-
+ 	strcpy(priv->ndev.vendor, "Apple");
+ 
+ 	writel((ANS_NVMMU_TCB_SIZE / ANS_NVMMU_TCB_PITCH) - 1,

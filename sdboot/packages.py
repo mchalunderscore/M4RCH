@@ -49,6 +49,7 @@ def render_boot_configuration(project, stage, config, release):
     write(stage, "etc/arch-m4/boot.conf", "".join(f"{key}='{value}'\n" for key, value in settings.items()))
     write(stage, "etc/mkinitcpio.m4rch.conf", "MODULES=()\nBINARIES=()\nFILES=()\nHOOKS=(m4rch-root)\nCOMPRESSION=gzip\nCOMPRESSION_OPTIONS=(-9)\n")
     write(stage, "usr/lib/initcpio/install/m4rch-root", (project / "packages/config-m4rch/mkinitcpio-install").read_text(), 0o755)
+    write(stage, "usr/lib/m4rch/init-nvme", (project / "tools/nvme/init").read_text(), 0o755)
     write(stage, "usr/lib/m4rch/init", (project / "sdboot/init").read_text(), 0o755)
     write(stage, "usr/bin/m4rch-boot-update", (project / "packages/config-m4rch/m4rch-boot-update").read_text(), 0o755)
     write(stage, "usr/share/m4rch/grub-embedded.cfg.in", "search --no-floppy --fs-uuid --set=root @BOOT_FAT_UUID@\nconfigfile ($root)/grub/grub.cfg\n")

@@ -160,7 +160,7 @@ def validate_compose(out, config):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("action", choices=("image", "kernel", "packages", "loader", "verify", "smoke", "flash", "boot", "boot-safe", "boot-status"))
+    parser.add_argument("action", choices=("image", "kernel", "packages", "loader", "loader-internal", "loader-split", "loader-gravity", "verify", "smoke", "flash", "boot", "boot-safe", "boot-status"))
     parser.add_argument("--disk")
     parser.add_argument("--model", choices=("Mac16,8",))
     parser.add_argument("--inside", action="store_true", help=argparse.SUPPRESS)
@@ -183,6 +183,15 @@ def main():
             import grub
             grub.build(PROJECT, out, config, lock)
         directory = kernel_directory(out)
+        if args.action == "loader-gravity":
+            import gravity_loader
+            gravity_loader.build(PROJECT, out, config, lock, directory)
+        if args.action == "loader-split":
+            import split_loader
+            split_loader.build(PROJECT, out, config, lock, directory)
+        if args.action == "loader-internal":
+            import loader
+            loader.build(PROJECT, out / "internal-loader", config, lock, directory, nvme=True, internal=True)
         if args.action in ("image", "loader"):
             import loader
             loader.build(PROJECT, out, config, lock, directory, nvme=False)

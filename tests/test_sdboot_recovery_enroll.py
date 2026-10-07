@@ -189,11 +189,12 @@ class SdbootRecoveryEnrollmentTests(unittest.TestCase):
     def receipt_text(self, digest):
         return IDS["VGID"] + "\n" + digest + "\n"
 
-    def render(self, auto=True):
+    def render(self, auto=True, force=False):
         text = enrollment.render(ROOT, self.identity, self.bundle,
                                  launcher=self.plan if auto else None, initial=getattr(self, "initial", False),
                                  owner_sha256=hashlib.sha256(self.owner.read_bytes()).hexdigest()
-                                 if getattr(self, "initial", False) else None)
+                                 if getattr(self, "initial", False) else None,
+                                 force_enrollment=force, stub_build="25G83" if force else "")
         self.assertNotIn("##", text)
         text = text.replace("PATH=/usr/bin:/bin:/usr/sbin:/sbin",
                             f"PATH='{self.bin}':/usr/bin:/bin:/usr/sbin:/sbin")
@@ -372,6 +373,25 @@ class SdbootRecoveryEnrollmentTests(unittest.TestCase):
                 self.assertFalse(any(c[0] == "kmutil" for c in self.calls))
                 if version_normal and marker_disabled:
                     self.assertFalse(self.events)
+
+    def test_stub_upgrade_forces_enrollment_with_an_identical_loader(self):
+        self.completed()
+        self.receipt.write_text(self.receipt_text(self.target))
+        self.render(force=True)
+        self.assert_complete(self.run_script("--update"))
+        self.assertTrue(any(c[0] == "kmutil" for c in self.calls))
+        self.assertIn(["bputil", "-nc", "-v", IDS["VGID"]], self.calls)
+        self.assertEqual((self.resources / "stub-enrolled.txt").read_text().splitlines(),
+                         [IDS["VGID"], self.target, "25G83"])
+
+    def test_failed_stub_enrollment_does_not_create_a_target_build_receipt(self):
+        self.completed()
+        self.receipt.write_text(self.receipt_text(self.target))
+        self.render(force=True)
+        self.data["kmutil_exit"] = 92
+        result = self.run_script("--update")
+        self.assertNotEqual(result.returncode, 0)
+        self.assertFalse((self.resources / "stub-enrolled.txt").exists())
 
     def test_failed_kmutil_leaves_receipt_and_armed_metadata_unchanged(self):
         self.data["kmutil_exit"] = 1
