@@ -8,6 +8,15 @@ for name,file in [('model','emulate-init-parser.py'),('batch','graph-register-ba
  spec=importlib.util.spec_from_file_location(name,KIT/file);mods[name]=importlib.util.module_from_spec(spec);spec.loader.exec_module(mods[name])
 raw=Path(sys.argv.pop(1)).read_bytes()
 class BatchTests(unittest.TestCase):
+ def test_runtime_and_native_allowlists_cover_qualified_batch(self):
+  import re
+  native=(KIT/'asc-graph-init/graph-map.h').read_text()
+  runner=(KIT/'run-root-envelope.py').read_text()
+  native_grants={int(x,16) for x in re.findall(r'pa!=(0x[0-9a-f]+)ULL',native)}
+  runtime_tuple=re.search(r'pa in \((.*?)\)\)',runner).group(1)
+  runtime_grants={int(x,16) for x in re.findall(r'0x[0-9a-f]+',runtime_tuple)}
+  self.assertTrue(mods['batch'].WRITABLE_PAGES<=native_grants)
+  self.assertEqual(mods['batch'].WRITABLE_PAGES,runtime_grants)
  def setUp(self):self.data,self.receipt=mods['batch'].extend(*mods['model'].graph_fixture(True),raw)
  def test_gfender_descriptor_and_partial_write_grant(self):
   h=next(o['arena_offset'] for o in self.receipt['objects'] if o['name']=='hardware')
