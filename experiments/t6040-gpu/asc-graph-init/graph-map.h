@@ -81,7 +81,9 @@ static int root_prepare(bool install)
       !(pa>=0x288000000ULL && pa+PAGE_SIZE<=0x28b758000ULL) ||
       region_intersects(pa,PAGE_SIZE,IORESOURCE_SYSTEM_RAM,IORES_DESC_NONE)!=REGION_DISJOINT)
    goto fail_root;
-  if (mmio_leaves[i].writable && pa!=0x288d44000ULL && pa!=0x288e00000ULL && pa!=0x288e1c000ULL) goto fail_root;
+  if (mmio_leaves[i].writable && pa!=0x288d04000ULL && pa!=0x288d10000ULL &&
+      pa!=0x288d40000ULL && pa!=0x288d44000ULL && pa!=0x288d4c000ULL &&
+      pa!=0x288e00000ULL && pa!=0x288e1c000ULL && pa!=0x288e40000ULL) goto fail_root;
   l2[((va>>14)&2047)]=pa|(mmio_leaves[i].writable?FW_MMIO_RW:FW_MMIO_RO);
  }
  /* Explicit structural fixture, including allocations-enabled root and all
@@ -96,7 +98,7 @@ static int root_prepare(bool install)
  for (i=0;i<ARRAY_SIZE(mmio_leaves);i++)
   if (l2[(mmio_leaves[i].gpu_va>>14)&2047]!=(mmio_leaves[i].physical|(mmio_leaves[i].writable?FW_MMIO_RW:FW_MMIO_RO)))
    goto fail_root;
- pr_info("m4rch graph-init: %zu device leaves prepared (Bumper/DFender/shared counter-clock pages writable); total mapped pages=%u\n",ARRAY_SIZE(mmio_leaves),GRAPH_MAPPED_PAGES);
+ pr_info("m4rch graph-init: %zu device leaves prepared (eight qualified pages writable); total mapped pages=%u\n",ARRAY_SIZE(mmio_leaves),GRAPH_MAPPED_PAGES);
  pr_info("m4rch graph-init: shadow walk passed, root=%#llx interface=%#llx host_allocations=1\n",
          ROOT_VA,get_unaligned_le64(page_address(owned[2])));
  if (!install) return 0;

@@ -1,3 +1,57 @@
+# Eight-page write batch passes MCW; platform mappings next — 2026-10-07
+
+Boot d7988335-efa2-43bf-a984-0f0f1427ca86. Kernel/default/bootloader/WFI unchanged.
+Six serialization tests and matching W=1 external-module build passed. Sparse
+SGX-relative layout now has 21 object pages, 34 device leaves, two owned tables,
+55 mapped VAs. Eight exact writable pages: GFender 288d04000, GCPMS 288d10000,
+MCW 288d40000, Bumper 288d44000, PRC 288d4c000, DFenderMGPUCfg 288e00000,
+shared clock/counter 288e1c000, DFenderCSCfg 288e40000. Other leaves remain RO.
+No production configuration or GPU work queues supplied.
+
+Sixteen exact pre-reads completed with GFX genpd, without firmware wake or host
+register writes. Initial build was still running when an older six-read module
+was loaded; that capture is explicitly archived as -old-reader. It is not
+sixteen-read evidence despite its intent file. Waited for build completion,
+reran expanded module and verified all sixteen new log addresses in order.
+The harness now rejects an incomplete/mismatched sequence automatically.
+
+Cold native root publication returned to Linux after bounded observation.
+ASC stopped, published module/backing/GFX retained; never force-unload/free.
+Same sixteen exact post-reads passed: MCW +0 changed 101051->100051 and +4 f->1;
+Bumper ffff6fdb/ff/0 -> f6fdb/0/0; counter 0->70700777. Firmware therefore
+passed the previous MCW permission fault. No full initialization/rendering.
+
+NEW crash: valid newly written 2544-byte log; PC fffffc000003a9ec, FAR 634,
+ESR 96000044. Cached slot0 GPCAICSWInt pointer at18f428 is zero; instruction
+stores2000 at +634. Following instructions load18f5e0, slot11
+PushTelemetryDashboardConfigSpace, read/OR/write+758 (b00) then write+254
+(200000). Both platform slots are outside GPUC002's thirteen HAL GPU-bank rows.
+
+NEXT: focused macOS static-analysis request on matching 25G83 / AppleAGX353.14:
+resolve slot0 GPCAICSWInt and slot11 PushTelemetryDashboardConfigSpace physical
+base/extent, constructor or platform-resource binding, flags and interrupt
+bit/register semantics. Include checked source offsets/instructions, firmware
+identifier, provenance and normalized table extracts; no Apple binaries needed.
+For slot0 reconcile firmware +634/2000 with J614s ADT meta-sw-interrupt records
+502414084 and502414284 (raw word80). Gravity g16_platform.rs aligns the latter
+to502414000 but that is a candidate, not proof of this firmware's binding.
+Kernel irq-apple-aic.c lays out software IRQ arrays dynamically using max_irqs;
+do not guess an interrupt write based on aperture containment. Slot11 needs its
+own resource resolution; do not substitute donor telemetry addresses blindly.
+Send this whole packet so the macOS checkout has current tracked patches,
+configs/pins/helpers and evidence, not only this prose.
+
+Further native firmware startup requires a normal reboot because resources
+remain pinned; another reboot alone does not resolve these two mapping gaps.
+Continue offline Linux work where useful; no automatic reboot has been issued.
+Evidence: docs/evidence/2026-10-07-gpu-write-batch-result.json and raw captures
+asc-graph-init/boot-d7988335-efa2-43bf-a984-0f0f1427ca86, exact-register-read/same
+under out/gpu-gravity-contract. Return packet /boot/GPUC002/linux-return.tar.gz
+includes this document and source/raw captures, excluding firmware TEXT code
+image, Apple driver binaries, credentials and system images. Input kit preserved.
+
+---
+
 # Sparse SGX layout and counter writes pass; MCW next — 2026-10-07
 
 Boot60b99992-6e38-4dbf-9ed4-eae746b9463d; same kernel/default/boot.bin/WFI.

@@ -9,13 +9,13 @@ for name,file in [('model','emulate-init-parser.py'),('batch','graph-register-ba
 raw=Path(sys.argv.pop(1)).read_bytes()
 class BatchTests(unittest.TestCase):
  def setUp(self):self.data,self.receipt=mods['batch'].extend(*mods['model'].graph_fixture(True),raw)
- def test_gfender_descriptor_and_readonly_flag(self):
+ def test_gfender_descriptor_and_partial_write_grant(self):
   h=next(o['arena_offset'] for o in self.receipt['objects'] if o['name']=='hardware')
   values=struct.unpack_from('<QQIIQI',self.data,h+0x640+26*0x28)
-  self.assertEqual(values[0],0x288d04000);self.assertEqual(values[2:],(0x8000,0x8000,0xd04000,0))
+  self.assertEqual(values[0],0x288d04000);self.assertEqual(values[2:],(0x8000,0x8000,0xd04000,1))
   self.assertEqual(values[1]%0x4000,0)
  def test_leaf_pages_are_disjoint_virtual_and_contained(self):
-  leaves=self.receipt['mmio_leaves'];self.assertEqual(len(leaves),32);self.assertEqual(self.receipt['mapped_pages'],53)
+  leaves=self.receipt['mmio_leaves'];self.assertEqual(len(leaves),34);self.assertEqual(self.receipt['mapped_pages'],55)
   start=int(self.receipt['mmio_virtual_base'],16)
   self.assertEqual([v['gpu_va'] for v in leaves],sorted(set(v['gpu_va'] for v in leaves)))
   self.assertTrue(all(v['gpu_va']==start+v['physical']-0x288000000 for v in leaves))
@@ -24,13 +24,14 @@ class BatchTests(unittest.TestCase):
  def test_real_banks_and_narrow_write_permissions(self):
   self.assertNotIn('ram_register_surrogate',self.receipt)
   writable=[v['physical'] for v in self.receipt['mmio_leaves'] if not v['readonly']]
-  self.assertEqual(writable,[0x288d44000,0x288e00000,0x288e1c000])
+  self.assertEqual(writable,[0x288d04000,0x288d10000,0x288d40000,0x288d44000,0x288d4c000,0x288e00000,0x288e1c000,0x288e40000])
   h=next(o['arena_offset'] for o in self.receipt['objects'] if o['name']=='hardware')
   for slot,physical in [(33,0x288d44000),(35,0x288e00000)]:
    values=struct.unpack_from('<QQIIQI',self.data,h+0x640+slot*0x28)
    self.assertEqual(values[0],physical);self.assertEqual(values[2],0x4000);self.assertEqual(values[-1],1)
   self.assertEqual(struct.unpack_from('<QQ',self.data,h+0x2560),(0xf6fdb,0))
   self.assertEqual(len(self.data)//0x4000,21)
+  self.assertTrue(next(v for v in self.receipt['mmio_leaves'] if v['physical']==0x288d08000)['readonly'])
  def test_relative_arithmetic_and_shared_clock_counter_page(self):
   d={v['slot']:v for v in self.receipt['mmio_descriptors']};base=int(self.receipt['mmio_virtual_base'],16)
   self.assertEqual(int(d[29]['gpu_va'],16)-0xd10000,int(d[17]['gpu_va'],16))

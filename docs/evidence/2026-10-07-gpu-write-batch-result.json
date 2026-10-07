@@ -1,0 +1,378 @@
+{
+  "boot_id": "d7988335-efa2-43bf-a984-0f0f1427ca86",
+  "kernel_release": "7.1.13-m4rch-gpu-contract",
+  "attempt": {
+    "boot_id": "d7988335-efa2-43bf-a984-0f0f1427ca86",
+    "adt_sha256": "78dd3de7e4ec406747cb730e8b02ffa130f663e72d595e1749da135a9237bc0c",
+    "tables_sha256": "8a39d2abd3999ab73c34db2476849cddf303ce389b35826850f9a700589b4a90",
+    "initial_tables_zero": true,
+    "text_sha256": "014b1aee53a9c5174a3899b3d3a0eb8420b4659481f52ead03664b7b46e9d212",
+    "text_contract": {
+      "raw_sha256": "014b1aee53a9c5174a3899b3d3a0eb8420b4659481f52ead03664b7b46e9d212",
+      "normalized_sha256": "190cef1946a23dfbde180592629631c3b28d0509a17eb76108b7c9a52accd9ac",
+      "observed_variable_payloads": [
+        {
+          "offset": "0x59841",
+          "tag_bytes": "GKTS",
+          "payload_hex": "00aadfb90a86daa3"
+        },
+        {
+          "offset": "0x59924",
+          "tag_bytes": "ECAP",
+          "payload_hex": "8dd4ffa8aa2679fe"
+        }
+      ],
+      "qualification": "Exact match outside two tagged eight-byte boot metadata payloads; tags and lengths are also checked. No instruction bytes excluded."
+    },
+    "validated_build_receipt": {
+      "kernel_release": "7.1.13-m4rch-gpu-contract",
+      "kernel_notes_sha256": "ab3d4a13f2cfe6403d9a75e9d03f55202f12c200894e24dd773a8c7ec6d8663a",
+      "module_sha256": "c8387b82fcd49b30e358494c5fa7bfbc954e2203859010a0f17bcf7d13840224",
+      "artifact_sha256": {
+        "sample-pagetables/gpu-data-sample.ko": "a68e498b4891dfb2f3fdc40c69dd8c739b7b1431dc989f86a95afbac7a82f4e5",
+        "root-text-sample/gpu-data-sample.ko": "94bc35c9aa33d18c1c35ae67e4a623670188967968e4f3cfd55364e673041d4c",
+        "root-data-sample/gpu-data-sample.ko": "e17b07b87ab8ccfcbf05b26879650b41d50a8cfeeb0f3f06fcc96cdbd89af083",
+        "arena-l2-sample/gpu-data-sample.ko": "99fcd6977b626b5abc6bbe0135583dd697240ea365ff234f64ad0dec362a2b2b",
+        "adt-current/m4rch_gpu_adt.ko": "531a56de1149b55c219ae9ee45349c0b10482a608734a2045af8e05b5a0d03eb",
+        "asc-root-envelope/asc-root-envelope.ko": "c8387b82fcd49b30e358494c5fa7bfbc954e2203859010a0f17bcf7d13840224",
+        "asc-arena-preflight/asc-arena-preflight.ko": "ff6837f23951c4871976fc5e64e3b4a62cd52b364a3b42e4170890e286ddb8fe",
+        "asc-graph-init/asc-graph-init.ko": "8d8860e7066d8fe12e9406f2fc15f87d28e450d8aaed4e6a6d18a14f8ba565b8"
+      },
+      "source_sha256": {
+        "asc-root-envelope.c": "91a3f3a5789e94405ce468f888895109bc7dc3901c541e9be11b82edd229497b",
+        "root-map.h": "ef3ee3185a5478f12059b318b60f7c14741910c0730a52e0ab258f19d9a730c2",
+        "boot-contract.h": "5194505b49f3b40acdc80f29bf1e8c5c5f11374f483ed6a22df2c22ea904e082"
+      },
+      "arena_object_pages": 21,
+      "arena_unknown_extent_marker_pages": [
+        "extra_root_1"
+      ],
+      "arena_source_sha256": {
+        "asc-arena-preflight.c": "6e824758ec4dc44bdeedb7c55f120b708d2c473cfc4a8635e7df27f8e5a65b98",
+        "arena-map.h": "5d74405224177b25e6b8263c9021fb670eaff2514570303ddc293666480521bc",
+        "arena-contract.h": "68f275383de0616544469fcd6890cbda55407b2497a4bb92fbfee140bfa480d8"
+      },
+      "graph_object_pages": 21,
+      "graph_fixture_sha256": "1e990228228e48a6ec8f6248312448d4ead9f5bd6cee6c5cf5c8325499fed86e",
+      "graph_source_sha256": {
+        "asc-graph-init.c": "95b497b9d9fc184f002a2b897a904a6b68038f16e42e03be8458bbd42e1037ed",
+        "graph-map.h": "4eaeac423c93cddb92cb440e5c5fe81dd5abb3ba32e8f7cc35a8c4c29d6095aa",
+        "graph-contract.h": "6eea381dbdabb2fb7000e327aeb02d7cbf4e689662cef067cce79186cf6529f3"
+      },
+      "graph_receipt_sha256": "caaeaef69c79f87ba03b16586d2e6f56746342523db59e3d79ea933c0738b351",
+      "hardware_trial_performed": false,
+      "default_gate": 0,
+      "preflight_gate": 1,
+      "cold_publication_gate": 2
+    },
+    "run_requested": true,
+    "mapping_or_publication_performed": true,
+    "root_published": true,
+    "load_returncode": 0,
+    "stderr": "",
+    "module_present": true,
+    "reboot_required": true,
+    "interpretation": "Allocations-enabled structural fixture. A sent root/object change does not prove initialization or rendering readiness. Never force unload.",
+    "data_before_sha256": "3a5b8cc02d184f78c42df9bd0cb33c6645ee49b5e3e871c0d14b4535e87efd17",
+    "data_after_sha256": "1e7458daa4f2aa2af0e5f4f47ce8bb5785aa53e6138b468dd0540b0e2e4418c5",
+    "data_changed_bytes": 68567,
+    "new_rejection_offsets": [],
+    "object_changes": [
+      {
+        "name": "root",
+        "changed_bytes": 0,
+        "first_changed_offsets": []
+      },
+      {
+        "name": "main",
+        "changed_bytes": 0,
+        "first_changed_offsets": []
+      },
+      {
+        "name": "hardware",
+        "changed_bytes": 0,
+        "first_changed_offsets": []
+      },
+      {
+        "name": "region_c",
+        "changed_bytes": 0,
+        "first_changed_offsets": []
+      },
+      {
+        "name": "extra_root",
+        "changed_bytes": 0,
+        "first_changed_offsets": []
+      },
+      {
+        "name": "main_header",
+        "changed_bytes": 1,
+        "first_changed_offsets": [
+          "0x0"
+        ]
+      },
+      {
+        "name": "shared_0",
+        "changed_bytes": 0,
+        "first_changed_offsets": []
+      },
+      {
+        "name": "shared_1",
+        "changed_bytes": 0,
+        "first_changed_offsets": []
+      },
+      {
+        "name": "shared_2",
+        "changed_bytes": 0,
+        "first_changed_offsets": []
+      },
+      {
+        "name": "shared_3",
+        "changed_bytes": 0,
+        "first_changed_offsets": []
+      },
+      {
+        "name": "shared_4",
+        "changed_bytes": 0,
+        "first_changed_offsets": []
+      },
+      {
+        "name": "hardware_counters",
+        "changed_bytes": 0,
+        "first_changed_offsets": []
+      },
+      {
+        "name": "power",
+        "changed_bytes": 2,
+        "first_changed_offsets": [
+          "0x922",
+          "0x923"
+        ]
+      },
+      {
+        "name": "region_a",
+        "changed_bytes": 0,
+        "first_changed_offsets": []
+      },
+      {
+        "name": "status_a",
+        "changed_bytes": 2,
+        "first_changed_offsets": [
+          "0x10",
+          "0x14"
+        ]
+      },
+      {
+        "name": "status_b",
+        "changed_bytes": 2,
+        "first_changed_offsets": [
+          "0xc734",
+          "0xc744"
+        ]
+      },
+      {
+        "name": "extra_root_1",
+        "changed_bytes": 0,
+        "first_changed_offsets": []
+      }
+    ],
+    "objects_after_sha256": "f2863ec7a28e8f92faa0b4d492cccdc627fc8c133960eabcb9dacec7fa8bcc36"
+  },
+  "crash": {
+    "boot_id": "d7988335-efa2-43bf-a984-0f0f1427ca86",
+    "data_before_sha256": "3a5b8cc02d184f78c42df9bd0cb33c6645ee49b5e3e871c0d14b4535e87efd17",
+    "data_after_sha256": "1e7458daa4f2aa2af0e5f4f47ce8bb5785aa53e6138b468dd0540b0e2e4418c5",
+    "crashlog_offset": "0xa0000",
+    "crashlog_bytes": 2544,
+    "version": 771,
+    "flags": 2052,
+    "footer_valid": true,
+    "sections": [
+      {
+        "offset": "0x20",
+        "fourcc": "Cver",
+        "bytes": 96,
+        "text": ""
+      },
+      {
+        "offset": "0x80",
+        "fourcc": "Ctim",
+        "bytes": 32
+      },
+      {
+        "offset": "0xa0",
+        "fourcc": "Crg8",
+        "bytes": 864,
+        "registers": {
+          "x0": "0x0",
+          "x1": "0xfffffc0000180040",
+          "x2": "0x0",
+          "x3": "0x0",
+          "x4": "0x0",
+          "x5": "0x0",
+          "x6": "0x0",
+          "x7": "0x0",
+          "x8": "0xfffffc000018f428",
+          "x9": "0x0",
+          "x10": "0x2000",
+          "x11": "0x2",
+          "x12": "0x1f001f",
+          "x13": "0xf001f",
+          "x14": "0x1f000f",
+          "x15": "0x30003",
+          "x16": "0xbee3b40000025690",
+          "x17": "0xfffffc00000393e8",
+          "x18": "0x0",
+          "x19": "0x0",
+          "x20": "0xfffffc2000130000",
+          "x21": "0x1",
+          "x22": "0xfffffc000018e000",
+          "x23": "0xfffffc000018e000",
+          "x24": "0xfffffc2000135b6c",
+          "x25": "0xfffffc000018e000",
+          "x26": "0xa",
+          "x27": "0xfffffc0000087668",
+          "x28": "0x1",
+          "x29": "0xfffffc00001800d0",
+          "x30": "0xfffffc000003a9b8"
+        },
+        "sp": "0xfffffc0000180010",
+        "pc": "0xfffffc000003a9ec",
+        "psr": "0x60000004",
+        "far": "0x634",
+        "esr": "0x96000044"
+      },
+      {
+        "offset": "0x400",
+        "fourcc": "Ccst",
+        "bytes": 48,
+        "task": 6,
+        "unknown": 536870912,
+        "addresses": [
+          "0xfffffc000003a9ec",
+          "0xfffffc0000038f9c"
+        ]
+      },
+      {
+        "offset": "0x430",
+        "fourcc": "CasC",
+        "bytes": 80
+      },
+      {
+        "offset": "0x480",
+        "fourcc": "Cmbx",
+        "bytes": 416
+      },
+      {
+        "offset": "0x620",
+        "fourcc": "Crtk",
+        "bytes": 688
+      },
+      {
+        "offset": "0x8d0",
+        "fourcc": "Ccdp",
+        "bytes": 128
+      },
+      {
+        "offset": "0x950",
+        "fourcc": "Cpct",
+        "bytes": 80
+      },
+      {
+        "offset": "0x9a0",
+        "fourcc": "Csta",
+        "bytes": 48
+      },
+      {
+        "offset": "0x9d0",
+        "fourcc": "CLHE",
+        "bytes": 32,
+        "form": "exact repeated header"
+      }
+    ],
+    "expected_rejection": false,
+    "parser_callsite_present": false,
+    "crashlog_newly_written": true,
+    "qualification": "Structured crashlog decoding only; interpret registers/stack with matching instructions and independent object capture. No initialization or rendering success established."
+  },
+  "mapped_object_pages": 21,
+  "mapped_device_pages": 34,
+  "owned_table_pages": 2,
+  "mapped_va_count": 55,
+  "writable_device_pages": [
+    "0x288d04000",
+    "0x288d10000",
+    "0x288d40000",
+    "0x288d44000",
+    "0x288d4c000",
+    "0x288e00000",
+    "0x288e1c000",
+    "0x288e40000"
+  ],
+  "exact_reads_before": {
+    "0x288d440a0": "0xffff6fdb",
+    "0x288d440a4": "0xff",
+    "0x288d440a8": "0x0",
+    "0x288e01704": "0x0",
+    "0x288e01780": "0xfe66",
+    "0x288e1f860": "0x0",
+    "0x288d06020": "0x0",
+    "0x288d06040": "0x0",
+    "0x288d10000": "0x300ff",
+    "0x288d10080": "0x0",
+    "0x288d40000": "0x101051",
+    "0x288d40004": "0xf",
+    "0x288d4c000": "0x0",
+    "0x288d4c004": "0x0",
+    "0x288e41010": "0x0",
+    "0x288e41014": "0x0"
+  },
+  "exact_reads_after": {
+    "0x288d440a0": "0xf6fdb",
+    "0x288d440a4": "0x0",
+    "0x288d440a8": "0x0",
+    "0x288e01704": "0x0",
+    "0x288e01780": "0xfe66",
+    "0x288e1f860": "0x70700777",
+    "0x288d06020": "0x0",
+    "0x288d06040": "0x0",
+    "0x288d10000": "0x300ff",
+    "0x288d10080": "0x0",
+    "0x288d40000": "0x100051",
+    "0x288d40004": "0x1",
+    "0x288d4c000": "0x0",
+    "0x288d4c004": "0x0",
+    "0x288e41010": "0x0",
+    "0x288e41014": "0x0"
+  },
+  "readback_qualification": "Same sixteen exact addresses, no host writes; after firmware ASC stopped with GFX and graph backing retained.",
+  "artifact_correction": "Initial reader build was still running when old six-address module loaded. Archived as -old-reader; its sixteen-address intent does not prove sixteen reads. Expanded module rerun completed and exact log delta verifies all sixteen addresses. Harness now checks this sequence.",
+  "next_fault": {
+    "slot": 0,
+    "name": "GPCAICSWInt",
+    "cached_virtual": "0x18f428",
+    "pc": "0xfffffc000003a9ec",
+    "far": "0x634",
+    "esr": "0x96000044",
+    "write_value": "0x2000",
+    "next_slot": 11,
+    "next_slot_name": "PushTelemetryDashboardConfigSpace",
+    "next_cached_virtual": "0x18f5e0",
+    "next_accesses": [
+      "read/OR/write +0x758 with 0xb00",
+      "write +0x254 with 0x200000"
+    ]
+  },
+  "slot0_candidate": {
+    "donor_file": "drivers/gpu/drm/asahi/g16_platform.rs:153-188",
+    "donor_rule": "last twenty-byte meta-sw-interrupt record address aligned down to 16KiB",
+    "physical": "0x502414000",
+    "adt_meta_addresses": [
+      "0x502414084",
+      "0x502414284"
+    ],
+    "adt_raw_word": "0x80",
+    "qualified": false,
+    "gap": "Firmware +0x634 / bit13 access does not directly match metadata offsets +0x84/+0x284 and raw word0x80. AIC layouts depend on max_irqs/dies; containment alone is not role proof."
+  },
+  "status": "Host returned; ASC stopped and graph retained. No full firmware initialization or rendering. No guessed AIC/telemetry access attempted."
+}

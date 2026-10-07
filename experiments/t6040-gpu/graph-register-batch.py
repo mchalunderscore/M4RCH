@@ -8,9 +8,10 @@ ROWS=[(17,0,0x21400),(26,0xd04000,0x8000),(27,0xd0d000,0x1000),
       (28,0xd58000,0x8000),(29,0xd10000,0x4000),(31,0xd40000,0x4000),
       (32,0xd60000,0x20000),(40,0xe1c000,0x4000),(22,0x1000000,0x8000),
       (39,0xe08000,0x8000),(41,0xe1f800,0x4000),
-      (33,0xd44000,0x4000),(35,0xe00000,0x4000)]
-WRITABLE_SLOTS={33,35,41}
-WRITABLE_PAGES={0x288d44000,0x288e00000,0x288e1c000}
+      (33,0xd44000,0x4000),(35,0xe00000,0x4000),
+      (34,0xd4c000,0x200),(37,0xe40000,0x4000)]
+WRITABLE_SLOTS={26,29,31,33,34,35,37,41}
+WRITABLE_PAGES={0x288d04000,0x288d10000,0x288d40000,0x288d44000,0x288d4c000,0x288e00000,0x288e1c000,0x288e40000}
 def extend(arena,receipt,raw):
     import json
     source=Path(__file__).resolve().parents[2]/'docs/evidence/gpuc002-input/agx-pio-map.json'
@@ -18,7 +19,7 @@ def extend(arena,receipt,raw):
     if mapping['apple_build']!='25G83' or mapping['firmware_hardware_record_bytes']!=40 or mapping['firmware_copied_record_bytes']!=36:raise ValueError('Static source ABI differs')
     records={r['hal_resource_id']:r for r in mapping['records']}
     for slot,relative,size in ROWS:
-        if slot in (26,32,33,35):
+        if slot in (17,26,29,31,32,33,34,35,37,40):
             r=records[slot]
             if int(r['relative_offset'],16)!=relative or int(r['length'],16)!=size:raise ValueError('Qualified static row differs')
     tree=adt.parse(raw);gpu=tree['/device-tree/arm-io/sgx']
@@ -69,5 +70,5 @@ def extend(arena,receipt,raw):
                    mmio_leaves=leaves,mmio_virtual_base=hex(mmio_base),mapped_pages=len(arena)//PAGE+len(leaves),voltage_adt_sha256=hashlib.sha256(raw).hexdigest(),
                    voltage_input_sha256={k:hashlib.sha256(gpu[k]).hexdigest() for k in ['perf-states','perf-states-sram']},
                    voltage_assignment='Only qualified profile-A core/SRAM cluster columns populated; profile-B and frequency assignment unchanged',
-                   qualification='Experimental structural graph; only Bumper/DFender and shared counter-clock page writable; sparse coherent SGX-relative VAs; other bank hypotheses read-only. No complete hardware construction, write permissions, queue execution or rendering established.')
+                   qualification='Experimental structural graph; eight exact-read/static-source-backed device pages writable; sparse coherent SGX-relative VAs; other bank hypotheses read-only. No complete hardware construction, write permissions, queue execution or rendering established.')
     return bytes(result),receipt

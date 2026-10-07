@@ -1,3 +1,15 @@
+## Current batch (2026-10-07)
+
+The current sparse graph maps 21 object pages and 34 device leaves (55 VAs)
+with two owned page tables. Eight qualified pages are writable; see
+`graph-map.h` and `graph-register-batch.py` for the exact whitelist.
+The cold native batch passed MCW programming and now faults on missing
+platform slot 0 GPCAICSWInt. Slot 11 telemetry configuration is used next.
+Neither mapping has been enabled speculatively. Six serializer tests passed.
+See `docs/evidence/2026-10-07-gpu-write-batch-result.json` for exact readbacks,
+permissions, crash decode and the focused platform-resource investigation.
+The following sections describe earlier trials and are historical.
+
 # Experimental structural GPU initialization
 
 Current GPUC002 helper publishes21 structural object pages and32 device pages.

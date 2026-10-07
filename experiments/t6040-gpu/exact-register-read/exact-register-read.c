@@ -26,13 +26,20 @@ static int sample(u64 base,const u32 *offsets,unsigned int count)
 static int __init exact_init(void)
 {
  const u32 bumper[]={0xa0,0xa4,0xa8},dfender[]={0x1704,0x1780},counter[]={0x3860};
+ const u32 gfender[]={0x2020,0x2040},gcpms[]={0,0x80},mcw[]={0,4},prc[]={0,4},cs[]={0x1010,0x1014};
  int ret;
  if (run_gate!=1 || !of_machine_is_compatible("apple,j614s") ||
      !of_machine_is_compatible("apple,t6040")) return -ENODEV;
  ret=sample(0x288d44000ULL,bumper,ARRAY_SIZE(bumper));
  if (ret) return ret;
  ret=sample(0x288e00000ULL,dfender,ARRAY_SIZE(dfender));
- return ret?ret:sample(0x288e1c000ULL,counter,ARRAY_SIZE(counter));
+ if (ret) return ret;
+ ret=sample(0x288e1c000ULL,counter,ARRAY_SIZE(counter)); if (ret) return ret;
+ ret=sample(0x288d04000ULL,gfender,ARRAY_SIZE(gfender)); if (ret) return ret;
+ ret=sample(0x288d10000ULL,gcpms,ARRAY_SIZE(gcpms)); if (ret) return ret;
+ ret=sample(0x288d40000ULL,mcw,ARRAY_SIZE(mcw)); if (ret) return ret;
+ ret=sample(0x288d4c000ULL,prc,ARRAY_SIZE(prc)); if (ret) return ret;
+ return sample(0x288e40000ULL,cs,ARRAY_SIZE(cs));
 }
 static void __exit exact_exit(void) {}
 module_init(exact_init);module_exit(exact_exit);
