@@ -1,0 +1,18 @@
+{
+  "release": "7.1.13-m4rch-gpu-contract",
+  "original_sha256": "0720d73285839c290a8a98bfa783fd42838caf539b0c60145a13dd41fea62e53",
+  "trial_sha256": "4d47019c7af77b82521058bba40a89eeca6592ffb6c269e77d95d56cdcb4a099",
+  "module_sha256": {
+    "dwc3.ko": "e053785a6f46a13da9b6cdf6ba571db0f6a34db38ca5d000f31938bac3f051e7",
+    "dwc3-apple.ko": "53f89da02c1d4b524c934d9d44c15c4c2acb43d5484967a572721608d565533e"
+  },
+  "installed_root_modules_modified": false,
+  "injection": "After NVMe root validation, before switch_root/root udev; exact insmod of dependency and candidate",
+  "grub_default": 3,
+  "trial_entry": "7.1.13-m4rch-gpu-contract (USBR001 role-provider trial)",
+  "trial_boot_path": "/boot/USBR001",
+  "rollback": "sudo cp /boot/USBR001/grub-before.cfg /boot/grub/grub.cfg",
+  "candidate_loaded": false,
+  "candidate_promoted": false,
+  "installed_module_tree_unchanged": true
+}

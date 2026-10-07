@@ -1,3 +1,32 @@
+# USBR001 staged as next GRUB default — 2026-10-07
+
+User authorized separate USB role-provider trial as default, promotion only
+if native tests pass. GRUB default3: GPU-contract kernel, /USBR001/vmlinuz and
+/USBR001/initramfs.img. Kernel identical to GPUC001; kernel package/module tree,
+original GPUC001 initrd and entry1 untouched. Candidate DWC3 glue preloaded by
+trial initrd after NVMe root validation, before root udev. Exact candidate/core
+hashes verified in initrd before insmod; any load failure stops before root
+userspace. Original installed module will not replace an already-loaded module.
+This is a boot-isolated module trial, not a promoted package/new kernel version.
+No automatic reboot or live USB driver replacement was performed.
+
+Next boot BEFORE GPU activity: verify role providers in /sys/class/usb_role,
+PD/typec bindings, devices_deferred reasons, kernel logs and known USB device
+on each physical port in both orientations. Test right-port boot-connected
+YubiKey and hotplug. Retain cold/warm boot distinction and charging setup.
+If PD still deferred, identify next dependency rather than declaring success
+from root hubs. Do not start GPU firmware until USB baseline is collected.
+
+Rollback (keyboard cannot select GRUB reliably): from remote Linux or shared
+boot filesystem restore /boot/USBR001/grub-before.cfg to /boot/grub/grub.cfg,
+then reboot normally. This selects original entry1/initrd and installed module.
+Original module copy also retained inUSBR001; root copy was never changed.
+GRUB script-check passed; staged image/kernel hashes match source. See
+ docs/evidence/2026-10-07-usb-role-trial-staged.json and
+ experiments/usb-role-provider/stage-initrd.py for reproducible staging.
+
+---
+
 # Linux USB investigation: missing fixed-host role provider candidate
 
 See experiments/usb-role-provider/README.md. All three live DT controllers

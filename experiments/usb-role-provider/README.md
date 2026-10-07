@@ -34,3 +34,11 @@ in right and both left ports, both connector orientations, cold and warm boot.
 If PD remains deferred, add stage-specific common-probe error diagnostics and
 resolve the actual next dependency. Do not bypass mux/IRQ/role ownership checks.
 No port-supply or orientation conclusion comes from root hubs alone.
+
+## Staged USBR001 boot
+
+User authorized next-default staging. GRUB entry3 now boots the same kernel
+with a separate initrd that loads candidate glue before root udev. Original
+module tree/initrd/entry1 unchanged. Stage script validates CPIO member bodies
+and module hashes. Restore /boot/USBR001/grub-before.cfg to /boot/grub/grub.cfg
+for rollback. No native trial completed or package promotion yet.
