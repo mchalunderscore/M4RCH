@@ -81,6 +81,25 @@ class BatchTests(unittest.TestCase):
   self.assertEqual(struct.unpack_from('<II',self.data,h+0x1008),(125,125))
   self.assertEqual(struct.unpack_from('<II',self.data,h+0x1008+0x40),(610,605))
   self.assertFalse(any(self.data[h+0x1008+11*0x40:h+0x1008+16*0x40]))
+ def test_single_control_refresh_changes_only_opcode_and_producer(self):
+  import copy
+  from control_refresh import stage
+  receipt=copy.deepcopy(self.receipt)
+  data,receipt=stage(self.data,receipt)
+  base=int(receipt['base'],16);channel=receipt['empty_channel_fixture'][12]
+  producer=int(channel['cursors'][2],16)-base;ring=int(channel['ring'],16)-base
+  self.assertEqual([i for i,(a,b) in enumerate(zip(self.data,data)) if a!=b],[producer,ring])
+  self.assertEqual((data[producer],data[ring]),(1,0x16))
+  self.assertEqual(receipt['mmio_leaves'],self.receipt['mmio_leaves'])
+  for obj in receipt['objects']:
+   start=obj['arena_offset']
+   import hashlib
+   self.assertEqual(obj['input_sha256'],hashlib.sha256(data[start:start+obj['input_bytes']]).hexdigest())
+ def test_control_refresh_rejects_nonempty_state(self):
+  from control_refresh import stage
+  data=bytearray(self.data);base=int(self.receipt['base'],16)
+  data[int(self.receipt['empty_channel_fixture'][12]['cursors'][0],16)-base]=1
+  with self.assertRaises(ValueError):stage(data,self.receipt)
  def test_changed_bus_translation_rejected(self):
   tree=mods['batch'].adt.parse(raw);old=mods['batch'].adt.parse
   tree['/device-tree/arm-io']['ranges']=bytes(len(tree['/device-tree/arm-io']['ranges']))

@@ -119,3 +119,13 @@ columns and16 storage slots with0x40 stride. The offline voltage codec takes11
 candidate voltage groups and emits full0x400-byte arrays with unused slots
 zero. Profile A/B frequency assignment and profile-B semantics remain unknown;
 these candidate bytes are not part of the running driver.
+
+## Initial control refresh trial (2026-10-08)
+
+The thirty-second empty fixture showed static owned objects. Build the next
+external candidate with `build-root-envelope.py out/gpu-gravity-contract
+--control-refresh`. It stages one operand-free opcode0x16 and control producer1;
+work queues remain empty. `model-control-refresh.py TEXT ARENA RECEIPT OUTPUT`
+executes the matched handler offline with explicit private-state assumptions.
+See `docs/evidence/2026-10-08-control-refresh-handover.md` for exact limits and
+reboot protocol. Native consumption and initialization are still unproven.

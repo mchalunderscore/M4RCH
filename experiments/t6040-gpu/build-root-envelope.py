@@ -20,6 +20,7 @@ def sha(path):
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('workspace', type=Path)
+    p.add_argument('--control-refresh', action='store_true', help='One opcode16 initial control record; work remains empty')
     args = p.parse_args()
     work = args.workspace.resolve()
     tree = work/'linux'
@@ -82,6 +83,9 @@ def main():
     batch_spec.loader.exec_module(register_batch)
     seed = work/'asc-graph-init/boot-e1e8db50-10f6-46b5-8d73-a593b7e2c611/boot.adt'
     graph_bytes, graph_receipt = register_batch.extend(graph_bytes,graph_receipt,seed.read_bytes())
+    if args.control_refresh:
+        from control_refresh import stage
+        graph_bytes, graph_receipt = stage(graph_bytes, graph_receipt)
     graph_pages = len(graph_bytes)//graph_plan.PAGE
     if len(graph_bytes)%graph_plan.PAGE or graph_pages!=47:
         raise ValueError('Unexpected structural fixture geometry')
