@@ -42,3 +42,12 @@ with a separate initrd that loads candidate glue before root udev. Original
 module tree/initrd/entry1 unchanged. Stage script validates CPIO member bodies
 and module hashes. Restore /boot/USBR001/grub-before.cfg to /boot/grub/grub.cfg
 for rollback. No native trial completed or package promotion yet.
+
+## Promotion result
+
+Trial fcfa7ebf: user confirms all three ports work. Three role providers, two PD
+controllers bound, right YubiKey enumerated;0-0a ENODEV remains. Package revision
+7.1.13-2 contains exact tested module plus package-owned init/hook early-load
+recipe. Regular GRUB default1 restored, USBR001 backup entry3 kept. One regular
+boot validation still due. Package-fix.py builds revision2 from pinned baseline
+payload, no full kernel rebuild; future source rebuild must apply the patch.

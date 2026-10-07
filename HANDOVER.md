@@ -1,3 +1,39 @@
+# USB role-provider fix promoted after all-port trial success
+
+User confirms all3 USB ports work onfcfa7ebf trial boot. Linux records three
+role providers, right-port YubiKey bus5, PD0-0c and2-0c bound/polling with
+successful cable callbacks. PD0-0a still failsENODEV; no full PD/IRQ claim.
+No GPU firmware attempt on this boot.
+
+Promoted package linux-m4rch-gpu-contract7.1.13-2. Only3 packaged files differ:
+DWC3 glue module (exact tested hash), init-nvme early modprobe dwc3_apple, and
+mkinitcpio hook including that module/dependency. Kernel image unchanged.
+Regular GPUC001 initramfs regenerated; exact embedded module and kmod loader
+verified. GRUB default1 restored, USBR001 validated trial retained as entry3.
+boot.bin unchanged cb3ab77bdac7f276b5331d8580a5ee1b81f8bd215c0cba1449391a73d790ef09.
+The generic package post-install boot-update hook overwrote GRUB with its old
+hardcoded menu; corrected regular+trial menu installed and script-check passed.
+Future package updates need to preserve this menu/default, not generic defaults.
+
+NEXT: one normal promoted boot; record all3 physical-port functionality BEFORE
+GPU activity. Then continue primary-SGX write/AFR static qualification. Maintain
+separate0-0a ENODEV investigation, cold/warm/charging/orientation distinctions.
+Original1 package + initrd storedUSBR001. Full rollback: install rollback-package
+with pacman-U, restore normal-initramfs-before to GPUC001/initramfs.img and
+initramfs-linux-m4rch-gpu-contract.img, then restoregrub-before.cfg last (package
+hooks overwrite GRUB), reboot normally. Trial backup remains independently
+bootable with its included candidate. No installed file was changed by hot-unbind.
+
+Source patch/build/package recipe and evidence tracked; root package owns fix.
+Protected existing build tree kept unchanged for GPU helper provenance; next full
+kernel rebuild must apply experimental-t6040-fixed-host-role-switch.patch to its
+source. Package-fix.py reproducibly updates the pinned baseline payload/module
+and early-load recipe; pkgrev2 was not a full kernel rebuild. Evidence
+ docs/evidence/2026-10-07-usb-role-provider-promoted.json. Rawlogs/sysfs/IRQs in
+out/usb-role-provider/boot-fcfa7ebf-d24f-4dec-9c4c-e3d2e97912ef.
+
+---
+
 # USBR001 loader corrected after initramfs stop
 
 First trial stopped BEFORE candidate load: both hashes passed, but BusyBox
