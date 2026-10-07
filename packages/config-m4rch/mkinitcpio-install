@@ -10,9 +10,18 @@ build() {
         add_binary "$tool" "/sbin/$tool"
     done
     for applet in dev proc sys run newroot tmp; do add_dir "/$applet"; done
-    add_file /usr/lib/m4rch/init /init 755
-    add_file /etc/arch-m4/boot.conf /etc/sdboot.conf
-    printf "KERNEL_RELEASE='%s'\nTESTING='0'\n" "$KERNELVERSION" >>"$BUILDROOT/etc/sdboot.conf"
+    if grep -q "^STORAGE_MODE='nvme'$" /etc/arch-m4/boot.conf; then
+        add_file /usr/lib/m4rch/init-nvme /init 755
+        add_file /etc/arch-m4/boot.conf /etc/nvme-root.conf
+        printf "KERNEL_RELEASE='%s'\n" "$KERNELVERSION" >>"$BUILDROOT/etc/nvme-root.conf"
+        add_binary /usr/bin/modprobe /sbin/modprobe
+        add_module apple_sart
+        add_module nvme_apple
+    else
+        add_file /usr/lib/m4rch/init /init 755
+        add_file /etc/arch-m4/boot.conf /etc/sdboot.conf
+        printf "KERNEL_RELEASE='%s'\nTESTING='0'\n" "$KERNELVERSION" >>"$BUILDROOT/etc/sdboot.conf"
+    fi
     while IFS= read -r firmware; do add_file "$firmware"; done </usr/share/m4rch/initramfs-firmware.list
     add_file /usr/lib/firmware/regulatory.db
     add_file /usr/lib/firmware/regulatory.db.p7s

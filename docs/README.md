@@ -2,6 +2,8 @@
 
 | Guide | Purpose |
 | --- | --- |
+| [Bootloader alignment](bootloader-alignment.md) | Gravity-based stage 2, build and rollback |
+| [Split internal boot](split-boot.md) | Enrolled stage 1 and replaceable ESP boot.bin |
 | [Setup](setup.md) | First installation, building, flashing, enrollment and updates |
 | [Hardware](hardware.md) | Tested devices, limits and useful native checks |
 | [Architecture](architecture.md) | Internal loader, SD UEFI files, packages and boot policy |
@@ -28,3 +30,7 @@ Curated evidence receipts are retained in [evidence/](evidence/):
 
 Raw captures, generated packages, images and machine-specific enrollment
 state are local `out/` artifacts and are excluded from the source repository.
+
+- [Apple boot-stub upgrade](stub-upgrade.md): isolated 25G83 preparation and GPU ABI reference.
+
+- [NVMe root migration](nvme-root.md): storage layout, qualification and fallback plan.

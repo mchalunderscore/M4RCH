@@ -1,0 +1,39 @@
+From f31c5646ccac279d11e128b8c42e968847eb7df2 Mon Sep 17 00:00:00 2001
+From: Janne Grunau <j@jannau.net>
+Date: Fri, 4 Sep 2026 21:22:39 +0200
+Subject: [PATCH] nvme: apple: Don't set a DMA direction for commands without a
+ data transfer
+
+Setting the DMA direction for commands that don't do any transfer likely
+triggered the PRP NULL check for which we needed a chicken bit. That bit
+has disappeared starting with macOS 15 so let's just do this correctly
+instead.
+
+Based on Linux kernel commit 94dd5804938d ("nvme-apple: Don't set a DMA
+direction for commands without a data transfer").
+
+Link: https://lore.kernel.org/asahi/20260806-b4-nvme-fwabi-v1-2-bde19ce8db04@kernel.org/
+Fixes: 50333c94f2de ("nvme: apple: Add driver for Apple NVMe storage controller")
+Signed-off-by: Janne Grunau <j@jannau.net>
+Link: https://patch.msgid.link/20260904-apple-nvme-fwabi-v1-1-f7ede661c469@jannau.net
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+ drivers/nvme/nvme_apple.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/nvme/nvme_apple.c b/drivers/nvme/nvme_apple.c
+index e674eda83445..dc94988e2ff8 100644
+--- a/drivers/nvme/nvme_apple.c
++++ b/drivers/nvme/nvme_apple.c
+@@ -122,7 +122,10 @@ static void apple_nvme_submit_cmd(struct nvme_queue *nvmeq,
+ 	tcb = ((void *)priv->tcbs[nvmeq->qid]) + tail * ANS_NVMMU_TCB_PITCH;
+ 	memset(tcb, 0, sizeof(*tcb));
+ 	tcb->opcode = cmd->common.opcode;
+-	tcb->flags = ANS_NVMMU_TCB_WRITE | ANS_NVMMU_TCB_READ;
++	if (cmd->common.prp1)
++		tcb->flags = ANS_NVMMU_TCB_WRITE | ANS_NVMMU_TCB_READ;
++	else
++		tcb->flags = 0;
+ 	tcb->slot = tail;
+ 	tcb->prpl_len = cmd->rw.length;
+ 	tcb->prp1 = cmd->common.prp1;

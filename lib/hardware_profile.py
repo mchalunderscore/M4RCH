@@ -13,7 +13,7 @@ from common import run, sha256
 
 WALLACE_REVISION = "55f116dd0e0f28d1412c6be728a101f7d861c473"
 OVERLAY = "patches/experimental-hardware.dtsi"
-OVERLAY_SHA256 = "a96790d1e9d91376ddc11917e3134ad68b116b96959a9e4ae11b148555f1e4d9"
+OVERLAY_SHA256 = "fd80ca09cfaa2a17b146c8d206a279e342a066997e75e7a2ab576c56d68bbb79"
 PATCHES = {
     "t6040-dwc3-apple-force-host.patch":
         "84cef2d3be3969bef9b8e4d9aa3683c6774592621acfe3167fd42d0f8a8168cb",

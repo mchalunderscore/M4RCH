@@ -1,0 +1,53 @@
+#!/bin/busybox sh
+# NVMe root: never resize, repartition, or mount an Apple filesystem.
+PATH=/bin:/sbin
+export PATH
+mount -t devtmpfs devtmpfs /dev
+mount -t proc proc /proc
+mount -t sysfs sysfs /sys
+mount -t tmpfs tmpfs /run
+. /etc/nvme-root.conf
+stop() {
+    echo "M4RCH NVME STOP: $*"
+    while :; do setsid cttyhack sh; sleep 1; done
+}
+case "$(tr '\000' '\n' </proc/device-tree/compatible)" in
+    *apple,j614s*) ;; *) stop 'Wrong machine' ;; esac
+if [ -f /etc/nvme-modules ]; then
+    while IFS= read -r module; do
+        echo "M4RCH: loading $module"
+        /sbin/m4rch-insmod "$module"
+        result=$?
+        [ "$result" = 0 ] || stop "Could not load $module (errno/exit $result)"
+    done </etc/nvme-modules
+else
+    /sbin/modprobe nvme_apple || stop 'Cannot load Apple NVMe driver'
+fi
+root=
+for attempt in $(seq 1 30); do
+    for candidate in /dev/nvme*n*p*; do
+        [ -b "$candidate" ] || continue
+        [ "$(blkid -p -s UUID -o value "$candidate")" = "$ROOT_UUID" ] || continue
+        [ -z "$root" ] || stop 'Duplicate root UUID'
+        root=$candidate
+    done
+    [ -n "$root" ] && break
+    sleep 1
+done
+[ -n "$root" ] || stop 'NVMe root not found'
+[ "$(blkid -p -s PART_ENTRY_UUID -o value "$root")" = "$ROOT_PARTITION_UUID" ] || stop 'Wrong root partition'
+[ "$(blkid -p -s TYPE -o value "$root")" = ext4 ] || stop 'Root is not ext4'
+# sysfs partition sizes and starts are always expressed in 512-byte units.
+[ "$(( $(cat /sys/class/block/${root##*/}/start) * 512 ))" = "$ROOT_OFFSET" ] || stop 'Wrong root offset'
+[ "$(( $(cat /sys/class/block/${root##*/}/size) * 512 ))" = "$ROOT_BYTES" ] || stop 'Wrong root size'
+e2fsck -p "$root"
+result=$?
+case "$result" in 0|1) ;; *) stop "Filesystem check failed: $result" ;; esac
+mount -t ext4 -o rw,noatime "$root" /newroot || stop 'Cannot mount root'
+[ "$(uname -r)" = "$KERNEL_RELEASE" ] || stop 'Kernel/initramfs mismatch'
+modules=/newroot/usr/lib/modules/$KERNEL_RELEASE
+[ "$(cat "$modules/pkgbase" 2>/dev/null)" = linux-m4rch ] || stop 'Matching kernel package missing'
+[ -f "$modules/modules.dep" ] || stop 'Missing module index'
+for directory in dev proc sys run; do mount --move /$directory /newroot/$directory || stop "Cannot move $directory"; done
+exec switch_root /newroot /sbin/init
+stop 'switch_root returned'

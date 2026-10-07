@@ -24,6 +24,8 @@ PREVIOUS_BOOT_SHA256='##PREVIOUS_BOOT_SHA256##'
 BOOT_BYTES='##BOOT_BYTES##'
 AUTO_LAUNCH='##AUTO_LAUNCH##'
 INITIAL_ENROLLMENT='##INITIAL_ENROLLMENT##'
+FORCE_ENROLLMENT='##FORCE_ENROLLMENT##'
+STUB_BUILD='##STUB_BUILD##'
 OWNER_SHA256='##OWNER_SHA256##'
 SYSTEM_VERSION_SHA256='##SYSTEM_VERSION_SHA256##'
 INSTALLER_SHA256='##INSTALLER_SHA256##'
@@ -186,6 +188,10 @@ case $BOOT_BYTES in ''|*[!0-9]*) die 'Invalid boot object size.' ;; esac
 [ "$BOOT_BYTES" -gt 0 ] || die 'Empty boot object.'
 printf '%s\n' "$OWNER_SHA256" | grep -Eq '^[a-f0-9]{64}$' || die 'Invalid first-enrollment owner digest.'
 case $INITIAL_ENROLLMENT in 0|1) ;; *) die 'Invalid first-enrollment mode.' ;; esac
+case $FORCE_ENROLLMENT in 0|1) ;; *) die 'Invalid forced enrollment mode.' ;; esac
+if [ "$FORCE_ENROLLMENT" = 1 ]; then
+    printf '%s\n' "$STUB_BUILD" | grep -Eq '^[0-9]{2}[A-Z][0-9]+$' || die 'Invalid bound stub build.'
+fi
 case $mode in
     enroll) [ "$INITIAL_ENROLLMENT" = 1 ] || die 'This is an update script; use --update.' ;;
     update) [ "$INITIAL_ENROLLMENT" = 0 ] || die 'First enrollment requires --enroll.' ;;
@@ -297,7 +303,7 @@ if [ "$mode" = check ]; then
     exit 0
 fi
 
-if [ "$receipt_hash" = "$BOOT_SHA256" ]; then
+if [ "$receipt_hash" = "$BOOT_SHA256" ] && [ "$FORCE_ENROLLMENT" = 0 ]; then
     finish_metadata
     printf '%s\n' 'This fixed SD loader is already enrolled; picker metadata is complete.'
     offer_reboot
@@ -314,10 +320,10 @@ check_metadata
 
 # Apple's tools request the existing owner credentials; no passwords in argv.
 # Only a new installation needs its first permissive/custom-boot policy.
-if [ "$mode" = enroll ] && [ -z "$receipt_hash" ]; then
+if { [ "$mode" = enroll ] && [ -z "$receipt_hash" ]; } || [ "$FORCE_ENROLLMENT" = 1 ]; then
     bputil -nc -v "$VGID" || die 'Initial policy authorization failed; no loader was enrolled.'
 fi
-if [ "$receipt_hash" != "$BOOT_SHA256" ]; then
+if [ "$receipt_hash" != "$BOOT_SHA256" ] || [ "$FORCE_ENROLLMENT" = 1 ]; then
     kmutil configure-boot -c "$bundle" --raw --entry-point 2048 \
         --lowest-virtual-address 0 -v "$system_dir" ||
         die 'Kernel enrollment failed. Retry from its paired Recovery; the script has not switched its picker metadata.'
@@ -326,6 +332,12 @@ if [ "$receipt_hash" != "$BOOT_SHA256" ]; then
     receipt_tmp=$(mktemp "$resources/.enrolled.XXXXXX") || die 'Cannot create atomic enrollment receipt.'
     printf '%s\n%s\n' "$VGID" "$BOOT_SHA256" > "$receipt_tmp"
     mv "$receipt_tmp" "$receipt" || die 'Cannot record completed enrollment.'
+    if [ "$FORCE_ENROLLMENT" = 1 ]; then
+        [ ! -L "$resources/stub-enrolled.txt" ] || die 'Unexpected stub enrollment receipt link.'
+        stub_receipt=$(mktemp "$resources/.stub-enrolled.XXXXXX") || die 'Cannot create stub receipt.'
+        printf '%s\n%s\n%s\n' "$VGID" "$BOOT_SHA256" "$STUB_BUILD" > "$stub_receipt"
+        mv "$stub_receipt" "$resources/stub-enrolled.txt" || die 'Cannot record stub enrollment.'
+    fi
     receipt_tmp=
     sync
 fi
