@@ -1,3 +1,36 @@
+# Application observation passed; native firmware ABI corroboration — 2026-10-07
+
+Current GPU-contract boot 38792891-2fb1-4c7c-92eb-84e6b530125b; WFI Y.
+Cold HELLO/map/crashlog, IOP/AP ON and START32/33 passed.250ms observation
+received zero application messages. Exact shutdown ACKs, stop and normal unload
+passed. No probe resources retained; no reboot needed for cleanup. Silence does
+not prove readiness or execution. No initialization graph/work submitted.
+
+OFFLINE BREAKTHROUGH: captured loaded RTKit3255.160.4 TEXT independently
+corroborates document G16S identifier0c8aa322039604c0. MOVZ/MOVK at offset2f254
+construct it;2f250 loads root firstu64;2f264 compares;2f268 branches on mismatch.
+Root copying reaches finalu64+c0, consistent with c8 bytes. Copied root+18 main
+pointer is stored at firmware global18e4c0. Routine3734 loads main,3738 adds471,
+373c dereferences power pointer.537c loads main,5380 adds254,5384 dereferences
+block+18. These are static code findings, not initialization acceptance proof.
+Earlier contiguous-byte search gave no match because constants are instruction
+immediates. Snapshot hash and instruction signatures recorded for reproducibility.
+
+NEXT: build explicit G16S initialization-object/allocation plan from this evidence;
+qualify remaining hwdata/RegionC/control-object layouts and unknown extra main
+field+240. Maintain our16-core3db/3db topology and independent cluster voltages.
+Do not transplant donor single-cluster builder, blindly shift all unknown fields,
+or publish root until mapped backing, cache/lifetime handling and object extents
+are concretely reviewable. Normal T6040 startup remains gated. Do not request
+another reboot merely to repeat app observation. Warm wake still unresolved;
+next actual cold publication experiment will require reboot once prepared.
+
+Evidence docs/evidence/2026-10-07-gravity-gpu-app-observation.json and
+2026-10-07-gravity-gpu-firmware-interface-audit.json. Reproduce static audit using
+experiments/t6040-gpu/audit-firmware-interface.py on the captured TEXT snapshot.
+Full disassembly/logs retained in out/gpu-gravity-contract. Same default1 kernel;
+owner "r" means rebooted and ready. Earlier checkpoints follow.
+
 # Application START and shutdown passed; table audit captured — 2026-10-07
 
 Current GPU-contract boot 9a7d7e28-5156-4a4b-aeb5-c24bbcd50c5a; WFI Y.

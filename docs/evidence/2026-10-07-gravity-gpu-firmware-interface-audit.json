@@ -1,0 +1,37 @@
+{
+  "text_sha256": "f09648aa1dee7d1d1783649bc8d8321d31e5f2fb84240b588b45381932e93600",
+  "g16s_identifier_sequences": [
+    {
+      "offset": "0x2f254",
+      "register": 10,
+      "identifier": "0xc8aa322039604c0",
+      "instructions": [
+        "0xd280980a",
+        "0xf2a072ca",
+        "0xf2d4644a",
+        "0xf2e1914a"
+      ]
+    }
+  ],
+  "qualification": "Static instruction evidence only; does not establish successful firmware initialization.",
+  "qualified_sample_findings": {
+    "root_interface": "Root first u64 loaded at 2f250; compared with reconstructed G16S identifier at 2f264; mismatch branches at 2f268.",
+    "root_copy_extent": "Root copied through final u64 at +c0 (2f2a4), consistent with c8 bytes.",
+    "main_pointer_provenance": "Copied root+18 supplies x19; stored at firmware global 18e4c0 (2f2f8).",
+    "main_power_pointer": "3734 loads that main pointer;3738 adds471;373c dereferences u64.",
+    "main_shared_object_block": "537c loads main pointer;5380 adds254;5384 dereferences block+18 (main26c)."
+  },
+  "instruction_checks": {
+    "0x2f250": "0xf9400109",
+    "0x2f264": "0xeb0a013f",
+    "0x2f268": "0x54003d61",
+    "0x2f2a4": "0xf940610a",
+    "0x2f2f8": "0xf9026293",
+    "0x3734": "0xf9426108",
+    "0x3738": "0x9111c508",
+    "0x373c": "0xf9400108",
+    "0x537c": "0xf9426394",
+    "0x5380": "0x91095289",
+    "0x5384": "0xf9400d36"
+  }
+}
