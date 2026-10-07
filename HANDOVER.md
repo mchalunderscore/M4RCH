@@ -1,3 +1,27 @@
+# GPUC004 primary table-register routine returned; channel cursor NULL
+
+Boot3c210c1d-4b3d-4f02-bdb3-f642f19baf8c, regularGPUC001 and USB all3
+providers/PD bindings present before/after. Gate1 shadow walk passed;
+gate2 returned normally. New2528-byte valid/new Crg8 task2 PC66f8,FAR0,
+ESR96000004. LDRW through main+20 NULL cursor. Caller379a0 follows
+returned call15e60: previously faulting primary table-register routine completed
+on this invocation. This is a concrete milestone, not full initialization.
+AFR all16 completion still unproven. Resources pinned; reboot needed for next
+publication. No installed kernel/initramfs/default change.
+
+NEXT: empty-channel structural fixture for12 work channels plus control.
+Native firmware66ec compares first/third cursor pointers of each32-byte
+record beginningmain+20; main+1a0/1b0 control comparison follows. Three
+independent32-bit cursors plus ring pointer matches donor serialization, but
+T6040 real work cursors are hardware-backed; RAM fixture only diagnoses
+structural startup, not production queue implementation or submission.
+Validate empty/nonempty cursor checks against matching TEXT offline; never
+advance a ring or submit jobs. Other receive-channel setup remains unqualified.
+Raw capture out/gpu-gravity-contract/asc-graph-init/boot-3c210c1d-4b3d-4f02-bdb3-f642f19baf8c.
+Evidence docs/evidence/2026-10-07-gpuc004-table-result.json.
+
+---
+
 # Next GPU batch built; normal Linux reboot required
 
 GPUC004 trial results below preserved in commitc050fe6 and raw boot capture.
