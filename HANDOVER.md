@@ -1,3 +1,34 @@
+# Guarded GPU binding passed; shutdown trial needs reboot — 2026-10-07
+
+Current boot 7.1.13-m4rch-gpu-contract, build ID
+1c0b2b5b48a59316f75940aa4049a5f671eca95c. Owner reports peripherals normal;
+WFI Y. T6040 normal-start guard refused before MMIO/firmware builders. Three
+powered Rust identification cycles bound successfully, returned ID 0x0a031100,
+counts 0011020a/00040404, clusters 400c0c02. Each released device, driver,
+resource overlay and GFX power normally; suspend result 0. No firmware startup
+in those three cycles. Captured masks remain metadata, not new native fuse reads.
+
+Then a bounded buffer-free shutdown probe negotiated HELLO12 and both endpoint
+maps. AP QUIESCED request received no response within two seconds; IOP SLEEP
+was not attempted. Core stop readback control0/status6e passed. asc_shutdown is
+intentionally pinned with power/mappings retained. REBOOT REQUIRED. Never force
+module removal or attempt a second start in this boot. No endpoint starts, buffer
+addresses, initialization graph or rendering commands were supplied.
+
+NEXT: normal Linux reboot into the same default1 GPU-contract kernel. No new
+kernel build or macOS handoff required. Qualify advertised endpoint1/crashlog
+lifecycle and IOP ON acknowledgement before retrying AP shutdown. Donor RTKit
+starts system endpoints explicitly to complete boot; our minimal exchange omitted
+that step. This is a candidate explanation for absent AP ACK, not proven causality.
+Keep normal startup gated and validate firmware-requested buffer bounds against
+fresh reserved-memory metadata before acknowledging any buffer. Avoid new DMA
+addresses until that contract is established. Verified teardown remains priority.
+
+Receipts: docs/evidence/2026-10-07-gravity-gpu-binding.json and
+2026-10-07-gravity-gpu-shutdown.json. Experimental source:
+experiments/t6040-gpu/asc-shutdown; logs out/gpu-gravity-contract/native-boot
+and asc-shutdown. Earlier staged checkpoint remains below for rollback details.
+
 # Guarded Gravity GPU framework — staged reboot checkpoint, 2026-10-07
 
 NEXT BOOT: 7.1.13-m4rch-gpu-contract, isolated linux-m4rch-gpu-contract package.
