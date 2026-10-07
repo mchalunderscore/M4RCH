@@ -1,3 +1,40 @@
+# Minimal G16S root reader trial ready; reboot boundary — 2026-10-07
+
+Current boot38792891-2fb1-4c7c-92eb-84e6b530125b, same GPU-contract kernel.
+NEW source experiments/t6040-gpu/asc-root-envelope; matching module and helpers
+built under out/gpu-gravity-contract. Native allocation-only gate1 passed three
+runs with normal unload. Defaultgate0 refusal confirmed. Fresh ADT, bootstrap
+TEXT/DATA translations, target slot2 empty, and parser firmware qualified using
+read-only samplers; all helpers unloaded. No root mapping/publication performed.
+Evidence docs/evidence/2026-10-07-gravity-gpu-root-envelope-preflight.json.
+
+NEXT requires a normal reboot for cold ASC status6a (this boot already slept).
+Do not replay START from6e. No new kernel/package/default-entry changes needed.
+After owner "r", validate/run:
+sudo python experiments/t6040-gpu/run-root-envelope.py out/gpu-gravity-contract --run
+Save work. This sends a minimal root with correct G16S ID but disabled host
+allocations (+2c zero), intentionally expecting firmware's specific early
+rejection BEFORE main/RegionC dereferences. It tests owned backing/table/cache/
+transport/interface, not initialization or acceleration. Parser's error string
+and branch checked in captured TEXT. Transmission or silence is not success.
+Raw before/after DATA retained for structured crashlog interpretation. Probe
+retains pages/PTE mapping/power after publication and pins until FOLLOWING
+reboot; never force-remove. Host hang possible. Read README for exact bounds.
+
+New firmware finding: current TEXT SHA72beef809ef62a6a7ba9862cf60595135811bbedbb732346571f64818744e199
+versus historical f09648... differs in only14 bytes inside two tagged8-byte
+payloads at59841 (GKTS) and59924 (ECAP), lengths8. Meaning not established.
+All other bytes match. Normalized SHA190cef1946a23dfbde180592629631c3b28d0509a17eb76108b7c9a52accd9ac.
+firmware_text_contract.py checks exact image outside only those payloads plus
+exact tag/length; changed parser instruction rejected in verification. Fresh
+instruction audit evidence2026-10-07-gravity-gpu-firmware-interface-current.json.
+
+Full-graph caution: ADT perf-state-count16, gpu-num-perf-states15,
+perf-state-table-count2; perf-states/perf-states-sram256 bytes each and
+perf-states1/perf-states-sram1 128 each. Donor builder/standalone voltage note
+11-row assumptions need explicit conversion qualification, not truncation.
+This minimal rejection root contains no hardware-data/voltage table.
+
 # G16S nested pointers qualified; explicit graph plan — 2026-10-07
 
 Offline captured-firmware audit now independently corroborates two more paths:
