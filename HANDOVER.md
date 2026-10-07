@@ -1,3 +1,36 @@
+# Crashlog boot and shutdown passed; explicit wake next — 2026-10-07
+
+Owner shorthand: a message consisting of "r" means rebooted and ready to continue.
+Current GPU-contract boot 518f3863-eb8c-4593-9378-b7686c41706d; fresh ADT
+captured with matching-kernel read-only helper, then helper unloaded; WFI Y.
+
+Cold bounded HELLO12/map exchange + system endpoint1 start succeeded. Firmware
+requested crashlog buffer 0x10001de4000+0x8000. Checked wholly within this boot's
+reserved DATA range 0x10001d44000+0x138000, page aligned and disjoint from Linux
+System RAM; echoed firmware's own offer. No new DMA allocation or RAM write.
+IOP ON20, AP ON20, AP QUIESCED10 and IOP SLEEP1 ACKs all observed. Core stop
+control0/status6e and empty RX FIFO allowed normal module unload. One successful
+crashlog-only retirement, no application endpoints/initialization graph/rendering.
+
+Repeat with ASC START alone from status6e produced no HELLO in four seconds.
+Resources retained by asc_crashlog; REBOOT REQUIRED. Never force removal.
+The low status bits alone do not distinguish fresh status6a from stopped/sleeping
+status6e. Do not label status6e a fresh cold boot. Driver C apple_rtkit_wake uses
+IOP INIT220; next prepared probe adds that explicit wake sequence, gated separately.
+It accepts cold status6a, or warm6e only with wake_gate=1. Not yet run natively.
+
+NEXT: normal Linux reboot, same default1 kernel. Recapture/revalidate firmware
+DATA bounds and bind helper to new boot/build/module hashes. First qualify cold
+boot/shutdown with asc-crashlog-wake; after successful unload try explicit warm
+wake_gate=1. Retain on failure. No kernel build or macOS handoff required. Keep
+normal T6040 startup gated. Successful shutdown does not yet prove repeatable
+restart, full driver teardown or acceleration.
+
+Receipt: docs/evidence/2026-10-07-gravity-gpu-crashlog-shutdown.json.
+Sources experiments/t6040-gpu/asc-crashlog and asc-crashlog-wake. Logs/artifacts
+out/gpu-gravity-contract counterparts. Earlier checkpoints follow; rollback
+remains /boot/GPUC001/grub-before.cfg -> /boot/grub/grub.cfg, sync.
+
 # Guarded GPU binding passed; shutdown trial needs reboot — 2026-10-07
 
 Current boot 7.1.13-m4rch-gpu-contract, build ID
