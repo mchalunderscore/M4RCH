@@ -1,3 +1,24 @@
+# Next GPU batch built; normal Linux reboot required
+
+GPUC004 trial results below preserved in commitc050fe6 and raw boot capture.
+Following candidate adds only existing primary leaves288010000/288020000 RW:
+STRX160a8 primary+21108 and selectorSTRX160d0 primary+103a8, with related
+register writes on the same pages. Total leaves unchanged100, objects21;
+11 ordinary SGX +16 AFR +2 platform writable. All other grants preserved.
+Nine tests pass; W=1 build passes; no second native trial on this pinned boot.
+Firmware descriptor AFR range semantics still experimental; no success claim.
+Candidate receipt docs/evidence/2026-10-07-gpuc004-next-candidate.json,
+artifacts out/gpu-gravity-contract/gpuc004-next-candidate. Raw successful build
+and attempted-trial module/graph/source/receipt archived separately.
+
+NEXT USER ACTION: normal Linux-to-Linux reboot. GRUB default1/regularGPUC001
+unchanged; promoted USB package7.1.13-2 retained. Do not force-unload pinned
+ASC graph resources or attempt another firmware boot before reboot. After
+reboot verify USB baseline then use rebuilt run-root-envelope --graph --run.
+No macOS handoff needed for current Linux qualification path.
+
+---
+
 # GPUC004 segmented AFR trial returned — 2026-10-07
 
 Regular promoted USB baseline verified before the trial. All3 role providers
@@ -36,7 +57,7 @@ PD controllers0-0a/0-0c/2-0c bound; successful host role transitions observed
 on382280000/38a280000/392280000 during user's port checks. Prior0-0a ENODEV
 not reproduced. Empty devices_deferred capture. Current lsusb may be empty
 because last logged change returnedcharging-only roleNONE; use transitionlogs
-and user's device tests, not root-hub presence alone. No GPU trial yet.
+and user's device tests, not root-hub presence alone. No GPU trial at this pre-trial USB snapshot.
 
 Evidence docs/evidence/2026-10-07-usb-regular-boot-verified.json; raw capture
 out/usb-role-provider/boot-6a0a6204-876f-4fd5-9330-60efe15d5186. USB correction

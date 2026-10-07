@@ -24,7 +24,7 @@ class BatchTests(unittest.TestCase):
  def test_real_banks_and_narrow_write_permissions(self):
   self.assertNotIn('ram_register_surrogate',self.receipt)
   writable=[v['physical'] for v in self.receipt['mmio_leaves'] if not v['readonly']]
-  self.assertEqual(writable,[0x288004000,0x288d04000,0x288d10000,0x288d40000,0x288d44000,0x288d4c000,0x288e00000,0x288e1c000,0x288e40000,0x502414000,0x5003d8000]+[base+offset for base in (0x28b000000,0x28b200000,0x28b400000,0x28b600000) for offset in (0,0x10000,0x20000,0x30000)])
+  self.assertEqual(writable,[0x288004000,0x288010000,0x288020000,0x288d04000,0x288d10000,0x288d40000,0x288d44000,0x288d4c000,0x288e00000,0x288e1c000,0x288e40000,0x502414000,0x5003d8000]+[base+offset for base in (0x28b000000,0x28b200000,0x28b400000,0x28b600000) for offset in (0,0x10000,0x20000,0x30000)])
   h=next(o['arena_offset'] for o in self.receipt['objects'] if o['name']=='hardware')
   for slot,physical in [(33,0x288d44000),(35,0x288e00000)]:
    values=struct.unpack_from('<QQIIQI',self.data,h+0x640+slot*0x28)
@@ -49,6 +49,8 @@ class BatchTests(unittest.TestCase):
   self.assertEqual(struct.unpack_from('<QQIIQI',self.data,h+0x640+20*0x28),(0x28b000000,0xfffffc2001c00000,0x100000,0x40000,0,1))
   afr=[v for v in self.receipt['mmio_leaves'] if v['gpu_va']>=0xfffffc2001c00000]
   self.assertEqual(len(afr),64)
+  descriptor=next(v for v in self.receipt['mmio_descriptors'] if v['slot']==20)
+  self.assertEqual(len(descriptor['effective_writable_pages']),16)
   for i,v in enumerate(afr):
    self.assertEqual(v['gpu_va'],0xfffffc2001c00000+i*0x4000)
    self.assertEqual(v['physical'],(0x28b000000,0x28b200000,0x28b400000,0x28b600000)[i//16]+(i%16)*0x4000)
@@ -57,6 +59,12 @@ class BatchTests(unittest.TestCase):
   primary=next(v for v in self.receipt['mmio_leaves'] if v['physical']==0x288004000)
   self.assertFalse(primary['readonly'])
   self.assertTrue(next(v for v in self.receipt['mmio_leaves'] if v['physical']==0x288000000)['readonly'])
+ def test_primary_table_register_batch(self):
+  leaves={v['physical']:v for v in self.receipt['mmio_leaves']}
+  for offset in (0x21108,0x21110,0x21118,0x21120,0x21008,0x211e0,0x103a8):
+   self.assertFalse(leaves[(0x288000000+offset)&~0x3fff]['readonly'])
+  for pa in (0x288000000,0x288008000,0x28800c000,0x288014000,0x288018000,0x28801c000):
+   self.assertTrue(leaves[pa]['readonly'])
  def test_profile_a_columns_and_tail(self):
   h=next(o['arena_offset'] for o in self.receipt['objects'] if o['name']=='hardware')
   self.assertEqual(struct.unpack_from('<II',self.data,h+0x1008),(125,125))
