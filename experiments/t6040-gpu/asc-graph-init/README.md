@@ -25,3 +25,11 @@ The subsequent read-only batch passed that access, set statusA+0x14 to one,
 and faulted on missing slot33 FenderRegsBumper at offsets0xa0/0xa4. See
 docs/evidence/2026-10-07-gravity-gpu-readonly-register-result.json.
 Mapped candidates are not individually validated merely because execution advanced.
+
+Current diagnostic variant adds one owned read-only RAM page for slot33. It
+contains the captured16-core mask0xf6fdb and is not a hardware Bumper mapping.
+The helper patches the descriptor physical field to that owned page before
+publication; hardware mask-programming input fields remain zero.22 object/RAM
+pages plus24 read-only device pages are mapped. The RAM-surrogate native run
+passed the mask consumer, then faulted writing missing slot35+0x1704.
+Do not convert the surrogate into a production register map.

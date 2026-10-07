@@ -4,6 +4,7 @@ import struct,hashlib
 from pathlib import Path
 import adt,contract
 PAGE=0x4000
+MASK_FIXTURE=0x3db|(0x3db<<10)
 ROWS=[(17,0,0x20000),(26,0xd04000,0x8000),(27,0xd0d000,0x1000),
       (28,0xd58000,0x8000),(29,0xd10000,0x4000),(31,0xd40000,0x4000),
       (32,0xd60000,0x8000),(40,0xe1c000,0x4000),(22,0x1000000,0x8000),
@@ -15,7 +16,23 @@ def extend(arena,receipt,raw):
     windows=[(pa+0x200000000,size) for pa,size in struct.iter_unpack('<QQ',gpu['reg'])]
     if windows!=[(0x288000000,0x3758000),(0x288d00000,0x16c000)]:raise ValueError('Changed SGX apertures')
     hardware=next(o for o in receipt['objects'] if o['name']=='hardware')['arena_offset']
-    base=int(receipt['base'],16);cursor=len(arena);leaves=[];descriptors=[];result=bytearray(arena)
+    base=int(receipt['base'],16);leaves=[];descriptors=[];result=bytearray(arena)
+    # Explicit RAM surrogate, never a claimed hardware-register address.
+    model_offset=len(result);result.extend(bytes(PAGE))
+    struct.pack_into('<III',result,model_offset+0xa0,MASK_FIXTURE,0,0)
+    # Nonzero placeholder for parser's physical-address gate; patched to owned
+    # page PA by helper before publication. No physical0x4000 mapping exists.
+    struct.pack_into('<QQIIQI',result,hardware+0x640+33*0x28,
+                     PAGE,base+model_offset,PAGE,PAGE,0,0)
+    receipt['objects'].append(dict(name='bumper_ram_surrogate',arena_offset=model_offset,
+        gpu_va=hex(base+model_offset),input_bytes=PAGE,reserved_bytes=PAGE,
+        layout_evidence='diagnostic RAM fixture; NOT native Bumper register mapping',
+        complete_extent_qualified=False))
+    receipt['ram_register_surrogate']=dict(page_index=model_offset//PAGE,
+        descriptor_physical_arena_offset=hardware+0x640+33*0x28,
+        packed_mask=hex(MASK_FIXTURE),readonly=True,
+        qualification='ADT/macOS-captured mask supplied in RAM only. Native Bumper address and mask programming remain unverified; hardware mask fields2560/2568 stay zero to skip programming.')
+    cursor=len(result)
     for slot,relative,size in ROWS:
         physical=windows[0][0]+relative;page=physical&~(PAGE-1);offset=physical&(PAGE-1)
         length=(offset+size+PAGE-1)&~(PAGE-1)
@@ -42,7 +59,7 @@ def extend(arena,receipt,raw):
     for obj in receipt['objects']:
         start=obj['arena_offset'];receipt_bytes=result[start:start+obj['input_bytes']]
         obj['input_sha256']=hashlib.sha256(receipt_bytes).hexdigest()
-    receipt.update(device_access=True, arena_sha256=hashlib.sha256(result).hexdigest(),mmio_descriptors=descriptors,
+    receipt.update(device_access=True, arena_bytes=len(result), arena_sha256=hashlib.sha256(result).hexdigest(),mmio_descriptors=descriptors,
                    mmio_leaves=leaves,mapped_pages=cursor//PAGE,voltage_adt_sha256=hashlib.sha256(raw).hexdigest(),
                    voltage_input_sha256={k:hashlib.sha256(gpu[k]).hexdigest() for k in ['perf-states','perf-states-sram']},
                    voltage_assignment='Only qualified profile-A core/SRAM cluster columns populated; profile-B and frequency assignment unchanged',

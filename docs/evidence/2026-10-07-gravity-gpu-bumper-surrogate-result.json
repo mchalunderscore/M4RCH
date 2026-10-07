@@ -1,0 +1,175 @@
+{
+  "boot_id": "54817cb4-dc3e-46a6-99c3-432ea842b99e",
+  "capture": "out/gpu-gravity-contract/asc-graph-init/boot-54817cb4-dc3e-46a6-99c3-432ea842b99e",
+  "capture_hashes": {
+    "data-before.bin": "3a5b8cc02d184f78c42df9bd0cb33c6645ee49b5e3e871c0d14b4535e87efd17",
+    "objects-before.bin": "0946aa265dc8ff38735708ffff812993699bf59fe3ed54d4722c527357a9e0cb",
+    "validation.json": "b0d15cddb43eb127d9c194d5e080e9fc69aa01280baa68c5023eed1614fefbae",
+    "dmesg-after.log": "f0e734704a0664a02d8e92edd562a298fc2716b37b83180a69521bc25021566c",
+    "text.bin": "cb337ea4a0b4ba7f52bebd6cb43bd8dc7a0a1cb2fb5e090b260ed468768362a8",
+    "pagetables.bin": "8a39d2abd3999ab73c34db2476849cddf303ce389b35826850f9a700589b4a90",
+    "boot.adt": "06f01aad3cc48970fcfe74fe9a81e60ef3f7f95e3746749db50de1b916ef3fa9",
+    "data-after.bin": "a918e580303768a01671030397ea6528908311f7cda268a188e1e06e340da1e9",
+    "attempt.json": "ea3fde6767093ded4cafb0a3511912960dfdf823d736a65177b499fe719d5af1",
+    "objects-after.bin": "dda115cc9272f6d9345bf25de45c495972516248a7f58f65ea236395c203bd3a",
+    "dmesg-before.log": "955a066966ee189997488deeb8cb7bdd05986a515eef1e62ee71425212293877"
+  },
+  "decoder": {
+    "boot_id": "54817cb4-dc3e-46a6-99c3-432ea842b99e",
+    "data_before_sha256": "3a5b8cc02d184f78c42df9bd0cb33c6645ee49b5e3e871c0d14b4535e87efd17",
+    "data_after_sha256": "a918e580303768a01671030397ea6528908311f7cda268a188e1e06e340da1e9",
+    "crashlog_offset": "0xa0000",
+    "crashlog_bytes": 2544,
+    "version": 771,
+    "flags": 2052,
+    "footer_valid": true,
+    "sections": [
+      {
+        "offset": "0x20",
+        "fourcc": "Cver",
+        "bytes": 96,
+        "text": ""
+      },
+      {
+        "offset": "0x80",
+        "fourcc": "Ctim",
+        "bytes": 32
+      },
+      {
+        "offset": "0xa0",
+        "fourcc": "Crg8",
+        "bytes": 864,
+        "registers": {
+          "x0": "0xfffffc2000133118",
+          "x1": "0xfffffc00001800e8",
+          "x2": "0x0",
+          "x3": "0x0",
+          "x4": "0x0",
+          "x5": "0x0",
+          "x6": "0x0",
+          "x7": "0x0",
+          "x8": "0x0",
+          "x9": "0x0",
+          "x10": "0xfffffc000018bb98",
+          "x11": "0x3ff00000",
+          "x12": "0xf6c00",
+          "x13": "0x0",
+          "x14": "0x0",
+          "x15": "0x0",
+          "x16": "0xfffffc00000393f4",
+          "x17": "0xfffffc00000393e8",
+          "x18": "0x0",
+          "x19": "0x0",
+          "x20": "0xfffffc2000130000",
+          "x21": "0xfffffc000018b000",
+          "x22": "0xfffffc000018e000",
+          "x23": "0xfffffc000018e000",
+          "x24": "0xfffffc2000135b6c",
+          "x25": "0xfffffc000018e000",
+          "x26": "0xa",
+          "x27": "0xfffffc0000087668",
+          "x28": "0x1",
+          "x29": "0xfffffc00001800d0",
+          "x30": "0xfffffc000003a82c"
+        },
+        "sp": "0xfffffc0000180010",
+        "pc": "0xfffffc000003963c",
+        "psr": "0x60000004",
+        "far": "0x1704",
+        "esr": "0x96000044"
+      },
+      {
+        "offset": "0x400",
+        "fourcc": "Ccst",
+        "bytes": 48,
+        "task": 6,
+        "unknown": 536870912,
+        "addresses": [
+          "0xfffffc000003963c",
+          "0xfffffc0000038f9c"
+        ]
+      },
+      {
+        "offset": "0x430",
+        "fourcc": "CasC",
+        "bytes": 80
+      },
+      {
+        "offset": "0x480",
+        "fourcc": "Cmbx",
+        "bytes": 416
+      },
+      {
+        "offset": "0x620",
+        "fourcc": "Crtk",
+        "bytes": 688
+      },
+      {
+        "offset": "0x8d0",
+        "fourcc": "Ccdp",
+        "bytes": 128
+      },
+      {
+        "offset": "0x950",
+        "fourcc": "Cpct",
+        "bytes": 80
+      },
+      {
+        "offset": "0x9a0",
+        "fourcc": "Csta",
+        "bytes": 48
+      },
+      {
+        "offset": "0x9d0",
+        "fourcc": "CLHE",
+        "bytes": 32,
+        "form": "exact repeated header"
+      }
+    ],
+    "expected_rejection": false,
+    "parser_callsite_present": false,
+    "crashlog_newly_written": true,
+    "qualification": "Structured crashlog decoding only; interpret registers/stack with matching instructions and independent object capture. No initialization or rendering success established."
+  },
+  "counts": {
+    "object_and_surrogate_pages": 22,
+    "device_pages_readonly": 24,
+    "owned_tables": 2,
+    "mapped_virtual_pages": 46
+  },
+  "diagnostic_surrogate": {
+    "page_index": 21,
+    "descriptor_physical_arena_offset": 35688,
+    "packed_mask": "0xf6fdb",
+    "readonly": true,
+    "qualification": "ADT/macOS-captured mask supplied in RAM only. Native Bumper address and mask programming remain unverified; hardware mask fields2560/2568 stay zero to skip programming."
+  },
+  "observed_firmware_masks": {
+    "0x18bb60": "0xf6fdb",
+    "0x18bb70": "0x3db",
+    "0x18bb80": "0xf6c00"
+  },
+  "bumper_cached_virtual": "0xfffffc2000154000",
+  "bumper_surrogate_unchanged": true,
+  "hardware_descriptor_diff_attribution": "Changes+b69..b6d are helper patching the owned physical PA before publication, not evidence of firmware changing hardware settings.",
+  "next_blocker": {
+    "slot": 35,
+    "name": "FenderRegsDFenderMGPUCfg",
+    "cached_virtual_field": "0x18f9a0",
+    "cached_virtual_value": "0x0",
+    "access": "32-bit write zero at+0x1704",
+    "pc": "0xfffffc000003963c",
+    "far": "0x1704",
+    "esr": "0x96000044",
+    "physical_address": "unknown"
+  },
+  "instruction_checks": {
+    "0x39634": "0xd0000aa8",
+    "0x39638": "0xf944d108",
+    "0x3963c": "0xb917051f",
+    "0x39640": "0xb9578109"
+  },
+  "qualification": "Native firmware consumed host-supplied mask in owned RAM, matching offline instruction model. No Bumper hardware identity/programming, full initialization or rendering established. No speculative-bank scan repeated.",
+  "reboot_required": true,
+  "user_smoke": "Everything normal"
+}

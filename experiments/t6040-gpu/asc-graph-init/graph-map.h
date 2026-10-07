@@ -10,6 +10,7 @@
 #define TABLE_BYTES 0x40000
 #define PA_MASK (GENMASK_ULL(41,14))
 #define FW_MMIO_RO (BIT_ULL(55) | BIT_ULL(10) | BIT_ULL(6) | 4ULL | 3ULL)
+#define FW_RAM_RO (BIT_ULL(55) | BIT_ULL(10) | BIT_ULL(6) | 8ULL | 3ULL)
 #define FW_GRAPH_RW (BIT_ULL(55) | BIT_ULL(54) | BIT_ULL(10) | BIT_ULL(6) | 8ULL | 3ULL)
 static struct page *owned[ARENA_OBJECT_PAGES + 2]; /* Generated candidate backing plus two tables. */
 static u64 *bootstrap, *borrowed_l1, *target_page, *target_slot;
@@ -68,9 +69,15 @@ static int root_prepare(bool install)
  l1=page_address(owned[0]);l2=page_address(owned[1]);
  l1[(ROOT_VA>>25)&2047]=page_to_phys(owned[1])|3;
  for (i=0;i<ARENA_OBJECT_PAGES;i++) {
-  l2[((ROOT_VA>>14)&2047)+i]=page_to_phys(owned[2+i])|FW_GRAPH_RW;
+  l2[((ROOT_VA>>14)&2047)+i]=page_to_phys(owned[2+i])|(i==RAM_REGISTER_PAGE?FW_RAM_RO:FW_GRAPH_RW);
   memcpy(page_address(owned[2+i]),graph_bytes+i*PAGE_SIZE,PAGE_SIZE);
  }
+ if (RAM_REGISTER_PAGE>=ARENA_OBJECT_PAGES ||
+     RAM_REGISTER_DESC_OFFSET%PAGE_SIZE>PAGE_SIZE-8 ||
+     RAM_REGISTER_DESC_OFFSET/PAGE_SIZE>=ARENA_OBJECT_PAGES) goto fail_root;
+ put_unaligned_le64(page_to_phys(owned[2+RAM_REGISTER_PAGE]),
+     (u8 *)page_address(owned[2+RAM_REGISTER_DESC_OFFSET/PAGE_SIZE])+RAM_REGISTER_DESC_OFFSET%PAGE_SIZE);
+ pr_info("m4rch graph-init: slot33 uses READ-ONLY RAM surrogate, not native Bumper mapping\n");
  for (i=0;i<ARRAY_SIZE(mmio_leaves);i++) {
   u64 pa=mmio_leaves[i].physical,va=mmio_leaves[i].gpu_va;
   if ((pa&~PA_MASK) || va!=ROOT_VA+(ARENA_OBJECT_PAGES+i)*PAGE_SIZE ||
@@ -88,6 +95,7 @@ static int root_prepare(bool install)
  if ((l1[(ROOT_VA>>25)&2047]&PA_MASK)!=page_to_phys(owned[1])) goto fail_root;
  for (i=0;i<ARENA_OBJECT_PAGES;i++)
   if ((l2[((ROOT_VA>>14)&2047)+i]&PA_MASK)!=page_to_phys(owned[2+i])) goto fail_root;
+ if (l2[((ROOT_VA>>14)&2047)+RAM_REGISTER_PAGE]!=(page_to_phys(owned[2+RAM_REGISTER_PAGE])|FW_RAM_RO)) goto fail_root;
  for (i=0;i<ARRAY_SIZE(mmio_leaves);i++)
   if (l2[(mmio_leaves[i].gpu_va>>14)&2047]!=(mmio_leaves[i].physical|FW_MMIO_RO))
    goto fail_root;

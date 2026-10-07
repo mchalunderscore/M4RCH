@@ -1,3 +1,52 @@
+# Bumper RAM diagnostic passes; real slot33/35 mappings needed — 2026-10-07
+
+Boot54817cb4-dc3e-46a6-99c3-432ea842b99e recovered from prior speculative-bank
+hang. Scanner remains quarantined and was NOT repeated. Current kernel/default,
+original boot.bin and continuous WFI unchanged.
+
+NEW FINDING: Bumper mask registers are programmed by firmware from hardware
+fields+2560/+2568 (writes+a0/+a4/+a8). The subsequent readback at2a774 is not
+established as a fuse/identification read. Initial zeros at the candidate bank
+are therefore inconclusive, not grounds to reject its physical address.
+
+Four OFFLINE producer/consumer cases passed using captured instructions:
+16-coref6fdb,20-corefffff,single-cluster3ff,zero. Cluster outputs preserve
+packed bit position. Tool model-bumper-mask.py and evidence bumper-mask-model.
+
+NATIVE DIAGNOSTIC executed: slot33 now points to an owned READ-ONLY RAM page
+preloadedf6fdb, not an MMIO Bumper mapping.22 object/surrogate pages,24 read-only
+device leaves,2 owned tables,46 mappedVAs. Hardware mask-programming inputs
+2560/2568 stayzero. Helper patches descriptor physical PA to owned RAM before
+publication. Firmware read RAM mask and wrote fullf6fdb to18bb60, cluster0=3db
+to18bb70, cluster1=f6c00 to18bb80. Surrogate page unchanged.
+
+Next concrete blocker: slot35 FenderRegsDFenderMGPUCfg cached virtual18f9a0
+is zero. NEW2544-byte crashlog validfooter: PCfffffc000003963c, FAR1704,
+ESR96000044 (write), x8=0. Captured instructions39634 ADRP18f000,
+39638 load#9a0,3963c STRWZR[x8,#1704]. No complete initialization or rendering;
+surrogate does not prove native Bumper identity/programming.
+
+Raw: out/gpu-gravity-contract/asc-graph-init/
+boot-54817cb4-dc3e-46a6-99c3-432ea842b99e/. Native evidence:
+docs/evidence/2026-10-07-gravity-gpu-bumper-surrogate-result.json.
+Read-only bank scan failure remains separately preserved. User confirms desktop,
+input,USB,networking all normal. Five batch checks passed; matching-kernel
+external module build passed. Captured offline mask cases4 passed.
+
+NEXT productive hardware step: macOS/register-map source investigation to
+establish actual Bumper33/DFenderMGPUCfg35 addresses and access prerequisites.
+Focused request: docs/gpu-macos-register-map-request.md. Return complete46-name
+mapping table if feasible, not just one bank. Conservative offline inventory:
+210 locally resolved accesses across12 slots, with3 exact instruction anchors
+checked; audit-register-consumers.py and register-consumers.json. Not a full
+CFG/access-coverage proof. No further speculative-bank scans.
+
+Another GPU firmware start requires NORMAL REBOOT because published resources
+remain pinned. No additional reboot merely for recovery is needed. Keep kernel,
+boot/default/WFI; handoff can proceed to macOS for mapping evidence.
+
+---
+
 # Speculative Bumper-bank scan hung machine; quarantined — 2026-10-07
 
 Failed boot583a2999-d384-4e7d-8760-efd842a6bc90; recovered automatically into

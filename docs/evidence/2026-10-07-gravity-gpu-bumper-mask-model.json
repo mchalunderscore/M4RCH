@@ -1,0 +1,225 @@
+{
+  "text_contract": {
+    "raw_sha256": "4c592b62c89f14ccc7274ad8dd2c530c301dfff5b29d9a617690ec450081967b",
+    "normalized_sha256": "190cef1946a23dfbde180592629631c3b28d0509a17eb76108b7c9a52accd9ac",
+    "observed_variable_payloads": [
+      {
+        "offset": "0x59841",
+        "tag_bytes": "GKTS",
+        "payload_hex": "00dd7b5a4821d61c"
+      },
+      {
+        "offset": "0x59924",
+        "tag_bytes": "ECAP",
+        "payload_hex": "506d318dbd640850"
+      }
+    ],
+    "qualification": "Exact match outside two tagged eight-byte boot metadata payloads; tags and lengths are also checked. No instruction bytes excluded."
+  },
+  "source_capture": "/home/alice/Desktop/m4rch/out/gpu-gravity-contract/asc-graph-init/boot-c6a64586-e1fb-4d69-802b-a9d066be2c7a/text.bin",
+  "instruction_ranges": [
+    "0x395f4..0x39624",
+    "0x2a774..0x2a7c4"
+  ],
+  "cases": [
+    {
+      "input_mask": "0xf6fdb",
+      "clusters": 2,
+      "programmed_words": [
+        "0xf6fdb",
+        "0x0",
+        "0x0"
+      ],
+      "full_mask": [
+        "0xf6fdb",
+        "0x0"
+      ],
+      "cluster_fields": [
+        [
+          "0x3db",
+          "0x0"
+        ],
+        [
+          "0xf6c00",
+          "0x0"
+        ]
+      ],
+      "accesses": [
+        {
+          "kind": "write",
+          "offset": "0xa0",
+          "bytes": 4,
+          "value": "0xf6fdb"
+        },
+        {
+          "kind": "write",
+          "offset": "0xa4",
+          "bytes": 4,
+          "value": "0x0"
+        },
+        {
+          "kind": "write",
+          "offset": "0xa8",
+          "bytes": 4,
+          "value": "0x0"
+        },
+        {
+          "kind": "read",
+          "offset": "0xa0",
+          "bytes": 4,
+          "value": null
+        },
+        {
+          "kind": "read",
+          "offset": "0xa4",
+          "bytes": 4,
+          "value": null
+        }
+      ]
+    },
+    {
+      "input_mask": "0xfffff",
+      "clusters": 2,
+      "programmed_words": [
+        "0xfffff",
+        "0x0",
+        "0x0"
+      ],
+      "full_mask": [
+        "0xfffff",
+        "0x0"
+      ],
+      "cluster_fields": [
+        [
+          "0x3ff",
+          "0x0"
+        ],
+        [
+          "0xffc00",
+          "0x0"
+        ]
+      ],
+      "accesses": [
+        {
+          "kind": "write",
+          "offset": "0xa0",
+          "bytes": 4,
+          "value": "0xfffff"
+        },
+        {
+          "kind": "write",
+          "offset": "0xa4",
+          "bytes": 4,
+          "value": "0x0"
+        },
+        {
+          "kind": "write",
+          "offset": "0xa8",
+          "bytes": 4,
+          "value": "0x0"
+        },
+        {
+          "kind": "read",
+          "offset": "0xa0",
+          "bytes": 4,
+          "value": null
+        },
+        {
+          "kind": "read",
+          "offset": "0xa4",
+          "bytes": 4,
+          "value": null
+        }
+      ]
+    },
+    {
+      "input_mask": "0x3ff",
+      "clusters": 1,
+      "programmed_words": [
+        "0x3ff",
+        "0x0",
+        "0x0"
+      ],
+      "full_mask": [
+        "0x3ff",
+        "0x0"
+      ],
+      "cluster_fields": [
+        [
+          "0x3ff",
+          "0x0"
+        ]
+      ],
+      "accesses": [
+        {
+          "kind": "write",
+          "offset": "0xa0",
+          "bytes": 4,
+          "value": "0x3ff"
+        },
+        {
+          "kind": "write",
+          "offset": "0xa4",
+          "bytes": 4,
+          "value": "0x0"
+        },
+        {
+          "kind": "write",
+          "offset": "0xa8",
+          "bytes": 4,
+          "value": "0x0"
+        },
+        {
+          "kind": "read",
+          "offset": "0xa0",
+          "bytes": 4,
+          "value": null
+        },
+        {
+          "kind": "read",
+          "offset": "0xa4",
+          "bytes": 4,
+          "value": null
+        }
+      ]
+    },
+    {
+      "input_mask": "0x0",
+      "clusters": 2,
+      "programmed_words": [
+        "0x0",
+        "0x0",
+        "0x0"
+      ],
+      "full_mask": [
+        "0x0",
+        "0x0"
+      ],
+      "cluster_fields": [
+        [
+          "0x0",
+          "0x0"
+        ],
+        [
+          "0x0",
+          "0x0"
+        ]
+      ],
+      "accesses": [
+        {
+          "kind": "read",
+          "offset": "0xa0",
+          "bytes": 4,
+          "value": null
+        },
+        {
+          "kind": "read",
+          "offset": "0xa4",
+          "bytes": 4,
+          "value": null
+        }
+      ]
+    }
+  ],
+  "qualification": "Captured instructions run offline with explicit RAM register fixture. No physical bank identity, safe MMIO access, power prerequisites or native rendering established. Cluster output masks retain bit position; they are not shifted to bit zero."
+}

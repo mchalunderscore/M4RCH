@@ -27,3 +27,10 @@ at TEXT2a774..2a7c0 reads words+a0/a4 and partitions ten-bit fields. Physical
 bank and enabled-mask interpretation not yet verified. Captured ADT packed
 candidate3db|(3db<<10)=f6fdb. Keep this as an instruction observation, not a
 native core-mask register result.
+
+Further qualification: captured producer instructions read hardware+2560/+2568
+and program Bumper+a0/+a4/+a8. The readback therefore need not be a fuse/ID
+register. Offline execution and native RAM-surrogate run yield fullf6fdb,
+cluster0=3db and cluster1=f6c00: output cluster fields preserve their packed
+bit position. Zero cold candidate reads are not proof of a wrong bank. Physical
+Bumper mapping/programming remains unverified.

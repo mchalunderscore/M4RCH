@@ -166,7 +166,7 @@ def main():
         return
     present = Path('/sys/module/asc_graph_init' if args.graph else '/sys/module/asc_root_envelope').exists()
     report['root_published'] = 'G16S root sent to EP32' in logs
-    report['mapping_or_publication_performed'] = ('21 object pages mapped' in logs if args.graph else 'installed previously-empty mapping slot' in logs)
+    report['mapping_or_publication_performed'] = (f"{receipt['graph_object_pages']} object pages mapped" in logs if args.graph else 'installed previously-empty mapping slot' in logs)
     report.update(load_returncode=result.returncode, stderr=result.stderr, module_present=present,
                   reboot_required=present, interpretation=('Allocations-enabled structural fixture. A sent root/object change does not prove initialization or rendering readiness. Never force unload.' if args.graph else 'A transmitted root is not proof of consumption. Seek a newly written disabled-host-allocations rejection in the crashlog. Never force module unload.'))
     (out/'attempt.json').write_text(json.dumps(report,indent=2)+'\n')
