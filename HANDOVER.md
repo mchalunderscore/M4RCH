@@ -1,3 +1,26 @@
+# Cold retirement reproduced; managed wake next — 2026-10-07
+
+Current boot 666c136e-bee9-45f0-80a7-e30e6b4fe34a, GPU-contract kernel; WFI Y.
+Fresh ADT revalidated DATA bounds. Cold endpoint1/crashlog boot, IOP ON, AP ON,
+AP QUIESCED, IOP SLEEP and normal unload succeeded again. Explicit INIT220 after
+manually stopping ASC and dropping/reacquiring power produced no messages.
+Final control0/status48 did NOT satisfy stop readback. asc_crashlog_wake retains
+resources; REBOOT REQUIRED; never force removal or retry in this boot.
+
+NEXT: normal Linux reboot, same default1. Prepared asc-managed-wake keeps ASC
+START and the same GFX power reference across three bounded protocol cycles:
+cold HELLO/map/crashlog/ON/shutdown, then INIT220 warm wake without manually
+stopping the controller. Only finally attempts core stop and conditional unload.
+This follows the donor distinction: RTKit shutdown changes AP/IOP protocol states,
+not the ASC start bit. Candidate explanation only, not native qualification.
+Revalidate fresh boot ADT, build ID and module hash before loading. No application
+endpoints, graph construction or new DMA buffers. Keep normal GPU startup gated.
+
+Receipt docs/evidence/2026-10-07-gravity-gpu-explicit-wake.json; logs
+out/gpu-gravity-contract/wake-boot. Next source experiments/t6040-gpu/asc-managed-wake,
+matching helper built in out/gpu-gravity-contract/asc-managed-wake. No kernel rebuild
+or macOS handoff required. Owner "r" means rebooted and ready. Earlier notes follow.
+
 # Crashlog boot and shutdown passed; explicit wake next — 2026-10-07
 
 Owner shorthand: a message consisting of "r" means rebooted and ready to continue.
