@@ -1,3 +1,41 @@
+# Maintained Gravity kernel promoted; USB fixed — 2026-10-07
+
+Owner requested promotion despite first-boot USB regression. linux-m4rch is now
+7.1.13-3, release 7.1.13-m4rch-gravity, on Gravity commit 3b85d81f6. Separate
+linux-m4rch-gravity-trial package removed in the same transaction. Internal
+NVMe normal GRUB default 0 now boots the promoted kernel and matching generated
+initramfs; stage-two boot.bin unchanged. Kernel/initramfs package identity and
+NVMe root UUID/bounds/storage dependencies verified. GPU work remains paused.
+
+USB regression diagnosed and fixed live:
+- Gravity required a DWC3 reset-control absent from T6040's live DT; reset is
+  provided by the exercised PHY path. Optional reset lookup restored for T6040
+  only; mandatory requirement retained on other boards.
+- Gravity parent Type-C Makefile used renamed TPS6598X_CORE config, omitting
+  our retained TPS6598X transport. Parent build wiring corrected.
+Three host controllers initialize successfully. Owner's left-front YubiKey
+1050:0407 enumerates, including HID/FIDO interface. Other ports/orientations
+not physically tested this round. USB service restart passes with persistent
+installed modules. First raw Type-C insmod lacked core dependency; loading
+Type-C core resolved it; normal modprobe resolves that dependency.
+
+NEXT: normal Linux reboot to verify maintained kernel/initramfs and automatic
+USB loading. Confirm left-front key and optionally other ports, input/network,
+SME/WFI and NVMe mounts. No revert requested. Earlier 7.1.3 boot files and module
+archive are in ignored out/gravity-kernel-alignment/boot-backup and
+maintained-modules-before.tar.gz, not an active menu fallback. Old GRAVK001
+initramfs expects removed trial pkgbase: do not select it after promotion.
+
+Receipt: docs/evidence/2026-10-07-gravity-kernel-promotion-usb.json. USB compile
+and live logs in out/gravity-kernel-alignment. Reproducible fixed source recipe:
+experiments/kernel-alignment. make kernel-gravity builds this profile;
+make packages-gravity creates maintained package in a fresh workspace.
+Historical generic image/kernel/package pipeline retains old pins and must
+not be used to rebuild this promoted installation pending full image-pipeline
+integration. Source patch replay and hash match verified on fresh checkout.
+
+Earlier checkpoints follow and are historical.
+
 # Gravity kernel alignment — staged reboot checkpoint, 2026-10-07
 
 NEXT BOOT: 7.1.13-m4rch-gravity, separate linux-m4rch-gravity-trial 7.1.13-1

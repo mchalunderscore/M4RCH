@@ -5756,7 +5756,7 @@ index 000000000..def510c03
 +MODULE_AUTHOR("Michael Reeves <michael.reeves077@gmail.com>");
 +MODULE_LICENSE("Dual MIT/GPL");
 diff --git a/drivers/usb/dwc3/dwc3-apple.c b/drivers/usb/dwc3/dwc3-apple.c
-index 569878adf..88eb851ad 100644
+index 569878adf..d79f09a6b 100644
 --- a/drivers/usb/dwc3/dwc3-apple.c
 +++ b/drivers/usb/dwc3/dwc3-apple.c
 @@ -13,6 +13,7 @@
@@ -5910,7 +5910,7 @@ index 569878adf..88eb851ad 100644
  }
  
  static enum usb_role dwc3_usb_role_switch_get(struct usb_role_switch *sw)
-@@ -444,6 +487,7 @@ static int dwc3_apple_probe(struct platform_device *pdev)
+@@ -444,11 +487,17 @@ static int dwc3_apple_probe(struct platform_device *pdev)
  		return -ENOMEM;
  
  	appledwc->dev = &pdev->dev;
@@ -5918,7 +5918,18 @@ index 569878adf..88eb851ad 100644
  	mutex_init(&appledwc->lock);
  	dr_mode = usb_get_dr_mode(dev);
  	appledwc->dwc.dr_mode = dr_mode;
-@@ -496,6 +540,42 @@ static int dwc3_apple_probe(struct platform_device *pdev)
+ 
+-	appledwc->reset = devm_reset_control_get_exclusive(dev, NULL);
++	/* T6040 uses the exercised PHY reset path; its live DT has no
++	 * DWC3 reset specifier. Preserve required resets on other boards. */
++	if (of_machine_is_compatible("apple,t6040"))
++		appledwc->reset = devm_reset_control_get_optional_exclusive(dev, NULL);
++	else
++		appledwc->reset = devm_reset_control_get_exclusive(dev, NULL);
+ 	if (IS_ERR(appledwc->reset))
+ 		return dev_err_probe(&pdev->dev, PTR_ERR(appledwc->reset),
+ 				     "Failed to get reset control\n");
+@@ -496,6 +545,42 @@ static int dwc3_apple_probe(struct platform_device *pdev)
  	if (ret)
  		return dev_err_probe(&pdev->dev, ret, "Failed to setup role switch\n");
  
@@ -5961,6 +5972,19 @@ index 569878adf..88eb851ad 100644
  	return 0;
  }
  
+diff --git a/drivers/usb/typec/Makefile b/drivers/usb/typec/Makefile
+index eebe658de..8a6a1c663 100644
+--- a/drivers/usb/typec/Makefile
++++ b/drivers/usb/typec/Makefile
+@@ -5,7 +5,7 @@ typec-$(CONFIG_ACPI)		+= port-mapper.o
+ obj-$(CONFIG_TYPEC)		+= altmodes/
+ obj-$(CONFIG_TYPEC_TCPM)	+= tcpm/
+ obj-$(CONFIG_TYPEC_UCSI)	+= ucsi/
+-obj-$(CONFIG_TYPEC_TPS6598X_CORE)	+= tipd/
++obj-$(CONFIG_TYPEC_TPS6598X)	+= tipd/
+ obj-$(CONFIG_TYPEC_ANX7411)	+= anx7411.o
+ obj-$(CONFIG_TYPEC_HD3SS3220)	+= hd3ss3220.o
+ obj-$(CONFIG_TYPEC_STUSB160X) 	+= stusb160x.o
 diff --git a/drivers/usb/typec/tipd/Kconfig b/drivers/usb/typec/tipd/Kconfig
 index 8177f860f..d178d4c8f 100644
 --- a/drivers/usb/typec/tipd/Kconfig

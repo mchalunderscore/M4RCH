@@ -35,3 +35,29 @@ makepkg natively so fakeroot ownership recording works. The temporary NVMe hook
 used for this trial is under out/gravity-kernel-alignment/hookdir; it replaces
 only the init's pkgbase check with the trial identity and retains native root
 UUID, PARTUUID and bounds. No installed boot updater or hook was changed.
+
+## Maintained promotion and USB correction
+
+The first native boot reached userspace but all USB controllers failed because
+Gravity made DWC3's reset-control mandatory. T6040's live DT has no DWC3 reset
+specifier and uses the exercised PHY reset. Optional reset lookup is now scoped
+to T6040. Gravity also renamed the parent Type-C build symbol, silently excluding
+our retained TPS6598x transport; parent Makefile wiring is corrected.
+
+Both fixes compiled, loaded live and enumerated the owner's left-front YubiKey
+1050:0407. Three host controllers initialized; other physical ports/orientations
+remain untested in this round. Type-C core was loaded before the raw insmod;
+normal modprobe/service loading resolves that dependency automatically.
+
+Promoted to linux-m4rch 7.1.13-3 with pkgbase linux-m4rch, proper preset and
+kernel-release metadata. The separate trial package was removed in the same
+transaction. Normal updater generated matching NVMe initramfs and selected main
+entry 0. Stage-two loader bundle stayed unchanged. Current hot fixes persist
+in installed modules; reboot validation is still pending.
+
+Use `make kernel-gravity` for this maintained source profile and
+`make packages-gravity` to produce its normal package in a fresh workspace.
+The historical generic image/kernel/package recipes retain their old pins;
+do not use them to rebuild the promoted installation until full image-pipeline
+alignment is implemented. Source/profile changes must regenerate recorded
+hashes. The build command refuses source drift rather than discarding edits.

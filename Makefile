@@ -120,3 +120,10 @@ loader-gravity: FORCE
 
 stage2-gravity: FORCE
 	"$(PYTHON)" scripts/setup-split-boot.py --stage2-only --gravity
+
+# Maintained Gravity/T6040 build; legacy image recipes remain separately pinned.
+kernel-gravity: FORCE
+	"$(PYTHON)" experiments/kernel-alignment/build.py
+
+packages-gravity: FORCE
+	"$(PYTHON)" experiments/kernel-alignment/build.py --package
