@@ -1,0 +1,20 @@
+{
+  "boot_id": "6a0a6204-876f-4fd5-9330-60efe15d5186",
+  "user_report": "USB verified working in all three ports after regular reboot",
+  "cmdline": "BOOT_IMAGE=/GPUC001/vmlinuz root=UUID=7568fe83-378f-5b78-ab12-ccc36ff09a90 rw console=ttydc0 console=tty0 rdinit=/init idle=nop arm64.nowfxt pd_ignore_unused clk_ignore_unused asahi_m4.probe_only=1",
+  "package": "linux-m4rch-gpu-contract 7.1.13-2",
+  "role_providers": [
+    "382280000.usb-role-switch",
+    "38a280000.usb-role-switch",
+    "392280000.usb-role-switch"
+  ],
+  "pd_bindings": {
+    "0-0a": true,
+    "0-0c": true,
+    "2-0c": true
+  },
+  "deferred": "",
+  "prior_0_0a_error": "Not reproduced; controller now bound and successful host role event observed. Cold/warm reproducibility not established.",
+  "capture": "out/usb-role-provider/boot-6a0a6204-876f-4fd5-9330-60efe15d5186",
+  "gpu_trial_performed": false
+}

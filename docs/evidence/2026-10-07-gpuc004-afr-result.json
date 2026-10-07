@@ -1,0 +1,160 @@
+{
+  "boot_id": "6a0a6204-876f-4fd5-9330-60efe15d5186",
+  "batch": "GPUC004 primary selector page plus segmented AFR",
+  "tests": "8 serialization tests pass;14 matching constructor instruction words and2 constants verified;W=1 build pass;gate1 shadow walk pass;gate2 returned0",
+  "crashlog": {
+    "boot_id": "6a0a6204-876f-4fd5-9330-60efe15d5186",
+    "data_before_sha256": "3a5b8cc02d184f78c42df9bd0cb33c6645ee49b5e3e871c0d14b4535e87efd17",
+    "data_after_sha256": "d55d4460908c4239d21e518c415694d8d16b99dfd38df0c859334f5bdf3620f3",
+    "crashlog_offset": "0xa0000",
+    "crashlog_bytes": 2544,
+    "version": 771,
+    "flags": 2052,
+    "footer_valid": true,
+    "sections": [
+      {
+        "offset": "0x20",
+        "fourcc": "Cver",
+        "bytes": 96,
+        "text": ""
+      },
+      {
+        "offset": "0x80",
+        "fourcc": "Ctim",
+        "bytes": 32
+      },
+      {
+        "offset": "0xa0",
+        "fourcc": "Crg8",
+        "bytes": 864,
+        "registers": {
+          "x0": "0x1",
+          "x1": "0x1",
+          "x2": "0x0",
+          "x3": "0x0",
+          "x4": "0x0",
+          "x5": "0x0",
+          "x6": "0x37de7c00000341a4",
+          "x7": "0x200000000004c9",
+          "x8": "0xfffffc000018f000",
+          "x9": "0xfffffc2000221008",
+          "x10": "0x103a8",
+          "x11": "0x0",
+          "x12": "0xfffffc2000200000",
+          "x13": "0xfffffc000018cf20",
+          "x14": "0x0",
+          "x15": "0x0",
+          "x16": "0xabc6a0000003500c",
+          "x17": "0x40",
+          "x18": "0x105fff7c000",
+          "x19": "0x0",
+          "x20": "0x1",
+          "x21": "0x1",
+          "x22": "0xfffffc2000108000",
+          "x23": "0xfffffc000018ee78",
+          "x24": "0xfffffc0000068000",
+          "x25": "0x3fffff00007ef",
+          "x26": "0xfffffc0000068000",
+          "x27": "0x0",
+          "x28": "0x0",
+          "x29": "0xfffffc0000086f50",
+          "x30": "0x29acbc00000379a0"
+        },
+        "sp": "0xfffffc0000086f20",
+        "pc": "0xfffffc00000160a8",
+        "psr": "0x60000244",
+        "far": "0xfffffc2000221108",
+        "esr": "0x9600004f"
+      },
+      {
+        "offset": "0x400",
+        "fourcc": "Ccst",
+        "bytes": 80,
+        "task": 2,
+        "unknown": 536870912,
+        "addresses": [
+          "0xfffffc00000160a8",
+          "0xfffffc000003799c",
+          "0xfffffc00000341cc",
+          "0xfffffc000003c07c",
+          "0xfffffffffffffffd",
+          "0x7fffff04"
+        ]
+      },
+      {
+        "offset": "0x450",
+        "fourcc": "CasC",
+        "bytes": 80
+      },
+      {
+        "offset": "0x4a0",
+        "fourcc": "Cmbx",
+        "bytes": 416
+      },
+      {
+        "offset": "0x640",
+        "fourcc": "Crtk",
+        "bytes": 656
+      },
+      {
+        "offset": "0x8d0",
+        "fourcc": "Ccdp",
+        "bytes": 128
+      },
+      {
+        "offset": "0x950",
+        "fourcc": "Cpct",
+        "bytes": 80
+      },
+      {
+        "offset": "0x9a0",
+        "fourcc": "Csta",
+        "bytes": 48
+      },
+      {
+        "offset": "0x9d0",
+        "fourcc": "CLHE",
+        "bytes": 32,
+        "form": "exact repeated header"
+      }
+    ],
+    "expected_rejection": false,
+    "parser_callsite_present": false,
+    "crashlog_newly_written": true,
+    "qualification": "Structured crashlog decoding only; interpret registers/stack with matching instructions and independent object capture. No initialization or rendering success established."
+  },
+  "cached_records": {
+    "17": [
+      "0x288000000",
+      "0xfffffc2000200000",
+      "0x21400",
+      "0x21400",
+      "0x0",
+      "0x1"
+    ],
+    "20": [
+      "0x28b000000",
+      "0xfffffc2001c00000",
+      "0x100000",
+      "0x40000",
+      "0x0",
+      "0x1"
+    ]
+  },
+  "post_usb": {
+    "roles": [
+      "382280000.usb-role-switch",
+      "38a280000.usb-role-switch",
+      "392280000.usb-role-switch"
+    ],
+    "pd": {
+      "0-0a": true,
+      "0-0c": true,
+      "2-0c": true
+    }
+  },
+  "gpu_initialization_success": false,
+  "interpretation": "New task2 primary-SGX write permission fault at PA288021108 leaf288020000. Old task6 PC2a3f0 fault not present in this crashlog. Cached slot20 points at new compact AFR VA. Completion of all16 AFR RMWs not proven; changed task can preempt another initialization path. No firmware queue execution or rendering.",
+  "next_batch": "Grant exact existing primary leaves288020000 and288010000 for captured routine15e60: fault160a8 and table selector STRX160d0 offset103a8; preserve other page restrictions. Normal reboot before next gate2; never force-unload pinned module.",
+  "user_post_trial": "Everything normal (desktop,input,USB,networking)"
+}

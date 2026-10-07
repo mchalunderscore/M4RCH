@@ -79,8 +79,9 @@ def main():
         for leaf in layout.get('mmio_leaves',[]):
             pa,va=leaf['physical'],leaf['gpu_va']
             platform=(pa,va) in ((0x502414000,0xfffffc2001a00000),(0x5003d8000,0xfffffc2001b18000))
+            afr=0x28b000000<=pa<0x28b640000 and (pa-0x28b000000)%0x200000<0x40000 and va==0xfffffc2001c00000+(pa-0x28b000000)//0x200000*0x40000+(pa-0x28b000000)%0x200000
             sgx=0x288000000<=pa and pa+0x4000<=0x28b758000 and va==0xfffffc2000200000+pa-0x288000000
-            require((platform and not leaf['readonly']) or (sgx and (leaf['readonly'] or pa in (0x288d04000,0x288d10000,0x288d40000,0x288d44000,0x288d4c000,0x288e00000,0x288e1c000,0x288e40000))),'Unqualified MMIO leaf range')
+            require((platform and not leaf['readonly']) or (afr and (leaf['readonly'] or (pa-0x28b000000)%0x10000==0)) or (sgx and (leaf['readonly'] or pa in (0x288004000,0x288d04000,0x288d10000,0x288d40000,0x288d44000,0x288d4c000,0x288e00000,0x288e1c000,0x288e40000))),'Unqualified MMIO leaf range')
     tables = capture(work/'sample-pagetables/gpu-data-sample.ko', '/sys/kernel/m4rch_gpu_data_sample/data', out/'pagetables.bin', 'gpu_data_sample')
     base = 0x105fff78000
     def translate(va):

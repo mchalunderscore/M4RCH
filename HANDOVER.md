@@ -1,3 +1,50 @@
+# GPUC004 segmented AFR trial returned — 2026-10-07
+
+Regular promoted USB baseline verified before the trial. All3 role providers
+and all3 SPMI PD controllers remain bound afterward; user reports everything
+normal. GPU gate1 shadow walk passed; gate2 returned0; Linux did not hang.
+100 device leaves +21 object pages;9 ordinary SGX,16 AFR,2 platform RW pages.
+Matching25G83 AGX constructor proves four40000 physical ranges at28b000000,
+28b200000,28b400000,28b600000 concatenated into virtual100000. Fourteen pinned
+instruction words and constant pair checked;8 serialization tests pass,W=1 build.
+Only AFR pages containing16 captured RMWs are RW; other48 AFR pages RO.
+Primary leaf288004000 RW for all7 selector+4000/+4008 writes.
+
+New2544-byte/footer-valid Crg8: task2 PCfffffc00000160a8,
+FARfffffc2000221108,ESR9600004f (write permission). Physical288021108,
+leaf288020000. Task6 old2a3f0 fault absent, but scheduler/task change means
+all16 AFR RMW completion is NOT proven. Firmware cached slot20 has exact
+new physical/virtual/total/per-range/flags record; descriptor accepted/copied,
+not proof of successful hardware configuration. Changed main_header/power/
+status objects captured; no queues/rendering or full initialization claim.
+
+NEXT: normal reboot required, no force-unload/restart. Prepare primary leaves
+288020000 (160a8 and table-register writes),288010000 (160d0 selector103a8)
+RW together from captured routine15e60; preserve other restrictions. No new
+installed kernel, initramfs or bootloader required; regular default1 remains.
+Full evidence docs/evidence/2026-10-07-gpuc004-afr-result.json and ignored raw
+out/gpu-gravity-contract/asc-graph-init/boot-6a0a6204-876f-4fd5-9330-60efe15d5186.
+No host AFR MMIO scan; Apple binary/private disassembly excluded from return.
+
+---
+
+# Regular promoted USB boot verified — 2026-10-07
+
+Boot6a0a6204-876f-4fd5-9330-60efe15d5186, regularGPUC001/default1,
+package7.1.13-2. User confirms all3 ports work. All3 role providers AND all3
+PD controllers0-0a/0-0c/2-0c bound; successful host role transitions observed
+on382280000/38a280000/392280000 during user's port checks. Prior0-0a ENODEV
+not reproduced. Empty devices_deferred capture. Current lsusb may be empty
+because last logged change returnedcharging-only roleNONE; use transitionlogs
+and user's device tests, not root-hub presence alone. No GPU trial yet.
+
+Evidence docs/evidence/2026-10-07-usb-regular-boot-verified.json; raw capture
+out/usb-role-provider/boot-6a0a6204-876f-4fd5-9330-60efe15d5186. USB correction
+qualified for this regular boot; cold/warm repeatability remains to characterize.
+Continue GPU qualification from this working baseline.
+
+---
+
 # USB role-provider fix promoted after all-port trial success
 
 User confirms all3 USB ports work onfcfa7ebf trial boot. Linux records three
