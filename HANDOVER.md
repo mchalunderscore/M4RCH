@@ -1,3 +1,40 @@
+# Gravity kernel alignment — staged reboot checkpoint, 2026-10-07
+
+NEXT BOOT: 7.1.13-m4rch-gravity, separate linux-m4rch-gravity-trial 7.1.13-1
+package. Gravity source 3b85d81f656af14d0fc4bea3eef87fe040c424f9, current default
+upstream revision verified. GPU work paused at owner's request; optional Apple
+display/SIO driver excluded, maintained software framebuffer retained.
+
+Internal NVMe GRUB default 1 selects /GRAVK001/vmlinuz and initramfs.img.
+Working 7.1.3 kernel/initramfs remain unchanged at entry 0. m1n1, U-Boot, Apple
+stub and enrollment unchanged. Rollback from macOS: mount internal M4RCHESP,
+copy GRAVK001/grub-before.cfg over grub/grub.cfg, sync. This is an internal
+kernel fallback, with no SD dependency. Do not automatically reboot.
+
+Full Image/modules build and modpost passed. Final pass had no compiler warnings
+or errors. Source patch applies to fresh pinned Gravity checkout. WFI, early
+fault handling, framebuffer, USB2 PHY and SPMI/Type-C files retain exercised
+sources. DockChannel/HID transport and shared power/NVMe/CPU APIs reconciled.
+Two compile/link issues fixed: PMGR skip-auto-enable field restored; optional
+Apple display module lacks exports and was excluded. Native packaging required
+because sandbox fakeroot rejected ownership preservation. Logs retained locally.
+
+NVMe trial initramfs verified: exact root UUID, PARTUUID/bounds, kernel release,
+trial package identity and Apple NVMe/SART module dependencies. Working boot
+artifacts matched backup hashes after installation; grub-script-check passed.
+Receipt: docs/evidence/2026-10-07-gravity-kernel-trial.json. Reproducible source
+recipe/config/patch: experiments/kernel-alignment. Local build/logs/package:
+out/gravity-kernel-alignment. No native trial boot or hardware stability claim yet.
+
+After reboot: verify release and NVMe mounts, collect dmesg/config, WFI activity,
+SME/SME2, CPU capacities/frequency, input, USB/YubiKey, Wi-Fi/Bluetooth and usual
+audio. Check failures against maintained baseline. Once stable, restore default
+0 while deciding package promotion. Do not resume GPU work until the aligned
+kernel baseline is verified; then use supplied Discord ABI document and saved
+handshake evidence. Loader cold and warm boot checks previously passed.
+
+Earlier checkpoint notes follow; their next-task states are superseded.
+
 # Native loader validation — 2026-10-07
 
 This cold boot passed: owner reports desktop, input, USB, Bluetooth and usual
