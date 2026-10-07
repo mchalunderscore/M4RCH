@@ -17,6 +17,7 @@ The harness now rejects an incomplete/mismatched sequence automatically.
 
 Cold native root publication returned to Linux after bounded observation.
 ASC stopped, published module/backing/GFX retained; never force-unload/free.
+User confirms desktop, built-in input, USB and networking remained normal.
 Same sixteen exact post-reads passed: MCW +0 changed 101051->100051 and +4 f->1;
 Bumper ffff6fdb/ff/0 -> f6fdb/0/0; counter 0->70700777. Firmware therefore
 passed the previous MCW permission fault. No full initialization/rendering.

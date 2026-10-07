@@ -374,5 +374,6 @@
     "qualified": false,
     "gap": "Firmware +0x634 / bit13 access does not directly match metadata offsets +0x84/+0x284 and raw word0x80. AIC layouts depend on max_irqs/dies; containment alone is not role proof."
   },
-  "status": "Host returned; ASC stopped and graph retained. No full firmware initialization or rendering. No guessed AIC/telemetry access attempted."
+  "status": "Host returned; ASC stopped and graph retained. No full firmware initialization or rendering. No guessed AIC/telemetry access attempted.",
+  "user_smoke_confirmation": "Everything normal: desktop, built-in input, USB and networking after larger batch"
 }
