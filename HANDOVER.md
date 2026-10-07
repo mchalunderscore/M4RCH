@@ -1,3 +1,138 @@
+# Owner checkpoint and next task — 2026-10-07
+
+Owner confirms SD-free internal NVMe boot and migration/update setup are complete;
+the SD card is no longer inserted. This supersedes earlier SD-dependency and
+NVMe-updater-pending assessments. macOS agent will push the completed changes.
+After owner's brief reboot, inspect the pushed commits and authoritative current
+mounts/boot configuration before continuing; do not reconstruct an obsolete
+SD-only boot path or overwrite the completed migration work.
+
+NEXT USER REQUEST: align the maintained M4RCH kernel version with Gravity Linux.
+Determine Gravity's exact target revision/version from the newly pushed source
+and current upstream, then plan/build the matching kernel while preserving our
+working T6040 USB, framebuffer, CPU/SME, continuous shallow WFI, NVMe root/boot
+and hardware handoff changes. Prior offline Gravity baseline was commit
+3b85d81f656af14d0fc4bea3eef87fe040c424f9, reporting 7.1.13+;
+verify the target rather than assuming this historical pin is still current.
+Do not install or select an unverified kernel merely to match its version label.
+Owner will reboot before this work resumes. No reboot is requested by this note.
+
+Live firmware check earlier this session: stage-two iBoot mBoot-18000.161.10,
+matching the pinned Gravity 26.6.2/25G83 target; stage-one iBoot
+mBoot-20457.1.29. Both m1n1 labels m1n1-m4rch-1.6.0. GPU payload hash/RTKit
+qualification is still distinct from matching iBoot version strings.
+
+Historical notes follow and may describe superseded storage/boot states.
+
+# NVMe Linux qualification — 2026-10-07
+
+macOS cloned the SD root; this boot uses NVME0002, not the older unexecuted
+NVME0001 kit. Native root is /dev/nvme0n1p4, UUID
+7568fe83-378f-5b78-ab12-ccc36ff09a90, ext4 rw. /boot stays on SD.
+Do not run NVME0001 partition/format/copy commands.
+NVME0002 finalize-types.py passed protected-entry checks and set only reserved
+ESP/root GPT types. On-disk table verified; kernel noted it retains the old
+partition-type view until reboot. No filesystem or partition bounds changed.
+16 MiB scratch fsync/readback passed and file removed. Cached bc reinstall
+passed. Evidence: docs/evidence/2026-10-07-nvme-root-qualification.json;
+raw logs out/nvme-qualification. ANS PANICLOG-not-written ERR_ABORT messages
+are recorded; no storage timeout/I/O-error signatures seen in captured log.
+
+Next: maintained NVMe-root boot-update integration, preserving SD fallback,
+fixed root identity/bounds and empty NVMe ESP. Keep current boot.conf guard;
+do not merely change its root UUID. Kernel/config/firmware transactions remain
+blocked by that guard until initramfs/updater support is implemented and checked.
+Shutdown/reboot durability remains to be verified. Older handovers below are
+historical; firmware upgrade state still needs fresh verification.
+
+# macOS handoff priority — align the Linux stub with Gravity, 2026-10-06
+
+Owner requests moving the Linux stub to macOS 26.6.2, build 25G83, to align
+with Gravity and the supplied M4 Pro GPU ABI findings. This supersedes the
+endpoint-start task as the immediate next step. Main macOS need not be downgraded:
+the target is the dedicated Linux stub and its matching boot/GPU firmware.
+No upgrade has been performed from Linux. The current probe requires reboot;
+booting macOS clears it.
+
+Current working baseline: stub 26.5.2 / 25F84, mBoot-18000.121.3,
+G16S payload SHA256 6cd1de6569955d793584c4da0058a8e7863a17f415985cafe316ed821cdf9c7f,
+RTKit 3255.120.11.release. Keep a recoverable copy of this working baseline and
+record boot-policy/recovery steps before altering the stub.
+
+Target: UniversalMac_26.6.2_25G83_Restore.ipsw. Apple's release listing confirms
+26.6.2 = 25G83: https://developer.apple.com/news/releases/?id=08172026j
+Pinned Gravity loader maps it to mBoot-18000.161.10, the full GPU driver's
+expected firmware identifier. Inspect the actual matching G16S payload and
+record its SHA256, RTKit version, FTAB/Mach-O layout, and installed stub
+SystemVersion/BuildManifest identifiers. Do not infer GPU payload equality
+from the OS version alone. Use the repository's existing stub installation
+workflow after inspecting its recovery and firmware selection behavior;
+update locks/configs coherently rather than only bypassing a driver gate.
+Do not install the main macOS 27 GPU payload into this older interface.
+
+Return to Linux with the normal maintained kernel default (entry 0), preserving
+USB, framebuffer, CPU/SME and continuous shallow WFI changes. Capture fresh
+ADT/FDT, kernel notes and firmware identifiers. All old boot-bound receipts
+must be regenerated. Requalify ASC resources/cold state, then repeat bounded
+HELLO and endpoint-map enumeration before starting endpoints or supplying
+initialization objects. Protocol 12 and identical maps are expectations to
+measure, not hard-coded proof of new-firmware behavior.
+
+The standalone ABI document targets J616s with 20 enabled cores; ours is J614s
+with 16 enabled cores, masks 0x3db/0x3db. Preserve native topology and independent
+cluster voltage ladders. Its offsets remain candidates until checked against
+our new firmware. No source repository/commit was supplied by the contact.
+
+Latest Linux result and evidence follow. No rendering/acceleration is claimed.
+
+# Current checkpoint — endpoint enumeration, 2026-10-06
+
+REBOOT REQUIRED NOW: normal 7.1.3-m4rch, boot 788d0c6e-2888-42ab-97a3-f491fe7a0756.
+Continuous shallow WFI remains enabled. Fresh read-only ADT capture matched ASC
+ranges, compatibility, IRQs and bus translation; helper unloaded. Disabled
+probe gate refused; W=1 compilation passed without warnings.
+
+Protocol-12 HELLO reply followed by bounded map acknowledgements succeeded:
+base 0 bitmap 3 LAST=0; base 1 bitmap 3 LAST=1. Advertised endpoints are
+0, 1, 32 and 33. Final map acknowledged. No endpoint start, buffer address,
+render command or initialization graph was sent. Stop readback passed; this
+is not DMA-quiescence proof. asc_enumerate holds resources until reboot.
+Do not force-remove it. Normal recovery entry 0 remains the default.
+
+Evidence: docs/evidence/2026-10-06-gpu-endpoint-enumeration.json; raw ignored
+captures out/gpu-normal/asc-enumerate and boot-adt-enumerate.
+Next: review endpoint 1 crashlog and application endpoints 32/33 handling,
+then design a bounded system-endpoint trial with qualified buffer ownership.
+No acceleration is claimed. Earlier reboot/current states below are historical.
+
+# Current checkpoint — normal-kernel HELLO reply, 2026-10-06
+
+REBOOT REQUIRED NOW: normal 7.1.3-m4rch boot successfully received protocol-12
+HELLO, sent HELLO_REPLY, and received the first endpoint map (base 0, bitmap 3,
+LAST false). No endpoint-map ACK or application endpoint start was sent.
+ASC stop readback passed; resources remain deliberately pinned until reboot.
+Do not force-remove asc_negotiate. Recovery GRUB default remains normal entry 0.
+Continuous shallow WFI remains enabled. No rendering or acceleration is claimed.
+
+Fresh reserved-ADT capture passed and its helper unloaded. ASC register ranges,
+compatibility, interrupt metadata and bus translation match the previous trial.
+Normal-source reconstruction retained functional configuration and protected
+source hashes; GCC/tool metadata differs from the installed kernel. Both C
+helpers built without W=1 warnings; native disabled-gate refusal passed.
+
+Evidence: docs/evidence/2026-10-06-gpu-hello-reply.json. Raw logs and current-boot
+receipts remain under ignored out/gpu-normal. Next after reboot: qualify the
+bounded endpoint-map acknowledgement/enumeration step, before application
+endpoints, DMA allocations or initialization graphs.
+
+New standalone Gravity Discord ABI reference is catalogued in
+2026-10-06-gpu-external-abi-reference.json. It describes J616s/20 cores/25G83;
+ours is J614s/16 cores/25F84. Its G16S layouts are candidates, not validated
+native offsets. No source commit is available. Preserve separate cluster
+voltage columns and native fused masks; do not copy their 20-core topology.
+
+Historical checkpoints follow; their CURRENT/reboot statements are superseded.
+
 # GPU source collaboration checkpoint — 2026-10-06
 
 Continue on branch gpu/native-contract. CURRENT: running 7.1.3-m4rch-gpu-port;

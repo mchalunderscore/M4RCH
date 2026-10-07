@@ -1,0 +1,18 @@
+{
+  "root": "/dev/nvme0n1p4",
+  "root_uuid": "7568fe83-378f-5b78-ab12-ccc36ff09a90",
+  "boot": "/dev/mmcblk0p1",
+  "kernel": "7.1.3-m4rch",
+  "gpt_types_finalized": true,
+  "protected_entries_verified": true,
+  "scratch_fsync_readback_bytes": 16777216,
+  "scratch_removed": true,
+  "ordinary_package_transaction": "cached bc 1.08.2-1 reinstall passed",
+  "limitations": [
+    "Boot updater still guards SD root UUID; do not bypass",
+    "Shutdown/reboot durability not yet tested in this qualification",
+    "NVMe ESP kept without boot files"
+  ],
+  "raw_evidence": "out/nvme-qualification",
+  "ans_observation": "Repeated PANICLOG not yet written ERR_ABORT; no timeout or I/O-error signatures seen in captured kernel log"
+}
