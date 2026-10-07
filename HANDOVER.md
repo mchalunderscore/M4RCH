@@ -1,3 +1,30 @@
+# Keyboard trial FAILED and stage 2 restored — 2026-10-07
+
+Boot 9a42112c-6d16-46a9-ae4c-77c0526fd868, same GPU-contract kernel.
+User observed no visible GRUB menu and loss of built-in keyboard/trackpad in
+Linux. Kernel: dockchannel-hid 514600000.hid timed out waiting for RTKit
+endpoint map (-62), failed to wake coprocessor, and probe failed. Only USB
+YubiKey keyboard registered. This is a real native regression, not a successful
+keyboard trial. GPU firmware publication was NOT attempted on this boot.
+
+Restored /boot/boot.bin from verified /boot/keyboard-trial/boot-before.bin.
+Readback SHA256 cb3ab77bdac7f276b5331d8580a5ee1b81f8bd215c0cba1449391a73d790ef09
+matches qualified working Gravity loader. No enrolled stage-1, kernel, GRUB
+configuration or WFI changes. Running MTP state is not repaired by replacing
+the file. Next action: full shutdown and power-on to reset firmware state,
+then verify built-in input and usual peripherals. Recovery still pending.
+
+Capture: out/keyboard-stage2/failed-boot-9a42112c-6d16-46a9-ae4c-77c0526fd868/
+(dmesg, kernel journal, live DT, input devices, hashes and result).
+Evidence: docs/evidence/2026-10-07-boot-keyboard-failure.json.
+Do not reinstall the failed keyboard bundle. Investigate RTKit helper
+startup/quiesce/stop and FIFO replay before another native keyboard trial.
+U-Boot MTP use is a suspect, not a proven root cause; GRUB display regression
+also remains unexplained. Preserve these captures. GPU work can resume after
+restored input is confirmed; current boot has no GPU probe resources retained.
+
+---
+
 # MTP keyboard stage-2 trial installed; reboot for GRUB input test — 2026-10-07
 
 Installed /boot/boot.bin SHA256:

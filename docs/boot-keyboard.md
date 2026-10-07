@@ -1,3 +1,10 @@
+# Native result: FAILED; reverted
+
+The 2026-10-07 trial hid the GRUB menu and caused the Linux MTP coprocessor
+wake to time out, losing built-in keyboard and trackpad. The original stage 2
+has been restored. Do not deploy this variant again until handoff is fixed.
+See docs/evidence/2026-10-07-boot-keyboard-failure.json.
+
 # J614s boot keyboard trial
 
 The qualified Gravity NVMe loader deliberately disabled keyboard and USB input.
