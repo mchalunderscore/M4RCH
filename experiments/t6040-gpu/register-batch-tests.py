@@ -24,7 +24,7 @@ class BatchTests(unittest.TestCase):
  def test_real_banks_and_narrow_write_permissions(self):
   self.assertNotIn('ram_register_surrogate',self.receipt)
   writable=[v['physical'] for v in self.receipt['mmio_leaves'] if not v['readonly']]
-  self.assertEqual(writable,[0x288004000,0x288010000,0x288020000,0x288d04000,0x288d10000,0x288d40000,0x288d44000,0x288d4c000,0x288e00000,0x288e1c000,0x288e40000,0x502414000,0x5003d8000]+[base+offset for base in (0x28b000000,0x28b200000,0x28b400000,0x28b600000) for offset in (0,0x10000,0x20000,0x30000)])
+  self.assertEqual(writable,[0x288004000,0x288008000,0x28800c000,0x288010000,0x288014000,0x288018000,0x28801c000,0x288020000,0x288d04000,0x288d10000,0x288d40000,0x288d44000,0x288d4c000,0x288e00000,0x288e1c000,0x288e40000,0x502414000,0x5003d8000]+[base+offset for base in (0x28b000000,0x28b200000,0x28b400000,0x28b600000) for offset in (0,0x10000,0x20000,0x30000)])
   h=next(o['arena_offset'] for o in self.receipt['objects'] if o['name']=='hardware')
   for slot,physical in [(33,0x288d44000),(35,0x288e00000)]:
    values=struct.unpack_from('<QQIIQI',self.data,h+0x640+slot*0x28)
@@ -63,8 +63,11 @@ class BatchTests(unittest.TestCase):
   leaves={v['physical']:v for v in self.receipt['mmio_leaves']}
   for offset in (0x21108,0x21110,0x21118,0x21120,0x21008,0x211e0,0x103a8):
    self.assertFalse(leaves[(0x288000000+offset)&~0x3fff]['readonly'])
-  for pa in (0x288000000,0x288008000,0x28800c000,0x288014000,0x288018000,0x28801c000):
+  for pa in (0x288000000,):
    self.assertTrue(leaves[pa]['readonly'])
+  for pa in (0x288008000,0x28800c000,0x288014000,0x288018000,0x28801c000):
+   self.assertFalse(leaves[pa]['readonly'])
+  self.assertFalse(leaves[(0x288000000+0x1ca20)&~0x3fff]['readonly'])
  def test_empty_channels_are_owned_disjoint_and_zero(self):
   h=next(o['arena_offset'] for o in self.receipt['objects'] if o['name']=='main')
   base=int(self.receipt['base'],16);all_spans=[]

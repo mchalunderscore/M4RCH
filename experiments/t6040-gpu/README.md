@@ -129,3 +129,12 @@ work queues remain empty. `model-control-refresh.py TEXT ARENA RECEIPT OUTPUT`
 executes the matched handler offline with explicit private-state assumptions.
 See `docs/evidence/2026-10-08-control-refresh-handover.md` for exact limits and
 reboot protocol. Native consumption and initialization are still unproven.
+
+## Primary startup batch (2026-10-08)
+
+The pending refresh fixture exposed native STRX8050 to primary+1ca20.
+`model-primary-startup.py TEXT CRASH ARENA RECEIPT OUTPUT` models a bounded
+continuation to8fb0 with explicit register-RAM/private-state assumptions.
+Five further primary pages are qualified together from37 modeled writes.
+See `docs/evidence/2026-10-08-primary-startup-handover.md`; the candidate
+retains the single pending control, empty work queues and30-second observation.
