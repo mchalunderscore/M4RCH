@@ -35,6 +35,9 @@ archived with zero tables/noASC modules, fixed then fresh checks reran. No
 warm-wake retry was performed. Published graph refcount1 remains pinned, ASC
 control0/status6e. NEVER force unload/free mappings or release GFX power.
 
+User smoke check after batch: desktop, keyboard/trackpad, USB and networking
+all normal.
+
 NEXT: normal Linux reboot required before another GPU firmware start. Keep
 original boot bundle/current kernel/default/WFI. Build next useful batch from
 required MMIO mappings plus already-qualified shared graph fields. Device MMIO
