@@ -9,6 +9,7 @@
 #define TABLE_BASE 0x105fff78000ULL
 #define TABLE_BYTES 0x40000
 #define PA_MASK (GENMASK_ULL(41,14))
+#define FW_MMIO_RO (BIT_ULL(55) | BIT_ULL(10) | BIT_ULL(6) | 4ULL | 3ULL)
 #define FW_GRAPH_RW (BIT_ULL(55) | BIT_ULL(54) | BIT_ULL(10) | BIT_ULL(6) | 8ULL | 3ULL)
 static struct page *owned[ARENA_OBJECT_PAGES + 2]; /* Generated candidate backing plus two tables. */
 static u64 *bootstrap, *borrowed_l1, *target_page, *target_slot;
@@ -25,7 +26,7 @@ static void clean_page(void *ptr)
 static void invalidate_root_va(void)
 {
  unsigned int i;
- for (i=0;i<ARENA_OBJECT_PAGES;i++) {
+ for (i=0;i<GRAPH_MAPPED_PAGES;i++) {
   u64 operand=((ROOT_VA+i*PAGE_SIZE)>>12)&0x00000ffffffffffcULL;
   asm volatile(".arch armv8.4-a\n\ttlbi vaae1os, %0" :: "r"(operand) : "memory");
  }
@@ -41,7 +42,7 @@ static void root_release(void)
   clean_page(target_page);
   invalidate_root_va();
   installed=false;
-  pr_info("m4rch graph-init: child slot restored; all %u VAs invalidated\n",ARENA_OBJECT_PAGES);
+  pr_info("m4rch graph-init: child slot restored; all %u VAs invalidated\n",GRAPH_MAPPED_PAGES);
  }
  if (borrowed_l1) {memunmap(borrowed_l1);borrowed_l1=NULL;}
  target_page=NULL;target_slot=NULL;
@@ -55,7 +56,7 @@ static int root_prepare(bool install)
  unsigned int i;
  int ret=-EINVAL;
  if (PAGE_SIZE!=0x4000 || ARENA_OBJECT_PAGES==0 ||
-     ((ROOT_VA>>14)&2047)+ARENA_OBJECT_PAGES>2048) return -EINVAL;
+     ((ROOT_VA>>14)&2047)+GRAPH_MAPPED_PAGES>2048) return -EINVAL;
  for (i=0;i<ARRAY_SIZE(owned);i++) {
   u64 pa;
   owned[i]=alloc_pages(GFP_KERNEL|__GFP_ZERO,0);
@@ -70,6 +71,14 @@ static int root_prepare(bool install)
   l2[((ROOT_VA>>14)&2047)+i]=page_to_phys(owned[2+i])|FW_GRAPH_RW;
   memcpy(page_address(owned[2+i]),graph_bytes+i*PAGE_SIZE,PAGE_SIZE);
  }
+ for (i=0;i<ARRAY_SIZE(mmio_leaves);i++) {
+  u64 pa=mmio_leaves[i].physical,va=mmio_leaves[i].gpu_va;
+  if ((pa&~PA_MASK) || va!=ROOT_VA+(ARENA_OBJECT_PAGES+i)*PAGE_SIZE ||
+      !(pa>=0x288000000ULL && pa+PAGE_SIZE<=0x28b758000ULL) ||
+      region_intersects(pa,PAGE_SIZE,IORESOURCE_SYSTEM_RAM,IORES_DESC_NONE)!=REGION_DISJOINT)
+   goto fail_root;
+  l2[((va>>14)&2047)]=pa|FW_MMIO_RO;
+ }
  /* Explicit structural fixture, including allocations-enabled root and all
   * known pointer edges. Opaque contents are zero; this is not a render graph. */
  if (get_unaligned_le64(page_address(owned[2]))!=0x0c8aa322039604c0ULL ||
@@ -79,6 +88,10 @@ static int root_prepare(bool install)
  if ((l1[(ROOT_VA>>25)&2047]&PA_MASK)!=page_to_phys(owned[1])) goto fail_root;
  for (i=0;i<ARENA_OBJECT_PAGES;i++)
   if ((l2[((ROOT_VA>>14)&2047)+i]&PA_MASK)!=page_to_phys(owned[2+i])) goto fail_root;
+ for (i=0;i<ARRAY_SIZE(mmio_leaves);i++)
+  if (l2[(mmio_leaves[i].gpu_va>>14)&2047]!=(mmio_leaves[i].physical|FW_MMIO_RO))
+   goto fail_root;
+ pr_info("m4rch graph-init: %zu read-only device leaves prepared; total mapped pages=%u\n",ARRAY_SIZE(mmio_leaves),GRAPH_MAPPED_PAGES);
  pr_info("m4rch graph-init: shadow walk passed, root=%#llx interface=%#llx host_allocations=1\n",
          ROOT_VA,get_unaligned_le64(page_address(owned[2])));
  if (!install) return 0;

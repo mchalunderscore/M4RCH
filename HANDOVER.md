@@ -1,3 +1,50 @@
+# Read-only register batch advances; Bumper descriptor next — 2026-10-07
+
+Boot c6a64586-e1fb-4d69-802b-a9d066be2c7a, same GPU-contract kernel.
+BATCH EXECUTED: cold handshake, shadow validation,21 object pages plus2 owned
+page tables,24 read-only device leaves covering11 candidate SGX descriptors,
+profile-A core/SRAM voltage cluster columns, one allocations-enabled root
+publication, five-second observation and stopped-ASC snapshots.
+
+Former slot26 GFender access passed: cached virtual18f838 now contains
+fffffc2000174000. StatusA+10 and+14 both equal1; prior run+14 stayed0.
+Firmware DATA changed68364 bytes. This is further initialization progress,
+not complete initialization, render submission or GPU acceleration. Read-only
+leaves grant no SGX write permissions; advancement does not validate every bank.
+
+New2544-byte structured crashlog has valid repeated footer, task6,
+PCfffffc000002a77c, FARa0, ESR96000004, x8=0. Exact captured TEXT words checked:
+2a774 ADRP18f000;2a778 loads cached virtual18f950;2a77c reads+0xa0;
+2a780 would read+0xa4. Cachedbase18f420/stride28 identifies slot33,
+FenderRegsBumper (record18f948, hardware+b68). Slot33 virtual is zero.
+Following instructions combine the words and partition ten-bit masks. Candidate
+packed ADT enabled mask is0xf6fdb (3db | 3db<<10), but Bumper register identity
+and physical address are NOT established. Task6 role is also unqualified.
+
+NEXT: identify Bumper physical bank from attributable register-map evidence,
+then add that descriptor and other independently justified mandatory consumers
+in a useful read-only batch. The captured firmware copy table establishes slot
+name/number, not its physical bank address. Current Gravity platform map and
+uploaded ABI document do not supply Bumper. Do not guess it from neighboring
+addresses or silently treat all donor offsets as validated. Keep two-cluster
+mask width separate from enabled-core count in the variant-porting writeup.
+
+Raw capture: out/gpu-gravity-contract/asc-graph-init/
+boot-c6a64586-e1fb-4d69-802b-a9d066be2c7a/ (TEXT/DATA, ADT, tables,
+objects, dmesg, attempt and validated build receipt). Decoded registers and
+instruction checks: docs/evidence/2026-10-07-gravity-gpu-readonly-register-result.json.
+User confirms desktop/input/USB/networking all normal. Four register-batch
+checks and five graph checks passed. The builder now labels device access in
+its generated receipt; cleanup diagnostic now reports all45 invalidated VAs.
+Those metadata/log fixes postdate this native artifact; raw hashes preserved.
+
+NORMAL LINUX REBOOT REQUIRED before another firmware start: published object
+backing/mappings/power stay pinned. Never force unload or retry a warm wake.
+Kernel/default/original boot.bin/continuous WFI unchanged; GRUB input deferred.
+No macOS handoff currently required for the next evidence investigation.
+
+---
+
 # Native allocations-enabled GPU graph consumed; GFender mapping blocker — 2026-10-07
 
 Boot e1e8db50-10f6-46b5-8d73-a593b7e2c611, same GPU-contract kernel.

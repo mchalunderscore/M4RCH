@@ -70,6 +70,14 @@ def main():
                           'gpu-region-base':0x105fffb8000, 'gpu-region-size':0x4000,
                           'gfx-shared-l2-region-base':0x105fff74000, 'gfx-shared-l2-region-size':0x4000}.items():
         require(int.from_bytes(sgx[key], 'little') == expected, 'Fresh ADT range mismatch: '+key)
+    if args.graph:
+        layout = json.loads((work/'asc-graph-init/graph-receipt.json').read_text())
+        for key,digest in layout.get('voltage_input_sha256',{}).items():
+            require(sha(sgx[key])==digest,'Fresh voltage input differs: '+key)
+        regs=list(struct.iter_unpack('<QQ',sgx['reg']))
+        require(regs==[(0x88000000,0x3758000),(0x88d00000,0x16c000)],'SGX MMIO apertures differ')
+        for leaf in layout.get('mmio_leaves',[]):
+            require(leaf['readonly'] and 0x288000000<=leaf['physical'] and leaf['physical']+0x4000<=0x28b758000,'Unqualified MMIO leaf range')
     tables = capture(work/'sample-pagetables/gpu-data-sample.ko', '/sys/kernel/m4rch_gpu_data_sample/data', out/'pagetables.bin', 'gpu_data_sample')
     base = 0x105fff78000
     def translate(va):

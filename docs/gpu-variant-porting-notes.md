@@ -21,3 +21,9 @@ Topics to qualify before the final guide:
 A common firmware ABI does not establish identical initialization constants.
 Separate document claims, captured ADT facts, firmware-instruction observations,
 codec candidates and successful native behavior in every comparison.
+
+2026-10-07 native read-only batch: firmware slot33 FenderRegsBumper consumer
+at TEXT2a774..2a7c0 reads words+a0/a4 and partitions ten-bit fields. Physical
+bank and enabled-mask interpretation not yet verified. Captured ADT packed
+candidate3db|(3db<<10)=f6fdb. Keep this as an instruction observation, not a
+native core-mask register result.
