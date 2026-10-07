@@ -13,7 +13,7 @@ ROWS=[(17,0,0x21400),(26,0xd04000,0x8000),(27,0xd0d000,0x1000),
 WRITABLE_SLOTS={17,26,29,31,33,34,35,37,41}
 # Primary startup: native TEXT8050 fault plus bounded offline continuation
 # through8fb0 qualifies five more primary leaves together; no blanket aperture grant.
-WRITABLE_PAGES={0x288004000,0x288008000,0x28800c000,0x288010000,0x288014000,0x288018000,0x28801c000,0x288020000,0x288d04000,0x288d10000,0x288d40000,0x288d44000,0x288d4c000,0x288e00000,0x288e1c000,0x288e40000}
+WRITABLE_PAGES={0x288000000,0x288004000,0x288008000,0x28800c000,0x288010000,0x288014000,0x288018000,0x28801c000,0x288020000,0x288d04000,0x288d10000,0x288d40000,0x288d44000,0x288d4c000,0x288e00000,0x288e1c000,0x288e40000}
 PLATFORM_ROWS=[(0,0x502414000,0xfffffc2001a00000,0x4000),
                (11,0x5003d8000,0xfffffc2001b18000,0x4000)]
 AFR_BASE=0xfffffc2001c00000
@@ -106,5 +106,5 @@ def extend(arena,receipt,raw):
                    mmio_leaves=leaves,mmio_virtual_base=hex(mmio_base),mapped_pages=len(arena)//PAGE+len(leaves),voltage_adt_sha256=hashlib.sha256(raw).hexdigest(),
                    voltage_input_sha256={k:hashlib.sha256(gpu[k]).hexdigest() for k in ['perf-states','perf-states-sram']},
                    voltage_assignment='Only qualified profile-A core/SRAM cluster columns populated; profile-B and frequency assignment unchanged',
-                   qualification='Experimental structural graph; sixteen ordinary SGX pages, sixteen AFR pages and two exact platform pages writable; sparse coherent SGX-relative VAs; other bank hypotheses read-only. Native STRX8050 and bounded continuation through8fb0 primary write pages now writable; no complete hardware construction, queue execution or rendering established.')
+                   qualification='Experimental structural graph; seventeen ordinary SGX pages, sixteen AFR pages and two exact platform pages writable; sparse coherent SGX-relative VAs; other bank hypotheses read-only. Native STRX8050 and bounded continuation through8fb0 primary write pages now writable; no complete hardware construction, queue execution or rendering established.')
     return bytes(result),receipt

@@ -138,3 +138,12 @@ continuation to8fb0 with explicit register-RAM/private-state assumptions.
 Five further primary pages are qualified together from37 modeled writes.
 See `docs/evidence/2026-10-08-primary-startup-handover.md`; the candidate
 retains the single pending control, empty work queues and30-second observation.
+
+## Late primary startup (2026-10-08)
+
+The five-page batch reached native aac8/primary+1710. The runner and native
+allowlists now have a consistency test. `model-primary-startup.py --late-start`
+continues aac8..b4a4 plus helper2a7c8 offline, identifying23 register writes
+on six primary pages. Only page288000000 needs another grant. The new
+candidate retains the same control and30-second observation; see
+`docs/evidence/2026-10-08-primary-late-handover.md` for capture/reboot limits.

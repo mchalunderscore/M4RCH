@@ -13,10 +13,12 @@ from unicorn import arm64_const as c
 from firmware_text_contract import qualify
 FW=0xfffffc0000000000;MMIO=0xfffffc2000200000
 p=argparse.ArgumentParser(description=__doc__)
+p.add_argument('--late-start',action='store_true',help='Continue native aac8 fault to b4a4 before state-query helper')
 for name in ['text','crash','arena','receipt','output']:p.add_argument(name,type=Path)
 a=p.parse_args();text=a.text.read_bytes();contract=qualify(text)
 crash=json.loads(a.crash.read_text());regs=next(s for s in crash['sections'] if s['fourcc']=='Crg8')
-if int(regs['pc'],16)!=FW+0x8050 or int(regs['far'],16)!=MMIO+0x1ca20:raise ValueError('Unexpected native fault')
+start,boundary,far=(0xaac8,0xb4a4,0x1710) if a.late_start else (0x8050,0x8fb0,0x1ca20)
+if int(regs['pc'],16)!=FW+start or int(regs['far'],16)!=MMIO+far:raise ValueError('Unexpected native fault')
 r=json.loads(a.receipt.read_text());arena=a.arena.read_bytes();base=int(r['base'],16)
 objects={o['name']:int(o['gpu_va'],16) for o in r['objects']}
 m=u.Uc(u.UC_ARCH_ARM64,u.UC_MODE_ARM)
@@ -30,12 +32,13 @@ for off,val in [(0x18f6d0,MMIO),(0x18e4c0,objects['main'])]:m.mem_write(FW+off,s
 accesses=[];steps=[];omissions=[]
 def code(mu,address,size,opaque):
  off=address-FW
- if off==0x8fb0:mu.emu_stop();return
+ if off==boundary:mu.emu_stop();return
  steps.append(off)
  if off==0x33de8:
   omissions.append(dict(kind='substituted-diagnostic-logger',caller=hex(mu.reg_read(c.UC_ARM64_REG_LR)-FW)))
   mu.reg_write(c.UC_ARM64_REG_PC,mu.reg_read(c.UC_ARM64_REG_LR));return
- if not any(lo<=off<hi for lo,hi in [(0x8050,0x8fb0),(0x29610,0x297ec),(0x29804,0x29954)]):raise ValueError(f'Unreviewed target {off:x}')
+ ranges=[(start,boundary),(0x2a7c8,0x2aa14)] if a.late_start else [(0x8050,0x8fb0),(0x29610,0x297ec),(0x29804,0x29954)]
+ if not any(lo<=off<hi for lo,hi in ranges):raise ValueError(f'Unreviewed target {off:x}')
  word=struct.unpack('<I',mu.mem_read(address,4))[0]
  if word in [0xd503237f,0xd65f0fff]:
   omissions.append(dict(kind='omitted-authentication',pc=hex(off)))
@@ -44,12 +47,14 @@ def memory(mu,kind,address,size,value,opaque):
  if MMIO<=address<MMIO+0x24000:
   accesses.append(dict(pc=hex(mu.reg_read(c.UC_ARM64_REG_PC)-FW),offset=hex(address-MMIO),bytes=size,write=kind==u.UC_MEM_WRITE,value=hex(value) if kind==u.UC_MEM_WRITE else None))
 m.hook_add(u.UC_HOOK_CODE,code);m.hook_add(u.UC_HOOK_MEM_READ|u.UC_HOOK_MEM_WRITE,memory)
-m.emu_start(FW+0x8050,0,count=20000,timeout=5_000_000)
-if m.reg_read(c.UC_ARM64_REG_PC)!=FW+0x8fb0:raise ValueError('Boundary not reached')
+m.emu_start(FW+start,0,count=20000,timeout=5_000_000)
+if m.reg_read(c.UC_ARM64_REG_PC)!=FW+boundary:raise ValueError('Boundary not reached')
 pages=sorted(set(int(x['offset'],16)&~0x3fff for x in accesses if x['write']))
-if pages!=[0x4000,0x8000,0xc000,0x10000,0x14000,0x18000,0x1c000]:
+if not a.late_start and pages!=[0x4000,0x8000,0xc000,0x10000,0x14000,0x18000,0x1c000]:
  raise ValueError('Startup write-page set changed; qualification must be reviewed')
-result=dict(text_contract=contract,instructions=len(steps),boundary='0x8fb0 before table loop',
+if a.late_start and pages!=[0,0x8000,0xc000,0x14000,0x18000,0x20000]:
+ raise ValueError('Late-startup write-page set changed; qualification must be reviewed')
+result=dict(text_contract=contract,instructions=len(steps),start=hex(start),boundary=hex(boundary)+(' before state-query helper' if a.late_start else ' before table loop'),
  primary_write_pages=[hex(x) for x in pages],accesses=accesses,omissions=omissions,
  qualification='Bounded offline instruction continuation with zero register RAM and private DATA. Captured fault registers and two explicit globals seeded. Diagnostic logger substituted; authentication omitted. No device behavior, timing, complete wake sequence or native completion established.')
-a.output.write_text(json.dumps(result,indent=2)+'\n');print('Reached table-loop boundary;',len(steps),'instructions; write pages',result['primary_write_pages'])
+a.output.write_text(json.dumps(result,indent=2)+'\n');print('Reached',result['boundary'],';',len(steps),'instructions; write pages',result['primary_write_pages'])

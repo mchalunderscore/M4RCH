@@ -1,0 +1,239 @@
+{
+  "text_contract": {
+    "raw_sha256": "dbb38149f1b17e7696660c9f15660351cc23b702fc39e2ed443f9b371c7d4ccf",
+    "normalized_sha256": "190cef1946a23dfbde180592629631c3b28d0509a17eb76108b7c9a52accd9ac",
+    "observed_variable_payloads": [
+      {
+        "offset": "0x59841",
+        "tag_bytes": "GKTS",
+        "payload_hex": "2f2e4f04000c2de7"
+      },
+      {
+        "offset": "0x59924",
+        "tag_bytes": "ECAP",
+        "payload_hex": "426fc84dd4447939"
+      }
+    ],
+    "qualification": "Exact match outside two tagged eight-byte boot metadata payloads; tags and lengths are also checked. No instruction bytes excluded."
+  },
+  "instructions": 222,
+  "start": "0xaac8",
+  "boundary": "0xb4a4 before state-query helper",
+  "primary_write_pages": [
+    "0x0",
+    "0x8000",
+    "0xc000",
+    "0x14000",
+    "0x18000",
+    "0x20000"
+  ],
+  "accesses": [
+    {
+      "pc": "0xaac8",
+      "offset": "0x1710",
+      "bytes": 8,
+      "write": true,
+      "value": "0x0"
+    },
+    {
+      "pc": "0xabac",
+      "offset": "0xc138",
+      "bytes": 8,
+      "write": true,
+      "value": "0x8080"
+    },
+    {
+      "pc": "0xacbc",
+      "offset": "0x211a8",
+      "bytes": 8,
+      "write": true,
+      "value": "-0xffffffffffc080"
+    },
+    {
+      "pc": "0xad40",
+      "offset": "0x21228",
+      "bytes": 8,
+      "write": true,
+      "value": "0xffff00"
+    },
+    {
+      "pc": "0xad48",
+      "offset": "0x211c0",
+      "bytes": 8,
+      "write": false,
+      "value": null
+    },
+    {
+      "pc": "0xadc8",
+      "offset": "0x211c0",
+      "bytes": 8,
+      "write": true,
+      "value": "0x11"
+    },
+    {
+      "pc": "0x2a8f0",
+      "offset": "0x1a100",
+      "bytes": 8,
+      "write": true,
+      "value": "0x3cc00"
+    },
+    {
+      "pc": "0x2a900",
+      "offset": "0x1a108",
+      "bytes": 8,
+      "write": true,
+      "value": "0x3cc00"
+    },
+    {
+      "pc": "0x2a97c",
+      "offset": "0x1a110",
+      "bytes": 8,
+      "write": true,
+      "value": "0x3cc00"
+    },
+    {
+      "pc": "0x2a984",
+      "offset": "0x1a018",
+      "bytes": 8,
+      "write": false,
+      "value": null
+    },
+    {
+      "pc": "0x2a9fc",
+      "offset": "0x1a018",
+      "bytes": 8,
+      "write": true,
+      "value": "0x8"
+    },
+    {
+      "pc": "0xaea4",
+      "offset": "0xd800",
+      "bytes": 8,
+      "write": true,
+      "value": "0x100"
+    },
+    {
+      "pc": "0xaeb4",
+      "offset": "0xd8e0",
+      "bytes": 8,
+      "write": true,
+      "value": "-0x1"
+    },
+    {
+      "pc": "0xaf2c",
+      "offset": "0xd8e8",
+      "bytes": 8,
+      "write": true,
+      "value": "0x1"
+    },
+    {
+      "pc": "0xb024",
+      "offset": "0xd8f8",
+      "bytes": 8,
+      "write": true,
+      "value": "0x26000608000"
+    },
+    {
+      "pc": "0xb034",
+      "offset": "0xd900",
+      "bytes": 8,
+      "write": true,
+      "value": "0x8040"
+    },
+    {
+      "pc": "0xb108",
+      "offset": "0xd908",
+      "bytes": 8,
+      "write": true,
+      "value": "0x0"
+    },
+    {
+      "pc": "0xb118",
+      "offset": "0xd910",
+      "bytes": 8,
+      "write": true,
+      "value": "0x0"
+    },
+    {
+      "pc": "0xb190",
+      "offset": "0xd8f0",
+      "bytes": 8,
+      "write": true,
+      "value": "0x0"
+    },
+    {
+      "pc": "0xb198",
+      "offset": "0x14088",
+      "bytes": 8,
+      "write": false,
+      "value": null
+    },
+    {
+      "pc": "0xb218",
+      "offset": "0x14088",
+      "bytes": 8,
+      "write": true,
+      "value": "0x40000"
+    },
+    {
+      "pc": "0xb220",
+      "offset": "0xd448",
+      "bytes": 8,
+      "write": false,
+      "value": null
+    },
+    {
+      "pc": "0xb2f8",
+      "offset": "0xd448",
+      "bytes": 8,
+      "write": true,
+      "value": "0x0"
+    },
+    {
+      "pc": "0xb30c",
+      "offset": "0x140b0",
+      "bytes": 8,
+      "write": true,
+      "value": "0x1"
+    },
+    {
+      "pc": "0xb3f8",
+      "offset": "0x14000",
+      "bytes": 8,
+      "write": true,
+      "value": "0x0"
+    },
+    {
+      "pc": "0xb40c",
+      "offset": "0x14010",
+      "bytes": 8,
+      "write": true,
+      "value": "0xfff"
+    },
+    {
+      "pc": "0xb424",
+      "offset": "0xa728",
+      "bytes": 8,
+      "write": false,
+      "value": null
+    },
+    {
+      "pc": "0xb4a0",
+      "offset": "0xa728",
+      "bytes": 8,
+      "write": true,
+      "value": "0x0"
+    }
+  ],
+  "omissions": [
+    {
+      "kind": "omitted-authentication",
+      "pc": "0x2a7c8"
+    },
+    {
+      "kind": "omitted-authentication",
+      "pc": "0x2aa10"
+    }
+  ],
+  "qualification": "Bounded offline instruction continuation with zero register RAM and private DATA. Captured fault registers and two explicit globals seeded. Diagnostic logger substituted; authentication omitted. No device behavior, timing, complete wake sequence or native completion established."
+}
