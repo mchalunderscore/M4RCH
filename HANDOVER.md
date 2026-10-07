@@ -1,3 +1,29 @@
+# GPUC003 repeated with working USB — 2026-10-07
+
+Boot a9112962-2426-4029-b412-6c4d74bf273e. User reports USB working after reboot.
+Captured USB BEFORE any GPU activity: six root hubs plus external hubs,
+TONOR microphone, ASIX Ethernet and digital AV adapter. USB/Type-C drivers
+loaded. Repeated identical built module/graph, without new mapping permissions.
+Independent receipt check PASS (36 device leaves,10 writable,57 mapped VAs).
+Cold native gate1/shadow check and gate2 bounded observation returned.
+
+USB enumeration unchanged after trial; no new disconnect, IRQ storm or unknown
+IRQ logs. User confirms USB devices, desktop and built-in input remain normal.
+Contrast prior recovery boot,
+whose pre-GPU baseline lacked the USB driver stack. This supports an earlier
+boot initialization gap; do not claim all possible delayed effects excluded.
+Same new valid2544-byte crash: PCfffffc000002a3f0, FARfffffc20002040a0,
+ESR9600004f. Both platform consumers passed again; slot17 primary SGX page
+288004000 remains RO. No extra write permissions or AFR mapping enabled.
+ASC stopped, graph/power pinned; NORMAL REBOOT before further firmware start.
+
+Evidence docs/evidence/2026-10-07-gpuc003-repeat-usb-result.json; native capture
+asc-graph-init/boot-a9112962-2426-4029-b412-6c4d74bf273e and USB baseline
+usb-baseline/same under out/gpu-gravity-contract. Continue Linux static source
+analysis before next batch; no macOS handoff needed just to repeat this fault.
+
+---
+
 # GPUC003 platform accesses pass; recheck USB before next trial — 2026-10-07
 
 Boot710c3031-553b-4a76-b06f-bef667b4b2a1, same GPU-contract kernel/default/WFI.
