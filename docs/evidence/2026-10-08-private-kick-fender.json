@@ -1,0 +1,41 @@
+{
+  "binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "cases": 2048,
+  "queue_ids": [
+    0,
+    127
+  ],
+  "fender_access_modes": [
+    0,
+    1
+  ],
+  "provider_chain": {
+    "firmware_initialize_call": "0xfffffe00089acfa8",
+    "accelerator_vtable": "0xfffffe0007eae388",
+    "slot": "0xbd8",
+    "factory": "0xfffffe00089d81cc",
+    "factory_vtable": "0xfffffe0007eabd90",
+    "firmware_store": "0xfffffe00089acfac",
+    "firmware_field": "0x210"
+  },
+  "native_methods": {
+    "disable": "0xfffffe00089d8268",
+    "enable": "0xfffffe00089d8358",
+    "disable_slot": "0x58",
+    "enable_slot": "0x50"
+  },
+  "gate_contract": {
+    "register": "0xd06030",
+    "disable": "old | 4",
+    "enable": "old & ~6",
+    "readback_after_each_write": true,
+    "mode_field": "accelerator+0xc774",
+    "mapped_base_field": "accelerator+0xf8e8",
+    "mapped_offset_field": "accelerator+0xc980"
+  },
+  "kick_offsets": [
+    "0x4090",
+    "0x4098"
+  ],
+  "qualification": "Complete native addKicks and complete native disable/enableDynamicFenderGating methods execute. Native vtable targets decoded and checked; firmware/factory chain statically inspected, not fully executed. PAC bypassed. Mode0 uses synthetic readGFXReg32/writeGFXReg32 providers; mode1 actual native memory accesses use supplied mapping. Entire accelerator/queue/MMIO backing checked. No real MMIO, physical mapping, concurrency, cache coherency, firmware acceptance, power handshake, shader execution or rendering."
+}
