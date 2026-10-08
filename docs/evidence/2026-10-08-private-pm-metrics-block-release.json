@@ -1,0 +1,14 @@
+{
+  "private_binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "range": [
+    "0xfffffe00089f6ea4",
+    "0xfffffe00089f70d4"
+  ],
+  "range_sha256": "ea16e760850571fa6e730854e0e8b7b5fb891651a81fe1cda30dea92b961c907",
+  "counts": {
+    "in_use": 512,
+    "freed": 512,
+    "cleared_slots": 29696
+  },
+  "qualification": "1024 whole pool/bitmap/record/vector comparisons of actual releaseAllocationBlockIfPossible:512 in-use exits and512 zero-count frees, block indices0..7, slots8/32/64/128, partial/full/multiple bitmap words, force0/1;29696 slot bits cleared and outer availability removed only when word becomes empty. External pool virtual8 freeAllocationBlock remains checked no-op; native vector entry zeroed, total slot capacity and allocated block count decremented. Fixtures16-entry vector so selected block is not last; replaceStorageArrays/shrink not qualified. No actual allocator teardown/cache/firmware lifetime proof."
+}

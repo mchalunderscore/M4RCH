@@ -1,3 +1,18 @@
+# Native metrics release checkpoint — 2026-10-08
+
+512 actual request/release roundtrips restore availability and allocation counts;
+actual release decision keeps in-use backing. Separate1024 native cleanup cases
+pass:512 in-use exits and512 zero-count frees,29696 slot bits cleared. Full
+pool/bitmap/record/vector comparisons; underlying allocation destruction remains
+external. See docs/evidence/2026-10-08-private-pm-metrics-release.md and the
+metrics-roundtrip/block-release JSON receipts and tools. Last-block storage
+shrink, actual allocator lifetime/cache/firmware retirement still unqualified.
+
+Continue joining corrected initialized-job metrics backing to full retention and
+native caller ordering, then Linux root/work/queues/events and completion/readback.
+No live GPU commands or reboot; not submission-only ready. Failed warm INIT still
+retained; normal reboot before live integration, no forced unload/reset/warm retry.
+
 # Metrics registration correction — 2026-10-08
 
 Resolved PM50 gap: registration call89fcf1c passes X6=PM50. Actual native
