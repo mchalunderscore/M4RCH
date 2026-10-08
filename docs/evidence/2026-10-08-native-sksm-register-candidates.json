@@ -1,0 +1,254 @@
+{
+  "private_binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "counts": {
+    "pairs": 16,
+    "native_register_lists": 80,
+    "scheduler_links": 80,
+    "checked_ta_firmware_values": 64,
+    "rejected_inputs": 6
+  },
+  "examples": [
+    {
+      "case": 0,
+      "bindings": {
+        "ta_command_gpu": "0x100000000",
+        "3d_command_gpu": "0x100010000",
+        "parameter_gpu": "0x100020000"
+      },
+      "gpu_bit47": false,
+      "routes": {
+        "ta": {
+          "table": "0xfffffe0007eae018",
+          "slot": "0x238",
+          "wrapper": "0xfffffe00089e7aec",
+          "producer": "0xfffffe00089dd2c4",
+          "wrapper_sha256": "d19d307929ea2bb72e7f1ec256fcfe214c676b32bd2fcae8a6b7752ae3aacad3"
+        },
+        "3d": {
+          "table": "0xfffffe0007eaa8e0",
+          "slot": "0x228",
+          "wrapper": "0xfffffe00089d5ce4",
+          "producer": "0xfffffe00089df73c",
+          "wrapper_sha256": "d4f46f30ec12a649c22d01aab5b1854a33a2d147047b8aa36ec0bdce07a62b13"
+        }
+      },
+      "lists": {
+        "ta": [
+          {
+            "address": "0x100000060",
+            "backing_count": 83,
+            "exported_count": 81
+          }
+        ],
+        "3d": [
+          {
+            "address": "0x1000100a0",
+            "backing_count": 91,
+            "exported_count": 87
+          },
+          {
+            "address": "0x1000107c0",
+            "backing_count": 16,
+            "exported_count": 16
+          },
+          {
+            "address": "0x100010ee0",
+            "backing_count": 23,
+            "exported_count": 23
+          },
+          {
+            "address": "0x100011600",
+            "backing_count": 10,
+            "exported_count": 10
+          }
+        ]
+      },
+      "hashes": {
+        "ta": "0607a1a5494dcb32d8a18cfadbdb03980e6c53a2a1eeb5569d1f149231b4cc76",
+        "3d": "fa06c3ed54688a568bdd0676889888e43f33f47ecec544e8ccde7a78ba65ee45"
+      }
+    },
+    {
+      "case": 1,
+      "bindings": {
+        "ta_command_gpu": "0x100100000",
+        "3d_command_gpu": "0x100110000",
+        "parameter_gpu": "0x100120000"
+      },
+      "gpu_bit47": false,
+      "routes": {
+        "ta": {
+          "table": "0xfffffe0007eae018",
+          "slot": "0x238",
+          "wrapper": "0xfffffe00089e7aec",
+          "producer": "0xfffffe00089dd2c4",
+          "wrapper_sha256": "d19d307929ea2bb72e7f1ec256fcfe214c676b32bd2fcae8a6b7752ae3aacad3"
+        },
+        "3d": {
+          "table": "0xfffffe0007eaa8e0",
+          "slot": "0x228",
+          "wrapper": "0xfffffe00089d5ce4",
+          "producer": "0xfffffe00089df73c",
+          "wrapper_sha256": "d4f46f30ec12a649c22d01aab5b1854a33a2d147047b8aa36ec0bdce07a62b13"
+        }
+      },
+      "lists": {
+        "ta": [
+          {
+            "address": "0x100100060",
+            "backing_count": 84,
+            "exported_count": 82
+          }
+        ],
+        "3d": [
+          {
+            "address": "0x1001100a0",
+            "backing_count": 91,
+            "exported_count": 87
+          },
+          {
+            "address": "0x1001107c0",
+            "backing_count": 16,
+            "exported_count": 16
+          },
+          {
+            "address": "0x100110ee0",
+            "backing_count": 23,
+            "exported_count": 23
+          },
+          {
+            "address": "0x100111600",
+            "backing_count": 10,
+            "exported_count": 10
+          }
+        ]
+      },
+      "hashes": {
+        "ta": "e82f6843163216cd11a6855a2a44c88d06b35de92f3b0381a8ebfa71d28369e4",
+        "3d": "77e97c97c3055edd714a60d60088a30f8cfe3943d1963e281316292691fb24a6"
+      }
+    },
+    {
+      "case": 2,
+      "bindings": {
+        "ta_command_gpu": "0x100200000",
+        "3d_command_gpu": "0x100210000",
+        "parameter_gpu": "0x100220000"
+      },
+      "gpu_bit47": true,
+      "routes": {
+        "ta": {
+          "table": "0xfffffe0007eae018",
+          "slot": "0x238",
+          "wrapper": "0xfffffe00089e7aec",
+          "producer": "0xfffffe00089dd2c4",
+          "wrapper_sha256": "d19d307929ea2bb72e7f1ec256fcfe214c676b32bd2fcae8a6b7752ae3aacad3"
+        },
+        "3d": {
+          "table": "0xfffffe0007eaa8e0",
+          "slot": "0x228",
+          "wrapper": "0xfffffe00089d5ce4",
+          "producer": "0xfffffe00089df73c",
+          "wrapper_sha256": "d4f46f30ec12a649c22d01aab5b1854a33a2d147047b8aa36ec0bdce07a62b13"
+        }
+      },
+      "lists": {
+        "ta": [
+          {
+            "address": "0x100200060",
+            "backing_count": 83,
+            "exported_count": 81
+          }
+        ],
+        "3d": [
+          {
+            "address": "0x1002100a0",
+            "backing_count": 91,
+            "exported_count": 87
+          },
+          {
+            "address": "0x1002107c0",
+            "backing_count": 16,
+            "exported_count": 16
+          },
+          {
+            "address": "0x100210ee0",
+            "backing_count": 23,
+            "exported_count": 23
+          },
+          {
+            "address": "0x100211600",
+            "backing_count": 10,
+            "exported_count": 10
+          }
+        ]
+      },
+      "hashes": {
+        "ta": "de6202b997b23991084f1f54178b7fc8bc66dd8039b9430eb24ac1de2961bed8",
+        "3d": "4ce89b750b93694c3455342f801e24e63c154addd07dd0b44991d2bc053309ac"
+      }
+    },
+    {
+      "case": 3,
+      "bindings": {
+        "ta_command_gpu": "0x100300000",
+        "3d_command_gpu": "0x100310000",
+        "parameter_gpu": "0x100320000"
+      },
+      "gpu_bit47": true,
+      "routes": {
+        "ta": {
+          "table": "0xfffffe0007eae018",
+          "slot": "0x238",
+          "wrapper": "0xfffffe00089e7aec",
+          "producer": "0xfffffe00089dd2c4",
+          "wrapper_sha256": "d19d307929ea2bb72e7f1ec256fcfe214c676b32bd2fcae8a6b7752ae3aacad3"
+        },
+        "3d": {
+          "table": "0xfffffe0007eaa8e0",
+          "slot": "0x228",
+          "wrapper": "0xfffffe00089d5ce4",
+          "producer": "0xfffffe00089df73c",
+          "wrapper_sha256": "d4f46f30ec12a649c22d01aab5b1854a33a2d147047b8aa36ec0bdce07a62b13"
+        }
+      },
+      "lists": {
+        "ta": [
+          {
+            "address": "0x100300060",
+            "backing_count": 84,
+            "exported_count": 82
+          }
+        ],
+        "3d": [
+          {
+            "address": "0x1003100a0",
+            "backing_count": 91,
+            "exported_count": 87
+          },
+          {
+            "address": "0x1003107c0",
+            "backing_count": 16,
+            "exported_count": 16
+          },
+          {
+            "address": "0x100310ee0",
+            "backing_count": 23,
+            "exported_count": 23
+          },
+          {
+            "address": "0x100311600",
+            "backing_count": 10,
+            "exported_count": 10
+          }
+        ]
+      },
+      "hashes": {
+        "ta": "a4d1fa8e3f4ffe9cb2f0eb2297fac71bc1058c1860b8e090f35c916b3fa2f7db",
+        "3d": "671b2b1990b12afc66906c56bb625929ea05f73c035ac46de076c957e6501abb"
+      }
+    }
+  ],
+  "tool_sha256": "41c7e53fcc70c5d7d8d4cca38c2940a73abff5589504a835ecc12ac1a5e25907",
+  "qualification": "16 explicit synthetic paired register producers through verified G16_SKSM wrappers, independently encoded entries and metadata links;64 independently expected TA firmware-address register values,80 native list/common scheduler links. Both conditional initial-entry states and GPU bit47 values. Six malformed input cases fail before export. Context/scene are explicit zero fixtures; untouched command storage, complete recipe semantics, live physical mapping/cache/queue/completion and valid primitive submission are not qualified. No hardware touched."
+}
