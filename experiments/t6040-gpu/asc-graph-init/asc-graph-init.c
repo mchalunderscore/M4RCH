@@ -165,6 +165,9 @@ static int __init hello_init(void)
  u32 appmap = 0;
  u8 apps_started = 0;
  u8 map_seen = 0;
+#ifdef GRAPH_COMMAND_POOL_EXPERIMENT
+ if (run_gate!=1) return -EINVAL; /* Own allocations only until context/ring lifecycle is joined. */
+#endif
  if (warm_restart && (!release_on_shutdown || !request_shutdown || !GRAPH_RELEASE_EXPERIMENT)) return -EINVAL;
  if (release_on_shutdown && (!request_shutdown || !GRAPH_RELEASE_EXPERIMENT)) return -EINVAL;
  if (observe_ms<5000 || observe_ms>60000) return -EINVAL;

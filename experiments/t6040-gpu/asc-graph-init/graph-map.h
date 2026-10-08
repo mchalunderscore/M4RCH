@@ -12,9 +12,20 @@
 #define FW_MMIO_RO (BIT_ULL(55) | BIT_ULL(10) | BIT_ULL(6) | 4ULL | 3ULL)
 #define FW_MMIO_RW (FW_MMIO_RO | BIT_ULL(54))
 #define FW_GRAPH_RW (BIT_ULL(55) | BIT_ULL(54) | BIT_ULL(10) | BIT_ULL(6) | 8ULL | 3ULL)
-static struct page *owned[ARENA_OBJECT_PAGES + 2]; /* Generated candidate backing plus two tables. */
+#ifdef GRAPH_COMMAND_POOL_EXPERIMENT
+#include "job-data.h"
+#define EXTRA_OWNED_PAGES (POOL_PAGES + 5)
+#define EFFECTIVE_MAPPED_PAGES (GRAPH_MAPPED_PAGES + POOL_PAGES + 2)
+#else
+#define EXTRA_OWNED_PAGES 0
+#define EFFECTIVE_MAPPED_PAGES GRAPH_MAPPED_PAGES
+#endif
+static struct page *owned[ARENA_OBJECT_PAGES + 2 + EXTRA_OWNED_PAGES]; /* Generated candidate backing plus two tables. */
 static u64 *bootstrap, *borrowed_l1, *target_page, *target_slot;
 static bool installed, root_sent, root_detached;
+#ifdef GRAPH_COMMAND_POOL_EXPERIMENT
+#include "command-pool-map.h"
+#endif
 
 static void clean_page(void *ptr)
 {
@@ -32,6 +43,13 @@ static void invalidate_root_va(void)
   u64 operand=(va>>12)&0x00000ffffffffffcULL;
   asm volatile(".arch armv8.4-a\n\ttlbi vaae1os, %0" :: "r"(operand) : "memory");
  }
+#ifdef GRAPH_COMMAND_POOL_EXPERIMENT
+ for (i=0;i<POOL_PAGES+2;i++) {
+  u64 va=FW_BASE+(u64)i*PAGE_SIZE;
+  u64 operand=(va>>12)&0x00000ffffffffffcULL;
+  asm volatile(".arch armv8.4-a\n\ttlbi vaae1os, %0" :: "r"(operand) : "memory");
+ }
+#endif
  asm volatile("dsb sy" ::: "memory");
 }
 /* Only called after RTKit quiesce/sleep ACKs, core stop and an empty FIFO.
@@ -47,7 +65,7 @@ static bool root_detach_after_shutdown(void)
  clean_page(target_page);invalidate_root_va();
  if (READ_ONCE(*target_slot)) return false;
  installed=false;root_detached=true;
- pr_info("m4rch graph-init: acknowledged shutdown; owned root detached; %u VAs invalidated; backing retained for snapshot\n",GRAPH_MAPPED_PAGES);
+ pr_info("m4rch graph-init: acknowledged shutdown; owned root detached; %u VAs invalidated; backing retained for snapshot\n",EFFECTIVE_MAPPED_PAGES);
  return true;
 }
 static void root_release(void)
@@ -60,7 +78,7 @@ static void root_release(void)
   clean_page(target_page);
   invalidate_root_va();
   installed=false;
-  pr_info("m4rch graph-init: child slot restored; all %u VAs invalidated\n",GRAPH_MAPPED_PAGES);
+  pr_info("m4rch graph-init: child slot restored; all %u VAs invalidated\n",EFFECTIVE_MAPPED_PAGES);
  }
  if (borrowed_l1) {memunmap(borrowed_l1);borrowed_l1=NULL;}
  target_page=NULL;target_slot=NULL;
@@ -117,6 +135,9 @@ static int root_prepare(bool install)
  if (get_unaligned_le64(page_address(owned[2]))!=0x0c8aa322039604c0ULL ||
      get_unaligned_le32((u8 *)page_address(owned[2])+0x2c)!=1)
   goto fail_root;
+#ifdef GRAPH_COMMAND_POOL_EXPERIMENT
+ if (!command_pool_prepare(l2)) goto fail_root;
+#endif
  for (i=0;i<ARRAY_SIZE(owned);i++) clean_page(page_address(owned[i]));
  if ((l1[(ROOT_VA>>25)&2047]&PA_MASK)!=page_to_phys(owned[1])) goto fail_root;
  for (i=0;i<ARENA_OBJECT_PAGES;i++)
@@ -124,7 +145,7 @@ static int root_prepare(bool install)
  for (i=0;i<ARRAY_SIZE(mmio_leaves);i++)
   if (l2[(mmio_leaves[i].gpu_va>>14)&2047]!=(mmio_leaves[i].physical|(mmio_leaves[i].writable?FW_MMIO_RW:FW_MMIO_RO)))
    goto fail_root;
- pr_info("m4rch graph-init: %zu device leaves prepared; total mapped pages=%u\n",ARRAY_SIZE(mmio_leaves),GRAPH_MAPPED_PAGES);
+ pr_info("m4rch graph-init: %zu device leaves prepared; total mapped pages=%u\n",ARRAY_SIZE(mmio_leaves),EFFECTIVE_MAPPED_PAGES);
  pr_info("m4rch graph-init: shadow walk passed, root=%#llx interface=%#llx host_allocations=1\n",
          ROOT_VA,get_unaligned_le64(page_address(owned[2])));
  if (!install) return 0;
