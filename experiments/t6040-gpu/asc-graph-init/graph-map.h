@@ -23,6 +23,7 @@
 static struct page *owned[ARENA_OBJECT_PAGES + 2 + EXTRA_OWNED_PAGES]; /* Generated candidate backing plus two tables. */
 static u64 *bootstrap, *borrowed_l1, *target_page, *target_slot;
 static bool installed, root_sent, root_detached;
+static bool device_context_retained;
 #ifdef GRAPH_COMMAND_POOL_EXPERIMENT
 #include "command-pool-map.h"
 #endif
@@ -72,7 +73,7 @@ static void root_release(void)
 {
  unsigned int i;
  /* Published backing is releasable only after the acknowledged detach path. */
- if (root_sent && !root_detached) return;
+ if (device_context_retained || (root_sent && !root_detached)) return;
  if (installed) {
   WRITE_ONCE(*target_slot,0);
   clean_page(target_page);

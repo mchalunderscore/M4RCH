@@ -31,6 +31,9 @@ module_param(run_gate,uint,0400);
 static struct platform_device *consumer;
 static void __iomem *asc, *mbox;
 static bool held, asc_region, mbox_region, started;
+#ifdef GRAPH_CONTEXT_LIVE_EXPERIMENT
+#include "device-context-live.h"
+#endif
 static struct kobject *graph_directory;
 static ssize_t graph_read(struct file *file, struct kobject *kobj,
  const struct bin_attribute *attr, char *buf, loff_t off, size_t count)
@@ -175,6 +178,14 @@ static int __init hello_init(void)
      !of_machine_is_compatible("apple,t6040")) return -ENODEV;
  if (run_gate==1) {
   ret=root_prepare(false);
+#ifdef GRAPH_CONTEXT_LIVE_EXPERIMENT
+  if (!ret) ret=device_context_trial();
+  if (device_context_retained) {
+   __module_get(THIS_MODULE);
+   pr_err("m4rch live-context: restoration unverified; module pinned and owned backing retained; ret=%d\n",ret);
+   return 0;
+  }
+#endif
   root_release();
   return ret;
  }
