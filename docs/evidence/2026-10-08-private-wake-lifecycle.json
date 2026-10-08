@@ -2,11 +2,56 @@
   "macho_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
   "apple_build": "25G83",
   "agx_version": "353.14",
-  "instruction_site_checks": 43,
+  "instruction_site_checks": 111,
   "vtable": "0xfffffe0007ea8668",
   "addresspoint_offset": 16,
   "image_specific_target_base": "0xfffffe0007004000",
   "resolved_self_slots": [
+    {
+      "slot": "0x140",
+      "target": "0xfffffe00089d18ec",
+      "method": "isFirmwareColdBootDone"
+    },
+    {
+      "slot": "0x148",
+      "target": "0xfffffe00089d18d4",
+      "method": "completeFirmwareColdBoot"
+    },
+    {
+      "slot": "0x190",
+      "target": "0xfffffe00089ca7cc",
+      "method": "bootFirmware"
+    },
+    {
+      "slot": "0x198",
+      "target": "0xfffffe00089ca784",
+      "method": "stopFirmware"
+    },
+    {
+      "slot": "0x368",
+      "target": "0xfffffe00089c89e4",
+      "method": "changePowerStateTo"
+    },
+    {
+      "slot": "0x380",
+      "target": "0xfffffe00089c8860",
+      "method": "submitCmdGPUIdlePowerOff"
+    },
+    {
+      "slot": "0x800",
+      "target": "0xfffffe00089bf1b0",
+      "method": "snapshotASCPowerGeneration"
+    },
+    {
+      "slot": "0x808",
+      "target": "0xfffffe00089bf160",
+      "method": "waitForNextASCPowerGeneration"
+    },
+    {
+      "slot": "0x810",
+      "target": "0xfffffe00089bf120",
+      "method": "waitForFirmwarePowerOff"
+    },
     {
       "slot": "0x0",
       "target": "0xfffffe00089d2074",
@@ -46,6 +91,29 @@
       "slot": "0x2d8",
       "target": "0xfffffe00089c8ff8",
       "method": "convertGPUVAToFWVA"
+    }
+  ],
+  "accelerator_vtable": "0xfffffe0007eae388",
+  "resolved_accelerator_slots": [
+    {
+      "slot": "0x0",
+      "target": "0xfffffe00089eaccc",
+      "method": "__ZN18AGXAcceleratorG16XD1Ev"
+    },
+    {
+      "slot": "0x8",
+      "target": "0xfffffe00089eac30",
+      "method": "__ZN18AGXAcceleratorG16XD0Ev"
+    },
+    {
+      "slot": "0x1138",
+      "target": "0xfffffe00089e7f60",
+      "method": "__ZN18AGXAcceleratorG16X18halResetEventFlagsERK20AGFIKSMEventFlagMask"
+    },
+    {
+      "slot": "0x1148",
+      "target": "0xfffffe00089e7e84",
+      "method": "__ZN18AGXAcceleratorG16X25halWaitForFenderPowerGateEv"
     }
   ],
   "payload_slots": {

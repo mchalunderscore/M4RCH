@@ -30,7 +30,7 @@ This is implementation-derived analysis, not clean-room. No binary, firmware TEX
 or complete disassembly belongs in the return bundle.
 
 Run `experiments/t6040-gpu/audit-private-wake-lifecycle.py <private-macho> <json>`.
-The saved JSON checks43 instruction sites and8 ASC vtable targets. Static words
+The saved JSON checks111 instruction sites,17 ASC and4 G16X accelerator vtable targets. Static words
 pin the reviewed sites; they do not independently prove semantics or causality.
 The constructor at89d30c4..89d30dc fixes the ASC vtable address point at
 fffffe0007ea8668+10. Image-specific encoded pointer targets use base
@@ -125,3 +125,65 @@ no blind writes or hardware reset experiments are requested.
 We can continue offline Linux ABI work and future cold batches. A normal Linux
 reboot clears the retained failed probe. A macOS visit is needed only to obtain
 the missing matched provider artifact/runtime evidence, not to recover Linux.
+
+## follow-up: ordinary idle/wake ordering
+
+Further review found a useful ordinary static-power path distinct from recovery.
+The checker now verifies111 instruction sites,17 ASC and4 G16X accelerator vtable targets. No live
+power request, mailbox command or MMIO read/write was added.
+
+- `staticPowerStateChangeRequest(bool)` (8977eac) checks an enable bit at
+  accelerator631 and tracks state at accelerator1114a. Its true branch accepts
+  tracked state2, calls firmware slot368 with argument1, then records1. Its false
+  branch accepts state1, calls the same slot with argument2, then records2.
+  Firmware slot368 is `changePowerStateTo`; that delegates to provider slot8c0.
+  `ensurePoweredHardware` (895fa20, key sites895faa4..895fad4) uses the2-to1
+  transition. Therefore state1 is the wake/powered request and state2 the idle
+  request in these callers. Full provider-state definitions remain unavailable;
+  do not assume that a native parameter1/2 maps directly to RTKit0x220/0x201.
+
+- `idleStaticPowerOffTimerEventHandler` (8975790) compares values obtained from
+  the device-control queue object at firmware898, virtual slots30/38. They must
+  match. It then calls firmware slot140 (`isFirmwareColdBootDone`) and requires
+  true before the enabled/tracked-state1 path requests state2. This corroborates
+  idle ordering: an empty control queue and completed host cold-boot bookkeeping
+  precede the static-power request. The queue cursor names are inferred from
+  their paired uses; numeric equality and gating are directly visible.
+  The cold-boot getter (89d18ec) reads host958 bit0; its setter (89d18d4) sets
+  host958+role*130. This is host memory, not a firmware graph flag we should invent.
+
+- `validateASCWakeupEvent` (8974b3c) snapshots power generation through firmware
+  slot800, issues a DMB, invokes G16X accelerator slot1148
+  (`halWaitForFenderPowerGate`), resets event flags through slot1138
+  (`halResetEventFlags`), and conditionally waits
+  for the next generation through firmware slot808. The generation helpers
+  read u32 at the32-byte shared block reached through firmware888, offset1c.
+  A rising shared generation is a more specific native wake predicate than just
+  an RTKit ACK. The accelerator table at7eae388+10 resolves both calls,
+  calibrated against its two named destructors; the call ordering is established.
+
+- G16X `halWaitForFenderPowerGate` (89e7e84) first calls firmware slot810,
+  `waitForFirmwarePowerOff`, which waits for shared block888+10 to become0.
+  It then polls a u32 at accelerator358 + e80110 until maskf0 is zero.
+  The accelerator358 mapping's physical provenance is unresolved in this pass;
+  this is an offset/mask observation, NOT permission to access a guessed physical
+  address. No assumption about applicability to every G16S state is established.
+  The static wait lacks a visible timeout; a Linux implementation must not copy
+  that unbounded wait into an experimental live path.
+
+- `submitCmdGPUIdlePowerOff(bool)` (89c8860) constructs a zeroed device-control
+  record with opcode0a and the boolean following it, submits through its workloop
+  path, and conditionally calls `waitForDeviceControlCompletion`. This establishes
+  another GPU-level power command beyond RTKit management messages. Submission
+  and completion ABI, bool meaning and prerequisites must be qualified before
+  any native test; it is not a justified rescue command for status48.
+
+These findings give us an eventual Linux lifecycle outline: verify host/control
+readiness, request the provider power transition, verify shared generation and
+power predicates, and distinguish idle resume from graph destruction/recreation.
+They do not establish the missing provider's implementation or the warm failure's
+exact cause. The32-byte block at host888 is distinct from the larger power object
+mapped from host320 into main471; do not apply its+10/+1c fields to main471.
+The next macOS evidence request should include provider state1/2 semantics,
+physical mapping provenance for358/e80110 and the semantics of event-flag
+reset slot1138. Slot1148 is now resolved to the Fender power-gate wait.
