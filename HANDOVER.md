@@ -1,3 +1,19 @@
+# Native completion queue preparation — 2026-10-08
+
+New actual native G16 batches pass:1024 full completion descriptor cases (2048
+present/2048 absent records),1024 allocation caller cases (512 first failures,
+256 second failures,256 successes). Four32-byte descriptors use64-byte entries,
+separate from72-byte general firmware event ring. Native allocation caller fills
+slots1af70/1af80 only; absent descriptor clears only first address. Independent
+reusable serializer and size model added. See private-completion-queues.md and
+completion-queues/allocation JSON receipts. Underlying allocations/map identity,
+root attachment, completion payload/cursors/coherency and retirement still need
+integration; no live command or completion claim.
+
+Continue full PM/caller chain and Linux allocation/root/work/queue publication,
+completion/readback. Failed warm INIT remains retained; normal reboot before
+live integration, no forced unload/reset/warm retry. Not submission-only ready.
+
 # Native metrics release checkpoint — 2026-10-08
 
 512 actual request/release roundtrips restore availability and allocation counts;

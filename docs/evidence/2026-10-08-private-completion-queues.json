@@ -1,31 +1,24 @@
 {
-  "binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
-  "counts": {
-    "cases": 512,
-    "present_descriptors": 1024,
-    "absent_descriptors": 1024
-  },
-  "allocation_geometry_cases": 256,
-  "descriptor_size": "0x20",
-  "entry_stride": "0x40",
-  "resource_array": "accelerator+0x1af70",
-  "capacity_source": "accelerator+0xee58",
-  "function": {
-    "start": "0xfffffe00089d76c0",
-    "end": "0xfffffe00089d7948",
-    "sha256": "ed171efd2e82e24315dda123f81551c6651e87f65a62630b58d1f55bfe4794f4"
-  },
-  "allocation_slices": [
-    {
-      "start": "0xfffffe00089d713c",
-      "size": 24,
-      "sha256": "03f5843ede5208f0a29ffd2e6c89e2e9181087ea601bf4d31527f3531a97e1e1"
-    },
-    {
-      "start": "0xfffffe00089d7178",
-      "size": 4,
-      "sha256": "1aae1361b65b38c0ee91182612838da80aea4a01a23987068b14aebbcf51630e"
-    }
+  "private_binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "range": [
+    "0xfffffe00089d76c0",
+    "0xfffffe00089d7948"
   ],
-  "qualification": "Complete native completion descriptor builder, all16 optional-resource combinations; independent full-output and call-order checks. PAC bypassed; resource50/58 virtual mapping getters synthetic. Capacity/stride/ordinal observed without naming pointer roles or entry payload. Allocation rounding slice only; no actual allocation, completion cursor, retirement or live GPU access."
+  "range_sha256": "ed171efd2e82e24315dda123f81551c6651e87f65a62630b58d1f55bfe4794f4",
+  "counts": {
+    "cases": 1024,
+    "present_descriptors": 2048,
+    "absent_descriptors": 2048
+  },
+  "constants": [
+    64,
+    0,
+    64,
+    1,
+    64,
+    2,
+    64,
+    3
+  ],
+  "qualification": "Actual G16 populateKSMCompletionQueue1024 full128-byte output and accelerator preservation checks, all16 resource presence masks, randomu32 capacities and mapping158 returns. Four32-byte descriptors:resource58 mapping,resource50 mapping,capacity,64-byte entries,index0..3,zero. Absent descriptors clear only first address and preserve remaining24 bytes. Underlying mapping services remain fixtures; count representability is not valid/live capacity or object identity. Not the72-byte firmware event ring, no completion consumption/retirement/cache or GPU execution."
 }
