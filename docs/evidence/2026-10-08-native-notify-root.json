@@ -1,0 +1,24 @@
+{
+  "binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "cases": 512,
+  "range": [
+    "0xfffffe00089d0eb4",
+    "0xfffffe00089d0f5c"
+  ],
+  "root_link_range": [
+    "0xfffffe00089cdb84",
+    "0xfffffe00089cdbc8"
+  ],
+  "sha256": "ba5d1156229479cd8f2481795a3e3f04275a7fa5403f1a77ca0f87884ac16d88",
+  "root_link_sha256": "3d845590a5fb3f85bd8ed10b841979df9ac6c0a40436b5a0c04e3a16b7456a0c",
+  "findings": [
+    "StateGPUVA hostFW16d0 -> object(hostFW960)+48e0",
+    "EntriesGPUVA hostFW16d8 -> object(hostFW960)+48e8",
+    "StateCPU hostFW16c0: head0 and producer10 cleared",
+    "Publication target48f0(u64),4900(u32),4910(u32) cleared",
+    "Actual converter slot2d8 executed and preserves both VAs"
+  ],
+  "root_offset": "0xb0",
+  "allocation_bytes": 58432,
+  "qualification": "Native root link proves hostFW970 mapping is root+b0 (status_b); hostFW960 CPU backing correspondence follows separately qualified allocation descriptor. Actual allocator/mapping service is not executed. Contiguous native initialization publication slice with512 whole firmware/state/target image comparisons. CPU/GPU alias correspondence is supplied, not exercised on hardware. These offsets must not be applied blindly to the community main-buffer layout. No hardware publication or consumption."
+}
