@@ -25,6 +25,13 @@ class ReceiveDecode(unittest.TestCase):
         struct.pack_into('<I', state, 32, 256)
         with self.assertRaises(ValueError): module.decode_ring(state, bytes(256*72))
         with self.assertRaises(ValueError): module.decode_ring(bytes(47), bytes(256*72))
+    def test_type1_notification_mask_and_selector(self):
+        state, ring = bytearray(48), bytearray(256*72)
+        struct.pack_into('<I', state, 32, 1)
+        struct.pack_into('<IQQH', ring, 0, 1, (1 << 31) | (1 << 32), 1 << 63, 24)
+        fields = module.decode_ring(state, ring)['entries'][0]['type1_observed_fields']
+        self.assertEqual(fields['notification_indices'], [31, 32, 127])
+        self.assertFalse(fields['selector_within_native_bound'])
     def test_equal_cursors_empty(self):
         self.assertEqual(module.decode_ring(bytes(48), bytes(256*72))['entries'], [])
 

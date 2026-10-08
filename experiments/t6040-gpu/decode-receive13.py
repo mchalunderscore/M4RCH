@@ -21,8 +21,16 @@ def decode_ring(state, ring, limit=64):
     for n in range(min(pending, limit)):
         index = (read + n) % 256
         record = ring[index * 72:(index + 1) * 72]
-        entries.append(dict(index=index, type=struct.unpack_from('<I', record)[0],
-                            raw_hex=record.hex()))
+        entry = dict(index=index, type=struct.unpack_from('<I', record)[0], raw_hex=record.hex())
+        if entry['type'] == 1:
+            lo, hi = struct.unpack_from('<QQ', record, 4)
+            mask = lo | (hi << 64)
+            selector = struct.unpack_from('<H', record, 20)[0]
+            entry['type1_observed_fields'] = dict(
+                notification_indices=[i for i in range(128) if mask & (1 << i)],
+                selector=selector, selector_within_native_bound=selector < 24,
+                qualification='Callback enumeration only; job retirement not established')
+        entries.append(entry)
     return dict(read=read, write=write, pending_modulo_256=pending,
                 entries=entries, truncated=pending > limit,
                 qualification='Snapshot only; equal cursors treated as empty, no phase/full flag established')

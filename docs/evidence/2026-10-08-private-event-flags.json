@@ -1,0 +1,26 @@
+{
+  "binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "slice_range": [
+    "0xfffffe00089a2e8c",
+    "0xfffffe00089a2f3c"
+  ],
+  "slice_sha256": "925bc028f66f46fe29ee825c76a68f19a7228725856c8ab29b10ad64e276f01a",
+  "cases": 194,
+  "event_type": 1,
+  "mask_words": [
+    {
+      "offset": 4,
+      "bytes": 8
+    },
+    {
+      "offset": 12,
+      "bytes": 8
+    }
+  ],
+  "selector_offset": 20,
+  "selector_width": 2,
+  "selector_native_upper_bound": 24,
+  "callback_target": "0xfffffe000a7cf84c",
+  "callback_indices": "Ascending set-bit indices 0..127, third argument zero",
+  "qualification": "Native loop emulated, all 128 single-bit positions plus empty/full/random masks. Four external calls replaced by recorder, no service code executed. Callback effect and complete fence/job retirement not proved."
+}
