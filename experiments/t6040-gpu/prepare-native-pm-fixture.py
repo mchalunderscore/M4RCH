@@ -5,7 +5,18 @@ import sys,json,hashlib,struct
 import private_render_inputs
 if '--prepared-output' not in sys.argv:raise SystemExit('required: --prepared-output NEW_DIRECTORY')
 arg_index=sys.argv.index('--prepared-output');prepared_output=Path(sys.argv[arg_index+1]);del sys.argv[arg_index:arg_index+2]
+pm_render_profile=None;pm_render_profile_sha256=None
+if '--render-profile' in sys.argv:
+ idx=sys.argv.index('--render-profile');path=Path(sys.argv[idx+1]);del sys.argv[idx:idx+2]
+ pm_render_profile=json.loads(path.read_text());pm_render_profile_sha256=hashlib.sha256(path.read_bytes()).hexdigest()
+ assert pm_render_profile['submission_ready'] is False and pm_render_profile['topology_fixture']['record_count']==16
 prepared_output.mkdir(parents=True,exist_ok=False)
+def align_pm_configuration(gpu):
+ assert pm_render_profile is not None
+ t=pm_render_profile['topology_fixture']
+ struct.pack_into('<I',gpu,0x4e4,t['accelerator4e4']);struct.pack_into('<Q',gpu,0x11188,t['memory11188']);struct.pack_into('<Q',gpu,0x6d0,t['flags6d0'])
+ struct.pack_into('<I',gpu,0x718,16);struct.pack_into('<I',gpu,0xf528,16)
+
 base=Path(private_render_inputs.__file__).with_name('audit-private-pm-initialized-retain.py')
 source=base.read_text();pm_export_source_text=source
 def export_initialized_fixture():
@@ -29,11 +40,20 @@ def export_initialized_fixture():
     for off,width,label in [(0x910,8,'selected vector-a value, 3D tail'),(0x918,8,'selected vector-b value, 3D tail'),(0x920,8,'mTile getter'),(0x928,8,'mList getter'),(0x930,8,'vHeap getter'),(0x938,8,'aux record end'),(0x948,4,'parameter field1d4'),(0x1228,8,'selected vector-a value, TA'),(0x1230,8,'selected vector-b value, TA'),(0x1238,8,'TA mTile getter'),(0x1240,8,'TA mList getter'),(0x1248,8,'TA vHeap getter'),(0x1250,8,'TA aux record end'),(0x1258,4,'TA parameter field1d4'),(0x1268,4,'selected scene index')]:
         value=int.from_bytes(m.mem_read(D+off,width),'little');fields.append({'offset':hex(off),'bytes':width,'label':label,'value':hex(value),'qualification':'native copied value; resource-domain conversion must be resolved before publication'})
     scene_pm=bytes(pm);_,_,_,scene_stride,scene_size=scene_setup(scene_pm,gpu,bytes(0x100),bytes(0x1000),dict(block_alloc=BLOCKALLOC,scene_alloc=SCALLOC,resource=SRESOURCE,discard_resource=DISCARD),[0],scene_map,0)
-    profile={'submission_ready':False,'case':i,'private_binary_sha256':sha,'source_harness_sha256':hashlib.sha256(pm_export_source_text.encode()).hexdigest(),'files':files,'configuration_fixtures':{'accelerator4e4':int.from_bytes(m.mem_read(GPU+0x4e4,4),'little'),'accelerator6d0':hex(int.from_bytes(m.mem_read(GPU+0x6d0,8),'little')),'accelerator11188':int.from_bytes(m.mem_read(GPU+0x11188,8),'little'),'memory_provider_return':memory},'capacities':{'block_capacity':capacity,'scene_records':slot_count,'state_slots':state_count,'page_factor':factor,'page_list_resource_bytes':page_bytes,'page_entries_written':4,'block_memory_bytes':0x20000,'block_alignment':0x8000,'hw_state_bytes':0xc0,'counter_bytes':4,'scene_stride':scene_stride,'scene_resource_bytes':scene_size,'discard_bytes':0x8000,'ring_indices_checked':32,'packed_ring_entry_bytes':16},'block_mapping_fixture':hex(block_address),'frame_indices':list(struct.unpack('<4I',m.mem_read(PAGE_BUFFER,16))),'native_descriptor_fields':fields,'host_resource_associations':associations,'requirements':['replace CPU object and mapping-service identities with genuine Linux objects; host resource fields are not GPU pointers','resolve firmware-visible aliases for native copied vector/scene/aux values','rebuild page entries for the real parameter-block mapping','regenerate packed hardware-ring entries from real state and addresses; 32 checked indices do not prove actual ring capacity','initialize event/counter/cache/ownership and completion lifetimes','connect the native render-target/shader/state fields and final TA/3D work serialization'],'qualification':'Snapshot after all initializer/retention/TA-window comparisons pass in actual native chain. Preserved bytes may be random input or external-service fixtures, not required initialized values. Raw snapshots are research fixtures, never a publishable job. No GPU execution or live allocation proved.'}
+    profile={'submission_ready':False,'case':i,'private_binary_sha256':sha,'source_harness_sha256':hashlib.sha256(pm_export_source_text.encode()).hexdigest(),'files':files,'aligned_render_profile_sha256':pm_render_profile_sha256,'configuration_fixtures':{'accelerator4e4':int.from_bytes(m.mem_read(GPU+0x4e4,4),'little'),'accelerator6d0':hex(int.from_bytes(m.mem_read(GPU+0x6d0,8),'little')),'accelerator11188':int.from_bytes(m.mem_read(GPU+0x11188,8),'little'),'memory_provider_return':memory},'capacities':{'block_capacity':capacity,'scene_records':slot_count,'state_slots':state_count,'page_factor':factor,'page_list_resource_bytes':page_bytes,'page_entries_written':4,'block_memory_bytes':0x20000,'block_alignment':0x8000,'hw_state_bytes':0xc0,'counter_bytes':4,'scene_stride':scene_stride,'scene_resource_bytes':scene_size,'discard_bytes':0x8000,'ring_indices_checked':32,'packed_ring_entry_bytes':16},'block_mapping_fixture':hex(block_address),'frame_indices':list(struct.unpack('<4I',m.mem_read(PAGE_BUFFER,16))),'native_descriptor_fields':fields,'host_resource_associations':associations,'requirements':['replace CPU object and mapping-service identities with genuine Linux objects; host resource fields are not GPU pointers','resolve firmware-visible aliases for native copied vector/scene/aux values','rebuild page entries for the real parameter-block mapping','regenerate packed hardware-ring entries from real state and addresses; 32 checked indices do not prove actual ring capacity','initialize event/counter/cache/ownership and completion lifetimes','connect the native render-target/shader/state fields and final TA/3D work serialization'],'qualification':'Snapshot after all initializer/retention/TA-window comparisons pass in actual native chain. Preserved bytes may be random input or external-service fixtures, not required initialized values. Raw snapshots are research fixtures, never a publishable job. No GPU execution or live allocation proved.'}
     (prepared_output/'profile.json').write_text(json.dumps(profile,indent=2)+'\n')
 needle="joined_counts['initializer_mode_one'] += 1"
 assert source.count(needle)==1
 source=source.replace(needle,needle+'\n        if i == 0: export_initialized_fixture()')
+if pm_render_profile:
+ marker="exec(compile(tail, str(base), 'exec'))"
+ assert source.count(marker)==1
+ setup_alignment='''assert tail.count('slot_count=1+i%32')==1
+assert tail.count('for addr,data in [(S,bytes(original))')==1
+tail=tail.replace('slot_count=1+i%32','slot_count=16 if i==0 else 1+i%32')
+tail=tail.replace('for addr,data in [(S,bytes(original))','if i==0: align_pm_configuration(gpu)\\n for addr,data in [(S,bytes(original))')
+'''
+ source=source.replace(marker,setup_alignment+marker)
 __file__=str(base)
 exec(compile(source,str(base),'exec'))
 assert (prepared_output/'profile.json').exists()
