@@ -1,0 +1,38 @@
+{
+  "binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "work_body_cases": 1024,
+  "cached_cases": 512,
+  "uncached_cases": 512,
+  "dependency_counts": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "instruction_range": [
+    "0xfffffe00089db370",
+    "0xfffffe00089db5dc"
+  ],
+  "extra_branch_range": [
+    "0xfffffe00089db5fc",
+    "0xfffffe00089db620"
+  ],
+  "helper_range": [
+    "0xfffffe00089ee94c",
+    "0xfffffe00089ee9bc"
+  ],
+  "slice_sha256": "118c72289b95019c6754eb2a71c1bcd3d3f1769c47941fdbb3d5d0a375d2e616",
+  "findings": [
+    "Explicit dependencies use 12-byte input stride, timestamp at entry0 and event index at entry4; third word not read in this slice",
+    "Event index also supplies low7 queue ID bits at dependency bit40; implicit prior added after explicit dependencies",
+    "QOS byte0 at bits32..39, u32+8 low5 at bits40..44, u32+4 low16 at bits48..63 of word20",
+    "Four reglists encode address>>5 low38 and count low7 at bit43, preserve high14; bits38..42 cleared",
+    "RCE kind low2 replaces whole byte148; auxiliary caller x5 stored at178"
+  ],
+  "qualification": "Actual body, uncached helper and LSE publication run in single-thread emulated RAM. Earlier external zero/init, full-input allocation/protocol bounds, live memory coherency, capacity diagnostic path and real rendering workloads excluded. Tested dependency counts0..8, not asserted maximum."
+}
