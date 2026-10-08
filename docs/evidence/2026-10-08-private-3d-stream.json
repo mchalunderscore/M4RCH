@@ -429,5 +429,13 @@
     "slot": "0x258",
     "target": "0xfffffe00089d4b54"
   },
-  "qualification": "Whole native G16 3D SKU builder, native begin/timestamp/WFI/finish run in RAM versus composed independently checked models; complete stream/encoder/command outputs compared. PAC bypassed; external availability/event association/resource/firmware maps and memcpy stubbed. Both optional second phase and wait/timestamp branches covered. Native G16 SKU path is not proof SKSM uses this path; no valid shader/job, mapping/cache or live firmware execution established."
+  "qualification": "Whole native G16 3D SKU builder, native begin/timestamp/WFI/finish run in RAM versus composed independently checked models; complete stream/encoder/command outputs compared. PAC bypassed; external availability/event association/resource/firmware maps and memcpy stubbed. Both optional second phase and wait/timestamp branches covered. Native G16 SKU path is not proof SKSM uses this path; no valid shader/job, mapping/cache or live firmware execution established.",
+  "sksm_register_generator": {
+    "vtable": "0xfffffe0007eaa8e0",
+    "slot": "0x228",
+    "wrapper": "0xfffffe00089d5ce4",
+    "parent": "0xfffffe00089df73c",
+    "wrapper_sha256": "d4f46f30ec12a649c22d01aab5b1854a33a2d147047b8aa36ec0bdce07a62b13",
+    "qualification": "Static native vtable/wrapper route to previously audited common register generator; not proof of whole SKSM submission or GPU execution."
+  }
 }

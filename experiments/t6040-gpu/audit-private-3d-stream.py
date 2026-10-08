@@ -129,4 +129,15 @@ for i in range(1024):
  if not descriptor[0x893]&1:counts['timestamp_pair']=counts.get('timestamp_pair',0)+1
  if i<32:examples.append(dict(case=i,order=order,bytes=position-4096,reported=(position-4096+63)&0xffffffc0))
 report=dict(binary_sha256=sha,counts=counts,examples=examples,visited_instruction_count=len(seen),function=dict(start=hex(FN),end=hex(BASE+0x89d5a30),sha256=hashlib.sha256(read(FN,0x89d5a30-0x89d517c)).hexdigest()),wfi_vtable=dict(base=hex(BASE+0x7eaa560),slot='0x258',target=hex(WFI)),qualification='Whole native G16 3D SKU builder, native begin/timestamp/WFI/finish run in RAM versus composed independently checked models; complete stream/encoder/command outputs compared. PAC bypassed; external availability/event association/resource/firmware maps and memcpy stubbed. Both optional second phase and wait/timestamp branches covered. Native G16 SKU path is not proof SKSM uses this path; no valid shader/job, mapping/cache or live firmware execution established.')
+sksm_table=BASE+0x7eaa8e0
+sksm_entry=struct.unpack('<Q',read(sksm_table+16+0x228,8))[0]
+sksm_target=BASE+0x7004000+(sksm_entry&0xffffffff)
+assert sksm_target==BASE+0x89d5ce4
+wrapper=read(sksm_target,12)
+assert struct.unpack('<2I',wrapper[:8])==(0xd503245f,0xf9400800)
+branch=struct.unpack('<I',wrapper[8:])[0];assert branch>>26==0b000101
+imm=branch&0x3ffffff
+if imm&(1<<25):imm-=1<<26
+parent=sksm_target+8+imm*4;assert parent==BASE+0x89df73c
+report['sksm_register_generator']=dict(vtable=hex(sksm_table),slot='0x228',wrapper=hex(sksm_target),parent=hex(parent),wrapper_sha256=hashlib.sha256(wrapper).hexdigest(),qualification='Static native vtable/wrapper route to previously audited common register generator; not proof of whole SKSM submission or GPU execution.')
 a.output.write_text(json.dumps(report,indent=2)+'\n');print(counts)

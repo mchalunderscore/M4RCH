@@ -74,3 +74,15 @@ shader/state inputs, command-pool stride provenance and complete register
 initialization before submitting a real render job. The retained failed warm
 INIT probe needs a normal reboot before hardware tests. No triangle or GPU
 accelerated desktop is proved by this audit.
+
+## SKSM route corroboration
+
+The same checker also pins the G16_SKSM vtable at 0xfffffe0007eaa8e0:
+slot +0x228 resolves to its generateRegisterListFor3D wrapper at
+0xfffffe00089d5ce4. The wrapper loads the accelerator from channel +0x10
+and directly branches to common generator 0xfffffe00089df73c. Thus our
+previous assembled common-generator audit is relevant to this SKSM virtual
+method. This does not establish a call from SKSM to the SKU stream builder;
+the two paths must remain separate until full submission ordering is traced.
+The target, wrapper instructions, branch target and wrapper hash are checked
+against the same pinned binary, without hardware execution.
