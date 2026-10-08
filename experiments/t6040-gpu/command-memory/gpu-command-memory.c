@@ -3,6 +3,7 @@
 #include <linux/module.h>
 #include <linux/mm.h>
 #include <linux/slab.h>
+#include <linux/unaligned.h>
 #include "job-data.h"
 static struct page *pages[POOL_PAGES];
 #define PA_MASK GENMASK_ULL(41,14) /* Linux CPU physical addresses, not native generic UAT inputs. */
@@ -10,6 +11,8 @@ static struct page *pages[POOL_PAGES];
  * Resource API options -> encoder input and actual pool dispatch remain unknown. */
 static const u64 leaf_flags[2]={0x00e0000000000c0bULL,0x00c000000000044bULL};
 static struct page *tables[2][3];
+static u8 mapping_records[POOL_PAGES][24];
+static unsigned int notification_count;
 static void command_pages_release(void)
 {
  unsigned int i,r,l;
@@ -41,7 +44,7 @@ static int tables_prepare(void)
  unsigned int r,l,i;
  for (r=0;r<2;r++) {
   u64 base=r?FW_BASE:DEVICE_BASE,*root,*l1,*l2;
-  if (base+POOL_BYTES>(1ULL<<42) || (base&(PAGE_SIZE-1)) || ((base+POOL_BYTES-1)>>25)!=(base>>25)) return -EINVAL;
+  if (base+POOL_BYTES<base || ((base>>42)!=0 && (base>>42)!=((1ULL<<22)-1)) || (base&(PAGE_SIZE-1)) || ((base+POOL_BYTES-1)>>25)!=(base>>25)) return -EINVAL;
   for (l=0;l<3;l++) {
    tables[r][l]=alloc_pages(GFP_KERNEL|__GFP_ZERO,0);
    if (!tables[r][l]) return -ENOMEM;
@@ -73,6 +76,24 @@ static bool rejection_checks(void)
  }
  return !walk(2,DEVICE_BASE);
 }
+static bool notifications_prepare(void)
+{
+ unsigned int i;
+ bool eligible=(FW_BASE>=0xfffffc2000000000ULL && FW_BASE+POOL_BYTES<=0xfffffc2180000000ULL) ||
+               (FW_BASE>=0xfffffc2181400000ULL && FW_BASE+POOL_BYTES<=0xfffffc2185400000ULL);
+ if (!eligible) return true; /* Legacy low fixture profile has no callback. */
+ for (i=0;i<POOL_PAGES;i++) {
+  u64 va=FW_BASE+(u64)i*PAGE_SIZE,pa=page_to_phys(pages[i]);
+  u16 flags=(va>=0xfffffc20c0000000ULL && va<0xfffffc2180000000ULL)?7:5;
+  u8 *record=mapping_records[i];
+  if ((pa>>12)>U32_MAX) return false;
+  put_unaligned_le64(va,record);put_unaligned_le32(pa>>12,record+8);
+  put_unaligned_le16(1,record+16);put_unaligned_le16(flags,record+18);
+  /* Static zeroed record padding; no firmware publication or cache claim. */
+  pr_info("m4rch command-memory: mapping %u va=%#llx pa=%#llx descriptor=%*phN\n",i,va,pa,24,record);
+ }
+ notification_count=POOL_PAGES;return true;
+}
 static int __init command_memory_init(void)
 {
  unsigned int i,j,part,boundaries=0;
@@ -83,7 +104,7 @@ static int __init command_memory_init(void)
   if (!pages[i]) goto failure;
   if (page_to_phys(pages[i])&~PA_MASK) goto failure;
  }
- if (tables_prepare() || !rejection_checks()) goto failure;
+ if (tables_prepare() || !rejection_checks() || !notifications_prepare()) goto failure;
  for (i=0;i<JOB_COUNT;i++) {
   unsigned int offset=i*COMMAND_BYTES;
   for (j=0;j<COMMAND_BYTES;j+=part) {
@@ -104,8 +125,8 @@ static int __init command_memory_init(void)
  /* Native-rounded trailing capacity is uninitialized command space, kept zero. */
  for (j=JOB_COUNT*COMMAND_BYTES;j<POOL_BYTES;j++)
   if (*(u8 *)walk(1,FW_BASE+j)) goto failure;
- pr_info("m4rch command-memory: PASS jobs=%u pages=%u bytes=%u crossings=%u two_aliases=1 trailing_zero=1 table_pages=6 rejected_invalid=17 published=0\n",
-         JOB_COUNT,POOL_PAGES,POOL_BYTES,boundaries);
+ pr_info("m4rch command-memory: PASS jobs=%u pages=%u bytes=%u crossings=%u two_aliases=1 trailing_zero=1 table_pages=6 rejected_invalid=17 notifications=%u fw_base=%#llx published=0\n",
+         JOB_COUNT,POOL_PAGES,POOL_BYTES,boundaries,notification_count,(u64)FW_BASE);
  pr_info("m4rch command-memory: CPU copies through owned three-level shadow tables; candidate protections only; no installed GPU mappings/cache/acceptance/completion proof\n");
  return 0;
 failure:

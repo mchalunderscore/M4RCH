@@ -1,0 +1,228 @@
+{
+  "boot_id": "8d5519d3-c1db-41a7-bb94-7c68e7ac0d10",
+  "kernel": "7.1.13-m4rch-gpu-contract",
+  "records": [
+    {
+      "index": 0,
+      "va": "0xfffffc2000800000",
+      "physical": "0x100038bc000",
+      "descriptor_hex": "0000800020fcffffbc380010000000000100050000000000"
+    },
+    {
+      "index": 1,
+      "va": "0xfffffc2000804000",
+      "physical": "0x100db4cc000",
+      "descriptor_hex": "0040800020fcffffccb40d10000000000100050000000000"
+    },
+    {
+      "index": 2,
+      "va": "0xfffffc2000808000",
+      "physical": "0x100db4c8000",
+      "descriptor_hex": "0080800020fcffffc8b40d10000000000100050000000000"
+    },
+    {
+      "index": 3,
+      "va": "0xfffffc200080c000",
+      "physical": "0x1013787c000",
+      "descriptor_hex": "00c0800020fcffff7c781310000000000100050000000000"
+    },
+    {
+      "index": 4,
+      "va": "0xfffffc2000810000",
+      "physical": "0x10137878000",
+      "descriptor_hex": "0000810020fcffff78781310000000000100050000000000"
+    },
+    {
+      "index": 5,
+      "va": "0xfffffc2000814000",
+      "physical": "0x10137874000",
+      "descriptor_hex": "0040810020fcffff74781310000000000100050000000000"
+    },
+    {
+      "index": 6,
+      "va": "0xfffffc2000818000",
+      "physical": "0x10137870000",
+      "descriptor_hex": "0080810020fcffff70781310000000000100050000000000"
+    },
+    {
+      "index": 7,
+      "va": "0xfffffc200081c000",
+      "physical": "0x1013786c000",
+      "descriptor_hex": "00c0810020fcffff6c781310000000000100050000000000"
+    },
+    {
+      "index": 8,
+      "va": "0xfffffc2000820000",
+      "physical": "0x10137868000",
+      "descriptor_hex": "0000820020fcffff68781310000000000100050000000000"
+    },
+    {
+      "index": 9,
+      "va": "0xfffffc2000824000",
+      "physical": "0x10137864000",
+      "descriptor_hex": "0040820020fcffff64781310000000000100050000000000"
+    },
+    {
+      "index": 10,
+      "va": "0xfffffc2000828000",
+      "physical": "0x10137860000",
+      "descriptor_hex": "0080820020fcffff60781310000000000100050000000000"
+    },
+    {
+      "index": 11,
+      "va": "0xfffffc200082c000",
+      "physical": "0x1013785c000",
+      "descriptor_hex": "00c0820020fcffff5c781310000000000100050000000000"
+    },
+    {
+      "index": 12,
+      "va": "0xfffffc2000830000",
+      "physical": "0x10137858000",
+      "descriptor_hex": "0000830020fcffff58781310000000000100050000000000"
+    },
+    {
+      "index": 13,
+      "va": "0xfffffc2000834000",
+      "physical": "0x10137854000",
+      "descriptor_hex": "0040830020fcffff54781310000000000100050000000000"
+    },
+    {
+      "index": 14,
+      "va": "0xfffffc2000838000",
+      "physical": "0x10137850000",
+      "descriptor_hex": "0080830020fcffff50781310000000000100050000000000"
+    },
+    {
+      "index": 15,
+      "va": "0xfffffc200083c000",
+      "physical": "0x1013784c000",
+      "descriptor_hex": "00c0830020fcffff4c781310000000000100050000000000"
+    },
+    {
+      "index": 16,
+      "va": "0xfffffc2000840000",
+      "physical": "0x10137848000",
+      "descriptor_hex": "0000840020fcffff48781310000000000100050000000000"
+    },
+    {
+      "index": 17,
+      "va": "0xfffffc2000844000",
+      "physical": "0x10137844000",
+      "descriptor_hex": "0040840020fcffff44781310000000000100050000000000"
+    },
+    {
+      "index": 18,
+      "va": "0xfffffc2000848000",
+      "physical": "0x10137840000",
+      "descriptor_hex": "0080840020fcffff40781310000000000100050000000000"
+    },
+    {
+      "index": 19,
+      "va": "0xfffffc200084c000",
+      "physical": "0x1013783c000",
+      "descriptor_hex": "00c0840020fcffff3c781310000000000100050000000000"
+    },
+    {
+      "index": 20,
+      "va": "0xfffffc2000850000",
+      "physical": "0x10137838000",
+      "descriptor_hex": "0000850020fcffff38781310000000000100050000000000"
+    },
+    {
+      "index": 21,
+      "va": "0xfffffc2000854000",
+      "physical": "0x10137834000",
+      "descriptor_hex": "0040850020fcffff34781310000000000100050000000000"
+    },
+    {
+      "index": 22,
+      "va": "0xfffffc2000858000",
+      "physical": "0x10137830000",
+      "descriptor_hex": "0080850020fcffff30781310000000000100050000000000"
+    },
+    {
+      "index": 23,
+      "va": "0xfffffc200085c000",
+      "physical": "0x1013782c000",
+      "descriptor_hex": "00c0850020fcffff2c781310000000000100050000000000"
+    },
+    {
+      "index": 24,
+      "va": "0xfffffc2000860000",
+      "physical": "0x10137828000",
+      "descriptor_hex": "0000860020fcffff28781310000000000100050000000000"
+    },
+    {
+      "index": 25,
+      "va": "0xfffffc2000864000",
+      "physical": "0x10137824000",
+      "descriptor_hex": "0040860020fcffff24781310000000000100050000000000"
+    },
+    {
+      "index": 26,
+      "va": "0xfffffc2000868000",
+      "physical": "0x10137820000",
+      "descriptor_hex": "0080860020fcffff20781310000000000100050000000000"
+    },
+    {
+      "index": 27,
+      "va": "0xfffffc200086c000",
+      "physical": "0x1013781c000",
+      "descriptor_hex": "00c0860020fcffff1c781310000000000100050000000000"
+    },
+    {
+      "index": 28,
+      "va": "0xfffffc2000870000",
+      "physical": "0x10137818000",
+      "descriptor_hex": "0000870020fcffff18781310000000000100050000000000"
+    },
+    {
+      "index": 29,
+      "va": "0xfffffc2000874000",
+      "physical": "0x10137814000",
+      "descriptor_hex": "0040870020fcffff14781310000000000100050000000000"
+    },
+    {
+      "index": 30,
+      "va": "0xfffffc2000878000",
+      "physical": "0x10137810000",
+      "descriptor_hex": "0080870020fcffff10781310000000000100050000000000"
+    },
+    {
+      "index": 31,
+      "va": "0xfffffc200087c000",
+      "physical": "0x1013780c000",
+      "descriptor_hex": "00c0870020fcffff0c781310000000000100050000000000"
+    },
+    {
+      "index": 32,
+      "va": "0xfffffc2000880000",
+      "physical": "0x10137808000",
+      "descriptor_hex": "0000880020fcffff08781310000000000100050000000000"
+    },
+    {
+      "index": 33,
+      "va": "0xfffffc2000884000",
+      "physical": "0x10137804000",
+      "descriptor_hex": "0040880020fcffff04781310000000000100050000000000"
+    },
+    {
+      "index": 34,
+      "va": "0xfffffc2000888000",
+      "physical": "0x10137800000",
+      "descriptor_hex": "0080880020fcffff00781310000000000100050000000000"
+    }
+  ],
+  "record_checks": 35,
+  "descriptor_scheduler_checks": 64,
+  "module_unloaded": true,
+  "published": false,
+  "module_sha256": "b4883e229f0180bb819810c8e804636d8745853c51509451ca5b9d0d119fe48f",
+  "header_sha256": "f25100cabcc6d6af49489bcbee5adc0b609e437e093a9baa8ccac0c3fb463c43",
+  "source_sha256": "85a15372db81f3fae0c31cf2fa8d8fcc34faa18b7f676a3c2893b1e2049001ff",
+  "limits": [
+    "High firmware VA is a candidate, not reserved/installed",
+    "Other shader/target/context/parameter objects remain fixtures",
+    "No firmware consumption or GPU cache visibility proved"
+  ]
+}
