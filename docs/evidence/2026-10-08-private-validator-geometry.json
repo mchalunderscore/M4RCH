@@ -1,0 +1,102 @@
+{
+  "binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "initialization_range": [
+    "0xfffffe00089ad000",
+    "0xfffffe00089ad160"
+  ],
+  "event": {
+    "host_offset": "0x800",
+    "state_resource_field": "0x8c0",
+    "mapped_state_field": "0x900",
+    "main_pointer_offset": "0x1c0",
+    "ring_resource_field": "0x8e0",
+    "mapped_ring_field": "0x920",
+    "main_ring_pointer_offset": "0x1c8",
+    "capacity": 256,
+    "allowed_mask": "0x2000ffd3"
+  },
+  "nine_type2_validators": [
+    {
+      "host_offset": "0x5f0",
+      "state_resource_field": "0x8c8",
+      "state_byte_offset": 0,
+      "ring_resource_field": "0x8e8",
+      "ring_byte_offset": 0,
+      "allowed_mask": "0x4",
+      "capacity": 256
+    },
+    {
+      "host_offset": "0x620",
+      "state_resource_field": "0x8c8",
+      "state_byte_offset": 48,
+      "ring_resource_field": "0x8e8",
+      "ring_byte_offset": 18432,
+      "allowed_mask": "0x4",
+      "capacity": 256
+    },
+    {
+      "host_offset": "0x650",
+      "state_resource_field": "0x8c8",
+      "state_byte_offset": 96,
+      "ring_resource_field": "0x8e8",
+      "ring_byte_offset": 36864,
+      "allowed_mask": "0x4",
+      "capacity": 256
+    },
+    {
+      "host_offset": "0x680",
+      "state_resource_field": "0x8c8",
+      "state_byte_offset": 144,
+      "ring_resource_field": "0x8e8",
+      "ring_byte_offset": 55296,
+      "allowed_mask": "0x4",
+      "capacity": 256
+    },
+    {
+      "host_offset": "0x6b0",
+      "state_resource_field": "0x8c8",
+      "state_byte_offset": 192,
+      "ring_resource_field": "0x8e8",
+      "ring_byte_offset": 73728,
+      "allowed_mask": "0x4",
+      "capacity": 256
+    },
+    {
+      "host_offset": "0x6e0",
+      "state_resource_field": "0x8c8",
+      "state_byte_offset": 240,
+      "ring_resource_field": "0x8e8",
+      "ring_byte_offset": 92160,
+      "allowed_mask": "0x4",
+      "capacity": 256
+    },
+    {
+      "host_offset": "0x710",
+      "state_resource_field": "0x8c8",
+      "state_byte_offset": 288,
+      "ring_resource_field": "0x8e8",
+      "ring_byte_offset": 110592,
+      "allowed_mask": "0x4",
+      "capacity": 256
+    },
+    {
+      "host_offset": "0x740",
+      "state_resource_field": "0x8c8",
+      "state_byte_offset": 336,
+      "ring_resource_field": "0x8e8",
+      "ring_byte_offset": 129024,
+      "allowed_mask": "0x4",
+      "capacity": 256
+    },
+    {
+      "host_offset": "0x770",
+      "state_resource_field": "0x8c8",
+      "state_byte_offset": 384,
+      "ring_resource_field": "0x8e8",
+      "ring_byte_offset": 147456,
+      "allowed_mask": "0x4",
+      "capacity": 256
+    }
+  ],
+  "qualification": "Actual call-free initialization slice with synthetic resource pointers. Mapping fields/main offsets corroborated by existing receive-layout audit. Nine validators allow type 2 only; richer log semantics and live message production unresolved."
+}
