@@ -219,7 +219,7 @@
           2
         ]
       ],
-      "descriptor_sha256": "d643f8ba79971e131a805562cf47338aa09c7a3dccd084754a1a436a03e800c8"
+      "descriptor_sha256": "2d48d8046ba9366d46ddcd391aec0b601fe30c14c1f7fe01aecf9608cd8519b4"
     },
     {
       "slot_count": 3,
@@ -320,7 +320,7 @@
           2
         ]
       ],
-      "descriptor_sha256": "9cbdc4ce394b9223de697cd517cf8b339db0b37fc1eefed8de3c7487ad2818df"
+      "descriptor_sha256": "dc18c6f4ed26cf250eebdcc4a7f97774e5ba7b79521e1a250d2adc8629377f20"
     },
     {
       "slot_count": 4,
@@ -421,10 +421,10 @@
           2
         ]
       ],
-      "descriptor_sha256": "958904ba01ce6751e8940a312ac65e05e1bbac2bd809d90168495bae4320e8fd"
+      "descriptor_sha256": "5fc459d41dfbe856acc35027cb491cc01db55f6a75487dad5db87d8bd32e6a72"
     }
   ],
-  "qualification": "256 actual initializer/metrics/scene/block/HWPB results branch into whole ordinary retention, actual fresh page mapping and release-null, actual page generation getter, block preparation and page builder. Full PM/manager/TA/state/config/block/staged/frame/page bytes checked with numeric expectations. Actual PM50 metrics resource retained into TA db8. Initial PM mode1 preserved, no fabricated PM28=0 reuse fixture. Explicit inherited-constructor fixture fields PM258=0/PM1d0=0 and support providers supplied; resource mapping preparation, support getters/locks/retains and inherited mapping initialization remain external fixtures. Then actual TA prepare caller window8a22c2c..8a22c4c invokes actual PM usage update and PB bind/HAL; event service arguments checked, full PM/manager/state/ring/scene/TA/page bytes checked. Earlier UMA lock/update and full TA prepare not qualified; no live allocation/cache/retirement/submission. Original RAM restored after independent branch, then parent manual PB-ring check runs.",
+  "qualification": "256 actual initializer/metrics/scene/block/HWPB graphs feed full TA parameter loader and actual TA retention caller22504..22534, whole ordinary retention, fresh page mapping/release-null/generation/block/page methods. Full PM/manager/TA/state/config/block/staged/frame/page byte comparisons. PM50 metrics backing reaches TA db8. Initial PM mode1 preserved. Actual TA caller22be4..22c4c executes native UMA lock and full canSubmitLocked validation, usage update, PM usage update, PB binding and packed ring HAL. Explicit seeds/event success fixtures, randomized dirty byte flags, pool/node comparisons and logical lock ordering checked. Inherited constructor fields PM258=0/PM1d0=0, support providers/retain/mapping preparation and event/mutex services remain fixtures. Optional host tracing off; omitted caller intervals and full TA prepare not qualified. No live allocation/cache/retirement/submission. RAM restored after joined branch before separate parent manual ring checks.",
   "concrete_scene_range": [
     "0xfffffe00089fefb0",
     "0xfffffe00089ff3a4"
@@ -447,21 +447,35 @@
     "page_entries": 1024,
     "initializer_mode_one": 256,
     "caller_bindings": 256,
-    "usage_event_service_calls": 512
+    "usage_event_service_calls": 512,
+    "uma_validations": 256,
+    "uma_usage_updates": 256,
+    "uma_descriptor_event_updates": 241,
+    "initialized_parameter_loads": 256
   },
   "initialized_retention_range": [
     "0xfffffe00089fa7a8",
     "0xfffffe00089fb0d4"
   ],
   "ta_caller_window": [
-    "0xfffffe0008a22c2c",
+    "0xfffffe0008a22be4",
     "0xfffffe0008a22c4c"
   ],
-  "ta_caller_window_sha256": "b7167a47ccfd3297d395cff89cb2c85cd77c2a863a8da3bcf60ae88d9cc50e22",
+  "ta_caller_window_sha256": "6319cd09f87bc1d8bb0748a1a6426e54cb7e65c516d8bc92abd9ff4a8c283f25",
   "usage_update_range": [
     "0xfffffe00089fe138",
     "0xfffffe00089fe1b4"
   ],
   "usage_update_range_sha256": "3e748324c96aca7672f11bebb42a78fcf48c5ae5e2f3cad0d17a781736e91637",
+  "ta_retention_caller_window": [
+    "0xfffffe0008a22504",
+    "0xfffffe0008a22534"
+  ],
+  "ta_retention_caller_window_sha256": "fa740b79168be5041b4f85d3a75a30f273e805e636f2952726ad5f22923a7211",
+  "ta_parameter_loader_range": [
+    "0xfffffe0008a20cbc",
+    "0xfffffe0008a20ea0"
+  ],
+  "ta_parameter_loader_range_sha256": "5cd09c58f40f215496a856d250b78637580fa4f25e9e59a4dc22db47ebf61815",
   "initialized_retention_range_sha256": "42fc2c69a3bc039d267fa3b693dcb289901b9c96ff099426c6cad5335b2cd424"
 }

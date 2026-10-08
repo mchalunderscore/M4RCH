@@ -10,8 +10,12 @@ All offsets below are hexadecimal.
 
 256 actual full parameter-manager initializers include actual metrics registration,
 concrete scene setup/block creation and native HWPB factory/reset. Each resulting
-object graph then runs the whole ordinary `prepareAndRetain` method
-89fa7a8..89fb0d4. Capacity2..33, one initial block, config write1/read0/done0.
+object graph first runs the complete native TA parameter loader8a20cbc..8a20ea0,
+including its actual3D tail and both sets of three native zero getters. The
+actual allocated vectors supply values; whole1800-byte descriptor and unchanged
+PM/vector comparisons pass. The TA caller window8a22504..8a22534 then dispatches
+the whole ordinary `prepareAndRetain` method89fa7a8..89fb0d4, with its actual
+argument construction checked. Capacity2..33, one initial block, config write1/read0/done0.
 PM28 remains the initializer's actual value1. We do not change it to0 to obtain
 the older reused-page fixture path.
 
@@ -44,7 +48,15 @@ compare against explicit numeric expectations.
 ## Actual TA caller window
 
 The same retained graph next executes actual TA `prepare` instructions
-8a22c2c..8a22c4c. This window calls actual PM usage-event update89fe138..89fe1b4,
+8a22be4..8a22c4c. This now executes actual TA UMA lock/validate8a20c0c and
+its full native `canSubmitLocked`8a29f88..8a2a080 for both pools, followed by
+actual TA UMA usage update8a20b48. Pool seeds and successful event comparisons
+are explicit inputs. Randomized node flag bytes cover both dirty-bit states;
+full pool/node comparisons check that only reached low-bit dirty flags clear.
+Logical lock ordering matches: pool0 lock, pool1 lock, usage updates, pool1
+unlock, pool0 unlock. Real concurrent mutex behavior is not tested.
+
+The caller then invokes actual PM usage-event update89fe138..89fe1b4,
 then actual `loadPBDesc`89fe1b4 and the actual G16 packed hardware-ring loader.
 256 bindings cover request indices0..31. PM/HWPB/state/ring/scenes/TA/page bytes
 are checked after this caller window, rather than manually passing independent
@@ -53,8 +65,9 @@ replacement objects into `loadPBDesc`.
 The usage updater makes two argument-checked external event-service calls per
 case: TA dc8 with kernel-resource18+40, then TA80 with kernel-resource18.
 These512 calls establish argument flow, **not event contents or fence behavior**.
-The earlier TA UMA-pool lock/update calls and the rest of full TA `prepare`
-remain outside this window; full caller ordering is not claimed.
+Other intervals of full TA `prepare` remain omitted, including the interval
+between the retention and binding windows. We execute two actual windows with
+manual orchestration between them; full caller ordering is not claimed.
 
 ## Explicit fixture limits
 
@@ -63,7 +76,9 @@ explicitly supplies inherited-constructor outputs0 for those fields before
 initialization. Resource support providers, retain vtable methods and mapping
 length are explicit external constructor/service fixtures; their implementations
 are not inferred from zero-filled RAM. Mapping preparation and support generation
-services remain argument-checked fixtures. No actual allocator, CPU/FW physical
+services remain argument-checked fixtures. UMA mutex/event-copy/comparison
+services are also explicit fixtures; optional host tracing is disabled.
+No actual allocator, CPU/FW physical
 identity, cache visibility, firmware publication or retirement is established.
 
 After verifying the independent joined branch, the harness restores its emulated
@@ -73,8 +88,9 @@ private/local; the exported JSON carries image and method-range hashes only.
 
 ## Next work
 
-Join the earlier TA UMA lock/update and parameter-data loading with explicit
-event/state inputs. Assemble the complete matched TA/3D work and microsequences
+Parameter-data loading and the earlier UMA lock/update are now joined on the
+checked success path; companion private-uma-validation.json also covers failure
+unwinds. Assemble the complete matched TA/3D work and microsequences
 from the Linux-owned resources and our shaders/target, not base-M4 donor objects.
 Resolve completion payload identity and retirement before resource reuse. The
 running failed warm INIT still pins probe resources; a normal reboot is needed

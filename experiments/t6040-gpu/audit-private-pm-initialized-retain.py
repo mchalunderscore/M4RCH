@@ -5,6 +5,8 @@ The initializer harness is restored after each independent branch so its origina
 manual PB-ring comparison remains intact. No hardware or live resources touched.
 """
 from pathlib import Path
+from private_uma_emulation import NativeUMA, LOCK, UPDATE, expected_validation, expected_update
+from private_ta_inputs import load_ta_parameter_management
 base = Path(__file__).with_name('audit-private-pm-metrics-job.py')
 setup = base.read_text().split("exec(compile(tail,str(base),'exec'))")[0]
 setup = setup.replace('m.hook_add(u.UC_HOOK_CODE,metrics_job_hook)',
@@ -18,10 +20,20 @@ m.mem_map(0xfffffe00089fa000, 4096)
 m.mem_write(RET, read(RET, RET_END-RET))
 m.mem_write(PAGEGEN, read(PAGEGEN, PAGEEND-PAGEGEN))
 USAGE = 0xfffffe00089fe138
-CALLER, CALLER_END = 0xfffffe0008a22c2c, 0xfffffe0008a22c4c
+CALLER, CALLER_END = 0xfffffe0008a22be4, 0xfffffe0008a22c4c
+RET_CALLER, RET_CALLER_END = 0xfffffe0008a22504, 0xfffffe0008a22534
 m.mem_write(USAGE, read(USAGE, PB-USAGE))
 m.mem_map(0xfffffe0008a22000, 4096)
 m.mem_write(CALLER, read(CALLER, CALLER_END-CALLER))
+m.mem_write(RET_CALLER, read(RET_CALLER, RET_CALLER_END-RET_CALLER))
+uma = NativeUMA(m, read)
+for table, slot, target in ((0xfffffe0007eb3050, 0x1e0, RET),
+        (0xfffffe0007eb7560, 0x208, LOCK), (0xfffffe0007eb7560, 0x210, UPDATE)):
+    encoded = struct.unpack('<Q', read(table+16+slot, 8))[0]
+    assert 0xfffffe0007004000+(encoded & 0xffffffff) == target
+TA_PM, TA_PM_END = 0xfffffe0008a20cbc, 0xfffffe0008a20ea0
+m.mem_write(TA_PM, read(TA_PM, TA_PM_END-TA_PM))
+for slot, target in zip((0x158, 0x160, 0x168), GETTERS): qwrite(PMVT+slot, target)
 m.mem_map(0x2f0000, 0x10000)
 POBJ, POVT, PIVT, PMETA, PNEW, PINIT, PRETAIN, PLENGTH, PA, PBARRAY = [
     0x2f0000 + 0x1000*j for j in range(10)]
@@ -34,12 +46,15 @@ qwrite(POVT+0x148, PLENGTH); qwrite(DVT+0x20, PRETAIN)
 joined_events = []
 joined_counts = dict(chains=0, fresh_page_mappings=0, descriptor_resources=0,
                      page_entries=0, initializer_mode_one=0, caller_bindings=0,
-                     usage_event_service_calls=0)
+                     usage_event_service_calls=0, uma_validations=0,
+                     uma_usage_updates=0, uma_descriptor_event_updates=0)
+joined_counts['initialized_parameter_loads'] = 0
 active_join = False
 
 def joined_hook(m, address, size, user):
     if not active_join:
         metrics_job_hook(m, address, size, user); return
+    if uma.hook(address): return
     x0 = m.reg_read(regs[0])
     if address in (0xfffffe00089fe17c, 0xfffffe00089fe1b0):
         event_args = (BCTX, D+0xdc8, 0x2fa500+0x40) if address == 0xfffffe00089fe17c else (BCTX, D+0x80, 0x2fa500)
@@ -72,9 +87,17 @@ def joined_hook(m, address, size, user):
     word = struct.unpack('<I', m.mem_read(address, 4))[0]
     if word & 0xfffffc00 == 0xd73f0800:
         target = m.reg_read(regs[(word >> 5) & 31])
+        if target in (LOCK, UPDATE):
+            assert x0 == D
+            m.reg_write(c.UC_ARM64_REG_LR, address+4)
+            m.reg_write(c.UC_ARM64_REG_PC, target); return
         if target in (PAGEPREP, PAGERELEASE, PAGEGEN, PREPARE, BUILD):
             assert x0 == S
             joined_events.append(('native', target))
+            m.reg_write(c.UC_ARM64_REG_LR, address+4)
+            m.reg_write(c.UC_ARM64_REG_PC, target); return
+        if target == RET:
+            assert tuple(m.reg_read(regs[j]) for j in range(3)) == (S, D, STAGED)
             m.reg_write(c.UC_ARM64_REG_LR, address+4)
             m.reg_write(c.UC_ARM64_REG_PC, target); return
         if target in (PNEW, PINIT, PRETAIN, PLENGTH, MRET):
@@ -120,7 +143,7 @@ def initialized_retention():
     global generation_values, retained_objects, block_address, request
     # Keep the initializer's real PM/config/manager/state identities. Resource
     # support getters are external constructor outputs absent in the parent stub.
-    original_ram = bytes(m.mem_read(0x200000, 0xf0000))
+    original_ram = bytes(m.mem_read(0x200000, 0x140000))
     old_block_address = globals().get('block_address')
     try:
         qwrite(GARTVT+0x20, PRETAIN); qwrite(BSUPPORT, POVT)
@@ -138,6 +161,23 @@ def initialized_retention():
         qwrite(KRES+0xa0, 0); qwrite(KRES+0x50, GPU)
         page_before = rng.randbytes(0x1000); m.mem_write(PAGE_BUFFER, page_before)
         descriptor_before = rng.randbytes(0x1800); m.mem_write(D, descriptor_before)
+        source_pm = bytes(m.mem_read(S, 0x300))
+        va_pointer, vb_pointer = (struct.unpack_from('<Q', source_pm, off)[0] for off in (0xa8, 0x88))
+        va_backing, vb_backing = (bytes(m.mem_read(ptr, 0x1000)) for ptr in (va_pointer, vb_pointer))
+        va_values, vb_values = struct.unpack('<512Q', va_backing), struct.unpack('<512Q', vb_backing)
+        loaded_descriptor = load_ta_parameter_management(descriptor_before, source_pm, va_values, vb_values, [0, 0, 0])
+        for reg in regs: m.reg_write(reg, 0)
+        for reg, value in ((c.UC_ARM64_REG_X0, D), (c.UC_ARM64_REG_X1, S),
+                (c.UC_ARM64_REG_SP, STACK), (c.UC_ARM64_REG_LR, STOP)):
+            m.reg_write(reg, value)
+        m.emu_start(TA_PM, STOP, count=3000)
+        assert m.reg_read(c.UC_ARM64_REG_PC) == STOP and m.reg_read(c.UC_ARM64_REG_SP) == STACK
+        assert bytes(m.mem_read(D, 0x1800)) == loaded_descriptor
+        assert bytes(m.mem_read(S, 0x300)) == source_pm
+        assert bytes(m.mem_read(va_pointer, 0x1000)) == va_backing
+        assert bytes(m.mem_read(vb_pointer, 0x1000)) == vb_backing
+        descriptor_before = loaded_descriptor
+        joined_counts['initialized_parameter_loads'] += 1
         staged_before = rng.randbytes(0x40); m.mem_write(STAGED, staged_before)
         block_address = rng.getrandbits(64)
         prep_receivers = dict(zip((0xfffffe00089fa7ec, 0xfffffe00089fa810,
@@ -162,12 +202,15 @@ def initialized_retention():
         assert struct.unpack_from('<I', hm, 0x30)[0] == 0
         assert struct.unpack_from('<Q', pm, 0x50)[0] == METRICS_RESOURCE
         joined_events.clear(); job_events.clear(); active_join = True
+        qwrite(PMVT+0x1e0, RET)
         for reg in regs: m.reg_write(reg, 0)
         for reg, value in ((c.UC_ARM64_REG_X0, S), (c.UC_ARM64_REG_X1, D),
                 (c.UC_ARM64_REG_X2, STAGED), (c.UC_ARM64_REG_SP, STACK),
+                (c.UC_ARM64_REG_X19, D), (c.UC_ARM64_REG_X20, S),
+                (c.UC_ARM64_REG_X29, STAGED+0x44),
                 (c.UC_ARM64_REG_LR, STOP)): m.reg_write(reg, value)
-        m.emu_start(RET, STOP, count=20000)
-        assert m.reg_read(c.UC_ARM64_REG_PC) == STOP
+        m.emu_start(RET_CALLER, RET_CALLER_END, count=20000)
+        assert m.reg_read(c.UC_ARM64_REG_PC) == RET_CALLER_END
         assert m.reg_read(c.UC_ARM64_REG_SP) == STACK and m.reg_read(c.UC_ARM64_REG_W0) == 0
         ep, eh, ed, es = bytearray(pm), bytearray(hm), bytearray(descriptor_before), bytearray(state)
         if struct.unpack_from('<I', pm, 0x1d0)[0] == 0: struct.pack_into('<I', ep, 0x1d0, 1)
@@ -207,11 +250,18 @@ def initialized_retention():
         assert bytes(m.mem_read(POBJ, len(page_object))) == page_object
         for addr, before, first in zip((PA, PBARRAY), page_array_before, (GART, BSUPPORT)):
             assert bytes(m.mem_read(addr, len(before))) == struct.pack('<Q', first)+before[8:]
-        # Actual TA prepare caller instructions, starting AFTER UMA lock/update.
-        # That omitted prefix is not claimed qualified. Usage-event services are
-        # checked external calls; PB bind/HAL and their mutations execute natively.
+        # Actual TA caller instructions now include native UMA validation/usage.
+        # Earlier preparation remains omitted. All event operations are fixtures.
         qwrite(KRES+0x18, 0x2fa500)
         qwrite(D+0x10, GPU); qwrite(D+0xd68, S); qwrite(D+0xd70, HWM)
+        wanted = [rng.getrandbits(64), rng.getrandbits(64)]
+        flags = [rng.randrange(256), rng.randrange(256)]
+        uma.seed(D, wanted, [1, 1], [0, 0], flags)
+        uma.qwrite(D+0x208, wanted[1])
+        qwrite(D, 0x2fa800); qwrite(0x2fa800+0x208, LOCK); qwrite(0x2fa800+0x210, UPDATE)
+        qwrite(STACK+0x18, wanted[0])
+        uma_before_p = [bytes(m.mem_read(p, 0x220)) for p in uma.pools]
+        uma_before_n = [bytes(m.mem_read(n, 0x200)) for n in uma.nodes]
         request = i % 32; m.mem_write(D+0x1218, struct.pack('<I', request))
         m.mem_write(D+0xc44, b'\x03')
         descriptor_for_caller = bytes(m.mem_read(D, 0x1800))
@@ -219,8 +269,11 @@ def initialized_retention():
         scene_before = bytes(m.mem_read(CPU60[0], 0x1000)); job_events.clear()
         for reg in regs: m.reg_write(reg, 0)
         m.reg_write(c.UC_ARM64_REG_X19, D); m.reg_write(c.UC_ARM64_REG_SP, STACK)
+        m.reg_write(c.UC_ARM64_REG_X20, D)
         m.reg_write(c.UC_ARM64_REG_LR, STOP)
+        uma.active = True
         m.emu_start(CALLER, CALLER_END, count=3000)
+        uma.active = False
         assert m.reg_read(c.UC_ARM64_REG_PC) == CALLER_END and m.reg_read(c.UC_ARM64_REG_SP) == STACK
         if not ep[0x230] & 1:
             ep[0x230] = 1; struct.pack_into('<Q', ep, 0x238, 1)
@@ -233,12 +286,23 @@ def initialized_retention():
             assert bytes(m.mem_read(addr, len(expected))) == bytes(expected), (i, 'caller', hex(addr))
         assert job_events == [('native_hal',), ('ring_cpu_map',)]
         assert [e[1] for e in joined_events if e[0] == 'caller'] == [0xfffffe0008a22c34, 0xfffffe0008a22c48]
+        result, validate_events, increments = expected_validation(wanted, wanted, [1, 1])
+        assert result == 0 and increments == [0, 0]
+        assert uma.events == validate_events+expected_update(flags)
+        for p, before in zip(uma.pools, uma_before_p): assert bytes(m.mem_read(p, len(before))) == before
+        for j, n in enumerate(uma.nodes):
+            en = bytearray(uma_before_n[j])
+            if flags[j] & 1: en[0x1b8] = 0
+            assert bytes(m.mem_read(n, len(en))) == en
+        joined_counts['uma_validations'] += 1; joined_counts['uma_usage_updates'] += 1
+        joined_counts['uma_descriptor_event_updates'] += sum(bool(flag & 1) for flag in flags)
         joined_counts['caller_bindings'] += 1
         joined_counts['chains'] += 1; joined_counts['fresh_page_mappings'] += 1
         joined_counts['descriptor_resources'] += 9; joined_counts['page_entries'] += 4
         joined_counts['initializer_mode_one'] += 1
     finally:
         active_join = False
+        uma.active = False
         m.mem_write(0x200000, original_ram)
         block_address = old_block_address
 
@@ -250,5 +314,5 @@ tail = tail.replace(needle, 'initialized_retention();'+needle)
 needle = "struct.pack_into('<Q',original,0xa8,0);"
 assert tail.count(needle) == 1
 tail = tail.replace(needle, needle+"struct.pack_into('<Q',original,0x258,0);struct.pack_into('<I',original,0x1d0,0);")
-tail = tail.replace('args.output.write_text', "report['initialized_retention_counts']=joined_counts\nreport['initialized_retention_range']=[hex(RET),hex(RET_END)]\nreport['ta_caller_window']=[hex(CALLER),hex(CALLER_END)]\nreport['ta_caller_window_sha256']=hashlib.sha256(read(CALLER,CALLER_END-CALLER)).hexdigest()\nreport['usage_update_range']=[hex(USAGE),hex(PB)]\nreport['usage_update_range_sha256']=hashlib.sha256(read(USAGE,PB-USAGE)).hexdigest()\nreport['initialized_retention_range_sha256']=hashlib.sha256(read(RET,RET_END-RET)).hexdigest()\nreport['qualification']='256 actual initializer/metrics/scene/block/HWPB results branch into whole ordinary retention, actual fresh page mapping and release-null, actual page generation getter, block preparation and page builder. Full PM/manager/TA/state/config/block/staged/frame/page bytes checked with numeric expectations. Actual PM50 metrics resource retained into TA db8. Initial PM mode1 preserved, no fabricated PM28=0 reuse fixture. Explicit inherited-constructor fixture fields PM258=0/PM1d0=0 and support providers supplied; resource mapping preparation, support getters/locks/retains and inherited mapping initialization remain external fixtures. Then actual TA prepare caller window8a22c2c..8a22c4c invokes actual PM usage update and PB bind/HAL; event service arguments checked, full PM/manager/state/ring/scene/TA/page bytes checked. Earlier UMA lock/update and full TA prepare not qualified; no live allocation/cache/retirement/submission. Original RAM restored after independent branch, then parent manual PB-ring check runs.'\nargs.output.write_text")
+tail = tail.replace('args.output.write_text', "report['initialized_retention_counts']=joined_counts\nreport['initialized_retention_range']=[hex(RET),hex(RET_END)]\nreport['ta_caller_window']=[hex(CALLER),hex(CALLER_END)]\nreport['ta_caller_window_sha256']=hashlib.sha256(read(CALLER,CALLER_END-CALLER)).hexdigest()\nreport['usage_update_range']=[hex(USAGE),hex(PB)]\nreport['usage_update_range_sha256']=hashlib.sha256(read(USAGE,PB-USAGE)).hexdigest()\nreport['ta_retention_caller_window']=[hex(RET_CALLER),hex(RET_CALLER_END)]\nreport['ta_retention_caller_window_sha256']=hashlib.sha256(read(RET_CALLER,RET_CALLER_END-RET_CALLER)).hexdigest()\nreport['ta_parameter_loader_range']=[hex(TA_PM),hex(TA_PM_END)]\nreport['ta_parameter_loader_range_sha256']=hashlib.sha256(read(TA_PM,TA_PM_END-TA_PM)).hexdigest()\nreport['initialized_retention_range_sha256']=hashlib.sha256(read(RET,RET_END-RET)).hexdigest()\nreport['qualification']='256 actual initializer/metrics/scene/block/HWPB graphs feed full TA parameter loader and actual TA retention caller22504..22534, whole ordinary retention, fresh page mapping/release-null/generation/block/page methods. Full PM/manager/TA/state/config/block/staged/frame/page byte comparisons. PM50 metrics backing reaches TA db8. Initial PM mode1 preserved. Actual TA caller22be4..22c4c executes native UMA lock and full canSubmitLocked validation, usage update, PM usage update, PB binding and packed ring HAL. Explicit seeds/event success fixtures, randomized dirty byte flags, pool/node comparisons and logical lock ordering checked. Inherited constructor fields PM258=0/PM1d0=0, support providers/retain/mapping preparation and event/mutex services remain fixtures. Optional host tracing off; omitted caller intervals and full TA prepare not qualified. No live allocation/cache/retirement/submission. RAM restored after joined branch before separate parent manual ring checks.'\nargs.output.write_text")
 exec(compile(tail, str(base), 'exec'))
