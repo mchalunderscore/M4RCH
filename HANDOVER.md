@@ -1,3 +1,19 @@
+# Ordinary PM resource-retention checkpoint
+
+Offline only; no GPU commands, live allocation, reboot or kernel/default changes.
+Read docs/evidence/2026-10-08-private-pm-retain.md/JSON plus private-pm-job-chain.md.
+512 complete native prepareAndRetain success cases compare full objects and staged buffers.
+2688 page-block preparations,896 dirty-block calls,768 pending drains,256 stage requests.
+TA retained resource fields bound; mapping generations and staged ring cursor checked.
+External mapping/page/staging/retain methods remain explicit services. Failures excluded.
+No direct loadPBDesc call in this method: trace later caller/resource/page-list ordering.
+Next ordinary virtual-method/resource setup -> matched TA/3D work and Linux-owned
+root/queues/events/stamps -> publication/completion/coherent readback. NOT submission-ready.
+Retained warm INIT needs normal reboot before live GPU trials; offline work continues.
+Private-derived; no Apple binary/TEXT/disassembly exported, no public push.
+
+---
+
 # Native PM initialization through packed hardware ring checkpoint
 
 Offline only; no live allocation, GPU commands, reboot or kernel/default changes.

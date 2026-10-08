@@ -97,7 +97,7 @@ JSON receipts with matching names are beside this document.
 Do not mistake these numeric initialization and packed-ring tests for a
 submission-ready Linux driver. Next trace ordinary prepareAndRetain89fa7a8..89fb0d4,
 which prepares/retains mappings, binds TA descriptor resource objects, observes
-mapping generations and stages page-list updates. Its direct loadPBDesc call and
+mapping generations and stages page-list updates. Its staged outputs and
 full descriptor association must be joined to the existing TA/3D recipes.
 
 Then replace external mapping/allocation/registration fixtures with Linux-owned
