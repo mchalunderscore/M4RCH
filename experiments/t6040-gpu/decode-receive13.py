@@ -29,7 +29,8 @@ def decode_ring(state, ring, limit=64):
             entry['type1_observed_fields'] = dict(
                 notification_indices=[i for i in range(128) if mask & (1 << i)],
                 selector=selector, selector_within_native_bound=selector < 24,
-                qualification='Callback enumeration only; job retirement not established')
+                native_callback_indices=[i for i in range(128) if mask & (1 << i)] if selector < 24 else [],
+                qualification='Native type1 dispatch requires selector<24; callback enumeration only, job retirement not established')
         entries.append(entry)
     return dict(read=read, write=write, pending_modulo_256=pending,
                 entries=entries, truncated=pending > limit,

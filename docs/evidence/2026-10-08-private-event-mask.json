@@ -1,0 +1,20 @@
+{
+  "binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "counts": {
+    "valid": 1008,
+    "invalid_metadata": 12,
+    "wrong_type": 4,
+    "notifications": 56385
+  },
+  "slice": {
+    "start": "0xfffffe00089a2e50",
+    "end": "0xfffffe00089a2f64",
+    "sha256": "8b4ac0701e06061aa4d8b56cc6da35f9eacfd6db32261789c3b9d856e64dd73d"
+  },
+  "switch": {
+    "table": "0xfffffe00089a3d38",
+    "index": 1,
+    "target": "0xfffffe00089a2e50"
+  },
+  "qualification": "Native type1 mask consumer against independent set-bit enumeration; all128 one-hot positions, zero/dense/random masks and invalid guard branches. External timestamp/event-machine callback synthetic. Notification is not evidence of job completion or safe cleanup; provider semantics unavailable."
+}
