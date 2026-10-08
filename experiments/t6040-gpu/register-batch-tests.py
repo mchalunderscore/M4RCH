@@ -138,4 +138,18 @@ class BatchTests(unittest.TestCase):
   from unittest.mock import patch
   with patch.object(mods['batch'].adt,'parse',lambda _:tree):
    with self.assertRaises(ValueError):mods['batch'].extend(*mods['model'].graph_fixture(True),raw)
+ def test_receive14_extents_pointer_positions_and_no_overlap(self):
+  import copy
+  from receive14_fixture import extend
+  data,r=extend(self.data,copy.deepcopy(self.receipt));base=int(r['base'],16)
+  self.assertEqual(len(data)//0x4000,54);self.assertEqual(r['mapped_pages'],154)
+  self.assertEqual(r['mmio_leaves'],self.receipt['mmio_leaves'])
+  main=next(o['arena_offset'] for o in r['objects'] if o['name']=='main')
+  objects=[o for o in r['objects'] if o['name'].startswith('receive14_')]
+  self.assertEqual([o['input_bytes'] for o in objects],[0x30,0x9000,0x30,0x4800])
+  for i,o in enumerate(objects):
+   self.assertEqual(struct.unpack_from('<Q',data,main+0x1e0+i*8)[0],base+o['arena_offset'])
+   self.assertFalse(any(data[o['arena_offset']:o['arena_offset']+o['reserved_bytes']]))
+  self.assertFalse(any(data[main+0x1c0:main+0x1e0]));self.assertFalse(any(data[main+0x200:main+0x240]))
+  with self.assertRaises(ValueError):extend(data,r)
 if __name__=='__main__':unittest.main()

@@ -47,11 +47,11 @@ def graph_fixture(enabled):
     return a.assemble(templates,ROOT)
 
 
-def run(text,data,enabled=False,instruction_limit=20000):
+def run(text,data,enabled=False,instruction_limit=20000,fixture=None):
     contract=qualify(text)
     if len(data)!=0x138000:
         raise ValueError('Wrong DATA extent')
-    arena,graph=graph_fixture(enabled)
+    arena,graph=graph_fixture(enabled) if fixture is None else fixture
     machine=u.Uc(u.UC_ARCH_ARM64,u.UC_MODE_ARM)
     machine.mem_map(FW,0x60000,u.UC_PROT_READ|u.UC_PROT_EXEC)
     machine.mem_write(FW,text)

@@ -22,5 +22,6 @@ def stage(arena, receipt, count=1):
         count=count, read=0, prefetch=0, write=count, operands='zero; native handler reads none',
         qualification='Bounded initial control fixture; no wraparound. Work channels remain empty RAM surrogates. No job, FList or rendering command; no extra doorbell.')
     receipt['arena_sha256'] = hashlib.sha256(data).hexdigest()
-    receipt['channel_qualification'] = f'Work0..11 use zero RAM cursor surrogates; control12 contains{count} initial refresh records and producer{count}. Channels13..16 remain unchanged/unqualified. No production work queue or rendering.'
+    receive = 'Receive14 has experimental four-buffer backing; receive13/15/16 unchanged/unqualified.' if 'receive14_fixture' in receipt else 'Channels13..16 remain unchanged/unqualified.'
+    receipt['channel_qualification'] = f'Work0..11 use zero RAM cursor surrogates; control12 contains{count} initial refresh records and producer{count}. {receive} No production work queue or rendering.'
     return data, receipt

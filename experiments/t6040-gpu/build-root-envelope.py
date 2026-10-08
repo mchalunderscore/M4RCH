@@ -22,6 +22,7 @@ def main():
     p.add_argument('workspace', type=Path)
     p.add_argument('--control-refresh', action='store_true', help='One opcode16 initial control record; work remains empty')
     p.add_argument('--control-refresh-count', type=int, default=1, help='With --control-refresh, stage1..32 identical records; no wraparound')
+    p.add_argument('--receive14', action='store_true', help='Experimental four-buffer receive14 fixture; no jobs')
     args = p.parse_args()
     if not 1 <= args.control_refresh_count <= 32 or (not args.control_refresh and args.control_refresh_count != 1):
         p.error('Require --control-refresh and count1..32 for a batch')
@@ -86,11 +87,14 @@ def main():
     batch_spec.loader.exec_module(register_batch)
     seed = work/'asc-graph-init/boot-e1e8db50-10f6-46b5-8d73-a593b7e2c611/boot.adt'
     graph_bytes, graph_receipt = register_batch.extend(graph_bytes,graph_receipt,seed.read_bytes())
+    if args.receive14:
+        from receive14_fixture import extend
+        graph_bytes, graph_receipt = extend(graph_bytes,graph_receipt)
     if args.control_refresh:
         from control_refresh import stage
         graph_bytes, graph_receipt = stage(graph_bytes, graph_receipt, args.control_refresh_count)
     graph_pages = len(graph_bytes)//graph_plan.PAGE
-    if len(graph_bytes)%graph_plan.PAGE or graph_pages!=47:
+    if len(graph_bytes)%graph_plan.PAGE or graph_pages!=(54 if args.receive14 else 47):
         raise ValueError('Unexpected structural fixture geometry')
     header = '/* Explicit experimental zero-opaque fixture, NOT a complete render graph. */\n'
     header += f'#define ARENA_OBJECT_PAGES {graph_pages}U\n'
