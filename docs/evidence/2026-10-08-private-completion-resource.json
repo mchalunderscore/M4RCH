@@ -1,0 +1,23 @@
+{
+  "private_binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "range": [
+    "0xfffffe000895fe24",
+    "0xfffffe0008960064"
+  ],
+  "range_sha256": "e4a067de0e84a33d988c549bf52d91a1bac02d321384899fbc87699ad50cca83",
+  "counts": {
+    "cases": 1024,
+    "success": 292,
+    "failures": [
+      147,
+      147,
+      73,
+      146,
+      73,
+      146
+    ],
+    "device_creations": 365,
+    "firmware_creations": 257
+  },
+  "qualification": "1024 complete allocSingleKSMCompletionQueue wrapper calls: new/init/mapping creation/address failures, preexisting/fresh device/firmware maps, full object/output/GPU comparisons and exact argument/order. Resource initInner, allocator, context, retain/release and mapping services explicit; no allocation destruction semantics. Resource10 type word, init flags low32GPU18e00|23, resource58 map flags600000087 in device context, resource50 flags20900000084 with resource18 context. Same resource48 provider backs both maps, not two independent allocation identities. Success publishes resource only after both158 addresses nonzero; failures preserve output, release object. No live allocation/cache or GPU command."
+}

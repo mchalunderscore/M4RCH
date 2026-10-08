@@ -1,0 +1,118 @@
+{
+  "firmware": {
+    "raw_sha256": "f09648aa1dee7d1d1783649bc8d8321d31e5f2fb84240b588b45381932e93600",
+    "normalized_sha256": "190cef1946a23dfbde180592629631c3b28d0509a17eb76108b7c9a52accd9ac",
+    "observed_variable_payloads": [
+      {
+        "offset": "0x59841",
+        "tag_bytes": "GKTS",
+        "payload_hex": "af0ef76cece300ea"
+      },
+      {
+        "offset": "0x59924",
+        "tag_bytes": "ECAP",
+        "payload_hex": "ce1bce7d854a188f"
+      }
+    ],
+    "qualification": "Exact match outside two tagged eight-byte boot metadata payloads; tags and lengths are also checked. No instruction bytes excluded."
+  },
+  "range": [
+    "0x15200",
+    "0x15d08"
+  ],
+  "range_sha256": "7879d0e45aaaa9c713a0a4fc6254e7738a9a921b0b1647e89fd899babe38a3a7",
+  "descriptor_order": [
+    1,
+    3,
+    0,
+    2
+  ],
+  "counts": {
+    "cases": 1024,
+    "active_batches": 1792,
+    "entries": 71168,
+    "process_calls": 47451,
+    "empty_batches": 256,
+    "full_batches": 512,
+    "wrapped_batches": 655
+  },
+  "examples": [
+    {
+      "capacity": 2,
+      "mode": 0,
+      "presence": 0,
+      "plans": [
+        {
+          "present": false
+        },
+        {
+          "present": false
+        },
+        {
+          "present": false
+        },
+        {
+          "present": false
+        }
+      ]
+    },
+    {
+      "capacity": 3,
+      "mode": 0,
+      "presence": 0,
+      "plans": [
+        {
+          "present": false
+        },
+        {
+          "present": false
+        },
+        {
+          "present": false
+        },
+        {
+          "present": false
+        }
+      ]
+    },
+    {
+      "capacity": 16,
+      "mode": 0,
+      "presence": 0,
+      "plans": [
+        {
+          "present": false
+        },
+        {
+          "present": false
+        },
+        {
+          "present": false
+        },
+        {
+          "present": false
+        }
+      ]
+    },
+    {
+      "capacity": 256,
+      "mode": 0,
+      "presence": 0,
+      "plans": [
+        {
+          "present": false
+        },
+        {
+          "present": false
+        },
+        {
+          "present": false
+        },
+        {
+          "present": false
+        }
+      ]
+    }
+  ],
+  "qualification": "Complete firmware15200 ring helper executes in emulated RAM with already-held reference counts and optional hardware-EB8/trace/pending-notification gates off.1024 independent full descriptor/data/MMIO/ring checks: modes0/2, capacities2/3/16/256, all presence masks, empty/full/wrapping, software cursor both matching/different from hardwarehead. Cache, payload gate12564/process12788, notification flush, clock are explicit services. Hardware MMIO is ordinary RAM; cannot establish register side effects, DMA/cache or actual completion/retirement. No firmware/native code exported."
+}
