@@ -1,0 +1,58 @@
+{
+  "queues": [
+    {
+      "stage": "ta",
+      "queue_id": 0,
+      "state_fw": "0xfffffc2000b18000",
+      "pointer_record_fw": "0xfffffc2000b18100",
+      "job_ring_fw": "0xfffffc2000b18400",
+      "context_fw": "0xfffffc2000b18200",
+      "ksm_ring_device": "0x10000cc000",
+      "ksm_ring_fw": "0xfffffc2000b1c000",
+      "config_fw": "0xfffffc2000b19000",
+      "timestamp": 1,
+      "job_pointer_producer": 1,
+      "ksm_work_records": 1,
+      "config_opcode": 15
+    },
+    {
+      "stage": "3d",
+      "queue_id": 1,
+      "state_fw": "0xfffffc2000b20000",
+      "pointer_record_fw": "0xfffffc2000b20100",
+      "job_ring_fw": "0xfffffc2000b20400",
+      "context_fw": "0xfffffc2000b20200",
+      "ksm_ring_device": "0x10000d4000",
+      "ksm_ring_fw": "0xfffffc2000b24000",
+      "config_fw": "0xfffffc2000b21000",
+      "timestamp": 1,
+      "job_pointer_producer": 1,
+      "ksm_work_records": 1,
+      "config_opcode": 15
+    }
+  ],
+  "owned_pages": 170,
+  "data_pages": 52,
+  "aliases": 21,
+  "producer_counts": {
+    "ta": 82,
+    "3d": 139
+  },
+  "dependency": "3D producer1 depends on TA queue0/timeline1; descriptor event512 converts to timestamp1",
+  "experimental": [
+    "M4 Pro state offsets from provided ABI; not full native state ctor proof",
+    "Base-M4 Gravity context seed; VM context association remains unverified",
+    "zero initial state/callback0 config default",
+    "queue0/1 IDs are chosen trial reservations, not allocated firmware identities"
+  ],
+  "remaining": [
+    "firmware config-command transport and acknowledgement",
+    "context seed/translation ID association",
+    "KSM doorbell and guarded-service requirements",
+    "full shader launch/stamp/event completion and readback"
+  ],
+  "submission_ready": false,
+  "hardware_trial": false,
+  "candidate_module_sha256": "89aaf6cf23c9bb693bd7dcbf16544c2eef92b71aae7cc6d60b309451bf654734",
+  "build": "Matching integrated W=1 clean build; not loaded"
+}
