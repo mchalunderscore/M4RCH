@@ -98,8 +98,12 @@ and explicit firmware translation inputs are described in
 `2026-10-08-private-ta-command.md`. A separate partial command is exported;
 producer-only files remain unchanged. Register backing/metadata60..77f stays
 byte-identical. Intervening descriptor callbacks, completion binding and
-conditional control remain excluded. Sixteen compositions pass, and eight
-malformed inputs fail before export. The command remains submission-unready.
+conditional control were initially excluded; the newer continuous native audit
+now executes the submitted-kick callback and derives control, including mode3.
+The builder adds checked completion address arithmetic from an explicit mapping
+return. Actual mapping/notification service semantics still remain fixtures.
+Sixteen compositions and eleven malformed-input rejections pass. The command
+remains submission-unready.
 
 ## Verification and remaining work
 

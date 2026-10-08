@@ -30,6 +30,8 @@ with tempfile.TemporaryDirectory(prefix='native-sksm-register-test-') as directo
         descriptor[0x1558] = i & 1
         epoch = [0, (1 << 64)-1, 0x123456789abcdef0, rng.getrandbits(64)][i % 4]
         struct.pack_into('<Q', descriptor, 0x14e8, epoch)
+        offset = [0,1,0xffffffff,i*32][i % 4]
+        struct.pack_into('<I',descriptor,0x1430,offset)
         (root/'descriptor.bin').write_bytes(descriptor)
         (root/'context.bin').write_bytes(bytes(0x100)); (root/'scene.bin').write_bytes(bytes(0x100))
         def scheduler(qid):
@@ -40,7 +42,8 @@ with tempfile.TemporaryDirectory(prefix='native-sksm-register-test-') as directo
             context='context.bin',scene='scene.bin',ta_command_gpu=hex(0x100000000+i*0x100000),
             **{'3d_command_gpu':hex(0x100010000+i*0x100000)},parameter_gpu=hex(0x100020000+i*0x100000),
             gpu_bit47=bool(i&2),scheduler={'ta':scheduler(1),'3d':scheduler(2)})
-        submit_context, submit_stack = rng.randbytes(0x600), rng.randbytes(0x100)
+        submit_context, submit_stack = bytearray(rng.randbytes(0x600)), rng.randbytes(0x100)
+        submit_context[0x5c0] = [0,1,2,3][i // 4]
         (root/'submit-context.bin').write_bytes(submit_context)
         (root/'submit-stack.bin').write_bytes(submit_stack)
         translations = [fw+j*0x8000 for j in range(3)]
@@ -48,7 +51,9 @@ with tempfile.TemporaryDirectory(prefix='native-sksm-register-test-') as directo
         binding['ta_construction'] = dict(submit_context='submit-context.bin',
             submit_stack='submit-stack.bin', serial=hex(serial),
             firmware_translations=[hex(v) for v in translations],
-            x26=hex(fw+0x100), w21=i, w22=i+1, branch_result=i & 1)
+            x26=hex(fw+0x100), w21=i, w22=i+1,
+            completion_mapping_address=hex((1 << 64)-1 if i % 2 else fw),
+            accelerator_mode=i % 4)
         manifest = root/'input.json'; manifest.write_text(json.dumps(binding))
         report = module.prepare(args.macho,manifest,root/('pair-'+str(i)))
         assert report['submission_ready'] is False
@@ -65,6 +70,15 @@ with tempfile.TemporaryDirectory(prefix='native-sksm-register-test-') as directo
         assert ta[0x90e:0x91e] == submit_context[0x3c8:0x3d8]
         assert struct.unpack_from('<Q2I',ta,0x8ae) == (fw+0x100,i,i+1)
         assert ta[0x8a6:0x8ae] == submit_stack[0x40:0x48]
+        mapping_address = int(binding['ta_construction']['completion_mapping_address'],0)
+        assert struct.unpack_from('<Q',ta,0x945)[0] == (mapping_address+offset) & ((1 << 64)-1)
+        expected_control = 0
+        # Choose enabled caller contexts independently of mode, including mode3.
+        if i % 4 and submit_context[0x5c0] in (1,2):
+            if i % 4 == 1: expected_control = (submit_context[0x13f]&1)^1
+            elif i % 4 == 3: expected_control = 1
+        assert struct.unpack_from('<I',ta,0x89e)[0] == expected_control
+        assert ta[0x93c] == submit_context[0x434]&1
         assert report['ta_construction']['submission_ready'] is False
         counts['ta_construction_pairs'] += 1
         lists = report['producers']['ta']['lists'][0]['records']
@@ -88,7 +102,10 @@ with tempfile.TemporaryDirectory(prefix='native-sksm-register-test-') as directo
         {'3d_command_gpu':binding['ta_command_gpu']}, dict(ta_command_gpu='0xffffffffffffffc0'),
         dict(parameter_gpu=0),dict(gpu_bit47=1),
         dict(ta_construction={**binding['ta_construction'], 'firmware_translations':[0,1]}),
-        dict(ta_construction={**binding['ta_construction'], 'serial':True})]
+        dict(ta_construction={**binding['ta_construction'], 'serial':True}),
+        dict(ta_construction={**binding['ta_construction'], 'branch_result':0}),
+        dict(ta_construction={**binding['ta_construction'], 'completion_mapping_address':True}),
+        dict(ta_construction={**binding['ta_construction'], 'accelerator_mode':True})]
     for j, replacement in enumerate(invalid):
         bad = {**binding,**replacement}; manifest.write_text(json.dumps(bad)); destination=root/('bad-'+str(j))
         try: module.prepare(args.macho,manifest,destination)
@@ -96,5 +113,5 @@ with tempfile.TemporaryDirectory(prefix='native-sksm-register-test-') as directo
         else: raise AssertionError('Invalid input accepted')
         assert not destination.exists(); counts['rejected_inputs'] += 1
 report = dict(private_binary_sha256=report['private_binary_sha256'],counts=counts,examples=examples,tool_sha256=hashlib.sha256(path.read_bytes()).hexdigest(),
-    qualification='16 explicit synthetic paired register producers through verified G16_SKSM wrappers, independently encoded entries and metadata links;64 independently expected TA firmware-address register values,80 native list/common scheduler links. 16 partial TA construction candidates check serial, translated resources, packed epoch, caller context/stack inputs and unchanged native register backing. Both conditional initial-entry states and GPU bit47 values. Eight malformed inputs fail before export. Producer context/scene are explicit zero fixtures; untouched command storage, complete recipe semantics, live physical mapping/cache/queue/completion and valid primitive submission are not qualified. No hardware touched.')
+    qualification='16 explicit synthetic paired register producers through verified G16_SKSM wrappers, independently encoded entries and metadata links;64 independently expected TA firmware-address register values,80 native list/common scheduler links. 16 partial TA construction candidates check serial, translated resources, packed epoch, caller context/stack inputs, completion mapping/u32-offset wrap and all sixteen mode/context combinations, with unchanged native register backing. Both conditional initial-entry states and GPU bit47 values. Eleven malformed inputs fail before export. Producer context/scene are explicit zero fixtures; untouched command storage, complete recipe semantics, live physical mapping/cache/queue/completion and valid primitive submission are not qualified. No hardware touched.')
 args.output.write_text(json.dumps(report,indent=2)+'\n'); print(counts)

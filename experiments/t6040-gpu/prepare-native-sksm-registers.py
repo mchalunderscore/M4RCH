@@ -155,11 +155,16 @@ def prepare(macho, manifest, output):
         if not isinstance(translated, list) or len(translated) != 3:
             raise ValueError('Three explicit firmware translation results required')
         translated = [integer(v,64,'firmware translation') for v in translated]
+        if 'branch_result' in spec:
+            raise ValueError('TA control must derive from accelerator mode and caller context')
         construction = dict(context=submit_context, stack=submit_stack,
             serial=integer(spec['serial'],64,'serial'), addresses=translated,
             x26=integer(spec['x26'],64,'x26'),
             w21=integer(spec['w21'],32,'w21'), w22=integer(spec['w22'],32,'w22'),
-            branch_result=integer(spec['branch_result'],32,'branch_result'))
+            mapping_address=integer(spec['completion_mapping_address'],64,'completion mapping'),
+            accelerator_mode=integer(spec['accelerator_mode'],32,'accelerator mode'))
+        construction['branch_result'] = ta_command.conditional_control(desc,submit_context,
+            construction['accelerator_mode'])
     # Produce both before exporting anything; a failed second producer leaves no
     # apparently complete pair behind. Inputs may be graph captures or fixtures.
     results = {}
@@ -175,6 +180,8 @@ def prepare(macho, manifest, output):
             construction['context'], construction['serial'])
         ta_candidate = ta_command.translated_resources(ta_candidate, construction['addresses'])
         ta_candidate = ta_command.metadata(ta_candidate, descriptor_out, construction['context'])
+        ta_candidate = ta_command.completion_binding(ta_candidate,descriptor_out,
+            construction['context'],construction['mapping_address'])
         ta_candidate = ta_command.tail(ta_candidate, descriptor_out, construction['stack'],
             construction['x26'], construction['w21'], construction['w22'], construction['branch_result'])
         if ta_candidate[0x60:0x780] != command[0x60:0x780]:
@@ -222,8 +229,10 @@ def prepare(macho, manifest, output):
             firmware_translations=[hex(v) for v in construction['addresses']],
             x26=hex(construction['x26']), w21=hex(construction['w21']), w22=hex(construction['w22']),
             branch_result=hex(construction['branch_result']),
+            accelerator_mode=hex(construction['accelerator_mode']),
+            completion_mapping_address=hex(construction['mapping_address']),
             register_backing_preserved=True,
-            qualification='Four independently checked native TA construction slice models over actual register producer output. Caller X28 context is distinct from producer lookup context. Translation results and tail branch result are explicit fixtures. Descriptor virtual1a8 and intervening resource/completion operations excluded. Remaining command bytes zero/unqualified; not a complete channel command or valid drawing job.')
+            qualification='Checked TA construction models over actual register producer output, including completion mapping plus u32 offset and derived control branch (mode3 trampoline included). Caller X28 context is distinct from producer lookup context. Translation/mapping results are explicit fixtures; notification virtual150 argument flow checked separately, its real output/lifetime semantics excluded. Descriptor virtual1a8 excluded. Remaining bytes zero/unqualified; not a complete channel command or valid drawing job.')
     if schedulers:
         report['scheduler_candidates'] = {}
         for kind, (work, accounting, template, detail) in schedulers.items():

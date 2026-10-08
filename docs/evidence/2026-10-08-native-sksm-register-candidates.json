@@ -5,7 +5,7 @@
     "native_register_lists": 80,
     "scheduler_links": 80,
     "checked_ta_firmware_values": 64,
-    "rejected_inputs": 8,
+    "rejected_inputs": 11,
     "ta_construction_pairs": 16
   },
   "examples": [
@@ -185,7 +185,7 @@
         ]
       },
       "hashes": {
-        "ta": "de6202b997b23991084f1f54178b7fc8bc66dd8039b9430eb24ac1de2961bed8",
+        "ta": "1d2c2a88578c2f0cdd0e34c98710535a47b281eec510ed09ec6441b9e6c33f57",
         "3d": "4ce89b750b93694c3455342f801e24e63c154addd07dd0b44991d2bc053309ac"
       }
     },
@@ -245,11 +245,11 @@
         ]
       },
       "hashes": {
-        "ta": "a4d1fa8e3f4ffe9cb2f0eb2297fac71bc1058c1860b8e090f35c916b3fa2f7db",
+        "ta": "4478882bf90ec93cf476b7c9d1edec85b4a47665f08dbe5be80313f246c18e0d",
         "3d": "671b2b1990b12afc66906c56bb625929ea05f73c035ac46de076c957e6501abb"
       }
     }
   ],
-  "tool_sha256": "c8c5bd896c63645498ad2c5ac22c06b32bfc331e59cd534ea9241cc041bcef94",
-  "qualification": "16 explicit synthetic paired register producers through verified G16_SKSM wrappers, independently encoded entries and metadata links;64 independently expected TA firmware-address register values,80 native list/common scheduler links. 16 partial TA construction candidates check serial, translated resources, packed epoch, caller context/stack inputs and unchanged native register backing. Both conditional initial-entry states and GPU bit47 values. Eight malformed inputs fail before export. Producer context/scene are explicit zero fixtures; untouched command storage, complete recipe semantics, live physical mapping/cache/queue/completion and valid primitive submission are not qualified. No hardware touched."
+  "tool_sha256": "b649bb286f1e307375dff1bf561bf33248369642033a92e442495cf4d75b5306",
+  "qualification": "16 explicit synthetic paired register producers through verified G16_SKSM wrappers, independently encoded entries and metadata links;64 independently expected TA firmware-address register values,80 native list/common scheduler links. 16 partial TA construction candidates check serial, translated resources, packed epoch, caller context/stack inputs, completion mapping/u32-offset wrap and all sixteen mode/context combinations, with unchanged native register backing. Both conditional initial-entry states and GPU bit47 values. Eleven malformed inputs fail before export. Producer context/scene are explicit zero fixtures; untouched command storage, complete recipe semantics, live physical mapping/cache/queue/completion and valid primitive submission are not qualified. No hardware touched."
 }

@@ -40,6 +40,30 @@ def metadata(command, descriptor, context):
     return bytes(out)
 
 
+def completion_binding(command, descriptor, context, mapping_address):
+    """Numeric command writes after explicit notification and mapping services."""
+    out = bytearray(command)
+    offset = struct.unpack_from('<I', descriptor, 0x1430)[0]
+    struct.pack_into('<Q', out, 0x945, (mapping_address+offset) & ((1 << 64)-1))
+    for dst, src in [(0x934,0x1408),(0x93d,0x1438),(0x8fe,0x878)]:
+        out[dst:dst+8] = descriptor[src:src+8]
+    out[0x93c] = context[0x434] & 1
+    struct.pack_into('<I', out, 0x892, context[0x13c] & 1)
+    struct.pack_into('<I', out, 0x89a, context[0x13f] & 1)
+    return bytes(out)
+
+
+def conditional_control(descriptor, context, accelerator_mode):
+    """Native normal path, including mode3's two-instruction value1 trampoline."""
+    kind = struct.unpack_from('<I', descriptor, 0x1130)[0]
+    if accelerator_mode and context[0x5c0] in (1,2) and kind != 3:
+        if accelerator_mode == 3:
+            return 1
+        if accelerator_mode == 1:
+            return (context[0x13f] & 1) ^ 1
+    return 0
+
+
 def tail(command, descriptor, stack, x26, w21, w22, branch_result):
     """Branch result is explicit: the preceding conditional path is excluded."""
     out = bytearray(command)
