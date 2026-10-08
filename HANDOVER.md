@@ -1,3 +1,21 @@
+# Ordinary3D construction integration checkpoint — 2026-10-08
+
+Continuous native895b388..895b9d8:1024 full command/source/channel/owner/counter
+comparisons,512 notification/mapping-present and512 absent paths. Actual kick,
+PM-operation and scratch-payload callbacks execute; explicit counter wrap cases.
+Resource translation/notification/map services remain fixtures. No hardware trial.
+
+The paired builder now exports partial ordinary3D construction over actual four
+native register lists, deriving payload from incremented channel204.16 synthetic
+pairs preserve80 list/scheduler links and64 expected TA FW values;15 malformed
+inputs rejected.64 checked prepared descriptors also produce partial3D commands.
+See private-3d-contiguous.md/JSON and the source tools. submission_ready=false.
+
+Next complete later3D event/control/aperture fields and channel publication,
+then actual Linux backing/address/cache/queue integration and verified completion/
+readback. No triangle submitted. Boot8d5519d3-c1db-41a7-bb94-7c68e7ac0d10 remains
+fresh with no asc_graph_init retained. No reboot needed for remaining preparation.
+
 # Post-reboot aperture and joined preparation checkpoint — 2026-10-08
 
 Boot8d5519d3-c1db-41a7-bb94-7c68e7ac0d10, kernel7.1.13-m4rch-gpu-contract.

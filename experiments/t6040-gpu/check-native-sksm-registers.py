@@ -15,7 +15,7 @@ module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
 p = argparse.ArgumentParser(description=__doc__)
 p.add_argument('macho', type=Path); p.add_argument('output', type=Path); args = p.parse_args()
 counts = dict(pairs=0, native_register_lists=0, scheduler_links=0,
-              checked_ta_firmware_values=0, rejected_inputs=0, ta_construction_pairs=0)
+              checked_ta_firmware_values=0, rejected_inputs=0, ta_construction_pairs=0, construction_3d_pairs=0)
 examples = []
 rng = random.Random(604019)
 with tempfile.TemporaryDirectory(prefix='native-sksm-register-test-') as directory:
@@ -37,6 +37,11 @@ with tempfile.TemporaryDirectory(prefix='native-sksm-register-test-') as directo
         for j in range(i):
             struct.pack_into('<QIBBH',descriptor,0x1288+j*16,
                 rng.getrandbits(64),rng.getrandbits(32),rng.getrandbits(8),0,rng.getrandbits(16))
+        struct.pack_into('<I',descriptor,0x144,i)
+        struct.pack_into('<Q',descriptor,0xb70,fw if i&1 else 0)
+        struct.pack_into('<I',descriptor,0xb98,offset)
+        struct.pack_into('<Q',descriptor,0xba0,fw+0x100)
+        descriptor[0xb9c]=i&1
         (root/'descriptor.bin').write_bytes(descriptor)
         (root/'context.bin').write_bytes(bytes(0x100)); (root/'scene.bin').write_bytes(bytes(0x100))
         def scheduler(qid):
@@ -59,6 +64,13 @@ with tempfile.TemporaryDirectory(prefix='native-sksm-register-test-') as directo
             x26=hex(fw+0x100), w21=i, w22=i+1,
             completion_mapping_address=hex((1 << 64)-1 if i % 2 else fw),
             accelerator_mode=i % 4, aperture_flags=i & 3)
+        source_3d,frame_3d=rng.randbytes(0x400),rng.randbytes(24)
+        (root/'3d-source.bin').write_bytes(source_3d);(root/'3d-frame.bin').write_bytes(frame_3d)
+        counter_3d=[0,255,0xffffffff,i][i%4]
+        binding['3d_construction']=dict(body_source='3d-source.bin',frame_data='3d-frame.bin',
+            submit_stack='submit-stack.bin',serial=hex(serial),channel_counter=counter_3d,
+            w21=i+2,w22=i+3,firmware_translations=[hex(v) for v in translations],
+            completion_mapping_address=hex((1<<64)-1))
         manifest = root/'input.json'; manifest.write_text(json.dumps(binding))
         report = module.prepare(args.macho,manifest,root/('pair-'+str(i)))
         assert report['submission_ready'] is False
@@ -96,6 +108,23 @@ with tempfile.TemporaryDirectory(prefix='native-sksm-register-test-') as directo
             assert struct.unpack_from('<QQ',ta,0x660+j*16) == (expected_start,expected_end)
         assert report['ta_construction']['submission_ready'] is False
         counts['ta_construction_pairs'] += 1
+        candidate_3d=(output_dir/'3d-construction-candidate.bin').read_bytes()
+        assert len(candidate_3d)==0x2240
+        assert struct.unpack_from('<IQ',candidate_3d,0)==(1,serial)
+        assert struct.unpack_from('<3Q',candidate_3d,0x28)==tuple(translations)
+        assert candidate_3d[0x90]==(counter_3d+1)&255
+        assert candidate_3d[0x2178:0x2190]==frame_3d
+        assert candidate_3d[0x60:0x70]==source_3d[0x2f0:0x300]
+        assert struct.unpack_from('<2I',candidate_3d,0x2150)==(i+2,i+3)
+        assert struct.unpack_from('<Q',candidate_3d,0x21df)[0]==(((1<<64)-1+offset)&((1<<64)-1) if i&1 else 0)
+        raw_3d=(output_dir/'3d-register-command.bin').read_bytes()
+        for item in report['producers']['3d']['lists']:
+            off=int(item['offset'],0);end=off+item['backing_bytes'];meta=0x7a0+item['phase']*0x720
+            assert candidate_3d[off:end]==raw_3d[off:end]
+            assert candidate_3d[meta:meta+12]==raw_3d[meta:meta+12]
+        assert report['3d_construction']['submission_ready'] is False
+        counts['construction_3d_pairs']+=1
+
         lists = report['producers']['ta']['lists'][0]['records']
         for reg, flag, value in ((0x1c038,1,fw),(0x1c9c8,0,fw),(0x1c078,1,fw+0x4000),(0x1c9d8,0,fw+0x4000)):
             assert [int(x['value'],0) for x in lists if int(x['register'],0)==reg and x['flag']==flag] == [value]
@@ -121,7 +150,10 @@ with tempfile.TemporaryDirectory(prefix='native-sksm-register-test-') as directo
         dict(ta_construction={**binding['ta_construction'], 'branch_result':0}),
         dict(ta_construction={**binding['ta_construction'], 'completion_mapping_address':True}),
         dict(ta_construction={**binding['ta_construction'], 'accelerator_mode':True}),
-        dict(ta_construction={**binding['ta_construction'], 'aperture_flags':256})]
+        dict(ta_construction={**binding['ta_construction'], 'aperture_flags':256}),
+        {'3d_construction':{**binding['3d_construction'],'channel_counter':True}},
+        {'3d_construction':{**binding['3d_construction'],'firmware_translations':[0]}},
+        {'3d_construction':{**binding['3d_construction'],'callback':0}}]
     for j, replacement in enumerate(invalid):
         bad = {**binding,**replacement}; manifest.write_text(json.dumps(bad)); destination=root/('bad-'+str(j))
         try: module.prepare(args.macho,manifest,destination)
@@ -129,5 +161,5 @@ with tempfile.TemporaryDirectory(prefix='native-sksm-register-test-') as directo
         else: raise AssertionError('Invalid input accepted')
         assert not destination.exists(); counts['rejected_inputs'] += 1
 report = dict(private_binary_sha256=report['private_binary_sha256'],counts=counts,examples=examples,tool_sha256=hashlib.sha256(path.read_bytes()).hexdigest(),
-    qualification='16 synthetic pairs through native SKSM wrappers;64 expected TA FW-register values,80 list/scheduler links. Partial TA commands check serial/translations/epoch/caller inputs, completion offset wrap, all16 mode/context combinations and counts0..15 aperture records with descriptor pointer/count. Native register backing/metadata preserved. Twelve malformed inputs fail before export. Context/scene zero fixtures; remaining command storage, recipe semantics, live mappings/cache/queues/completion and valid drawing unqualified. No hardware touched.')
+    qualification='16 synthetic pairs through native SKSM wrappers;64 expected TA FW-register values,80 list/scheduler links. Partial TA commands check serial/translations/epoch/caller inputs, completion offset wrap, all16 mode/context combinations and counts0..15 aperture records with descriptor pointer/count. Native register backing/metadata preserved. Sixteen partial ordinary3D candidates check native list preservation, header/frame/body/resource inputs and counter-derived payload. Fifteen malformed inputs fail before export. Context/scene zero fixtures; remaining command storage, recipe semantics, live mappings/cache/queues/completion and valid drawing unqualified. No hardware touched.')
 args.output.write_text(json.dumps(report,indent=2)+'\n'); print(counts)

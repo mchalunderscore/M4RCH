@@ -5,8 +5,9 @@
     "native_register_lists": 80,
     "scheduler_links": 80,
     "checked_ta_firmware_values": 64,
-    "rejected_inputs": 12,
-    "ta_construction_pairs": 16
+    "rejected_inputs": 15,
+    "ta_construction_pairs": 16,
+    "construction_3d_pairs": 16
   },
   "examples": [
     {
@@ -126,7 +127,7 @@
       },
       "hashes": {
         "ta": "3e3e9a5adee8dac1b26eac2dd4ea3c59493421f03fddc699484ea37787f41824",
-        "3d": "77e97c97c3055edd714a60d60088a30f8cfe3943d1963e281316292691fb24a6"
+        "3d": "41bf4dc806f8e82631a77393c4cad2f0005b5bf7ab53af2771b697d610f476cd"
       }
     },
     {
@@ -186,7 +187,7 @@
       },
       "hashes": {
         "ta": "9e7eed7940e120c4888402b604118d2c18311fbfd68eb81d557e4157211f0594",
-        "3d": "4ce89b750b93694c3455342f801e24e63c154addd07dd0b44991d2bc053309ac"
+        "3d": "d0c200b023cc2f6082674566e70b5b72b37a64ff50f0624e46013086bd39bf4f"
       }
     },
     {
@@ -246,10 +247,10 @@
       },
       "hashes": {
         "ta": "9c813e0761e64fdf1b04a2309225bde4ffbbcf785d75dab401adf15d51c49fe7",
-        "3d": "671b2b1990b12afc66906c56bb625929ea05f73c035ac46de076c957e6501abb"
+        "3d": "bbe660782becc5943ecc6c3c97be4e037936620501a41fb6787dda07b0ce0f3e"
       }
     }
   ],
-  "tool_sha256": "0ee213005d7c360443137fa0dc3b98c1e478796f87fe67015802633928ae63fa",
-  "qualification": "16 synthetic pairs through native SKSM wrappers;64 expected TA FW-register values,80 list/scheduler links. Partial TA commands check serial/translations/epoch/caller inputs, completion offset wrap, all16 mode/context combinations and counts0..15 aperture records with descriptor pointer/count. Native register backing/metadata preserved. Twelve malformed inputs fail before export. Context/scene zero fixtures; remaining command storage, recipe semantics, live mappings/cache/queues/completion and valid drawing unqualified. No hardware touched."
+  "tool_sha256": "a52a5e2bb7c183d7aac5be6fc7800326013b879136ec6853e761e5af17a8caee",
+  "qualification": "16 synthetic pairs through native SKSM wrappers;64 expected TA FW-register values,80 list/scheduler links. Partial TA commands check serial/translations/epoch/caller inputs, completion offset wrap, all16 mode/context combinations and counts0..15 aperture records with descriptor pointer/count. Native register backing/metadata preserved. Sixteen partial ordinary3D candidates check native list preservation, header/frame/body/resource inputs and counter-derived payload. Fifteen malformed inputs fail before export. Context/scene zero fixtures; remaining command storage, recipe semantics, live mappings/cache/queues/completion and valid drawing unqualified. No hardware touched."
 }

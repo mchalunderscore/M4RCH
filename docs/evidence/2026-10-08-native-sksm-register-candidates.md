@@ -126,3 +126,13 @@ a real triangle nor desktop acceleration has been proved.
 The current failed warm INIT remains pinned on boot
 fa78dd48-b214-46fc-8786-cae63897ad78. Normal reboot before live integration;
 no forced unload/reset was attempted. Offline preparation can continue in Linux.
+
+## Partial ordinary3D construction
+
+Optional3d_construction now composes checked continuous ordinary header/resource/
+body/tail fields over actual native four-list output. The payload byte derives
+from incremented channel204, matching actual SKSM callback89d5cf0. Native
+register backing and metadata are preserved. See private-3d-contiguous.md/JSON.
+16 synthetic pairs and64 prepared-descriptor cases pass. Remaining event/control/
+aperture/scheduling fields and live allocation/cache/completion are unqualified.
+submission_ready=false.

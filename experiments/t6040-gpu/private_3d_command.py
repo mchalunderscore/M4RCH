@@ -53,3 +53,18 @@ def tail(command, descriptor, stack, w21, w22, callback):
     struct.pack_into('<2I',out,0x2150,w21,w22)
     out[0x2158:0x215c]=stack[0x4c:0x50];out[0x215c:0x2160]=stack[0x48:0x4c]
     return bytes(out)
+
+
+def bindings(command, descriptor, translations, completion_mapping):
+    """Numeric ordinary3D resource writes; actual services remain explicit."""
+    if len(translations) != 3:
+        raise ValueError('Three explicit firmware translation results required')
+    out=bytearray(command)
+    out[0x21d6]=descriptor[0xb9c]&1
+    out[0x21d7:0x21df]=descriptor[0xba0:0xba8]
+    if struct.unpack_from('<Q',descriptor,0xb70)[0]:
+        offset=struct.unpack_from('<I',descriptor,0xb98)[0]
+        struct.pack_into('<Q',out,0x21df,(completion_mapping+offset)&((1<<64)-1))
+    out[0x20:0x28]=descriptor[0x188:0x190]
+    struct.pack_into('<3Q',out,0x28,*translations)
+    return bytes(out)

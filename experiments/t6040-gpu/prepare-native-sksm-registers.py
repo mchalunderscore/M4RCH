@@ -13,6 +13,7 @@ from pathlib import Path
 from private_rce_entry import encode_entry, rce_metadata
 from native_scheduler_candidate import prepare as prepare_scheduler
 import private_ta_command as ta_command
+import private_3d_command as command_3d
 
 def integer(value, bits, name):
     if isinstance(value, bool) or not isinstance(value, (str, int)):
@@ -166,6 +167,21 @@ def prepare(macho, manifest, output):
             aperture_flags=integer(spec['aperture_flags'],8,'aperture flags'))
         construction['branch_result'] = ta_command.conditional_control(desc,submit_context,
             construction['accelerator_mode'])
+    construction_3d = None
+    if '3d_construction' in binding:
+        spec = binding['3d_construction']
+        if 'callback' in spec or 'payload' in spec:
+            raise ValueError('3D payload must derive from channel counter')
+        translated = spec['firmware_translations']
+        if not isinstance(translated,list) or len(translated) != 3:
+            raise ValueError('Three explicit 3D firmware translation results required')
+        construction_3d = dict(source=blob(root,spec['body_source'],0x400),
+            frame=blob(root,spec['frame_data'],24),stack=blob(root,spec['submit_stack'],0x100),
+            serial=integer(spec['serial'],64,'3D serial'),
+            counter=integer(spec['channel_counter'],32,'3D channel counter'),
+            w21=integer(spec['w21'],32,'3D w21'),w22=integer(spec['w22'],32,'3D w22'),
+            mapping_address=integer(spec['completion_mapping_address'],64,'3D completion mapping'),
+            addresses=[integer(v,64,'3D firmware translation') for v in translated])
     # Produce both before exporting anything; a failed second producer leaves no
     # apparently complete pair behind. Inputs may be graph captures or fixtures.
     results = {}
@@ -196,6 +212,22 @@ def prepare(macho, manifest, output):
                 raise ValueError('TA construction changed native register backing')
         if ta_candidate[0x760:0x76c] != command[0x760:0x76c]:
             raise ValueError('TA construction changed native register metadata')
+    candidate_3d = None
+    if construction_3d is not None:
+        command, descriptor_out, detail = results['3d']
+        candidate_3d = command_3d.header(command,descriptor_out,construction_3d['serial'],construction_3d['frame'])
+        candidate_3d = command_3d.bindings(candidate_3d,descriptor_out,
+            construction_3d['addresses'],construction_3d['mapping_address'])
+        candidate_3d = command_3d.body(candidate_3d,descriptor_out,construction_3d['source'])
+        candidate_3d = command_3d.tail(candidate_3d,descriptor_out,construction_3d['stack'],
+            construction_3d['w21'],construction_3d['w22'],(construction_3d['counter']+1)&255)
+        for item in detail['lists']:
+            offset=int(item['offset'],0);end=offset+item['backing_bytes']
+            if candidate_3d[offset:end] != command[offset:end]:
+                raise ValueError('3D construction changed native register backing')
+            meta=0x7a0+item['phase']*0x720
+            if candidate_3d[meta:meta+12] != command[meta:meta+12]:
+                raise ValueError('3D construction changed native register metadata')
     schedulers = {}
     if 'scheduler' in binding:
         for kind in ('ta', '3d'):
@@ -248,6 +280,22 @@ def prepare(macho, manifest, output):
             descriptor_sha256=hashlib.sha256(ta_candidate_descriptor).hexdigest(),
             register_backing_preserved=True,
             qualification='Checked TA preproducer models, native register output and postproducer flag/mcache models. Aperture records use reserved660..75f; native register backing/metadata preserved. Caller X28 context distinct from producer lookup context. Translation/mapping returns are explicit fixtures; notification real output/lifetime semantics excluded. Actual submitted-kick callback checked separately. Descriptor output retains emulator CPU identities and excludes notification output/counter objects. Remaining bytes zero/unqualified; not a complete live job.')
+    if candidate_3d is not None:
+        (output/'3d-construction-candidate.bin').write_bytes(candidate_3d)
+        report['3d_construction'] = dict(submission_ready=False,
+            command_sha256=hashlib.sha256(candidate_3d).hexdigest(),
+            source_sha256=hashlib.sha256(construction_3d['source']).hexdigest(),
+            frame_sha256=hashlib.sha256(construction_3d['frame']).hexdigest(),
+            stack_sha256=hashlib.sha256(construction_3d['stack']).hexdigest(),
+            serial=hex(construction_3d['serial']),
+            channel_counter_before=construction_3d['counter'],
+            channel_counter_after=(construction_3d['counter']+1)&0xffffffff,
+            scratch_payload=(construction_3d['counter']+1)&255,
+            firmware_translations=[hex(v) for v in construction_3d['addresses']],
+            completion_mapping_address=hex(construction_3d['mapping_address']),
+            completion_mapping_present=bool(struct.unpack_from('<Q',results['3d'][1],0xb70)[0]),
+            register_backing_preserved=True,
+            qualification='Checked continuous ordinary3D construction models over actual four-list native producer output. Scratch payload derived from incremented u32 channel counter. Translations/conditional completion mapping, source/frame/stack are explicit fixtures. Real submitted-kick/PM counters checked in native audit but not live objects in this export. Postproducer aperture/masks/scheduling and real mapping/cache/publication/completion remain unqualified; no valid drawing job.')
     if schedulers:
         report['scheduler_candidates'] = {}
         for kind, (work, accounting, template, detail) in schedulers.items():
