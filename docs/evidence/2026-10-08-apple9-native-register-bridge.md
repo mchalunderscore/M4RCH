@@ -2,8 +2,8 @@
 
 Offline, private-derived AGX353.14 / Apple25G83. No live job or GPU access.
 
-220 differential trials vary one numeric descriptor dword at a time through
-the native 3D generator; 107 words change its observed register lists.
+276 differential trials vary one numeric descriptor dword at a time through
+the native 3D generator; 125 words change its observed register lists.
 The full observations and baseline backing counts are in the field-registers
 JSON. These are numerical dependencies, not standalone semantic definitions.
 Conditional insertions, masking and register duplicates are retained.
@@ -32,14 +32,20 @@ This correspondence is useful evidence, not hardware acceptance.
 
 Gravity's direct VDM/PPP launch fields use 64-byte units. Its submitted
 background/EOT launch fields use USC byte offsets; the bridge checks byte
-values30c00/30800 without adding a speculative tag. Resources are fixture
-addresses and zero resource-spec words follow the pinned Apple9 submit path.
+UAPI offsets30c00/30800. The pinned G16 kernel converts these to absolute
+USC addresses10000030c00/10000030800 for firmware registers. A present
+background also gets bind tagffff800000000000; EOT bind remains0 for this
+fixture. The revised native bridge checks these conversions. Earlier bridge
+receipts only checked raw offsets and must not be used as firmware-ready state.
+All addresses are still offline fixtures.
 
-The observed native phase0 recipe does not emit donor register10068
-(USC_EXEC_BASE_ISP). Shader-base initialization needs a separate producer trace;
-do not add a donor register merely to make this recipe resemble the old path.
+Correction: the actual pinned G16 donor uses g16_render.rs, which also omits
+register10068. The older generic queue/render.rs was the wrong comparison.
+G16 kernel queue creation requires a fixed USC aperture at 1 << 40; pinned
+Mesa uses that same aperture for gen16/17. The refreshed candidates use it.
+This establishes source compatibility, not hardware validation of our mappings.
 
-Still required: actual UAT allocations/cache policy, USC-base producer,
+Still required: actual UAT allocations/cache policy, fixed-aperture mapping,
 complete register recipe and parameter/tile storage, matched TA/3D job and
 microsequence, completion notification/fence and invalidation/readback.
 The retained failed warm INIT remains live on boot

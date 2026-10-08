@@ -71,7 +71,7 @@ launcher; the local tool builds with other warnings treated as errors.
 
 Still required: actual GPU allocation/placement and visibility of the prepared
 entries/roots/state/target candidates; parameter/tile storage; complete matched
-G16S job and microsequence integration; USC-base setup; completion-to-readback.
+G16S job and microsequence integration; fixed-aperture mapping; completion-to-readback.
 The tools below prepare several byte-level candidates but do not make a full
 render job ready. The retained failed warm INIT needs a normal reboot before a
 hardware trial. Offline preparation continues meanwhile.
@@ -96,7 +96,8 @@ Caller inspection resolves two important pointer conventions: direct VDM's
 vertex launch is a USC byte offset divided by 64, while pipeline_word is
 0x01000000, **not an entry-header address**. Fragment launch in the PPP group is
 also divided by 64. Background/EOT fields in the submit path instead receive
-USC byte offsets. Do not mix these units.
+USC byte offsets at the UAPI boundary. The G16 kernel adds its fixed
+1 TiB USC base for firmware register addresses. Do not mix these layers or units.
 
 ## Target and tile-store preparation
 
@@ -120,7 +121,7 @@ executed. No actual target or tile/parameter buffers have been allocated.
 
 ```sh
 python experiments/t6040-gpu/prepare-apple9-stage-image.py SHADERS LAUNCHER \
-  NEW_STAGE_DIRECTORY --shader-base 0x800000000
+  NEW_STAGE_DIRECTORY --shader-base 0x10000000000
 python experiments/t6040-gpu/prepare-apple9-draw-state.py MESA_SOURCE \
   STAGE_DIRECTORY NEW_DRAW_DIRECTORY DRAW_RECEIPT.json
 python experiments/t6040-gpu/prepare-apple9-target.py MESA_SOURCE MESA_BUILD \
@@ -129,3 +130,19 @@ python experiments/t6040-gpu/prepare-apple9-target.py MESA_SOURCE MESA_BUILD \
 
 All arguments above are filesystem paths; each output directory must be new.
 Adjacent JSONs record source hashes, output hashes and exact qualifications.
+
+
+## Fixed-aperture correction and complete donor comparison
+
+The actual G16 renderer is g16_render.rs, not the older generic queue/render.rs.
+Kernel queue creation requires USC base1<<40 and Mesa gen16 uses the same fixed
+aperture. That G16 renderer also omits the old shader-base register. New candidates
+are in stage-1tb/draw-1tb/target-1tb; the earlier 0x800000000 receipt/image was a
+synthetic numeric fixture, not a qualified G16 heap. Draw/target receipts now carry
+and hash-link their input aperture. The target tool rejects a mismatched aperture.
+
+Read 2026-10-08-apple9-render-preparation.md for the native geometry composition,
+complete donor work/microsequence/storage candidates and remaining integration.
+Historical draw-state/target/stage-image JSONs retain their original fixtures;
+new draw-preparation/target-preparation JSONs and stage-1tb JSON are authoritative
+for the corrected candidate. This preserves, rather than rewrites, earlier evidence.

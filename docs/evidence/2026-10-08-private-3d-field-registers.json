@@ -11,7 +11,7 @@
     23,
     10
   ],
-  "perturbations": 220,
+  "perturbations": 276,
   "observations": [
     {
       "descriptor_u32_offset": "0x4b0",
@@ -2881,6 +2881,992 @@
     },
     {
       "descriptor_u32_offset": "0x81c",
+      "fixture_value": "0x31415926",
+      "changes": []
+    },
+    {
+      "descriptor_u32_offset": "0x820",
+      "fixture_value": "0x31415926",
+      "changes": []
+    },
+    {
+      "descriptor_u32_offset": "0x824",
+      "fixture_value": "0x31415926",
+      "changes": []
+    },
+    {
+      "descriptor_u32_offset": "0x828",
+      "fixture_value": "0x31415926",
+      "changes": []
+    },
+    {
+      "descriptor_u32_offset": "0x82c",
+      "fixture_value": "0x31415926",
+      "changes": []
+    },
+    {
+      "descriptor_u32_offset": "0x830",
+      "fixture_value": "0x31415926",
+      "changes": []
+    },
+    {
+      "descriptor_u32_offset": "0x834",
+      "fixture_value": "0x31415926",
+      "changes": []
+    },
+    {
+      "descriptor_u32_offset": "0x838",
+      "fixture_value": "0x31415926",
+      "changes": []
+    },
+    {
+      "descriptor_u32_offset": "0x83c",
+      "fixture_value": "0x31415926",
+      "changes": []
+    },
+    {
+      "descriptor_u32_offset": "0x840",
+      "fixture_value": "0x31415926",
+      "changes": []
+    },
+    {
+      "descriptor_u32_offset": "0x844",
+      "fixture_value": "0x31415926",
+      "changes": []
+    },
+    {
+      "descriptor_u32_offset": "0x848",
+      "fixture_value": "0x31415926",
+      "changes": []
+    },
+    {
+      "descriptor_u32_offset": "0x84c",
+      "fixture_value": "0x31415926",
+      "changes": []
+    },
+    {
+      "descriptor_u32_offset": "0x850",
+      "fixture_value": "0x31415926",
+      "changes": []
+    },
+    {
+      "descriptor_u32_offset": "0x854",
+      "fixture_value": "0x31415926",
+      "changes": []
+    },
+    {
+      "descriptor_u32_offset": "0x858",
+      "fixture_value": "0x31415926",
+      "changes": []
+    },
+    {
+      "descriptor_u32_offset": "0x85c",
+      "fixture_value": "0x31415926",
+      "changes": []
+    },
+    {
+      "descriptor_u32_offset": "0x860",
+      "fixture_value": "0x31415926",
+      "changes": []
+    },
+    {
+      "descriptor_u32_offset": "0x864",
+      "fixture_value": "0x31415926",
+      "changes": []
+    },
+    {
+      "descriptor_u32_offset": "0x868",
+      "fixture_value": "0x31415926",
+      "changes": []
+    },
+    {
+      "descriptor_u32_offset": "0x86c",
+      "fixture_value": "0x31415926",
+      "changes": [
+        {
+          "phase": 0,
+          "register": "0x160e0",
+          "flag": 0,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": "0x3141592600000000"
+        },
+        {
+          "phase": 0,
+          "register": "0x1498",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": "0x3141592600000000"
+        },
+        {
+          "phase": 0,
+          "register": "0xa340",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": "0x3141592600000000"
+        }
+      ]
+    },
+    {
+      "descriptor_u32_offset": "0x870",
+      "fixture_value": "0x31415926",
+      "changes": []
+    },
+    {
+      "descriptor_u32_offset": "0x874",
+      "fixture_value": "0x31415926",
+      "changes": []
+    },
+    {
+      "descriptor_u32_offset": "0x878",
+      "fixture_value": "0x31415926",
+      "changes": []
+    },
+    {
+      "descriptor_u32_offset": "0x87c",
+      "fixture_value": "0x31415926",
+      "changes": []
+    },
+    {
+      "descriptor_u32_offset": "0x880",
+      "fixture_value": "0x31415926",
+      "changes": []
+    },
+    {
+      "descriptor_u32_offset": "0x884",
+      "fixture_value": "0x31415926",
+      "changes": []
+    },
+    {
+      "descriptor_u32_offset": "0x888",
+      "fixture_value": "0x31415926",
+      "changes": []
+    },
+    {
+      "descriptor_u32_offset": "0x88c",
+      "fixture_value": "0x31415926",
+      "changes": [
+        {
+          "phase": 0,
+          "register": "0x10038",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x280",
+          "after": "0x10280"
+        },
+        {
+          "phase": 1,
+          "register": "0x10038",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x280",
+          "after": "0x10280"
+        },
+        {
+          "phase": 3,
+          "register": "0x10038",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x280",
+          "after": "0x10280"
+        }
+      ]
+    },
+    {
+      "descriptor_u32_offset": "0x890",
+      "fixture_value": "0x31415926",
+      "changes": [
+        {
+          "phase": 0,
+          "register": "0x16068",
+          "flag": 0,
+          "occurrence": 0,
+          "before": "0xa2000036011",
+          "after": "0xa2000076011"
+        },
+        {
+          "phase": 0,
+          "register": "0x160a8",
+          "flag": 0,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": "0x20"
+        }
+      ]
+    },
+    {
+      "descriptor_u32_offset": "0x894",
+      "fixture_value": "0x31415926",
+      "changes": [
+        {
+          "phase": 1,
+          "register": "0x15220",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": null
+        },
+        {
+          "phase": 1,
+          "register": "0x10038",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x280",
+          "after": null
+        },
+        {
+          "phase": 1,
+          "register": "0x15380",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": null
+        },
+        {
+          "phase": 1,
+          "register": "0x15430",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": null
+        },
+        {
+          "phase": 1,
+          "register": "0x15358",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x20",
+          "after": null
+        },
+        {
+          "phase": 1,
+          "register": "0x15428",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": null
+        },
+        {
+          "phase": 1,
+          "register": "0x15330",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": null
+        },
+        {
+          "phase": 1,
+          "register": "0x15348",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": null
+        },
+        {
+          "phase": 1,
+          "register": "0x15420",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": null
+        },
+        {
+          "phase": 1,
+          "register": "0x15228",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": null
+        },
+        {
+          "phase": 1,
+          "register": "0x15318",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": null
+        },
+        {
+          "phase": 1,
+          "register": "0x16068",
+          "flag": 0,
+          "occurrence": 0,
+          "before": null,
+          "after": "0x40000"
+        },
+        {
+          "phase": 1,
+          "register": "0x15378",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": null
+        },
+        {
+          "phase": 1,
+          "register": "0x153c8",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": null
+        },
+        {
+          "phase": 1,
+          "register": "0x153d8",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": null
+        },
+        {
+          "phase": 1,
+          "register": "0x160a8",
+          "flag": 0,
+          "occurrence": 0,
+          "before": null,
+          "after": "0x20"
+        },
+        {
+          "phase": 1,
+          "register": "0x15340",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": null
+        },
+        {
+          "phase": 1,
+          "register": "0x15438",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": null
+        },
+        {
+          "phase": 1,
+          "register": "0x16020",
+          "flag": 0,
+          "occurrence": 0,
+          "before": null,
+          "after": "0x0"
+        },
+        {
+          "phase": 2,
+          "register": "0x15308",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x200",
+          "after": null
+        },
+        {
+          "phase": 2,
+          "register": "0x15220",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": null
+        },
+        {
+          "phase": 2,
+          "register": "0x15328",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": null
+        },
+        {
+          "phase": 2,
+          "register": "0x15368",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": null
+        },
+        {
+          "phase": 2,
+          "register": "0x15380",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": null
+        },
+        {
+          "phase": 2,
+          "register": "0x10038",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x280",
+          "after": null
+        },
+        {
+          "phase": 2,
+          "register": "0x153d0",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": null
+        },
+        {
+          "phase": 2,
+          "register": "0x15430",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": null
+        },
+        {
+          "phase": 2,
+          "register": "0x15358",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x20",
+          "after": null
+        },
+        {
+          "phase": 2,
+          "register": "0x153c0",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": null
+        },
+        {
+          "phase": 2,
+          "register": "0x15428",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": null
+        },
+        {
+          "phase": 2,
+          "register": "0x15330",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": null
+        },
+        {
+          "phase": 2,
+          "register": "0x15370",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": null
+        },
+        {
+          "phase": 2,
+          "register": "0x15348",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": null
+        },
+        {
+          "phase": 2,
+          "register": "0x15420",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": null
+        },
+        {
+          "phase": 2,
+          "register": "0x15338",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": null
+        },
+        {
+          "phase": 2,
+          "register": "0x15228",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": null
+        },
+        {
+          "phase": 2,
+          "register": "0x15318",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": null
+        },
+        {
+          "phase": 2,
+          "register": "0x16068",
+          "flag": 0,
+          "occurrence": 0,
+          "before": null,
+          "after": "0x40000"
+        },
+        {
+          "phase": 2,
+          "register": "0x15378",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": null
+        },
+        {
+          "phase": 2,
+          "register": "0x153c8",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": null
+        },
+        {
+          "phase": 2,
+          "register": "0x153d8",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": null
+        },
+        {
+          "phase": 2,
+          "register": "0x160a8",
+          "flag": 0,
+          "occurrence": 0,
+          "before": null,
+          "after": "0x20"
+        },
+        {
+          "phase": 2,
+          "register": "0x15340",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": null
+        },
+        {
+          "phase": 2,
+          "register": "0x15438",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": null
+        },
+        {
+          "phase": 2,
+          "register": "0x16020",
+          "flag": 0,
+          "occurrence": 0,
+          "before": null,
+          "after": "0x0"
+        },
+        {
+          "phase": 3,
+          "register": "0x15348",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": null
+        },
+        {
+          "phase": 3,
+          "register": "0x15308",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x200",
+          "after": null
+        },
+        {
+          "phase": 3,
+          "register": "0x15328",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": null
+        },
+        {
+          "phase": 3,
+          "register": "0x15368",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": null
+        },
+        {
+          "phase": 3,
+          "register": "0x10038",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x280",
+          "after": null
+        },
+        {
+          "phase": 3,
+          "register": "0x15338",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": null
+        },
+        {
+          "phase": 3,
+          "register": "0x153d0",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": null
+        },
+        {
+          "phase": 3,
+          "register": "0x153c0",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": null
+        },
+        {
+          "phase": 3,
+          "register": "0x15318",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": null
+        },
+        {
+          "phase": 3,
+          "register": "0x16068",
+          "flag": 0,
+          "occurrence": 0,
+          "before": null,
+          "after": "0x40000"
+        },
+        {
+          "phase": 3,
+          "register": "0x160a8",
+          "flag": 0,
+          "occurrence": 0,
+          "before": null,
+          "after": "0x20"
+        },
+        {
+          "phase": 3,
+          "register": "0x16020",
+          "flag": 0,
+          "occurrence": 0,
+          "before": null,
+          "after": "0x0"
+        },
+        {
+          "phase": 3,
+          "register": "0x15370",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": null
+        }
+      ]
+    },
+    {
+      "descriptor_u32_offset": "0x898",
+      "fixture_value": "0x31415926",
+      "changes": []
+    },
+    {
+      "descriptor_u32_offset": "0x89c",
+      "fixture_value": "0x31415926",
+      "changes": []
+    },
+    {
+      "descriptor_u32_offset": "0x8a0",
+      "fixture_value": "0x31415926",
+      "changes": [
+        {
+          "phase": 0,
+          "register": "0x16428",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": "0x31415926"
+        }
+      ]
+    },
+    {
+      "descriptor_u32_offset": "0x8a4",
+      "fixture_value": "0x31415926",
+      "changes": [
+        {
+          "phase": 0,
+          "register": "0x16428",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": "0x3141592600000000"
+        }
+      ]
+    },
+    {
+      "descriptor_u32_offset": "0x8a8",
+      "fixture_value": "0x31415926",
+      "changes": [
+        {
+          "phase": 0,
+          "register": "0x16060",
+          "flag": 0,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": "0x31415926"
+        }
+      ]
+    },
+    {
+      "descriptor_u32_offset": "0x8ac",
+      "fixture_value": "0x31415926",
+      "changes": [
+        {
+          "phase": 0,
+          "register": "0x16060",
+          "flag": 0,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": "0x3141592600000000"
+        }
+      ]
+    },
+    {
+      "descriptor_u32_offset": "0x8b0",
+      "fixture_value": "0x31415926",
+      "changes": [
+        {
+          "phase": 0,
+          "register": "0x16098",
+          "flag": 0,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": "0x31415900"
+        }
+      ]
+    },
+    {
+      "descriptor_u32_offset": "0x8b4",
+      "fixture_value": "0x31415926",
+      "changes": [
+        {
+          "phase": 0,
+          "register": "0x16098",
+          "flag": 0,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": "0x3141592600000000"
+        }
+      ]
+    },
+    {
+      "descriptor_u32_offset": "0x8b8",
+      "fixture_value": "0x31415926",
+      "changes": [
+        {
+          "phase": 0,
+          "register": "0x10018",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": "0x31415926"
+        }
+      ]
+    },
+    {
+      "descriptor_u32_offset": "0x8bc",
+      "fixture_value": "0x31415926",
+      "changes": [
+        {
+          "phase": 0,
+          "register": "0x10018",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": "0x3141592600000000"
+        }
+      ]
+    },
+    {
+      "descriptor_u32_offset": "0x8c0",
+      "fixture_value": "0x31415926",
+      "changes": []
+    },
+    {
+      "descriptor_u32_offset": "0x8c4",
+      "fixture_value": "0x31415926",
+      "changes": []
+    },
+    {
+      "descriptor_u32_offset": "0x8c8",
+      "fixture_value": "0x31415926",
+      "changes": []
+    },
+    {
+      "descriptor_u32_offset": "0x8cc",
+      "fixture_value": "0x31415926",
+      "changes": []
+    },
+    {
+      "descriptor_u32_offset": "0x8d0",
+      "fixture_value": "0x31415926",
+      "changes": [
+        {
+          "phase": 0,
+          "register": "0x100b0",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": "0x31415926"
+        },
+        {
+          "phase": 0,
+          "register": "0x16030",
+          "flag": 0,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": "0x31415926"
+        }
+      ]
+    },
+    {
+      "descriptor_u32_offset": "0x8d4",
+      "fixture_value": "0x31415926",
+      "changes": [
+        {
+          "phase": 0,
+          "register": "0x100d8",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": "0x31415926"
+        },
+        {
+          "phase": 0,
+          "register": "0x16068",
+          "flag": 0,
+          "occurrence": 0,
+          "before": "0xa2000036011",
+          "after": "0x2b26a2000036011"
+        }
+      ]
+    },
+    {
+      "descriptor_u32_offset": "0x8d8",
+      "fixture_value": "0x31415926",
+      "changes": []
+    },
+    {
+      "descriptor_u32_offset": "0x8dc",
+      "fixture_value": "0x31415926",
+      "changes": []
+    },
+    {
+      "descriptor_u32_offset": "0x8e0",
+      "fixture_value": "0x31415926",
+      "changes": [
+        {
+          "phase": 0,
+          "register": "0x15130",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": "0x31415926"
+        }
+      ]
+    },
+    {
+      "descriptor_u32_offset": "0x8e4",
+      "fixture_value": "0x31415926",
+      "changes": [
+        {
+          "phase": 0,
+          "register": "0x15138",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": "0x31415926"
+        }
+      ]
+    },
+    {
+      "descriptor_u32_offset": "0x8e8",
+      "fixture_value": "0x31415926",
+      "changes": []
+    },
+    {
+      "descriptor_u32_offset": "0x8ec",
+      "fixture_value": "0x31415926",
+      "changes": []
+    },
+    {
+      "descriptor_u32_offset": "0x8f0",
+      "fixture_value": "0x31415926",
+      "changes": [
+        {
+          "phase": 0,
+          "register": "0x10038",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x280",
+          "after": "0x281"
+        },
+        {
+          "phase": 0,
+          "register": "0x16068",
+          "flag": 0,
+          "occurrence": 0,
+          "before": "0xa2000036011",
+          "after": "0xa2100036011"
+        },
+        {
+          "phase": 1,
+          "register": "0x10038",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x280",
+          "after": "0x281"
+        },
+        {
+          "phase": 2,
+          "register": "0x10038",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x280",
+          "after": "0x281"
+        },
+        {
+          "phase": 3,
+          "register": "0x10038",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x280",
+          "after": "0x281"
+        }
+      ]
+    },
+    {
+      "descriptor_u32_offset": "0x8f4",
+      "fixture_value": "0x31415926",
+      "changes": [
+        {
+          "phase": 0,
+          "register": "0x16430",
+          "flag": 1,
+          "occurrence": 0,
+          "before": "0x0",
+          "after": "0xc5056498000000"
+        }
+      ]
+    },
+    {
+      "descriptor_u32_offset": "0x8f8",
+      "fixture_value": "0x31415926",
+      "changes": []
+    },
+    {
+      "descriptor_u32_offset": "0x8fc",
       "fixture_value": "0x31415926",
       "changes": []
     }

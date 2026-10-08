@@ -1,16 +1,22 @@
 {
   "private_binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
-  "target_receipt_sha256": "b68f20d9bf92a4a80c68121060df73e88fe8542a8ff67fdb171aee774d5f7f58",
+  "target_receipt_sha256": "c6008f792f60569d9ff186168c397a90b221586bd6f30cb6190647232441befa",
   "native_harness_sha256": "0f4f2cee1b8adb7a7aead150a47c8a3cc4a000088164434108baab738e31d367",
   "checked_register_values": 15,
   "common_qwords": {
-    "0xa0": "0x0",
-    "0xa8": "0x30c00",
+    "0xa0": "0xffff800000000000",
+    "0xa8": "0x10000030c00",
     "0xc0": "0x0",
-    "0xc8": "0x30800",
+    "0xc8": "0x10000030800",
     "0xe0": "0x1000002000",
     "0xe8": "0x1000002040"
   },
+  "exported_counts": [
+    87,
+    16,
+    23,
+    10
+  ],
   "phases": [
     [
       {
@@ -31,17 +37,17 @@
       {
         "register": "0x15380",
         "flag": 1,
-        "value": "0x30800"
+        "value": "0x10000030800"
       },
       {
         "register": "0x15368",
         "flag": 1,
-        "value": "0x0"
+        "value": "0xffff800000000000"
       },
       {
         "register": "0x15370",
         "flag": 1,
-        "value": "0x30c00"
+        "value": "0x10000030c00"
       },
       {
         "register": "0x15130",
@@ -478,7 +484,7 @@
       {
         "register": "0x15380",
         "flag": 1,
-        "value": "0x30800"
+        "value": "0x10000030800"
       },
       {
         "register": "0x10038",
@@ -560,17 +566,17 @@
       {
         "register": "0x15380",
         "flag": 1,
-        "value": "0x30800"
+        "value": "0x10000030800"
       },
       {
         "register": "0x15368",
         "flag": 1,
-        "value": "0x0"
+        "value": "0xffff800000000000"
       },
       {
         "register": "0x15370",
         "flag": 1,
-        "value": "0x30c00"
+        "value": "0x10000030c00"
       },
       {
         "register": "0x10038",
@@ -672,12 +678,12 @@
       {
         "register": "0x15368",
         "flag": 1,
-        "value": "0x0"
+        "value": "0xffff800000000000"
       },
       {
         "register": "0x15370",
         "flag": 1,
-        "value": "0x30c00"
+        "value": "0x10000030c00"
       },
       {
         "register": "0x10038",
@@ -721,5 +727,6 @@
       }
     ]
   ],
-  "qualification": "Native client copier and native 3D generator consume offline candidate background/EOT byte-offsets, scissor/depth-bias synthetic addresses and dimensions. Selected register values independently checked. Gravity register roles corroborate labels; do not establish valid T6040 hardware state. No shader execution, USC-base provenance, target/parameter/tile allocation, firmware microsequence, live completion or readback. Complete register output recorded, not independently validated recipe. GPU addresses are fixtures; no live mappings. Not a complete submittable job."
+  "shader_base": "0x10000000000",
+  "qualification": "Native client copier and native 3D generator consume offline candidate background/EOT absolute register addresses and load bind tag after the pinned G16 UAPI offset conversion, scissor/depth-bias synthetic addresses and dimensions. Selected register values independently checked. Gravity register roles corroborate labels; do not establish valid T6040 hardware state. No shader execution, USC-base provenance, target/parameter/tile allocation, firmware microsequence, live completion or readback. Complete register output recorded, not independently validated recipe. GPU addresses are fixtures; no live mappings. Not a complete submittable job."
 }

@@ -28,7 +28,7 @@ def run(desc):
   result.append(entries)
  return result
 baseline=run(initial);observations=[]
-for offset in range(0x4b0,0x820,4):
+for offset in range(0x4b0,0x900,4):
  desc=bytearray(initial);struct.pack_into('<I',desc,offset,0x31415926);current=run(desc);changes=[]
  for phase,(before,after) in enumerate(zip(baseline,current)):
   for key in before.keys()|after.keys():

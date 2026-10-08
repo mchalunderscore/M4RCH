@@ -1,3 +1,31 @@
+# Native render preparation checkpoint
+
+Offline work only; no kernel/default changes or GPU job submission.
+Read docs/evidence/2026-10-08-apple9-render-preparation.md.
+Fixed USC aperture1<<40 matches actual G16 kernel/Mesa; old8GB image was a fixture.
+BG/EOT UAPI byte offsets become full USC addresses in firmware registers.
+Native ordinary geometry, geometry->loader, segment control, dynamic-min and PM-min:
+1024 cases each; full byte comparisons. Topology/providers remain synthetic.
+Native geometry->loader->client-copy->3D register generator composed and checked.
+3D exports87 entries with91 backing; donor shares86 identities in the same order.
+Native160b8 replaces donor's duplicate1731; do not overwrite native sequence.
+Full native TA producer executes in128 deterministic flag/subtype cases;
+10496 encoder records and256 metadata links checked. TA exported81/82,
+backing83/84; donor exported65/backing71. Full descriptor semantics still missing.
+Pinned donor Rust creates complete TA/3D work/microsequences/preludes/sparse storage;
+1080 scratch-size comparisons,158 packed registers,four cross-links verified.
+Eight readback-checker tests reject untouched/partial/corrupt captures.
+Candidate files under out/gpu-shader-preparation/*-1tb and donor-job.
+These are comparison candidates, NOT a complete submittable T6040 job.
+Remaining: descriptor/PM initialization, matched work/queue/address-space integration,
+actual allocation/cache visibility, firmware completion/retirement and readback.
+Failed warm INIT still retained on bootfa78dd48-b214-46fc-8786-cae63897ad78;
+normal reboot needed before live integration. No forced unload or new warm retry.
+Offline investigation may continue; no macOS needed merely for next Linux trial.
+Private-derived research, not clean-room; no Apple binary/TEXT/disassembly exported.
+
+---
+
 # cold graph retirement reproduced; INIT wake fails, do not repeat
 
 bootfa78dd48-b214-46fc-8786-cae63897ad78, source1f1eeae, exact warm-init-candidate.

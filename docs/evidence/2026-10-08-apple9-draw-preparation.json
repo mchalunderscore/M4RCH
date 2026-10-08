@@ -1,0 +1,58 @@
+{
+  "shader_base": "0x10000000000",
+  "stage_receipt_sha256": "74aacc7e958f0ee902c777cd796748af602d478b0aac0bf4ad796220009d16e8",
+  "mesa_commit": "87ac51d411f0e58a9433567ec2666f457be89e1d",
+  "mesa_source_sha256": "2cfc94a7f2421371fc062c58b4562e228732d0261b38ef93344d214302269410",
+  "extracted_functions": {
+    "apple9_cf_binding_count": "ab59a184e9b3db87f7f249db5add3ab1d6a29598a2595579540b5e6184a757f8",
+    "apple9_build_cf_bindings": "4f0fe679f485e76cc2ba974704a8c0135ac1a2d3e6e5aee55c8f89a534be292a",
+    "apple9_build_direct_bind_group": "745e54ede681e0cc35d7ccdfbd90684b7cd45e483d12aa0447fd2581c8f6da58",
+    "agx_apple9_emit_draw_state": "0062b051a63b77d5970e365a628ac36aed77ac449dde92d39a1a7dffb237a1e5",
+    "agx_apple9_emit_direct_draw": "7f523ffc5c909ef79ef409a14f811821c3e2a91952cee85c62970fb16c96abb7"
+  },
+  "prepare_draw_tail_sha256": "9786f5ad05fa2588c272eac8323365ed3ad206d5518ad658eefab84495640115",
+  "comparisons": {
+    "coefficient": 256,
+    "direct_group": 256,
+    "direct_vdm": 256,
+    "canonical_ppp_tail": 1
+  },
+  "candidate": {
+    "width": 64,
+    "height": 64,
+    "format": "RGBA8 UNORM",
+    "samples": 1,
+    "tile_bytes": 4,
+    "cf_bindings": 2,
+    "cf_offset": "0x40800",
+    "context_base": "0x1000000000",
+    "ppp_relative": "0x1000",
+    "vertex_entry_block": "0x400",
+    "vertex_launch_units64": "0xc00",
+    "pipeline_word": "0x01000000",
+    "fragment_launch": "0x30400",
+    "vertex_count": 3,
+    "instance_count": 1,
+    "primitive": 6,
+    "depth_stencil_queries": false
+  },
+  "files": {
+    "coefficients.bin": {
+      "bytes": 544,
+      "sha256": "b4fdffa9ec63f1c93468c2edacb3c825fa2cbe95a3d51cf0e6e8c92578dc318d"
+    },
+    "usc-with-coefficients.bin": {
+      "bytes": 327680,
+      "sha256": "9a527570e25260e2be7387aa4c501b76859373deeb0a3019e59a4f9d23cddfbb"
+    },
+    "vdm.bin": {
+      "bytes": 120,
+      "sha256": "19ffad8f64689fdde4bafe8d02f917c7fb895f5d6e8b1a9a855360031820ae5d"
+    },
+    "ppp.bin": {
+      "bytes": 256,
+      "sha256": "f043c94fae34c591bbff6b5b8dc12ac21e4310c5ebacaf07e4ca5a03cbaebb8c"
+    }
+  },
+  "qualification": "Offline candidate only. Pinned Mesa extracted CF/default-group/direct-VDM serializers execute in CPU adapter; independently modeled full bytes compared. Adapter structs are not native driver or firmware ABI. Full canonical PPP bytes compared to extracted prepare_draw tail with synthetic upload return; earlier prepare_draw allocations/entry installation excluded. All placement synthetic; no GPU VA allocation, target/PBE/tile storage, scissor/depth-bias upload, TA/3D job/microsequence or completion. Source serializers not independently hardware-qualified on 16-core T6040; do not submit as a complete job."
+}
