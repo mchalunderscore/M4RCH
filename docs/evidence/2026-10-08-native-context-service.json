@@ -1,0 +1,109 @@
+{
+  "binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "counts": {
+    "initializers": 128,
+    "caller_geometry_copy": 1,
+    "updates": 1152,
+    "unchanged": 384,
+    "mirror_callbacks": 170,
+    "high_physical_cases": 1150,
+    "context_registered": 877,
+    "context_removed": 147,
+    "old_context_invalidated": 414,
+    "direct_invalidation": 211,
+    "service_invalidation": 203
+  },
+  "geometry_blocks": [
+    {
+      "entry_bytes": 8,
+      "physical_output_shift": 14,
+      "physical_input_shift": 14,
+      "va_shift": 36,
+      "entries": 64,
+      "allocation_bytes": 16384,
+      "valid": 1,
+      "physical_mask": "0x3ffffffc000",
+      "va_mask": "0x3f000000000"
+    },
+    {
+      "entry_bytes": 8,
+      "physical_output_shift": 14,
+      "physical_input_shift": 14,
+      "va_shift": 25,
+      "entries": 2048,
+      "allocation_bytes": 16384,
+      "valid": 1,
+      "physical_mask": "0x3ffffffc000",
+      "va_mask": "0xffe000000"
+    },
+    {
+      "entry_bytes": 8,
+      "physical_output_shift": 14,
+      "physical_input_shift": 14,
+      "va_shift": 14,
+      "entries": 2048,
+      "allocation_bytes": 16384,
+      "valid": 1,
+      "physical_mask": "0x3ffffffc000",
+      "va_mask": "0x1ffc000"
+    }
+  ],
+  "ranges": {
+    "shared_init": {
+      "start": "0xfffffe00089dc90c",
+      "end": "0xfffffe00089dc9bc",
+      "sha256": "b58bcf1d36b0a5cb85400e418cf5af9e79d06337740f21a9aa4d4625d341ca70"
+    },
+    "legacy_shared_init": {
+      "start": "0xfffffe00089dce3c",
+      "end": "0xfffffe00089dceec",
+      "sha256": "b58bcf1d36b0a5cb85400e418cf5af9e79d06337740f21a9aa4d4625d341ca70"
+    },
+    "caller_copy": {
+      "start": "0xfffffe00089f3c20",
+      "end": "0xfffffe00089f3c68",
+      "sha256": "6225d65fd7855b138da6a781f7f68c2bb3a574b15c67e2e203857ec22ea709e3"
+    },
+    "legacy_update": {
+      "start": "0xfffffe00089f2328",
+      "end": "0xfffffe00089f2514",
+      "sha256": "e799fe40d2b3cb133a7c49c1c0ab32236c9e087992e725dccbb85dd3c036d0fa"
+    },
+    "context_registration": {
+      "start": "0xfffffe00089dcb40",
+      "end": "0xfffffe00089dcd58",
+      "sha256": "6f42300bbb8bf96f608233df29274af00838022e99216f663c1cc535ce1082f6"
+    },
+    "accelerator_getter": {
+      "start": "0xfffffe000895f11c",
+      "end": "0xfffffe000895f164",
+      "sha256": "1b0e831121a7aa54fe2809a1cb6bb1bd982039c0dd5ae3a9b05cbbdb7602770f"
+    },
+    "accelerator_invalidate": {
+      "start": "0xfffffe000895f33c",
+      "end": "0xfffffe000895f384",
+      "sha256": "87cdf86e015ec303e53c53c797bce959d7e8a4665823c12da5c18da588a4f95e"
+    },
+    "g16_invalidate": {
+      "start": "0xfffffe00089e675c",
+      "end": "0xfffffe00089e67f8",
+      "sha256": "0877e4cc44658760465ad6b4f3d8b282a53275d89c276592b1a91c56317d5f99"
+    },
+    "g16_getter": {
+      "start": "0xfffffe00089e6dac",
+      "end": "0xfffffe00089e6db8",
+      "sha256": "0e5e680cc2fe906f26638d2c620a78df622ac5f02640a2a55a42c167cd880229"
+    }
+  },
+  "mirror_ranges": [
+    [
+      "0xfffffc2000000000",
+      "0xfffffc2180000000"
+    ],
+    [
+      "0xfffffc2181400000",
+      "0xfffffc2185400000"
+    ]
+  ],
+  "qualification": "Actual G16 initializer numeric constants, two128-byte initializer outputs checked in128 randomized images with16KiB page globals; actual caller geometry copy and1536 whole native legacy updates. Actual G16 encoder slot270 executed, PAC bypassed. External mirror callback target and arguments checked, body not executed. Native masks preserve physical bit40 and six root bits. Additionally1024 actual context registration/removal executions; old pair valid bits cleared before executed native accelerator/secure-monitor invalidation chain. Actual getter follows accelerator1aef0 -> secureMonitor20. Invalidation follows secureMonitor40 accelerator and writes context<<8 to GFXd08030 with readback; both external register services and RAM-surrogate direct branch checked, replacement TTBR0 encodes aligned root physical plus ASID48 and valid1, TTBR1 zero. Native root physical getter executed but external physical-address service supplied. G16 and secure-monitor virtual slot targets checked against pinned binary tables; flags argument0 only in this composed registration audit. No live context registration, hardware invalidate behavior, cache/TLB behavior, live translation or rendering proved."
+}
