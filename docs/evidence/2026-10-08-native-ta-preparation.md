@@ -1,3 +1,7 @@
+## Event/aperture integration — 2026-10-08
+
+All64 checked prepared native descriptors now feed paired TA/3D construction including explicit fixture3D event epochs/capacity/initial/context. Updated3D descriptor timestamp and aperture metadata exported.64 native compositions,320 intermediate checks,256 FW register values and5,248 independent encoder records pass. Still fixture-backed; no actual Linux GPU mapping/queue/publication/completion proven.
+
 # Native TA input preparation and initialization
 
 Private-derived AGX353.14 / Apple25G83 numeric evidence. Offline RAM only;

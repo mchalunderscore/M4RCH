@@ -1,3 +1,7 @@
+## Ordinary3D event/control and aperture integration — 2026-10-08
+
+16 paired candidates retain80 list/scheduler links and64 independently expected TA FW values. All16 now check3D event/control with event boundary cases, native aperture records counts0..15, descriptor timestamp and aperture outputs, and scheduler aperture derived from updated descriptor.18 malformed inputs rejected. Separate native audits cover2,048 continuous event/control cases and1,024 real3D aperture helper/HAL cases. No live job or GPU rendering. See private-3d-event.md and private-3d-aperture.md.
+
 # Paired native SKSM register producers and scheduler links
 
 Private implementation-derived AGX353.14/25G83 work. Offline Unicorn only; no

@@ -68,3 +68,50 @@ def bindings(command, descriptor, translations, completion_mapping):
     out[0x20:0x28]=descriptor[0x188:0x190]
     struct.pack_into('<3Q',out,0x28,*translations)
     return bytes(out)
+
+
+def event_control(command, descriptor, context, epochs, capacity, initial, payload, aperture_flags):
+    """Ordinary3D event conversion and control writes; explicit queue fixtures."""
+    from private_nop_body import convert_timestamp
+    if len(epochs) != 2:
+        raise ValueError('Two event-machine epochs required')
+    out, desc = bytearray(command), bytearray(descriptor)
+    event = struct.unpack_from('<I',desc,0x210)[0]
+    # CMN wEvent,1 / CSEL GT includes the overflow flag. In particular,
+    # 0x7fffffff selects the first epoch despite its wrapped negative sum.
+    timestamp = convert_timestamp(epochs[event >> 31],event,capacity,initial) | ((payload & 255) << 40)
+    struct.pack_into('<Q',desc,0x178,timestamp)
+    struct.pack_into('<Q',out,0x2160,timestamp)
+    struct.pack_into('<Q',out,0x2190,0)
+    struct.pack_into('<4I',out,0x2124,context[0x2a5]&1,context[0x2a6]&1,
+                     desc[0x88f]&1,desc[0x893]&1)
+    struct.pack_into('<I',out,0x2138,desc[0x895]&1)
+    out[0x2168:0x2170]=desc[0x100:0x108]
+    flags=out[0x222d]&0xf2
+    if struct.unpack_from('<I',desc,0xa70)[0] or any(context[0x490:0x4b0]):
+        flags |= 1 | ((aperture_flags&3)<<2)
+        out[0x220d:0x222d]=desc[0xa78:0xa98]
+    out[0x222d]=flags
+    out[0x222e:0x2232]=bytes(4)
+    return bytes(out),bytes(desc)
+
+
+def aperture_records(command, descriptor):
+    """Native ordinary3D postproducer mcache helper/HAL record writes."""
+    out,desc=bytearray(command),bytearray(descriptor)
+    count=struct.unpack_from('<I',desc,0xa70)[0]
+    if count>16:
+        raise ValueError('3D aperture count exceeds reserved storage')
+    struct.pack_into('<QQ',desc,0xa98,0,0xffffffff)
+    qid=struct.unpack_from('<I',desc,0x144)[0]
+    for j in range(count):
+        address,length=struct.unpack_from('<QI',desc,0x970+j*16)
+        dsid=desc[0x970+j*16+12]
+        size=struct.unpack_from('<H',desc,0x970+j*16+14)[0]
+        start=((dsid<<47)|(qid<<41)|(address>>7)|(1<<55))&((1<<64)-1)
+        end=(((address>>7)+length)&((1<<64)-1))|((1<<min(size,4))<<42)|(1<<41)
+        struct.pack_into('<QQ',out,0x6a0+j*16,start,end)
+    if count:
+        pointer=(struct.unpack_from('<Q',out,0x7a0)[0]+0x600)&((1<<64)-1)
+        struct.pack_into('<Q2I',desc,0xa98,pointer,0,count)
+    return bytes(out),bytes(desc)

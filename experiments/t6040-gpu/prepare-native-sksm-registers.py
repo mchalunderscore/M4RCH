@@ -182,6 +182,19 @@ def prepare(macho, manifest, output):
             w21=integer(spec['w21'],32,'3D w21'),w22=integer(spec['w22'],32,'3D w22'),
             mapping_address=integer(spec['completion_mapping_address'],64,'3D completion mapping'),
             addresses=[integer(v,64,'3D firmware translation') for v in translated])
+        if 'event_control' in spec:
+            event = spec['event_control']
+            epochs=event['epochs']
+            if not isinstance(epochs,list) or len(epochs)!=2:
+                raise ValueError('Two explicit event-machine epochs required')
+            capacity=integer(event['capacity'],32,'3D event queue capacity')
+            if not 1 <= capacity <= 256:
+                raise ValueError('Qualified event queue capacities1..256')
+            construction_3d['event_control']=dict(
+                context=blob(root,event['submit_context'],0x600),
+                epochs=[integer(v,64,'3D event epoch') for v in epochs],
+                capacity=capacity,initial=integer(event['initial'],64,'3D event queue initial'),
+                aperture_flags=integer(event['aperture_flags'],8,'3D aperture flags'))
     # Produce both before exporting anything; a failed second producer leaves no
     # apparently complete pair behind. Inputs may be graph captures or fixtures.
     results = {}
@@ -221,8 +234,18 @@ def prepare(macho, manifest, output):
         candidate_3d = command_3d.body(candidate_3d,descriptor_out,construction_3d['source'])
         candidate_3d = command_3d.tail(candidate_3d,descriptor_out,construction_3d['stack'],
             construction_3d['w21'],construction_3d['w22'],(construction_3d['counter']+1)&255)
+        candidate_3d_descriptor=descriptor_out
+        if 'event_control' in construction_3d:
+            event=construction_3d['event_control']
+            candidate_3d,candidate_3d_descriptor=command_3d.event_control(
+                candidate_3d,descriptor_out,event['context'],event['epochs'],
+                event['capacity'],event['initial'],(construction_3d['counter']+1)&255,
+                event['aperture_flags'])
+        candidate_3d,candidate_3d_descriptor=command_3d.aperture_records(candidate_3d,candidate_3d_descriptor)
         for item in detail['lists']:
             offset=int(item['offset'],0);end=offset+item['backing_bytes']
+            if item['phase']==0 and end>0x6a0:
+                raise ValueError('3D register backing overlaps aperture storage')
             if candidate_3d[offset:end] != command[offset:end]:
                 raise ValueError('3D construction changed native register backing')
             meta=0x7a0+item['phase']*0x720
@@ -233,6 +256,14 @@ def prepare(macho, manifest, output):
         for kind in ('ta', '3d'):
             template = dict(binding['scheduler'][kind])
             if 'register_lists' in template: raise ValueError('Scheduler register lists must derive from producer metadata')
+            if kind=='3d' and candidate_3d is not None:
+                address,index,count=struct.unpack_from('<Q2I',candidate_3d_descriptor,0xa98)
+                derived=dict(address=hex(address),index=index if count else 0,count=count)
+                if 'aperture' in template:
+                    supplied=template['aperture']
+                    if any(integer(supplied[k],64,k)!=integer(derived[k],64,k) for k in derived):
+                        raise ValueError('3D scheduler aperture conflicts with native descriptor')
+                template['aperture']=derived
             lists = results[kind][2]['lists']
             template['register_lists'] = [dict(address=l['address'], count=l['exported_count']) for l in lists]
             template['register_lists'] += [dict(address=0, count=0)]*(4-len(lists))
@@ -282,8 +313,14 @@ def prepare(macho, manifest, output):
             qualification='Checked TA preproducer models, native register output and postproducer flag/mcache models. Aperture records use reserved660..75f; native register backing/metadata preserved. Caller X28 context distinct from producer lookup context. Translation/mapping returns are explicit fixtures; notification real output/lifetime semantics excluded. Actual submitted-kick callback checked separately. Descriptor output retains emulator CPU identities and excludes notification output/counter objects. Remaining bytes zero/unqualified; not a complete live job.')
     if candidate_3d is not None:
         (output/'3d-construction-candidate.bin').write_bytes(candidate_3d)
+        (output/'3d-construction-descriptor.bin').write_bytes(candidate_3d_descriptor)
         report['3d_construction'] = dict(submission_ready=False,
             command_sha256=hashlib.sha256(candidate_3d).hexdigest(),
+            descriptor_sha256=hashlib.sha256(candidate_3d_descriptor).hexdigest(),
+            aperture_pointer=hex(struct.unpack_from('<Q',candidate_3d_descriptor,0xa98)[0]),
+            aperture_count=struct.unpack_from('<I',candidate_3d_descriptor,0xaa4)[0],
+            event_control_checked='event_control' in construction_3d,
+            event_timestamp=hex(struct.unpack_from('<Q',candidate_3d_descriptor,0x178)[0]) if 'event_control' in construction_3d else None,
             source_sha256=hashlib.sha256(construction_3d['source']).hexdigest(),
             frame_sha256=hashlib.sha256(construction_3d['frame']).hexdigest(),
             stack_sha256=hashlib.sha256(construction_3d['stack']).hexdigest(),
@@ -295,7 +332,7 @@ def prepare(macho, manifest, output):
             completion_mapping_address=hex(construction_3d['mapping_address']),
             completion_mapping_present=bool(struct.unpack_from('<Q',results['3d'][1],0xb70)[0]),
             register_backing_preserved=True,
-            qualification='Checked continuous ordinary3D construction models over actual four-list native producer output. Scratch payload derived from incremented u32 channel counter. Translations/conditional completion mapping, source/frame/stack are explicit fixtures. Real submitted-kick/PM counters checked in native audit but not live objects in this export. Postproducer aperture/masks/scheduling and real mapping/cache/publication/completion remain unqualified; no valid drawing job.')
+            qualification='Checked continuous ordinary3D construction models over actual four-list native producer output. Scratch payload derived from incremented u32 channel counter. Translations/conditional completion mapping, source/frame/stack are explicit fixtures. Real submitted-kick/PM counters checked in native audit but not live objects in this export. Optional event/control model uses explicit queue epochs/capacity/initial and caller context; descriptor timestamp exported. Native postproducer aperture records and descriptor pointer/count derived; scheduler aperture linked to updated descriptor. Other scheduling identities and real mapping/cache/publication/completion remain unqualified; no valid drawing job.')
     if schedulers:
         report['scheduler_candidates'] = {}
         for kind, (work, accounting, template, detail) in schedulers.items():

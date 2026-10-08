@@ -1,0 +1,7 @@
+# Ordinary3D event/control construction
+
+Native interval 895b9d8..895bbb0 compared against independent numeric model in 2,048 cases. Actual descriptor event getter895d5e4 and channel payload getter89d5cf0 execute. Whole command and descriptor match; caller context/channel unchanged. 1,211 first-epoch and837 second-epoch cases,512 inactive and512 context-only aperture flag paths. Event boundaries include0,1,255,256,7ffffffe,7fffffff,80000000,fffffffe,ffffffff; queue capacities1,2,3,64,255,256.
+
+CMN wEvent,1 / CSEL GT selects epoch1458 for nonnegative signed event, otherwise1460. Overflow flags mean7fffffff selects1458 despite wrapped negative sum. Timestamp is queue-converted low40 bits with counter-derived low8 payload atbit40; written to descriptor178 and command2160. Control bits2124/2128/212c/2130/2138 and flags222d derive from caller context/descriptor and explicit accelerator flags. Conditional32-byte state copied at220d;222e cleared.
+
+Paired builder optional3d_construction.event_control requires explicit submit_context600, epochs2, capacity1..256, initialu64 and aperture_flagsu8. Emits updated3d-construction-descriptor.bin and labels whether event/control was included. Actual queue/event providers and concurrent epoch semantics remain fixtures. No live GPU initialization/submission, aperture record generation, publication or rendered pixels proven by this audit. submission_ready remains false.

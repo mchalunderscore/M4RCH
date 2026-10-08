@@ -90,6 +90,7 @@ for i in range(64):
             submit_stack='submit-stack.bin',serial=0,channel_counter=i,w21=0,w22=0,
             firmware_translations=['0xffffffc000000000','0xffffffc000010000','0xffffffc000020000'],
             completion_mapping_address='0xffffffc000030000')
+        manifest['3d_construction']['event_control']=dict(submit_context='submit-context.bin',epochs=[0,0],capacity=16,initial=0,aperture_flags=0)
         (case/'input.json').write_text(json.dumps(manifest,indent=2)+'\n')
         joined=paired.prepare(a.macho,case/'input.json',case/'output')
         assert joined['submission_ready'] is False
