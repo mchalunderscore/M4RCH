@@ -1,3 +1,22 @@
+# Concrete PM initialization and page/job preparation checkpoint
+
+Offline only; no live allocation, GPU command, reboot or kernel/default changes.
+Read docs/evidence/2026-10-08-private-pm-concrete-job.md and seven numeric receipts.
+512 actual setupSceneState successes;512 actual block creations and128 ring-full returns.
+Important: native capacity1 starts full because a slot is reserved; prior creator fixtures
+at capacity1 did not establish valid native setup. Combined actual init uses capacity2..33.
+256 complete PM initializers now execute concrete scene setup/block creation, actual
+HWPB factory/reset and actual discard-page getter208. Readiness150 no longer stubbed.
+1024 native block preparations;1024 native page builders/6252 page entries checked.
+256 init->block prep->page list->native PB job binding->G16 packed ring dataflow chains.
+Manual sequencing and external alloc/resource/memory/registration/map services remain fixtures.
+Next native page-list mapping89fe494/release89fe44c, full retention lifecycle/caller/TA
+association, then Linux-owned root/work/KSM queue/event/stamp publication/completion/readback.
+NOT submission-only readiness. Retained warm INIT needs normal reboot before live trials.
+Offline work continues. No forced unload/reset/warm retry, no private Apple code exports/public push.
+
+---
+
 # Ordinary PM resource-retention checkpoint
 
 Offline only; no GPU commands, live allocation, reboot or kernel/default changes.

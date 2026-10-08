@@ -1,0 +1,436 @@
+{
+  "reset_range_sha256": "4d2e726238c8aa5d7207717293f4c1d634e6a9089c2c83448e6dfcc57bba6cc8",
+  "hwpb_range": [
+    "0xfffffe00089fd3a8",
+    "0xfffffe00089fda5c"
+  ],
+  "hwpb_range_sha256": "ac2df871f7eab43d4d8e6424427562f86e7dd5757cf818ac50edaea8fb7ec3b4",
+  "private_binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "range": [
+    "0xfffffe00089fc624",
+    "0xfffffe00089fd3a8"
+  ],
+  "range_sha256": "3655a070ade7fcd06f9e694c9374b51e4add2942ed5e36837e8e2496b73b67e7",
+  "counts": {
+    "complete_pm_initializer": 256,
+    "created_resources": 768,
+    "scene_records": 4224
+  },
+  "constant70": "0x20000",
+  "constant78": "0x8",
+  "examples": [
+    {
+      "slot_count": 1,
+      "manager_count": 2,
+      "alignment": 4,
+      "resource_sizes": [
+        192,
+        128,
+        16
+      ],
+      "resource_events": [
+        [
+          "new_resource",
+          0
+        ],
+        [
+          "init_resource",
+          0,
+          192
+        ],
+        [
+          "map50_get158",
+          0
+        ],
+        [
+          "map60_get138",
+          0
+        ],
+        [
+          "map50_get158",
+          0
+        ],
+        [
+          "map60_get138",
+          0
+        ],
+        [
+          "new_resource",
+          1
+        ],
+        [
+          "init_resource",
+          1,
+          128
+        ],
+        [
+          "map50_get158",
+          1
+        ],
+        [
+          "map60_get138",
+          1
+        ],
+        [
+          "map50_get158",
+          1
+        ],
+        [
+          "map60_get138",
+          1
+        ],
+        [
+          "new_resource",
+          2
+        ],
+        [
+          "init_resource",
+          2,
+          16
+        ],
+        [
+          "map50_get158",
+          2
+        ],
+        [
+          "map60_get138",
+          2
+        ],
+        [
+          "registration_provider"
+        ],
+        [
+          "registration_request"
+        ],
+        [
+          "registration_commit"
+        ],
+        [
+          "clear_registration_scratch",
+          4
+        ],
+        [
+          "map50_get158",
+          2
+        ],
+        [
+          "map60_get138",
+          2
+        ]
+      ],
+      "descriptor_sha256": "c21d57fa9e460c55efb4ca7484b4b9b79d9efcbd562754cddbc6d5b55480b293"
+    },
+    {
+      "slot_count": 2,
+      "manager_count": 3,
+      "alignment": 8,
+      "resource_sizes": [
+        320,
+        128,
+        24
+      ],
+      "resource_events": [
+        [
+          "new_resource",
+          0
+        ],
+        [
+          "init_resource",
+          0,
+          320
+        ],
+        [
+          "map50_get158",
+          0
+        ],
+        [
+          "map60_get138",
+          0
+        ],
+        [
+          "map50_get158",
+          0
+        ],
+        [
+          "map60_get138",
+          0
+        ],
+        [
+          "new_resource",
+          1
+        ],
+        [
+          "init_resource",
+          1,
+          128
+        ],
+        [
+          "map50_get158",
+          1
+        ],
+        [
+          "map60_get138",
+          1
+        ],
+        [
+          "map50_get158",
+          1
+        ],
+        [
+          "map60_get138",
+          1
+        ],
+        [
+          "new_resource",
+          2
+        ],
+        [
+          "init_resource",
+          2,
+          24
+        ],
+        [
+          "map50_get158",
+          2
+        ],
+        [
+          "map60_get138",
+          2
+        ],
+        [
+          "registration_provider"
+        ],
+        [
+          "registration_request"
+        ],
+        [
+          "registration_commit"
+        ],
+        [
+          "clear_registration_scratch",
+          16
+        ],
+        [
+          "map50_get158",
+          2
+        ],
+        [
+          "map60_get138",
+          2
+        ]
+      ],
+      "descriptor_sha256": "11b93c1cbd2986895d0941c84b66caafe13a0cda0eb70d9b666732734b22cafe"
+    },
+    {
+      "slot_count": 3,
+      "manager_count": 4,
+      "alignment": 16,
+      "resource_sizes": [
+        448,
+        128,
+        32
+      ],
+      "resource_events": [
+        [
+          "new_resource",
+          0
+        ],
+        [
+          "init_resource",
+          0,
+          448
+        ],
+        [
+          "map50_get158",
+          0
+        ],
+        [
+          "map60_get138",
+          0
+        ],
+        [
+          "map50_get158",
+          0
+        ],
+        [
+          "map60_get138",
+          0
+        ],
+        [
+          "new_resource",
+          1
+        ],
+        [
+          "init_resource",
+          1,
+          128
+        ],
+        [
+          "map50_get158",
+          1
+        ],
+        [
+          "map60_get138",
+          1
+        ],
+        [
+          "map50_get158",
+          1
+        ],
+        [
+          "map60_get138",
+          1
+        ],
+        [
+          "new_resource",
+          2
+        ],
+        [
+          "init_resource",
+          2,
+          32
+        ],
+        [
+          "map50_get158",
+          2
+        ],
+        [
+          "map60_get138",
+          2
+        ],
+        [
+          "registration_provider"
+        ],
+        [
+          "registration_request"
+        ],
+        [
+          "registration_commit"
+        ],
+        [
+          "clear_registration_scratch",
+          48
+        ],
+        [
+          "map50_get158",
+          2
+        ],
+        [
+          "map60_get138",
+          2
+        ]
+      ],
+      "descriptor_sha256": "9d57b419a131b9c0fc0a511644403173e4fab1e4a68c15d01a36eadb90578939"
+    },
+    {
+      "slot_count": 4,
+      "manager_count": 5,
+      "alignment": 32,
+      "resource_sizes": [
+        576,
+        128,
+        40
+      ],
+      "resource_events": [
+        [
+          "new_resource",
+          0
+        ],
+        [
+          "init_resource",
+          0,
+          576
+        ],
+        [
+          "map50_get158",
+          0
+        ],
+        [
+          "map60_get138",
+          0
+        ],
+        [
+          "map50_get158",
+          0
+        ],
+        [
+          "map60_get138",
+          0
+        ],
+        [
+          "new_resource",
+          1
+        ],
+        [
+          "init_resource",
+          1,
+          128
+        ],
+        [
+          "map50_get158",
+          1
+        ],
+        [
+          "map60_get138",
+          1
+        ],
+        [
+          "map50_get158",
+          1
+        ],
+        [
+          "map60_get138",
+          1
+        ],
+        [
+          "new_resource",
+          2
+        ],
+        [
+          "init_resource",
+          2,
+          40
+        ],
+        [
+          "map50_get158",
+          2
+        ],
+        [
+          "map60_get138",
+          2
+        ],
+        [
+          "registration_provider"
+        ],
+        [
+          "registration_request"
+        ],
+        [
+          "registration_commit"
+        ],
+        [
+          "clear_registration_scratch",
+          128
+        ],
+        [
+          "map50_get158",
+          2
+        ],
+        [
+          "map60_get138",
+          2
+        ]
+      ],
+      "descriptor_sha256": "f4155442127e3528c2c948b60f5bed766d32f1483fba9e433cf0716aca29e6dc"
+    }
+  ],
+  "qualification": "256 complete native PM initializers including actual concrete scene setup, no-argument wrapper plus actual parameter-block creation, native HWPB factory/reset and concrete discard-page getter. Independent full PM/config/manager/block/allocation-vector/scenes/HW-state/counter checks. Capacity2..33 reserves empty slot; positive state count1..8. Both bit47 resource/GART mapping flags and optional extra scene branch. External inherited/resource/memory-descriptor/registration/mapping/state alloc services remain fixtures. No allocator/root/cache visibility, staged job/TA association, KSM submission or completion readiness proved.",
+  "concrete_scene_range": [
+    "0xfffffe00089fefb0",
+    "0xfffffe00089ff3a4"
+  ],
+  "block_range": [
+    "0xfffffe00089febec",
+    "0xfffffe00089fef68"
+  ]
+}
