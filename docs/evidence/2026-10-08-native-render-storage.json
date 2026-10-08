@@ -1,0 +1,325 @@
+{
+  "private_binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "counts": {
+    "gtp_reuse_full_function": 1024,
+    "ring_offset_publication_slice": 1024,
+    "ring_entry_sizing_slice": 1024,
+    "ring_capacity_growth_slice": 1024,
+    "gtp_allocation_success": 409,
+    "gtp_allocation_failure": 103
+  },
+  "examples": [
+    {
+      "case": 0,
+      "gtp_sizes": [
+        121651,
+        3716,
+        97763,
+        88389,
+        8325,
+        122483,
+        37852,
+        40300
+      ],
+      "gtp_alignments": [
+        16384,
+        128,
+        32,
+        16384,
+        64,
+        256,
+        64
+      ],
+      "gtp_offsets": [
+        0,
+        131072,
+        134912,
+        232704,
+        327680,
+        336064,
+        458752,
+        496640
+      ],
+      "gtp_total": 536940,
+      "ring_geometry_bytes": 1280,
+      "ring_padded_bytes": 4096,
+      "ring_extra_bytes": [
+        734,
+        776
+      ],
+      "ring_offsets": [
+        3887,
+        6079,
+        6813
+      ],
+      "ring_growth_required": 22372264,
+      "page_shift_fixture": 12,
+      "ring_capacity": 33554432,
+      "ring_allocation": 33554432
+    },
+    {
+      "case": 1,
+      "gtp_sizes": [
+        173,
+        41073,
+        54800,
+        108718,
+        7343,
+        53469,
+        27742,
+        82575
+      ],
+      "gtp_alignments": [
+        64,
+        256,
+        16384,
+        0,
+        256,
+        32,
+        64
+      ],
+      "gtp_offsets": [
+        0,
+        192,
+        41472,
+        98304,
+        207022,
+        214528,
+        268000,
+        295744
+      ],
+      "gtp_total": 378319,
+      "ring_geometry_bytes": 4096,
+      "ring_padded_bytes": 4096,
+      "ring_extra_bytes": [
+        344,
+        952
+      ],
+      "ring_offsets": [
+        6047,
+        9281,
+        9625
+      ],
+      "ring_growth_required": 25470168,
+      "page_shift_fixture": 14,
+      "ring_capacity": 33554432,
+      "ring_allocation": 35651584
+    },
+    {
+      "case": 2,
+      "gtp_sizes": [
+        66079,
+        4591,
+        92026,
+        47263,
+        60595,
+        40447,
+        109345,
+        93801
+      ],
+      "gtp_alignments": [
+        32,
+        16384,
+        16384,
+        0,
+        64,
+        256,
+        32
+      ],
+      "gtp_offsets": [
+        0,
+        66080,
+        81920,
+        180224,
+        227487,
+        288128,
+        328704,
+        438080
+      ],
+      "gtp_total": 531881,
+      "ring_geometry_bytes": 4097,
+      "ring_padded_bytes": 8192,
+      "ring_extra_bytes": [
+        58,
+        82
+      ],
+      "ring_offsets": [
+        2738,
+        10738,
+        10796
+      ],
+      "ring_growth_required": 14722285,
+      "page_shift_fixture": 12,
+      "ring_capacity": 16777216,
+      "ring_allocation": 16777216
+    },
+    {
+      "case": 3,
+      "gtp_sizes": [
+        36058,
+        62007,
+        10125,
+        94335,
+        130257,
+        46272,
+        95788,
+        16054
+      ],
+      "gtp_alignments": [
+        256,
+        16384,
+        64,
+        128,
+        64,
+        128,
+        128
+      ],
+      "gtp_offsets": [
+        0,
+        36096,
+        98304,
+        108480,
+        202880,
+        333184,
+        379520,
+        475392
+      ],
+      "gtp_total": 491446,
+      "ring_geometry_bytes": 4294963200,
+      "ring_padded_bytes": 4294963200,
+      "ring_extra_bytes": [
+        816,
+        541
+      ],
+      "ring_offsets": [
+        79708,
+        85724,
+        86540
+      ],
+      "ring_growth_required": 26803858,
+      "page_shift_fixture": 14,
+      "ring_capacity": 33554432,
+      "ring_allocation": 35651584
+    },
+    {
+      "case": 4,
+      "gtp_sizes": [
+        120933,
+        128630,
+        84579,
+        87122,
+        26262,
+        44166,
+        88973,
+        91575
+      ],
+      "gtp_alignments": [
+        32,
+        32,
+        128,
+        256,
+        0,
+        128,
+        16384
+      ],
+      "gtp_offsets": [
+        0,
+        120960,
+        249600,
+        334208,
+        421376,
+        447638,
+        491904,
+        589824
+      ],
+      "gtp_total": 681399,
+      "ring_geometry_bytes": 4294963201,
+      "ring_padded_bytes": 0,
+      "ring_extra_bytes": [
+        16,
+        300
+      ],
+      "ring_offsets": [
+        80601,
+        130244,
+        130260
+      ],
+      "ring_growth_required": 28704642,
+      "page_shift_fixture": 12,
+      "ring_capacity": 33554432,
+      "ring_allocation": 33554432
+    },
+    {
+      "case": 5,
+      "gtp_sizes": [
+        78591,
+        63065,
+        82680,
+        109699,
+        61811,
+        74667,
+        20062,
+        59533
+      ],
+      "gtp_alignments": [
+        0,
+        128,
+        128,
+        128,
+        16384,
+        32,
+        64
+      ],
+      "gtp_offsets": [
+        0,
+        78591,
+        141696,
+        224384,
+        334208,
+        409600,
+        484288,
+        504384
+      ],
+      "gtp_total": 563917,
+      "ring_geometry_bytes": 4294967295,
+      "ring_padded_bytes": 0,
+      "ring_extra_bytes": [
+        925,
+        937
+      ],
+      "ring_offsets": [
+        334827,
+        437510,
+        438435
+      ],
+      "ring_growth_required": 19493502,
+      "page_shift_fixture": 14,
+      "ring_capacity": 33554432,
+      "ring_allocation": 35651584
+    }
+  ],
+  "native_ranges": [
+    {
+      "start": "0xfffffe0008a0abec",
+      "end": "0xfffffe0008a0ae74",
+      "sha256": "4331ec9b554903017b0f9d88dcc50375694c459b7fdc0a788748d86e017906a1"
+    },
+    {
+      "start": "0xfffffe0008a0b294",
+      "end": "0xfffffe0008a0b2d8",
+      "sha256": "1bb9ee483e9d024eb255ae20ea399f8bbe40c913a2c0f4fd3783d8bb7b734f90"
+    },
+    {
+      "start": "0xfffffe0008a0affc",
+      "end": "0xfffffe0008a0b02c",
+      "sha256": "ce95c5928f94d059017355f089394dfbe2482e8b547107cda36e6fa408d64c34"
+    },
+    {
+      "start": "0xfffffe0008a0b09c",
+      "end": "0xfffffe0008a0b0e0",
+      "sha256": "3e840e48647bb3820ca413f7ddf4d15c4679498370e7f32bfb7c61d1ef31e35d"
+    }
+  ],
+  "visited_instructions": 208,
+  "qualification": "Full GTP-only update on reuse plus success/failure allocation branches with argument-checked supplied services; other tests are explicitly bounded slices. Full object byte comparisons and ring-entry untouched bytes checked. Native allocation call arguments checked but actual resource creation, retain/release, priority and map/cache services supplied; no real resources, event wait, allocation lifetime, full render-target update or GPU job executed. Page shift supplied, not queried from running kernel. PAC return bypassed. Deliberate 32-bit overflow cases characterize arithmetic, not valid job inputs."
+}
