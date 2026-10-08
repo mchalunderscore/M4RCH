@@ -1,0 +1,24 @@
+{
+  "binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "header_cases": 1024,
+  "counter_cases": 834,
+  "header_kind_bits": 2,
+  "header_ranges": [
+    [
+      "0xfffffe00089dc0c8",
+      "0xfffffe00089dc10c"
+    ],
+    [
+      "0xfffffe00089dc198",
+      "0xfffffe00089dc1d4"
+    ]
+  ],
+  "slice_hashes": [
+    "7bb0314c8acd3398de251632c0d89024d3e83d54c9787cafa76c553ae6719d56",
+    "dd22eeffbd5a30279b5d34609a0174b31aed28d4fb9c61907a84487a85675d1e"
+  ],
+  "nop_vtable_slot": "0x148",
+  "nop_target": "0xfffffe00089dc07c",
+  "return_value": "Previous queue object +0x48 counter, not record address",
+  "qualification": "Actual header/counter arithmetic slices only. Arbitrary-width inputs characterize masks/overlap, not valid protocol timestamps. Return links pinned; external conversion, allocation, full encoding, atomic pending-count increment and hardware execution excluded."
+}

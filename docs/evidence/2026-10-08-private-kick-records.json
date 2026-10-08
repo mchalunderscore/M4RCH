@@ -41,14 +41,14 @@
     "count_offset": 6,
     "count": 1,
     "scheduler_id_offset": 8,
-    "pointer_offset": 9,
+    "timestamp_offset": 9,
     "value_offset": 17,
     "minimum_bytes": 21
   },
   "alternate_prefix": {
     "opcode": 16,
     "queue_offset": 4,
-    "pointer_offset": 6,
+    "timestamp_offset": 6,
     "constant_offset": 14,
     "constant": 254,
     "minimum_bytes": 18

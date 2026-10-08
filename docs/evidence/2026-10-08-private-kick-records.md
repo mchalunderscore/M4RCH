@@ -19,7 +19,7 @@ With flag bit clear, the result of the named
 | 4 | 2 | Low 16 bits of stack +0x24 |
 | 6 | 2 | Constant 1 |
 | 8 | 1 | Low 8 bits of scheduler object +0x1c |
-| 9 | 8 | x27 pointer supplied by earlier construction |
+| 9 | 8 | x27 prior scheduler timestamp (resolved by later NOP audit) |
 | 0x11 | 4 | Stack +0x20 |
 
 This patch writes 21 bytes. The uploaded spec describes a 24-byte opcode-14
@@ -35,7 +35,7 @@ With flag bit set, a separately allocated non-null record receives:
 | --- | --- | --- |
 | 0 | 4 | Opcode 16 |
 | 4 | 2 | Low 16 bits of stack +0x24 |
-| 6 | 8 | Same x27 pointer |
+| 6 | 8 | Same x27 prior timestamp |
 | 0x0e | 4 | Constant 0xfe |
 
 This patch writes 18 bytes; total allocation size and complete opcode-16 role
@@ -54,15 +54,16 @@ checker verifies these three targets from encoded native pointers.
 `audit-private-kick-records.py` executes only the two reviewed call-free patch
 slices in emulated RAM, with the actual pinned binary. Independent numeric
 models in `private_kick_records.py` match **256 randomized cases per variant**,
-including truncation of input fields, packed unaligned pointers and preserved
+including truncation of input fields, packed unaligned timestamp fields and preserved
 unknown tails. No allocation, mapping or external callback executes.
 
 The helper names describe observed transport roles, not authorization to send
-these incomplete records. A valid x27 kick pointer, scheduler configuration,
+these incomplete records. A valid x27 timestamp, scheduler configuration,
 entry-signal/stamp handling and complete allocation lifetime are prerequisites
 still to establish. Calling this routine 'NOP' does not make it independent
 of that state or prove it safe as the first live command.
 
-Next trace the earlier x27 construction and configuration/entry-signal records,
+The later NOP audit resolves x27 as the previous scheduler counter, not an
+address. Next trace configuration/entry-signal records,
 and corroborate the packed format with firmware
 consumers. This narrows the first-job path but does not yet produce a render job.

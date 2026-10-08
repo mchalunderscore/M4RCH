@@ -37,7 +37,7 @@ for mode,(start,end) in enumerate(ranges):
   assert bytes(m.mem_read(0x200000,64))==expected
 report=dict(binary_sha256=sha,cases_per_variant=256,channel_slots=slots,ranges=[[hex(x),hex(y)] for x,y in ranges],
  slices_sha256=[hashlib.sha256(read(x,y-x)).hexdigest() for x,y in ranges],
- add_kicks_prefix=dict(opcode=14,queue_offset=4,count_offset=6,count=1,scheduler_id_offset=8,pointer_offset=9,value_offset=17,minimum_bytes=21),
- alternate_prefix=dict(opcode=16,queue_offset=4,pointer_offset=6,constant_offset=14,constant=254,minimum_bytes=18),
+ add_kicks_prefix=dict(opcode=14,queue_offset=4,count_offset=6,count=1,scheduler_id_offset=8,timestamp_offset=9,value_offset=17,minimum_bytes=21),
+ alternate_prefix=dict(opcode=16,queue_offset=4,timestamp_offset=6,constant_offset=14,constant=254,minimum_bytes=18),
  qualification='Call-free patches only, all unused bytes preserved. Mode choice depends on native accelerator flag +0xee5f bit0; allocation extents, pointer roles, earlier/later commands and full NOP lifecycle unresolved. No hardware execution.')
 a.output.write_text(json.dumps(report,indent=2)+'\n');print('256 cases per packed variant matched; unknown tails preserved')
