@@ -1,3 +1,20 @@
+# Reusable native common scheduler candidate checkpoint
+
+Offline only; no GPU command, allocation, reboot or kernel/default changes.
+Read docs/evidence/2026-10-08-native-scheduler-candidate.md/JSON.
+native_scheduler_candidate.py creates common200-byte work/accounting fixtures from explicit bindings.
+128 complete actual native prefix/body/accounting cases match serializer and changed queue fields.
+Qualified bounds/alignment/presence checks reject26 invalid input cases; three test methods pass.
+Register-list counts explicit, not backing-derived; example3D87/16/23/10 matches prior exports.
+Common scheduler work is NOT the TA/3D work object or microsequence. Output always submission_ready=false.
+Live queue/root/resource identity, matched work/lifecycle bindings, cache-visible publication,
+independent completion/event/stamp retirement and coherent readback remain to integrate.
+Retained warm INIT requires normal reboot before live GPU session, no forced unload/reset/new retry.
+Offline PM creation/allocation/registration research continues. No macOS needed for next Linux trials.
+Private-derived; no Apple binary/TEXT/disassembly exported or public push.
+
+---
+
 # Native PM and hardware parameter-buffer reset checkpoint
 
 Offline only; no GPU command, allocation, reboot or kernel/default changes.
