@@ -30,7 +30,7 @@ static void *walk(unsigned int role,u64 va)
  root=page_address(tables[role][0]);l1=page_address(tables[role][1]);
  l2=page_address(tables[role][2]);
  /* Never dereference a physical pointer taken from a table. Verify ownership. */
- if (root[(va>>36)&7]!=(page_to_phys(tables[role][1])|3) ||
+ if (root[(va>>36)&63]!=(page_to_phys(tables[role][1])|3) ||
      l1[(va>>25)&2047]!=(page_to_phys(tables[role][2])|3)) return NULL;
  index=(va-base)>>PAGE_SHIFT;entry=l2[(va>>14)&2047];
  if (entry!=(page_to_phys(pages[index])|leaf_flags[role])) return NULL;
@@ -41,14 +41,14 @@ static int tables_prepare(void)
  unsigned int r,l,i;
  for (r=0;r<2;r++) {
   u64 base=r?FW_BASE:DEVICE_BASE,*root,*l1,*l2;
-  if (base+POOL_BYTES>(1ULL<<39) || (base&(PAGE_SIZE-1)) || ((base+POOL_BYTES-1)>>25)!=(base>>25)) return -EINVAL;
+  if (base+POOL_BYTES>(1ULL<<42) || (base&(PAGE_SIZE-1)) || ((base+POOL_BYTES-1)>>25)!=(base>>25)) return -EINVAL;
   for (l=0;l<3;l++) {
    tables[r][l]=alloc_pages(GFP_KERNEL|__GFP_ZERO,0);
    if (!tables[r][l]) return -ENOMEM;
    if (page_to_phys(tables[r][l])&~PA_MASK) return -EINVAL;
   }
   root=page_address(tables[r][0]);l1=page_address(tables[r][1]);l2=page_address(tables[r][2]);
-  root[(base>>36)&7]=page_to_phys(tables[r][1])|3;
+  root[(base>>36)&63]=page_to_phys(tables[r][1])|3;
   l1[(base>>25)&2047]=page_to_phys(tables[r][2])|3;
   for (i=0;i<POOL_PAGES;i++) l2[((base+(u64)i*PAGE_SIZE)>>14)&2047]=page_to_phys(pages[i])|leaf_flags[r];
  }
@@ -61,7 +61,7 @@ static bool rejection_checks(void)
   u64 base=r?FW_BASE:DEVICE_BASE;
   if (walk(r,base-1) || walk(r,base+POOL_BYTES)) return false;
   for (l=0;l<3;l++) {
-   unsigned int index=l==0?(base>>36)&7:l==1?(base>>25)&2047:(base>>14)&2047;
+   unsigned int index=l==0?(base>>36)&63:l==1?(base>>25)&2047:(base>>14)&2047;
    u64 *table=page_address(tables[r][l]),saved=table[index];
    table[index]=0;
    if (walk(r,base)) {table[index]=saved;return false;}
