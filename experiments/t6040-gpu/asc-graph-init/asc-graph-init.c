@@ -34,6 +34,9 @@ static bool held, asc_region, mbox_region, started;
 #ifdef GRAPH_CONTEXT_LIVE_EXPERIMENT
 #include "device-context-live.h"
 #endif
+#ifdef GRAPH_JOINED_INIT_EXPERIMENT
+#include "joined-context-init.h"
+#endif
 static struct kobject *graph_directory;
 static ssize_t graph_read(struct file *file, struct kobject *kobj,
  const struct bin_attribute *attr, char *buf, loff_t off, size_t count)
@@ -56,6 +59,21 @@ static ssize_t graph_read(struct file *file, struct kobject *kobj,
  }
  return count;
 }
+#ifdef GRAPH_JOINED_INIT_EXPERIMENT
+static ssize_t joined_read(struct file *file, struct kobject *kobj,
+ const struct bin_attribute *attr,char *buf,loff_t off,size_t count)
+{
+ size_t done=0,total=ARRAY_SIZE(owned)*PAGE_SIZE;
+ if(off<0)return -EINVAL;if(off>=total)return 0;
+ count=min_t(size_t,count,total-off);
+ while(done<count){size_t p=off+done,index=p/PAGE_SIZE,within=p%PAGE_SIZE,n=min_t(size_t,count-done,PAGE_SIZE-within);unsigned long a;void *page;
+  if(!owned[index])return -ENODEV;page=page_address(owned[index]);
+  for(a=(unsigned long)page;a<(unsigned long)page+PAGE_SIZE;a+=16)asm volatile("dc ivac, %0" :: "r"(a) : "memory");
+  asm volatile("dsb sy" ::: "memory");memcpy(buf+done,(u8 *)page+within,n);done+=n;}
+ return count;
+}
+static struct bin_attribute joined_raw={.attr={.name="owned",.mode=0400},.read=joined_read,.size=ARRAY_SIZE(owned)*PAGE_SIZE};
+#endif
 static struct bin_attribute graph_raw = {
  .attr={.name="objects",.mode=0400},.read=graph_read,.size=sizeof(graph_bytes),
 };
@@ -66,6 +84,9 @@ static int graph_snapshot_create(void)
  if (!graph_directory) return -ENOMEM;
  ret=sysfs_create_bin_file(graph_directory,&graph_raw);
  if (ret) {kobject_put(graph_directory);graph_directory=NULL;}
+#ifdef GRAPH_JOINED_INIT_EXPERIMENT
+ if (!ret) ret=sysfs_create_bin_file(graph_directory,&joined_raw);
+#endif
  return ret;
 }
 static void graph_snapshot_remove(void)
@@ -168,8 +189,11 @@ static int __init hello_init(void)
  u32 appmap = 0;
  u8 apps_started = 0;
  u8 map_seen = 0;
-#ifdef GRAPH_COMMAND_POOL_EXPERIMENT
+#if defined(GRAPH_COMMAND_POOL_EXPERIMENT) && !defined(GRAPH_JOINED_INIT_EXPERIMENT)
  if (run_gate!=1) return -EINVAL; /* Own allocations only until context/ring lifecycle is joined. */
+#endif
+#ifdef GRAPH_JOINED_INIT_EXPERIMENT
+ if (release_on_shutdown || warm_restart) return -EINVAL; /* No joined teardown proof yet. */
 #endif
  if (warm_restart && (!release_on_shutdown || !request_shutdown || !GRAPH_RELEASE_EXPERIMENT)) return -EINVAL;
  if (release_on_shutdown && (!request_shutdown || !GRAPH_RELEASE_EXPERIMENT)) return -EINVAL;
@@ -265,6 +289,9 @@ static int __init hello_init(void)
  if (epmap && crashlog_boot() && power_ack(0xb,0xb,0x20)) {
   ret=root_prepare(true);if(ret)goto retire_firmware;
   ret=graph_snapshot_create();if(ret)goto retire_firmware;
+#ifdef GRAPH_JOINED_INIT_EXPERIMENT
+  ret=joined_context_attach();if(ret)goto retire_firmware;
+#endif
   /* Start only the two advertised app endpoints. No init-root message. */
   if ((appmap&3)==3) {
    unsigned int ep;
@@ -315,7 +342,7 @@ stop_firmware:
   * Only this reserved-buffer, crashlog-only probe may release after both power
   * ACKs, core stop and an empty receive FIFO. Any incomplete step stays pinned.
   * This does not authorize teardown of an initialized or rendering GPU. */
- retired=!root_sent && ap_quiesced && iop_sleep && stopped && (readl(mbox+0x114)&EMPTY);
+ retired=!device_context_retained && !root_sent && ap_quiesced && iop_sleep && stopped && (readl(mbox+0x114)&EMPTY);
  if (root_sent && release_on_shutdown && ap_quiesced && iop_sleep && stopped &&
      (readl(mbox+0x114)&EMPTY)) {
   retired=root_detach_after_shutdown();

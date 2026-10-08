@@ -222,6 +222,16 @@ def main():
     report['mapping_or_publication_performed'] = (f"{receipt['graph_object_pages']} object pages mapped" in delta if args.graph else 'installed previously-empty mapping slot' in logs)
     report.update(load_returncode=result.returncode, stderr=result.stderr, module_present=present,
                   reboot_required=present, interpretation=('Allocations-enabled structural fixture. A sent root/object change does not prove initialization or rendering readiness. Never force unload.' if args.graph else 'A transmitted root is not proof of consumption. Seek a newly written disabled-host-allocations rejection in the crashlog. Never force module unload.'))
+    if args.graph and receipt.get('joined_context_init') and present:
+        owned=Path('/sys/kernel/m4rch_gpu_graph_trial/owned').read_bytes()
+        require(len(owned)==receipt['joined_owned_pages']*0x4000,'Joined owned snapshot extent mismatch')
+        (out/'owned-after.bin').write_bytes(owned)
+        cursor=receipt['joined_notify_first_page']*0x4000
+        report['joined_observation']=dict(owned_pages=len(owned)//0x4000,owned_sha256=sha(owned),
+            mapping_ring_head=struct.unpack_from('<I',owned,cursor)[0],
+            mapping_ring_tail=struct.unpack_from('<I',owned,cursor+0x10)[0],
+            mapping_descriptors=receipt['joined_mapping_descriptors'],jobs_enqueued=0,
+            qualification='Owned context and graph publication only; no work queue doorbell or rendering. Context retained until reboot.')
     (out/'attempt.json').write_text(json.dumps(report,indent=2)+'\n')
     os.sync()
     # Sampler is read-only and independently unloadable; root probe stays pinned.
