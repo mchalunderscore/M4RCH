@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: GPL-2.0-only */
 #define RENDER_FIRST_PAGE (GPTBAT_PAGE + 1)
 #define RENDER_TABLE_FIRST (RENDER_FIRST_PAGE + RENDER_BACKING_PAGES)
-static bool pool_prepare_render(void)
+static bool pool_prepare_render(u64 *firmware_l2)
 {
  u64 *root=page_address(owned[DEVICE_TABLE_FIRST]);
  unsigned int i,region;
@@ -21,6 +21,15 @@ static bool pool_prepare_render(void)
    void *cpu=page_address(owned[RENDER_FIRST_PAGE+i]);
    if ((addr&(PAGE_SIZE-1)) || (addr>>36)!=(va>>36) || (addr>>25)!=(va>>25) || l2[(addr>>14)&2047]) return false;
    l2[(addr>>14)&2047]=pa|flags;
+#ifdef RENDER_FW_ALIASES
+   if (render_fw_aliases[i]) {
+    u64 fw=render_fw_aliases[i];
+    if ((fw&(PAGE_SIZE-1)) || (fw>>25)!=(ROOT_VA>>25) || firmware_l2[(fw>>14)&2047]) return false;
+    firmware_l2[(fw>>14)&2047]=pa|FW_GRAPH_RW;
+    if (firmware_l2[(fw>>14)&2047]!=(pa|FW_GRAPH_RW)) return false;
+    pr_info("m4rch render-alias: page=%u device=%#llx firmware=%#llx physical=%#llx publication=0\n",i,addr,fw,pa);
+   }
+#endif
    memcpy(cpu,render_bytes+i*PAGE_SIZE,PAGE_SIZE);
    if (root[(addr>>36)&63]!=(page_to_phys(owned[RENDER_TABLE_FIRST+region*2])|3) ||
        l1[(addr>>25)&2047]!=(page_to_phys(owned[RENDER_TABLE_FIRST+region*2+1])|3) ||

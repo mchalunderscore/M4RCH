@@ -142,7 +142,7 @@ static bool command_pool_prepare(u64 *firmware_l2)
  pr_info("m4rch joined-pool: PASS jobs=%u pages=%u device_root=%#llx firmware_root_index=%llu notifications=%u publication=0\n",
          JOB_COUNT,POOL_PAGES,page_to_phys(owned[DEVICE_TABLE_FIRST]),((u64)FW_BASE>>36)&63,POOL_PAGES);
 #ifdef GRAPH_RENDER_BACKING_EXPERIMENT
- if (!pool_prepare_render()) return false;
+ if (!pool_prepare_render(firmware_l2)) return false;
 #endif
  return true;
 }
