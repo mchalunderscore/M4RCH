@@ -1,3 +1,21 @@
+# Native PM and hardware parameter-buffer reset checkpoint
+
+Offline only; no GPU command, allocation, reboot or kernel/default changes.
+Read docs/evidence/2026-10-08-private-pm-reset.md/JSON.
+Complete native PM reset and actual nested HW reset:512 cases; HW-only:512 cases.
+Whole PM/configuration/manager/HW state/counter bytes match independent models.
+Optional PM virtual1c8 request covered256 times, exact lock/map/translation ordering checked.
+State20 comes from scheduler2d8(map158,0), NOT directly from the first map address.
+State28 comes from separate resource map158; state84 from PM virtual208.
+State capacity/counters/sentinels and unaligned fields documented; untouched bytes preserved.
+Services still explicit fixtures. Next:full PM creation/allocation/registration and subtype getters,
+matched work/root/KSM queue/event/stamp integration, live cache visibility and completion readback.
+Still NOT submission-only readiness. Retained warm INIT requires normal reboot before live testing;
+bootfa78dd48-b214-46fc-8786-cae63897ad78, no forced unload/reset/new warm retry.
+Private-derived; no Apple binary/TEXT/disassembly exported or public push.
+
+---
+
 # Native constructor and PM scene preparation checkpoint
 
 Offline only; no GPU command, reboot or kernel/default changes.
