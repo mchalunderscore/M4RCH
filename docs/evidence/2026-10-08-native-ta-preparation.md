@@ -94,3 +94,15 @@ private-render-setup, private-tile-flags, private-ta-inputs,
 native-ta-preparation and private-ta-initialization JSON files dated2026-10-08.
 The scripts consume the local hash-pinned Apple binary; it is not exported.
 This is private implementation-derived work, not a clean-room specification.
+
+## Joined paired builder after reboot
+
+The optional --paired-output directory now exports64 descriptor fixtures from
+this checked preparation pipeline into paired native TA/3D producers and partial
+TA command construction. The entire9c0 TA producer output must equal the original
+native producer run, not merely a selected register. All64 pass, retaining320
+independent intermediate comparisons,256 expected firmware values and5248
+encoder-record comparisons. Caller context/stack, services and CPU relocations
+remain fixtures; this is not a valid Linux-owned drawing job. See
+2026-10-08-private-ta-postproducer.md for postproducer construction and reboot
+evidence. No live initialization/rendering attempted.

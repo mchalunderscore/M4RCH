@@ -1,3 +1,27 @@
+# Post-reboot aperture and joined preparation checkpoint — 2026-10-08
+
+Boot8d5519d3-c1db-41a7-bb94-7c68e7ac0d10, kernel7.1.13-m4rch-gpu-contract.
+asc_graph_init absent: earlier retained failed warm INIT is cleared. Native USB
+enumeration shows six root hubs plus YubiKey, SanDisk storage, hubs, Ethernet
+and microphone; this is enumeration evidence, not a fresh interactive port test.
+No GPU hardware trials in this checkpoint.
+
+Postproducer caller plus actual mcache aperture helper/HAL:1024 cases,8166
+records,61 empty and31 context-only paths. Whole command/descriptor and context
+checks. Reusable builder adds reserved660..75f aperture data and emits updated
+descriptor pointer/index/count;12 malformed inputs rejected.
+
+64 checked constructor/geometry/resource/PM/payload descriptors now feed paired
+TA/3D register generation and partial TA construction. Entire TA producer bytes
+match the original native run. See native-ta-preparation.md and
+private-ta-postproducer.md/JSON. Services/CPU relocations/caller context still
+fixtures. Not a Linux-owned valid drawing job.
+
+Next complete3D/channel scheduling/publication and integrate actual Linux
+backing/mappings/cache visibility/completion retirement/readback. No triangle
+submitted; desktop GPU acceleration remains the goal. Earlier reboot-required
+notes below are historical and superseded for this fresh boot.
+
 # Native completion queue preparation — 2026-10-08
 
 Expanded prior descriptor audit and added full allocation caller:1024 full completion descriptor cases (2048

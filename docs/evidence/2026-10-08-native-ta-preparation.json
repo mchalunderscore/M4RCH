@@ -4,7 +4,8 @@
     "native_compositions": 64,
     "independent_intermediates": 320,
     "checked_register_values": 256,
-    "independent_encoder_records": 5248
+    "independent_encoder_records": 5248,
+    "prepared_descriptor_pairs": 64
   },
   "examples": [
     {
@@ -1718,5 +1719,5 @@
       "descriptor_sha256": "84bfba94d4c6b515fb73c4644013c76a7e18836fd41e5e68c81b4f45f8a2fca7"
     }
   ],
-  "qualification": "Actual complete TA+3D constructors -> ordinary geometry -> complete TA RT loader -> complete TA/3D PM loader -> actual payload slice/common helper -> full TA producer, with full-byte independent comparisons at every input stage. Resource FW and GPU map bases deliberately distinct, only numeric services qualified. Native encoder records independently checked; four independently expected firmware addresses checked per case. 64 positive extent/single-sample fixtures with groups1..3 and conditional initial entry. Inherited constructor/lifecycle services, PM subtype, resource map/retain services, payload caller aliases and remaining lifecycle providers are explicit synthetic fixtures. No actual allocation, queue/event binding, GPU execution or submission-ready job proved."
+  "qualification": "Actual complete TA+3D constructors -> ordinary geometry -> complete TA RT loader -> complete TA/3D PM loader -> actual payload slice/common helper -> full TA producer, with full-byte independent comparisons at every input stage. Resource FW and GPU map bases deliberately distinct, only numeric services qualified. Native encoder records independently checked; four independently expected firmware addresses checked per case. 64 positive extent/single-sample fixtures with groups1..3 and conditional initial entry. Inherited constructor/lifecycle services, PM subtype, resource map/retain services, payload caller aliases and remaining lifecycle providers are explicit synthetic fixtures. Optional paired output feeds this prepared descriptor through both verified SKSM wrappers and partial TA construction; its entire TA producer output must equal this original native producer result. Caller context/stack and translation/completion services remain explicit zero/address fixtures. No actual allocation, queue/event binding, GPU execution or submission-ready job proved."
 }

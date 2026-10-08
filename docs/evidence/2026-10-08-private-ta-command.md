@@ -61,7 +61,8 @@ descriptor190 lookup context. Do not silently substitute one for the other.
   "w21": 0,
   "w22": 1,
   "completion_mapping_address": "0xffffffb000120000",
-  "accelerator_mode": 0
+  "accelerator_mode": 0,
+  "aperture_flags": 0
 }
 ```
 
@@ -70,18 +71,24 @@ X26 and completion mapping are explicit u64; W21/W22/accelerator mode are u32. T
 not inferred valid resource identities. Boolean integer inputs are rejected.
 The models operate on actual TA register-producer output and export a separate
 `ta-construction-candidate.bin`, preserving producer-only output.
-Register backing and metadata60..77f must remain byte-identical.
+Actual native register backing and metadata760..76b must remain byte-identical.
+Reserved aperture records may change660..75f; they must not overlap register backing.
 
 Sixteen paired cases pass, retaining80 list/scheduler links and64 independently
 expected firmware register values. Checks cover serial, three translation
 results, packed epoch boundaries, caller context/stack metadata, mapping-offset
 wrap, all16 accelerator-mode/context combinations and preservation of register
 output. Caller-supplied branch results are rejected: control is derived.
-Eleven malformed inputs fail before export. All receipts
+Twelve malformed inputs fail before export. All receipts
 retain `submission_ready=false`.
 
 Remaining: actual completion mapping/notification service semantics and other
 command fields; initialized resource
 identities; Linux physical backing, mapping/cache, publication, completion and
-coherent readback. Retained failed warm INIT requires normal reboot before
-live integration.
+coherent readback. The reboot on boot8d5519d3-c1db-41a7-bb94-7c68e7ac0d10 cleared the
+retained probe: no asc_graph_init module was loaded during verification.
+No live GPU initialization or rendering was performed in this checkpoint.
+
+Postproducer aperture record construction is documented in
+`2026-10-08-private-ta-postproducer.md`. The reusable builder exports its updated
+TA descriptor separately; that descriptor still contains emulator CPU identities.
