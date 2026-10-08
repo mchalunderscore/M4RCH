@@ -1,0 +1,28 @@
+[ 7114.683894] m4rch GFX test: existing genpd runtime resume succeeded; no SGX access
+[ 7114.685653] m4rch mmu-read: begin physical=0x288d08000
+[ 7114.685662] m4rch mmu-read: physical=0x288d08000 value=0x1
+[ 7114.685666] m4rch mmu-read: begin physical=0x288d08004
+[ 7114.685667] m4rch mmu-read: physical=0x288d08004 value=0x3ff
+[ 7114.685669] m4rch mmu-read: begin physical=0x288d08008
+[ 7114.685670] m4rch mmu-read: physical=0x288d08008 value=0x1
+[ 7114.685671] m4rch mmu-read: begin physical=0x288d0800c
+[ 7114.685672] m4rch mmu-read: physical=0x288d0800c value=0x0
+[ 7114.685672] m4rch mmu-read: begin physical=0x288d08010
+[ 7114.685673] m4rch mmu-read: physical=0x288d08010 value=0x0
+[ 7114.685674] m4rch mmu-read: begin physical=0x288d08014
+[ 7114.685675] m4rch mmu-read: physical=0x288d08014 value=0x3680d8
+[ 7114.685676] m4rch mmu-read: begin physical=0x288d08018
+[ 7114.685677] m4rch mmu-read: physical=0x288d08018 value=0x3680d8
+[ 7114.685677] m4rch mmu-read: begin physical=0x288d0801c
+[ 7114.685678] m4rch mmu-read: physical=0x288d0801c value=0x0
+[ 7114.685678] m4rch mmu-read: begin physical=0x288d08020
+[ 7114.685678] m4rch mmu-read: physical=0x288d08020 value=0x0
+[ 7114.685679] m4rch mmu-read: begin physical=0x288d08024
+[ 7114.685679] m4rch mmu-read: physical=0x288d08024 value=0x0
+[ 7114.685680] m4rch mmu-read: begin physical=0x288d08028
+[ 7114.685680] m4rch mmu-read: physical=0x288d08028 value=0x0
+[ 7114.685681] m4rch mmu-read: begin physical=0x288d0802c
+[ 7114.685681] m4rch mmu-read: physical=0x288d0802c value=0x417ffee
+[ 7114.685681] m4rch mmu-read: begin physical=0x288d08030
+[ 7114.685682] m4rch mmu-read: physical=0x288d08030 value=0x0
+[ 7114.726416] m4rch GFX test: runtime suspend result=0
