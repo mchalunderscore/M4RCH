@@ -1,0 +1,113 @@
+{
+  "private_binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "cases": 1024,
+  "record_counts": {
+    "7": 1024,
+    "3": 1024,
+    "8": 1024
+  },
+  "examples": [
+    {
+      "case": 0,
+      "startup_entries": 0,
+      "record_sequence": [
+        "0x7",
+        "0x80000003",
+        "0x3",
+        "0x8",
+        "0x40000002"
+      ],
+      "stream_bytes": 836,
+      "sha256": "8f6453a13e3643ad0724f5fdf2dd2af94afb6b88ff0747d605431506e7c5ea60"
+    },
+    {
+      "case": 1,
+      "startup_entries": 1,
+      "record_sequence": [
+        "0x7",
+        "0x3",
+        "0x8",
+        "0x40000002"
+      ],
+      "stream_bytes": 760,
+      "sha256": "95833c5da83c8ba35864779a7de855345e72a62b132bbcfc4848637b3051e70d"
+    },
+    {
+      "case": 2,
+      "startup_entries": 2,
+      "record_sequence": [
+        "0x7",
+        "0x80000003",
+        "0x8",
+        "0x40000002"
+      ],
+      "stream_bytes": 760,
+      "sha256": "7eac31fb05c02adf088c5d19e2a0b35b5e8649ef459f18758eceea728e741044"
+    },
+    {
+      "case": 3,
+      "startup_entries": 3,
+      "record_sequence": [
+        "0x7",
+        "0x8",
+        "0x40000002"
+      ],
+      "stream_bytes": 684,
+      "sha256": "daacd834ff3129a6890e4f237330cd3714dc1c557f418f06f7a8843934ea5fdf"
+    },
+    {
+      "case": 4,
+      "startup_entries": 4,
+      "record_sequence": [
+        "0x7",
+        "0x80000003",
+        "0x3",
+        "0x8",
+        "0x40000002"
+      ],
+      "stream_bytes": 836,
+      "sha256": "ee8efd7bd53f3be09ab8ba01636d6483a53314e3dd331ed919212ec3fc8e1dfc"
+    },
+    {
+      "case": 5,
+      "startup_entries": 5,
+      "record_sequence": [
+        "0x7",
+        "0x3",
+        "0x8",
+        "0x40000002"
+      ],
+      "stream_bytes": 760,
+      "sha256": "51efb82857ede160bf442fb715768f5e12e55e6d4bab78b4a271f8aac33a3b4e"
+    },
+    {
+      "case": 6,
+      "startup_entries": 6,
+      "record_sequence": [
+        "0x7",
+        "0x80000003",
+        "0x8",
+        "0x40000002"
+      ],
+      "stream_bytes": 760,
+      "sha256": "61970170b5b587e77b3d58f13defd5945e40a5ea2557c0c42c3738b974c5c539"
+    },
+    {
+      "case": 7,
+      "startup_entries": 7,
+      "record_sequence": [
+        "0x7",
+        "0x8",
+        "0x40000002"
+      ],
+      "stream_bytes": 684,
+      "sha256": "03fca57108c0e1a4e8b3473ec46212065e0bb086beb7609fb73bd99fcb68f6ca"
+    }
+  ],
+  "range": [
+    "0xfffffe00089d5344",
+    "0xfffffe00089d5990"
+  ],
+  "range_sha256": "87d96485ef35786034972a59f1866a293d88e4e4b4bde2f7b115972ea2403d0e",
+  "qualification": "Connected native startup payload/publication, conditional real timestamp encoders, synthetic channel258 callback and primary opcode8 through native finishEncode and caller pointer/rounded-size publication. Whole backing/encoder/descriptor and resulting command checked against independent composition. PAC bypassed; resource providers/firmware translation/memcpy/channel callback explicit stubs. Entry counts0..16 synthetic, optional secondary phase disabled; leading/trailing wait excluded. Callback effects beyond supplied no-op not established. No GPU job validity, microsequence interpretation, real allocation/cache/firmware execution or completion."
+}
