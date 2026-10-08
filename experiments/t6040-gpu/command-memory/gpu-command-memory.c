@@ -5,7 +5,7 @@
 #include <linux/slab.h>
 #include "job-data.h"
 static struct page *pages[POOL_PAGES];
-#define PA_MASK GENMASK_ULL(41,14)
+#define PA_MASK GENMASK_ULL(41,14) /* Linux CPU physical addresses, not native generic UAT inputs. */
 /* Candidate protections cross-checked against native UAT encoding and pgtable.rs.
  * Resource API options -> encoder input and actual pool dispatch remain unknown. */
 static const u64 leaf_flags[2]={0x00e0000000000c0bULL,0x00c000000000044bULL};
@@ -41,7 +41,7 @@ static int tables_prepare(void)
  unsigned int r,l,i;
  for (r=0;r<2;r++) {
   u64 base=r?FW_BASE:DEVICE_BASE,*root,*l1,*l2;
-  if ((base&(PAGE_SIZE-1)) || ((base+POOL_BYTES-1)>>25)!=(base>>25)) return -EINVAL;
+  if (base+POOL_BYTES>(1ULL<<39) || (base&(PAGE_SIZE-1)) || ((base+POOL_BYTES-1)>>25)!=(base>>25)) return -EINVAL;
   for (l=0;l<3;l++) {
    tables[r][l]=alloc_pages(GFP_KERNEL|__GFP_ZERO,0);
    if (!tables[r][l]) return -ENOMEM;
