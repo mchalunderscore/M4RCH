@@ -1,0 +1,467 @@
+{
+  "reset_range_sha256": "4d2e726238c8aa5d7207717293f4c1d634e6a9089c2c83448e6dfcc57bba6cc8",
+  "hwpb_range": [
+    "0xfffffe00089fd3a8",
+    "0xfffffe00089fda5c"
+  ],
+  "hwpb_range_sha256": "ac2df871f7eab43d4d8e6424427562f86e7dd5757cf818ac50edaea8fb7ec3b4",
+  "private_binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "range": [
+    "0xfffffe00089fc624",
+    "0xfffffe00089fd3a8"
+  ],
+  "range_sha256": "3655a070ade7fcd06f9e694c9374b51e4add2942ed5e36837e8e2496b73b67e7",
+  "counts": {
+    "complete_pm_initializer": 256,
+    "created_resources": 768,
+    "scene_records": 4224
+  },
+  "constant70": "0x20000",
+  "constant78": "0x8",
+  "examples": [
+    {
+      "slot_count": 1,
+      "manager_count": 2,
+      "alignment": 4,
+      "resource_sizes": [
+        192,
+        128,
+        16
+      ],
+      "resource_events": [
+        [
+          "new_resource",
+          0
+        ],
+        [
+          "init_resource",
+          0,
+          192
+        ],
+        [
+          "map50_get158",
+          0
+        ],
+        [
+          "map60_get138",
+          0
+        ],
+        [
+          "map50_get158",
+          0
+        ],
+        [
+          "map60_get138",
+          0
+        ],
+        [
+          "new_resource",
+          1
+        ],
+        [
+          "init_resource",
+          1,
+          128
+        ],
+        [
+          "map50_get158",
+          1
+        ],
+        [
+          "map60_get138",
+          1
+        ],
+        [
+          "map50_get158",
+          1
+        ],
+        [
+          "map60_get138",
+          1
+        ],
+        [
+          "new_resource",
+          2
+        ],
+        [
+          "init_resource",
+          2,
+          16
+        ],
+        [
+          "map50_get158",
+          2
+        ],
+        [
+          "map60_get138",
+          2
+        ],
+        [
+          "registration_provider"
+        ],
+        [
+          "registration_request"
+        ],
+        [
+          "registration_commit"
+        ],
+        [
+          "clear_registration_scratch",
+          4
+        ],
+        [
+          "map50_get158",
+          2
+        ],
+        [
+          "map60_get138",
+          2
+        ]
+      ],
+      "descriptor_sha256": "fd6911ab8004ead7e009d2f9da4c5de48df55410106242a74411529c6f351f5d"
+    },
+    {
+      "slot_count": 2,
+      "manager_count": 3,
+      "alignment": 8,
+      "resource_sizes": [
+        320,
+        128,
+        24
+      ],
+      "resource_events": [
+        [
+          "new_resource",
+          0
+        ],
+        [
+          "init_resource",
+          0,
+          320
+        ],
+        [
+          "map50_get158",
+          0
+        ],
+        [
+          "map60_get138",
+          0
+        ],
+        [
+          "map50_get158",
+          0
+        ],
+        [
+          "map60_get138",
+          0
+        ],
+        [
+          "new_resource",
+          1
+        ],
+        [
+          "init_resource",
+          1,
+          128
+        ],
+        [
+          "map50_get158",
+          1
+        ],
+        [
+          "map60_get138",
+          1
+        ],
+        [
+          "map50_get158",
+          1
+        ],
+        [
+          "map60_get138",
+          1
+        ],
+        [
+          "new_resource",
+          2
+        ],
+        [
+          "init_resource",
+          2,
+          24
+        ],
+        [
+          "map50_get158",
+          2
+        ],
+        [
+          "map60_get138",
+          2
+        ],
+        [
+          "registration_provider"
+        ],
+        [
+          "registration_request"
+        ],
+        [
+          "registration_commit"
+        ],
+        [
+          "clear_registration_scratch",
+          16
+        ],
+        [
+          "map50_get158",
+          2
+        ],
+        [
+          "map60_get138",
+          2
+        ]
+      ],
+      "descriptor_sha256": "d643f8ba79971e131a805562cf47338aa09c7a3dccd084754a1a436a03e800c8"
+    },
+    {
+      "slot_count": 3,
+      "manager_count": 4,
+      "alignment": 16,
+      "resource_sizes": [
+        448,
+        128,
+        32
+      ],
+      "resource_events": [
+        [
+          "new_resource",
+          0
+        ],
+        [
+          "init_resource",
+          0,
+          448
+        ],
+        [
+          "map50_get158",
+          0
+        ],
+        [
+          "map60_get138",
+          0
+        ],
+        [
+          "map50_get158",
+          0
+        ],
+        [
+          "map60_get138",
+          0
+        ],
+        [
+          "new_resource",
+          1
+        ],
+        [
+          "init_resource",
+          1,
+          128
+        ],
+        [
+          "map50_get158",
+          1
+        ],
+        [
+          "map60_get138",
+          1
+        ],
+        [
+          "map50_get158",
+          1
+        ],
+        [
+          "map60_get138",
+          1
+        ],
+        [
+          "new_resource",
+          2
+        ],
+        [
+          "init_resource",
+          2,
+          32
+        ],
+        [
+          "map50_get158",
+          2
+        ],
+        [
+          "map60_get138",
+          2
+        ],
+        [
+          "registration_provider"
+        ],
+        [
+          "registration_request"
+        ],
+        [
+          "registration_commit"
+        ],
+        [
+          "clear_registration_scratch",
+          48
+        ],
+        [
+          "map50_get158",
+          2
+        ],
+        [
+          "map60_get138",
+          2
+        ]
+      ],
+      "descriptor_sha256": "9cbdc4ce394b9223de697cd517cf8b339db0b37fc1eefed8de3c7487ad2818df"
+    },
+    {
+      "slot_count": 4,
+      "manager_count": 5,
+      "alignment": 32,
+      "resource_sizes": [
+        576,
+        128,
+        40
+      ],
+      "resource_events": [
+        [
+          "new_resource",
+          0
+        ],
+        [
+          "init_resource",
+          0,
+          576
+        ],
+        [
+          "map50_get158",
+          0
+        ],
+        [
+          "map60_get138",
+          0
+        ],
+        [
+          "map50_get158",
+          0
+        ],
+        [
+          "map60_get138",
+          0
+        ],
+        [
+          "new_resource",
+          1
+        ],
+        [
+          "init_resource",
+          1,
+          128
+        ],
+        [
+          "map50_get158",
+          1
+        ],
+        [
+          "map60_get138",
+          1
+        ],
+        [
+          "map50_get158",
+          1
+        ],
+        [
+          "map60_get138",
+          1
+        ],
+        [
+          "new_resource",
+          2
+        ],
+        [
+          "init_resource",
+          2,
+          40
+        ],
+        [
+          "map50_get158",
+          2
+        ],
+        [
+          "map60_get138",
+          2
+        ],
+        [
+          "registration_provider"
+        ],
+        [
+          "registration_request"
+        ],
+        [
+          "registration_commit"
+        ],
+        [
+          "clear_registration_scratch",
+          128
+        ],
+        [
+          "map50_get158",
+          2
+        ],
+        [
+          "map60_get138",
+          2
+        ]
+      ],
+      "descriptor_sha256": "958904ba01ce6751e8940a312ac65e05e1bbac2bd809d90168495bae4320e8fd"
+    }
+  ],
+  "qualification": "256 actual initializer/metrics/scene/block/HWPB results branch into whole ordinary retention, actual fresh page mapping and release-null, actual page generation getter, block preparation and page builder. Full PM/manager/TA/state/config/block/staged/frame/page bytes checked with numeric expectations. Actual PM50 metrics resource retained into TA db8. Initial PM mode1 preserved, no fabricated PM28=0 reuse fixture. Explicit inherited-constructor fixture fields PM258=0/PM1d0=0 and support providers supplied; resource mapping preparation, support getters/locks/retains and inherited mapping initialization remain external fixtures. Then actual TA prepare caller window8a22c2c..8a22c4c invokes actual PM usage update and PB bind/HAL; event service arguments checked, full PM/manager/state/ring/scene/TA/page bytes checked. Earlier UMA lock/update and full TA prepare not qualified; no live allocation/cache/retirement/submission. Original RAM restored after independent branch, then parent manual PB-ring check runs.",
+  "concrete_scene_range": [
+    "0xfffffe00089fefb0",
+    "0xfffffe00089ff3a4"
+  ],
+  "block_range": [
+    "0xfffffe00089febec",
+    "0xfffffe00089fef68"
+  ],
+  "job_methods": [
+    "0xfffffe00089fea44",
+    "0xfffffe00089fb414",
+    "0xfffffe00089fe1b4",
+    "0xfffffe00089d6f54"
+  ],
+  "metrics_method": "0xfffffe00089f740c",
+  "initialized_retention_counts": {
+    "chains": 256,
+    "fresh_page_mappings": 256,
+    "descriptor_resources": 2304,
+    "page_entries": 1024,
+    "initializer_mode_one": 256,
+    "caller_bindings": 256,
+    "usage_event_service_calls": 512
+  },
+  "initialized_retention_range": [
+    "0xfffffe00089fa7a8",
+    "0xfffffe00089fb0d4"
+  ],
+  "ta_caller_window": [
+    "0xfffffe0008a22c2c",
+    "0xfffffe0008a22c4c"
+  ],
+  "ta_caller_window_sha256": "b7167a47ccfd3297d395cff89cb2c85cd77c2a863a8da3bcf60ae88d9cc50e22",
+  "usage_update_range": [
+    "0xfffffe00089fe138",
+    "0xfffffe00089fe1b4"
+  ],
+  "usage_update_range_sha256": "3e748324c96aca7672f11bebb42a78fcf48c5ae5e2f3cad0d17a781736e91637",
+  "initialized_retention_range_sha256": "42fc2c69a3bc039d267fa3b693dcb289901b9c96ff099426c6cad5335b2cd424"
+}
