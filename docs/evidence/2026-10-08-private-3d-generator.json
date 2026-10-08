@@ -1,0 +1,2458 @@
+{
+  "binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "assembled_cases": 128,
+  "independent_spm_helper_checks": 384,
+  "visited_instruction_count": 3124,
+  "fixtures": [
+    {
+      "case": 0,
+      "phase_counts": [
+        92,
+        16,
+        23,
+        10
+      ],
+      "descriptor_counts": [
+        88,
+        16,
+        23,
+        10
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 140,
+      "command_sha256": "4547f93758bc54c1f5ef8f7ba544136a5e8bb67dc2cbf0ae1ec358894473f743",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 1,
+      "phase_counts": [
+        93,
+        16,
+        25,
+        12
+      ],
+      "descriptor_counts": [
+        87,
+        16,
+        25,
+        12
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 145,
+      "command_sha256": "7f6e2546bc40b133f7413cdf99ed9e47ac84ec6478092586d1506798e7ad4a08",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 2,
+      "phase_counts": [
+        92,
+        3,
+        3,
+        3
+      ],
+      "descriptor_counts": [
+        88,
+        3,
+        3,
+        3
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 100,
+      "command_sha256": "571880e3ee9ced0d4b9058c21d61dcb2977d428f673dbfe92aff48caeb64eb78",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 3,
+      "phase_counts": [
+        94,
+        3,
+        5,
+        5
+      ],
+      "descriptor_counts": [
+        88,
+        3,
+        5,
+        5
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 106,
+      "command_sha256": "16d10ec9b6ed41487b945fa2c942f817fa8f938d44b5ba3d984458e3037f737e",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 4,
+      "phase_counts": [
+        92,
+        16,
+        23,
+        10
+      ],
+      "descriptor_counts": [
+        88,
+        16,
+        23,
+        10
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 140,
+      "command_sha256": "bcc59d8cc0b6e6fed2c09bdd01bb9bf4a716cde7b9d8d8c25bc8a8152077e50e",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 5,
+      "phase_counts": [
+        93,
+        16,
+        25,
+        12
+      ],
+      "descriptor_counts": [
+        87,
+        16,
+        25,
+        12
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 145,
+      "command_sha256": "b8288611608e355f89ce88da2572e7a7d7fb6a8efebdc73c748e378149e46884",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 6,
+      "phase_counts": [
+        91,
+        3,
+        3,
+        3
+      ],
+      "descriptor_counts": [
+        87,
+        3,
+        3,
+        3
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 99,
+      "command_sha256": "8fa518431c9fdec381ffd32218d8d60465a48a64d40c16d4e2b79c2024c5633e",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 7,
+      "phase_counts": [
+        94,
+        3,
+        5,
+        5
+      ],
+      "descriptor_counts": [
+        88,
+        3,
+        5,
+        5
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 106,
+      "command_sha256": "f131f1934265bfa11edc026877c56bf205d4e7edae0277cc0b594d82010c6341",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 8,
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "descriptor_counts": [
+        87,
+        16,
+        23,
+        10
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 139,
+      "command_sha256": "8c6bc28bcbdf84636c824abef271568292982df5e90be4d4a6c9bbe59bf99bcf",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 9,
+      "phase_counts": [
+        94,
+        16,
+        25,
+        12
+      ],
+      "descriptor_counts": [
+        88,
+        16,
+        25,
+        12
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 146,
+      "command_sha256": "477df50877f11477eac84c70a6957b65811400f1f909f480ffdf89756e332516",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 10,
+      "phase_counts": [
+        91,
+        3,
+        3,
+        3
+      ],
+      "descriptor_counts": [
+        87,
+        3,
+        3,
+        3
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 99,
+      "command_sha256": "c9c608fae53af6d7fd8a9295b868bfc9e800a9531b9fc8fa95bc047d70cbe870",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 11,
+      "phase_counts": [
+        93,
+        3,
+        5,
+        5
+      ],
+      "descriptor_counts": [
+        87,
+        3,
+        5,
+        5
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 105,
+      "command_sha256": "159873ba18262ec898193799f183cd81581c4cb0b97e49ff35108b84fbc5b07e",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 12,
+      "phase_counts": [
+        92,
+        16,
+        23,
+        10
+      ],
+      "descriptor_counts": [
+        88,
+        16,
+        23,
+        10
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 140,
+      "command_sha256": "351fc8be6df7986080b7cf29bad56193a722a8924b8077c76fb6e05d22283bf8",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 13,
+      "phase_counts": [
+        94,
+        16,
+        25,
+        12
+      ],
+      "descriptor_counts": [
+        88,
+        16,
+        25,
+        12
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 146,
+      "command_sha256": "a690b5ace8e856062ed91b3c736114329fc89e5ddc7720dd468b75a03a5b7601",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 14,
+      "phase_counts": [
+        92,
+        3,
+        3,
+        3
+      ],
+      "descriptor_counts": [
+        88,
+        3,
+        3,
+        3
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 100,
+      "command_sha256": "03412ed4776bde63c75ce233f9c617f130da331a78b47e908f974907e7452f99",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 15,
+      "phase_counts": [
+        93,
+        3,
+        5,
+        5
+      ],
+      "descriptor_counts": [
+        87,
+        3,
+        5,
+        5
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 105,
+      "command_sha256": "5982cecd5ac8fa780c1f4133fdde11632b0858a52615a3a7f7e320f6019d4b7a",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 16,
+      "phase_counts": [
+        93,
+        16,
+        23,
+        10
+      ],
+      "descriptor_counts": [
+        89,
+        16,
+        23,
+        10
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 141,
+      "command_sha256": "9602a0a322a25957401a0ac9f9ff7a98cc36d95d3eae45a176c40e53676149c4",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 17,
+      "phase_counts": [
+        96,
+        16,
+        25,
+        12
+      ],
+      "descriptor_counts": [
+        90,
+        16,
+        25,
+        12
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 148,
+      "command_sha256": "8cf63abfd00c6792e9354c9fddccd8af2bf45a1fb08c48bb6a9a03413fc8d35f",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 18,
+      "phase_counts": [
+        94,
+        3,
+        3,
+        3
+      ],
+      "descriptor_counts": [
+        90,
+        3,
+        3,
+        3
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 102,
+      "command_sha256": "e901acd650d369d3e1b3e3b853d7c8045b722fc523cf17f2b1ea340d4ca58bc3",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 19,
+      "phase_counts": [
+        95,
+        3,
+        5,
+        5
+      ],
+      "descriptor_counts": [
+        89,
+        3,
+        5,
+        5
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 107,
+      "command_sha256": "35ba350c9bac2329dc80fa85b40dc697b9ad6f1d1ef9b7becd64674607f8702e",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 20,
+      "phase_counts": [
+        94,
+        16,
+        23,
+        10
+      ],
+      "descriptor_counts": [
+        90,
+        16,
+        23,
+        10
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 142,
+      "command_sha256": "93db44a4762d2a48ad7f7d5bd2eae40050ae8711d811e905e12799b347027ec7",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 21,
+      "phase_counts": [
+        95,
+        16,
+        25,
+        12
+      ],
+      "descriptor_counts": [
+        89,
+        16,
+        25,
+        12
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 147,
+      "command_sha256": "2bad441668ff56063ff385f0223b506e906c127f73974138cba7b339afdfa938",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 22,
+      "phase_counts": [
+        93,
+        3,
+        3,
+        3
+      ],
+      "descriptor_counts": [
+        89,
+        3,
+        3,
+        3
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 101,
+      "command_sha256": "2d17b0a17f3e9c29f4e8e6c210a14b5823cc844d03af6e4aa1102948f47d3d95",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 23,
+      "phase_counts": [
+        95,
+        3,
+        5,
+        5
+      ],
+      "descriptor_counts": [
+        89,
+        3,
+        5,
+        5
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 107,
+      "command_sha256": "fc57a7f46762506e83d4f61d72cd6ed892b22702b3305cca99d3d47ea13174e0",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 24,
+      "phase_counts": [
+        93,
+        16,
+        23,
+        10
+      ],
+      "descriptor_counts": [
+        89,
+        16,
+        23,
+        10
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 141,
+      "command_sha256": "01ed2040c055b28d7d8fe49d409edeb4e34310aefae62cb27e55789879107a99",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 25,
+      "phase_counts": [
+        96,
+        16,
+        25,
+        12
+      ],
+      "descriptor_counts": [
+        90,
+        16,
+        25,
+        12
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 148,
+      "command_sha256": "e83094a15967da06eac066904c543f834068d6cd371c00aa4cb1d622c909a296",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 26,
+      "phase_counts": [
+        94,
+        3,
+        3,
+        3
+      ],
+      "descriptor_counts": [
+        90,
+        3,
+        3,
+        3
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 102,
+      "command_sha256": "111280b70c17f94930c0999aa36167127ebd3b5cbce6a78e72b3ec61adaa6ea9",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 27,
+      "phase_counts": [
+        95,
+        3,
+        5,
+        5
+      ],
+      "descriptor_counts": [
+        89,
+        3,
+        5,
+        5
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 107,
+      "command_sha256": "00da8026d85af62a5ff861a6929000402262fabfc169887211ebdb9b99e4c59c",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 28,
+      "phase_counts": [
+        93,
+        16,
+        23,
+        10
+      ],
+      "descriptor_counts": [
+        89,
+        16,
+        23,
+        10
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 141,
+      "command_sha256": "e94fa5a8411e02d0d593596e7db6a5c14a18825a41e264563debe7ca1adba941",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 29,
+      "phase_counts": [
+        96,
+        16,
+        25,
+        12
+      ],
+      "descriptor_counts": [
+        90,
+        16,
+        25,
+        12
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 148,
+      "command_sha256": "d887e4a8aebe0f28ce9a7a1865b742479cac3cfbbafb543a84998d887b312ca7",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 30,
+      "phase_counts": [
+        94,
+        3,
+        3,
+        3
+      ],
+      "descriptor_counts": [
+        90,
+        3,
+        3,
+        3
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 102,
+      "command_sha256": "3ed32d511b75a22db924c5048362dfa9890dbefe16dad053ea229ff63998cf85",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 31,
+      "phase_counts": [
+        96,
+        3,
+        5,
+        5
+      ],
+      "descriptor_counts": [
+        90,
+        3,
+        5,
+        5
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 108,
+      "command_sha256": "5a6c3f8a1f88be4e751867e59e3aefd71e95e5f11624afa829d4ab9231ec2377",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 32,
+      "phase_counts": [
+        92,
+        16,
+        23,
+        10
+      ],
+      "descriptor_counts": [
+        88,
+        16,
+        23,
+        10
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 140,
+      "command_sha256": "cfd08386d318616882970c601478eb5c01279ebeb6e399dde224df124a93ecad",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 33,
+      "phase_counts": [
+        93,
+        16,
+        25,
+        12
+      ],
+      "descriptor_counts": [
+        87,
+        16,
+        25,
+        12
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 145,
+      "command_sha256": "a56e32db2df503aebc628e8dd0ef1e55de800348120e04178f7c2e2eed618d17",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 34,
+      "phase_counts": [
+        92,
+        3,
+        3,
+        3
+      ],
+      "descriptor_counts": [
+        88,
+        3,
+        3,
+        3
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 100,
+      "command_sha256": "c9e08b6891108e03fc734f88e9167ca349700f282438095d4bc6b03a1da92286",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 35,
+      "phase_counts": [
+        93,
+        3,
+        5,
+        5
+      ],
+      "descriptor_counts": [
+        87,
+        3,
+        5,
+        5
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 105,
+      "command_sha256": "a720ca62f0a6d9c11e6d3eee9feb1c2f6c240af4a502d644a760f16e8206a1c9",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 36,
+      "phase_counts": [
+        92,
+        16,
+        23,
+        10
+      ],
+      "descriptor_counts": [
+        88,
+        16,
+        23,
+        10
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 140,
+      "command_sha256": "3e6333a6fa2a0b555e596b481f3fa2d3ea8769740ec8a52f3f27cdbf0f95823a",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 37,
+      "phase_counts": [
+        93,
+        16,
+        25,
+        12
+      ],
+      "descriptor_counts": [
+        87,
+        16,
+        25,
+        12
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 145,
+      "command_sha256": "4391b8705e86aafc8197552c42e4e86bec5d6567e096c6e2904a571d53ebedc9",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 38,
+      "phase_counts": [
+        91,
+        3,
+        3,
+        3
+      ],
+      "descriptor_counts": [
+        87,
+        3,
+        3,
+        3
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 99,
+      "command_sha256": "d257e13130bb86ae21255b45de55f0604ae9fcf2981e2d5870c4628172212cac",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 39,
+      "phase_counts": [
+        94,
+        3,
+        5,
+        5
+      ],
+      "descriptor_counts": [
+        88,
+        3,
+        5,
+        5
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 106,
+      "command_sha256": "a949833c22ef177bf88352d050845f2ae7f60f0044ea30278de1320598fa1313",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 40,
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "descriptor_counts": [
+        87,
+        16,
+        23,
+        10
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 139,
+      "command_sha256": "945a32f3186c9a552eeb56d899c574250bcfa6fa1f12dc4046d447a88b8f41db",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 41,
+      "phase_counts": [
+        94,
+        16,
+        25,
+        12
+      ],
+      "descriptor_counts": [
+        88,
+        16,
+        25,
+        12
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 146,
+      "command_sha256": "d8f82de71af30e47458325948636d9dcbbb86641a0379e9cef6a36235ea42e0e",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 42,
+      "phase_counts": [
+        92,
+        3,
+        3,
+        3
+      ],
+      "descriptor_counts": [
+        88,
+        3,
+        3,
+        3
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 100,
+      "command_sha256": "8b85601c75d16dd856d0d23d909c4f030fa1e57214f30b8728bca4cca3f2a986",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 43,
+      "phase_counts": [
+        93,
+        3,
+        5,
+        5
+      ],
+      "descriptor_counts": [
+        87,
+        3,
+        5,
+        5
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 105,
+      "command_sha256": "bf4c50191bbf6fd911db6b89e41dd788498b4e8534dc46a7508e382802f5dc2f",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 44,
+      "phase_counts": [
+        92,
+        16,
+        23,
+        10
+      ],
+      "descriptor_counts": [
+        88,
+        16,
+        23,
+        10
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 140,
+      "command_sha256": "0f6c55c6d42a569b6aa188c0e52125b0f7f74ab80e954733de541a82446b4659",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 45,
+      "phase_counts": [
+        93,
+        16,
+        25,
+        12
+      ],
+      "descriptor_counts": [
+        87,
+        16,
+        25,
+        12
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 145,
+      "command_sha256": "ce1843b4aeb5b94434bc485cf253bcdb96b35c8cb3a6152f59c0c1591a75cab6",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 46,
+      "phase_counts": [
+        91,
+        3,
+        3,
+        3
+      ],
+      "descriptor_counts": [
+        87,
+        3,
+        3,
+        3
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 99,
+      "command_sha256": "4446465d2c1eeafb592be7713ea823ff35cdb219ca0953a0b8805cc80fb09f8a",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 47,
+      "phase_counts": [
+        94,
+        3,
+        5,
+        5
+      ],
+      "descriptor_counts": [
+        88,
+        3,
+        5,
+        5
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 106,
+      "command_sha256": "0e400e96dac74bedb60033765c2d40b111044aa107887513f4e5b18e75e0c75e",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 48,
+      "phase_counts": [
+        93,
+        16,
+        23,
+        10
+      ],
+      "descriptor_counts": [
+        89,
+        16,
+        23,
+        10
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 141,
+      "command_sha256": "0583cb7e18e0c3da82969c743ab2dc536511a51f3d41c8fce4f8c567dfb18e9d",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 49,
+      "phase_counts": [
+        96,
+        16,
+        25,
+        12
+      ],
+      "descriptor_counts": [
+        90,
+        16,
+        25,
+        12
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 148,
+      "command_sha256": "55133c6eef3ccb38a90fa658bc84f361274893e769454ed3b5615e324f20b3e9",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 50,
+      "phase_counts": [
+        94,
+        3,
+        3,
+        3
+      ],
+      "descriptor_counts": [
+        90,
+        3,
+        3,
+        3
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 102,
+      "command_sha256": "d32abe690b010a4095aca109bcb033aabf11af77f2c710479efc1690bbcd9b81",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 51,
+      "phase_counts": [
+        96,
+        3,
+        5,
+        5
+      ],
+      "descriptor_counts": [
+        90,
+        3,
+        5,
+        5
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 108,
+      "command_sha256": "a02f1c2be88148a617fc6445aab0bf985d64a89993685d68847c872781becb11",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 52,
+      "phase_counts": [
+        93,
+        16,
+        23,
+        10
+      ],
+      "descriptor_counts": [
+        89,
+        16,
+        23,
+        10
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 141,
+      "command_sha256": "50433c1060097c51f5a2551281636669e949bb63feda993e82c11efd57405319",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 53,
+      "phase_counts": [
+        96,
+        16,
+        25,
+        12
+      ],
+      "descriptor_counts": [
+        90,
+        16,
+        25,
+        12
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 148,
+      "command_sha256": "54556445337af10f5052185735c335cfa361c68ad70800da198a5797cd5119f0",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 54,
+      "phase_counts": [
+        93,
+        3,
+        3,
+        3
+      ],
+      "descriptor_counts": [
+        89,
+        3,
+        3,
+        3
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 101,
+      "command_sha256": "143b14f99507caa059232f1166cdccc4d016e8920390538e9e661821c036a488",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 55,
+      "phase_counts": [
+        96,
+        3,
+        5,
+        5
+      ],
+      "descriptor_counts": [
+        90,
+        3,
+        5,
+        5
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 108,
+      "command_sha256": "d99bbc08669e2a60c6982fd7c6e54b11ccf6e90b412b96164adf14889222f18a",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 56,
+      "phase_counts": [
+        94,
+        16,
+        23,
+        10
+      ],
+      "descriptor_counts": [
+        90,
+        16,
+        23,
+        10
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 142,
+      "command_sha256": "569753ad6078c31b5cfa405d1b936518ec747b0ecbe3e2b664516353302233e1",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 57,
+      "phase_counts": [
+        96,
+        16,
+        25,
+        12
+      ],
+      "descriptor_counts": [
+        90,
+        16,
+        25,
+        12
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 148,
+      "command_sha256": "856ce7229849b5d5de39e7a261cb75cf002f057e1c9231b163b9213b73a99aa9",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 58,
+      "phase_counts": [
+        93,
+        3,
+        3,
+        3
+      ],
+      "descriptor_counts": [
+        89,
+        3,
+        3,
+        3
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 101,
+      "command_sha256": "bc81658f13c53ad1a1af140002c2b1a79d3ee1da19c0e6c13ae91aa6ab6209ee",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 59,
+      "phase_counts": [
+        96,
+        3,
+        5,
+        5
+      ],
+      "descriptor_counts": [
+        90,
+        3,
+        5,
+        5
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 108,
+      "command_sha256": "a67601cd331a547f1365e6fc236bab4697309eb6d8b1bf51904387219b7cbdbf",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 60,
+      "phase_counts": [
+        94,
+        16,
+        23,
+        10
+      ],
+      "descriptor_counts": [
+        90,
+        16,
+        23,
+        10
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 142,
+      "command_sha256": "c761aa592a7459d75348c37edb97d4548e9cb44620df6ce9efc3fcd41ed9984d",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 61,
+      "phase_counts": [
+        95,
+        16,
+        25,
+        12
+      ],
+      "descriptor_counts": [
+        89,
+        16,
+        25,
+        12
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 147,
+      "command_sha256": "c0f0f9cbe579822f69813099baaad8f2df6363813a8c7396d6e9127ec75a6e90",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 62,
+      "phase_counts": [
+        93,
+        3,
+        3,
+        3
+      ],
+      "descriptor_counts": [
+        89,
+        3,
+        3,
+        3
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 101,
+      "command_sha256": "a8df249992f9230b64d41470467528b93e0e3f4ec032be0eec0396c542882a41",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 63,
+      "phase_counts": [
+        95,
+        3,
+        5,
+        5
+      ],
+      "descriptor_counts": [
+        89,
+        3,
+        5,
+        5
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 107,
+      "command_sha256": "d01378046bcc570dee035d64f0e0572b82a6a8748e4076f95ac7b011c4e1f39a",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 64,
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "descriptor_counts": [
+        87,
+        16,
+        23,
+        10
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 139,
+      "command_sha256": "20d5d0664fac1cd4cfe1b625932d7dbeab65508ceca7dd6dabebc93311414004",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 65,
+      "phase_counts": [
+        94,
+        16,
+        25,
+        12
+      ],
+      "descriptor_counts": [
+        88,
+        16,
+        25,
+        12
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 146,
+      "command_sha256": "4bc2084384fba45b57bbfeec37fff7030f1d981169f4b2094c02a1bcce589800",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 66,
+      "phase_counts": [
+        91,
+        3,
+        3,
+        3
+      ],
+      "descriptor_counts": [
+        87,
+        3,
+        3,
+        3
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 99,
+      "command_sha256": "d1a26af5081cbf30814dc4dec71ab781f2da17a96a13a38aace22e5a9b8ef60b",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 67,
+      "phase_counts": [
+        93,
+        3,
+        5,
+        5
+      ],
+      "descriptor_counts": [
+        87,
+        3,
+        5,
+        5
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 105,
+      "command_sha256": "feece34cfbd872992689c213b62013b836495ddf003f244a7169cdcde3830b50",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 68,
+      "phase_counts": [
+        92,
+        16,
+        23,
+        10
+      ],
+      "descriptor_counts": [
+        88,
+        16,
+        23,
+        10
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 140,
+      "command_sha256": "4b97ecb1721380422e7dff7901de17d2af17bc6140a9792041cc694b95da3c84",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 69,
+      "phase_counts": [
+        94,
+        16,
+        25,
+        12
+      ],
+      "descriptor_counts": [
+        88,
+        16,
+        25,
+        12
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 146,
+      "command_sha256": "cdd2f8bfbcd6006107e842dc948d04eba002a88e6f939ce2d62e59701a7cb74c",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 70,
+      "phase_counts": [
+        91,
+        3,
+        3,
+        3
+      ],
+      "descriptor_counts": [
+        87,
+        3,
+        3,
+        3
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 99,
+      "command_sha256": "f33e84f7b9970da4e9dad4d67e615084a5a1e8f447a356b54bedfff9650b0b5c",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 71,
+      "phase_counts": [
+        94,
+        3,
+        5,
+        5
+      ],
+      "descriptor_counts": [
+        88,
+        3,
+        5,
+        5
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 106,
+      "command_sha256": "dd8fe09a1e2e03ecb35842bec96c3a7840fa004af3892b0adc955f5ab9e719d6",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 72,
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "descriptor_counts": [
+        87,
+        16,
+        23,
+        10
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 139,
+      "command_sha256": "73f14b93c3a1a3b008713267c0de107cb8ba9473026cd40b8cfdb05b093da69e",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 73,
+      "phase_counts": [
+        94,
+        16,
+        25,
+        12
+      ],
+      "descriptor_counts": [
+        88,
+        16,
+        25,
+        12
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 146,
+      "command_sha256": "2beadf875807d132c1b6a3372898d8994ced6b6bf1698431c3c2516e177331ed",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 74,
+      "phase_counts": [
+        92,
+        3,
+        3,
+        3
+      ],
+      "descriptor_counts": [
+        88,
+        3,
+        3,
+        3
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 100,
+      "command_sha256": "a0b55ae67df5a0ad0acb582f680fd1a6b623041071376c9f5446a78aaf1f534e",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 75,
+      "phase_counts": [
+        93,
+        3,
+        5,
+        5
+      ],
+      "descriptor_counts": [
+        87,
+        3,
+        5,
+        5
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 105,
+      "command_sha256": "4bf1b1686ef67346e5af8966ea0a6a92f604a8f723ff7c4fe2d89f607d062a1c",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 76,
+      "phase_counts": [
+        92,
+        16,
+        23,
+        10
+      ],
+      "descriptor_counts": [
+        88,
+        16,
+        23,
+        10
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 140,
+      "command_sha256": "bb21980c98ecef5200f6e01c684854816b26d3836e9bf2189ab7a9e8f85ba7a9",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 77,
+      "phase_counts": [
+        93,
+        16,
+        25,
+        12
+      ],
+      "descriptor_counts": [
+        87,
+        16,
+        25,
+        12
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 145,
+      "command_sha256": "d3212513499c176f6355d9514280dfc2db4f38eab7d8d398683a25c00d66532b",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 78,
+      "phase_counts": [
+        91,
+        3,
+        3,
+        3
+      ],
+      "descriptor_counts": [
+        87,
+        3,
+        3,
+        3
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 99,
+      "command_sha256": "ed21525d8940218a761ee43906dd21bdf90b8659c3b5d801143e8c96acef8014",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 79,
+      "phase_counts": [
+        94,
+        3,
+        5,
+        5
+      ],
+      "descriptor_counts": [
+        88,
+        3,
+        5,
+        5
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 106,
+      "command_sha256": "d505fb3b5300f362c10c41cd4fd0ee38730527ce1e477ccdf24c6fe29aa6f057",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 80,
+      "phase_counts": [
+        93,
+        16,
+        23,
+        10
+      ],
+      "descriptor_counts": [
+        89,
+        16,
+        23,
+        10
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 141,
+      "command_sha256": "09e8474c154dc2bdd7b7e2b6d0da4e441dc7737df39c66654ea358c5ef1c1a01",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 81,
+      "phase_counts": [
+        95,
+        16,
+        25,
+        12
+      ],
+      "descriptor_counts": [
+        89,
+        16,
+        25,
+        12
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 147,
+      "command_sha256": "864bbf9f8e6ce436f7f3fd745f60b5d326d5b72ef1fd805d685cd326f3619f64",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 82,
+      "phase_counts": [
+        93,
+        3,
+        3,
+        3
+      ],
+      "descriptor_counts": [
+        89,
+        3,
+        3,
+        3
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 101,
+      "command_sha256": "611b46af6f502c2de7e0f9255a2831ffb8150d0385ffb47d1a20eb1b3599f348",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 83,
+      "phase_counts": [
+        96,
+        3,
+        5,
+        5
+      ],
+      "descriptor_counts": [
+        90,
+        3,
+        5,
+        5
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 108,
+      "command_sha256": "f7c89cc4d749f58821a33c26794729780bacdf9a6ea9673bbea56b88938b7989",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 84,
+      "phase_counts": [
+        93,
+        16,
+        23,
+        10
+      ],
+      "descriptor_counts": [
+        89,
+        16,
+        23,
+        10
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 141,
+      "command_sha256": "d3a57d9702433bdd14a1a3c09b180536121f27bb3f8db61177ee4ab8fde71548",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 85,
+      "phase_counts": [
+        95,
+        16,
+        25,
+        12
+      ],
+      "descriptor_counts": [
+        89,
+        16,
+        25,
+        12
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 147,
+      "command_sha256": "288d1ee97c178bebef2b63b81ffdabb06680b611d3baa9a91a67446294527810",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 86,
+      "phase_counts": [
+        93,
+        3,
+        3,
+        3
+      ],
+      "descriptor_counts": [
+        89,
+        3,
+        3,
+        3
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 101,
+      "command_sha256": "35d68028ccc7161b8022136b6ade7f207c602aa18ffaf4f80ff03baa071b3834",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 87,
+      "phase_counts": [
+        96,
+        3,
+        5,
+        5
+      ],
+      "descriptor_counts": [
+        90,
+        3,
+        5,
+        5
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 108,
+      "command_sha256": "cfbac7f10a2f2b311e3228adf65618d8c7709d182720726a3e55229b94026d7f",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 88,
+      "phase_counts": [
+        93,
+        16,
+        23,
+        10
+      ],
+      "descriptor_counts": [
+        89,
+        16,
+        23,
+        10
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 141,
+      "command_sha256": "305fd9f42be14be639fa522821ba539b3a476255f2eab94278df6f0d002ce260",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 89,
+      "phase_counts": [
+        95,
+        16,
+        25,
+        12
+      ],
+      "descriptor_counts": [
+        89,
+        16,
+        25,
+        12
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 147,
+      "command_sha256": "51763a4f980c6f3b13280f7178a4d64add1c173ea5051423533df876650b28f8",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 90,
+      "phase_counts": [
+        94,
+        3,
+        3,
+        3
+      ],
+      "descriptor_counts": [
+        90,
+        3,
+        3,
+        3
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 102,
+      "command_sha256": "cbefaa1214a0973467c5ebbcc89d92cb0752063555d12a2564501ee51bf2a707",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 91,
+      "phase_counts": [
+        95,
+        3,
+        5,
+        5
+      ],
+      "descriptor_counts": [
+        89,
+        3,
+        5,
+        5
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 107,
+      "command_sha256": "00cb21187120f0cf2b91e94589f7bfd0f5f3769493a2dfda35943250ac731c52",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 92,
+      "phase_counts": [
+        94,
+        16,
+        23,
+        10
+      ],
+      "descriptor_counts": [
+        90,
+        16,
+        23,
+        10
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 142,
+      "command_sha256": "2cd4d81ca3368ed078fb302c43671173797bca5ce0d7c601beabc1cd8d6642b8",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 93,
+      "phase_counts": [
+        95,
+        16,
+        25,
+        12
+      ],
+      "descriptor_counts": [
+        89,
+        16,
+        25,
+        12
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 147,
+      "command_sha256": "b9e0bf2f50414e855e358fd0b5f35404955664a612881d44a91db13006775ce2",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 94,
+      "phase_counts": [
+        94,
+        3,
+        3,
+        3
+      ],
+      "descriptor_counts": [
+        90,
+        3,
+        3,
+        3
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 102,
+      "command_sha256": "61893fb54a995fccbe6e2037dd3e3d5ddfaefd1b9d920f97d6c822805b021df6",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 95,
+      "phase_counts": [
+        96,
+        3,
+        5,
+        5
+      ],
+      "descriptor_counts": [
+        90,
+        3,
+        5,
+        5
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 108,
+      "command_sha256": "d630ea2a693d5a521d0e264e28561b701ec821b7d9f34b0312d7cdce84bb11d8",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 96,
+      "phase_counts": [
+        92,
+        16,
+        23,
+        10
+      ],
+      "descriptor_counts": [
+        88,
+        16,
+        23,
+        10
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 140,
+      "command_sha256": "7c45aa309b54e7e7f87214bf21b42851a9825ab2b46ad4b1f71dcf068ae8a1e9",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 97,
+      "phase_counts": [
+        94,
+        16,
+        25,
+        12
+      ],
+      "descriptor_counts": [
+        88,
+        16,
+        25,
+        12
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 146,
+      "command_sha256": "4934d5c34f97196186017e361688ca172eb2b24018d8c509a8f148af30fc11d9",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 98,
+      "phase_counts": [
+        92,
+        3,
+        3,
+        3
+      ],
+      "descriptor_counts": [
+        88,
+        3,
+        3,
+        3
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 100,
+      "command_sha256": "63470a0b417f4cb43b7a6df74f7abf8a57cf564f1046169578552b011577b027",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 99,
+      "phase_counts": [
+        93,
+        3,
+        5,
+        5
+      ],
+      "descriptor_counts": [
+        87,
+        3,
+        5,
+        5
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 105,
+      "command_sha256": "21de252df7af8e5f3ada8a737906303197b81f73861741b8978efb4e21da9023",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 100,
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "descriptor_counts": [
+        87,
+        16,
+        23,
+        10
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 139,
+      "command_sha256": "f4f5801111fb5ec89c1c9f4c26bf96f1190918187bc97bef3402a06eb61a8393",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 101,
+      "phase_counts": [
+        93,
+        16,
+        25,
+        12
+      ],
+      "descriptor_counts": [
+        87,
+        16,
+        25,
+        12
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 145,
+      "command_sha256": "12712a4ed57da063e52e1a2b1511ada59fa7ea52d6b5a4de95584b4a2bb8ad80",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 102,
+      "phase_counts": [
+        91,
+        3,
+        3,
+        3
+      ],
+      "descriptor_counts": [
+        87,
+        3,
+        3,
+        3
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 99,
+      "command_sha256": "8a240330f4f06e8431241a9fb52ebe8dd2bc12d9926bcbab2234e276fb5ab8a3",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 103,
+      "phase_counts": [
+        94,
+        3,
+        5,
+        5
+      ],
+      "descriptor_counts": [
+        88,
+        3,
+        5,
+        5
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 106,
+      "command_sha256": "3afa9290e118ed78bb89edcd35a44b36eb8458419219a6925f4471f41862c8aa",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 104,
+      "phase_counts": [
+        92,
+        16,
+        23,
+        10
+      ],
+      "descriptor_counts": [
+        88,
+        16,
+        23,
+        10
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 140,
+      "command_sha256": "e7bd7b9c7caa83df617b562838680f2d3d2f74640b1bf70b2c5df3daf385d8e5",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 105,
+      "phase_counts": [
+        94,
+        16,
+        25,
+        12
+      ],
+      "descriptor_counts": [
+        88,
+        16,
+        25,
+        12
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 146,
+      "command_sha256": "8ac9b34aa008497de45b800a790850cd1561b5f02a6a0c6cf1c10ef8236e62e8",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 106,
+      "phase_counts": [
+        91,
+        3,
+        3,
+        3
+      ],
+      "descriptor_counts": [
+        87,
+        3,
+        3,
+        3
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 99,
+      "command_sha256": "993021a307362021f08d3021fa1f6412a9bed1c01dd5a948a91ce41feea83622",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 107,
+      "phase_counts": [
+        93,
+        3,
+        5,
+        5
+      ],
+      "descriptor_counts": [
+        87,
+        3,
+        5,
+        5
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 105,
+      "command_sha256": "49ac65b6dfa9950a11fb7a1dc827169f00ecbe3b45e623cc842cd1df2449e495",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 108,
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "descriptor_counts": [
+        87,
+        16,
+        23,
+        10
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 139,
+      "command_sha256": "c1b4ec03e84a0ff02f1bba7122c8f4810aec8f84810561c2a3d7a442d441af80",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 109,
+      "phase_counts": [
+        94,
+        16,
+        25,
+        12
+      ],
+      "descriptor_counts": [
+        88,
+        16,
+        25,
+        12
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 146,
+      "command_sha256": "0ef670f588a80ed646fed658e2cb98921a776572964e72f66f3881d6cdc5c428",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 110,
+      "phase_counts": [
+        92,
+        3,
+        3,
+        3
+      ],
+      "descriptor_counts": [
+        88,
+        3,
+        3,
+        3
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 100,
+      "command_sha256": "25834f5933fb447c5fab83d808ab3a09a4a51f36f9741c2ed0b8155245ee9488",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 111,
+      "phase_counts": [
+        94,
+        3,
+        5,
+        5
+      ],
+      "descriptor_counts": [
+        88,
+        3,
+        5,
+        5
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 106,
+      "command_sha256": "5caec943022083ebda037253d40cc18ead22ff7a91f7408e2df6c0118ad01d34",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 112,
+      "phase_counts": [
+        93,
+        16,
+        23,
+        10
+      ],
+      "descriptor_counts": [
+        89,
+        16,
+        23,
+        10
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 141,
+      "command_sha256": "3cc94de37468e200837d8dec57b2e5952e8d2e49f93f8808257da0932ba34019",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 113,
+      "phase_counts": [
+        95,
+        16,
+        25,
+        12
+      ],
+      "descriptor_counts": [
+        89,
+        16,
+        25,
+        12
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 147,
+      "command_sha256": "60641d430d6d0a8c03e84a1c35fb90720900e2e87f45c0124e1d0acd96773bdc",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 114,
+      "phase_counts": [
+        93,
+        3,
+        3,
+        3
+      ],
+      "descriptor_counts": [
+        89,
+        3,
+        3,
+        3
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 101,
+      "command_sha256": "4f5dd665aaf106470019bfb702dbd7e39260e4ac471719ba9907c0431ac4ab2f",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 115,
+      "phase_counts": [
+        96,
+        3,
+        5,
+        5
+      ],
+      "descriptor_counts": [
+        90,
+        3,
+        5,
+        5
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 108,
+      "command_sha256": "2b97056046b4afac60dffdbda8cbeabcc6200ee633fba210cbd260be82e166ef",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 116,
+      "phase_counts": [
+        93,
+        16,
+        23,
+        10
+      ],
+      "descriptor_counts": [
+        89,
+        16,
+        23,
+        10
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 141,
+      "command_sha256": "02eac2d7381fb35baf868339285cb30fa0e67b414aac61e41e90ca039e646491",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 117,
+      "phase_counts": [
+        95,
+        16,
+        25,
+        12
+      ],
+      "descriptor_counts": [
+        89,
+        16,
+        25,
+        12
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 147,
+      "command_sha256": "b65e5d05845329baaafb1d0ddeecc04f07919959fc48344af4c99e54dd84b80e",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 118,
+      "phase_counts": [
+        93,
+        3,
+        3,
+        3
+      ],
+      "descriptor_counts": [
+        89,
+        3,
+        3,
+        3
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 101,
+      "command_sha256": "c97d74c80089c03bd77ef1f1744004a47dbb139195d44a6f236e9417d7ab35a1",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 119,
+      "phase_counts": [
+        95,
+        3,
+        5,
+        5
+      ],
+      "descriptor_counts": [
+        89,
+        3,
+        5,
+        5
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 107,
+      "command_sha256": "91fa52fb547b122c0fba10de9775a5c3971e1afc0ca30fac0f71c1b08036393e",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 120,
+      "phase_counts": [
+        93,
+        16,
+        23,
+        10
+      ],
+      "descriptor_counts": [
+        89,
+        16,
+        23,
+        10
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 141,
+      "command_sha256": "8e0dd3d2d5b9820bc20e9af6d0e0fc0c519507bd75eb0485c5d6b6d11960c61c",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 121,
+      "phase_counts": [
+        96,
+        16,
+        25,
+        12
+      ],
+      "descriptor_counts": [
+        90,
+        16,
+        25,
+        12
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 148,
+      "command_sha256": "415ac043fdd0924181dedf6ecf5f62f69e9b405c6d311c438a139444061b7fa1",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 122,
+      "phase_counts": [
+        93,
+        3,
+        3,
+        3
+      ],
+      "descriptor_counts": [
+        89,
+        3,
+        3,
+        3
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 101,
+      "command_sha256": "66b3f2ff56dcd841bc9000c790e36b50e92810b5ddb080262d9979c5e9a82ee0",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 123,
+      "phase_counts": [
+        95,
+        3,
+        5,
+        5
+      ],
+      "descriptor_counts": [
+        89,
+        3,
+        5,
+        5
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 107,
+      "command_sha256": "7799ca022031093e5c6251817a8910e8724bfe73980c35d2bc0e88691db01475",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 124,
+      "phase_counts": [
+        93,
+        16,
+        23,
+        10
+      ],
+      "descriptor_counts": [
+        89,
+        16,
+        23,
+        10
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 141,
+      "command_sha256": "51184f38e6971a88fde656001985cfb6ddaf0c213c46492752424c154014f97b",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 125,
+      "phase_counts": [
+        95,
+        16,
+        25,
+        12
+      ],
+      "descriptor_counts": [
+        89,
+        16,
+        25,
+        12
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 147,
+      "command_sha256": "9b9a9eb5395d798e894ea2e6af9f8aebe99fb989ebfd8e5274cdebcb8ee59e0e",
+      "phase0_tail_count": 6
+    },
+    {
+      "case": 126,
+      "phase_counts": [
+        93,
+        3,
+        3,
+        3
+      ],
+      "descriptor_counts": [
+        89,
+        3,
+        3,
+        3
+      ],
+      "map_calls": 1,
+      "native_encode_calls": 101,
+      "command_sha256": "468e3b2cc5ff876d0f570ba069117cb9dc782d0acf6c4760d3fe9685715935e6",
+      "phase0_tail_count": 4
+    },
+    {
+      "case": 127,
+      "phase_counts": [
+        95,
+        3,
+        5,
+        5
+      ],
+      "descriptor_counts": [
+        89,
+        3,
+        5,
+        5
+      ],
+      "map_calls": 4,
+      "native_encode_calls": 107,
+      "command_sha256": "ae52ef04acd04743115b23c8309df5e20720983e52eb636fa2c0c6ea90953f8c",
+      "phase0_tail_count": 6
+    }
+  ],
+  "native_range": [
+    "0xfffffe00089df73c",
+    "0xfffffe00089e2948"
+  ],
+  "native_range_sha256": "cf0c1d68b9130f1aa6dbd6562710409bc899a015f22f71f49ecc7b9e66446693",
+  "duplication_getters": [
+    {
+      "slot": "0x10e8",
+      "target": "0xfffffe00089e7fe4",
+      "constant": 1
+    },
+    {
+      "slot": "0x10f0",
+      "target": "0xfffffe00089e7fd8",
+      "constant": 2
+    }
+  ],
+  "qualification": "Assembled native parent generator, SPM, empty override, append, encode and G16X min/max getters execute in RAM. PAC bypassed; one resource map service stub returns synthetic mapped address. Helper and descriptor metadata independently compared, phase0 complete register recipe only observed, not independently modeled. Synthetic descriptor fields are not validated rendering inputs. No live firmware/GPU acceptance, allocation/cache policy or shader/target preparation proved."
+}

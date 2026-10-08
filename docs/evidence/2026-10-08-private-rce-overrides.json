@@ -1,0 +1,78 @@
+{
+  "binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "totals": {
+    "override_cases": 1024,
+    "append_cases": 512,
+    "spm_backing_override_cases": 256,
+    "matched_patches": 10198,
+    "native_decodes": 230816
+  },
+  "edges": {
+    "empty_table": 76,
+    "empty_entries": 21,
+    "unmatched_rows": 4531,
+    "duplicate_rows": 1800,
+    "count_wrap": 128
+  },
+  "examples": [
+    {
+      "case": 0,
+      "mode": "override_cases",
+      "entry_count": 0,
+      "row_count": 0,
+      "patch_count": 0
+    },
+    {
+      "case": 1,
+      "mode": "override_cases",
+      "entry_count": 1,
+      "row_count": 1,
+      "patch_count": 0
+    },
+    {
+      "case": 16,
+      "mode": "override_cases",
+      "entry_count": 16,
+      "row_count": 16,
+      "patch_count": 15
+    },
+    {
+      "case": 48,
+      "mode": "override_cases",
+      "entry_count": 48,
+      "row_count": 14,
+      "patch_count": 23
+    },
+    {
+      "case": 1024,
+      "mode": "spm_backing_override_cases",
+      "entry_count": 16,
+      "row_count": 4,
+      "patch_count": 2
+    }
+  ],
+  "visited_instruction_count": 128,
+  "ranges": [
+    {
+      "start": "0xfffffe00089df538",
+      "end": "0xfffffe00089df5a4",
+      "sha256": "604bd6c0316e9aa31a5714a2c5a41197764c3d14e489c3da9d21da62f17bde00"
+    },
+    {
+      "start": "0xfffffe00089df5a4",
+      "end": "0xfffffe00089df6ec",
+      "sha256": "bd7b3b3727922eb38319d7926970c0a38d56225127ab566dd15e873e8b469765"
+    },
+    {
+      "start": "0xfffffe00089df6ec",
+      "end": "0xfffffe00089df714",
+      "sha256": "79b2c1ab404fe5cccbaa82c2c63afcd5735a571eb65a0653ba2965ebfa1edd7e"
+    },
+    {
+      "start": "0xfffffe00089df714",
+      "end": "0xfffffe00089df73c",
+      "sha256": "f6f098e614002302e7af8e2cee5955b737671f142c49448d56f9cc99d62db3a0"
+    }
+  ],
+  "qualification": "Whole append and override functions with actual native encode/getEntry calls in emulated RAM. PAC bypass for unsigned fixture pointers. Counts0..48, override rows0..16, safe nonoverlapping backing cursor for append. SPM-generated backing fixtures use previously checked Python SPM model. Table population/provenance, concurrent modification, large-count/truncated scan behavior and live GPU acceptance excluded."
+}
