@@ -1,3 +1,21 @@
+# Native mapping lifecycle checkpoint — 2026-10-08
+
+Three more offline batches pass:256 fresh/256 reused concrete page mappings,
+512 release/512 empty-release checks;1024 internal-resource prepare/complete
+cases including first/second failures and unwind;512 joined ordinary retention
+paths with2560 actual resource preparations and512 concrete page preparations.
+See docs/evidence/2026-10-08-private-pm-mapping-lifecycle.md and three JSON receipts.
+
+Important open join: initialized concrete PM50 is zero; base retention later
+passes PM50 to a nonnull-only resource helper. The retention fixture explicitly
+supplies PM50. Resolve subtype/inherited/caller lifecycle rather than synthesizing
+success. This is not a demonstrated native-driver bug. Static actual PB binding
+caller is TA prepare8a22090..8a22f34, binding call8a22c48; full caller not yet
+qualified. Pending/mode2 page mapping, Linux allocations/root/work/queues/events,
+cache publication and completion/readback remain. Not submission-only ready.
+No live commands or reboot. Failed warm INIT still retained; normal reboot before
+live integration, no forced unload/reset/warm retry.
+
 # Concrete PM initialization and page/job preparation checkpoint
 
 Offline only; no live allocation, GPU command, reboot or kernel/default changes.

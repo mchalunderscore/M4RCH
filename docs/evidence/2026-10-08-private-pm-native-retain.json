@@ -1,0 +1,20 @@
+{
+  "private_binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "range": [
+    "0xfffffe00089fa7a8",
+    "0xfffffe00089fb0d4"
+  ],
+  "range_sha256": "42fc2c69a3bc039d267fa3b693dcb289901b9c96ff099426c6cad5335b2cd424",
+  "counts": {
+    "successes": 512,
+    "block_calls": 2688,
+    "stage_calls": 256,
+    "pending_drains": 0,
+    "dirty_blocks": 896
+  },
+  "qualification": "512 ordinary native retention paths join actual internal-resource prepareMappings and actual concrete reused page-mapping method. Full PM/manager/TA/config/staged/pending and six internal-resource bytes checked; native preparation counters increment only for active resources. Page object already exists, PM28=0 and no pending blocks/discard. Page/resource underlying preparation, locks, retain, generation and block/page-builder services remain external fixtures. This is a retention fixture, not the initialized-job chain: PM50 explicitly populated; actual concrete initialization leaves it zero and its lifecycle/caller still needs qualification. No live ownership/cache/GPU command.",
+  "joined_counts": {
+    "resource_preparations": 2560,
+    "page_preparations": 512
+  }
+}
