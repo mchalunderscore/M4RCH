@@ -93,9 +93,19 @@ with tempfile.TemporaryDirectory(prefix='native-sksm-register-test-') as directo
             cached=bool(i&1),fallback_auxiliary=hex(fw+0x800),channel_payload=hex(fw+0x900))
         if not i&1:binding['scheduler']['3d']['queue'].pop('previous')
 
+        occupancy=bytearray([1]*16);pool_index=i;occupancy[pool_index]=0
+        (root/'pool-occupancy.bin').write_bytes(occupancy)
+        binding['ordinary3d_pool']=dict(capacity=16,occupancy='pool-occupancy.bin',cursor=i,
+            cpu_base=hex(0x300000000),device_base=hex(int(binding['3d_command_gpu'],0)-i*0x2240),
+            firmware_base=hex(0x200010000+i*0x100000-i*0x2240))
         manifest = root/'input.json'; manifest.write_text(json.dumps(binding))
         report = module.prepare(args.macho,manifest,root/('pair-'+str(i)))
         assert report['submission_ready'] is False
+        assert report['ordinary3d_pool']['index']==i
+        assert int(report['ordinary3d_pool']['device'],0)==int(binding['3d_command_gpu'],0)
+        assert (root/('pair-'+str(i))/'3d-pool-occupancy-after.bin').read_bytes()==bytes([1]*16)
+        assert int(report['ordinary3d_pool']['firmware'],0)==0x200010000+i*0x100000
+
         output_dir = root/('pair-'+str(i))
         ta = (output_dir/'ta-construction-candidate.bin').read_bytes()
         register_only = (output_dir/'ta-register-command.bin').read_bytes()
@@ -207,7 +217,11 @@ with tempfile.TemporaryDirectory(prefix='native-sksm-register-test-') as directo
         {'3d_construction':{**binding['3d_construction'],'event_control':{**binding['3d_construction']['event_control'],'capacity':0}}},
         {'3d_construction':{**binding['3d_construction'],'event_control':{**binding['3d_construction']['event_control'],'epochs':[1]}}},
         {'scheduler':{**binding['scheduler'],'3d':{**binding['scheduler']['3d'],'aperture':dict(address=0,index=0,count=0)}}},
-        {'scheduler':{**binding['scheduler'],'3d':{**binding['scheduler']['3d'],'payload':[0,0]}}}]
+        {'scheduler':{**binding['scheduler'],'3d':{**binding['scheduler']['3d'],'payload':[0,0]}}},
+        {'ordinary3d_pool':{**binding['ordinary3d_pool'],'device_base':0}},
+        {'ordinary3d_pool':{**binding['ordinary3d_pool'],'device_base':'0xffffffffffffffff'}},
+        {'ordinary3d_pool':{**binding['ordinary3d_pool'],'cursor':True}},
+        {'ordinary3d_pool':{**binding['ordinary3d_pool'],'device_base':'0x100000000'}}]
     for j, replacement in enumerate(invalid):
         bad = {**binding,**replacement}; manifest.write_text(json.dumps(bad)); destination=root/('bad-'+str(j))
         try: module.prepare(args.macho,manifest,destination)
@@ -215,5 +229,5 @@ with tempfile.TemporaryDirectory(prefix='native-sksm-register-test-') as directo
         else: raise AssertionError('Invalid input accepted')
         assert not destination.exists(); counts['rejected_inputs'] += 1
 report = dict(private_binary_sha256=report['private_binary_sha256'],counts=counts,examples=examples,tool_sha256=hashlib.sha256(path.read_bytes()).hexdigest(),
-    qualification='16 synthetic pairs through native SKSM wrappers;64 expected TA FW-register values,80 list/scheduler links. Partial TA commands check serial/translations/epoch/caller inputs, completion offset wrap, all16 mode/context combinations and counts0..15 aperture records with descriptor pointer/count. Native register backing/metadata preserved. Sixteen partial ordinary3D candidates check native list preservation, header/frame/body/resource inputs and counter-derived payload. Nineteen malformed inputs fail before export. Native3D scheduler derives dependencies, flags, auxiliary fallback and payload pointer from explicit descriptor/provider identities. Ordinary3D event/control and aperture records0..15 derive timestamps and scheduler aperture metadata; native whole-window audits provide separate numeric qualification. Context/scene zero fixtures; remaining command storage, recipe semantics, live mappings/cache/queues/completion and valid drawing unqualified. No hardware touched.')
+    qualification='16 synthetic pairs through native SKSM wrappers;64 expected TA FW-register values,80 list/scheduler links. Partial TA commands check serial/translations/epoch/caller inputs, completion offset wrap, all16 mode/context combinations and counts0..15 aperture records with descriptor pointer/count. Native register backing/metadata preserved. Sixteen partial ordinary3D candidates check native list preservation, header/frame/body/resource inputs and counter-derived payload. Twenty-three malformed inputs fail before export. All16 bind three mapping aliases through a checked ordinary3D pool slot. Native3D scheduler derives dependencies, flags, auxiliary fallback and payload pointer from explicit descriptor/provider identities. Ordinary3D event/control and aperture records0..15 derive timestamps and scheduler aperture metadata; native whole-window audits provide separate numeric qualification. Context/scene zero fixtures; remaining command storage, recipe semantics, live mappings/cache/queues/completion and valid drawing unqualified. No hardware touched.')
 args.output.write_text(json.dumps(report,indent=2)+'\n'); print(counts)

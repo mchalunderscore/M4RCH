@@ -99,6 +99,10 @@ for i in range(64):
             **{'3d':dict(queue=dict(queue),qos=[0,0,0],masks=[0,0,0,0],
                     native_3d=dict(event_epochs=[[0,0] for _ in range(24)],cached=True,
                                    fallback_auxiliary=0,channel_payload=0))})
+        (case/'pool-occupancy.bin').write_bytes(bytes(64))
+        manifest['ordinary3d_pool']=dict(capacity=64,cursor=i,occupancy='pool-occupancy.bin',
+            cpu_base='0x800000000',device_base=hex(0x850000000-i*0x2240),
+            firmware_base=hex(0x860000000-i*0x2240))
         (case/'input.json').write_text(json.dumps(manifest,indent=2)+'\n')
         joined=paired.prepare(a.macho,case/'input.json',case/'output')
         assert joined['submission_ready'] is False
@@ -108,7 +112,8 @@ for i in range(64):
         assert joined['3d_construction']['scratch_payload']==(i+1)&255
         assert joined['scheduler_candidates']['3d']['submission_ready'] is False
         scheduler=json.loads((case/'output/3d-scheduler-bindings.json').read_text())
-        assert scheduler['payload'][0]==struct.unpack_from('<Q',prepared,0x448)[0]
+        assert scheduler['payload'][0]==0x860000000
+        assert joined['ordinary3d_pool']['index']==i
         counts['prepared_descriptor_pairs']=counts.get('prepared_descriptor_pairs',0)+1
 
     m.mem_write(C,bytes(0x3000));m.mem_write(ta['ns']['O'],bytes(0x100));m.mem_write(A+0x6d0,bytes(8));ta['ns']['mapped']=0x840000000;ta['ns']['entries'].clear();ta['ns']['calls'].clear();ta['ns']['pending']=None

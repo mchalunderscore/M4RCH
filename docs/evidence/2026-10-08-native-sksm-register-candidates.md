@@ -1,3 +1,7 @@
+## Ordinary3D pool reservation integration — 2026-10-08
+
+All16 now reserve one shared pool slot and derive CPU/register/publication aliases.23 malformed inputs rejected. Full native request+descriptor caller audit covers2,048 cases including43 selected zero-CPU failures. See native-3d-pool-reservation.md. Real allocation/mappings remain fixtures.
+
 ## Descriptor-derived3D scheduler integration — 2026-10-08
 
 All16 paired candidates now derive dependencies,flags,RCE kind,auxiliary fallback and payload from constructed descriptor plus explicit provider bindings.19 invalid inputs rejected. Separate full native wrapper audit covers1,024 cases. Queue timestamp and descriptor timestamp kept distinct; payload448 kept distinct from register mapping440. See native-3d-scheduler-bindings.md. No live job.

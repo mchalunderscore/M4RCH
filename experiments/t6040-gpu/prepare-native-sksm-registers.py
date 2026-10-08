@@ -145,6 +145,25 @@ def prepare(macho, manifest, output):
     if any(start+size > 1 << 64 for start,size in extents): raise ValueError('Command extent wraps address space')
     if max(start for start,_ in extents) < min(start+size for start,size in extents):
         raise ValueError('TA and3D command GPU extents overlap')
+    pool_reservation=None
+    if 'ordinary3d_pool' in binding:
+        from native_3d_pool import reserve,STRIDE
+        pool=binding['ordinary3d_pool']
+        capacity=integer(pool['capacity'],32,'3D pool capacity')
+        if not 1<=capacity<=256:raise ValueError('Qualified3D pool capacities1..256')
+        occupancy=blob(root,pool['occupancy'],capacity)
+        bases=[integer(pool[k],64,k) for k in ('cpu_base','device_base','firmware_base')]
+        if any(not base or base+capacity*STRIDE>1<<64 for base in bases):
+            raise ValueError('3D pool mapping extent is zero or wraps')
+        pool_reservation=reserve(occupancy,integer(pool['cursor'],32,'3D pool cursor'),*bases)
+        if pool_reservation is None:raise ValueError('3D pool has no free slot')
+        if pool_reservation['device']!=values['3d_command_gpu']:
+            raise ValueError('3D register mapping disagrees with reserved pool slot')
+        if pool_reservation['device']&63 or pool_reservation['firmware']&63:
+            raise ValueError('3D pool aliases must be64-byte aligned')
+        desc=bytearray(desc)
+        struct.pack_into('<3Q',desc,0x438,pool_reservation['cpu'],pool_reservation['device'],pool_reservation['firmware'])
+        desc=bytes(desc)
     construction = None
     if 'ta_construction' in binding:
         spec = binding['ta_construction']
@@ -297,6 +316,14 @@ def prepare(macho, manifest, output):
         detail['command_sha256'] = hashlib.sha256(command).hexdigest()
         detail['descriptor_sha256'] = hashlib.sha256(descriptor_out).hexdigest()
         report['producers'][kind] = detail
+    if pool_reservation is not None:
+        (output/'3d-pool-occupancy-after.bin').write_bytes(pool_reservation['occupancy'])
+        report['ordinary3d_pool']=dict(
+            index=pool_reservation['index'],offset=hex(pool_reservation['offset']),
+            cpu=hex(pool_reservation['cpu']),device=hex(pool_reservation['device']),
+            firmware=hex(pool_reservation['firmware']),cursor_after=pool_reservation['cursor'],
+            submission_ready=False,
+            qualification='Common resource backing with three explicit fixture mapping bases and shared native slot displacement. No Linux allocation, mapping attributes, cache visibility, locking or retirement proven.')
     if ta_candidate is not None:
         (output/'ta-construction-candidate.bin').write_bytes(ta_candidate)
         (output/'ta-construction-descriptor.bin').write_bytes(ta_candidate_descriptor)

@@ -5,7 +5,7 @@
     "native_register_lists": 80,
     "scheduler_links": 80,
     "checked_ta_firmware_values": 64,
-    "rejected_inputs": 19,
+    "rejected_inputs": 23,
     "ta_construction_pairs": 16,
     "construction_3d_pairs": 16
   },
@@ -251,6 +251,6 @@
       }
     }
   ],
-  "tool_sha256": "32e86417ff4875ace8fa1ce7ff899a41c42598e49374619bfe4f7df5106df394",
-  "qualification": "16 synthetic pairs through native SKSM wrappers;64 expected TA FW-register values,80 list/scheduler links. Partial TA commands check serial/translations/epoch/caller inputs, completion offset wrap, all16 mode/context combinations and counts0..15 aperture records with descriptor pointer/count. Native register backing/metadata preserved. Sixteen partial ordinary3D candidates check native list preservation, header/frame/body/resource inputs and counter-derived payload. Nineteen malformed inputs fail before export. Native3D scheduler derives dependencies, flags, auxiliary fallback and payload pointer from explicit descriptor/provider identities. Ordinary3D event/control and aperture records0..15 derive timestamps and scheduler aperture metadata; native whole-window audits provide separate numeric qualification. Context/scene zero fixtures; remaining command storage, recipe semantics, live mappings/cache/queues/completion and valid drawing unqualified. No hardware touched."
+  "tool_sha256": "d3a3819da1bffcb46e6cf42054fea9406c843a64f114ef7701a2f269b7b2ddb8",
+  "qualification": "16 synthetic pairs through native SKSM wrappers;64 expected TA FW-register values,80 list/scheduler links. Partial TA commands check serial/translations/epoch/caller inputs, completion offset wrap, all16 mode/context combinations and counts0..15 aperture records with descriptor pointer/count. Native register backing/metadata preserved. Sixteen partial ordinary3D candidates check native list preservation, header/frame/body/resource inputs and counter-derived payload. Twenty-three malformed inputs fail before export. All16 bind three mapping aliases through a checked ordinary3D pool slot. Native3D scheduler derives dependencies, flags, auxiliary fallback and payload pointer from explicit descriptor/provider identities. Ordinary3D event/control and aperture records0..15 derive timestamps and scheduler aperture metadata; native whole-window audits provide separate numeric qualification. Context/scene zero fixtures; remaining command storage, recipe semantics, live mappings/cache/queues/completion and valid drawing unqualified. No hardware touched."
 }

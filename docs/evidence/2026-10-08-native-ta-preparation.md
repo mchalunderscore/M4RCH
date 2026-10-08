@@ -1,3 +1,7 @@
+## Pool aliases joined — 2026-10-08
+
+All64 checked prepared descriptor pairs now bind a shared ordinary3D pool slot and derive scheduler payload from its firmware alias. Earlier zero448 fixture limitation superseded for these numeric candidates; real mapping provenance/attributes/cache and Linux physical backing remain unqualified. No live submission. See native-3d-pool-reservation.md.
+
 ## Derived scheduler preparation — 2026-10-08
 
 All64 prepared descriptor pairs now export paired scheduler candidates with descriptor-derived3D fields. Descriptor448 remains zero in these constructor fixtures; no live command mapping inferred. See native-3d-scheduler-bindings.md. Still submission_ready=false.
