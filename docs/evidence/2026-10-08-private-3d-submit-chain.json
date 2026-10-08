@@ -1,0 +1,27 @@
+{
+  "binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "counts": {
+    "release_roundtrips": 1024,
+    "config_records": 1024,
+    "pointer_publications": 3072,
+    "opcode12": 512,
+    "opcode14": 1024,
+    "opcode16": 512,
+    "nop_records": 34943,
+    "guard_cases": 64,
+    "cases": 1024,
+    "fallback_aux": 512,
+    "descriptor_aux": 512,
+    "cached": 512,
+    "uncached": 512,
+    "qos_local": 512,
+    "qos_fallback": 512,
+    "qos_ratio": 512
+  },
+  "caller": {
+    "start": "0xfffffe000895bd00",
+    "end": "0xfffffe000895c374",
+    "sha256": "3e540bf04b258c8b4cf40d9fcca8e02573c0dd81bbafdab5190e25e04a8f11cf"
+  },
+  "qualification": "Native config construction/publication followed continuously by NOP/3D scheduling and actual post-kick encoding and native pointer publications with actual return/count. Independent full ring/record/count models and explicitly simulated native pending release; owner lookup/registration, firmware mapping and zero service synthetic, optional trace disabled. No full submit, hardware acceptance or completion."
+}
