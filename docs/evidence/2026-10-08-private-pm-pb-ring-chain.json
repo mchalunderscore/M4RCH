@@ -1,0 +1,78 @@
+{
+  "provider_vtable": "G16X+10f8",
+  "provider_range": [
+    "0xfffffe00089d6f54",
+    "0xfffffe00089d7054"
+  ],
+  "provider_range_sha256": "244be3803807fabbbdf54196f07ddb818d500b475a52563ee78e1f5126097b29",
+  "private_binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "range": [
+    "0xfffffe00089fe1b4",
+    "0xfffffe00089fe330"
+  ],
+  "range_sha256": "b701fe84efd3751f3f734e768a5e5300784ab8cde7495b6b177e2cfe0cba38a0",
+  "counts": {
+    "successful_load": 928,
+    "provider_calls": 464,
+    "asserted_generation_mismatch": 96
+  },
+  "examples": [
+    {
+      "mode": 0,
+      "first": true,
+      "events": [
+        [
+          "prepare_state"
+        ]
+      ]
+    },
+    {
+      "mode": 1,
+      "first": true,
+      "events": [
+        [
+          "prepare_state"
+        ]
+      ]
+    },
+    {
+      "mode": 2,
+      "first": true,
+      "events": [
+        [
+          "prepare_state"
+        ]
+      ]
+    },
+    {
+      "mode": 3,
+      "first": true,
+      "events": [
+        [
+          "prepare_state"
+        ]
+      ]
+    },
+    {
+      "mode": 0,
+      "first": false,
+      "events": []
+    },
+    {
+      "mode": 1,
+      "first": false,
+      "events": []
+    },
+    {
+      "mode": 2,
+      "first": false,
+      "events": []
+    },
+    {
+      "mode": 3,
+      "first": false,
+      "events": []
+    }
+  ],
+  "qualification": "Actual complete PM loadPBDesc invokes actual G16 halLoadPBDesc, verified by G16X encoded vtable10f8.928 successful whole-object/ring cases and96 expected generation assertions.464 native packed ring writes compare independent22-bit cursor/address-bit model; reused manager skips provider. Only external ring map138 remains a service. Bounded request0..31; no live ring identity/capacity/cache visibility, staged prepareAndRetain or firmware acceptance."
+}

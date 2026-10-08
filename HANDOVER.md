@@ -1,3 +1,21 @@
+# Native PM initialization through packed hardware ring checkpoint
+
+Offline only; no live allocation, GPU commands, reboot or kernel/default changes.
+Read docs/evidence/2026-10-08-private-pm-job-chain.md and its five numeric receipts.
+256 complete actual native PM initializers now include actual HWPB factory/reset.
+128 old-manager initializer release and128 support-resize branches; allocation flags both branches.
+Actual PM job-binding:928 successful,96 generation assertions;464 first-use provider calls.
+G16X vtable10f8 verified as native halLoadPBDesc;1024 packed-ring load/store roundtrips.
+256 joined init->factory->reset->job binding->native packed-ring cases compare full bytes.
+Inherited alloc/resource/registration/readiness/mapping/translation still explicit fixtures.
+Next:ordinary prepareAndRetain/staged page lists and TA resource association, then
+matched Linux allocations/work/root/KSM queues/events/stamps and completion/readback.
+Still NOT submission-only readiness; no firmware-executed render job proved.
+Retained failed warm INIT needs normal reboot before live trials; offline work continues.
+No forced unload/reset/warm retry. Private-derived; no Apple code exported or public push.
+
+---
+
 # Joined native PM creation checkpoint
 
 Offline only; no live allocation, GPU command, reboot or kernel/default changes.

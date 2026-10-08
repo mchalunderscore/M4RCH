@@ -1,0 +1,72 @@
+{
+  "private_binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "range": [
+    "0xfffffe00089fe1b4",
+    "0xfffffe00089fe330"
+  ],
+  "range_sha256": "b701fe84efd3751f3f734e768a5e5300784ab8cde7495b6b177e2cfe0cba38a0",
+  "counts": {
+    "successful_load": 928,
+    "provider_calls": 464,
+    "asserted_generation_mismatch": 96
+  },
+  "examples": [
+    {
+      "mode": 0,
+      "first": true,
+      "events": [
+        [
+          "prepare_state"
+        ]
+      ]
+    },
+    {
+      "mode": 1,
+      "first": true,
+      "events": [
+        [
+          "prepare_state"
+        ]
+      ]
+    },
+    {
+      "mode": 2,
+      "first": true,
+      "events": [
+        [
+          "prepare_state"
+        ]
+      ]
+    },
+    {
+      "mode": 3,
+      "first": true,
+      "events": [
+        [
+          "prepare_state"
+        ]
+      ]
+    },
+    {
+      "mode": 0,
+      "first": false,
+      "events": []
+    },
+    {
+      "mode": 1,
+      "first": false,
+      "events": []
+    },
+    {
+      "mode": 2,
+      "first": false,
+      "events": []
+    },
+    {
+      "mode": 3,
+      "first": false,
+      "events": []
+    }
+  ],
+  "qualification": "Complete native loadPBDesc successful path plus generation assertion entries.1024 combinations cover low-byte mode0..3, initial/reused manager, optional generation check, activation and mismatch; full PM/manager/state/scene/GPU preservation comparisons. First-use GPU virtual10f8 is an explicit no-op fixture, arguments checked. Index0..15 only. No provider implementation, prepareAndRetain composition, firmware acceptance or job submission."
+}
