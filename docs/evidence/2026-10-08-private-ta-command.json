@@ -1,0 +1,33 @@
+{
+  "binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "counts": {
+    "header": 1024,
+    "translations": 1024,
+    "metadata": 1024,
+    "tail": 1024
+  },
+  "visited_instruction_count": 156,
+  "ranges": [
+    {
+      "start": "0xfffffe0008a1f394",
+      "end": "0xfffffe0008a1f3f0",
+      "sha256": "384cce5adc361bab452b537cd4c4d271f6167991827e29a1ee85463db69688a2"
+    },
+    {
+      "start": "0xfffffe0008a1f3f0",
+      "end": "0xfffffe0008a1f4d8",
+      "sha256": "e9254b8cbc17aa4fe4bec4bd0e8d5e1986d18ca1c2efd45938995c4bf7a3d3aa"
+    },
+    {
+      "start": "0xfffffe0008a1f514",
+      "end": "0xfffffe0008a1f5d4",
+      "sha256": "ab38593e49e998693ae7773973e7ddcdab79dbf459d065679ea9f06501c5c4f6"
+    },
+    {
+      "start": "0xfffffe0008a1f6f4",
+      "end": "0xfffffe0008a1f76c",
+      "sha256": "5e334fb0481d739402368f89e124d4e6219fe81bbc3f0c566c112885c6801054"
+    }
+  ],
+  "qualification": "Actual TA SKSM construction slices compared over entire 9c0 command backing, descriptor/context/stack sources unchanged. Serial wrap and whole owner checked; owner lookup and three firmware translations are explicit external service fixtures. Pointer authentication skipped. Descriptor virtual1a8, completion-resource mapping/notification, preceding tail conditional, full submit and valid drawing inputs remain unqualified. No live GPU submission or retirement proved."
+}

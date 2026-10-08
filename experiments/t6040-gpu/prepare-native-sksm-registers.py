@@ -12,6 +12,7 @@ import sys
 from pathlib import Path
 from private_rce_entry import encode_entry, rce_metadata
 from native_scheduler_candidate import prepare as prepare_scheduler
+import private_ta_command as ta_command
 
 def integer(value, bits, name):
     if isinstance(value, bool) or not isinstance(value, (str, int)):
@@ -143,6 +144,22 @@ def prepare(macho, manifest, output):
     if any(start+size > 1 << 64 for start,size in extents): raise ValueError('Command extent wraps address space')
     if max(start for start,_ in extents) < min(start+size for start,size in extents):
         raise ValueError('TA and3D command GPU extents overlap')
+    construction = None
+    if 'ta_construction' in binding:
+        spec = binding['ta_construction']
+        # This context is the submit caller's X28 backing, not the producer's
+        # descriptor190 lookup object. Keep their identities explicit.
+        submit_context = blob(root, spec['submit_context'], 0x600)
+        submit_stack = blob(root, spec['submit_stack'], 0x100)
+        translated = spec['firmware_translations']
+        if not isinstance(translated, list) or len(translated) != 3:
+            raise ValueError('Three explicit firmware translation results required')
+        translated = [integer(v,64,'firmware translation') for v in translated]
+        construction = dict(context=submit_context, stack=submit_stack,
+            serial=integer(spec['serial'],64,'serial'), addresses=translated,
+            x26=integer(spec['x26'],64,'x26'),
+            w21=integer(spec['w21'],32,'w21'), w22=integer(spec['w22'],32,'w22'),
+            branch_result=integer(spec['branch_result'],32,'branch_result'))
     # Produce both before exporting anything; a failed second producer leaves no
     # apparently complete pair behind. Inputs may be graph captures or fixtures.
     results = {}
@@ -151,6 +168,17 @@ def prepare(macho, manifest, output):
         command, descriptor_out, report = produce(ns, kind, desc,
             values[kind+'_command_gpu'], values['parameter_gpu'], context, scene, flags)
         results[kind] = (command, descriptor_out, report)
+    ta_candidate = None
+    if construction is not None:
+        command, descriptor_out, _ = results['ta']
+        ta_candidate = ta_command.header(command, descriptor_out,
+            construction['context'], construction['serial'])
+        ta_candidate = ta_command.translated_resources(ta_candidate, construction['addresses'])
+        ta_candidate = ta_command.metadata(ta_candidate, descriptor_out, construction['context'])
+        ta_candidate = ta_command.tail(ta_candidate, descriptor_out, construction['stack'],
+            construction['x26'], construction['w21'], construction['w22'], construction['branch_result'])
+        if ta_candidate[0x60:0x780] != command[0x60:0x780]:
+            raise ValueError('TA construction changed native register backing/metadata')
     schedulers = {}
     if 'scheduler' in binding:
         for kind in ('ta', '3d'):
@@ -184,6 +212,18 @@ def prepare(macho, manifest, output):
         detail['command_sha256'] = hashlib.sha256(command).hexdigest()
         detail['descriptor_sha256'] = hashlib.sha256(descriptor_out).hexdigest()
         report['producers'][kind] = detail
+    if ta_candidate is not None:
+        (output/'ta-construction-candidate.bin').write_bytes(ta_candidate)
+        report['ta_construction'] = dict(submission_ready=False,
+            command_sha256=hashlib.sha256(ta_candidate).hexdigest(),
+            context_sha256=hashlib.sha256(construction['context']).hexdigest(),
+            stack_sha256=hashlib.sha256(construction['stack']).hexdigest(),
+            serial=hex(construction['serial']),
+            firmware_translations=[hex(v) for v in construction['addresses']],
+            x26=hex(construction['x26']), w21=hex(construction['w21']), w22=hex(construction['w22']),
+            branch_result=hex(construction['branch_result']),
+            register_backing_preserved=True,
+            qualification='Four independently checked native TA construction slice models over actual register producer output. Caller X28 context is distinct from producer lookup context. Translation results and tail branch result are explicit fixtures. Descriptor virtual1a8 and intervening resource/completion operations excluded. Remaining command bytes zero/unqualified; not a complete channel command or valid drawing job.')
     if schedulers:
         report['scheduler_candidates'] = {}
         for kind, (work, accounting, template, detail) in schedulers.items():

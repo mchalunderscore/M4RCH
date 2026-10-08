@@ -90,6 +90,17 @@ python experiments/t6040-gpu/check-native-sksm-registers.py \
   /boot/GPUC003/private-apple/com.apple.AGXG16X /tmp/paired-registers.json
 ```
 
+## Additional partial TA construction
+
+Optional `ta_construction` now composes four checked TA SKSM construction
+slice models over actual native register output. Separate caller context/stack
+and explicit firmware translation inputs are described in
+`2026-10-08-private-ta-command.md`. A separate partial command is exported;
+producer-only files remain unchanged. Register backing/metadata60..77f stays
+byte-identical. Intervening descriptor callbacks, completion binding and
+conditional control remain excluded. Sixteen compositions pass, and eight
+malformed inputs fail before export. The command remains submission-unready.
+
 ## Verification and remaining work
 
 16 pairs pass through the verified native wrappers:80 register lists and80
