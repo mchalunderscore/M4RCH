@@ -93,17 +93,22 @@ with tempfile.TemporaryDirectory(prefix='native-sksm-register-test-') as directo
             cached=bool(i&1),fallback_auxiliary=hex(fw+0x800),channel_payload=hex(fw+0x900))
         if not i&1:binding['scheduler']['3d']['queue'].pop('previous')
 
-        occupancy=bytearray([1]*16);pool_index=i;occupancy[pool_index]=0
+        page_shift=[12,14,16][i%3];allocation_bytes=(16*0x2240+(1<<page_shift)-1)&-(1<<page_shift);pool_capacity=allocation_bytes//0x2240
+        occupancy=bytearray([1]*pool_capacity);pool_index=i;occupancy[pool_index]=0
         (root/'pool-occupancy.bin').write_bytes(occupancy)
-        binding['ordinary3d_pool']=dict(capacity=16,occupancy='pool-occupancy.bin',cursor=i,
+        binding['ordinary3d_pool']=dict(capacity=pool_capacity,occupancy='pool-occupancy.bin',cursor=i,
             cpu_base=hex(0x300000000),device_base=hex(int(binding['3d_command_gpu'],0)-i*0x2240),
-            firmware_base=hex(0x200010000+i*0x100000-i*0x2240))
+            firmware_base=hex(0x200010000+i*0x100000-i*0x2240),
+            backing=dict(requested=16,page_shift=page_shift,resource_flags=i))
         manifest = root/'input.json'; manifest.write_text(json.dumps(binding))
         report = module.prepare(args.macho,manifest,root/('pair-'+str(i)))
         assert report['submission_ready'] is False
         assert report['ordinary3d_pool']['index']==i
+        assert report['ordinary3d_backing']['allocation_bytes']==allocation_bytes
+        assert report['ordinary3d_backing']['device_map_flags']==0x600000085
+        assert report['ordinary3d_backing']['resource_init_flags']==i|0x23
         assert int(report['ordinary3d_pool']['device'],0)==int(binding['3d_command_gpu'],0)
-        assert (root/('pair-'+str(i))/'3d-pool-occupancy-after.bin').read_bytes()==bytes([1]*16)
+        assert (root/('pair-'+str(i))/'3d-pool-occupancy-after.bin').read_bytes()==bytes([1]*pool_capacity)
         assert int(report['ordinary3d_pool']['firmware'],0)==0x200010000+i*0x100000
 
         output_dir = root/('pair-'+str(i))
@@ -221,7 +226,9 @@ with tempfile.TemporaryDirectory(prefix='native-sksm-register-test-') as directo
         {'ordinary3d_pool':{**binding['ordinary3d_pool'],'device_base':0}},
         {'ordinary3d_pool':{**binding['ordinary3d_pool'],'device_base':'0xffffffffffffffff'}},
         {'ordinary3d_pool':{**binding['ordinary3d_pool'],'cursor':True}},
-        {'ordinary3d_pool':{**binding['ordinary3d_pool'],'device_base':'0x100000000'}}]
+        {'ordinary3d_pool':{**binding['ordinary3d_pool'],'device_base':'0x100000000'}},
+        {'ordinary3d_pool':{**binding['ordinary3d_pool'],'backing':{**binding['ordinary3d_pool']['backing'],'requested':1}}},
+        {'ordinary3d_pool':{**binding['ordinary3d_pool'],'backing':{**binding['ordinary3d_pool']['backing'],'page_shift':15}}}]
     for j, replacement in enumerate(invalid):
         bad = {**binding,**replacement}; manifest.write_text(json.dumps(bad)); destination=root/('bad-'+str(j))
         try: module.prepare(args.macho,manifest,destination)
@@ -229,5 +236,5 @@ with tempfile.TemporaryDirectory(prefix='native-sksm-register-test-') as directo
         else: raise AssertionError('Invalid input accepted')
         assert not destination.exists(); counts['rejected_inputs'] += 1
 report = dict(private_binary_sha256=report['private_binary_sha256'],counts=counts,examples=examples,tool_sha256=hashlib.sha256(path.read_bytes()).hexdigest(),
-    qualification='16 synthetic pairs through native SKSM wrappers;64 expected TA FW-register values,80 list/scheduler links. Partial TA commands check serial/translations/epoch/caller inputs, completion offset wrap, all16 mode/context combinations and counts0..15 aperture records with descriptor pointer/count. Native register backing/metadata preserved. Sixteen partial ordinary3D candidates check native list preservation, header/frame/body/resource inputs and counter-derived payload. Twenty-three malformed inputs fail before export. All16 bind three mapping aliases through a checked ordinary3D pool slot. Native3D scheduler derives dependencies, flags, auxiliary fallback and payload pointer from explicit descriptor/provider identities. Ordinary3D event/control and aperture records0..15 derive timestamps and scheduler aperture metadata; native whole-window audits provide separate numeric qualification. Context/scene zero fixtures; remaining command storage, recipe semantics, live mappings/cache/queues/completion and valid drawing unqualified. No hardware touched.')
+    qualification='16 synthetic pairs through native SKSM wrappers;64 expected TA FW-register values,80 list/scheduler links. Partial TA commands check serial/translations/epoch/caller inputs, completion offset wrap, all16 mode/context combinations and counts0..15 aperture records with descriptor pointer/count. Native register backing/metadata preserved. Sixteen partial ordinary3D candidates check native list preservation, header/frame/body/resource inputs and counter-derived payload. Twenty-five malformed inputs fail before export. Backing contract checks page-rounded bytes/capacity and distinct command-pool mapping flags. All16 bind three mapping aliases through a checked ordinary3D pool slot. Native3D scheduler derives dependencies, flags, auxiliary fallback and payload pointer from explicit descriptor/provider identities. Ordinary3D event/control and aperture records0..15 derive timestamps and scheduler aperture metadata; native whole-window audits provide separate numeric qualification. Context/scene zero fixtures; remaining command storage, recipe semantics, live mappings/cache/queues/completion and valid drawing unqualified. No hardware touched.')
 args.output.write_text(json.dumps(report,indent=2)+'\n'); print(counts)

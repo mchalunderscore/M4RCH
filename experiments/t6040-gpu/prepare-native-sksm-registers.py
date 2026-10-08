@@ -146,14 +146,24 @@ def prepare(macho, manifest, output):
     if max(start for start,_ in extents) < min(start+size for start,size in extents):
         raise ValueError('TA and3D command GPU extents overlap')
     pool_reservation=None
+    pool_backing=None
     if 'ordinary3d_pool' in binding:
         from native_3d_pool import reserve,STRIDE
         pool=binding['ordinary3d_pool']
         capacity=integer(pool['capacity'],32,'3D pool capacity')
         if not 1<=capacity<=256:raise ValueError('Qualified3D pool capacities1..256')
+        if 'backing' in pool:
+            from native_3d_pool import backing_contract
+            backing=pool['backing']
+            pool_backing=backing_contract(integer(backing['requested'],32,'pool request'),
+                integer(backing['page_shift'],32,'pool page shift'),
+                integer(backing['resource_flags'],32,'pool resource flags'))
+            if capacity!=pool_backing['capacity']:
+                raise ValueError('Pool capacity differs from page-rounded backing geometry')
         occupancy=blob(root,pool['occupancy'],capacity)
         bases=[integer(pool[k],64,k) for k in ('cpu_base','device_base','firmware_base')]
-        if any(not base or base+capacity*STRIDE>1<<64 for base in bases):
+        allocation_bytes=pool_backing['allocation_bytes'] if pool_backing else capacity*STRIDE
+        if any(not base or base+allocation_bytes>1<<64 for base in bases):
             raise ValueError('3D pool mapping extent is zero or wraps')
         pool_reservation=reserve(occupancy,integer(pool['cursor'],32,'3D pool cursor'),*bases)
         if pool_reservation is None:raise ValueError('3D pool has no free slot')
@@ -318,6 +328,7 @@ def prepare(macho, manifest, output):
         report['producers'][kind] = detail
     if pool_reservation is not None:
         (output/'3d-pool-occupancy-after.bin').write_bytes(pool_reservation['occupancy'])
+        if pool_backing is not None:report['ordinary3d_backing']=pool_backing
         report['ordinary3d_pool']=dict(
             index=pool_reservation['index'],offset=hex(pool_reservation['offset']),
             cpu=hex(pool_reservation['cpu']),device=hex(pool_reservation['device']),

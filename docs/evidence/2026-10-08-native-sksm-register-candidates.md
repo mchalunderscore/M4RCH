@@ -1,3 +1,7 @@
+## Ordinary3D backing contract — 2026-10-08
+
+16 candidates now validate page-rounded backing size/capacity and report distinct command-pool mapping flags.25 malformed inputs rejected. Full createBacking audit covers2,048 service cases. See native-3d-pool-backing.md; no Linux PTE/cache semantics inferred.
+
 ## Ordinary3D pool reservation integration — 2026-10-08
 
 All16 now reserve one shared pool slot and derive CPU/register/publication aliases.23 malformed inputs rejected. Full native request+descriptor caller audit covers2,048 cases including43 selected zero-CPU failures. See native-3d-pool-reservation.md. Real allocation/mappings remain fixtures.

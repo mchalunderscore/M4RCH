@@ -1,3 +1,7 @@
+## Page-rounded backing joined — 2026-10-08
+
+All64 pairs now carry requested64/page14 ordinary3D backing contract,573440-byte allocation and65-slot capacity. Candidate register/publication aliases still explicit fixtures. See native-3d-pool-backing.md.
+
 ## Pool aliases joined — 2026-10-08
 
 All64 checked prepared descriptor pairs now bind a shared ordinary3D pool slot and derive scheduler payload from its firmware alias. Earlier zero448 fixture limitation superseded for these numeric candidates; real mapping provenance/attributes/cache and Linux physical backing remain unqualified. No live submission. See native-3d-pool-reservation.md.
