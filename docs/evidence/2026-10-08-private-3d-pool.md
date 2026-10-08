@@ -73,3 +73,12 @@ Reproduce:
 python experiments/t6040-gpu/audit-private-3d-pool.py \
   /boot/GPUC003/private-apple/com.apple.AGXG16X /tmp/3d-pool.json
 ```
+
+## Size initialization follow-up
+
+The 2026-10-08-private-pool-sizes audit resolves the previous default-stride
+gap through native configurePoolElementSizes, its actual vtable/caller and
+downstream copies. Ordinary3D2240, FastBlita00, CL1040; all three post-kick
+transport pools40. TA host stride9c0 differs from the supplied9a0 payload
+extent; padding remains a possible explanation. These are host strides,
+not automatically wire lengths. See the newer evidence for qualifications.
