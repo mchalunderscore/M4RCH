@@ -1,0 +1,352 @@
+[ 8555.884809] m4rch graph-init: owned page 0 physical=0x10282dac000
+[ 8555.884824] m4rch graph-init: owned page 1 physical=0x10282da8000
+[ 8555.884830] m4rch graph-init: owned page 2 physical=0x1022155c000
+[ 8555.884832] m4rch graph-init: owned page 3 physical=0x10221558000
+[ 8555.884832] m4rch graph-init: owned page 4 physical=0x10221554000
+[ 8555.884833] m4rch graph-init: owned page 5 physical=0x10221550000
+[ 8555.884833] m4rch graph-init: owned page 6 physical=0x1022154c000
+[ 8555.884834] m4rch graph-init: owned page 7 physical=0x10221548000
+[ 8555.884834] m4rch graph-init: owned page 8 physical=0x10221544000
+[ 8555.884834] m4rch graph-init: owned page 9 physical=0x10221540000
+[ 8555.884835] m4rch graph-init: owned page 10 physical=0x100641fc000
+[ 8555.884835] m4rch graph-init: owned page 11 physical=0x100641f8000
+[ 8555.884836] m4rch graph-init: owned page 12 physical=0x100641f4000
+[ 8555.884836] m4rch graph-init: owned page 13 physical=0x100641f0000
+[ 8555.884836] m4rch graph-init: owned page 14 physical=0x100641ec000
+[ 8555.884837] m4rch graph-init: owned page 15 physical=0x100641e8000
+[ 8555.884837] m4rch graph-init: owned page 16 physical=0x100641e4000
+[ 8555.884837] m4rch graph-init: owned page 17 physical=0x100641e0000
+[ 8555.884838] m4rch graph-init: owned page 18 physical=0x100641dc000
+[ 8555.884838] m4rch graph-init: owned page 19 physical=0x100641d8000
+[ 8555.884839] m4rch graph-init: owned page 20 physical=0x100641d4000
+[ 8555.884839] m4rch graph-init: owned page 21 physical=0x100641d0000
+[ 8555.884839] m4rch graph-init: owned page 22 physical=0x100641cc000
+[ 8555.884840] m4rch graph-init: owned page 23 physical=0x100641c8000
+[ 8555.884840] m4rch graph-init: owned page 24 physical=0x100641c4000
+[ 8555.884840] m4rch graph-init: owned page 25 physical=0x100641c0000
+[ 8555.884841] m4rch graph-init: owned page 26 physical=0x100641bc000
+[ 8555.884841] m4rch graph-init: owned page 27 physical=0x100641b8000
+[ 8555.884842] m4rch graph-init: owned page 28 physical=0x100641b4000
+[ 8555.884842] m4rch graph-init: owned page 29 physical=0x100641b0000
+[ 8555.884843] m4rch graph-init: owned page 30 physical=0x100641ac000
+[ 8555.884843] m4rch graph-init: owned page 31 physical=0x100641a8000
+[ 8555.884844] m4rch graph-init: owned page 32 physical=0x100641a4000
+[ 8555.884844] m4rch graph-init: owned page 33 physical=0x100641a0000
+[ 8555.884849] m4rch graph-init: owned page 34 physical=0x1012fb38000
+[ 8555.884851] m4rch graph-init: owned page 35 physical=0x100db5f8000
+[ 8555.884852] m4rch graph-init: owned page 36 physical=0x1002f348000
+[ 8555.884852] m4rch graph-init: owned page 37 physical=0x1004fa08000
+[ 8555.884853] m4rch graph-init: owned page 38 physical=0x10283134000
+[ 8555.884854] m4rch graph-init: owned page 39 physical=0x1016b1fc000
+[ 8555.884855] m4rch graph-init: owned page 40 physical=0x1000e134000
+[ 8555.884856] m4rch graph-init: owned page 41 physical=0x1011f640000
+[ 8555.884857] m4rch graph-init: owned page 42 physical=0x1003ddd8000
+[ 8555.884857] m4rch graph-init: owned page 43 physical=0x10012f08000
+[ 8555.884858] m4rch graph-init: owned page 44 physical=0x1004e4f8000
+[ 8555.884858] m4rch graph-init: owned page 45 physical=0x1011f5a0000
+[ 8555.884859] m4rch graph-init: owned page 46 physical=0x10012554000
+[ 8555.884860] m4rch graph-init: owned page 47 physical=0x100143ac000
+[ 8555.884861] m4rch graph-init: owned page 48 physical=0x102823ac000
+[ 8555.884871] m4rch graph-init: owned page 49 physical=0x100110c8000
+[ 8555.884873] m4rch graph-init: owned page 50 physical=0x1011e948000
+[ 8555.884874] m4rch graph-init: owned page 51 physical=0x1011f86c000
+[ 8555.884874] m4rch graph-init: owned page 52 physical=0x100116a0000
+[ 8555.884875] m4rch graph-init: owned page 53 physical=0x10014128000
+[ 8555.884876] m4rch graph-init: owned page 54 physical=0x100103dc000
+[ 8555.884877] m4rch graph-init: owned page 55 physical=0x1013a9a4000
+[ 8555.884878] m4rch graph-init: owned page 56 physical=0x101063cc000
+[ 8555.884878] m4rch graph-init: owned page 57 physical=0x1000daa4000
+[ 8555.884879] m4rch graph-init: owned page 58 physical=0x1010673c000
+[ 8555.884880] m4rch graph-init: owned page 59 physical=0x1000ffec000
+[ 8555.884880] m4rch graph-init: owned page 60 physical=0x1000f7bc000
+[ 8555.884881] m4rch graph-init: owned page 61 physical=0x1001081c000
+[ 8555.884881] m4rch graph-init: owned page 62 physical=0x10107a8c000
+[ 8555.884882] m4rch graph-init: owned page 63 physical=0x10134640000
+[ 8555.884883] m4rch graph-init: owned page 64 physical=0x1004f6f0000
+[ 8555.884883] m4rch graph-init: owned page 65 physical=0x1001bbb4000
+[ 8555.884884] m4rch graph-init: owned page 66 physical=0x1013bd9c000
+[ 8555.884886] m4rch graph-init: owned page 67 physical=0x1018aac8000
+[ 8555.884887] m4rch graph-init: owned page 68 physical=0x10012034000
+[ 8555.884887] m4rch graph-init: owned page 69 physical=0x10097918000
+[ 8555.884888] m4rch graph-init: owned page 70 physical=0x1001bb8c000
+[ 8555.884889] m4rch graph-init: owned page 71 physical=0x10096cd8000
+[ 8555.884889] m4rch graph-init: owned page 72 physical=0x1003d118000
+[ 8555.884890] m4rch graph-init: owned page 73 physical=0x1004fff8000
+[ 8555.884890] m4rch graph-init: owned page 74 physical=0x101343ec000
+[ 8555.884891] m4rch graph-init: owned page 75 physical=0x1018af88000
+[ 8555.884892] m4rch graph-init: owned page 76 physical=0x1011ebb8000
+[ 8555.884892] m4rch graph-init: owned page 77 physical=0x10194b58000
+[ 8555.884893] m4rch graph-init: owned page 78 physical=0x1016b1e0000
+[ 8555.884916] m4rch graph-init: owned page 79 physical=0x1011f410000
+[ 8555.884918] m4rch graph-init: owned page 80 physical=0x1012585c000
+[ 8555.884919] m4rch graph-init: owned page 81 physical=0x10013368000
+[ 8555.884920] m4rch graph-init: owned page 82 physical=0x10011150000
+[ 8555.884920] m4rch graph-init: owned page 83 physical=0x100962b8000
+[ 8555.884921] m4rch graph-init: owned page 84 physical=0x10010154000
+[ 8555.884922] m4rch graph-init: owned page 85 physical=0x10033328000
+[ 8555.884923] m4rch graph-init: owned page 86 physical=0x1001b9ac000
+[ 8555.884923] m4rch graph-init: owned page 87 physical=0x1016a254000
+[ 8555.884925] m4rch graph-init: owned page 88 physical=0x100db508000
+[ 8555.884925] m4rch graph-init: owned page 89 physical=0x100111c0000
+[ 8555.884926] m4rch graph-init: owned page 90 physical=0x102200a0000
+[ 8555.884927] m4rch graph-init: owned page 91 physical=0x1011f28c000
+[ 8555.884928] m4rch graph-init: owned page 92 physical=0x1017ba3c000
+[ 8555.884929] m4rch graph-init: owned page 93 physical=0x10124b54000
+[ 8555.884929] m4rch graph-init: owned page 94 physical=0x10014cec000
+[ 8555.884930] m4rch graph-init: owned page 95 physical=0x10220bd8000
+[ 8555.884930] m4rch graph-init: owned page 96 physical=0x1001a194000
+[ 8555.884931] m4rch graph-init: owned page 97 physical=0x101358dc000
+[ 8555.884932] m4rch graph-init: owned page 98 physical=0x1001a018000
+[ 8555.884933] m4rch graph-init: owned page 99 physical=0x100976e0000
+[ 8555.884933] m4rch graph-init: owned page 100 physical=0x1001b984000
+[ 8555.884935] m4rch graph-init: owned page 101 physical=0x10096ef4000
+[ 8555.884935] m4rch graph-init: owned page 102 physical=0x1013d3e8000
+[ 8555.884936] m4rch graph-init: owned page 103 physical=0x1001a2fc000
+[ 8555.884938] m4rch graph-init: owned page 104 physical=0x10096188000
+[ 8555.884939] m4rch graph-init: owned page 105 physical=0x1011e43c000
+[ 8555.884940] m4rch graph-init: owned page 106 physical=0x1012588c000
+[ 8555.884940] m4rch graph-init: owned page 107 physical=0x10013e80000
+[ 8555.884941] m4rch graph-init: owned page 108 physical=0x1003dcdc000
+[ 8555.884942] m4rch graph-init: owned page 109 physical=0x1004e7b4000
+[ 8555.884942] m4rch graph-init: owned page 110 physical=0x1004f868000
+[ 8555.884943] m4rch graph-init: owned page 111 physical=0x1000e1ec000
+[ 8555.884944] m4rch graph-init: owned page 112 physical=0x10172a4c000
+[ 8555.884945] m4rch graph-init: owned page 113 physical=0x1004f5a4000
+[ 8555.884946] m4rch graph-init: owned page 114 physical=0x1012f508000
+[ 8555.884947] m4rch graph-init: owned page 115 physical=0x1003ce24000
+[ 8555.884948] m4rch graph-init: owned page 116 physical=0x101067f0000
+[ 8555.884949] m4rch graph-init: owned page 117 physical=0x10014904000
+[ 8555.884951] m4rch graph-init: owned page 118 physical=0x1002ea80000
+[ 8555.884951] m4rch graph-init: owned page 119 physical=0x10106160000
+[ 8555.884952] m4rch graph-init: owned page 120 physical=0x101379e4000
+[ 8555.884953] m4rch graph-init: owned page 121 physical=0x1013b888000
+[ 8555.884954] m4rch graph-init: owned page 122 physical=0x10013c10000
+[ 8555.884955] m4rch graph-init: owned page 123 physical=0x100144ac000
+[ 8555.884956] m4rch graph-init: owned page 124 physical=0x10097050000
+[ 8555.884956] m4rch graph-init: owned page 125 physical=0x100146f8000
+[ 8555.884957] m4rch graph-init: owned page 126 physical=0x100da5b0000
+[ 8555.884957] m4rch graph-init: owned page 127 physical=0x10097cdc000
+[ 8555.884958] m4rch graph-init: owned page 128 physical=0x10010fcc000
+[ 8555.884958] m4rch graph-init: owned page 129 physical=0x100da55c000
+[ 8555.884959] m4rch graph-init: owned page 130 physical=0x101073e4000
+[ 8555.884960] m4rch graph-init: owned page 131 physical=0x10106c74000
+[ 8555.884961] m4rch graph-init: owned page 132 physical=0x100dae48000
+[ 8555.884962] m4rch graph-init: owned page 133 physical=0x1011b2e8000
+[ 8555.884963] m4rch graph-init: owned page 134 physical=0x1011ff48000
+[ 8555.884964] m4rch graph-init: owned page 135 physical=0x10107e14000
+[ 8555.884965] m4rch graph-init: owned page 136 physical=0x10107b58000
+[ 8555.884965] m4rch graph-init: owned page 137 physical=0x102ccc8c000
+[ 8555.884966] m4rch graph-init: owned page 138 physical=0x1011a3a4000
+[ 8555.885004] m4rch graph-init: owned page 139 physical=0x1011b470000
+[ 8555.885006] m4rch graph-init: owned page 140 physical=0x100da428000
+[ 8555.885007] m4rch graph-init: owned page 141 physical=0x1022139c000
+[ 8555.885008] m4rch graph-init: owned page 142 physical=0x102cc990000
+[ 8555.885009] m4rch graph-init: owned page 143 physical=0x10012d38000
+[ 8555.885009] m4rch graph-init: owned page 144 physical=0x100da770000
+[ 8555.885010] m4rch graph-init: owned page 145 physical=0x1003d740000
+[ 8555.885011] m4rch graph-init: owned page 146 physical=0x10010d10000
+[ 8555.885011] m4rch graph-init: owned page 147 physical=0x1004ee38000
+[ 8555.885012] m4rch graph-init: owned page 148 physical=0x100106bc000
+[ 8555.885455] m4rch joined-context: encoding id=0 ttbr0=0x1003dcdc001 ttbr1=0 publication=0
+[ 8555.885457] m4rch joined-context: encoding id=1 ttbr0=0x101003dcdc001 ttbr1=0 publication=0
+[ 8555.885457] m4rch joined-context: encoding id=2 ttbr0=0x201003dcdc001 ttbr1=0 publication=0
+[ 8555.885457] m4rch joined-context: encoding id=3 ttbr0=0x301003dcdc001 ttbr1=0 publication=0
+[ 8555.885458] m4rch joined-context: encoding id=4 ttbr0=0x401003dcdc001 ttbr1=0 publication=0
+[ 8555.885458] m4rch joined-context: encoding id=5 ttbr0=0x501003dcdc001 ttbr1=0 publication=0
+[ 8555.885458] m4rch joined-context: encoding id=6 ttbr0=0x601003dcdc001 ttbr1=0 publication=0
+[ 8555.885459] m4rch joined-context: encoding id=7 ttbr0=0x701003dcdc001 ttbr1=0 publication=0
+[ 8555.885459] m4rch joined-context: encoding id=8 ttbr0=0x801003dcdc001 ttbr1=0 publication=0
+[ 8555.885459] m4rch joined-context: encoding id=9 ttbr0=0x901003dcdc001 ttbr1=0 publication=0
+[ 8555.885460] m4rch joined-context: encoding id=10 ttbr0=0xa01003dcdc001 ttbr1=0 publication=0
+[ 8555.885460] m4rch joined-context: encoding id=11 ttbr0=0xb01003dcdc001 ttbr1=0 publication=0
+[ 8555.885461] m4rch joined-context: encoding id=12 ttbr0=0xc01003dcdc001 ttbr1=0 publication=0
+[ 8555.885461] m4rch joined-context: encoding id=13 ttbr0=0xd01003dcdc001 ttbr1=0 publication=0
+[ 8555.885461] m4rch joined-context: encoding id=14 ttbr0=0xe01003dcdc001 ttbr1=0 publication=0
+[ 8555.885461] m4rch joined-context: encoding id=15 ttbr0=0xf01003dcdc001 ttbr1=0 publication=0
+[ 8555.885462] m4rch joined-context: encoding id=16 ttbr0=0x1001003dcdc001 ttbr1=0 publication=0
+[ 8555.885463] m4rch joined-context: encoding id=17 ttbr0=0x1101003dcdc001 ttbr1=0 publication=0
+[ 8555.885464] m4rch joined-context: encoding id=18 ttbr0=0x1201003dcdc001 ttbr1=0 publication=0
+[ 8555.885464] m4rch joined-context: encoding id=19 ttbr0=0x1301003dcdc001 ttbr1=0 publication=0
+[ 8555.885464] m4rch joined-context: encoding id=20 ttbr0=0x1401003dcdc001 ttbr1=0 publication=0
+[ 8555.885465] m4rch joined-context: encoding id=21 ttbr0=0x1501003dcdc001 ttbr1=0 publication=0
+[ 8555.885465] m4rch joined-context: encoding id=22 ttbr0=0x1601003dcdc001 ttbr1=0 publication=0
+[ 8555.885465] m4rch joined-context: encoding id=23 ttbr0=0x1701003dcdc001 ttbr1=0 publication=0
+[ 8555.885466] m4rch joined-context: encoding id=24 ttbr0=0x1801003dcdc001 ttbr1=0 publication=0
+[ 8555.885466] m4rch joined-context: encoding id=25 ttbr0=0x1901003dcdc001 ttbr1=0 publication=0
+[ 8555.885466] m4rch joined-context: encoding id=26 ttbr0=0x1a01003dcdc001 ttbr1=0 publication=0
+[ 8555.885467] m4rch joined-context: encoding id=27 ttbr0=0x1b01003dcdc001 ttbr1=0 publication=0
+[ 8555.885467] m4rch joined-context: encoding id=28 ttbr0=0x1c01003dcdc001 ttbr1=0 publication=0
+[ 8555.885467] m4rch joined-context: encoding id=29 ttbr0=0x1d01003dcdc001 ttbr1=0 publication=0
+[ 8555.885468] m4rch joined-context: encoding id=30 ttbr0=0x1e01003dcdc001 ttbr1=0 publication=0
+[ 8555.885468] m4rch joined-context: encoding id=31 ttbr0=0x1f01003dcdc001 ttbr1=0 publication=0
+[ 8555.885468] m4rch joined-context: encoding id=32 ttbr0=0x2001003dcdc001 ttbr1=0 publication=0
+[ 8555.885469] m4rch joined-context: encoding id=33 ttbr0=0x2101003dcdc001 ttbr1=0 publication=0
+[ 8555.885469] m4rch joined-context: encoding id=34 ttbr0=0x2201003dcdc001 ttbr1=0 publication=0
+[ 8555.885470] m4rch joined-context: encoding id=35 ttbr0=0x2301003dcdc001 ttbr1=0 publication=0
+[ 8555.885470] m4rch joined-context: encoding id=36 ttbr0=0x2401003dcdc001 ttbr1=0 publication=0
+[ 8555.885471] m4rch joined-context: encoding id=37 ttbr0=0x2501003dcdc001 ttbr1=0 publication=0
+[ 8555.885471] m4rch joined-context: encoding id=38 ttbr0=0x2601003dcdc001 ttbr1=0 publication=0
+[ 8555.885471] m4rch joined-context: encoding id=39 ttbr0=0x2701003dcdc001 ttbr1=0 publication=0
+[ 8555.885472] m4rch joined-context: encoding id=40 ttbr0=0x2801003dcdc001 ttbr1=0 publication=0
+[ 8555.885472] m4rch joined-context: encoding id=41 ttbr0=0x2901003dcdc001 ttbr1=0 publication=0
+[ 8555.885472] m4rch joined-context: encoding id=42 ttbr0=0x2a01003dcdc001 ttbr1=0 publication=0
+[ 8555.885472] m4rch joined-context: encoding id=43 ttbr0=0x2b01003dcdc001 ttbr1=0 publication=0
+[ 8555.885473] m4rch joined-context: encoding id=44 ttbr0=0x2c01003dcdc001 ttbr1=0 publication=0
+[ 8555.885473] m4rch joined-context: encoding id=45 ttbr0=0x2d01003dcdc001 ttbr1=0 publication=0
+[ 8555.885473] m4rch joined-context: encoding id=46 ttbr0=0x2e01003dcdc001 ttbr1=0 publication=0
+[ 8555.885474] m4rch joined-context: encoding id=47 ttbr0=0x2f01003dcdc001 ttbr1=0 publication=0
+[ 8555.885474] m4rch joined-context: encoding id=48 ttbr0=0x3001003dcdc001 ttbr1=0 publication=0
+[ 8555.885474] m4rch joined-context: encoding id=49 ttbr0=0x3101003dcdc001 ttbr1=0 publication=0
+[ 8555.885475] m4rch joined-context: encoding id=50 ttbr0=0x3201003dcdc001 ttbr1=0 publication=0
+[ 8555.885475] m4rch joined-context: encoding id=51 ttbr0=0x3301003dcdc001 ttbr1=0 publication=0
+[ 8555.885475] m4rch joined-context: encoding id=52 ttbr0=0x3401003dcdc001 ttbr1=0 publication=0
+[ 8555.885476] m4rch joined-context: encoding id=53 ttbr0=0x3501003dcdc001 ttbr1=0 publication=0
+[ 8555.885476] m4rch joined-context: encoding id=54 ttbr0=0x3601003dcdc001 ttbr1=0 publication=0
+[ 8555.885476] m4rch joined-context: encoding id=55 ttbr0=0x3701003dcdc001 ttbr1=0 publication=0
+[ 8555.885477] m4rch joined-context: encoding id=56 ttbr0=0x3801003dcdc001 ttbr1=0 publication=0
+[ 8555.885477] m4rch joined-context: encoding id=57 ttbr0=0x3901003dcdc001 ttbr1=0 publication=0
+[ 8555.885477] m4rch joined-context: encoding id=58 ttbr0=0x3a01003dcdc001 ttbr1=0 publication=0
+[ 8555.885478] m4rch joined-context: encoding id=59 ttbr0=0x3b01003dcdc001 ttbr1=0 publication=0
+[ 8555.885478] m4rch joined-context: encoding id=60 ttbr0=0x3c01003dcdc001 ttbr1=0 publication=0
+[ 8555.885478] m4rch joined-context: encoding id=61 ttbr0=0x3d01003dcdc001 ttbr1=0 publication=0
+[ 8555.885479] m4rch joined-context: encoding id=62 ttbr0=0x3e01003dcdc001 ttbr1=0 publication=0
+[ 8555.885479] m4rch joined-context: encoding id=63 ttbr0=0x3f01003dcdc001 ttbr1=0 publication=0
+[ 8555.885479] m4rch joined-context: encoding id=64 ttbr0=0x4001003dcdc001 ttbr1=0 publication=0
+[ 8555.885480] m4rch joined-context: encoding id=65 ttbr0=0x4101003dcdc001 ttbr1=0 publication=0
+[ 8555.885481] m4rch joined-context: encoding id=66 ttbr0=0x4201003dcdc001 ttbr1=0 publication=0
+[ 8555.885481] m4rch joined-context: encoding id=67 ttbr0=0x4301003dcdc001 ttbr1=0 publication=0
+[ 8555.885482] m4rch joined-context: encoding id=68 ttbr0=0x4401003dcdc001 ttbr1=0 publication=0
+[ 8555.885482] m4rch joined-context: encoding id=69 ttbr0=0x4501003dcdc001 ttbr1=0 publication=0
+[ 8555.885482] m4rch joined-context: encoding id=70 ttbr0=0x4601003dcdc001 ttbr1=0 publication=0
+[ 8555.885483] m4rch joined-context: encoding id=71 ttbr0=0x4701003dcdc001 ttbr1=0 publication=0
+[ 8555.885483] m4rch joined-context: encoding id=72 ttbr0=0x4801003dcdc001 ttbr1=0 publication=0
+[ 8555.885484] m4rch joined-context: encoding id=73 ttbr0=0x4901003dcdc001 ttbr1=0 publication=0
+[ 8555.885484] m4rch joined-context: encoding id=74 ttbr0=0x4a01003dcdc001 ttbr1=0 publication=0
+[ 8555.885484] m4rch joined-context: encoding id=75 ttbr0=0x4b01003dcdc001 ttbr1=0 publication=0
+[ 8555.885485] m4rch joined-context: encoding id=76 ttbr0=0x4c01003dcdc001 ttbr1=0 publication=0
+[ 8555.885485] m4rch joined-context: encoding id=77 ttbr0=0x4d01003dcdc001 ttbr1=0 publication=0
+[ 8555.885485] m4rch joined-context: encoding id=78 ttbr0=0x4e01003dcdc001 ttbr1=0 publication=0
+[ 8555.885486] m4rch joined-context: encoding id=79 ttbr0=0x4f01003dcdc001 ttbr1=0 publication=0
+[ 8555.885486] m4rch joined-context: encoding id=80 ttbr0=0x5001003dcdc001 ttbr1=0 publication=0
+[ 8555.885486] m4rch joined-context: encoding id=81 ttbr0=0x5101003dcdc001 ttbr1=0 publication=0
+[ 8555.885487] m4rch joined-context: encoding id=82 ttbr0=0x5201003dcdc001 ttbr1=0 publication=0
+[ 8555.885487] m4rch joined-context: encoding id=83 ttbr0=0x5301003dcdc001 ttbr1=0 publication=0
+[ 8555.885487] m4rch joined-context: encoding id=84 ttbr0=0x5401003dcdc001 ttbr1=0 publication=0
+[ 8555.885487] m4rch joined-context: encoding id=85 ttbr0=0x5501003dcdc001 ttbr1=0 publication=0
+[ 8555.885488] m4rch joined-context: encoding id=86 ttbr0=0x5601003dcdc001 ttbr1=0 publication=0
+[ 8555.885488] m4rch joined-context: encoding id=87 ttbr0=0x5701003dcdc001 ttbr1=0 publication=0
+[ 8555.885488] m4rch joined-context: encoding id=88 ttbr0=0x5801003dcdc001 ttbr1=0 publication=0
+[ 8555.885489] m4rch joined-context: encoding id=89 ttbr0=0x5901003dcdc001 ttbr1=0 publication=0
+[ 8555.885489] m4rch joined-context: encoding id=90 ttbr0=0x5a01003dcdc001 ttbr1=0 publication=0
+[ 8555.885489] m4rch joined-context: encoding id=91 ttbr0=0x5b01003dcdc001 ttbr1=0 publication=0
+[ 8555.885490] m4rch joined-context: encoding id=92 ttbr0=0x5c01003dcdc001 ttbr1=0 publication=0
+[ 8555.885490] m4rch joined-context: encoding id=93 ttbr0=0x5d01003dcdc001 ttbr1=0 publication=0
+[ 8555.885490] m4rch joined-context: encoding id=94 ttbr0=0x5e01003dcdc001 ttbr1=0 publication=0
+[ 8555.885491] m4rch joined-context: encoding id=95 ttbr0=0x5f01003dcdc001 ttbr1=0 publication=0
+[ 8555.885491] m4rch joined-context: encoding id=96 ttbr0=0x6001003dcdc001 ttbr1=0 publication=0
+[ 8555.885491] m4rch joined-context: encoding id=97 ttbr0=0x6101003dcdc001 ttbr1=0 publication=0
+[ 8555.885492] m4rch joined-context: encoding id=98 ttbr0=0x6201003dcdc001 ttbr1=0 publication=0
+[ 8555.885492] m4rch joined-context: encoding id=99 ttbr0=0x6301003dcdc001 ttbr1=0 publication=0
+[ 8555.885492] m4rch joined-context: encoding id=100 ttbr0=0x6401003dcdc001 ttbr1=0 publication=0
+[ 8555.885493] m4rch joined-context: encoding id=101 ttbr0=0x6501003dcdc001 ttbr1=0 publication=0
+[ 8555.885493] m4rch joined-context: encoding id=102 ttbr0=0x6601003dcdc001 ttbr1=0 publication=0
+[ 8555.885493] m4rch joined-context: encoding id=103 ttbr0=0x6701003dcdc001 ttbr1=0 publication=0
+[ 8555.885494] m4rch joined-context: encoding id=104 ttbr0=0x6801003dcdc001 ttbr1=0 publication=0
+[ 8555.885494] m4rch joined-context: encoding id=105 ttbr0=0x6901003dcdc001 ttbr1=0 publication=0
+[ 8555.885495] m4rch joined-context: encoding id=106 ttbr0=0x6a01003dcdc001 ttbr1=0 publication=0
+[ 8555.885495] m4rch joined-context: encoding id=107 ttbr0=0x6b01003dcdc001 ttbr1=0 publication=0
+[ 8555.885496] m4rch joined-context: encoding id=108 ttbr0=0x6c01003dcdc001 ttbr1=0 publication=0
+[ 8555.885496] m4rch joined-context: encoding id=109 ttbr0=0x6d01003dcdc001 ttbr1=0 publication=0
+[ 8555.885496] m4rch joined-context: encoding id=110 ttbr0=0x6e01003dcdc001 ttbr1=0 publication=0
+[ 8555.885497] m4rch joined-context: encoding id=111 ttbr0=0x6f01003dcdc001 ttbr1=0 publication=0
+[ 8555.885497] m4rch joined-context: encoding id=112 ttbr0=0x7001003dcdc001 ttbr1=0 publication=0
+[ 8555.885498] m4rch joined-context: encoding id=113 ttbr0=0x7101003dcdc001 ttbr1=0 publication=0
+[ 8555.885498] m4rch joined-context: encoding id=114 ttbr0=0x7201003dcdc001 ttbr1=0 publication=0
+[ 8555.885499] m4rch joined-context: encoding id=115 ttbr0=0x7301003dcdc001 ttbr1=0 publication=0
+[ 8555.885499] m4rch joined-context: encoding id=116 ttbr0=0x7401003dcdc001 ttbr1=0 publication=0
+[ 8555.885500] m4rch joined-context: encoding id=117 ttbr0=0x7501003dcdc001 ttbr1=0 publication=0
+[ 8555.885500] m4rch joined-context: encoding id=118 ttbr0=0x7601003dcdc001 ttbr1=0 publication=0
+[ 8555.885500] m4rch joined-context: encoding id=119 ttbr0=0x7701003dcdc001 ttbr1=0 publication=0
+[ 8555.885501] m4rch joined-context: encoding id=120 ttbr0=0x7801003dcdc001 ttbr1=0 publication=0
+[ 8555.885501] m4rch joined-context: encoding id=121 ttbr0=0x7901003dcdc001 ttbr1=0 publication=0
+[ 8555.885501] m4rch joined-context: encoding id=122 ttbr0=0x7a01003dcdc001 ttbr1=0 publication=0
+[ 8555.885502] m4rch joined-context: encoding id=123 ttbr0=0x7b01003dcdc001 ttbr1=0 publication=0
+[ 8555.885502] m4rch joined-context: encoding id=124 ttbr0=0x7c01003dcdc001 ttbr1=0 publication=0
+[ 8555.885502] m4rch joined-context: encoding id=125 ttbr0=0x7d01003dcdc001 ttbr1=0 publication=0
+[ 8555.885503] m4rch joined-context: encoding id=126 ttbr0=0x7e01003dcdc001 ttbr1=0 publication=0
+[ 8555.885503] m4rch joined-context: encoding id=127 ttbr0=0x7f01003dcdc001 ttbr1=0 publication=0
+[ 8555.885504] m4rch joined-context: PASS table_pa=0x1000e1ec000 base_ppn=0x400387b root_pa=0x1003dcdc000 context=1 ttbr0=0x101003dcdc001 checked=128 walked=35 publication=0
+[ 8555.885512] m4rch joined-pool: cold binding PASS root_b0=0xfffffc2000140000 state_field=0xfffffc20001448e0 entries_field=0xfffffc20001448e8 head=0 tail=0 publication=0
+[ 8555.885514] m4rch joined-pool: ring state_va=0xfffffc200088c000 entries_va=0xfffffc2000890000 head=0 tail=35 owned_pages=2 publication=0
+[ 8555.885515] m4rch joined-pool: mapping 0 va=0xfffffc2000800000 pa=0x10096cd8000 descriptor=0000800020fcffffd86c0910000000000100050000000000
+[ 8555.885518] m4rch joined-pool: mapping 1 va=0xfffffc2000804000 pa=0x1003d118000 descriptor=0040800020fcffff18d10310000000000100050000000000
+[ 8555.885519] m4rch joined-pool: mapping 2 va=0xfffffc2000808000 pa=0x1004fff8000 descriptor=0080800020fcfffff8ff0410000000000100050000000000
+[ 8555.885519] m4rch joined-pool: mapping 3 va=0xfffffc200080c000 pa=0x101343ec000 descriptor=00c0800020fcffffec431310000000000100050000000000
+[ 8555.885520] m4rch joined-pool: mapping 4 va=0xfffffc2000810000 pa=0x1018af88000 descriptor=0000810020fcffff88af1810000000000100050000000000
+[ 8555.885520] m4rch joined-pool: mapping 5 va=0xfffffc2000814000 pa=0x1011ebb8000 descriptor=0040810020fcffffb8eb1110000000000100050000000000
+[ 8555.885521] m4rch joined-pool: mapping 6 va=0xfffffc2000818000 pa=0x10194b58000 descriptor=0080810020fcffff584b1910000000000100050000000000
+[ 8555.885521] m4rch joined-pool: mapping 7 va=0xfffffc200081c000 pa=0x1016b1e0000 descriptor=00c0810020fcffffe0b11610000000000100050000000000
+[ 8555.885522] m4rch joined-pool: mapping 8 va=0xfffffc2000820000 pa=0x1011f410000 descriptor=0000820020fcffff10f41110000000000100050000000000
+[ 8555.885522] m4rch joined-pool: mapping 9 va=0xfffffc2000824000 pa=0x1012585c000 descriptor=0040820020fcffff5c581210000000000100050000000000
+[ 8555.885523] m4rch joined-pool: mapping 10 va=0xfffffc2000828000 pa=0x10013368000 descriptor=0080820020fcffff68330110000000000100050000000000
+[ 8555.885523] m4rch joined-pool: mapping 11 va=0xfffffc200082c000 pa=0x10011150000 descriptor=00c0820020fcffff50110110000000000100050000000000
+[ 8555.885523] m4rch joined-pool: mapping 12 va=0xfffffc2000830000 pa=0x100962b8000 descriptor=0000830020fcffffb8620910000000000100050000000000
+[ 8555.885524] m4rch joined-pool: mapping 13 va=0xfffffc2000834000 pa=0x10010154000 descriptor=0040830020fcffff54010110000000000100050000000000
+[ 8555.885524] m4rch joined-pool: mapping 14 va=0xfffffc2000838000 pa=0x10033328000 descriptor=0080830020fcffff28330310000000000100050000000000
+[ 8555.885525] m4rch joined-pool: mapping 15 va=0xfffffc200083c000 pa=0x1001b9ac000 descriptor=00c0830020fcffffacb90110000000000100050000000000
+[ 8555.885525] m4rch joined-pool: mapping 16 va=0xfffffc2000840000 pa=0x1016a254000 descriptor=0000840020fcffff54a21610000000000100050000000000
+[ 8555.885526] m4rch joined-pool: mapping 17 va=0xfffffc2000844000 pa=0x100db508000 descriptor=0040840020fcffff08b50d10000000000100050000000000
+[ 8555.885526] m4rch joined-pool: mapping 18 va=0xfffffc2000848000 pa=0x100111c0000 descriptor=0080840020fcffffc0110110000000000100050000000000
+[ 8555.885527] m4rch joined-pool: mapping 19 va=0xfffffc200084c000 pa=0x102200a0000 descriptor=00c0840020fcffffa0002210000000000100050000000000
+[ 8555.885528] m4rch joined-pool: mapping 20 va=0xfffffc2000850000 pa=0x1011f28c000 descriptor=0000850020fcffff8cf21110000000000100050000000000
+[ 8555.885528] m4rch joined-pool: mapping 21 va=0xfffffc2000854000 pa=0x1017ba3c000 descriptor=0040850020fcffff3cba1710000000000100050000000000
+[ 8555.885529] m4rch joined-pool: mapping 22 va=0xfffffc2000858000 pa=0x10124b54000 descriptor=0080850020fcffff544b1210000000000100050000000000
+[ 8555.885529] m4rch joined-pool: mapping 23 va=0xfffffc200085c000 pa=0x10014cec000 descriptor=00c0850020fcffffec4c0110000000000100050000000000
+[ 8555.885529] m4rch joined-pool: mapping 24 va=0xfffffc2000860000 pa=0x10220bd8000 descriptor=0000860020fcffffd80b2210000000000100050000000000
+[ 8555.885530] m4rch joined-pool: mapping 25 va=0xfffffc2000864000 pa=0x1001a194000 descriptor=0040860020fcffff94a10110000000000100050000000000
+[ 8555.885530] m4rch joined-pool: mapping 26 va=0xfffffc2000868000 pa=0x101358dc000 descriptor=0080860020fcffffdc581310000000000100050000000000
+[ 8555.885531] m4rch joined-pool: mapping 27 va=0xfffffc200086c000 pa=0x1001a018000 descriptor=00c0860020fcffff18a00110000000000100050000000000
+[ 8555.885531] m4rch joined-pool: mapping 28 va=0xfffffc2000870000 pa=0x100976e0000 descriptor=0000870020fcffffe0760910000000000100050000000000
+[ 8555.885532] m4rch joined-pool: mapping 29 va=0xfffffc2000874000 pa=0x1001b984000 descriptor=0040870020fcffff84b90110000000000100050000000000
+[ 8555.885532] m4rch joined-pool: mapping 30 va=0xfffffc2000878000 pa=0x10096ef4000 descriptor=0080870020fcfffff46e0910000000000100050000000000
+[ 8555.885533] m4rch joined-pool: mapping 31 va=0xfffffc200087c000 pa=0x1013d3e8000 descriptor=00c0870020fcffffe8d31310000000000100050000000000
+[ 8555.885534] m4rch joined-pool: mapping 32 va=0xfffffc2000880000 pa=0x1001a2fc000 descriptor=0000880020fcfffffca20110000000000100050000000000
+[ 8555.885534] m4rch joined-pool: mapping 33 va=0xfffffc2000884000 pa=0x10096188000 descriptor=0040880020fcffff88610910000000000100050000000000
+[ 8555.885535] m4rch joined-pool: mapping 34 va=0xfffffc2000888000 pa=0x1011e43c000 descriptor=0080880020fcffff3ce41110000000000100050000000000
+[ 8555.885535] m4rch joined-pool: PASS jobs=64 pages=35 device_root=0x1003dcdc000 firmware_root_index=2 notifications=35 publication=0
+[ 8555.885541] m4rch render-backing: page=0 va=0x10000000000 physical=0x10172a4c000 bytes=16384 root_index=16 publication=0
+[ 8555.885548] m4rch render-backing: page=1 va=0x10000004000 physical=0x1004f5a4000 bytes=16384 root_index=16 publication=0
+[ 8555.885555] m4rch render-backing: page=2 va=0x10000008000 physical=0x1012f508000 bytes=16384 root_index=16 publication=0
+[ 8555.885560] m4rch render-backing: page=3 va=0x1000000c000 physical=0x1003ce24000 bytes=16384 root_index=16 publication=0
+[ 8555.885567] m4rch render-backing: page=4 va=0x10000010000 physical=0x101067f0000 bytes=16384 root_index=16 publication=0
+[ 8555.885575] m4rch render-backing: page=5 va=0x10000014000 physical=0x10014904000 bytes=16384 root_index=16 publication=0
+[ 8555.885581] m4rch render-backing: page=6 va=0x10000018000 physical=0x1002ea80000 bytes=16384 root_index=16 publication=0
+[ 8555.885585] m4rch render-backing: page=7 va=0x1000001c000 physical=0x10106160000 bytes=16384 root_index=16 publication=0
+[ 8555.885591] m4rch render-backing: page=8 va=0x10000020000 physical=0x101379e4000 bytes=16384 root_index=16 publication=0
+[ 8555.885596] m4rch render-backing: page=9 va=0x10000024000 physical=0x1013b888000 bytes=16384 root_index=16 publication=0
+[ 8555.885602] m4rch render-backing: page=10 va=0x10000028000 physical=0x10013c10000 bytes=16384 root_index=16 publication=0
+[ 8555.885607] m4rch render-backing: page=11 va=0x1000002c000 physical=0x100144ac000 bytes=16384 root_index=16 publication=0
+[ 8555.885613] m4rch render-backing: page=12 va=0x10000030000 physical=0x10097050000 bytes=16384 root_index=16 publication=0
+[ 8555.885618] m4rch render-backing: page=13 va=0x10000034000 physical=0x100146f8000 bytes=16384 root_index=16 publication=0
+[ 8555.885624] m4rch render-backing: page=14 va=0x10000038000 physical=0x100da5b0000 bytes=16384 root_index=16 publication=0
+[ 8555.885632] m4rch render-backing: page=15 va=0x1000003c000 physical=0x10097cdc000 bytes=16384 root_index=16 publication=0
+[ 8555.885637] m4rch render-backing: page=16 va=0x10000040000 physical=0x10010fcc000 bytes=16384 root_index=16 publication=0
+[ 8555.885643] m4rch render-backing: page=17 va=0x10000044000 physical=0x100da55c000 bytes=16384 root_index=16 publication=0
+[ 8555.885651] m4rch render-backing: page=18 va=0x10000048000 physical=0x101073e4000 bytes=16384 root_index=16 publication=0
+[ 8555.885657] m4rch render-backing: page=19 va=0x1000004c000 physical=0x10106c74000 bytes=16384 root_index=16 publication=0
+[ 8555.885664] m4rch render-backing: page=20 va=0x2000010000 physical=0x100dae48000 bytes=16384 root_index=2 publication=0
+[ 8555.885670] m4rch render-backing: page=21 va=0x1000000000 physical=0x1011b2e8000 bytes=16384 root_index=1 publication=0
+[ 8555.885677] m4rch render-backing: page=22 va=0x1000040000 physical=0x1011ff48000 bytes=16384 root_index=1 publication=0
+[ 8555.885683] m4rch render-backing: page=23 va=0x1000044000 physical=0x10107e14000 bytes=16384 root_index=1 publication=0
+[ 8555.885689] m4rch render-backing: page=24 va=0x1000048000 physical=0x10107b58000 bytes=16384 root_index=1 publication=0
+[ 8555.885696] m4rch render-backing: page=25 va=0x100004c000 physical=0x102ccc8c000 bytes=16384 root_index=1 publication=0
+[ 8555.885703] m4rch render-backing: page=26 va=0x1000050000 physical=0x1011a3a4000 bytes=16384 root_index=1 publication=0
+[ 8555.885709] m4rch render-backing: page=27 va=0x1000054000 physical=0x1011b470000 bytes=16384 root_index=1 publication=0
+[ 8555.885718] m4rch render-backing: page=28 va=0x1000058000 physical=0x100da428000 bytes=16384 root_index=1 publication=0
+[ 8555.885728] m4rch render-backing: page=29 va=0x100005c000 physical=0x1022139c000 bytes=16384 root_index=1 publication=0
+[ 8555.885738] m4rch render-backing: page=30 va=0x1000060000 physical=0x102cc990000 bytes=16384 root_index=1 publication=0
+[ 8555.885739] m4rch render-backing: PASS data_pages=31 table_pages=6 regions=3 byte_comparisons=507904 context=1 publication=0
+[ 8555.885936] m4rch graph-init: 100 device leaves prepared; total mapped pages=206
+[ 8555.885937] m4rch graph-init: shadow walk passed, root=0xfffffc2000100000 interface=0xc8aa322039604c0 host_allocations=1
+[ 8555.885942] m4rch graph-init: owned backing released; published=0 detached=0
+[ 8555.905444] m4rch graph-init: owned backing released; published=0 detached=0

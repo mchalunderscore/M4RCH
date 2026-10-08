@@ -5,9 +5,10 @@ static bool pool_prepare_render(void)
 {
  u64 *root=page_address(owned[DEVICE_TABLE_FIRST]);
  unsigned int i,region;
- const unsigned int starts[]={0,20,21},counts[]={20,1,1};
+ const unsigned int *starts=render_region_starts,*counts=render_region_counts;
  const u64 flags=0x00e0000000000c0bULL; /* Candidate; GPU visibility unproved. */
- if (ARRAY_SIZE(render_vas)!=RENDER_BACKING_PAGES || RENDER_EXTRA_PAGES!=RENDER_BACKING_PAGES+6) return false;
+ if (ARRAY_SIZE(render_region_starts)!=3 || ARRAY_SIZE(render_region_counts)!=3 ||
+     counts[0]+counts[1]+counts[2]!=RENDER_BACKING_PAGES || ARRAY_SIZE(render_vas)!=RENDER_BACKING_PAGES || RENDER_EXTRA_PAGES!=RENDER_BACKING_PAGES+6) return false;
  for (region=0;region<3;region++) {
   u64 va=render_vas[starts[region]];
   u64 *l1=page_address(owned[RENDER_TABLE_FIRST+region*2]);
