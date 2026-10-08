@@ -6,6 +6,48 @@
 #define NOTIFY_STATE_VA (FW_BASE + POOL_BYTES)
 #define NOTIFY_RING_VA (NOTIFY_STATE_VA + PAGE_SIZE)
 static u8 pool_notifications[POOL_PAGES][24];
+/* Resolve only owned graph objects; never return an MMIO mapping. */
+static void *pool_graph_cpu(u64 *l2, u64 va, unsigned int bytes)
+{
+ unsigned int i;
+ if (!bytes || (va & (PAGE_SIZE-1))+bytes>PAGE_SIZE) return NULL;
+ for (i=0;i<ARENA_OBJECT_PAGES;i++)
+  if (owned_page_vas[i]==(va & ~(PAGE_SIZE-1))) {
+   if (l2[(va>>14)&2047]!=(page_to_phys(owned[2+i])|FW_GRAPH_RW)) return NULL;
+   return (u8 *)page_address(owned[2+i])+(va & (PAGE_SIZE-1));
+  }
+ return NULL;
+}
+static bool pool_bind_notifications(u64 *l2)
+{
+ u64 status=get_unaligned_le64((u8 *)page_address(owned[2])+0xb0);
+ void *state_pointer=pool_graph_cpu(l2,status+0x48e0,8);
+ void *entries_pointer=pool_graph_cpu(l2,status+0x48e8,8);
+ void *zero64=pool_graph_cpu(l2,status+0x48f0,8);
+ void *zero32a=pool_graph_cpu(l2,status+0x4900,4);
+ void *zero32b=pool_graph_cpu(l2,status+0x4910,4);
+ u8 *state=page_address(owned[NOTIFY_FIRST_PAGE]);
+ u8 *ring=page_address(owned[NOTIFY_FIRST_PAGE+1]);
+ unsigned int i;
+ if (!status || (status&(PAGE_SIZE-1)) || !state_pointer || !entries_pointer ||
+     !zero64 || !zero32a || !zero32b || !pool_graph_cpu(l2,status+0xe43f,1)) return false;
+ for (i=0;i<4;i++) if (!pool_graph_cpu(l2,status+i*PAGE_SIZE,1)) return false;
+ put_unaligned_le64(NOTIFY_STATE_VA,state_pointer);
+ put_unaligned_le64(NOTIFY_RING_VA,entries_pointer);
+ put_unaligned_le64(0,zero64);put_unaligned_le32(0,zero32a);put_unaligned_le32(0,zero32b);
+ /* Execute the native cold-initialization order before preparing later entries. */
+ put_unaligned_le32(0,state);put_unaligned_le32(0,state+0x10);
+ if (get_unaligned_le64(state_pointer)!=NOTIFY_STATE_VA ||
+     get_unaligned_le64(entries_pointer)!=NOTIFY_RING_VA ||
+     l2[(get_unaligned_le64(state_pointer)>>14)&2047]!=(page_to_phys(owned[NOTIFY_FIRST_PAGE])|FW_GRAPH_RW) ||
+     l2[(get_unaligned_le64(entries_pointer)>>14)&2047]!=(page_to_phys(owned[NOTIFY_FIRST_PAGE+1])|FW_GRAPH_RW) ||
+     get_unaligned_le64(zero64) || get_unaligned_le32(zero32a) || get_unaligned_le32(zero32b) ||
+     get_unaligned_le32(state) || get_unaligned_le32(state+0x10)) return false;
+ for (i=0;i<PAGE_SIZE;i++) if (ring[i]) return false;
+ pr_info("m4rch joined-pool: cold binding PASS root_b0=%#llx state_field=%#llx entries_field=%#llx head=0 tail=0 publication=0\n",
+         status,status+0x48e0,status+0x48e8);
+ return true;
+}
 static bool command_pool_prepare(u64 *firmware_l2)
 {
  unsigned int i,j,part;
@@ -48,6 +90,7 @@ static bool command_pool_prepare(u64 *firmware_l2)
   if ((va>>25)!=(ROOT_VA>>25) || firmware_l2[(va>>14)&2047]) return false;
   firmware_l2[(va>>14)&2047]=pa|FW_GRAPH_RW;
  }
+ if (!pool_bind_notifications(firmware_l2)) return false;
  memcpy(page_address(owned[NOTIFY_FIRST_PAGE+1]),pool_notifications,sizeof(pool_notifications));
  put_unaligned_le32(POOL_PAGES,(u8 *)page_address(owned[NOTIFY_FIRST_PAGE])+0x10);
  if (memcmp(page_address(owned[NOTIFY_FIRST_PAGE+1]),pool_notifications,sizeof(pool_notifications)) ||
