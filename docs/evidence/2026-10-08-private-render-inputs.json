@@ -1,0 +1,141 @@
+{
+  "binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "counts": {
+    "render_target_loader": 1024,
+    "fast_target_loader": 1024,
+    "parameter_loader": 384,
+    "parameter_trap": 640,
+    "fast_geometry": 1024,
+    "fast_validator": 1024,
+    "render_validator": 1024,
+    "fast_geometry_to_descriptor": 512
+  },
+  "parameter_trap_sites": {
+    "0xfffffe000895d7a4": 384,
+    "0xfffffe000895d648": 128,
+    "0xfffffe000895d798": 128
+  },
+  "boundary_examples": [
+    {
+      "render_input": [
+        16384,
+        1,
+        0
+      ],
+      "render_accept": 0
+    },
+    {
+      "render_input": [
+        16,
+        16,
+        1
+      ],
+      "render_accept": 1
+    },
+    {
+      "render_input": [
+        0,
+        16,
+        2
+      ],
+      "render_accept": 1
+    },
+    {
+      "render_input": [
+        33,
+        31,
+        3
+      ],
+      "render_accept": 1
+    },
+    {
+      "render_input": [
+        0,
+        16384,
+        4
+      ],
+      "render_accept": 1
+    },
+    {
+      "render_input": [
+        31,
+        4294967295,
+        7
+      ],
+      "render_accept": 0
+    },
+    {
+      "render_input": [
+        255,
+        15,
+        8
+      ],
+      "render_accept": 0
+    },
+    {
+      "render_input": [
+        15,
+        4294967295,
+        9
+      ],
+      "render_accept": 0
+    },
+    {
+      "render_input": [
+        0,
+        16384,
+        4294967295
+      ],
+      "render_accept": 0
+    }
+  ],
+  "visited_instruction_count": 367,
+  "functions": [
+    {
+      "start": "0xfffffe000895d5f0",
+      "end": "0xfffffe000895d7b4",
+      "sha256": "46b94c83e9ae2a5024bd4b1b34d1448af828d26d6989c81ef8ffeaaa24f0a08c"
+    },
+    {
+      "start": "0xfffffe000895d7b4",
+      "end": "0xfffffe000895d914",
+      "sha256": "3b0e7a4f989f4cd9b6f6a72d28479376a859498b66c482a27998742863ff18fe"
+    },
+    {
+      "start": "0xfffffe000895d914",
+      "end": "0xfffffe000895d968",
+      "sha256": "f82825e9658521fc14eb5b9cabb7d3091e287f1d7c27d307a33784a0e8207a29"
+    },
+    {
+      "start": "0xfffffe00089e5b2c",
+      "end": "0xfffffe00089e5cf8",
+      "sha256": "729a863e4cff0223e6c8118283cbb865f0050b57509b8771e7ea984396bf7980"
+    },
+    {
+      "start": "0xfffffe00089e5cf8",
+      "end": "0xfffffe00089e5d30",
+      "sha256": "71a6164c2231dc26a8ae656a677e7c198151106ae636eb1a7a644d5a7beb159e"
+    },
+    {
+      "start": "0xfffffe00089e63b8",
+      "end": "0xfffffe00089e63f8",
+      "sha256": "d9d39ac25566b5bcc94bc59e4cedec63f0fcd8786934dc2c5a006dcc4a786b40"
+    }
+  ],
+  "parameter_getters": [
+    "0xfffffe00089fefa4",
+    "0xfffffe00089fef98",
+    "0xfffffe00089fef8c"
+  ],
+  "sample_shifts": [
+    32,
+    36,
+    40,
+    44,
+    48,
+    52,
+    56,
+    60
+  ],
+  "qualification": "Actual loaders, fast geometry and validators in RAM. PAC bypassed. RTM map slot158 returns three independent synthetic addresses; mapping semantics not qualified. PM virtual subtype getters execute actual native zero-return functions; ordinary subtype methods are external/unavailable. PM low unsigned fixture pointers only, panic calls intercepted before execution; overflowed high-pointer arithmetic excluded. Numeric validation is not overall object/job validity. No live GPU or shader preparation proved."
+}
