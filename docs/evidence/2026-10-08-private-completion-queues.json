@@ -1,0 +1,31 @@
+{
+  "binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "counts": {
+    "cases": 512,
+    "present_descriptors": 1024,
+    "absent_descriptors": 1024
+  },
+  "allocation_geometry_cases": 256,
+  "descriptor_size": "0x20",
+  "entry_stride": "0x40",
+  "resource_array": "accelerator+0x1af70",
+  "capacity_source": "accelerator+0xee58",
+  "function": {
+    "start": "0xfffffe00089d76c0",
+    "end": "0xfffffe00089d7948",
+    "sha256": "ed171efd2e82e24315dda123f81551c6651e87f65a62630b58d1f55bfe4794f4"
+  },
+  "allocation_slices": [
+    {
+      "start": "0xfffffe00089d713c",
+      "size": 24,
+      "sha256": "03f5843ede5208f0a29ffd2e6c89e2e9181087ea601bf4d31527f3531a97e1e1"
+    },
+    {
+      "start": "0xfffffe00089d7178",
+      "size": 4,
+      "sha256": "1aae1361b65b38c0ee91182612838da80aea4a01a23987068b14aebbcf51630e"
+    }
+  ],
+  "qualification": "Complete native completion descriptor builder, all16 optional-resource combinations; independent full-output and call-order checks. PAC bypassed; resource50/58 virtual mapping getters synthetic. Capacity/stride/ordinal observed without naming pointer roles or entry payload. Allocation rounding slice only; no actual allocation, completion cursor, retirement or live GPU access."
+}
