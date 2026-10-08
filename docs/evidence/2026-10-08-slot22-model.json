@@ -1,0 +1,177 @@
+{
+  "text_contract": {
+    "raw_sha256": "b734bfc10affb93781ccc005439cdd8136f655d6c5276a54f022b81d7602ee1b",
+    "normalized_sha256": "190cef1946a23dfbde180592629631c3b28d0509a17eb76108b7c9a52accd9ac",
+    "observed_variable_payloads": [
+      {
+        "offset": "0x59841",
+        "tag_bytes": "GKTS",
+        "payload_hex": "ee2800f5de21e83f"
+      },
+      {
+        "offset": "0x59924",
+        "tag_bytes": "ECAP",
+        "payload_hex": "fb0b941fbe586eb7"
+      }
+    ],
+    "qualification": "Exact match outside two tagged eight-byte boot metadata payloads; tags and lengths are also checked. No instruction bytes excluded."
+  },
+  "boot_id": "c22c7dac-2c96-41b7-8796-cf1a92a5cb7b",
+  "input_sha256": {
+    "text": "b734bfc10affb93781ccc005439cdd8136f655d6c5276a54f022b81d7602ee1b",
+    "captured_data": "1cbfabe2c6371070b0f5111867423ececf7cc73e0485c00e6b9e427d58bbf242",
+    "owned_objects": "ad9c943d1528c5b7716157e97dd2cb3ebcbe2a8d1de3736f0bb8716fd0d6e0bf"
+  },
+  "native_continuation": {
+    "start": "0x24210",
+    "boundary": "0x2427c before timer helper",
+    "instructions": 15,
+    "writes": 2,
+    "write_pages": [
+      "0x289004000"
+    ],
+    "accesses": [
+      {
+        "bank": "slot22",
+        "pc": "0x24210",
+        "offset": "0x4004",
+        "bytes": 4,
+        "write": true,
+        "value": "0x0"
+      },
+      {
+        "bank": "slot22",
+        "pc": "0x24218",
+        "offset": "0x4010",
+        "bytes": 4,
+        "write": true,
+        "value": "0x0"
+      }
+    ]
+  },
+  "earlier_selector_replay": {
+    "start": "0x24048",
+    "boundary": "0x2427c before timer helper",
+    "instructions": 118,
+    "writes": 8,
+    "write_pages": [
+      "0x288004000",
+      "0x289004000"
+    ],
+    "accesses": [
+      {
+        "bank": "primary",
+        "pc": "0x24084",
+        "offset": "0x40a0",
+        "bytes": 8,
+        "write": true,
+        "value": "0x28040000019cd8"
+      },
+      {
+        "bank": "primary",
+        "pc": "0x24094",
+        "offset": "0x40a8",
+        "bytes": 8,
+        "write": false,
+        "value": null
+      },
+      {
+        "bank": "primary",
+        "pc": "0x2409c",
+        "offset": "0x40a0",
+        "bytes": 8,
+        "write": true,
+        "value": "0x28040000019ce0"
+      },
+      {
+        "bank": "primary",
+        "pc": "0x240a4",
+        "offset": "0x40a8",
+        "bytes": 8,
+        "write": false,
+        "value": null
+      },
+      {
+        "bank": "primary",
+        "pc": "0x2410c",
+        "offset": "0x40a0",
+        "bytes": 8,
+        "write": true,
+        "value": "0x28040000019ce8"
+      },
+      {
+        "bank": "primary",
+        "pc": "0x24114",
+        "offset": "0x40a8",
+        "bytes": 8,
+        "write": false,
+        "value": null
+      },
+      {
+        "bank": "primary",
+        "pc": "0x2411c",
+        "offset": "0x40a0",
+        "bytes": 8,
+        "write": true,
+        "value": "0x28040000019cf0"
+      },
+      {
+        "bank": "primary",
+        "pc": "0x24124",
+        "offset": "0x40a8",
+        "bytes": 8,
+        "write": false,
+        "value": null
+      },
+      {
+        "bank": "primary",
+        "pc": "0x24188",
+        "offset": "0x40a0",
+        "bytes": 8,
+        "write": true,
+        "value": "0x28040000019ca8"
+      },
+      {
+        "bank": "primary",
+        "pc": "0x24190",
+        "offset": "0x40a8",
+        "bytes": 8,
+        "write": false,
+        "value": null
+      },
+      {
+        "bank": "primary",
+        "pc": "0x241a0",
+        "offset": "0x40a0",
+        "bytes": 8,
+        "write": true,
+        "value": "0x28040000019cc0"
+      },
+      {
+        "bank": "primary",
+        "pc": "0x241a8",
+        "offset": "0x40a8",
+        "bytes": 8,
+        "write": false,
+        "value": null
+      },
+      {
+        "bank": "slot22",
+        "pc": "0x24210",
+        "offset": "0x4004",
+        "bytes": 4,
+        "write": true,
+        "value": "0x0"
+      },
+      {
+        "bank": "slot22",
+        "pc": "0x24218",
+        "offset": "0x4010",
+        "bytes": 4,
+        "write": true,
+        "value": "0x0"
+      }
+    ]
+  },
+  "qualification": "Captured native DATA/objects/registers; device reads explicitly zero RAM. Earlier replay assumes preserved registers and native state-query result3. Stops before timer helper; no peripheral semantics, later callback, whole function, startup or rendering success established. Implementation-derived evidence."
+}

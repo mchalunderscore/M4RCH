@@ -1,5 +1,17 @@
 # T6040 GPU bring-up
 
+Current checkpoint (2026-10-08): the maintained kernel is
+7.1.13-m4rch-gpu-contract, with the matching 25G83/.161.10 loader firmware.
+External probes publish an experimental initialization graph; firmware reaches
+slot22 startup writes but has not consumed the queued refresh control. There
+is no rendering or acceleration yet. The sections below retain earlier work.
+
+Current firmware and mapping analysis includes private Apple binary exposure
+and is **not clean-room work**. Keep Apple binaries, full disassembly and
+firmware TEXT captures in private ignored storage, outside Git and return
+archives. Factual evidence retains its provenance; review before sharing with
+clean implementers. A local driver experiment is not a Gravity contribution.
+
 Baseline: Gravity Linux's G16G/T8132 implementation. First target is a correct
 G16S platform contract and identification, then firmware boot and a render
 node, then headless rendering. Desktop acceleration follows those milestones.
@@ -47,10 +59,9 @@ Hardcoded T8132 MCC registers, power limits/calibration, firmware object layouts
 and single-cluster submission topology require individual review. No chip-ID
 spoofing or blanket firmware-version bypass.
 
-Public Gravity/Asahi sources and observed metadata are the inputs to this work;
-no Apple source, firmware disassembly or binary-derived control code is used.
-Derived kernel patch retains GPL-2.0-only provenance. Existing project USB work
-has separate provenance; this is not a repository-wide clean-room claim.
+The initial metadata and identification work below used public Gravity/Asahi
+sources and observed metadata. That statement does not describe the later
+binary-exposed firmware experiments or establish repository-wide provenance.
 
 ## Native contract and offline builds (2026-10-06)
 

@@ -90,7 +90,7 @@ static int root_prepare(bool install)
   if (afr && mmio_leaves[i].writable && ((pa-0x28b000000ULL)%0x10000ULL)) goto fail_root;
   if (mmio_leaves[i].writable && pa!=0x288000000ULL && pa!=0x288004000ULL && pa!=0x288008000ULL && pa!=0x28800c000ULL && pa!=0x288010000ULL && pa!=0x288014000ULL && pa!=0x288018000ULL && pa!=0x28801c000ULL && pa!=0x288020000ULL && pa!=0x288d04000ULL && pa!=0x288d10000ULL &&
       pa!=0x288d40000ULL && pa!=0x288d44000ULL && pa!=0x288d4c000ULL &&
-      pa!=0x288e00000ULL && pa!=0x288e1c000ULL && pa!=0x288e40000ULL && !platform && !afr) goto fail_root;
+      pa!=0x288e00000ULL && pa!=0x288e1c000ULL && pa!=0x288e40000ULL && pa!=0x289004000ULL && !platform && !afr) goto fail_root;
   l2[((va>>14)&2047)]=pa|(mmio_leaves[i].writable?FW_MMIO_RW:FW_MMIO_RO);
  }
  /* Explicit structural fixture, including allocations-enabled root and all
@@ -105,7 +105,7 @@ static int root_prepare(bool install)
  for (i=0;i<ARRAY_SIZE(mmio_leaves);i++)
   if (l2[(mmio_leaves[i].gpu_va>>14)&2047]!=(mmio_leaves[i].physical|(mmio_leaves[i].writable?FW_MMIO_RW:FW_MMIO_RO)))
    goto fail_root;
- pr_info("m4rch graph-init: %zu device leaves prepared (seventeen SGX, sixteen AFR and two platform pages writable); total mapped pages=%u\n",ARRAY_SIZE(mmio_leaves),GRAPH_MAPPED_PAGES);
+ pr_info("m4rch graph-init: %zu device leaves prepared; total mapped pages=%u\n",ARRAY_SIZE(mmio_leaves),GRAPH_MAPPED_PAGES);
  pr_info("m4rch graph-init: shadow walk passed, root=%#llx interface=%#llx host_allocations=1\n",
          ROOT_VA,get_unaligned_le64(page_address(owned[2])));
  if (!install) return 0;
