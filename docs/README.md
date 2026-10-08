@@ -32,5 +32,6 @@ Raw captures, generated packages, images and machine-specific enrollment
 state are local `out/` artifacts and are excluded from the source repository.
 
 - [Apple boot-stub upgrade](stub-upgrade.md): isolated 25G83 preparation and GPU ABI reference.
+- [GPU register mappings](gpu-register-map.md): static AGX mapping evidence and native qualification boundaries.
 
 - [NVMe root migration](nvme-root.md): storage layout, qualification and fallback plan.

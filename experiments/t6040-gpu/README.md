@@ -48,7 +48,9 @@ Hardcoded T8132 MCC registers, power limits/calibration, firmware object layouts
 and single-cluster submission topology require individual review. No chip-ID
 spoofing or blanket firmware-version bypass.
 
-Public Gravity/Asahi sources and observed metadata are the inputs to this work;
-no Apple source, firmware disassembly or binary-derived control code is used.
-Derived kernel patch retains GPL-2.0-only provenance. Existing project USB work
-has separate provenance; this is not a repository-wide clean-room claim.
+The original identification patch uses public Gravity/Asahi sources and
+observed metadata, and retains GPL-2.0-only provenance. Later GPU ABI and
+[register mapping](../../docs/gpu-register-map.md) research includes Apple
+firmware/driver binary analysis and is not clean-room work. Raw binaries and
+disassembly remain private in ignored output. Existing USB work has separate
+provenance; this is not a repository-wide clean-room claim.
