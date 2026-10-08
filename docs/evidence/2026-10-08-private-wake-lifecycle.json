@@ -1,0 +1,60 @@
+{
+  "macho_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "apple_build": "25G83",
+  "agx_version": "353.14",
+  "instruction_site_checks": 43,
+  "vtable": "0xfffffe0007ea8668",
+  "addresspoint_offset": 16,
+  "image_specific_target_base": "0xfffffe0007004000",
+  "resolved_self_slots": [
+    {
+      "slot": "0x0",
+      "target": "0xfffffe00089d2074",
+      "method": "AGXArmFirmwareASC::~AGXArmFirmwareASC D1"
+    },
+    {
+      "slot": "0x8",
+      "target": "0xfffffe00089d190c",
+      "method": "AGXArmFirmwareASC::~AGXArmFirmwareASC D0"
+    },
+    {
+      "slot": "0x1d8",
+      "target": "0xfffffe00089ca40c",
+      "method": "getNumDeviceRecoveries"
+    },
+    {
+      "slot": "0x1e0",
+      "target": "0xfffffe00089ca3ec",
+      "method": "isFirmwareStoppedForHostRecovery"
+    },
+    {
+      "slot": "0x480",
+      "target": "0xfffffe00089c27e8",
+      "method": "isFirmwareStoppedForPreRecovery"
+    },
+    {
+      "slot": "0x488",
+      "target": "0xfffffe00089c27c8",
+      "method": "isFirmwareStoppedForPostRecovery"
+    },
+    {
+      "slot": "0x700",
+      "target": "0xfffffe00089d15d0",
+      "method": "isSystemSleepNotificationInProgress"
+    },
+    {
+      "slot": "0x2d8",
+      "target": "0xfffffe00089c8ff8",
+      "method": "convertGPUVAToFWVA"
+    }
+  ],
+  "payload_slots": {
+    "initialize": "0x880",
+    "boot": "0x888",
+    "root_notification_send": "0x898",
+    "recovery_send": "0x8a8",
+    "change_power_state": "0x8c0",
+    "request_firmware_binary": "0x8d0"
+  },
+  "qualification": "Offline private static audit, not clean-room. Provider implementations are absent. No hardware actions, Apple code execution or exact status48/cause diagnosis. See companion Markdown for interpretation and limitations."
+}
