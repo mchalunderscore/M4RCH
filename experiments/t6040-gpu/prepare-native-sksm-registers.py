@@ -162,7 +162,8 @@ def prepare(macho, manifest, output):
             x26=integer(spec['x26'],64,'x26'),
             w21=integer(spec['w21'],32,'w21'), w22=integer(spec['w22'],32,'w22'),
             mapping_address=integer(spec['completion_mapping_address'],64,'completion mapping'),
-            accelerator_mode=integer(spec['accelerator_mode'],32,'accelerator mode'))
+            accelerator_mode=integer(spec['accelerator_mode'],32,'accelerator mode'),
+            aperture_flags=integer(spec['aperture_flags'],8,'aperture flags'))
         construction['branch_result'] = ta_command.conditional_control(desc,submit_context,
             construction['accelerator_mode'])
     # Produce both before exporting anything; a failed second producer leaves no
@@ -184,8 +185,17 @@ def prepare(macho, manifest, output):
             construction['context'],construction['mapping_address'])
         ta_candidate = ta_command.tail(ta_candidate, descriptor_out, construction['stack'],
             construction['x26'], construction['w21'], construction['w22'], construction['branch_result'])
-        if ta_candidate[0x60:0x780] != command[0x60:0x780]:
-            raise ValueError('TA construction changed native register backing/metadata')
+        ta_candidate, ta_candidate_descriptor = ta_command.postproducer(ta_candidate,
+            descriptor_out,construction['context'],construction['aperture_flags'])
+        for item in results['ta'][2]['lists']:
+            offset = int(item['offset'],0)
+            end = offset+item['backing_bytes']
+            if end > 0x660:
+                raise ValueError('TA register backing overlaps aperture storage')
+            if ta_candidate[offset:end] != command[offset:end]:
+                raise ValueError('TA construction changed native register backing')
+        if ta_candidate[0x760:0x76c] != command[0x760:0x76c]:
+            raise ValueError('TA construction changed native register metadata')
     schedulers = {}
     if 'scheduler' in binding:
         for kind in ('ta', '3d'):
@@ -221,6 +231,7 @@ def prepare(macho, manifest, output):
         report['producers'][kind] = detail
     if ta_candidate is not None:
         (output/'ta-construction-candidate.bin').write_bytes(ta_candidate)
+        (output/'ta-construction-descriptor.bin').write_bytes(ta_candidate_descriptor)
         report['ta_construction'] = dict(submission_ready=False,
             command_sha256=hashlib.sha256(ta_candidate).hexdigest(),
             context_sha256=hashlib.sha256(construction['context']).hexdigest(),
@@ -231,8 +242,12 @@ def prepare(macho, manifest, output):
             branch_result=hex(construction['branch_result']),
             accelerator_mode=hex(construction['accelerator_mode']),
             completion_mapping_address=hex(construction['mapping_address']),
+            aperture_flags=hex(construction['aperture_flags']),
+            aperture_count=struct.unpack_from('<I',ta_candidate_descriptor,0x13bc)[0],
+            aperture_pointer=hex(struct.unpack_from('<Q',ta_candidate_descriptor,0x13b0)[0]),
+            descriptor_sha256=hashlib.sha256(ta_candidate_descriptor).hexdigest(),
             register_backing_preserved=True,
-            qualification='Checked TA construction models over actual register producer output, including completion mapping plus u32 offset and derived control branch (mode3 trampoline included). Caller X28 context is distinct from producer lookup context. Translation/mapping results are explicit fixtures; notification virtual150 argument flow checked separately, its real output/lifetime semantics excluded. Descriptor virtual1a8 excluded. Remaining bytes zero/unqualified; not a complete channel command or valid drawing job.')
+            qualification='Checked TA preproducer models, native register output and postproducer flag/mcache models. Aperture records use reserved660..75f; native register backing/metadata preserved. Caller X28 context distinct from producer lookup context. Translation/mapping returns are explicit fixtures; notification real output/lifetime semantics excluded. Actual submitted-kick callback checked separately. Descriptor output retains emulator CPU identities and excludes notification output/counter objects. Remaining bytes zero/unqualified; not a complete live job.')
     if schedulers:
         report['scheduler_candidates'] = {}
         for kind, (work, accounting, template, detail) in schedulers.items():

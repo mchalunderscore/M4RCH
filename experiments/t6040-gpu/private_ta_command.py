@@ -64,6 +64,32 @@ def conditional_control(descriptor, context, accelerator_mode):
     return 0
 
 
+def postproducer(command, descriptor, context, aperture_flags):
+    """TA postproducer flags plus native G16 mcache aperture records."""
+    out, desc = bytearray(command), bytearray(descriptor)
+    count = struct.unpack_from('<I',desc,0x1388)[0]
+    if count > 16:
+        raise ValueError('Aperture count exceeds descriptor/command reserved storage')
+    flags = out[0x98e] & 0xf2
+    if count or any(context[0x390:0x3b0]):
+        flags |= 1 | ((aperture_flags & 3) << 2)
+        out[0x96e:0x98e] = desc[0x1390:0x13b0]
+    out[0x98e] = flags
+    struct.pack_into('<QQ',desc,0x13b0,0,0xffffffff)
+    if count:
+        qid = struct.unpack_from('<I',desc,0x1274)[0]
+        for j in range(count):
+            address, length = struct.unpack_from('<QI',desc,0x1288+j*16)
+            dsid = desc[0x1288+j*16+12]
+            size = struct.unpack_from('<H',desc,0x1288+j*16+14)[0]
+            start = ((dsid << 47) | (qid << 41) | (address >> 7) | (1 << 55)) & ((1 << 64)-1)
+            end = (((address >> 7)+length) & ((1 << 64)-1)) | ((1 << min(size,4)) << 42) | (1 << 41)
+            struct.pack_into('<QQ',out,0x660+j*16,start,end)
+        pointer = (struct.unpack_from('<Q',out,0x760)[0]+0x600) & ((1 << 64)-1)
+        struct.pack_into('<Q2I',desc,0x13b0,pointer,0,count)
+    return bytes(out),bytes(desc)
+
+
 def tail(command, descriptor, stack, x26, w21, w22, branch_result):
     """Branch result is explicit: the preceding conditional path is excluded."""
     out = bytearray(command)

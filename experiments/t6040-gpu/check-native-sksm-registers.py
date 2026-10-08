@@ -32,6 +32,11 @@ with tempfile.TemporaryDirectory(prefix='native-sksm-register-test-') as directo
         struct.pack_into('<Q', descriptor, 0x14e8, epoch)
         offset = [0,1,0xffffffff,i*32][i % 4]
         struct.pack_into('<I',descriptor,0x1430,offset)
+        struct.pack_into('<I',descriptor,0x1388,i)
+        struct.pack_into('<I',descriptor,0x1274,i)
+        for j in range(i):
+            struct.pack_into('<QIBBH',descriptor,0x1288+j*16,
+                rng.getrandbits(64),rng.getrandbits(32),rng.getrandbits(8),0,rng.getrandbits(16))
         (root/'descriptor.bin').write_bytes(descriptor)
         (root/'context.bin').write_bytes(bytes(0x100)); (root/'scene.bin').write_bytes(bytes(0x100))
         def scheduler(qid):
@@ -53,7 +58,7 @@ with tempfile.TemporaryDirectory(prefix='native-sksm-register-test-') as directo
             firmware_translations=[hex(v) for v in translations],
             x26=hex(fw+0x100), w21=i, w22=i+1,
             completion_mapping_address=hex((1 << 64)-1 if i % 2 else fw),
-            accelerator_mode=i % 4)
+            accelerator_mode=i % 4, aperture_flags=i & 3)
         manifest = root/'input.json'; manifest.write_text(json.dumps(binding))
         report = module.prepare(args.macho,manifest,root/('pair-'+str(i)))
         assert report['submission_ready'] is False
@@ -61,7 +66,8 @@ with tempfile.TemporaryDirectory(prefix='native-sksm-register-test-') as directo
         ta = (output_dir/'ta-construction-candidate.bin').read_bytes()
         register_only = (output_dir/'ta-register-command.bin').read_bytes()
         assert len(ta) == 0x9c0
-        assert ta[0x60:0x780] == register_only[0x60:0x780]
+        assert ta[0x60:0x660] == register_only[0x60:0x660]
+        assert ta[0x760:0x780] == register_only[0x760:0x780]
         assert struct.unpack_from('<IQ',ta,0) == (0,serial)
         assert struct.unpack_from('<3Q',ta,0x20) == tuple(translations)
         assert struct.unpack_from('<Q',ta,0x7a8)[0] == epoch & ((1 << 40)-1)
@@ -79,6 +85,15 @@ with tempfile.TemporaryDirectory(prefix='native-sksm-register-test-') as directo
             elif i % 4 == 3: expected_control = 1
         assert struct.unpack_from('<I',ta,0x89e)[0] == expected_control
         assert ta[0x93c] == submit_context[0x434]&1
+        constructed_descriptor = (output_dir/'ta-construction-descriptor.bin').read_bytes()
+        assert struct.unpack_from('<Q2I',constructed_descriptor,0x13b0) == (
+            int(report['producers']['ta']['lists'][0]['address'],0)+0x600 if i else 0,
+            0 if i else 0xffffffff,i)
+        for j in range(i):
+            address,length,dsid,_,size = struct.unpack_from('<QIBBH',descriptor,0x1288+j*16)
+            expected_start = ((dsid<<47)|(i<<41)|(address>>7)|(1<<55)) & ((1<<64)-1)
+            expected_end = ((address>>7)+length)|((1<<min(size,4))<<42)|(1<<41)
+            assert struct.unpack_from('<QQ',ta,0x660+j*16) == (expected_start,expected_end)
         assert report['ta_construction']['submission_ready'] is False
         counts['ta_construction_pairs'] += 1
         lists = report['producers']['ta']['lists'][0]['records']
@@ -105,7 +120,8 @@ with tempfile.TemporaryDirectory(prefix='native-sksm-register-test-') as directo
         dict(ta_construction={**binding['ta_construction'], 'serial':True}),
         dict(ta_construction={**binding['ta_construction'], 'branch_result':0}),
         dict(ta_construction={**binding['ta_construction'], 'completion_mapping_address':True}),
-        dict(ta_construction={**binding['ta_construction'], 'accelerator_mode':True})]
+        dict(ta_construction={**binding['ta_construction'], 'accelerator_mode':True}),
+        dict(ta_construction={**binding['ta_construction'], 'aperture_flags':256})]
     for j, replacement in enumerate(invalid):
         bad = {**binding,**replacement}; manifest.write_text(json.dumps(bad)); destination=root/('bad-'+str(j))
         try: module.prepare(args.macho,manifest,destination)
@@ -113,5 +129,5 @@ with tempfile.TemporaryDirectory(prefix='native-sksm-register-test-') as directo
         else: raise AssertionError('Invalid input accepted')
         assert not destination.exists(); counts['rejected_inputs'] += 1
 report = dict(private_binary_sha256=report['private_binary_sha256'],counts=counts,examples=examples,tool_sha256=hashlib.sha256(path.read_bytes()).hexdigest(),
-    qualification='16 explicit synthetic paired register producers through verified G16_SKSM wrappers, independently encoded entries and metadata links;64 independently expected TA firmware-address register values,80 native list/common scheduler links. 16 partial TA construction candidates check serial, translated resources, packed epoch, caller context/stack inputs, completion mapping/u32-offset wrap and all sixteen mode/context combinations, with unchanged native register backing. Both conditional initial-entry states and GPU bit47 values. Eleven malformed inputs fail before export. Producer context/scene are explicit zero fixtures; untouched command storage, complete recipe semantics, live physical mapping/cache/queue/completion and valid primitive submission are not qualified. No hardware touched.')
+    qualification='16 synthetic pairs through native SKSM wrappers;64 expected TA FW-register values,80 list/scheduler links. Partial TA commands check serial/translations/epoch/caller inputs, completion offset wrap, all16 mode/context combinations and counts0..15 aperture records with descriptor pointer/count. Native register backing/metadata preserved. Twelve malformed inputs fail before export. Context/scene zero fixtures; remaining command storage, recipe semantics, live mappings/cache/queues/completion and valid drawing unqualified. No hardware touched.')
 args.output.write_text(json.dumps(report,indent=2)+'\n'); print(counts)
