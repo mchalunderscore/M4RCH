@@ -1,3 +1,20 @@
+# Metrics registration correction — 2026-10-08
+
+Resolved PM50 gap: registration call89fcf1c passes X6=PM50. Actual native
+requestPMPageMetricsBuffer89f740c writes and retains the resource through it;
+our earlier external service fixture omitted that sixth output. No native bug.
+Corrected parent creation expectations. New actual-method audit1024 cases
+(512 success/512 empty pool), and256 full initialized-job chains with actual
+metrics registration pass. See docs/evidence/2026-10-08-private-pm-metrics.md,
+private-pm-metrics.json and private-pm-metrics-job.json. This supersedes earlier
+zero-PM50/lifecycle-gap statements; all seven affected parent audits rerun successfully.
+
+Next join ordinary retention with corrected initialized job and native caller
+ordering; qualify pool growth/release and pending/replacement mappings, Linux
+allocations/root/work/queues/events, cache publication/completion/readback.
+No live commands; not submission-only ready. Normal reboot before live trials;
+no forced unload/reset/warm retry of retained failed warm INIT.
+
 # Native mapping lifecycle checkpoint — 2026-10-08
 
 Three more offline batches pass:256 fresh/256 reused concrete page mappings,

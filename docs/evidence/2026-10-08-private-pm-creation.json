@@ -104,7 +104,7 @@
           4
         ]
       ],
-      "descriptor_sha256": "2061c88751ee382f14333d6498d521726ad9671ffb04b1b28ef7a0eed4d5105a"
+      "descriptor_sha256": "ce958696695e960bc47016d4cd9b684072c90cd3b6265c4d148bf1e26e1fd5c3"
     },
     {
       "slot_count": 2,
@@ -197,7 +197,7 @@
           16
         ]
       ],
-      "descriptor_sha256": "d75aa008ddf75e37aec6a7f1c69a976ba1f017b15319afdfd35114c329730add"
+      "descriptor_sha256": "6714983aef399661aff2f30dccba0ab82712b610b5db8fc8653399257a2eb77d"
     },
     {
       "slot_count": 3,
@@ -290,7 +290,7 @@
           48
         ]
       ],
-      "descriptor_sha256": "8b805065f9069c8313d604a7acd597a9b71fd13761bd6a8246fcf92b32710d42"
+      "descriptor_sha256": "202f738283e49a47b3d9f3b6678519dc25f44e7502310b2bb3eff1047636afa1"
     },
     {
       "slot_count": 4,
@@ -383,7 +383,7 @@
           128
         ]
       ],
-      "descriptor_sha256": "ce98ad9297fb56b4758e791ab3df070a72bf001db3ca112900565c11b52c6833"
+      "descriptor_sha256": "14cdf86c10276125bee3af37081278449fab951f032d69a8ec67ce978da6f358"
     }
   ],
   "qualification": "Joined actual PM initializer allocation/configuration -> three resource creation/association paths -> registration outputs -> scene-array publication.256 successful positive-count fixtures, both allocation override branches. Full PM object, vectors, scene/scratch buffers compare independently. Resource map50/map60 already exist; lazy creation, allocation/registration failures, remaining PM initializer/HWPB creation excluded. Inherited services, resource alloc/init/mapping and registration are explicit stubs; sizes/argument/object ordering checked. CPU-dereferenced returned pointers differ from FW scene addresses, no universal virtual-slot mapping semantics claimed. No live root/resource/queue registration or GPU command."

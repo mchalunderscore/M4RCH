@@ -1,5 +1,9 @@
 # Native page-mapping and internal-resource lifecycle
 
+**Correction:** the PM50 gap below is now resolved as an omitted sixth output in
+the registration fixture. See private-pm-metrics.md and the actual native-method
+and initialized-job receipts. The gap discussion records the earlier investigation.
+
 Offline private-derived AGX353.14/Apple25G83, using the pinned input SHA in each
 JSON receipt. All numeric offsets and addresses below are hexadecimal. No live
 GPU commands or kernel/boot changes were made by the audits.

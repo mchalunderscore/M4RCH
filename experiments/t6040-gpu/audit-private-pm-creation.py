@@ -11,6 +11,7 @@ m.mem_write(META,struct.pack('<Q',MVT));m.mem_write(MVT+0xa8,struct.pack('<Q',NE
 RES=[0x280000,0x281000,0x282000];MAPOBJ=[0x283000,0x284000,0x285000];CPUOBJ=[0x286000,0x287000,0x288000];MAPVT,CPUVT=0x289000,0x28a000
 MAPGET,CPUGET=0x239018,0x239020;REGP,REGVT,REGOBJ,REGOVT,REGREQ,REGCOMMIT=0x292000,0x293000,0x294000,0x295000,0x239028,0x239030
 CPU50=[0x28b000,0x28c000,0x28d000];CPU60=[0x28e000,0x28f000,0x290000];SCRATCH=0x296000
+METRICS_RESOURCE=0x297000
 m.mem_write(MAPVT+0x158,struct.pack('<Q',MAPGET));m.mem_write(CPUVT+0x138,struct.pack('<Q',CPUGET))
 for i,r in enumerate(RES):
  m.mem_write(r+0x50,struct.pack('<Q',MAPOBJ[i]));m.mem_write(r+0x60,struct.pack('<Q',CPUOBJ[i]));m.mem_write(MAPOBJ[i],struct.pack('<Q',MAPVT));m.mem_write(CPUOBJ[i],struct.pack('<Q',CPUVT))
@@ -38,9 +39,9 @@ def creation_hook(m,address,size,user):
     index=CPUOBJ.index(x0);value=CPU60[index];resource_events.append(('map60_get138',index))
    elif target==REGREQ:assert x0==REGP;assert m.reg_read(c.UC_ARM64_REG_X1)==struct.unpack_from('<Q',qcfg,0x28)[0];value=REGOBJ;resource_events.append(('registration_request',))
    else:
-    assert x0==REGOBJ;assert m.reg_read(c.UC_ARM64_REG_X1)==S;assert m.reg_read(c.UC_ARM64_REG_X2)==S+0x48
+    assert x0==REGOBJ;assert m.reg_read(c.UC_ARM64_REG_X1)==S;assert m.reg_read(c.UC_ARM64_REG_X2)==S+0x48;assert m.reg_read(regs[6])==S+0x50
     for reg,v in [(3,SCRATCH),(4,fw_maps[1]),(5,fw_maps[0])]:m.mem_write(m.reg_read(regs[reg]),struct.pack('<Q',v))
-    struct.pack_into('<I',expected_registration,0,registration_id);m.mem_write(S+0x48,bytes(expected_registration));resource_events.append(('registration_commit',));value=1
+    struct.pack_into('<I',expected_registration,0,registration_id);m.mem_write(S+0x48,bytes(expected_registration));m.mem_write(S+0x50,struct.pack('<Q',METRICS_RESOURCE));resource_events.append(('registration_commit',));value=1
    m.reg_write(c.UC_ARM64_REG_X0,value);m.reg_write(c.UC_ARM64_REG_PC,address+4);return
  if address==0xfffffe00089fcf44:
   x0=m.reg_read(c.UC_ARM64_REG_X0);n=m.reg_read(c.UC_ARM64_REG_W1);assert x0==SCRATCH and n==slot_count*stride;m.mem_write(SCRATCH,bytes(n));resource_events.append(('clear_registration_scratch',n));m.reg_write(c.UC_ARM64_REG_PC,address+4);return
@@ -62,7 +63,7 @@ for i in range(256):
  for reg,val in [(c.UC_ARM64_REG_X0,S),(c.UC_ARM64_REG_X1,GPU),(c.UC_ARM64_REG_X2,SHARED),(c.UC_ARM64_REG_X3,DEVICE),(c.UC_ARM64_REG_X4,QCFG),(c.UC_ARM64_REG_SP,STACK)]:m.reg_write(reg,val)
  m.emu_start(START,END,count=30000);assert m.reg_read(c.UC_ARM64_REG_PC)==END
  expected,_,_,_=allocation_prelude(original,gpu,device,qcfg,GPU,SHARED,results,memory);expected=bytearray(expected)
- for off,v in [(0x38,RES[0]),(0x40,RES[1]),(0x30,RES[2]),(0xb8,CPU50[0]+slot_count*0x80),(0xc8,CPU50[1]),(0x98,CPU60[1]),(0xa0,CPU50[1]+0x40),(0x80,CPU60[1]+0x40)]:struct.pack_into('<Q',expected,off,v)
+ for off,v in [(0x38,RES[0]),(0x40,RES[1]),(0x30,RES[2]),(0x50,METRICS_RESOURCE),(0xb8,CPU50[0]+slot_count*0x80),(0xc8,CPU50[1]),(0x98,CPU60[1]),(0xa0,CPU50[1]+0x40),(0x80,CPU60[1]+0x40)]:struct.pack_into('<Q',expected,off,v)
  struct.pack_into('<I',expected,0x48,registration_id);expected[0x70:0x80]=constant
  actual=bytes(m.mem_read(S,len(original)));assert actual==expected,(i,[(hex(j),actual[j],expected[j]) for j in range(len(actual)) if actual[j]!=expected[j]][:20])
  for role,baseptr in [('vector_a',CPU50[0]),('vector_b',CPU60[0])]:

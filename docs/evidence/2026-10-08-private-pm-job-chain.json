@@ -118,7 +118,7 @@
           2
         ]
       ],
-      "descriptor_sha256": "2c63ba88c94a1e38898b6ab16b7e09fdd489b69fad3bed11d57403456133ca3b"
+      "descriptor_sha256": "ca411e9ba60f7030e6d56326ba9cef72e05cba9f51ba9f485d57f9815a802673"
     },
     {
       "slot_count": 2,
@@ -219,7 +219,7 @@
           2
         ]
       ],
-      "descriptor_sha256": "df6d84ad1f88d4ab875a17f87e1562ebdce5e43b2261d2331742b1656d0af111"
+      "descriptor_sha256": "42e8a24fb7f268e3b49fe0998d0cafe960cb442f6de305426cbc41b4e9a76717"
     },
     {
       "slot_count": 3,
@@ -320,7 +320,7 @@
           2
         ]
       ],
-      "descriptor_sha256": "b4a44516c58667c4df20ac1b18464453e58d391420a94b7e993d596ac74dfcc6"
+      "descriptor_sha256": "7e7d4ef532ac7edc202de81c1bbab8c9df4b4421007a135ce7487542cf53ae29"
     },
     {
       "slot_count": 4,
@@ -421,7 +421,7 @@
           2
         ]
       ],
-      "descriptor_sha256": "f8a8ac6f8db0c8cf0375fa0cbd0ef2ed5c23c55626f0cfb183c2e86c989412ea"
+      "descriptor_sha256": "613b2bd454d1839937263db430058ffb6dc0d000f8458be695cbc1398fae1374"
     }
   ],
   "qualification": "256 joined native complete PM initializer -> native HWPB factory -> native HW reset -> native PM loadPBDesc -> native G16 descriptor-ring load. Whole objects/state/counter/scenes/ring compare independently at both initializer and job boundaries. First-use jobs mode3, request0..31, scene index0; optional initializer old-manager/support-resize and bit47 allocation flags covered. External alloc/init/registration/mapping/translation remain fixtures. No staged prepareAndRetain/descriptor association, live identities/cache visibility, KSM submission or completion proved.",

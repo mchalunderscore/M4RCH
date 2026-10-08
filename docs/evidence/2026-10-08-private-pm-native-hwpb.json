@@ -118,7 +118,7 @@
           2
         ]
       ],
-      "descriptor_sha256": "985df34defda9ba39c74b078544da2295ae61d2c9fa03ed2b01994accbc542d2"
+      "descriptor_sha256": "b62d1816762605cf2097da337d2c83c78c464ded9bd58ad2148ca22bc302ee51"
     },
     {
       "slot_count": 2,
@@ -219,7 +219,7 @@
           2
         ]
       ],
-      "descriptor_sha256": "4a1337d1bce8c7599dd3aa0346df6d4eae60f7367d1a12ae507a55a75d50c729"
+      "descriptor_sha256": "e335312798102ea2f77e8712aa99cfbadc52f23f1501331fb85a508dcb8f9fc0"
     },
     {
       "slot_count": 3,
@@ -320,7 +320,7 @@
           2
         ]
       ],
-      "descriptor_sha256": "6933b73d9709699d5656615091f138aba9c94357cd3bbb11073c262e4621e310"
+      "descriptor_sha256": "0a3562852043af32a6a2b0fc25832caec3a8ee0b4cd29a29d3ae99df686cc9cc"
     },
     {
       "slot_count": 4,
@@ -421,7 +421,7 @@
           2
         ]
       ],
-      "descriptor_sha256": "a064cdd51c1fab6183e437f46aae485fc395dd9b8b85adda340224090b902647"
+      "descriptor_sha256": "b28fc94faafc3b183fd5cf60a43ab3c07636e94a136fda0db5829e64a64188a3"
     }
   ],
   "qualification": "Complete actual native PM initializer including native HWPB allocation factory and nested native HW reset,256 successful cases, full PM/manager/state/counter/vector/scene bytes and external service order/arguments checked. Both GPU bit47 resource-flag branches. Allocators, inherited/resource initialization, preexisting mapping services, registration, scheduler translation and PM configuration are explicit fixtures. Initializer old-manager release and factory support-resize branches each covered128 times; factory old-manager replacement excluded; lazy mappings, failures and live identities excluded. No live GPU command or rendering readiness proved."

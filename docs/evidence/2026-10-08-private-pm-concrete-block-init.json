@@ -118,7 +118,7 @@
           2
         ]
       ],
-      "descriptor_sha256": "c21d57fa9e460c55efb4ca7484b4b9b79d9efcbd562754cddbc6d5b55480b293"
+      "descriptor_sha256": "5cfcdb182ef24fb5dc6198e57aa9f1eb2f6701bb4f4bfa0b1dbdaa1bbf9c97da"
     },
     {
       "slot_count": 2,
@@ -219,7 +219,7 @@
           2
         ]
       ],
-      "descriptor_sha256": "11b93c1cbd2986895d0941c84b66caafe13a0cda0eb70d9b666732734b22cafe"
+      "descriptor_sha256": "2abe8d8496888dcfecb7abc4d3d33c416435744a60a1e7c6827df31600027b8d"
     },
     {
       "slot_count": 3,
@@ -320,7 +320,7 @@
           2
         ]
       ],
-      "descriptor_sha256": "9d57b419a131b9c0fc0a511644403173e4fab1e4a68c15d01a36eadb90578939"
+      "descriptor_sha256": "ff70b37517da9104228031377976f61cc23116eb4257d1e93f01a90a832ef301"
     },
     {
       "slot_count": 4,
@@ -421,7 +421,7 @@
           2
         ]
       ],
-      "descriptor_sha256": "f4155442127e3528c2c948b60f5bed766d32f1483fba9e433cf0716aca29e6dc"
+      "descriptor_sha256": "d94c0efae92bd6d01133bfd5cda251cf4c37a34307bc19e8335cb1b5ac5d1ab2"
     }
   ],
   "qualification": "256 complete native PM initializers including actual concrete scene setup, no-argument wrapper plus actual parameter-block creation, native HWPB factory/reset and concrete discard-page getter. Independent full PM/config/manager/block/allocation-vector/scenes/HW-state/counter checks. Capacity2..33 reserves empty slot; positive state count1..8. Both bit47 resource/GART mapping flags and optional extra scene branch. External inherited/resource/memory-descriptor/registration/mapping/state alloc services remain fixtures. No allocator/root/cache visibility, staged job/TA association, KSM submission or completion readiness proved.",

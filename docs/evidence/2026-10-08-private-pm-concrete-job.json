@@ -118,7 +118,7 @@
           2
         ]
       ],
-      "descriptor_sha256": "e6ef6a1b49f6522a6a630f17cfed3e8eb5bdd5720fc201dcc6265b6c5ab31642"
+      "descriptor_sha256": "c23b10419979544c6bb1f6c2edc792feb3a0b05dd8598be747ddd2b3d6df671e"
     },
     {
       "slot_count": 2,
@@ -219,7 +219,7 @@
           2
         ]
       ],
-      "descriptor_sha256": "dca2c6e14d256e31c3e00ac85d7476e0b14c9aa658b7e5ee5c216a1276a56c5f"
+      "descriptor_sha256": "60e1b55fb65fca0ed8cea298be251b9e5a8f26a66b6c6166ac1cffb6294ebf0a"
     },
     {
       "slot_count": 3,
@@ -320,7 +320,7 @@
           2
         ]
       ],
-      "descriptor_sha256": "b51fd2dc1707803456973b4fb5e8714a712b99efb77f4db94c1ba97d688ffef8"
+      "descriptor_sha256": "f6901b0b5b91b4b0237b99d40979bc2743211582a1be901140e80f4e49f985e4"
     },
     {
       "slot_count": 4,
@@ -421,7 +421,7 @@
           2
         ]
       ],
-      "descriptor_sha256": "6f6abfe04f93503103cd7f329d94ee96353bb9fe683df026af61d361e82b0bd7"
+      "descriptor_sha256": "0d62bdf1744a5536695f16f060f40dffa4b16342fdffd0ea00945e0953c60429"
     }
   ],
   "qualification": "256 dataflow chains: actual full PM initialization/concrete scene setup/actual block creation/HWPB reset -> actual block preparation -> actual page-list builder -> actual PM job bind and actual G16 packed ring load. Independent whole-byte comparisons at each boundary; actual created block/HW objects reused. One initial block, capacity2..33, staged cursor1/completed0,32KiB page units, four generated page entries, request0..31. Manual orchestration between methods does not prove native caller ordering or full prepareAndRetain; external resource/memory/registration/map/preparation services still fixtures. No live identity/cache visibility or submission/completion readiness.",

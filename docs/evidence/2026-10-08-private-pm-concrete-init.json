@@ -118,7 +118,7 @@
           2
         ]
       ],
-      "descriptor_sha256": "d18fe92bbb2779f069f7678a96d6bc6c2a9e90ab7fa7c1a6f6430f557d5c80ac"
+      "descriptor_sha256": "f2114139cb00e871207a441435db99985298a4ce6c4d43cab9766a7ba2b9c7bd"
     },
     {
       "slot_count": 2,
@@ -219,7 +219,7 @@
           2
         ]
       ],
-      "descriptor_sha256": "7bae0cedc93390fce2f8440097221492123a90c50843946ef95c35561920ebb2"
+      "descriptor_sha256": "a92c92255a25628c3fb8b31a14eb49fd764378f9eea7f72b82f6fe1cd63f68e0"
     },
     {
       "slot_count": 3,
@@ -320,7 +320,7 @@
           2
         ]
       ],
-      "descriptor_sha256": "192cd14f3bca6a299e69f2552b35992b49c5f6a3b9b4d4c1895b5ca3fa4ef7f7"
+      "descriptor_sha256": "35311b14ddd707f9295117c875a9d9b69afd35c74de4609d921aee3966dbd4e9"
     },
     {
       "slot_count": 4,
@@ -421,7 +421,7 @@
           2
         ]
       ],
-      "descriptor_sha256": "26fdc75b6f1d7ca0195e25a9dc79a9588fc244af44a96ad20094dd3e3925e85c"
+      "descriptor_sha256": "30507a7e5b81dd5078d49fa0f459246e909eb14c189ff9c0456f88766ef07283"
     }
   ],
   "qualification": "256 complete native PM initializers replace virtual150 readiness with actual concrete setupSceneState, then execute native HWPB factory/reset including actual concrete discard-page getter208. Full PM/manager/state/counter/scenes/config/vector byte comparisons. Positive state counts1..8, capacity1..32, one initial block per initializer, both bit47 and optional extra shared-scene branches. Block creation, inherited alloc/resource/mapping/registration/translation services still explicit. Concrete page mapping/block implementation, failure paths, live identities/cache visibility and GPU submission excluded.",
