@@ -182,4 +182,25 @@ class BatchTests(unittest.TestCase):
   from owned_gpu_layout import validate
   for data,r in ((self.data,self.receipt),extend(self.data,copy.deepcopy(self.receipt))):
    self.assertEqual(validate(data,r),[int(r['base'],16)+i*0x4000 for i in range(len(data)//0x4000)])
+ def test_retirement_ignores_prior_shadow_allocations_and_requires_complete_final_group(self):
+  from retirement_proof import last_allocation
+  log=''.join(f'owned page {i} physical={0x800000000+i*0x4000:#x}\n' for i in range(3))
+  log+=''.join(f'owned page {i} physical={0x810000000+i*0x4000:#x}\n' for i in range(3))
+  self.assertEqual(last_allocation(log,3),[0x810000000+i*0x4000 for i in range(3)])
+  with self.assertRaises(ValueError):last_allocation(log+'owned page 0 physical=0x820000000\n',3)
+ def test_post_unload_rejects_lingering_reference_and_broken_loader_path(self):
+  from retirement_proof import check,BASE,ROOT
+  table=bytearray(0x40000);l2=bytes(0x4000)
+  for offset,value in [(0,(BASE+0x4000)|3),(0x4000,(BASE+0x8000)|3),(0x8000,0x10000be4000|3),
+                       (0x8000+24*8,0x10001d44000|3),(((ROOT>>36)&63)*8,0x200105fff744cb)]:
+   struct.pack_into('<Q',table,offset,value)
+  log=''.join(f'owned page {i} physical={0x800000000+i*0x4000:#x}\n' for i in range(3))
+  self.assertTrue(check(table,l2,bytes(0x40000),log,1)['post_unload_verified'])
+  self.assertTrue(check(table,l2,table,log,1)['post_unload_verified'])
+  dirty=bytearray(l2);struct.pack_into('<Q',dirty,0,0x800008000|3)
+  self.assertFalse(check(table,dirty,table,log,1)['post_unload_verified'])
+  dirty=bytearray(table);struct.pack_into('<Q',dirty,0x8000,0x10000be8000|3)
+  self.assertFalse(check(dirty,l2,bytes(0x40000),log,1)['post_unload_verified'])
+  dirty=bytearray(table);struct.pack_into('<Q',dirty,0x1000,0x800004000|3)
+  self.assertFalse(check(dirty,l2,bytes(0x40000),log,1)['post_unload_verified'])
 if __name__=='__main__':unittest.main()

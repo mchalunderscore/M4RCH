@@ -20,6 +20,8 @@
 #define EMPTY BIT(17)
 static unsigned int run_gate;
 static bool request_shutdown;
+static bool release_on_shutdown;
+module_param(release_on_shutdown,bool,0400);
 module_param(request_shutdown,bool,0400);
 static unsigned int observe_ms=30000;
 module_param(observe_ms,uint,0400);
@@ -77,7 +79,10 @@ static void cleanup(void)
  if (mbox_region) release_mem_region(MBOX_BASE,0x1000);
  if (asc_region) release_mem_region(ASC_BASE,0x1000);
  if (consumer) {
-  if (held) pm_runtime_put_sync_suspend(&consumer->dev);
+  if (held) {
+   int ret=pm_runtime_put_sync_suspend(&consumer->dev);
+   pr_info("m4rch graph-init: runtime suspend result=%d\n",ret);
+  }
   pm_runtime_disable(&consumer->dev);
   pm_genpd_remove_device(&consumer->dev);
   platform_device_unregister(consumer);
@@ -158,6 +163,7 @@ static int __init hello_init(void)
  u32 appmap = 0;
  u8 apps_started = 0;
  u8 map_seen = 0;
+ if (release_on_shutdown && (!request_shutdown || !GRAPH_RELEASE_EXPERIMENT)) return -EINVAL;
  if (observe_ms<5000 || observe_ms>60000) return -EINVAL;
  if ((run_gate!=1 && run_gate!=2) || !of_machine_is_compatible("apple,j614s") ||
      !of_machine_is_compatible("apple,t6040")) return -ENODEV;
@@ -278,12 +284,20 @@ retire_firmware:
   usleep_range(1000,2000);
  } while(time_before(jiffies,limit));
  pr_info("m4rch ASC crashlog: final control=%#x status=%#x stop_readback=%d\n",readl(asc+0x44),readl(asc+0x48),stopped);
- /* Only this reserved-buffer, crashlog-only probe may release after both power
+ /* Only the explicitly compiled structural/no-job experiment may detach
+  * published backing after both ACKs, core stop and an empty FIFO.
+  * The ordinary non-publication path retains its previous checks.
+  * Only this reserved-buffer, crashlog-only probe may release after both power
   * ACKs, core stop and an empty receive FIFO. Any incomplete step stays pinned.
   * This does not authorize teardown of an initialized or rendering GPU. */
  retired=!root_sent && ap_quiesced && iop_sleep && stopped && (readl(mbox+0x114)&EMPTY);
+ if (root_sent && release_on_shutdown && ap_quiesced && iop_sleep && stopped &&
+     (readl(mbox+0x114)&EMPTY)) {
+  retired=root_detach_after_shutdown();
+  if (retired) pr_info("m4rch graph-init: graph retirement verified; normal unload allowed\n");
+ }
  if (retired) {
-  pr_info("m4rch ASC crashlog: application-start-only retirement verified; normal unload allowed\n");
+  if (!root_sent) pr_info("m4rch ASC crashlog: application-start-only retirement verified; normal unload allowed\n");
  } else {
   __module_get(THIS_MODULE);
   pr_warn("m4rch ASC crashlog: retirement incomplete; resources pinned; reboot required\n");

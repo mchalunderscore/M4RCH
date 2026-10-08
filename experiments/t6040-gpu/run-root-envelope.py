@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Fresh-boot validation and optional minimal-root rejection probe. Never reboot.
+"""Validate matched firmware and run bounded structural GPU probes. Never reboot.
 
-The publication probe deliberately expects firmware rejection. Its backing and
-power reference remain pinned after publication, even if ASC stop succeeds.
+Published backing stays pinned by default. The explicitly qualified structural
+release candidate permits normal unload only after acknowledged root detach;
+the runner independently verifies reserved tables and released resources.
 """
 import argparse
 import hashlib
@@ -43,8 +44,10 @@ def main():
     p.add_argument('--run', action='store_true')
     mode = p.add_mutually_exclusive_group()
     mode.add_argument('--arena', action='store_true', help='Mapping/retirement only; never publish a root')
-    mode.add_argument('--graph', action='store_true', help='Batch structural initialization, allocations enabled; published memory pins until reboot')
+    mode.add_argument('--graph', action='store_true', help='Structural initialization; backing pins unless the qualified shutdown release succeeds')
+    p.add_argument('--cycle',type=int,choices=(1,2,3),help='Separate lifecycle capture; requires validated predecessor unload after cycle1')
     args = p.parse_args()
+    require(args.cycle is None or args.graph,'Cycles only apply to graph lifecycle trial')
     work = args.workspace.resolve()
     build = work/'asc-root-envelope'
     receipt = json.loads((build/'build-receipt.json').read_text())
@@ -59,7 +62,16 @@ def main():
         require(not (name.startswith('asc_') or name in ['asahi_m4', 'resource_overlay', 'gfx_power_test', 'gpu_data_sample', 'm4rch_gpu_adt']), 'Conflicting module: '+name)
     boot = Path('/proc/sys/kernel/random/boot_id').read_text().strip()
     out = (work/'asc-graph-init' if args.graph else work/'asc-arena-preflight' if args.arena else build)/('boot-'+boot)
-    out.mkdir(exist_ok=True)
+    if args.cycle is not None:
+        require(receipt.get('graph_release_on_shutdown',False),'Cycle requires release-enabled candidate')
+        if args.cycle>1:
+            previous=out/f'cycle-{args.cycle-1}'/'attempt.json'
+            require(previous.exists(),'Previous lifecycle capture missing')
+            prev=json.loads(previous.read_text())
+            require(prev.get('post_unload_verified') and prev.get('graph_retirement_verified') and prev.get('unloaded'),'Previous lifecycle release not verified')
+            require(prev['validated_build_receipt']==receipt,'Candidate changed across lifecycle cycles')
+        out=out/f'cycle-{args.cycle}'
+    out.mkdir(parents=True,exist_ok=True)
     require(not (out/'attempt.json').exists() and not (out/'result.json').exists(), 'Attempt already recorded for this boot; do not repeat')
     raw = capture(work/'adt-current/m4rch_gpu_adt.ko', '/sys/kernel/m4rch_gpu_adt/adt', out/'boot.adt', 'm4rch_gpu_adt')
     tree = parse(raw)
@@ -106,7 +118,12 @@ def main():
     # On a genuinely cold boot the firmware populates these tables during its
     # handshake. The native probe checks the completed path before installing.
 
-    require(struct.unpack_from('<Q',tables,16)[0] == 0, 'Candidate top-level slot occupied')
+    slot=struct.unpack_from('<Q',tables,16)[0]
+    if args.cycle is not None and args.cycle>1 and slot==0x200105fff744cb:
+        retained_l2=capture(work/'arena-l2-sample/gpu-data-sample.ko','/sys/kernel/m4rch_gpu_data_sample/data',out/'l2-before-restart.bin','gpu_data_sample')
+        require(not any(retained_l2),'Owned loader child remains occupied before restart')
+    else:
+        require(slot==0,'Candidate top-level slot occupied')
     text = capture(work/'root-text-sample/gpu-data-sample.ko', '/sys/kernel/m4rch_gpu_data_sample/data', out/'text.bin', 'gpu_data_sample')
     text_contract = qualify(text)
     # Instruction and string checks qualify the intended early rejection path.
@@ -142,6 +159,7 @@ def main():
     try:
         parameters=['run_gate=1' if args.arena else 'run_gate=2']
         if args.graph and receipt.get('graph_power_retirement_probe',False):parameters.append('request_shutdown=1')
+        if args.graph and receipt.get('graph_release_on_shutdown',False):parameters.append('release_on_shutdown=1')
         result = subprocess.run(['insmod',str(selected)]+parameters,capture_output=True,text=True)
     finally:
         done.set()
@@ -189,8 +207,10 @@ def main():
         print('Arena preflight retired and unloaded; no pinned resources.' if unloaded else 'Arena preflight refused or retained resources; inspect evidence.')
         return
     present = Path('/sys/module/asc_graph_init' if args.graph else '/sys/module/asc_root_envelope').exists()
-    report['root_published'] = 'G16S root sent to EP32' in logs
-    report['mapping_or_publication_performed'] = (f"{receipt['graph_object_pages']} object pages mapped" in logs if args.graph else 'installed previously-empty mapping slot' in logs)
+    before_log=(out/'dmesg-before.log').read_text()
+    delta=logs[len(before_log):] if logs.startswith(before_log) else logs
+    report['root_published'] = 'G16S root sent to EP32' in delta
+    report['mapping_or_publication_performed'] = (f"{receipt['graph_object_pages']} object pages mapped" in delta if args.graph else 'installed previously-empty mapping slot' in logs)
     report.update(load_returncode=result.returncode, stderr=result.stderr, module_present=present,
                   reboot_required=present, interpretation=('Allocations-enabled structural fixture. A sent root/object change does not prove initialization or rendering readiness. Never force unload.' if args.graph else 'A transmitted root is not proof of consumption. Seek a newly written disabled-host-allocations rejection in the crashlog. Never force module unload.'))
     (out/'attempt.json').write_text(json.dumps(report,indent=2)+'\n')
@@ -227,11 +247,46 @@ def main():
                 report['object_changes'].append(dict(name=obj['name'],changed_bytes=len(changed),
                     first_changed_offsets=[hex(i) for i in changed[:32]]))
             report['objects_after_sha256']=sha(objects)
+            report['object_snapshot_missing']=False
         else:
             report['object_snapshot_missing']=True
         (out/'attempt.json').write_text(json.dumps(report,indent=2)+'\n')
+    if args.graph and present and receipt.get('graph_release_on_shutdown',False):
+        verified='graph retirement verified; normal unload allowed' in delta
+        report['graph_retirement_verified']=verified
+        refcount=int(Path('/sys/module/asc_graph_init/refcnt').read_text())
+        report['module_refcount_after']=refcount
+        report['unloaded']=False
+        if verified and refcount==0 and not report.get('object_snapshot_missing',True):
+            subprocess.run(['rmmod','asc_graph_init'],check=True)
+            report['unloaded']=True
+            report['reboot_required']=True
+            report['post_unload_verified']=False
+            (out/'attempt.json').write_text(json.dumps(report,indent=2)+'\n')
+            os.sync()
+            table=capture(work/'sample-pagetables/gpu-data-sample.ko','/sys/kernel/m4rch_gpu_data_sample/data',out/'tables-after-unload.bin','gpu_data_sample')
+            l2=capture(work/'arena-l2-sample/gpu-data-sample.ko','/sys/kernel/m4rch_gpu_data_sample/data',out/'l2-after-unload.bin','gpu_data_sample')
+            from retirement_proof import check
+            report.update(check(table,l2,(out/'pagetables.bin').read_bytes(),delta,receipt['graph_object_pages']))
+            report.update(post_unload_tables_sha256=sha(table),post_unload_l2_sha256=sha(l2))
+            report['reboot_required']=not report['post_unload_verified']
+        final_log=subprocess.check_output(['dmesg','--color=never'],text=True)
+        (out/'dmesg-after-unload.log').write_text(final_log)
+        if report.get('unloaded'):
+            final_delta=final_log[len(logs):] if final_log.startswith(logs) else final_log
+            suspend_results=[int(x) for x in re.findall(r'graph-init: runtime suspend result=(-?\d+)',final_delta)]
+            report.update(module_absent=not Path('/sys/module/asc_graph_init').exists(),
+                          consumer_absent=not any(Path('/sys/bus/platform/devices').glob('m4rch-asc-crashlog*')),
+                          mmio_claims_released='m4rch-asc-crashlog' not in Path('/proc/iomem').read_text(),
+                          runtime_suspend_results=suspend_results)
+            report['post_unload_verified']=report['post_unload_verified'] and report['module_absent'] and report['consumer_absent'] and report['mmio_claims_released'] and bool(suspend_results) and all(x>=0 for x in suspend_results)
+            report['reboot_required']=not report['post_unload_verified']
+        (out/'attempt.json').write_text(json.dumps(report,indent=2)+'\n')
+        os.sync()
+        print('Graph retired and unloaded; inspect post-unload proof before another cycle.' if report.get('post_unload_verified') else 'Graph retirement incomplete; inspect evidence; do not retry.')
+        return
     os.sync()
-    print('Probe returned. Inspect evidence; pinned backing requires reboot.' if present else 'Probe refused; inspect evidence before retrying.')
+    print('Probe returned. Inspect evidence; pinned backing requires reboot.'  if present else 'Probe refused; inspect evidence before retrying.')
 
 if __name__ == '__main__':
     main()

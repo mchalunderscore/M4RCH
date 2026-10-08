@@ -14,7 +14,7 @@
 #define FW_GRAPH_RW (BIT_ULL(55) | BIT_ULL(54) | BIT_ULL(10) | BIT_ULL(6) | 8ULL | 3ULL)
 static struct page *owned[ARENA_OBJECT_PAGES + 2]; /* Generated candidate backing plus two tables. */
 static u64 *bootstrap, *borrowed_l1, *target_page, *target_slot;
-static bool installed, root_sent;
+static bool installed, root_sent, root_detached;
 
 static void clean_page(void *ptr)
 {
@@ -34,11 +34,27 @@ static void invalidate_root_va(void)
  }
  asm volatile("dsb sy" ::: "memory");
 }
+/* Only called after RTKit quiesce/sleep ACKs, core stop and an empty FIFO.
+ * Keep physical backing for the post-stop snapshot; free on ordinary unload.
+ */
+static bool root_detach_after_shutdown(void)
+{
+ u64 expected;
+ if (!root_sent || !installed || !target_slot || !target_page) return false;
+ expected=page_to_phys(owned[borrowed_l1?1:0])|3;
+ if (READ_ONCE(*target_slot)!=expected) return false;
+ WRITE_ONCE(*target_slot,0);
+ clean_page(target_page);invalidate_root_va();
+ if (READ_ONCE(*target_slot)) return false;
+ installed=false;root_detached=true;
+ pr_info("m4rch graph-init: acknowledged shutdown; owned root detached; %u VAs invalidated; backing retained for snapshot\n",GRAPH_MAPPED_PAGES);
+ return true;
+}
 static void root_release(void)
 {
  unsigned int i;
- /* No unmapping/freeing once a root publication was sent to firmware. */
- if (root_sent) return;
+ /* Published backing is releasable only after the acknowledged detach path. */
+ if (root_sent && !root_detached) return;
  if (installed) {
   WRITE_ONCE(*target_slot,0);
   clean_page(target_page);
@@ -51,6 +67,7 @@ static void root_release(void)
  if (bootstrap) {memunmap(bootstrap);bootstrap=NULL;}
  for (i=0;i<ARRAY_SIZE(owned);i++)
   if (owned[i]) {__free_pages(owned[i],0);owned[i]=NULL;}
+ pr_info("m4rch graph-init: owned backing released; published=%d detached=%d\n",root_sent,root_detached);
 }
 static int root_prepare(bool install)
 {

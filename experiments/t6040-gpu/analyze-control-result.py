@@ -30,6 +30,8 @@ for i in range(count):
   raise ValueError('Unexpected control record')
 data=(a.capture/'data-after.bin').read_bytes()
 log=(a.capture/'dmesg-after.log').read_text()
+prior=(a.capture/'dmesg-before.log').read_text()
+if log.startswith(prior):log=log[len(prior):]
 live=attempt['live_observation']
 result=dict(boot_id=attempt['boot_id'],trial_fixture_sha256=digest,
  trial_module_sha256=attempt['validated_build_receipt']['artifact_sha256']['asc-graph-init/asc-graph-init.ko'],
@@ -56,5 +58,6 @@ for index in (13,14):
    first_word=struct.unpack_from('<I',right)[0],word_at_20=struct.unpack_from('<I',right,0x20)[0]))
  result[f'receive{index}_qualification']='Raw owned-buffer changes/words only; no cursor role, event decoding or receive readiness inferred.'
 result['shutdown_log']=[line for line in log.splitlines() if 'shutdown requested=' in line or 'AP_QUIESCED_ACK=' in line or 'power response message=' in line or 'final control=' in line]
+result['retirement']={key:attempt[key] for key in ('graph_retirement_verified','unloaded','module_refcount_after','post_unload_verified','owned_page_count','owned_page_references','reserved_l2_zero','loader_root_preserved','loader_text_data_path_qualified','module_absent','consumer_absent','mmio_claims_released','runtime_suspend_results') if key in attempt}
 a.output.write_text(json.dumps(result,indent=2)+'\n')
 print('Control cursors',result['control_cursors_after'],'consumed',result['all_control_records_consumed'],'crash header',result['crashlog_header_present'])

@@ -25,7 +25,9 @@ def main():
     p.add_argument('--receive14', action='store_true', help='Experimental four-buffer receive14 fixture; no jobs')
     p.add_argument('--receive13', action='store_true', help='With receive14, add four-buffer receive13 using device-disjoint GPU pages')
     p.add_argument('--retirement-probe', action='store_true', help='Request AP quiesce/IOP sleep after observation; never release published backing yet')
+    p.add_argument('--release-on-shutdown', action='store_true', help='Qualified structural-only trial: detach owned root after ACKs/stop, allow normal unload')
     args = p.parse_args()
+    if args.release_on_shutdown and not (args.retirement_probe and args.receive13 and args.receive14 and args.control_refresh and args.control_refresh_count==32):p.error('Release experiment requires the exact receive13/14+32-control shutdown fixture')
     if args.receive13 and not args.receive14:p.error('Receive13 currently requires receive14')
     if not 1 <= args.control_refresh_count <= 32 or (not args.control_refresh and args.control_refresh_count != 1):
         p.error('Require --control-refresh and count1..32 for a batch')
@@ -105,6 +107,7 @@ def main():
     from owned_gpu_layout import validate
     owned_vas = validate(graph_bytes,graph_receipt)
     header = '/* Explicit experimental zero-opaque fixture, NOT a complete render graph. */\n'
+    header += f'#define GRAPH_RELEASE_EXPERIMENT {int(args.release_on_shutdown)}U\n'
     header += f'#define ARENA_OBJECT_PAGES {graph_pages}U\n'
     header += f'#define GRAPH_MAPPED_PAGES {graph_receipt["mapped_pages"]}U\n'
     header += f'#define GRAPH_MMIO_BASE {graph_receipt["mmio_virtual_base"]}ULL\n'
@@ -132,7 +135,7 @@ def main():
                    graph_object_pages=graph_pages,graph_fixture_sha256=sha(graph/'graph-before.bin'),
                    graph_source_sha256={name:sha(graph/name) for name in ['asc-graph-init.c','graph-map.h','graph-contract.h']},
                    graph_receipt_sha256=sha(graph/'graph-receipt.json'),
-                   graph_power_retirement_probe=args.retirement_probe,hardware_trial_performed=False,default_gate=0,preflight_gate=1,cold_publication_gate=2)
+                   graph_power_retirement_probe=args.retirement_probe,graph_release_on_shutdown=args.release_on_shutdown,hardware_trial_performed=False,default_gate=0,preflight_gate=1,cold_publication_gate=2)
     (out/'build-receipt.json').write_text(json.dumps(receipt,indent=2)+'\n')
     print('Built matching isolated modules; no loading or firmware publication.')
 
