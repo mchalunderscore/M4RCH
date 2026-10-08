@@ -1,3 +1,24 @@
+# Native TA preparation checkpoint
+
+Offline only; no GPU commands, kernel/default changes or reboot.
+Read docs/evidence/2026-10-08-native-ta-preparation.md and numeric receipts.
+Complete native TA RT loader:1024 full-byte cases, ordered primary/support160/158 services.
+Complete TA PM loader plus actual3D tail:384 valid,640 expected trapped cases.
+Native geometry -> TA RT/PM loaders -> payload/common copy -> full TA recipe:
+64 cases,256 full-byte intermediate comparisons,256 expected firmware address values,
+5248 independent encoder checks. TA exports81/82; backing83/84.
+Complete payload slice:1024 cases, including partial BG/EOT and lifecycle values.
+All128 raw client flag combinations preserve observed tile-statea2000036011.
+Native low default36011 (corrected prior prose typo3611); donor3717f is not interchangeable.
+TA-specific constructor tail:1024 full-byte cases; parent and5 external services excluded.
+Next:parent3D/ordinary PM initialization, matched work/queue/event/stamp integration,
+actual mappings/cache visibility and completion-to-readback. Still NOT submission-only readiness.
+Failed warm INIT retained on bootfa78dd48-b214-46fc-8786-cae63897ad78;
+normal reboot required before next live GPU session. No forced unload/reset/retry.
+Private-derived; no Apple binary/TEXT/disassembly exported or public push.
+
+---
+
 # Native render preparation checkpoint
 
 Offline work only; no kernel/default changes or GPU job submission.

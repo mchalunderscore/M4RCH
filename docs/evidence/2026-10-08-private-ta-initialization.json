@@ -1,0 +1,111 @@
+{
+  "private_binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "range": [
+    "0xfffffe0008a213dc",
+    "0xfffffe0008a21594"
+  ],
+  "range_sha256": "704a7edc46ce1760f63ab7e27e257f8f8a6d22070b98bfd4f1f7862c61c2f836",
+  "counts": {
+    "ta_initialization_tail": 1024,
+    "external_lifecycle_calls": 5120
+  },
+  "zero_ranges": [
+    [
+      "0xc4c",
+      "0xd0d"
+    ],
+    [
+      "0x1148",
+      "0x1218"
+    ],
+    [
+      "0x121c",
+      "0x1270"
+    ],
+    [
+      "0xff0",
+      "0x1142"
+    ],
+    [
+      "0x1288",
+      "0x13c0"
+    ],
+    [
+      "0x13c8",
+      "0x13e8"
+    ],
+    [
+      "0xd98",
+      "0xda0"
+    ],
+    [
+      "0xe68",
+      "0xff0"
+    ]
+  ],
+  "examples": [
+    {
+      "allocation": "0x0",
+      "return_value": 1,
+      "services": [
+        {
+          "kind": "lifecycle",
+          "x0": "0x200000",
+          "x1": "0x0"
+        },
+        {
+          "kind": "state_init",
+          "x0": "0x200dc8",
+          "x1": "0x0"
+        },
+        {
+          "kind": "lifecycle",
+          "x0": "0x200000",
+          "x1": "0x0"
+        },
+        {
+          "kind": "state_init",
+          "x0": "0x200d28",
+          "x1": "0x0"
+        },
+        {
+          "kind": "allocation",
+          "x0": "0x1",
+          "x1": "0x1234567890abcdef"
+        }
+      ]
+    },
+    {
+      "allocation": "0xd0c0af43042a60f3",
+      "return_value": 1,
+      "services": [
+        {
+          "kind": "lifecycle",
+          "x0": "0x200000",
+          "x1": "0x0"
+        },
+        {
+          "kind": "state_init",
+          "x0": "0x200dc8",
+          "x1": "0x0"
+        },
+        {
+          "kind": "lifecycle",
+          "x0": "0x200000",
+          "x1": "0x0"
+        },
+        {
+          "kind": "state_init",
+          "x0": "0x200d28",
+          "x1": "0x0"
+        },
+        {
+          "kind": "allocation",
+          "x0": "0x1",
+          "x1": "0x1234567890abcdef"
+        }
+      ]
+    }
+  ],
+  "qualification": "Actual complete TA-specific constructor tail after its parent call. Full destination byte comparisons with random original bytes. Parent AGX3D constructor, lifecycle/state_init helpers and allocation semantics excluded; service calls intercepted with explicit no-op/result fixtures. The caller frame is supplied, PAC bypassed. Return1 even with allocation0 is observed in this tail, not a proof null allocation is valid for a render job. No live initialization or GPU submission."
+}

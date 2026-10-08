@@ -48,7 +48,7 @@ donor87. Their shared order agrees. Native has160b8, donor has a second1731;
 those are genuine recipe-identity differences in this source comparison.64 of
 86 values agree after native geometry composition. The remaining22 are NOT
 all variant differences: many native lifecycle/client fields remain zero and
-source inputs differ. The tile-state low default3611 versus donor3717f and gate
+source inputs differ. The tile-state low default36011 versus donor3717f and gate
 prefix60 versus donord5 deserve specific native producer qualification. Preserve
 our native recipe rather than replace it with the donor sequence.
 
