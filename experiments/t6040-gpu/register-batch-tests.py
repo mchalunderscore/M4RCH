@@ -119,6 +119,19 @@ class BatchTests(unittest.TestCase):
   data=bytearray(self.data);base=int(self.receipt['base'],16)
   data[int(self.receipt['empty_channel_fixture'][12]['cursors'][0],16)-base]=1
   with self.assertRaises(ValueError):stage(data,self.receipt)
+ def test_refresh_batch_bounds_and_record_isolation(self):
+  import copy
+  from control_refresh import stage
+  base=int(self.receipt['base'],16);channel=self.receipt['empty_channel_fixture'][12]
+  producer=int(channel['cursors'][2],16)-base;ring=int(channel['ring'],16)-base
+  for count in (2,16,32):
+   data,r=stage(self.data,copy.deepcopy(self.receipt),count)
+   changed=[i for i,(a,b) in enumerate(zip(self.data,data)) if a!=b]
+   self.assertEqual(changed,[producer]+[ring+i*0x40 for i in range(count)])
+   self.assertEqual(struct.unpack_from('<I',data,producer)[0],count)
+   self.assertEqual(r['mmio_leaves'],self.receipt['mmio_leaves'])
+  for count in (0,33,-1,True,1.5):
+   with self.assertRaises(ValueError):stage(self.data,copy.deepcopy(self.receipt),count)
  def test_changed_bus_translation_rejected(self):
   tree=mods['batch'].adt.parse(raw);old=mods['batch'].adt.parse
   tree['/device-tree/arm-io']['ranges']=bytes(len(tree['/device-tree/arm-io']['ranges']))

@@ -15,7 +15,9 @@ p=argparse.ArgumentParser(description=__doc__)
 for name in ['text','arena','receipt','output']:p.add_argument(name,type=Path)
 a=p.parse_args();text=a.text.read_bytes();contract=qualify(text)
 arena=a.arena.read_bytes();receipt=json.loads(a.receipt.read_text());base=int(receipt['base'],16)
-if receipt.get('control_refresh',{}).get('opcode')!=0x16:raise ValueError('Missing single refresh fixture')
+if receipt.get('control_refresh',{}).get('opcode')!=0x16:raise ValueError('Missing refresh fixture')
+count=receipt['control_refresh'].get('count',1)
+if type(count) is not int or not 1<=count<=32:raise ValueError('Unqualified refresh count')
 entry=struct.unpack_from('<i',text,0x5284+(0x16-4)*4)[0]+0x3a3c
 if entry!=0x4b1c or text[0x58850+0x16]!=0:raise ValueError('Unexpected command dispatch/power class')
 m=u.Uc(u.UC_ARCH_ARM64,u.UC_MODE_ARM)
@@ -27,7 +29,7 @@ for offset,name in [(0x18e4c0,'main'),(0x18e3f0,'status_a'),(0x18ee70,'status_b'
  m.mem_write(FW+offset,struct.pack('<Q',int(objects[name]['gpu_va'],16)))
 m.mem_map(0x4000000,0x10000);m.reg_write(c.UC_ARM64_REG_SP,0x400f000)
 m.reg_write(c.UC_ARM64_REG_CPACR_EL1,3<<20)
-sentinel=FW+0x400;m.reg_write(c.UC_ARM64_REG_LR,sentinel);m.reg_write(c.UC_ARM64_REG_X0,1)
+sentinel=FW+0x400;m.reg_write(c.UC_ARM64_REG_LR,sentinel);m.reg_write(c.UC_ARM64_REG_X0,count)
 steps=[];accesses=[];omissions=[]
 def code(mu,address,size,opaque):
  if address==sentinel:mu.emu_stop();return
@@ -47,10 +49,10 @@ m.hook_add(u.UC_HOOK_CODE,code);m.hook_add(u.UC_HOOK_MEM_READ|u.UC_HOOK_MEM_WRIT
 m.emu_start(FW+0x385c,sentinel,count=20000,timeout=5_000_000)
 channel=receipt['empty_channel_fixture'][12]
 cursors=[struct.unpack('<I',m.mem_read(int(x,16),4))[0] for x in channel['cursors']]
-if m.reg_read(c.UC_ARM64_REG_PC)!=sentinel or cursors!=[1,1,1] or 0x4b1c not in steps or 0x3388 not in steps:
+if m.reg_read(c.UC_ARM64_REG_PC)!=sentinel or cursors!=[count]*3 or steps.count(0x4b1c)!=count or 0x3388 not in steps:
  raise ValueError('Refresh did not return with consumed control and cleared flag')
 result=dict(text_contract=contract,arena_sha256=hashlib.sha256(arena).hexdigest(),
- instructions=len(steps),dispatch=hex(entry),control_cursors_after=cursors,
+ instructions=len(steps),dispatch=hex(entry),handler_entries=steps.count(0x4b1c),control_cursors_after=cursors,
  object_accesses=accesses,omitted_authentication=omissions,
  qualification='Offline control-handler model only. Explicit zero private state and disabled cache-helper configuration; four parser globals seeded. No device mappings, native queue processing, timing or rendering established.')
 a.output.write_text(json.dumps(result,indent=2)+'\n');print('Control refresh returned; cursors',cursors,'instructions',len(steps))

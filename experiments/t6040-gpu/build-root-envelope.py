@@ -21,7 +21,10 @@ def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('workspace', type=Path)
     p.add_argument('--control-refresh', action='store_true', help='One opcode16 initial control record; work remains empty')
+    p.add_argument('--control-refresh-count', type=int, default=1, help='With --control-refresh, stage1..32 identical records; no wraparound')
     args = p.parse_args()
+    if not 1 <= args.control_refresh_count <= 32 or (not args.control_refresh and args.control_refresh_count != 1):
+        p.error('Require --control-refresh and count1..32 for a batch')
     work = args.workspace.resolve()
     tree = work/'linux'
     source = json.loads((work/'source-receipt.json').read_text())
@@ -85,7 +88,7 @@ def main():
     graph_bytes, graph_receipt = register_batch.extend(graph_bytes,graph_receipt,seed.read_bytes())
     if args.control_refresh:
         from control_refresh import stage
-        graph_bytes, graph_receipt = stage(graph_bytes, graph_receipt)
+        graph_bytes, graph_receipt = stage(graph_bytes, graph_receipt, args.control_refresh_count)
     graph_pages = len(graph_bytes)//graph_plan.PAGE
     if len(graph_bytes)%graph_plan.PAGE or graph_pages!=47:
         raise ValueError('Unexpected structural fixture geometry')
