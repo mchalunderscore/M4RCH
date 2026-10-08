@@ -109,3 +109,12 @@ Reproduce:
 python experiments/t6040-gpu/audit-private-sku-startup.py \
  /boot/GPUC003/private-apple/com.apple.AGXG16X /tmp/sku-startup.json
 ```
+
+## Follow-up: native producer bounds the count
+
+The subsequent private-hwdsid-append report traces this structure to
+populateCommandHWDSIDData. Its two checked append paths permit only existing
+count<=15, leaving a final maximum of16, and render callers pass descriptor970.
+This explains how ordinary native construction avoids the malformed consumer
+fixtures above. The local loop remains unchecked, but that alone is not evidence
+of a native-driver vulnerability. See2026-10-08-private-hwdsid-append.md/JSON.
