@@ -7,6 +7,11 @@ Read docs/evidence/2026-10-08-private-pm-retain.md/JSON plus private-pm-job-chai
 TA retained resource fields bound; mapping generations and staged ring cursor checked.
 External mapping/page/staging/retain methods remain explicit services. Failures excluded.
 No direct loadPBDesc call in this method: trace later caller/resource/page-list ordering.
+Concrete AGXParameterManagementVirtual dispatch now identified:150=setupSceneState89fefb0,
+1f0=prepareAndRetainPageListMapping89fe494,1c0=prepareParameterBufferBlock89fea44,
+1c8=buildPageList89fb414,200=getPageListPreparationID89fe440,208=getDiscardPageAddress89fe3ec.
+Next replace remaining readiness/page-service fixtures with these concrete native methods.
+See private-pm-retain.md appended vtable table; targets checked, bodies not yet qualified.
 Next ordinary virtual-method/resource setup -> matched TA/3D work and Linux-owned
 root/queues/events/stamps -> publication/completion/coherent readback. NOT submission-ready.
 Retained warm INIT needs normal reboot before live GPU trials; offline work continues.

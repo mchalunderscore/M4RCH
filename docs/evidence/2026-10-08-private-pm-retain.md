@@ -44,3 +44,30 @@ and caller ordering into loadPBDesc, then bind the existing descriptor/register
 recipes to Linux-owned work/queue/event/stamp identities and coherent completion.
 The retained failed warm INIT still requires a normal reboot before live GPU
 trials; offline work can continue. No commands submitted in this batch.
+
+## Concrete subtype dispatch identified after the batch
+
+Reading encoded vtable entries in the same pinned Mach-O gives these exact
+concrete `AGXParameterManagementVirtual` targets. Address point is7eb3050+16;
+each encoded target decodes as7004000 plus low32 of its entry (high address
+prefixfffffe0000000000). The earlier base-vtable services must not be treated as
+implemented base methods: several base entries instead share external target
+c0a8ae0. This observation identifies dispatch, not complete subtype validation.
+
+| Slot | Actual target | Method |
+|---|---|---|
+|150|89fefb0|setupSceneState|
+|158|89fefa4|getCurrentmTileArrayFWAddress|
+|160|89fef98|getCurrentmListArrayFWAddress|
+|168|89fef8c|getCurrentvHeapTableFWAddress|
+|1c0|89fea44|prepareParameterBufferBlock|
+|1c8|89fb414|buildPageList|
+|1f0|89fe494|prepareAndRetainPageListMapping|
+|1f8|89fe44c|releasePageListMapping|
+|200|89fe440|getPageListPreparationID|
+|208|89fe3ec|getDiscardPageAddress|
+
+Therefore the immediate next offline batch should replace the initializer's150
+readiness fixture with actual setupSceneState, and run the retention-path
+concrete methods above. The earlier virtual zero getters are consistent with
+this subtype; selecting the subtype still needs a caller/lifecycle match.
