@@ -1,0 +1,14 @@
+{
+  "submission_ready": false,
+  "base_descriptor_sha256": "a43d437e088ff34c8055754a76a3e1a56c897624b9de546661ed9e978ee124d2",
+  "combined_receipt_sha256": "56f3f39c74c2c06b44a1b7696528c9acf77a8999c4bc4dc747e75cbce1077231",
+  "pm_profile_sha256": "da3716a096bbdabc63cc53789e18930fe005bb1301e9104ffea5fce945ff9a97",
+  "patched_native_field_bytes": 396,
+  "payload_native_comparison": true,
+  "firmware_register_values_checked": 4,
+  "producer_counts": {
+    "ta": 82,
+    "3d": 139
+  },
+  "qualification": "Aligned native PM/target fields merged into previously constructor/payload-prepared descriptor using checked target-write mask and explicit PM fields; native payload copy preserves all merged fields. Actual paired SKSM native register producers execute; existing construction/event/aperture/scheduler models compose over their output. Four expected native target register values checked. Base fixture shader/state sources, translation/completion/queue/pool/parameter service identities remain supplied; no actual FW mapping/publication/cache/GPU lookup or pixels. Candidate is not submission-ready."
+}
