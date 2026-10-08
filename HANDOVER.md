@@ -1,3 +1,21 @@
+# Joined native PM creation checkpoint
+
+Offline only; no live allocation, GPU command, reboot or kernel/default changes.
+Read docs/evidence/2026-10-08-private-pm-creation.md and allocation/creation/full-init JSON receipts.
+1024 native allocation-prelude cases; slot/vector, state and manager counts remain distinct.
+256 joined allocation/resource/registration/scene cases,768 resource creations,4224 scenes checked.
+Native PM70=20000, PM78=8; resource requests40|(slots<<7),80,8*managerCapacity.
+CPU-dereferenced resource50/60 results differ from firmware addresses placed in scenes.
+128 entire native PM initializers return1 with restored stack and whole-object comparisons.
+Inherited/resource/mapping/registration/state/statistic services remain explicit fixtures;
+PM readiness and final createNewHWPBManager call still stubbed, not a valid live manager.
+Next:actual HWPB creation/reset composition, then work/root/queue/event/stamp live integration
+and coherent completion readback. Still NOT submission-only readiness.
+Retained failed warm INIT needs normal reboot before live GPU testing, no forced unload/reset/retry.
+Private-derived; no Apple binary/TEXT/disassembly exported or public push.
+
+---
+
 # Reusable native common scheduler candidate checkpoint
 
 Offline only; no GPU command, allocation, reboot or kernel/default changes.

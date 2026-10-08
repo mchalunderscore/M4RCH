@@ -1,0 +1,118 @@
+{
+  "private_binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "range": [
+    "0xfffffe00089fc624",
+    "0xfffffe00089fc948"
+  ],
+  "range_sha256": "b9589a48e58b3d94e76facf9ce0fc2c424d00114ab175b05293ccd4c866f6af2",
+  "counts": {
+    "complete_allocation_prelude": 1024,
+    "vector_bytes_cleared": 261888,
+    "state_initializer_calls": 4608
+  },
+  "examples": [
+    {
+      "slot_count": 0,
+      "state_count": 0,
+      "manager_count": 0,
+      "service_order": [
+        "inherited",
+        "lock_a",
+        "lock_b",
+        "vector_a",
+        "main_lock",
+        "memory_provider",
+        "vector_b",
+        "state_array",
+        "state_init",
+        "manager_array",
+        "manager_vector"
+      ],
+      "allocation_sizes": {
+        "vector_bytes": 0,
+        "state_bytes": 0,
+        "manager_bytes": 0,
+        "manager_vector_bytes": 0
+      }
+    },
+    {
+      "slot_count": 1,
+      "state_count": 1,
+      "manager_count": 1,
+      "service_order": [
+        "inherited",
+        "lock_a",
+        "lock_b",
+        "vector_a",
+        "main_lock",
+        "memory_provider",
+        "vector_b",
+        "state_array",
+        "state_init",
+        "state_init",
+        "manager_array",
+        "manager_vector"
+      ],
+      "allocation_sizes": {
+        "vector_bytes": 8,
+        "state_bytes": 64,
+        "manager_bytes": 64,
+        "manager_vector_bytes": 8
+      }
+    },
+    {
+      "slot_count": 2,
+      "state_count": 2,
+      "manager_count": 2,
+      "service_order": [
+        "inherited",
+        "lock_a",
+        "lock_b",
+        "vector_a",
+        "main_lock",
+        "memory_provider",
+        "vector_b",
+        "state_array",
+        "state_init",
+        "state_init",
+        "state_init",
+        "manager_array",
+        "manager_vector"
+      ],
+      "allocation_sizes": {
+        "vector_bytes": 16,
+        "state_bytes": 128,
+        "manager_bytes": 128,
+        "manager_vector_bytes": 16
+      }
+    },
+    {
+      "slot_count": 3,
+      "state_count": 3,
+      "manager_count": 3,
+      "service_order": [
+        "inherited",
+        "lock_a",
+        "lock_b",
+        "vector_a",
+        "main_lock",
+        "memory_provider",
+        "vector_b",
+        "state_array",
+        "state_init",
+        "state_init",
+        "state_init",
+        "state_init",
+        "manager_array",
+        "manager_vector"
+      ],
+      "allocation_sizes": {
+        "vector_bytes": 24,
+        "state_bytes": 192,
+        "manager_bytes": 192,
+        "manager_vector_bytes": 24
+      }
+    }
+  ],
+  "qualification": "Complete native PM initializer allocation/configuration prelude, full object comparison and vector backing clear checks.1024 cases, slot/manager counts0..32 and state count0..7, both override/fallback and memory-provider argument branches. Old vector_a null excludes freeing/replacement path; negative capacity and allocation failures excluded. Inherited init, locks, allocators, memory-size provider and state-init services explicit stubs; actual sizes/arguments/order checked. State-init no-op backing preservation is fixture behavior, not actual initialized state. Remaining resource creation/registration, full PM init/HWPB binding and live mappings excluded. No GPU command or live allocation."
+}
