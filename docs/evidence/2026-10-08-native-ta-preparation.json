@@ -2,7 +2,7 @@
   "private_binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
   "counts": {
     "native_compositions": 64,
-    "independent_intermediates": 256,
+    "independent_intermediates": 320,
     "checked_register_values": 256,
     "independent_encoder_records": 5248
   },
@@ -352,7 +352,7 @@
         {
           "register": "0x1c830",
           "flag": 0,
-          "value": "0x0"
+          "value": "0xffffffff"
         },
         {
           "register": "0x1ca30",
@@ -397,17 +397,17 @@
         {
           "register": "0x10208",
           "flag": 1,
-          "value": "0x0"
+          "value": "0xffffff00"
         },
         {
           "register": "0x1c9f0",
           "flag": 0,
-          "value": "0x0"
+          "value": "0xffffff00"
         },
         {
           "register": "0x14320",
           "flag": 0,
-          "value": "0x0"
+          "value": "0xffffff00"
         },
         {
           "register": "0x14308",
@@ -430,7 +430,7 @@
           "value": "0x1"
         }
       ],
-      "descriptor_sha256": "2bb1f0c563938392cdf84e80f30fb1a0026711593a7950efe8f1e7519a59023e"
+      "descriptor_sha256": "bf179f45589d0417b0cf581cb27c98225af3a556db60cd2a79f3f73ecc09997d"
     },
     {
       "width": 64,
@@ -782,7 +782,7 @@
         {
           "register": "0x1c830",
           "flag": 0,
-          "value": "0x0"
+          "value": "0xffffffff"
         },
         {
           "register": "0x1ca30",
@@ -827,17 +827,17 @@
         {
           "register": "0x10208",
           "flag": 1,
-          "value": "0x0"
+          "value": "0xffffff00"
         },
         {
           "register": "0x1c9f0",
           "flag": 0,
-          "value": "0x0"
+          "value": "0xffffff00"
         },
         {
           "register": "0x14320",
           "flag": 0,
-          "value": "0x0"
+          "value": "0xffffff00"
         },
         {
           "register": "0x14308",
@@ -860,7 +860,7 @@
           "value": "0x1"
         }
       ],
-      "descriptor_sha256": "4ffdbf1a7c088e927b97a7b5b33b789581ac7f1a92df69dee8559b010687973e"
+      "descriptor_sha256": "c9076bcb1ccb3a02e62e91384195b36ac66e2c827d88d13f0096bc6eb9dbf430"
     },
     {
       "width": 128,
@@ -1207,7 +1207,7 @@
         {
           "register": "0x1c830",
           "flag": 0,
-          "value": "0x0"
+          "value": "0xffffffff"
         },
         {
           "register": "0x1ca30",
@@ -1252,17 +1252,17 @@
         {
           "register": "0x10208",
           "flag": 1,
-          "value": "0x0"
+          "value": "0xffffff00"
         },
         {
           "register": "0x1c9f0",
           "flag": 0,
-          "value": "0x0"
+          "value": "0xffffff00"
         },
         {
           "register": "0x14320",
           "flag": 0,
-          "value": "0x0"
+          "value": "0xffffff00"
         },
         {
           "register": "0x14308",
@@ -1285,7 +1285,7 @@
           "value": "0x1"
         }
       ],
-      "descriptor_sha256": "8c599bb2d43528bdce945c80b275da22e2ff1032f1c5e3841b71e08217849901"
+      "descriptor_sha256": "efb5bb63533e1278064b6f61408874933f2981442d338fe8f84d345bc6553646"
     },
     {
       "width": 256,
@@ -1637,7 +1637,7 @@
         {
           "register": "0x1c830",
           "flag": 0,
-          "value": "0x0"
+          "value": "0xffffffff"
         },
         {
           "register": "0x1ca30",
@@ -1682,17 +1682,17 @@
         {
           "register": "0x10208",
           "flag": 1,
-          "value": "0x0"
+          "value": "0xffffff00"
         },
         {
           "register": "0x1c9f0",
           "flag": 0,
-          "value": "0x0"
+          "value": "0xffffff00"
         },
         {
           "register": "0x14320",
           "flag": 0,
-          "value": "0x0"
+          "value": "0xffffff00"
         },
         {
           "register": "0x14308",
@@ -1715,8 +1715,8 @@
           "value": "0x1"
         }
       ],
-      "descriptor_sha256": "d6bab08a52f927849618f69340a88d8842017128f2f2046aff9a9aab50d37cc0"
+      "descriptor_sha256": "84bfba94d4c6b515fb73c4644013c76a7e18836fd41e5e68c81b4f45f8a2fca7"
     }
   ],
-  "qualification": "Actual ordinary geometry -> complete TA RT loader -> complete TA/3D PM loader -> actual payload slice/common helper -> full TA producer, with full-byte independent comparisons at every input stage. Resource FW and GPU map bases deliberately distinct, only numeric services qualified. Native encoder records independently checked; four independently expected firmware addresses checked per case. 64 positive extent/single-sample fixtures with groups1..3 and conditional initial entry. Initial descriptor, PM subtype, resource map/retain services, payload caller aliases and remaining lifecycle providers are explicit synthetic fixtures. No actual allocation, queue/event binding, GPU execution or submission-ready job proved."
+  "qualification": "Actual complete TA+3D constructors -> ordinary geometry -> complete TA RT loader -> complete TA/3D PM loader -> actual payload slice/common helper -> full TA producer, with full-byte independent comparisons at every input stage. Resource FW and GPU map bases deliberately distinct, only numeric services qualified. Native encoder records independently checked; four independently expected firmware addresses checked per case. 64 positive extent/single-sample fixtures with groups1..3 and conditional initial entry. Inherited constructor/lifecycle services, PM subtype, resource map/retain services, payload caller aliases and remaining lifecycle providers are explicit synthetic fixtures. No actual allocation, queue/event binding, GPU execution or submission-ready job proved."
 }

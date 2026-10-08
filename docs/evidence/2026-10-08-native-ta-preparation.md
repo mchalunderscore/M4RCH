@@ -23,15 +23,17 @@ proved by the native zero-return subtype used here.
 
 ## Joined preparation
 
-Sixty-four cases execute this continuous data path across emulator instances:
+Sixty-four cases execute this continuous data path across emulator instances
+(now including the actual TA and3D constructors; see the descriptor-initialization note):
 
-1. Actual ordinary geometry, checked against the full numeric object model.
-2. Complete native TA render-target memory loader.
-3. Complete native TA/3D parameter-management loader.
-4. Actual processRenderSetup payload slice, including the common record copier.
-5. Complete native TA register generator and its actual encoder helpers.
+1. Complete native TA constructor including the actual3D parent.
+2. Actual ordinary geometry, checked against the full numeric object model.
+3. Complete native TA render-target memory loader.
+4. Complete native TA/3D parameter-management loader.
+5. Actual processRenderSetup payload slice, including the common record copier.
+6. Complete native TA register generator and its actual encoder helpers.
 
-All 256 intermediate full-byte comparisons pass. Firmware and GPU map bases
+All 320 intermediate full-byte comparisons pass. Firmware and GPU map bases
 are deliberately different. Four independently expected firmware-address
 register values per case pass; 5,248 actual encoder records match the independent
 12-byte codec. Dimensions, groups and the conditional initial entry vary;
@@ -39,7 +41,7 @@ exported TA counts remain 81/82, with backing counts 83/84. Records are ordered
 and include flags and duplicates. Numeric geometry, maps and payload state now
 reach the native recipe together; this is not just a zero-descriptor recipe.
 
-The PM object, lifecycle providers, initial descriptor and caller alias choices
+The PM object, inherited constructor/lifecycle services and caller alias choices
 still include explicit fixtures. Their integration cannot be inferred from these
 successful numeric checks. No live allocation, event identity or GPU job is proved.
 
@@ -74,7 +76,8 @@ and allocation implementations remain prerequisites.
 
 ## Remaining before submission-only readiness
 
-Next qualify the parent descriptor constructor and ordinary PM initialization,
+The complete native parent constructor is now qualified with external services;
+next finish ordinary PM initialization,
 then connect our native register/microsequence results to matched TA work,
 KSM queue/event/stamp identities and root mappings. Donor full job files are
 comparison material and must not be submitted unchanged. Actual resource

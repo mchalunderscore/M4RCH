@@ -1,3 +1,22 @@
+# Native constructor and PM scene preparation checkpoint
+
+Offline only; no GPU command, reboot or kernel/default changes.
+Read docs/evidence/2026-10-08-private-descriptor-initialization.md/JSON and PM scene-array JSON.
+Full native3D constructor512 cases and fullTA plus actual3D parent512 cases match whole bytes.
+Native vtable1e0 returns descriptor+210; stored408, limit410=2, not a size-getter stub.
+Inherited IOGPU, cast, retain, lifecycle/state and allocation services remain explicit fixtures.
+Joined native TA preparation now includes actual constructors:64 cases,320 intermediate checks,
+256 expected firmware address values and5248 independent encoder records.
+Native PM scene arrays:1024 cases,16368 scenes,32736 vector elements;80-byte element stride,
+separate map-base stride and final PM80/98/a0/b8/c8 publication verified.
+Next:preceding PM allocation/registration, HWPB reset, matched work/queue/event/root wiring,
+live mappings/cache visibility and completion-to-readback. Still NOT submission-only readiness.
+Retained failed warm INIT on bootfa78dd48-b214-46fc-8786-cae63897ad78 requires normal reboot
+before live GPU testing; offline work continues. No forced unload/reset/new warm retry.
+Private-derived; no Apple binary/TEXT/disassembly exported or public push.
+
+---
+
 # Native TA preparation checkpoint
 
 Offline only; no GPU commands, kernel/default changes or reboot.

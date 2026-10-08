@@ -5,6 +5,7 @@ from pathlib import Path
 from private_render_setup import copy_payload
 from private_ta_inputs import load_ta_render_target,load_ta_parameter_management
 from private_rce_entry import encode_entry
+from private_descriptor_initialization import init_3d,init_ta
 p=argparse.ArgumentParser(description=__doc__);p.add_argument('macho',type=Path);p.add_argument('output',type=Path);a=p.parse_args()
 def harness(name,marker,extra=()):
     path=Path(__file__).with_name(name);ns={'__file__':str(path),'__name__':'composition'};old=sys.argv;sys.argv=[str(path),str(a.macho),*map(str,extra),str(a.output)]
@@ -14,7 +15,9 @@ def harness(name,marker,extra=()):
 geo=harness('audit-private-render-geometry.py','rng=random.Random(604018);')
 loader=harness('audit-private-ta-inputs.py','rng=random.Random(604012);')
 ta=harness('audit-private-ta-generator.py',"counts={'complete_ta_producer'",[a.output])
+ctor=harness('audit-private-descriptor-initialization.py','rng=random.Random(604022);')
 m=ta['m'];c=ta['c'];A,C,D=[ta[k] for k in ('A','C','D')];START=ta['START'];payload_address,wrapper_address=0x238000,0x23c000
+ctor['m'].mem_map(0x220000,0x30000);ctor['D']=D
 COPY_START,COPY_END=0xfffffe0008998198,0xfffffe0008998504
 m.mem_map(0xfffffe0008998000,4096);m.mem_write(COPY_START,ta['ns']['read'](COPY_START,COPY_END-COPY_START))
 counts={'native_compositions':0,'independent_intermediates':0,'checked_register_values':0,'independent_encoder_records':0};examples=[]
@@ -34,8 +37,15 @@ for i in range(64):
     expected_order=[]
     def service(resource,slot):
         value=bases[resource,slot];expected_order.append((resource,slot,value));return value
-    expected=load_ta_render_target(bytes(0x1800),source,service)
-    loader['returns']=[v for _,_,v in expected_order];loader['services'].clear();lm=loader['m'];lm.mem_write(loader['D'],bytes(0x1800));lm.mem_write(loader['S'],bytes(source));loader['run'](loader['TRTM'])
+    # Execute both constructors on the same descriptor address used downstream.
+    initial=bytearray(0x1800);struct.pack_into('<Q',initial,0,ctor['DVT']);struct.pack_into('<Q',initial,0x60,ctor['TASK'])
+    cm=ctor['m'];cm.mem_write(D,bytes(initial));cm.mem_write(ctor['DVT']+0x1e0,struct.pack('<Q',ctor['leaves'][1]));cm.mem_write(ctor['QUEUE']+0x550,bytes(8));ctor['external_calls'].clear();ctor['parent_result']=1;ctor['debug']=0;ctor['allocation']=0x850000000
+    for reg in ctor['regs']:cm.reg_write(reg,0)
+    for reg,val in [(c.UC_ARM64_REG_X0,D),(c.UC_ARM64_REG_X1,0xfeed0000),(c.UC_ARM64_REG_X2,ctor['QUEUE']),(c.UC_ARM64_REG_X3,ctor['TASK']),(c.UC_ARM64_REG_X4,0),(c.UC_ARM64_REG_X5,0),(c.UC_ARM64_REG_X6,0),(c.UC_ARM64_REG_SP,ctor['STACK']),(c.UC_ARM64_REG_LR,ctor['STOP'])]:cm.reg_write(reg,val)
+    cm.emu_start(ctor['INITTA'],ctor['STOP'],count=4000);assert cm.reg_read(c.UC_ARM64_REG_PC)==ctor['STOP']
+    initialized=bytes(cm.mem_read(D,0x1800));assert initialized==init_ta(init_3d(initial,D,0,0,0,0,ctor['ROOT']),D,ctor['allocation']);counts['independent_intermediates']+=1
+    expected=load_ta_render_target(initialized,source,service)
+    loader['returns']=[v for _,_,v in expected_order];loader['services'].clear();lm=loader['m'];lm.mem_write(loader['D'],initialized);lm.mem_write(loader['S'],bytes(source));loader['run'](loader['TRTM'])
     desc=bytes(lm.mem_read(loader['D'],0x1800));assert desc==expected;assert loader['services']==expected_order;counts['independent_intermediates']+=1
     pm=bytearray(0x400)
     for off,val in [(0,loader['PV']),(0x88,loader['VB']),(0xa8,loader['VA'])]:struct.pack_into('<Q',pm,off,val)
@@ -69,5 +79,5 @@ for i in range(64):
         assert cmd[off:off+12]==encode_entry(bytes(12),reg,flag,value);counts['independent_encoder_records']+=1
     counts['native_compositions']+=1
     if i<4:examples.append(dict(width=w,height=h,groups=groups,backing_count=n,exported_count=exported,records=records,descriptor_sha256=hashlib.sha256(final).hexdigest()))
-report=dict(private_binary_sha256=ta['ns']['sha'],counts=counts,examples=examples,qualification='Actual ordinary geometry -> complete TA RT loader -> complete TA/3D PM loader -> actual payload slice/common helper -> full TA producer, with full-byte independent comparisons at every input stage. Resource FW and GPU map bases deliberately distinct, only numeric services qualified. Native encoder records independently checked; four independently expected firmware addresses checked per case. 64 positive extent/single-sample fixtures with groups1..3 and conditional initial entry. Initial descriptor, PM subtype, resource map/retain services, payload caller aliases and remaining lifecycle providers are explicit synthetic fixtures. No actual allocation, queue/event binding, GPU execution or submission-ready job proved.')
+report=dict(private_binary_sha256=ta['ns']['sha'],counts=counts,examples=examples,qualification='Actual complete TA+3D constructors -> ordinary geometry -> complete TA RT loader -> complete TA/3D PM loader -> actual payload slice/common helper -> full TA producer, with full-byte independent comparisons at every input stage. Resource FW and GPU map bases deliberately distinct, only numeric services qualified. Native encoder records independently checked; four independently expected firmware addresses checked per case. 64 positive extent/single-sample fixtures with groups1..3 and conditional initial entry. Inherited constructor/lifecycle services, PM subtype, resource map/retain services, payload caller aliases and remaining lifecycle providers are explicit synthetic fixtures. No actual allocation, queue/event binding, GPU execution or submission-ready job proved.')
 a.output.write_text(json.dumps(report,indent=2)+'\n');print(counts)
