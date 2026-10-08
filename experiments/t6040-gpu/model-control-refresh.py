@@ -22,7 +22,9 @@ entry=struct.unpack_from('<i',text,0x5284+(0x16-4)*4)[0]+0x3a3c
 if entry!=0x4b1c or text[0x58850+0x16]!=0:raise ValueError('Unexpected command dispatch/power class')
 m=u.Uc(u.UC_ARCH_ARM64,u.UC_MODE_ARM)
 m.mem_map(FW,0x60000,u.UC_PROT_READ|u.UC_PROT_EXEC);m.mem_write(FW,text)
-m.mem_map(FW+0x60000,0x138000);m.mem_map(base,len(arena));m.mem_write(base,arena)
+m.mem_map(FW+0x60000,0x138000)
+from owned_gpu_layout import map_emulator
+map_emulator(m,arena,receipt)
 objects={o['name']:o for o in receipt['objects']}
 # Root parser 2f2c8..2f300: main, status_a, status_b and region_c globals.
 for offset,name in [(0x18e4c0,'main'),(0x18e3f0,'status_a'),(0x18ee70,'status_b'),(0x195748,'region_c')]:
@@ -40,9 +42,9 @@ def code(mu,address,size,opaque):
  if word in [0xd503237f,0xd65f0fff]:
   omissions.append(hex(off));mu.reg_write(c.UC_ARM64_REG_PC,address+4 if word==0xd503237f else mu.reg_read(c.UC_ARM64_REG_LR))
 def memory(mu,kind,address,size,value,opaque):
- if base<=address<base+len(arena):
-  obj=next(o for o in objects.values() if base+o['arena_offset']<=address<base+o['arena_offset']+o['reserved_bytes'])
-  offset=address-base-obj['arena_offset']
+ if any(int(o['gpu_va'],16)<=address<int(o['gpu_va'],16)+o['reserved_bytes'] for o in objects.values()):
+  obj=next(o for o in objects.values() if int(o['gpu_va'],16)<=address<int(o['gpu_va'],16)+o['reserved_bytes'])
+  offset=address-int(obj['gpu_va'],16)
   if offset+size>obj['input_bytes']:raise ValueError('Object access beyond explicit input')
   accesses.append(dict(object=obj['name'],offset=hex(offset),bytes=size,write=kind==u.UC_MEM_WRITE))
 m.hook_add(u.UC_HOOK_CODE,code);m.hook_add(u.UC_HOOK_MEM_READ|u.UC_HOOK_MEM_WRITE,memory)

@@ -28,7 +28,7 @@ static void invalidate_root_va(void)
 {
  unsigned int i;
  for (i=0;i<ARENA_OBJECT_PAGES+ARRAY_SIZE(mmio_leaves);i++) {
-  u64 va=i<ARENA_OBJECT_PAGES?ROOT_VA+i*PAGE_SIZE:mmio_leaves[i-ARENA_OBJECT_PAGES].gpu_va;
+  u64 va=i<ARENA_OBJECT_PAGES?owned_page_vas[i]:mmio_leaves[i-ARENA_OBJECT_PAGES].gpu_va;
   u64 operand=(va>>12)&0x00000ffffffffffcULL;
   asm volatile(".arch armv8.4-a\n\ttlbi vaae1os, %0" :: "r"(operand) : "memory");
  }
@@ -58,7 +58,7 @@ static int root_prepare(bool install)
  unsigned int i;
  int ret=-EINVAL;
  if (PAGE_SIZE!=0x4000 || ARENA_OBJECT_PAGES==0 ||
-     ((ROOT_VA>>14)&2047)+ARENA_OBJECT_PAGES>2048 || GRAPH_MAPPED_PAGES!=ARENA_OBJECT_PAGES+ARRAY_SIZE(mmio_leaves)) return -EINVAL;
+     ARRAY_SIZE(owned_page_vas)!=ARENA_OBJECT_PAGES || owned_page_vas[0]!=ROOT_VA || GRAPH_MAPPED_PAGES!=ARENA_OBJECT_PAGES+ARRAY_SIZE(mmio_leaves)) return -EINVAL;
  for (i=0;i<ARRAY_SIZE(owned);i++) {
   u64 pa;
   owned[i]=alloc_pages(GFP_KERNEL|__GFP_ZERO,0);
@@ -70,7 +70,9 @@ static int root_prepare(bool install)
  l1=page_address(owned[0]);l2=page_address(owned[1]);
  l1[(ROOT_VA>>25)&2047]=page_to_phys(owned[1])|3;
  for (i=0;i<ARENA_OBJECT_PAGES;i++) {
-  l2[((ROOT_VA>>14)&2047)+i]=page_to_phys(owned[2+i])|FW_GRAPH_RW;
+  u64 va=owned_page_vas[i];
+  if ((va&(PAGE_SIZE-1)) || (va>>25)!=(ROOT_VA>>25) || l2[(va>>14)&2047]) goto fail_root;
+  l2[(va>>14)&2047]=page_to_phys(owned[2+i])|FW_GRAPH_RW;
   memcpy(page_address(owned[2+i]),graph_bytes+i*PAGE_SIZE,PAGE_SIZE);
  }
  for (i=0;i<ARRAY_SIZE(mmio_leaves);i++) {
@@ -83,7 +85,7 @@ static int root_prepare(bool install)
   bool sgx=pa>=0x288000000ULL && pa+PAGE_SIZE<=0x28b758000ULL &&
            va==GRAPH_MMIO_BASE+(pa-0x288000000ULL);
   if ((pa&~PA_MASK) || (va&(PAGE_SIZE-1)) || (!sgx && !platform && !afr) || (platform && !mmio_leaves[i].writable) ||
-      (va>>25)!=(ROOT_VA>>25) || va<ROOT_VA+ARENA_OBJECT_PAGES*PAGE_SIZE ||
+      (va>>25)!=(ROOT_VA>>25) || l2[(va>>14)&2047] ||
       ((i>0) && va<=mmio_leaves[i-1].gpu_va) ||
       region_intersects(pa,PAGE_SIZE,IORESOURCE_SYSTEM_RAM,IORES_DESC_NONE)!=REGION_DISJOINT)
    goto fail_root;
@@ -101,7 +103,7 @@ static int root_prepare(bool install)
  for (i=0;i<ARRAY_SIZE(owned);i++) clean_page(page_address(owned[i]));
  if ((l1[(ROOT_VA>>25)&2047]&PA_MASK)!=page_to_phys(owned[1])) goto fail_root;
  for (i=0;i<ARENA_OBJECT_PAGES;i++)
-  if ((l2[((ROOT_VA>>14)&2047)+i]&PA_MASK)!=page_to_phys(owned[2+i])) goto fail_root;
+  if ((l2[(owned_page_vas[i]>>14)&2047]&PA_MASK)!=page_to_phys(owned[2+i])) goto fail_root;
  for (i=0;i<ARRAY_SIZE(mmio_leaves);i++)
   if (l2[(mmio_leaves[i].gpu_va>>14)&2047]!=(mmio_leaves[i].physical|(mmio_leaves[i].writable?FW_MMIO_RW:FW_MMIO_RO)))
    goto fail_root;

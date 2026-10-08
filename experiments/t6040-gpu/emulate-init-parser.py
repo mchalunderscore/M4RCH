@@ -57,8 +57,8 @@ def run(text,data,enabled=False,instruction_limit=20000,fixture=None):
     machine.mem_write(FW,text)
     machine.mem_map(FW+0x60000,len(data),u.UC_PROT_READ|u.UC_PROT_WRITE)
     machine.mem_write(FW+0x60000,data)
-    machine.mem_map(ROOT,len(arena),u.UC_PROT_READ|u.UC_PROT_WRITE)
-    machine.mem_write(ROOT,arena)
+    from owned_gpu_layout import map_emulator
+    map_emulator(machine,arena,graph)
     machine.mem_map(STACK,0x10000,u.UC_PROT_READ|u.UC_PROT_WRITE)
     machine.reg_write(c.UC_ARM64_REG_SP,STACK+0xf000)
     machine.reg_write(c.UC_ARM64_REG_CPACR_EL1,3<<20)
@@ -105,9 +105,9 @@ def run(text,data,enabled=False,instruction_limit=20000,fixture=None):
             events.append(dict(kind='omitted-authenticated-return',pc=hex(address)))
             mu.reg_write(c.UC_ARM64_REG_PC,mu.reg_read(c.UC_ARM64_REG_LR))
     def memory_hook(mu,kind,address,size,value,opaque):
-        if ROOT<=address<ROOT+len(arena):
+        if any(int(o['gpu_va'],16)<=address<int(o['gpu_va'],16)+o['reserved_bytes'] for o in objects):
             for obj in objects:
-                start=ROOT+obj['arena_offset']
+                start=int(obj['gpu_va'],16)
                 if start<=address<start+obj['reserved_bytes']:
                     offset=address-start
                     accesses.append(dict(pc=hex(mu.reg_read(c.UC_ARM64_REG_PC)),object=obj['name'],

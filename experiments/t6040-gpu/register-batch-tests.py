@@ -152,4 +152,34 @@ class BatchTests(unittest.TestCase):
    self.assertFalse(any(data[o['arena_offset']:o['arena_offset']+o['reserved_bytes']]))
   self.assertFalse(any(data[main+0x1c0:main+0x1e0]));self.assertFalse(any(data[main+0x200:main+0x240]))
   with self.assertRaises(ValueError):extend(data,r)
+ def test_receive13_sparse_spans_and_mapping_validation(self):
+  import copy
+  from receive14_fixture import extend as receive14
+  from receive13_fixture import extend as receive13
+  from owned_gpu_layout import validate
+  data,r=receive13(*receive14(self.data,copy.deepcopy(self.receipt)))
+  pages=validate(data,r);self.assertEqual(len(pages),69);self.assertEqual(r['mapped_pages'],169)
+  self.assertEqual(r['mmio_leaves'],self.receipt['mmio_leaves'])
+  objects=[o for o in r['objects'] if o['name'].startswith('receive13_')]
+  self.assertEqual([o['input_bytes'] for o in objects],[0x30,0x4800,0x1b0,0x28800])
+  ring=objects[-1];self.assertEqual(int(ring['gpu_va'],16),0xfffffc2000224000)
+  self.assertEqual(ring['arena_offset']//0x4000,58)
+  main=next(o['arena_offset'] for o in r['objects'] if o['name']=='main')
+  for i,o in enumerate(objects):
+   self.assertEqual(struct.unpack_from('<Q',data,main+0x1c0+i*8)[0],int(o['gpu_va'],16))
+   self.assertFalse(any(data[o['arena_offset']:o['arena_offset']+o['reserved_bytes']]))
+  self.assertFalse(any(data[main+0x200:main+0x240]))
+  with self.assertRaises(ValueError):receive13(data,r)
+  # Reject collisions, duplicate mappings, split objects and wrong encoded pointers.
+  for index,va in [(58,0xfffffc2000200000),(58,pages[57]),(59,pages[59]+0x4000),(0,pages[0]+0x4000)]:
+   bad=copy.deepcopy(r);bad['owned_page_vas'][index]=va
+   with self.assertRaises(ValueError):validate(data,bad)
+  bad=bytearray(data);struct.pack_into('<Q',bad,main+0x1d8,int(ring['gpu_va'],16)+0x4000)
+  with self.assertRaises(ValueError):validate(bad,r)
+ def test_original_and_receive14_owned_mapping_are_contiguous(self):
+  import copy
+  from receive14_fixture import extend
+  from owned_gpu_layout import validate
+  for data,r in ((self.data,self.receipt),extend(self.data,copy.deepcopy(self.receipt))):
+   self.assertEqual(validate(data,r),[int(r['base'],16)+i*0x4000 for i in range(len(data)//0x4000)])
 if __name__=='__main__':unittest.main()

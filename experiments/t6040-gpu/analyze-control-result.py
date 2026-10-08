@@ -45,14 +45,16 @@ result=dict(boot_id=attempt['boot_id'],trial_fixture_sha256=digest,
  refresh_private_state={hex(off):struct.unpack_from('<I',data,off-0x60000)[0] for off in (0x18eec8,0x146908,0x146914)},
  reboot_required=attempt['reboot_required'],
  qualification='Native consumption of the operand-free initial refresh fixture only. No crash header/fatal notification during this bounded capture is not proof of full initialization, receive channels, job execution, interrupts, GPU acceleration or safe retirement.')
-if 'receive14_fixture' in receipt:
- result['receive14_buffers']=[]
+for index in (13,14):
+ if f'receive{index}_fixture' not in receipt:continue
+ result[f'receive{index}_buffers']=[]
  for obj in receipt['objects']:
-  if not obj['name'].startswith('receive14_'):continue
+  if not obj['name'].startswith(f'receive{index}_'):continue
   start=obj['arena_offset'];end=start+obj['input_bytes'];left=before[start:end];right=after[start:end]
-  result['receive14_buffers'].append(dict(name=obj['name'],bytes=obj['input_bytes'],
+  result[f'receive{index}_buffers'].append(dict(name=obj['name'],bytes=obj['input_bytes'],
    changed_bytes=sum(x!=y for x,y in zip(left,right)),sha256=hashlib.sha256(right).hexdigest(),
    first_word=struct.unpack_from('<I',right)[0],word_at_20=struct.unpack_from('<I',right,0x20)[0]))
- result['receive14_qualification']='Raw owned-buffer changes/words only; no cursor role, event decoding or receive readiness inferred.'
+ result[f'receive{index}_qualification']='Raw owned-buffer changes/words only; no cursor role, event decoding or receive readiness inferred.'
+result['shutdown_log']=[line for line in log.splitlines() if 'shutdown requested=' in line or 'AP_QUIESCED_ACK=' in line or 'power response message=' in line or 'final control=' in line]
 a.output.write_text(json.dumps(result,indent=2)+'\n')
 print('Control cursors',result['control_cursors_after'],'consumed',result['all_control_records_consumed'],'crash header',result['crashlog_header_present'])

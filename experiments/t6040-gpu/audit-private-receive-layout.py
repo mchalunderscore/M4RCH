@@ -48,13 +48,17 @@ checks={0xfffffe00089ab948:0x91070108,0xfffffe00089a9e40:0xf9448a61,
  0xfffffe00089a9e84:0xf9001100,0xfffffe00089a9e88:0xf9449a61,
  0xfffffe00089a9ecc:0xf9001500,0xfffffe00089a9ed0:0xf9448e61,
  0xfffffe00089a9f14:0xf9001900,0xfffffe00089a9f18:0xf9449e61,
- 0xfffffe00089a9f58:0xf9001d00}
+ 0xfffffe00089a9f58:0xf9001d00,
+ 0xfffffe00089a9d20:0xf9448261,0xfffffe00089a9d64:0xf9000100,
+ 0xfffffe00089a9d68:0xf9449261,0xfffffe00089a9dac:0xf9000500,
+ 0xfffffe00089a9db0:0xf9448661,0xfffffe00089a9df4:0xf9000900,
+ 0xfffffe00089a9df8:0xf9449661,0xfffffe00089a9e3c:0xf9000d00}
 for address,word in checks.items():
  if struct.unpack('<I',read(address,4))[0]!=word:raise ValueError('Changed receive mapping producer')
 result=dict(macho_sha256=digest,agx_version='353.14',apple_build='25G83',
  descriptor_model_range=[hex(start),hex(end)],instructions=len(steps),allocation_records=records,
  receive14_main_offset='0x1e0',receive14_cpu_fields=fields,receive14_extents=extents,
- receive13_cpu_fields=['0x900','0x920','0x908','0x928'],receive13_extents=[by_field[x] for x in ['0x900','0x920','0x908','0x928']],
+ receive13_main_offset='0x1c0',receive13_cpu_fields=['0x900','0x920','0x908','0x928'],receive13_extents=[by_field[x] for x in ['0x900','0x920','0x908','0x928']],
  main200_resource_cpu_field='0x880',main200_extent=by_field['0x880'],pinned_mapping_site_checks=len(checks),
  qualification='Offline straight-line private CPU allocation-descriptor construction and exact mapping sites. Zero fake host object and stack, actual file-backed constants/code, no service/allocation/mapping calls. Numeric extents/pointer positions corroborated; cache policy, initial contents, event type/production, role and live acceptance unqualified. Not clean-room.')
 a.output.write_text(json.dumps(result,indent=2)+'\n');print('27 allocation descriptors; receive14 extents',list(map(hex,extents)))

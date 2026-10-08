@@ -19,6 +19,8 @@
 #define START BIT(4)
 #define EMPTY BIT(17)
 static unsigned int run_gate;
+static bool request_shutdown;
+module_param(request_shutdown,bool,0400);
 static unsigned int observe_ms=30000;
 module_param(observe_ms,uint,0400);
 module_param(run_gate,uint,0400);
@@ -120,7 +122,7 @@ static bool crashlog_boot(void)
  pr_info("m4rch ASC crashlog: boot timeout offered=%d IOP_ON=%d\n",offered,iop_on);
  return false;
 }
-/* Handshake-only retirement: no endpoint starts or firmware-accessible buffers. */
+/* Bounded RTKit shutdown requests; replies alone do not authorize graph release. */
 static bool power_ack(unsigned int request, unsigned int reply, u16 state)
 {
  unsigned long deadline;
@@ -263,7 +265,8 @@ static int __init hello_init(void)
    pr_info("m4rch graph-init: observation messages=%u; capture crashlog before reboot\n",observed);
   }
 retire_firmware:
-  if (!root_sent) ap_quiesced=power_ack(0xb,0xb,0x10);
+  pr_info("m4rch graph-init: shutdown requested=%d root_sent=%d; published backing remains pinned\n",request_shutdown,root_sent);
+  if (!root_sent || request_shutdown) ap_quiesced=power_ack(0xb,0xb,0x10);
   if (ap_quiesced) iop_sleep=power_ack(6,7,1);
  }
  pr_info("m4rch ASC crashlog: AP_QUIESCED_ACK=%d IOP_SLEEP_ACK=%d\n",ap_quiesced,iop_sleep);

@@ -74,6 +74,8 @@ def main():
         require(int.from_bytes(sgx[key], 'little') == expected, 'Fresh ADT range mismatch: '+key)
     if args.graph:
         layout = json.loads((work/'asc-graph-init/graph-receipt.json').read_text())
+        from owned_gpu_layout import validate
+        validate((work/'asc-graph-init/graph-before.bin').read_bytes(),layout)
         for key,digest in layout.get('voltage_input_sha256',{}).items():
             require(sha(sgx[key])==digest,'Fresh voltage input differs: '+key)
         regs=list(struct.iter_unpack('<QQ',sgx['reg']))
@@ -138,7 +140,9 @@ def main():
         observer=threading.Thread(target=observe,args=(Path('/sys/kernel/m4rch_gpu_graph_trial/objects'),out/'live-objects',layout,done),daemon=True)
         observer.start()
     try:
-        result = subprocess.run(['insmod',str(selected),'run_gate=1' if args.arena else 'run_gate=2'],capture_output=True,text=True)
+        parameters=['run_gate=1' if args.arena else 'run_gate=2']
+        if args.graph and receipt.get('graph_power_retirement_probe',False):parameters.append('request_shutdown=1')
+        result = subprocess.run(['insmod',str(selected)]+parameters,capture_output=True,text=True)
     finally:
         done.set()
         if observer is not None:observer.join(timeout=5)

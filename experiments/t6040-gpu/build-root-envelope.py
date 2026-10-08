@@ -23,7 +23,10 @@ def main():
     p.add_argument('--control-refresh', action='store_true', help='One opcode16 initial control record; work remains empty')
     p.add_argument('--control-refresh-count', type=int, default=1, help='With --control-refresh, stage1..32 identical records; no wraparound')
     p.add_argument('--receive14', action='store_true', help='Experimental four-buffer receive14 fixture; no jobs')
+    p.add_argument('--receive13', action='store_true', help='With receive14, add four-buffer receive13 using device-disjoint GPU pages')
+    p.add_argument('--retirement-probe', action='store_true', help='Request AP quiesce/IOP sleep after observation; never release published backing yet')
     args = p.parse_args()
+    if args.receive13 and not args.receive14:p.error('Receive13 currently requires receive14')
     if not 1 <= args.control_refresh_count <= 32 or (not args.control_refresh and args.control_refresh_count != 1):
         p.error('Require --control-refresh and count1..32 for a batch')
     work = args.workspace.resolve()
@@ -90,16 +93,22 @@ def main():
     if args.receive14:
         from receive14_fixture import extend
         graph_bytes, graph_receipt = extend(graph_bytes,graph_receipt)
+    if args.receive13:
+        from receive13_fixture import extend
+        graph_bytes, graph_receipt = extend(graph_bytes,graph_receipt)
     if args.control_refresh:
         from control_refresh import stage
         graph_bytes, graph_receipt = stage(graph_bytes, graph_receipt, args.control_refresh_count)
     graph_pages = len(graph_bytes)//graph_plan.PAGE
-    if len(graph_bytes)%graph_plan.PAGE or graph_pages!=(54 if args.receive14 else 47):
+    if len(graph_bytes)%graph_plan.PAGE or graph_pages!=(69 if args.receive13 else 54 if args.receive14 else 47):
         raise ValueError('Unexpected structural fixture geometry')
+    from owned_gpu_layout import validate
+    owned_vas = validate(graph_bytes,graph_receipt)
     header = '/* Explicit experimental zero-opaque fixture, NOT a complete render graph. */\n'
     header += f'#define ARENA_OBJECT_PAGES {graph_pages}U\n'
     header += f'#define GRAPH_MAPPED_PAGES {graph_receipt["mapped_pages"]}U\n'
     header += f'#define GRAPH_MMIO_BASE {graph_receipt["mmio_virtual_base"]}ULL\n'
+    header += 'static const u64 owned_page_vas[] = {\n' + ''.join(f' {va:#x}ULL,\n' for va in owned_vas) + '};\n'
     header += 'struct graph_mmio_leaf { u64 physical, gpu_va; bool writable; };\n'
     header += 'static const struct graph_mmio_leaf mmio_leaves[] = {\n'
     header += ''.join(f' {{ {v["physical"]:#x}ULL, {v["gpu_va"]:#x}ULL, {int(not v["readonly"])} }},\n' for v in graph_receipt['mmio_leaves'])
@@ -123,7 +132,7 @@ def main():
                    graph_object_pages=graph_pages,graph_fixture_sha256=sha(graph/'graph-before.bin'),
                    graph_source_sha256={name:sha(graph/name) for name in ['asc-graph-init.c','graph-map.h','graph-contract.h']},
                    graph_receipt_sha256=sha(graph/'graph-receipt.json'),
-                   hardware_trial_performed=False,default_gate=0,preflight_gate=1,cold_publication_gate=2)
+                   graph_power_retirement_probe=args.retirement_probe,hardware_trial_performed=False,default_gate=0,preflight_gate=1,cold_publication_gate=2)
     (out/'build-receipt.json').write_text(json.dumps(receipt,indent=2)+'\n')
     print('Built matching isolated modules; no loading or firmware publication.')
 
