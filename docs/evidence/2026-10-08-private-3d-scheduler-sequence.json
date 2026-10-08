@@ -1,0 +1,21 @@
+{
+  "binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "counts": {
+    "nop_records": 34943,
+    "guard_cases": 64,
+    "cases": 1024,
+    "fallback_aux": 512,
+    "descriptor_aux": 512,
+    "cached": 512,
+    "uncached": 512,
+    "qos_local": 512,
+    "qos_fallback": 512,
+    "qos_ratio": 512
+  },
+  "caller": {
+    "start": "0xfffffe000895bfc8",
+    "end": "0xfffffe000895c154",
+    "sha256": "bc674ac45e4f4a6c68806088ec50eb8a4d5d97aa92c27ea09133e1f0f36634b6"
+  },
+  "qualification": "Enclosing native caller executes extra NOP loop plus complete3D wrapper/common encoders and LSE accounting. Independent full ring/record/count models; owner lookup and zero service synthetic, optional trace disabled. No full submit, hardware acceptance or completion."
+}
