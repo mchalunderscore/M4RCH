@@ -3,6 +3,8 @@
 #define POOL_FIRST_PAGE (ARENA_OBJECT_PAGES + 2)
 #define NOTIFY_FIRST_PAGE (POOL_FIRST_PAGE + POOL_PAGES)
 #define DEVICE_TABLE_FIRST (NOTIFY_FIRST_PAGE + 2)
+#define GPTBAT_PAGE (DEVICE_TABLE_FIRST + 3)
+#define STAGED_CONTEXT 1 /* Allocation-only candidate; no live ID reservation. */
 #define NOTIFY_STATE_VA (FW_BASE + POOL_BYTES)
 #define NOTIFY_RING_VA (NOTIFY_STATE_VA + PAGE_SIZE)
 static u8 pool_notifications[POOL_PAGES][24];
@@ -48,6 +50,40 @@ static bool pool_bind_notifications(u64 *l2)
          status,status+0x48e0,status+0x48e8);
  return true;
 }
+static bool pool_prepare_context(void)
+{
+ u64 *table=page_address(owned[GPTBAT_PAGE]);
+ u64 root_pa=page_to_phys(owned[DEVICE_TABLE_FIRST]);
+ u64 table_pa=page_to_phys(owned[GPTBAT_PAGE]);
+ u64 *root=page_address(owned[DEVICE_TABLE_FIRST]);
+ u64 *l1=page_address(owned[DEVICE_TABLE_FIRST+1]);
+ u64 *l2=page_address(owned[DEVICE_TABLE_FIRST+2]);
+ unsigned int i;
+ if ((root_pa|table_pa)&~PA_MASK || (root_pa|table_pa)&(PAGE_SIZE-1)) return false;
+ for (i=0;i<PAGE_SIZE/sizeof(u64);i++) if (table[i]) return false;
+ for (i=0;i<128;i++) {
+  u64 ttbr=root_pa|((u64)i<<48)|1;
+  table[2*i]=ttbr;table[2*i+1]=0;
+  if ((table[2*i]&PA_MASK)!=root_pa || ((table[2*i]>>48)&127)!=i ||
+      !(table[2*i]&1) || table[2*i+1]) return false;
+  pr_info("m4rch joined-context: encoding id=%u ttbr0=%#llx ttbr1=0 publication=0\n",i,ttbr);
+ }
+ /* Leave one candidate; context selection in the prepared job is still a fixture. */
+ memset(table,0,PAGE_SIZE);
+ table[STAGED_CONTEXT*2]=root_pa|((u64)STAGED_CONTEXT<<48)|1;
+ for (i=0;i<PAGE_SIZE/sizeof(u64);i++)
+  if (i!=STAGED_CONTEXT*2 && table[i]) return false;
+ if ((table[STAGED_CONTEXT*2]&PA_MASK)!=root_pa ||
+     root[(DEVICE_BASE>>36)&63]!=(page_to_phys(owned[DEVICE_TABLE_FIRST+1])|3) ||
+     l1[(DEVICE_BASE>>25)&2047]!=(page_to_phys(owned[DEVICE_TABLE_FIRST+2])|3)) return false;
+ for (i=0;i<POOL_PAGES;i++) {
+  u64 va=DEVICE_BASE+(u64)i*PAGE_SIZE;
+  if ((l2[(va>>14)&2047]&PA_MASK)!=page_to_phys(owned[POOL_FIRST_PAGE+i])) return false;
+ }
+ pr_info("m4rch joined-context: PASS table_pa=%#llx base_ppn=%#llx root_pa=%#llx context=%u ttbr0=%#llx checked=128 walked=%u publication=0\n",
+         table_pa,table_pa>>14,root_pa,STAGED_CONTEXT,table[STAGED_CONTEXT*2],POOL_PAGES);
+ return true;
+}
 static bool command_pool_prepare(u64 *firmware_l2)
 {
  unsigned int i,j,part;
@@ -90,6 +126,7 @@ static bool command_pool_prepare(u64 *firmware_l2)
   if ((va>>25)!=(ROOT_VA>>25) || firmware_l2[(va>>14)&2047]) return false;
   firmware_l2[(va>>14)&2047]=pa|FW_GRAPH_RW;
  }
+ if (!pool_prepare_context()) return false;
  if (!pool_bind_notifications(firmware_l2)) return false;
  memcpy(page_address(owned[NOTIFY_FIRST_PAGE+1]),pool_notifications,sizeof(pool_notifications));
  put_unaligned_le32(POOL_PAGES,(u8 *)page_address(owned[NOTIFY_FIRST_PAGE])+0x10);
