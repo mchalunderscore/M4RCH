@@ -1,0 +1,188 @@
+{
+  "boot_id": "8d5519d3-c1db-41a7-bb94-7c68e7ac0d10",
+  "kernel": "7.1.13-m4rch-gpu-contract",
+  "owned_pages": 140,
+  "render_pages": [
+    {
+      "index": 0,
+      "va": "0x10000000000",
+      "physical": "0x1003dc90000",
+      "root_index": 16
+    },
+    {
+      "index": 1,
+      "va": "0x10000004000",
+      "physical": "0x1002ef50000",
+      "root_index": 16
+    },
+    {
+      "index": 2,
+      "va": "0x10000008000",
+      "physical": "0x100103f4000",
+      "root_index": 16
+    },
+    {
+      "index": 3,
+      "va": "0x1000000c000",
+      "physical": "0x100da5b0000",
+      "root_index": 16
+    },
+    {
+      "index": 4,
+      "va": "0x10000010000",
+      "physical": "0x10015308000",
+      "root_index": 16
+    },
+    {
+      "index": 5,
+      "va": "0x10000014000",
+      "physical": "0x10013cc0000",
+      "root_index": 16
+    },
+    {
+      "index": 6,
+      "va": "0x10000018000",
+      "physical": "0x1012e728000",
+      "root_index": 16
+    },
+    {
+      "index": 7,
+      "va": "0x1000001c000",
+      "physical": "0x1003cc70000",
+      "root_index": 16
+    },
+    {
+      "index": 8,
+      "va": "0x10000020000",
+      "physical": "0x10010938000",
+      "root_index": 16
+    },
+    {
+      "index": 9,
+      "va": "0x10000024000",
+      "physical": "0x1000f7d0000",
+      "root_index": 16
+    },
+    {
+      "index": 10,
+      "va": "0x10000028000",
+      "physical": "0x1002ef5c000",
+      "root_index": 16
+    },
+    {
+      "index": 11,
+      "va": "0x1000002c000",
+      "physical": "0x100144c4000",
+      "root_index": 16
+    },
+    {
+      "index": 12,
+      "va": "0x10000030000",
+      "physical": "0x1011e2c8000",
+      "root_index": 16
+    },
+    {
+      "index": 13,
+      "va": "0x10000034000",
+      "physical": "0x1004f38c000",
+      "root_index": 16
+    },
+    {
+      "index": 14,
+      "va": "0x10000038000",
+      "physical": "0x100331f4000",
+      "root_index": 16
+    },
+    {
+      "index": 15,
+      "va": "0x1000003c000",
+      "physical": "0x10134950000",
+      "root_index": 16
+    },
+    {
+      "index": 16,
+      "va": "0x10000040000",
+      "physical": "0x1000ccd4000",
+      "root_index": 16
+    },
+    {
+      "index": 17,
+      "va": "0x10000044000",
+      "physical": "0x102cc440000",
+      "root_index": 16
+    },
+    {
+      "index": 18,
+      "va": "0x10000048000",
+      "physical": "0x1003d094000",
+      "root_index": 16
+    },
+    {
+      "index": 19,
+      "va": "0x1000004c000",
+      "physical": "0x1018a978000",
+      "root_index": 16
+    },
+    {
+      "index": 20,
+      "va": "0x2000010000",
+      "physical": "0x102822d8000",
+      "root_index": 2
+    },
+    {
+      "index": 21,
+      "va": "0x1000000000",
+      "physical": "0x101733f0000",
+      "root_index": 1
+    }
+  ],
+  "byte_comparisons": 360448,
+  "preparation": {
+    "shader_base": "0x10000000000",
+    "target_va": "0x2000010000",
+    "state_va": "0x1000000000",
+    "pages": 22,
+    "extra_table_pages": 6,
+    "bytes": 360448,
+    "data_sha256": "321425b456dde3684519c463e5721f76340d8d4da14198582a1a0975b574a09c",
+    "header_sha256": "e786be2769086162197bffe4cb8478423dd448a30eb7806019a7fbfab65ab6cf",
+    "target_receipt_sha256": "c6008f792f60569d9ff186168c397a90b221586bd6f30cb6190647232441befa",
+    "draw_receipt_sha256": "f450deb7fdb4ddabb3a6a5a8272f8bf4e2bba0875f4a183d65e42296d9f044e9",
+    "objects": [
+      {
+        "name": "usc",
+        "va": "0x10000000000",
+        "bytes": 327680,
+        "sha256": "0e81899ff189e071293afd62007ee99543115fd10d30a7343163098ff75e34bb"
+      },
+      {
+        "name": "target",
+        "va": "0x2000010000",
+        "bytes": 16384,
+        "sha256": "add4fa3e6dbfb8723b21cfe7debadbed5d5f2ca1ab88c666470daed16afbe21a"
+      },
+      {
+        "name": "draw-state",
+        "va": "0x1000000000",
+        "bytes": 16384,
+        "sha256": "49fe66ee5f53bd3a07365e9caf22e841b6dc85434ac4d017fdd8860a0ba74ede"
+      }
+    ],
+    "submission_ready": false,
+    "qualification": "Checked authored compiler/state candidates bound to previous receipt-linked VAs; no native descriptor relocation, GPU translation, shader execution or complete job proved."
+  },
+  "publication": false,
+  "module_absent": true,
+  "qualification": "Owned CPU backing/readback and device shadow walks. Existing native command/register fixtures still not bound to these authored candidate resources. No live context, GPU lookup, shader execution, job, completion or pixels.",
+  "build_hashes": {
+    "asc-graph-init.ko": "54a4019f93e36d9b0251e56b6fda0d94577e8b23a681e8991fdce9249218b1e8",
+    "render-backing-map.h": "9849feb03f83a9e56ca11f254df451303db46771e2052395f1c2217748f0404d",
+    "command-pool-map.h": "227312cb2ce09b77193a357ec960af6453b64bf2f71938cdda43d501a8a452f6",
+    "graph-map.h": "5fa2a6da431066f58251cc7fc3026129921de7f48eb4e894bcdbad310e3cb40b",
+    "asc-graph-init.c": "ce560056ab2c263876632033253f34a65c81d787577a0b4516d3b0919561d847",
+    "boot-contract.h": "5194505b49f3b40acdc80f29bf1e8c5c5f11374f483ed6a22df2c22ea904e082",
+    "graph-contract.h": "d38b4b70dcec25c3ce9d80367c18db7fdbb519cfcb27aaa8d86783cbdb3b779e",
+    "job-data.h": "f25100cabcc6d6af49489bcbee5adc0b609e437e093a9baa8ccac0c3fb463c43",
+    "render-data.h": "e786be2769086162197bffe4cb8478423dd448a30eb7806019a7fbfab65ab6cf"
+  }
+}

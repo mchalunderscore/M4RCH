@@ -84,6 +84,9 @@ static bool pool_prepare_context(void)
          table_pa,table_pa>>14,root_pa,STAGED_CONTEXT,table[STAGED_CONTEXT*2],POOL_PAGES);
  return true;
 }
+#ifdef GRAPH_RENDER_BACKING_EXPERIMENT
+#include "render-backing-map.h"
+#endif
 static bool command_pool_prepare(u64 *firmware_l2)
 {
  unsigned int i,j,part;
@@ -138,5 +141,8 @@ static bool command_pool_prepare(u64 *firmware_l2)
   pr_info("m4rch joined-pool: mapping %u va=%#llx pa=%#llx descriptor=%*phN\n",i,(u64)FW_BASE+(u64)i*PAGE_SIZE,page_to_phys(owned[POOL_FIRST_PAGE+i]),24,pool_notifications[i]);
  pr_info("m4rch joined-pool: PASS jobs=%u pages=%u device_root=%#llx firmware_root_index=%llu notifications=%u publication=0\n",
          JOB_COUNT,POOL_PAGES,page_to_phys(owned[DEVICE_TABLE_FIRST]),((u64)FW_BASE>>36)&63,POOL_PAGES);
+#ifdef GRAPH_RENDER_BACKING_EXPERIMENT
+ if (!pool_prepare_render()) return false;
+#endif
  return true;
 }
