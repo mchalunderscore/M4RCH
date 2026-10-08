@@ -48,6 +48,14 @@ with tempfile.TemporaryDirectory(prefix='native-sksm-register-test-') as directo
                 rng.getrandbits(64),rng.getrandbits(32),rng.getrandbits(8),0,rng.getrandbits(16))
         event_timestamp=[0,1,0x7fffffff,0x80000000,0xffffffff][i%5]
         struct.pack_into('<I',descriptor,0x210,event_timestamp)
+        struct.pack_into('<I',descriptor,0x214,i%24)
+        struct.pack_into('<I',descriptor,0x218,i%9)
+        for j in range(i%9):
+            struct.pack_into('<3I',descriptor,0x21c+j*12,(event_timestamp+j)&0xffffffff,(i+j)%24,0)
+        struct.pack_into('<Q',descriptor,0x448,0x200010000+i*0x100000)
+        struct.pack_into('<Q',descriptor,0x168,fw if i&1 else 0)
+        descriptor[0xc44]=3 if i%3==0 else 0
+        descriptor[0x4c]=i&1;descriptor[0xb48]=i&1
         (root/'descriptor.bin').write_bytes(descriptor)
         (root/'context.bin').write_bytes(bytes(0x100)); (root/'scene.bin').write_bytes(bytes(0x100))
         def scheduler(qid):
@@ -79,6 +87,12 @@ with tempfile.TemporaryDirectory(prefix='native-sksm-register-test-') as directo
             completion_mapping_address=hex((1<<64)-1))
         binding['3d_construction']['event_control']=dict(submit_context='submit-context.bin',epochs=[3,7],capacity=16,initial=0,aperture_flags=i)
         binding['scheduler']['3d'].pop('aperture')
+        for key in ('payload','dependencies','rce_kind','auxiliary','alternate_kind','extra_flag'):
+            binding['scheduler']['3d'].pop(key)
+        binding['scheduler']['3d']['native_3d']=dict(event_epochs=[[3,7] for _ in range(24)],
+            cached=bool(i&1),fallback_auxiliary=hex(fw+0x800),channel_payload=hex(fw+0x900))
+        if not i&1:binding['scheduler']['3d']['queue'].pop('previous')
+
         manifest = root/'input.json'; manifest.write_text(json.dumps(binding))
         report = module.prepare(args.macho,manifest,root/('pair-'+str(i)))
         assert report['submission_ready'] is False
@@ -136,7 +150,16 @@ with tempfile.TemporaryDirectory(prefix='native-sksm-register-test-') as directo
         assert report['3d_construction']['event_control_checked'] is True
         ap_pointer=int(report['producers']['3d']['lists'][0]['address'],0)+0x600 if i else 0
         assert struct.unpack_from('<Q2I',(output_dir/'3d-construction-descriptor.bin').read_bytes(),0xa98)==(ap_pointer,0 if i else 0xffffffff,i)
-        scheduler_ap=json.loads((output_dir/'3d-scheduler-bindings.json').read_text())['aperture']
+        sched3d=json.loads((output_dir/'3d-scheduler-bindings.json').read_text())
+        assert sched3d['payload']==[0x200010000+i*0x100000,fw+0x900]
+        assert sched3d['auxiliary']==(fw if i&1 else fw+0x800)
+        assert sched3d['alternate_kind']==(i%3==0 or bool(i&1))
+        assert sched3d['extra_flag']==bool(i&1)
+        assert len(sched3d['dependencies'])==i%9
+        for j,dep in enumerate(sched3d['dependencies']):
+            ev=(event_timestamp+j)&0xffffffff
+            assert dep==dict(event=ev,index=(i+j)%24,epoch=3 if ev<0x80000000 else 7)
+        scheduler_ap=sched3d['aperture']
         assert scheduler_ap==dict(address=hex(ap_pointer),index=0,count=i)
         for j in range(i):
             addr,length,dsid,_,size=struct.unpack_from('<QIBBH',descriptor,0x970+j*16)
@@ -183,7 +206,8 @@ with tempfile.TemporaryDirectory(prefix='native-sksm-register-test-') as directo
         {'3d_construction':{**binding['3d_construction'],'callback':0}},
         {'3d_construction':{**binding['3d_construction'],'event_control':{**binding['3d_construction']['event_control'],'capacity':0}}},
         {'3d_construction':{**binding['3d_construction'],'event_control':{**binding['3d_construction']['event_control'],'epochs':[1]}}},
-        {'scheduler':{**binding['scheduler'],'3d':{**binding['scheduler']['3d'],'aperture':dict(address=0,index=0,count=0)}}}]
+        {'scheduler':{**binding['scheduler'],'3d':{**binding['scheduler']['3d'],'aperture':dict(address=0,index=0,count=0)}}},
+        {'scheduler':{**binding['scheduler'],'3d':{**binding['scheduler']['3d'],'payload':[0,0]}}}]
     for j, replacement in enumerate(invalid):
         bad = {**binding,**replacement}; manifest.write_text(json.dumps(bad)); destination=root/('bad-'+str(j))
         try: module.prepare(args.macho,manifest,destination)
@@ -191,5 +215,5 @@ with tempfile.TemporaryDirectory(prefix='native-sksm-register-test-') as directo
         else: raise AssertionError('Invalid input accepted')
         assert not destination.exists(); counts['rejected_inputs'] += 1
 report = dict(private_binary_sha256=report['private_binary_sha256'],counts=counts,examples=examples,tool_sha256=hashlib.sha256(path.read_bytes()).hexdigest(),
-    qualification='16 synthetic pairs through native SKSM wrappers;64 expected TA FW-register values,80 list/scheduler links. Partial TA commands check serial/translations/epoch/caller inputs, completion offset wrap, all16 mode/context combinations and counts0..15 aperture records with descriptor pointer/count. Native register backing/metadata preserved. Sixteen partial ordinary3D candidates check native list preservation, header/frame/body/resource inputs and counter-derived payload. Eighteen malformed inputs fail before export. Ordinary3D event/control and aperture records0..15 derive timestamps and scheduler aperture metadata; native whole-window audits provide separate numeric qualification. Context/scene zero fixtures; remaining command storage, recipe semantics, live mappings/cache/queues/completion and valid drawing unqualified. No hardware touched.')
+    qualification='16 synthetic pairs through native SKSM wrappers;64 expected TA FW-register values,80 list/scheduler links. Partial TA commands check serial/translations/epoch/caller inputs, completion offset wrap, all16 mode/context combinations and counts0..15 aperture records with descriptor pointer/count. Native register backing/metadata preserved. Sixteen partial ordinary3D candidates check native list preservation, header/frame/body/resource inputs and counter-derived payload. Nineteen malformed inputs fail before export. Native3D scheduler derives dependencies, flags, auxiliary fallback and payload pointer from explicit descriptor/provider identities. Ordinary3D event/control and aperture records0..15 derive timestamps and scheduler aperture metadata; native whole-window audits provide separate numeric qualification. Context/scene zero fixtures; remaining command storage, recipe semantics, live mappings/cache/queues/completion and valid drawing unqualified. No hardware touched.')
 args.output.write_text(json.dumps(report,indent=2)+'\n'); print(counts)

@@ -251,11 +251,16 @@ def prepare(macho, manifest, output):
             meta=0x7a0+item['phase']*0x720
             if candidate_3d[meta:meta+12] != command[meta:meta+12]:
                 raise ValueError('3D construction changed native register metadata')
+    from native_3d_scheduler import derive as derive_3d_scheduler
     schedulers = {}
     if 'scheduler' in binding:
         for kind in ('ta', '3d'):
             template = dict(binding['scheduler'][kind])
             if 'register_lists' in template: raise ValueError('Scheduler register lists must derive from producer metadata')
+            if 'native_3d' in template:
+                if kind!='3d' or candidate_3d is None:
+                    raise ValueError('Native3D scheduler requires constructed3D descriptor')
+                template=derive_3d_scheduler(candidate_3d_descriptor,template)
             if kind=='3d' and candidate_3d is not None:
                 address,index,count=struct.unpack_from('<Q2I',candidate_3d_descriptor,0xa98)
                 derived=dict(address=hex(address),index=index if count else 0,count=count)

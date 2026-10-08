@@ -91,6 +91,14 @@ for i in range(64):
             firmware_translations=['0xffffffc000000000','0xffffffc000010000','0xffffffc000020000'],
             completion_mapping_address='0xffffffc000030000')
         manifest['3d_construction']['event_control']=dict(submit_context='submit-context.bin',epochs=[0,0],capacity=16,initial=0,aperture_flags=0)
+        queue=dict(timestamp=1,id=0,priority=0,capacity=16,previous=0,initial=0,pending=0)
+        manifest['scheduler']=dict(
+            ta=dict(queue=dict(queue),aperture=dict(address=0,index=0,count=0),payload=[0,0],
+                    dependencies=[],qos=[0,0,0],rce_kind=0,masks=[0,0,0,0],
+                    auxiliary=0,alternate_kind=False,extra_flag=False),
+            **{'3d':dict(queue=dict(queue),qos=[0,0,0],masks=[0,0,0,0],
+                    native_3d=dict(event_epochs=[[0,0] for _ in range(24)],cached=True,
+                                   fallback_auxiliary=0,channel_payload=0))})
         (case/'input.json').write_text(json.dumps(manifest,indent=2)+'\n')
         joined=paired.prepare(a.macho,case/'input.json',case/'output')
         assert joined['submission_ready'] is False
@@ -98,6 +106,9 @@ for i in range(64):
         assert joined['ta_construction']['aperture_count']==0
         assert struct.unpack_from('<I', (case/'output/ta-construction-candidate.bin').read_bytes(),0)[0]==0
         assert joined['3d_construction']['scratch_payload']==(i+1)&255
+        assert joined['scheduler_candidates']['3d']['submission_ready'] is False
+        scheduler=json.loads((case/'output/3d-scheduler-bindings.json').read_text())
+        assert scheduler['payload'][0]==struct.unpack_from('<Q',prepared,0x448)[0]
         counts['prepared_descriptor_pairs']=counts.get('prepared_descriptor_pairs',0)+1
 
     m.mem_write(C,bytes(0x3000));m.mem_write(ta['ns']['O'],bytes(0x100));m.mem_write(A+0x6d0,bytes(8));ta['ns']['mapped']=0x840000000;ta['ns']['entries'].clear();ta['ns']['calls'].clear();ta['ns']['pending']=None

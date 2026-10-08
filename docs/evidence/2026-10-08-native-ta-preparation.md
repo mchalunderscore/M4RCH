@@ -1,3 +1,7 @@
+## Derived scheduler preparation — 2026-10-08
+
+All64 prepared descriptor pairs now export paired scheduler candidates with descriptor-derived3D fields. Descriptor448 remains zero in these constructor fixtures; no live command mapping inferred. See native-3d-scheduler-bindings.md. Still submission_ready=false.
+
 ## Event/aperture integration — 2026-10-08
 
 All64 checked prepared native descriptors now feed paired TA/3D construction including explicit fixture3D event epochs/capacity/initial/context. Updated3D descriptor timestamp and aperture metadata exported.64 native compositions,320 intermediate checks,256 FW register values and5,248 independent encoder records pass. Still fixture-backed; no actual Linux GPU mapping/queue/publication/completion proven.

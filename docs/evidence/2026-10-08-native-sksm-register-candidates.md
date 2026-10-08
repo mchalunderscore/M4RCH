@@ -1,3 +1,7 @@
+## Descriptor-derived3D scheduler integration — 2026-10-08
+
+All16 paired candidates now derive dependencies,flags,RCE kind,auxiliary fallback and payload from constructed descriptor plus explicit provider bindings.19 invalid inputs rejected. Separate full native wrapper audit covers1,024 cases. Queue timestamp and descriptor timestamp kept distinct; payload448 kept distinct from register mapping440. See native-3d-scheduler-bindings.md. No live job.
+
 ## Ordinary3D event/control and aperture integration — 2026-10-08
 
 16 paired candidates retain80 list/scheduler links and64 independently expected TA FW values. All16 now check3D event/control with event boundary cases, native aperture records counts0..15, descriptor timestamp and aperture outputs, and scheduler aperture derived from updated descriptor.18 malformed inputs rejected. Separate native audits cover2,048 continuous event/control cases and1,024 real3D aperture helper/HAL cases. No live job or GPU rendering. See private-3d-event.md and private-3d-aperture.md.
