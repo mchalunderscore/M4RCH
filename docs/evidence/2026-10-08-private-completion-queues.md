@@ -5,6 +5,10 @@ addresses and record sizes below are hexadecimal unless stated in decimal.
 No live allocation, GPU commands or kernel changes. This fills a preparation
 gap; it does not establish completion delivery or command retirement.
 
+This expands the earlier512-case descriptor audit and256 allocation-size slice
+checks. The descriptor layout is unchanged. The new evidence is reusable numeric
+preparation and complete allocation-caller success/failure execution.
+
 ## Actual native descriptor population
 
 populateKSMCompletionQueue89d76c0..89d7948 writes four descriptors of20 bytes

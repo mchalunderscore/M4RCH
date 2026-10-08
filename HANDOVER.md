@@ -1,6 +1,6 @@
 # Native completion queue preparation — 2026-10-08
 
-New actual native G16 batches pass:1024 full completion descriptor cases (2048
+Expanded prior descriptor audit and added full allocation caller:1024 full completion descriptor cases (2048
 present/2048 absent records),1024 allocation caller cases (512 first failures,
 256 second failures,256 successes). Four32-byte descriptors use64-byte entries,
 separate from72-byte general firmware event ring. Native allocation caller fills
