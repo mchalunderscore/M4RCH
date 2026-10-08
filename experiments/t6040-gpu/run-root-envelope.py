@@ -46,7 +46,9 @@ def main():
     mode.add_argument('--arena', action='store_true', help='Mapping/retirement only; never publish a root')
     mode.add_argument('--graph', action='store_true', help='Structural initialization; backing pins unless the qualified shutdown release succeeds')
     p.add_argument('--cycle',type=int,choices=(1,2,3),help='Separate lifecycle capture; requires validated predecessor unload after cycle1')
+    p.add_argument('--warm-restart-from',type=Path,help='Experimental stopped6e HELLO replay, only after validated prior detach/unload')
     args = p.parse_args()
+    require(args.warm_restart_from is None or (args.graph and args.cycle is None),'Warm restart is graph-only and separate from numbered cycles')
     require(args.cycle is None or args.graph,'Cycles only apply to graph lifecycle trial')
     work = args.workspace.resolve()
     build = work/'asc-root-envelope'
@@ -71,6 +73,12 @@ def main():
             require(prev.get('post_unload_verified') and prev.get('graph_retirement_verified') and prev.get('unloaded'),'Previous lifecycle release not verified')
             require(prev['validated_build_receipt']==receipt,'Candidate changed across lifecycle cycles')
         out=out/f'cycle-{args.cycle}'
+    if args.warm_restart_from is not None:
+        require(receipt.get('graph_release_on_shutdown',False),'Warm restart requires release candidate')
+        prev=json.loads((args.warm_restart_from/'attempt.json').read_text())
+        require(prev['boot_id']==boot and prev.get('post_unload_verified') and prev.get('graph_retirement_verified') and prev.get('unloaded'),'Prior release not verified on this boot')
+        require(prev['validated_build_receipt']['graph_fixture_sha256']==receipt['graph_fixture_sha256'] and prev['validated_build_receipt']['kernel_notes_sha256']==receipt['kernel_notes_sha256'],'Warm fixture/kernel changed')
+        out=out/'warm-restart-1'
     out.mkdir(parents=True,exist_ok=True)
     require(not (out/'attempt.json').exists() and not (out/'result.json').exists(), 'Attempt already recorded for this boot; do not repeat')
     raw = capture(work/'adt-current/m4rch_gpu_adt.ko', '/sys/kernel/m4rch_gpu_adt/adt', out/'boot.adt', 'm4rch_gpu_adt')
@@ -119,7 +127,7 @@ def main():
     # handshake. The native probe checks the completed path before installing.
 
     slot=struct.unpack_from('<Q',tables,16)[0]
-    if args.cycle is not None and args.cycle>1 and slot==0x200105fff744cb:
+    if ((args.cycle is not None and args.cycle>1) or args.warm_restart_from is not None) and slot==0x200105fff744cb:
         retained_l2=capture(work/'arena-l2-sample/gpu-data-sample.ko','/sys/kernel/m4rch_gpu_data_sample/data',out/'l2-before-restart.bin','gpu_data_sample')
         require(not any(retained_l2),'Owned loader child remains occupied before restart')
     else:
@@ -160,6 +168,7 @@ def main():
         parameters=['run_gate=1' if args.arena else 'run_gate=2']
         if args.graph and receipt.get('graph_power_retirement_probe',False):parameters.append('request_shutdown=1')
         if args.graph and receipt.get('graph_release_on_shutdown',False):parameters.append('release_on_shutdown=1')
+        if args.warm_restart_from is not None:parameters.append('warm_restart=1')
         result = subprocess.run(['insmod',str(selected)]+parameters,capture_output=True,text=True)
     finally:
         done.set()

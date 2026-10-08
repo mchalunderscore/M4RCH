@@ -22,8 +22,14 @@ def check(table,l2,baseline,log,object_pages):
        not ((word(0x4000)^((BASE+0x8000)|3))&~(1<<10)) and
        word(0x8000)&3==3 and word(0x8000)&MASK==0x10000be4000 and
        word(0x8000+24*8)&3==3 and word(0x8000+24*8)&MASK==0x10001d44000 and
-       word(((ROOT>>36)&63)*8)==0x200105fff744cb)
- preserved=path and (table==baseline or not any(baseline))
+       word(((ROOT>>36)&63)*8) in (0,0x200105fff744cb))
+ # RTKit sleep may clear the firmware's top-level GPU root entry. Accept
+ # only that exact removal from a warm baseline, with TEXT/DATA unchanged.
+ root_offset=((ROOT>>36)&63)*8
+ adjusted=bytearray(baseline)
+ if word(root_offset)==0:struct.pack_into('<Q',adjusted,root_offset,0)
+ preserved=path and (table==baseline or table==adjusted or not any(baseline))
  return dict(owned_page_count=len(pages),owned_page_references=refs,reserved_l2_zero=not any(l2),
              loader_root_preserved=preserved,loader_text_data_path_qualified=path,
+             gpu_root_after=hex(word(((ROOT>>36)&63)*8)),
              post_unload_verified=not refs and not any(l2) and preserved)

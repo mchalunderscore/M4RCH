@@ -20,6 +20,8 @@
 #define EMPTY BIT(17)
 static unsigned int run_gate;
 static bool request_shutdown;
+static bool warm_restart;
+module_param(warm_restart,bool,0400);
 static bool release_on_shutdown;
 module_param(release_on_shutdown,bool,0400);
 module_param(request_shutdown,bool,0400);
@@ -163,6 +165,7 @@ static int __init hello_init(void)
  u32 appmap = 0;
  u8 apps_started = 0;
  u8 map_seen = 0;
+ if (warm_restart && (!release_on_shutdown || !request_shutdown || !GRAPH_RELEASE_EXPERIMENT)) return -EINVAL;
  if (release_on_shutdown && (!request_shutdown || !GRAPH_RELEASE_EXPERIMENT)) return -EINVAL;
  if (observe_ms<5000 || observe_ms>60000) return -EINVAL;
  if ((run_gate!=1 && run_gate!=2) || !of_machine_is_compatible("apple,j614s") ||
@@ -192,11 +195,18 @@ static int __init hello_init(void)
  asc=ioremap(ASC_BASE,0x1000);mbox=ioremap(MBOX_BASE,0x1000);
  if (!asc || !mbox) {ret=-ENOMEM;goto fail;}
  control=readl(asc+0x44);status=readl(asc+0x48);
- if ((control&START) || status!=0x6a) {ret=-EBUSY;goto fail;}
+ pr_info("m4rch graph-init: entry control=%#x status=%#x warm_restart=%d\n",control,status,warm_restart);
+ if ((control&START) || (status!=0x6a && !(warm_restart && status==0x6e))) {ret=-EBUSY;goto fail;}
  /* Refuse an old pending receive: this experiment needs a cold FIFO. */
  if (!(readl(mbox+0x114)&EMPTY)) {ret=-EBUSY;goto fail;}
  pr_info("m4rch ASC crashlog: cold control=%#x status=%#x; starting bounded poll\n",control,status);
  started=true;writel(control|START,asc+0x44);readl(asc+0x44);
+ if (warm_restart) {
+  /* Matched local apple_rtkit_wake: INIT requests negotiation after sleep. */
+  if (readl(mbox+0x110)&BIT(16)) goto stop_firmware;
+  wmb();writeq((6ULL<<52)|0x220ULL,mbox+0x800);writeq(0,mbox+0x808);
+  pr_info("m4rch graph-init: warm IOP INIT request0x220 sent; awaiting fresh HELLO/map\n");
+ }
  limit=jiffies+msecs_to_jiffies(4000);
  do {
   if (!(readl(mbox+0x114)&EMPTY)) {
@@ -275,6 +285,7 @@ retire_firmware:
   if (!root_sent || request_shutdown) ap_quiesced=power_ack(0xb,0xb,0x10);
   if (ap_quiesced) iop_sleep=power_ack(6,7,1);
  }
+stop_firmware:
  pr_info("m4rch ASC crashlog: AP_QUIESCED_ACK=%d IOP_SLEEP_ACK=%d\n",ap_quiesced,iop_sleep);
  writel(control&~START,asc+0x44);readl(asc+0x44);
  limit=jiffies+msecs_to_jiffies(100);
