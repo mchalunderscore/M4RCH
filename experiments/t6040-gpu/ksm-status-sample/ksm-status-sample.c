@@ -31,13 +31,16 @@ static int __init sample_init(void)
   if(saved>127){iounmap(selector);iounmap(ksm);return -EINVAL;}
   for(q=0;q<2;q++){
    writeq(q,selector+0x3a8);readq(selector+0x3a8);
-   pr_info("m4rch ksm-bank: queue=%u ring_config=%#llx\n",q,readq(ksm+0x1008));
+   /* Matched firmware snapshot16514..1652c reads these banked words. */
+   pr_info("m4rch ksm-bank: queue=%u ring_config=%#llx raw21010=%#llx raw21020=%#llx raw211e0=%#llx\n",q,readq(ksm+0x1008),readq(ksm+0x1010),readq(ksm+0x1020),readq(ksm+0x11e0));
   }
   writeq(saved,selector+0x3a8);
   pr_info("m4rch ksm-bank: restored_selector=%#llx expected=%#llx\n",readq(selector+0x3a8),saved);
   if(readq(selector+0x3a8)!=saved){iounmap(selector);iounmap(ksm);return -EIO;}
   iounmap(selector);
  }
+ /* Matched firmware16544..16568 snapshots four global words. */
+ pr_info("m4rch ksm-global: raw210e8=%#llx raw210f0=%#llx raw210f8=%#llx raw21100=%#llx\n",readq(ksm+0x10e8),readq(ksm+0x10f0),readq(ksm+0x10f8),readq(ksm+0x1100));
  iounmap(ksm);
  fault=ioremap(0x28800c000ULL,0x4000);
  if(!fault)return -ENOMEM;
