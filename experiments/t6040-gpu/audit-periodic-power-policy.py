@@ -230,7 +230,7 @@ if later_path.exists():
     assert len(later_bytes) == later_receipt['bytes']
     assert sha(later_bytes) == later_receipt['data_sha256']
     later = dict(receipt=later_receipt, words={hex(x): struct.unpack_from('<I', later_bytes, x - base)[0]
-        for x in (0x146908, 0x146914, 0x18e620, 0x18e688, 0x18e858, 0x18eec8, 0x18eef8, 0x18ef78, 0x18ef80)})
+        for x in (0x146908, 0x146914, 0x18e620, 0x18e688, 0x18e858, 0x18eec8, 0x18eef8, 0x18ef78, 0x18ef7c, 0x18ef80)})
 
 event_rows = []
 for address, mask, callback, arg in ((0x87490, 0x10000000, 0x35b34, 0x10000000),
@@ -251,7 +251,7 @@ report = dict(
     hardware_access=False,
     capture=str(a.capture),
     diagnostic_snapshot=dict(receipt=dr, words={hex(x): dword(x) for x in
-        (0x146908, 0x146914, 0x18eef8, 0x18eefc, 0x18ef78, 0x18ef80, 0x18fc78, 0x18e620, 0x18e688, 0x18e858, 0x18eec8)}),
+        (0x146908, 0x146914, 0x18eef8, 0x18eefc, 0x18ef78, 0x18ef7c, 0x18ef80, 0x18fc78, 0x18e620, 0x18e688, 0x18e858, 0x18eec8)}),
     later_diagnostic_snapshot=later,
     owned_snapshot=dict(sha256=sha(objects), power_offset=hex(power_offset),
         words={hex(x): pword(x) for x in (4, 8, 0x10, 0x38, 0x50, 0x78, 0x9b8, 0x9bc, 0x652c)}),
@@ -284,7 +284,7 @@ report = dict(
         'When 18eef8=0, e598 takes the fallback guard: down/up pair c8f0+d2b4 is reached iff 146914!=0 and 146908!=1. Both late DATA snapshots have 146914=1, 146908=1; those captured values take the no-op exit in RAM. Freshness of firmware cache state is not established.',
         'Periodic event 6 directly calls other policy helpers and temperature accounting, not d2b4. Its helpers have not been completely emulated by this audit.',
         'Event 1 reaches 3a4a4 and d2b4(power,1,1,0) when power+38=0; it signals main-event 10000000 when already powered. Producer 33ac4 posts power mask 2, but main-state bit 1 at 18e688 blocks that producer. Both late snapshots have state 2 and power event mask 0; those captured state values block the producer in RAM.',
-        'Native default GPU/Fender idle delays are 2/40 ms. Their consumed configuration source is region_c+9b8/+9bc (DATA195748), distinct from the runtime power object. Firmware 31c4..31d0 mirrors these to 18ef78/18ef80. Both captured configuration fields are zero, a native-default mismatch.',
+        'Native default GPU/Fender idle delays are 2/40 ms. Their consumed configuration source is region_c+9b8/+9bc (DATA195748), distinct from the runtime power object. Firmware 31c4..31d0 mirrors these to 18ef78/18ef7c; 18ef80 is the separate region_c+9c0 early-wake field. Both captured configuration fields are zero, a native-default mismatch.',
         'All 32 captured initial opcode22 records were consumed. Its actual handler4b1c sets the one-shot enable18eec8, calls30a8 to copy the delay fields, and clears that enable at3388. Captured enable0 therefore does not exclude this prior reached mirror. Restoring native region_c idle defaults2/40 is justified as a contract correction; it does not establish the earlier120/s caller or solve phase2.',
         'Existing sample period 200000 clocks/native 8 ms is consistent with roughly 120/s observed power-up completions. Rate agreement alone does not prove the caller or a zero timeout cause.'
     ],

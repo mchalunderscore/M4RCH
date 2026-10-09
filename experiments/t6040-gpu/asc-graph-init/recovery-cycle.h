@@ -5,6 +5,10 @@
  */
 #include "recovery-contract.h"
 static bool resident_session,recovery_resident,recovery_work_submitted;
+#ifdef RECOVERY_TRACE_MASK
+static bool recovery_trace_disabled;
+static unsigned int recovery_completed_total;
+#endif
 module_param(resident_session,bool,0400);
 static void *recovery_ptr(unsigned int offset)
 {
@@ -170,7 +174,11 @@ static bool recovery_cycles(void)
   if(recovery_read32(RECOVERY_STATUS+0x4900) ||
      recovery_read64(RECOVERY_STATUS+0x48f0)!=token+1 || recovery_read32(RECOVERY_REQUEST) ||
      recovery_read32(RECOVERY_REQUEST+4) || !recovery_idle()) goto done;
-  token++;completed++;recovery_sample(cycle,"fresh-control-consumed");
+  token++;completed++;
+#ifdef RECOVERY_TRACE_MASK
+  recovery_completed_total++;
+#endif
+  recovery_sample(cycle,"fresh-control-consumed");
  }
 done:
  recovery_sample(cycle,"final");
@@ -178,6 +186,35 @@ done:
  pr_info("m4rch recovery-result: completed=%u requested=2 allocations_retained=1 work_submitted=0\n",completed);
  return completed==2;
 }
+
+#ifdef RECOVERY_TRACE_MASK
+/* Native host-owned mask, followed by the existing forced configuration copy.
+ * Four completed idle cycles qualify this operation before the single draw.
+ * A failed copy keeps the entire context pinned and seals later publication. */
+static bool recovery_trace_off(void)
+{
+ u32 control;
+ if(recovery_trace_disabled || recovery_work_submitted || recovery_completed_total<4 ||
+    !recovery_messages()) return false;
+ control=recovery_read32(RECOVERY_CONTROL+16);
+ if(!recovery_idle() || control<RECOVERY_CONTROL_INITIAL+recovery_completed_total ||
+    control>=RECOVERY_CONTROL_LAST ||
+    recovery_read32(RECOVERY_CONTROL)!=control ||
+    recovery_read32(RECOVERY_CONTROL+8)!=control ||
+    recovery_read32(RECOVERY_STATUS+0x4900) || recovery_read32(RECOVERY_REQUEST) ||
+    recovery_read32(RECOVERY_REQUEST+4) ||
+    recovery_read32(RECOVERY_TRACE_MASK)!=RECOVERY_TRACE_INITIAL_MASK) return false;
+ recovery_write32(RECOVERY_TRACE_MASK,0);
+ if(!recovery_control(control+1,true)) return false;
+ if(recovery_read32(RECOVERY_TRACE_MASK) || recovery_read32(RECOVERY_STATUS+0x4900) ||
+    recovery_read32(RECOVERY_REQUEST) || recovery_read32(RECOVERY_REQUEST+4) ||
+    !recovery_idle()) return false;
+ recovery_trace_disabled=true;
+ pr_info("m4rch recovery-trace: disabled=1 completed_idle_cycles=%u control=%u allocations_retained=1\n",
+  recovery_completed_total,control+1);
+ return true;
+}
+#endif
 
 /* Typed resident operations share the snapshot lock. No arbitrary memory/MMIO
  * commands and no reusing or freeing a submitted job. A failed operation seals
@@ -219,8 +256,15 @@ static ssize_t recovery_command_store(struct kobject *kobj,struct kobj_attribute
  } else if(sysfs_streq(buf,"recover")) {
   if(recovery_work_submitted) {ret=-EBUSY;goto out;}
   ok=recovery_cycles();
+#ifdef RECOVERY_TRACE_MASK
+ } else if(sysfs_streq(buf,"trace-off")) {
+  ok=recovery_trace_off();
+#endif
  } else if(sysfs_streq(buf,"submit")) {
   if(recovery_work_submitted) {ret=-EALREADY;goto out;}
+#ifdef RECOVERY_TRACE_MASK
+  if(!recovery_trace_disabled) {ret=-EBUSY;goto out;}
+#endif
   if(!recovery_idle() || recovery_read32(RECOVERY_STATUS+0x4900) ||
      recovery_read32(RECOVERY_REQUEST) || recovery_read32(RECOVERY_REQUEST+4)) {ret=-EBUSY;goto out;}
   if(!recovery_control(recovery_read32(RECOVERY_CONTROL+16),false)) {ok=false;goto failed;}

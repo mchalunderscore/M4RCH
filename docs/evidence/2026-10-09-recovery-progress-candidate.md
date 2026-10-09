@@ -1,17 +1,19 @@
 # Native idle defaults and recovery progress trace
 
-Built and independently reviewed; **not run**. Candidate:
+Built and independently reviewed; **executed once** on boot
+`1730bf24-0823-4be9-a338-7e136762d076`. Candidate:
 `out/recovery-progress/candidate`. GPU module SHA256:
 `37c5fb6313a52d94a8e932bfce8a34ba2d5b825194905ec4f4fb32ece4ecef39`.
-The current boot `bba7a8f2-e6d3-49b8-88ed-bc5be2d17c0a` remains sealed after
-the previous RX candidate failed its first recovery. A normal reboot is required.
+Native tracing worked, but the first recovery still failed in phase2. The
+current boot remains sealed with retained backing. See
+`2026-10-09-recovery-progress-live.md/.json`. Do not repeat this candidate unchanged.
 
 The private Apple driver publishes GPU/Fender idle delays of **2/40 ms** to
 **RegionC+9b8/+9bc**, distinct from the runtime power object. Our owned fields
 were zero. All32 initial opcode22 controls were consumed. The actual firmware
 handler at4b1c enables its configuration mirror, calls30a8, then clears the
 one-shot enable at3388. Two full RAM paths ran186 instructions each: changing
-the configuration defaults changes whole firmware DATA only at18ef78/18ef80.
+the configuration defaults changes whole firmware DATA only at18ef78/18ef7c.
 A later mirror-enable zero is expected and does not exclude prior consumption.
 This justifies correcting the defaults; it does not identify the repeated
 startup-counter caller or establish the cause of the phase2 stall.
@@ -39,27 +41,12 @@ prefix log. `W=1` build, artifact/source/graph receipts and preservation checks
 passed. The adjacent JSON binds the final native proofs, build and review.
 Two defaults and tracing are batched, so success would not isolate one cause.
 
-After a different normal boot, absent conflicting GPU modules, and verification
-of all three PD drivers and USB role providers, run **once**:
+This executed candidate is now historical. The first recovery failed, so
+neither the second resident recovery nor the retained triangle was published.
+Only typed sample/stop is permitted; all174 DMA pages and the module stay
+pinned. No recovery, teardown, GPU execution or rendered triangle is established.
 
-```sh
-sudo -n python experiments/t6040-gpu/run-root-envelope.py out/recovery-progress/candidate --graph --run
-```
-
-Only after two clean idle cycles, cleared request state/flag, fresh consumed
-controls and a healthy retained journal, use the same module for two more:
-
-```sh
-sudo -n python experiments/t6040-gpu/run-resident-gpu.py out/recovery-progress/candidate recover
-```
-
-Only after four clean cycles, submit its single immutable triangle:
-
-```sh
-sudo -n python experiments/t6040-gpu/run-resident-gpu.py out/recovery-progress/candidate submit
-```
-
-Inspect completion backing and target pixels at1/5/15/30seconds. Any failure
-permits only typed sample/stop. All174 DMA pages and the module stay pinned;
-no force unload, warm retry, work reuse or retirement inference from RTKit ACKs.
-No recovery, teardown, GPU execution or rendered triangle is established yet.
+Address erratum: the earlier pinned policy proof mislabeled the Fender mirror
+destination as18ef80. The actual contiguous second u32 is18ef7c; the RAM audit
+and candidate RegionC+9bc value were already correct. Preserve the historical
+proof/receipt hashes; consult the corrected policy evidence for future staging.

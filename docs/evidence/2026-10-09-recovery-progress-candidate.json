@@ -1,6 +1,6 @@
 {
   "schema": "m4rch-recovery-progress-candidate-v1",
-  "stage": "Built and independently reviewed offline; NOT RUN. Normal reboot required after sealed boot bba7a8f2.",
+  "stage": "Executed once on boot1730bf24-0823-4be9-a338-7e136762d076. Native tracing works; first recoveryphase2 still incomplete. Sealed diagnostic only. Do not repeat unchanged.",
   "candidate": "out/recovery-progress/candidate",
   "prepared": "out/recovery-progress/prepared",
   "module_sha256": "37c5fb6313a52d94a8e932bfce8a34ba2d5b825194905ec4f4fb32ece4ecef39",
@@ -105,5 +105,6 @@
   ],
   "qualification": "Reached-consumer native initialization correction plus native progress observation. Marker presence requires role/function/arguments, journal prefix and recovery chronology; it is not a live PC. Absence cannot identify a wait. Two idle defaults and trace bit are batched, so success would not isolate a single cause. No recovery, retirement, teardown or rendering success claimed.",
   "progress_analyzer": "experiments/t6040-gpu/analyze-recovery-progress.py",
-  "saved_prior_observation": "docs/evidence/2026-10-09-bba-recovery-progress-observation.json"
+  "saved_prior_observation": "docs/evidence/2026-10-09-bba-recovery-progress-observation.json",
+  "live_result": "docs/evidence/2026-10-09-recovery-progress-live.json"
 }

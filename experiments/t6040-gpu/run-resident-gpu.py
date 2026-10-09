@@ -25,7 +25,7 @@ SYSFS = Path('/sys/kernel/m4rch_gpu_graph_trial')
 MODULE = Path('/sys/module/asc_graph_init')
 MODULE_ARTIFACT = 'asc-graph-init/asc-graph-init.ko'
 PAGE_SIZE = 0x4000
-COMMANDS = ('sample', 'control', 'recover', 'submit', 'stop')
+COMMANDS = ('sample', 'control', 'recover', 'trace-off', 'submit', 'stop')
 
 
 def require(condition, explanation):
@@ -224,6 +224,11 @@ def main():
     with (operations / '.lock').open('a') as lock:
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         receipt, session, original = validate(work, boot)
+        if args.command == 'trace-off':
+            require(receipt['graph_recovery_trial'].get('progress_trace', {}).get(
+                'native_trace_disable') == dict(object='status_a', byte_offset=0,
+                value=0, force_snapshot_opcode=22, minimum_completed_idle_cycles=4),
+                'Candidate does not implement the native trace-disable contract')
         state_path = operations / 'state.json'
         state = json.loads(state_path.read_text()) if state_path.exists() else {
             'boot_id': boot, 'candidate_module_sha256': receipt['artifact_sha256'][MODULE_ARTIFACT],
