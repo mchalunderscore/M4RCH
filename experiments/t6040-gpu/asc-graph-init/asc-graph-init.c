@@ -20,6 +20,10 @@
 #define EMPTY BIT(17)
 static unsigned int run_gate;
 static bool request_shutdown;
+#ifdef GRAPH_JOINED_WORK_EXPERIMENT
+static bool submit_work;
+module_param(submit_work,bool,0400);
+#endif
 static bool warm_restart;
 module_param(warm_restart,bool,0400);
 static bool release_on_shutdown;
@@ -200,6 +204,9 @@ static int __init hello_init(void)
  if (observe_ms<5000 || observe_ms>60000) return -EINVAL;
  if ((run_gate!=1 && run_gate!=2) || !of_machine_is_compatible("apple,j614s") ||
      !of_machine_is_compatible("apple,t6040")) return -ENODEV;
+#ifdef GRAPH_JOINED_WORK_EXPERIMENT
+ if (run_gate==2 && !submit_work) return -EINVAL;
+#endif
  if (run_gate==1) {
   ret=root_prepare(false);
 #ifdef GRAPH_CONTEXT_LIVE_EXPERIMENT
@@ -310,6 +317,18 @@ static int __init hello_init(void)
    root_sent=true; /* pin even if delivery/consumption cannot be established */
    wmb();writeq(0x00810c2000100000ULL,mbox+0x800);writeq(32,mbox+0x808);
    pr_warn("m4rch graph-init: G16S root sent to EP32; host allocations enabled; structural fixture, NOT rendering readiness\n");
+#ifdef GRAPH_JOINED_WORK_EXPERIMENT
+   if (readl(mbox+0x110)&BIT(16)) {
+    pr_err("m4rch joined-work: TX full; work notification not sent; prepared root remains pinned\n");
+   } else {
+    /* Initial staged RAM producer words are already cleaned by root_prepare.
+     * Pair-zero render notification via Gravity's matched RTKit transport.
+     * Queues0/1 carry config15/add-kicks14, KSM NOP0 and native work1.
+     * This is an experimental candidate, not a validated triangle job. */
+    wmb();writeq(0x0083000000000000ULL,mbox+0x800);writeq(33,mbox+0x808);
+    pr_info("m4rch joined-work: EP33 notification0x0083000000000000 sent; TA/3D queues0/1 config15/add2; experimental work candidate, completion unproven\n");
+   }
+#endif
    observe_until=jiffies+msecs_to_jiffies(observe_ms);
    do {
     if (!(readl(mbox+0x114)&EMPTY)) {

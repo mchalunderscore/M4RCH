@@ -168,6 +168,7 @@ def main():
         parameters=['run_gate=1' if args.arena else 'run_gate=2']
         if args.graph and receipt.get('graph_power_retirement_probe',False):parameters.append('request_shutdown=1')
         if args.graph and receipt.get('graph_release_on_shutdown',False):parameters.append('release_on_shutdown=1')
+        if args.graph and receipt.get('graph_submit_work',False):parameters.append('submit_work=1')
         if args.warm_restart_from is not None:parameters.append('warm_restart=1')
         result = subprocess.run(['insmod',str(selected)]+parameters,capture_output=True,text=True)
     finally:
@@ -230,8 +231,8 @@ def main():
         report['joined_observation']=dict(owned_pages=len(owned)//0x4000,owned_sha256=sha(owned),
             mapping_ring_head=struct.unpack_from('<I',owned,cursor)[0],
             mapping_ring_tail=struct.unpack_from('<I',owned,cursor+0x10)[0],
-            mapping_descriptors=receipt['joined_mapping_descriptors'],jobs_enqueued=0,
-            qualification='Owned context and graph publication only; no work queue doorbell or rendering. Context retained until reboot.')
+            mapping_descriptors=receipt['joined_mapping_descriptors'],work_publication_candidate=receipt.get('graph_submit_work',False),
+            qualification='Owned graph/context with optional experimental config/add-kicks and paired native work publication; no valid completion or rendered pixels established. Context retained until reboot.')
     (out/'attempt.json').write_text(json.dumps(report,indent=2)+'\n')
     os.sync()
     # Sampler is read-only and independently unloadable; root probe stays pinned.
