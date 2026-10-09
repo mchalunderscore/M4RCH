@@ -81,6 +81,17 @@ static struct bin_attribute joined_raw={.attr={.name="owned",.mode=0400},.read=j
 static struct bin_attribute graph_raw = {
  .attr={.name="objects",.mode=0400},.read=graph_read,.size=sizeof(graph_bytes),
 };
+/* Read-only matched KSM status. Called only while this consumer holds GFX.
+ * Raw values, not independently established queue-execution semantics. */
+static void ksm_status_sample(const char *phase)
+{
+ void __iomem *ksm=ioremap(0x288020000ULL,0x4000);
+ if (!ksm) {pr_warn("m4rch ksm-status: phase=%s map failed\n",phase);return;}
+ /* Matched TEXT reads21038/21040 at19858/19900 and211c8 at19644. */
+ pr_info("m4rch ksm-status: phase=%s offset21038=%#llx offset21040=%#llx offset211c8=%#llx\n",
+         phase,readq(ksm+0x1038),readq(ksm+0x1040),readq(ksm+0x11c8));
+ iounmap(ksm);
+}
 static int graph_snapshot_create(void)
 {
  int ret;
@@ -313,7 +324,9 @@ static int __init hello_init(void)
   /* Publish one complete candidate batch; published pages remain pinned. */
   if (apps_started==3 && !(readl(mbox+0x110)&BIT(16))) {
    unsigned long observe_until;
-   unsigned int observed=0;
+   unsigned int observed=0, status_stage=0;
+   unsigned long observation_start;
+   ksm_status_sample("before-root");
    root_sent=true; /* pin even if delivery/consumption cannot be established */
    wmb();writeq(0x00810c2000100000ULL,mbox+0x800);writeq(32,mbox+0x808);
    pr_warn("m4rch graph-init: G16S root sent to EP32; host allocations enabled; structural fixture, NOT rendering readiness\n");
@@ -329,8 +342,15 @@ static int __init hello_init(void)
     pr_info("m4rch joined-work: EP33 notification0x0083000000000000 sent; TA/3D queues0/1 config15/add2; experimental work candidate, completion unproven\n");
    }
 #endif
+   observation_start=jiffies;
    observe_until=jiffies+msecs_to_jiffies(observe_ms);
+   ksm_status_sample("after-publication");
    do {
+    static const unsigned int status_times[]={1000,5000,15000};
+    static const char * const status_labels[]={"1s","5s","15s"};
+    if(status_stage<ARRAY_SIZE(status_times) &&
+       time_after_eq(jiffies,observation_start+msecs_to_jiffies(status_times[status_stage])))
+      ksm_status_sample(status_labels[status_stage++]);
     if (!(readl(mbox+0x114)&EMPTY)) {
      u64 msg=readq(mbox+0x830),meta=readq(mbox+0x838);
      pr_info("m4rch graph-init: after-publication message=%#llx metadata=%#llx; no reply\n",msg,meta);
@@ -338,6 +358,7 @@ static int __init hello_init(void)
     }
     usleep_range(1000,2000);
    } while(time_before(jiffies,observe_until));
+   ksm_status_sample("before-stop");
    pr_info("m4rch graph-init: observation messages=%u; capture crashlog before reboot\n",observed);
   }
 retire_firmware:

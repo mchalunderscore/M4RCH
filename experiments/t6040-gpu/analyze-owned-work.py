@@ -5,7 +5,7 @@ Cursors and changed memory are intermediate evidence. GPU completion/pixels
 require independent event/stamp and image-layout validation.
 """
 from pathlib import Path
-import argparse,json,struct,hashlib
+import argparse,json,struct,hashlib,re
 from firmware_text_contract import qualify
 p=argparse.ArgumentParser(description=__doc__);p.add_argument('candidate',type=Path);p.add_argument('capture',type=Path);p.add_argument('output',type=Path);a=p.parse_args()
 prep=json.loads((a.candidate/'preparation.json').read_text());before=(a.candidate/'backing.bin').read_bytes();owned=(a.capture/'owned-after.bin').read_bytes();attempt=json.loads((a.capture/'attempt.json').read_text());layout=json.loads((a.candidate/'graph-receipt.json').read_text());graph=(a.capture/'objects-after.bin').read_bytes()
@@ -41,4 +41,6 @@ for j,q in enumerate(prep['owned_scheduler']):
  context_page=next(i for i,alias in enumerate(prep['firmware_aliases']) if int(alias,0)<=context<int(alias,0)+16384 and int(alias,0)!=0)
  offset=context-int(prep['firmware_aliases'][context_page],0)
  item['context_after_hex']=after[context_page*16384+offset:context_page*16384+offset+0x38].hex()
+r['firmware_pending']=dict(queue_flags=[hex(word(data,0x18cee0+q['queue_id']*40+0x40,'Q')) for q in prep['owned_scheduler']],queue_mask=hex(word(data,0x18cee0+0x1420,'Q')),config_write_bypass=word(data,0x18fd0c,'I'),qualification='Matched config sets bit0 and kick handler sets bit1 in queue flags; both mark pending mask. These indicate requests, not hardware completion.')
+r['live_ksm_status']=[dict(phase=m.group(1),offset21038=hex(int(m.group(2),0)),offset21040=hex(int(m.group(3),0)),offset211c8=hex(int(m.group(4),0))) for m in re.finditer(r'm4rch ksm-status: phase=(\S+) offset21038=(0x[0-9a-f]+|0) offset21040=(0x[0-9a-f]+|0) offset211c8=(0x[0-9a-f]+|0)',(a.capture/'dmesg-after.log').read_text())]
 (a.output/'result.json').write_text(json.dumps(r,indent=2)+'\n');print(json.dumps(r,indent=2))
