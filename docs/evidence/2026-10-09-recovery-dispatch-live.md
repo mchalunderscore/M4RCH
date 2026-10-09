@@ -82,7 +82,7 @@ The driver-owned checked GFX reset API passed a final W=1 object build and98
 actual-C fault cases, independently reproduced from the exact patch by reviewer
 and root. It remains an experimental device-reset scope hypothesis with all
 backing retained. A separate kernel and explicit resident owner are now built and independently
-reviewed; nothing has been deployed or pulsed. See
+reviewed. The kernel has been installed additively, but not booted or pulsed. See
 `2026-10-09-gfx-reset-scope-candidate.md/.json` for exact future identities and
 the bounded test. Command readback will not
 establish whole-GPU reset coverage or authorize memory retirement.

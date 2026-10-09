@@ -5,7 +5,7 @@
   "old_live_owner_sealed": true,
   "candidate_path": "out/gfx-reset-scope/candidate",
   "future_kernel_release": "7.1.13-m4rch-gpu-reset",
-  "kernel_installed": false,
+  "kernel_installed": true,
   "hardware_reset_performed": false,
   "dma_pages_retained": 174,
   "gpu_work_submitted": false,
@@ -22,8 +22,8 @@
   "artifacts": [
     {
       "path": "docs/evidence/2026-10-09-gfx-reset-scope-candidate.md",
-      "sha256": "6c71b337844ad348112f479525b0c3d84441b401f47d31a25a2fa883e2f4442d",
-      "bytes": 6368
+      "sha256": "38481f5761c9172e3801bc741025a8cd5438329c0607e360b08996c545131d21",
+      "bytes": 6653
     },
     {
       "path": "out/gfx-reset-scope/root-final-qualification.json",
@@ -79,6 +79,16 @@
       "path": "docs/evidence/2026-10-09-rtbuddy-reset-review.json",
       "sha256": "c43a596e018b705d33652437e87a6673433019d169b56adefb15307cd713fb87",
       "bytes": 37336
+    },
+    {
+      "path": "docs/evidence/2026-10-09-gfx-reset-boot-installed.json",
+      "sha256": "7dbf35283a299c14e7f3d0e27837aa14e70b75474be7cd6aa0d85100b442a523",
+      "bytes": 2618
     }
-  ]
+  ],
+  "kernel_booted": false,
+  "menu_entry_index": 4,
+  "default_preserved": 1,
+  "current_boot_menu_default": 4,
+  "goal_pause_requested": true
 }

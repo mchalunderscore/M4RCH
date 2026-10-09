@@ -1,6 +1,6 @@
 # Checked GFX reset scope candidate
 
-A distinct kernel and retained resident owner are built and independently reviewed. This prepares a hardware experiment; it does not establish recovery, teardown, execution or DMA retirement. The old live owner on boot `278a044e-6204-4893-83dd-0ef198566470` remains sealed on `7.1.13-m4rch-gpu-contract`, with all 174 pages retained. No new kernel has been installed or reset pulse performed.
+A distinct kernel and retained resident owner are built and independently reviewed. This prepares a hardware experiment; it does not establish recovery, teardown, execution or DMA retirement. The old live owner on boot `278a044e-6204-4893-83dd-0ef198566470` remains sealed on `7.1.13-m4rch-gpu-contract`, with all 174 pages retained. The new kernel is now installed additively, with a separate boot entry; it has not been booted or pulsed. See `2026-10-09-gfx-reset-boot-installed.md/.json`.
 
 The matched Apple kernelcache was retrieved from APFS Preboot through a verified read-only mount and then unmounted. Matching AGX bytes and the six RTBuddy delegate slots now resolve against the original 25G83 image. The native PWRGATE/ON lifecycle is useful evidence, but generic ASCWrapV6 forced stop still requires hardware idle. It does not prove recovery from the observed nonidle stall. The extra control44 mask0x20 clear would be a no-op for the saved controls and is not a new wake experiment.
 
@@ -35,7 +35,7 @@ Verification passed: 98 actual driver C fault cases, 513 actual owner C cases wi
 
 ## Future bounded trial
 
-The future kernel must first be installed additively and booted normally by the user. Do not run this candidate on the old kernel or old retained session. Confirm the new release and notes, a different boot ID, no conflicting GPU module, all three PD bindings and all three USB role providers. The wrappers enforce the exact future image/module identity and reject repeated initial captures.
+The future kernel is installed additively. The fifth entry, `7.1.13-m4rch-gpu-reset (GFXR001 checked reset trial)`, is now default4 at the user's request. A normal reboot will select it without GRUB input. The user requested pausing the goal until they report booting it. Do not run this candidate on the old kernel or old retained session. Confirm the new release and notes, a different boot ID, no conflicting GPU module, all three PD bindings and all three USB role providers. The wrappers enforce the exact future image/module identity and reject repeated initial captures.
 
 On that fresh boot, establish the new no-work retained instance once:
 

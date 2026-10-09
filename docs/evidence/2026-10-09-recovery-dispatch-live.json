@@ -145,8 +145,8 @@
     },
     {
       "path": "docs/evidence/2026-10-09-gfx-reset-scope-candidate.json",
-      "sha256": "0ffa6a99801c45c2d71fe5a1145fa06c1531f694b973a0da0b916f13c8df5523",
-      "bytes": 3066
+      "sha256": "c676eda558d72f0c58cebe26e5722fc7e1a4e895e5eba829f6d88e24dbe6d80c",
+      "bytes": 3397
     }
   ],
   "final_owned_state": {
@@ -279,7 +279,7 @@
   "independent_review": "docs/evidence/2026-10-09-recovery-dispatch-live-review.json",
   "lifetime": "Main module/context/all174 pages retained, sealed diagnostic only; typed sample/stop only.",
   "new_reset_metadata": "Registered GFX provider and #reset-cells0 confirmed; capability gate1 confirms no usable internal phandle. No pulse or DMA/reset scope qualification.",
-  "next_action": "Boot the separately prepared checked GFX reset kernel/retained owner after additive installation, then one bounded no-work scope pulse. Do not repeat unchanged332d or old wake trials; no automatic firmware restart or backing release.",
+  "next_action": "Goal pause requested by user. New checked reset kernel is default4; await user normal boot report/resume, then qualify exact kernel/PD/USB before the bounded retained no-work scope experiment.",
   "qualification": {
     "idle_recovery_verified": false,
     "work_recovery_verified": false,
@@ -333,6 +333,9 @@
     "resident_owner_built": true,
     "independent_owner_review_passed": true,
     "candidate_receipt_sha256": "a60d3e4d2a0e54ad3f6818480cbe9c021fc7bbffe4eff7c2495c1c34706144ac",
-    "kernel_installed": false
-  }
+    "kernel_installed": true,
+    "kernel_booted": false
+  },
+  "current_boot_menu_default": 4,
+  "goal_pause_requested": true
 }
