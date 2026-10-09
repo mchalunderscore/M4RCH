@@ -12,6 +12,7 @@
 #include <linux/jiffies.h>
 #include <linux/kobject.h>
 #include <linux/sysfs.h>
+#include <linux/mutex.h>
 #include "boot-contract.h"
 #include "graph-map.h"
 #define ASC_BASE 0x28a600000ULL
@@ -42,6 +43,7 @@ static bool held, asc_region, mbox_region, started;
 #include "joined-context-init.h"
 #endif
 static struct kobject *graph_directory;
+static DEFINE_MUTEX(graph_io_lock);
 static ssize_t graph_read(struct file *file, struct kobject *kobj,
  const struct bin_attribute *attr, char *buf, loff_t off, size_t count)
 {
@@ -49,19 +51,20 @@ static ssize_t graph_read(struct file *file, struct kobject *kobj,
  if (off<0) return -EINVAL;
  if (off>=sizeof(graph_bytes)) return 0;
  count=min_t(size_t,count,sizeof(graph_bytes)-off);
+ mutex_lock(&graph_io_lock);
  while (done<count) {
   size_t position=off+done, index=position/PAGE_SIZE;
   size_t within=position%PAGE_SIZE, bytes=min_t(size_t,count-done,PAGE_SIZE-within);
   void *page;
   unsigned long address;
-  if (!owned[2+index]) return -ENODEV;
+  if (!owned[2+index]) {mutex_unlock(&graph_io_lock);return -ENODEV;}
   page=page_address(owned[2+index]);
   for (address=(unsigned long)page;address<(unsigned long)page+PAGE_SIZE;address+=16)
    asm volatile("dc ivac, %0" :: "r"(address) : "memory");
   asm volatile("dsb sy" ::: "memory");
   memcpy(buf+done,(u8 *)page+within,bytes);done+=bytes;
  }
- return count;
+ mutex_unlock(&graph_io_lock);return count;
 }
 #ifdef GRAPH_JOINED_INIT_EXPERIMENT
 static ssize_t joined_read(struct file *file, struct kobject *kobj,
@@ -70,11 +73,12 @@ static ssize_t joined_read(struct file *file, struct kobject *kobj,
  size_t done=0,total=ARRAY_SIZE(owned)*PAGE_SIZE;
  if(off<0)return -EINVAL;if(off>=total)return 0;
  count=min_t(size_t,count,total-off);
+ mutex_lock(&graph_io_lock);
  while(done<count){size_t p=off+done,index=p/PAGE_SIZE,within=p%PAGE_SIZE,n=min_t(size_t,count-done,PAGE_SIZE-within);unsigned long a;void *page;
-  if(!owned[index])return -ENODEV;page=page_address(owned[index]);
+  if(!owned[index]){mutex_unlock(&graph_io_lock);return -ENODEV;}page=page_address(owned[index]);
   for(a=(unsigned long)page;a<(unsigned long)page+PAGE_SIZE;a+=16)asm volatile("dc ivac, %0" :: "r"(a) : "memory");
   asm volatile("dsb sy" ::: "memory");memcpy(buf+done,(u8 *)page+within,n);done+=n;}
- return count;
+ mutex_unlock(&graph_io_lock);return count;
 }
 static struct bin_attribute joined_raw={.attr={.name="owned",.mode=0400},.read=joined_read,.size=ARRAY_SIZE(owned)*PAGE_SIZE};
 #endif
@@ -86,6 +90,15 @@ static struct bin_attribute graph_raw = {
 static void ksm_status_sample(const char *phase)
 {
  void __iomem *fault;
+#ifdef GRAPH_RECOVERY_EXPERIMENT
+ /* Gravity get_gpu_id and native readChipInfo both read this ID word.
+  * It supplies the three engine-count masks for the next integrated fixture. */
+ void __iomem *identity=ioremap(0x288d04000ULL,PAGE_SIZE);
+ if(identity) {
+  pr_info("m4rch gpu-identity: phase=%s raw_d04018=%#x\n",phase,readl(identity+0x18));
+  iounmap(identity);
+ }
+#endif
  void __iomem *ksm=ioremap(0x288020000ULL,0x4000);
  if (!ksm) {pr_warn("m4rch ksm-status: phase=%s map failed\n",phase);return;}
  /* Matched TEXT reads21038/21040 at19858/19900 and211c8 at19644. */
@@ -110,7 +123,7 @@ static void ksm_status_sample(const char *phase)
   iounmap(fault);
  }
 }
-#ifdef GRAPH_JOINED_WORK_EXPERIMENT
+#if defined(GRAPH_JOINED_WORK_EXPERIMENT) || defined(GRAPH_RECOVERY_EXPERIMENT)
 /* Read owned output while firmware is alive, before quiesce can change state.
  * This follows the existing owned sysfs invalidation discipline; host does not
  * write these pages after publication. A byte change is not rendering proof. */
@@ -139,6 +152,10 @@ static void joined_output_sample(const char *phase)
 #endif
 }
 #endif
+#ifdef GRAPH_RECOVERY_EXPERIMENT
+static bool power_ack(unsigned int request,unsigned int reply,u16 state);
+#include "recovery-cycle.h"
+#endif
 static int graph_snapshot_create(void)
 {
  int ret;
@@ -148,6 +165,9 @@ static int graph_snapshot_create(void)
  if (ret) {kobject_put(graph_directory);graph_directory=NULL;}
 #ifdef GRAPH_JOINED_INIT_EXPERIMENT
  if (!ret) ret=sysfs_create_bin_file(graph_directory,&joined_raw);
+#endif
+#ifdef GRAPH_RECOVERY_EXPERIMENT
+ if (!ret) ret=sysfs_create_file(graph_directory,&recovery_command.attr);
 #endif
  return ret;
 }
@@ -416,6 +436,23 @@ static int __init hello_init(void)
    joined_output_sample("before-stop");
 #endif
    pr_info("m4rch graph-init: observation messages=%u; capture crashlog before reboot\n",observed);
+#ifdef GRAPH_RECOVERY_EXPERIMENT
+   /* Keep every mapping/allocation alive throughout the application handshake. */
+   if (!observed) {
+    bool recovered;
+    mutex_lock(&graph_io_lock);recovered=recovery_cycles();
+    if(resident_session) {
+     __module_get(THIS_MODULE);recovery_resident=true;recovery_session_failed=!recovered;
+    }
+    mutex_unlock(&graph_io_lock);
+    if(resident_session) {
+     if(recovered) pr_info("m4rch recovery-session: resident=1 control_ready=1 work_submitted=0 allocations_retained=1\n");
+     else pr_info("m4rch recovery-session: diagnostic=1 sealed=1 control_ready=0 work_submitted=0 allocations_retained=1; only sample/stop allowed\n");
+     return 0;
+    }
+   }
+   else pr_warn("m4rch recovery-result: skipped after initial mailbox activity; allocations retained\n");
+#endif
   }
 retire_firmware:
   pr_info("m4rch graph-init: shutdown requested=%d root_sent=%d; published backing remains pinned\n",request_shutdown,root_sent);

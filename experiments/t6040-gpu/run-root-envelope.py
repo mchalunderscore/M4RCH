@@ -164,7 +164,7 @@ def main():
         subprocess.run(['rmmod','asc_graph_init'],check=True)
         (out/'objects-before.bin').write_bytes((work/'asc-graph-init/graph-before.bin').read_bytes())
     observer=None;done=threading.Event()
-    if args.graph:
+    if args.graph and not receipt.get('graph_recovery_trial'):
         layout=json.loads((work/'asc-graph-init/graph-receipt.json').read_text())
         observer=threading.Thread(target=observe,args=(Path('/sys/kernel/m4rch_gpu_graph_trial/objects'),out/'live-objects',layout,done),daemon=True)
         observer.start()
@@ -173,12 +173,14 @@ def main():
         if args.graph and receipt.get('graph_power_retirement_probe',False):parameters.append('request_shutdown=1')
         if args.graph and receipt.get('graph_release_on_shutdown',False):parameters.append('release_on_shutdown=1')
         if args.graph and receipt.get('graph_submit_work',False):parameters.append('submit_work=1')
+        if args.graph and receipt.get('graph_recovery_trial'):parameters.append('observe_ms=5000')
+        if args.graph and receipt.get('graph_recovery_trial',{}).get('resident_session'):parameters.append('resident_session=1')
         if args.warm_restart_from is not None:parameters.append('warm_restart=1')
         result = subprocess.run(['insmod',str(selected)]+parameters,capture_output=True,text=True)
     finally:
         done.set()
         if observer is not None:observer.join(timeout=5)
-    if args.graph:
+    if args.graph and not receipt.get('graph_recovery_trial'):
         observations=out/'live-objects/observations.json'
         report['live_observation']=json.loads(observations.read_text()) if observations.exists() else {'error':'Observer did not produce a completed report'}
     logs = subprocess.check_output(['dmesg','--color=never'],text=True)
@@ -227,6 +229,12 @@ def main():
     report['mapping_or_publication_performed'] = (f"{receipt['graph_object_pages']} object pages mapped" in delta if args.graph else 'installed previously-empty mapping slot' in logs)
     report.update(load_returncode=result.returncode, stderr=result.stderr, module_present=present,
                   reboot_required=present, interpretation=('Allocations-enabled structural fixture. A sent root/object change does not prove initialization or rendering readiness. Never force unload.' if args.graph else 'A transmitted root is not proof of consumption. Seek a newly written disabled-host-allocations rejection in the crashlog. Never force module unload.'))
+    if args.graph and receipt.get('graph_recovery_trial'):
+        resident=present and result.returncode==0 and 'm4rch recovery-session: resident=1 control_ready=1' in delta
+        report['resident_session_active']=resident
+        report['diagnostic_session_active']=present and result.returncode==0 and 'm4rch recovery-session: diagnostic=1 sealed=1' in delta
+        report['reboot_required']=present and not resident
+        report['interpretation']='Application recovery trial; all owned backing remains retained. Resident success permits typed control/recovery and one immutable triangle publication; no work reuse, DMA retirement or unload qualification.'
     if args.graph and receipt.get('joined_context_init') and present:
         owned=Path('/sys/kernel/m4rch_gpu_graph_trial/owned').read_bytes()
         require(len(owned)==receipt['joined_owned_pages']*0x4000,'Joined owned snapshot extent mismatch')
@@ -240,7 +248,7 @@ def main():
     (out/'attempt.json').write_text(json.dumps(report,indent=2)+'\n')
     os.sync()
     # Sampler is read-only and independently unloadable; root probe stays pinned.
-    if present:
+    if present and not (report.get('resident_session_active') or report.get('diagnostic_session_active')):
         after = capture(work/'root-data-sample/gpu-data-sample.ko', '/sys/kernel/m4rch_gpu_data_sample/data', out/'data-after.bin', 'gpu_data_sample')
         report['data_before_sha256'] = sha(before)
         report['data_after_sha256'] = sha(after)
@@ -310,7 +318,12 @@ def main():
         print('Graph retired and unloaded; inspect post-unload proof before another cycle.' if report.get('post_unload_verified') else 'Graph retirement incomplete; inspect evidence; do not retry.')
         return
     os.sync()
-    print('Probe returned. Inspect evidence; pinned backing requires reboot.'  if present else 'Probe refused; inspect evidence before retrying.')
+    if report.get('diagnostic_session_active'):
+        print('Recovery incomplete; diagnostic session retained with ASC/GFX held. Only sample/stop allowed; no submission, retry or force unload.')
+    elif report.get('resident_session_active'):
+        print('Resident session active after recovery; use typed resident commands. All backing retained; never force unload.')
+    else:
+        print('Probe returned. Inspect evidence; pinned backing requires reboot.' if present else 'Probe refused; inspect evidence before retrying.')
 
 if __name__ == '__main__':
     main()

@@ -1,0 +1,62 @@
+{
+  "schema": "m4rch-recovery-power-wait-candidate-v1",
+  "stage": "prepared and reviewed; not run",
+  "candidate": "out/recovery-power-wait/candidate",
+  "prepared_graph": "out/recovery-power-wait/prepared",
+  "module_sha256": "e9727a6c36daa68fb6d6c84594774622ec2314e67f13be2d1233d5815b727388",
+  "build_receipt_sha256": "b8f4c46adbcafe4632f45dd80e287df59ea2f8f02e0927533781aca1ea5635da",
+  "graph_sha256": "d9e21a9d9d33c6a5186a1f201f5a99374a5e478491feb43ab3ad0fc0d6e2985c",
+  "graph_receipt_sha256": "5b2526dcaf93af1bdaa13b06d8bff32b0b06160f3009319e527e96a7d8c869c5",
+  "source_sha256": {
+    "joined-context-init.h": "1851e697907d50a3f47d153879f47f1b6b07065f5d58055fa6269bc436bc15b2",
+    "graph-contract.h": "8d047c87dfcabd3af246c943dca78c67a71e76ae9f4493147b6ef9ea625618a2",
+    "render-data.h": "3bdbf04b9a3219c8e818beb464b5f55626e8a9b3d184680e3fd05a6361c47cbd",
+    "recovery-contract.h": "2ffe44545a74631cbb86c33d26e52da4b8f49c3e587d5351955495d7e7ecee31",
+    "job-data.h": "c18ede083b691fbd3044237aaf30eb1e34c775e9391d3c6f1bea8e61561e0913",
+    "render-backing-map.h": "ade8cedde4da68f2f463ed8604f47ab6b56cdf1c8ff3984d592e00f4a065978b",
+    "command-pool-map.h": "1e4696787075de13a56f4946018221803a5a01a3c5a653bbbdbd48f319e74b6b",
+    "recovery-cycle.h": "1048edb2c63891b8846f6fea1c9811abe5e3ed8fe74a25e9b8f6602232e0b808",
+    "graph-map.h": "5fa2a6da431066f58251cc7fc3026129921de7f48eb4e894bcdbad310e3cb40b",
+    "boot-contract.h": "5194505b49f3b40acdc80f29bf1e8c5c5f11374f483ed6a22df2c22ea904e082",
+    "asc-graph-init.c": "140f8a968854a916cc4eab8d7bd708640a30c5573def1de6b33f67fae4c4cacd"
+  },
+  "runner_sha256": {
+    "run-root-envelope.py": "eec90cf26aa7a9ce22e959d6a02ec098d6dbb321dfb428150479d980d4c8e135",
+    "run-resident-gpu.py": "b37be06302caa66f962b8c9af5f0deaa6352ee07ec96d5d726543bf5973354b0",
+    "prepare-recovery-trial.py": "ed26c6279ecd7899398064e6f5b66cb5d28ec91be3fe3dd70a785928a8130931"
+  },
+  "kernel_release": "7.1.13-m4rch-gpu-contract",
+  "owned_pages": 174,
+  "initial_control_records": 32,
+  "staged_control_records": 128,
+  "work_roots_empty": true,
+  "failed_recovery_policy": "Keep ASC/GFX and allocations held; seal session; only sample/stop; no repeated recovery or work publication",
+  "polls": [
+    {
+      "physical": "0x288005960",
+      "width": 8,
+      "condition": "value & 7 == 0"
+    },
+    {
+      "physical": "0x288005978",
+      "width": 8,
+      "condition": "value & 2 != 0"
+    },
+    {
+      "physical": "0x288d4c004",
+      "width": 4,
+      "condition": "value & 31 == requested pstate"
+    }
+  ],
+  "sampling_guard": "recovery phase2 and nonzero owned power state",
+  "verification": [
+    "W=1 module build successful",
+    "all module artifact hashes and generated C/header hashes match receipts",
+    "current C and recovery header match candidate",
+    "owned graph layout validates",
+    "interrupted control/recover remains quarantined across three later sample operations, temporary files only",
+    "modified Python sources compile",
+    "Rust ABI codec existing tests 10/10"
+  ],
+  "qualification": "Offline candidate only; no completed recovery, DMA retirement, GPU execution or rendered pixels established"
+}

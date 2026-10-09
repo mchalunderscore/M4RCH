@@ -26,23 +26,27 @@ for i in range(pages):
  if offsets:changed.append(dict(page=i,device_va=prep['candidate_vas'][i],changed_bytes=len(offsets),first_changed_offsets=[hex(x) for x in offsets[:32]]))
 target=after[20*16384:21*16384];initial=before[20*16384:21*16384];completion=after[47*16384:48*16384]
 a.output.mkdir(exist_ok=False);(a.output/'target-after.bin').write_bytes(target);(a.output/'completion-after.bin').write_bytes(completion)
-r=dict(boot_id=attempt['boot_id'],candidate_module_sha256=attempt['validated_build_receipt']['artifact_sha256']['asc-graph-init/asc-graph-init.ko'],root_channels=root,queues=queues,changed_backing_pages=changed,target_changed_bytes=sum(x!=y for x,y in zip(initial,target)),target_sha256=hashlib.sha256(target).hexdigest(),completion_changed_bytes=sum(x!=y for x,y in zip(before[47*16384:48*16384],completion)),work_notification_sent='m4rch joined-work: EP33 notification' in (a.capture/'dmesg-after.log').read_text(),reboot_required=attempt['reboot_required'],qualification='Post-return non-atomic owned-memory capture. Root-channel consumption, job pointer prefetch/completion cursors and changed target storage are distinct evidence; none alone proves GPU execution, valid shader completion or a rendered triangle. Context/backing remain pinned.')
-r['firmware_identity']=qualify((a.capture/'text.bin').read_bytes())
-data=(a.capture/'data-after.bin').read_bytes()
-prior=(a.capture/'data-before.bin').read_bytes()
-def word(blob,address,fmt):return struct.unpack_from('<'+fmt,blob,address-0x60000)[0]
-r['firmware_scheduler']=dict(queues=[],added_kick_counter_before=word(prior,0x13c390,'I'),added_kick_counter_after=word(data,0x13c390,'I'),crashlog_header_present=data[0xa0000:0xa0004]==b'EHLC',qualification='Matched opcode15 handler installs a40-byte row at13dbd8+queueID*40 only if config1a is nonzero. Opcode14 increments13c390 by its count; that counter does not prove hardware execution. These are post-shutdown snapshots.')
-for j,q in enumerate(prep['owned_scheduler']):
- row=0x13dbd8+q['queue_id']*40
- r['firmware_scheduler']['queues'].append(dict(stage=q['stage'],queue_id=q['queue_id'],config_install_flag=word(before,0x60000+(48+j*2)*16384+0x101a,'I'),installed_flags=word(data,row,'B'),firmware_ring=hex(word(data,row+8,'Q')),device_ring=hex(word(data,row+16,'Q')),header_word=word(data,row+24,'I'),encoded_geometry=word(data,row+28,'I'),data_master=word(data,row+32,'I'),row_changed_bytes=sum(x!=y for x,y in zip(prior[row-0x60000:row-0x60000+40],data[row-0x60000:row-0x60000+40]))))
- item=r['firmware_scheduler']['queues'][-1]
- item['baseline_after']=hex(word(data,0x13c3a0+q['queue_id']*8,'Q'))
- item['context_binding_after']=hex(word(data,0x13bf88+q['queue_id']*8,'Q'))
- context=int(q['context_fw'],0)
- context_page=next(i for i,alias in enumerate(prep['firmware_aliases']) if int(alias,0)<=context<int(alias,0)+16384 and int(alias,0)!=0)
- offset=context-int(prep['firmware_aliases'][context_page],0)
- item['context_after_hex']=after[context_page*16384+offset:context_page*16384+offset+0x38].hex()
-r['firmware_pending']=dict(queue_flags=[hex(word(data,0x18cee0+q['queue_id']*40+0x40,'Q')) for q in prep['owned_scheduler']],queue_mask=hex(word(data,0x18cee0+0x1420,'Q')),config_write_bypass=word(data,0x18fd0c,'I'),qualification='Matched config sets bit0 and kick handler sets bit1 in queue flags; both mark pending mask. These indicate requests, not hardware completion.')
+r=dict(boot_id=attempt['boot_id'],candidate_module_sha256=attempt['validated_build_receipt']['artifact_sha256']['asc-graph-init/asc-graph-init.ko'],root_channels=root,queues=queues,changed_backing_pages=changed,target_changed_bytes=sum(x!=y for x,y in zip(initial,target)),target_sha256=hashlib.sha256(target).hexdigest(),completion_changed_bytes=sum(x!=y for x,y in zip(before[47*16384:48*16384],completion)),work_notification_sent=any(marker in (a.capture/'dmesg-after.log').read_text() for marker in ('m4rch joined-work: EP33 notification','prepared_triangle_published=1 notification_sent=1')),reboot_required=attempt['reboot_required'],qualification='Post-return non-atomic owned-memory capture. Root-channel consumption, job pointer prefetch/completion cursors and changed target storage are distinct evidence; none alone proves GPU execution, valid shader completion or a rendered triangle. Context/backing remain pinned.')
+r['firmware_identity']=qualify((a.capture/'text.bin').read_bytes()) if (a.capture/'text.bin').exists() else attempt.get('text_contract')
+if (a.capture/'data-after.bin').exists() and (a.capture/'data-before.bin').exists():
+ data=(a.capture/'data-after.bin').read_bytes()
+ prior=(a.capture/'data-before.bin').read_bytes()
+ def word(blob,address,fmt):return struct.unpack_from('<'+fmt,blob,address-0x60000)[0]
+ r['firmware_scheduler']=dict(queues=[],added_kick_counter_before=word(prior,0x13c390,'I'),added_kick_counter_after=word(data,0x13c390,'I'),crashlog_header_present=data[0xa0000:0xa0004]==b'EHLC',qualification='Matched opcode15 handler installs a40-byte row at13dbd8+queueID*40 only if config1a is nonzero. Opcode14 increments13c390 by its count; that counter does not prove hardware execution. Snapshot timing is recorded by the capture; values alone do not prove hardware work.')
+ for j,q in enumerate(prep['owned_scheduler']):
+  row=0x13dbd8+q['queue_id']*40
+  r['firmware_scheduler']['queues'].append(dict(stage=q['stage'],queue_id=q['queue_id'],config_install_flag=word(before,0x60000+(48+j*2)*16384+0x101a,'I'),installed_flags=word(data,row,'B'),firmware_ring=hex(word(data,row+8,'Q')),device_ring=hex(word(data,row+16,'Q')),header_word=word(data,row+24,'I'),encoded_geometry=word(data,row+28,'I'),data_master=word(data,row+32,'I'),row_changed_bytes=sum(x!=y for x,y in zip(prior[row-0x60000:row-0x60000+40],data[row-0x60000:row-0x60000+40]))))
+  item=r['firmware_scheduler']['queues'][-1]
+  item['baseline_after']=hex(word(data,0x13c3a0+q['queue_id']*8,'Q'))
+  item['context_binding_after']=hex(word(data,0x13bf88+q['queue_id']*8,'Q'))
+  context=int(q['context_fw'],0)
+  context_page=next(i for i,alias in enumerate(prep['firmware_aliases']) if int(alias,0)<=context<int(alias,0)+16384 and int(alias,0)!=0)
+  offset=context-int(prep['firmware_aliases'][context_page],0)
+  item['context_after_hex']=after[context_page*16384+offset:context_page*16384+offset+0x38].hex()
+ r['firmware_pending']=dict(queue_flags=[hex(word(data,0x18cee0+q['queue_id']*40+0x40,'Q')) for q in prep['owned_scheduler']],queue_mask=hex(word(data,0x18cee0+0x1420,'Q')),config_write_bypass=word(data,0x18fd0c,'I'),qualification='Matched config sets bit0 and kick handler sets bit1 in queue flags; both mark the bank save mask after the MMIO write. These track bank state, not stalled requests or hardware completion.')
+else:
+ r['firmware_scheduler']={'available':False,'reason':'Resident capture contains owned memory and live registers only; firmware DATA was not sampled.'}
+ r['firmware_pending']=None
 r['live_ksm_status']=[dict(phase=m.group(1),offset21038=hex(int(m.group(2),0)),offset21040=hex(int(m.group(3),0)),offset211c8=hex(int(m.group(4),0))) for m in re.finditer(r'm4rch ksm-status: phase=(\S+) offset21038=(0x[0-9a-f]+|0) offset21040=(0x[0-9a-f]+|0) offset211c8=(0x[0-9a-f]+|0)',(a.capture/'dmesg-after.log').read_text())]
 r['live_pause_ack']=[dict(phase=m.group(1),value=hex(int(m.group(2),0))) for m in re.finditer(r'm4rch ksm-detail: phase=(\S+) pause_ack=(0x[0-9a-f]+|0)',(a.capture/'dmesg-after.log').read_text())]
 r['live_faults']=[dict(phase=m.group(1),info=hex(int(m.group(2),0)),addr_raw=hex(int(m.group(3),0))) for m in re.finditer(r'm4rch ksm-fault: phase=(\S+) info=(0x[0-9a-f]+|0) addr=(0x[0-9a-f]+|0)',(a.capture/'dmesg-after.log').read_text())]

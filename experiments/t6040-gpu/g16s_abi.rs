@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-2.0-only
-//! Candidate 25G83 G16S wire codecs from the owner-supplied standalone ABI note.
+//! Candidate 25G83 G16S wire codecs from the owner-supplied standalone ABI note,
+//! with separate queue-pointer fields corrected from matched native evidence.
 //! These do not allocate firmware objects or authorize GPU startup.
 pub const INTERFACE: u64 = 0x0c8aa322039604c0;
 pub const MAIN_POINTERS: usize = 0x254;
@@ -42,18 +43,24 @@ impl ChannelState {
         Self(out)
     }
 }
-/// Only the documented prefix: full allocation extent is not qualified.
+/// Separate queue-pointer prefix: native reset sets sentinel50 to UINT_MAX;
+/// native writeChannelCommandPointer publishes producer40, with capacity60.
+/// See docs/evidence/2026-10-08-private-{channel-reset,queue-pointer}.md.
+/// Other bytes are zero-filled model storage, not a complete native reset.
+/// Full allocation extent and live publication are not qualified here.
 pub struct QueuePointers(pub [u8; 0x64]);
 impl QueuePointers {
     pub fn new(capacity: u32) -> Option<Self> {
         if capacity == 0 { return None; }
         let mut out = [0; 0x64];
+        put32(&mut out, 0x50, u32::MAX);
         put32(&mut out, 0x60, capacity);
         Some(Self(out))
     }
+    /// Serialize the producer only; no ring write, full-queue check or DMA barrier.
     pub fn publish(&mut self, producer: u32) -> Option<()> {
         if producer >= get32(&self.0, 0x60) { return None; }
-        put32(&mut self.0, 0x50, producer);
+        put32(&mut self.0, 0x40, producer);
         Some(())
     }
     pub fn completed(&self) -> u32 { get32(&self.0, 0) }
@@ -163,10 +170,14 @@ mod tests {
     #[test]
     fn prefetch_is_not_completion() {
         let mut q = QueuePointers::new(16).unwrap();
+        assert_eq!(get32(&q.0, 0x40), 0);
+        assert_eq!(get32(&q.0, 0x50), u32::MAX);
         put32(&mut q.0, 0, 2); put32(&mut q.0, 0x30, 9);
         assert_eq!(q.completed(), 2); assert_eq!(q.prefetched(), 9);
+        let mut expected = q.0;
+        put32(&mut expected, 0x40, 15);
         assert_eq!(q.publish(15), Some(())); assert_eq!(q.publish(16), None);
-        assert_eq!(&q.0[0x50..0x54], &[15, 0, 0, 0]);
+        assert_eq!(q.0, expected); // Sentinel, completion, prefetch and capacity unchanged.
     }
     #[test]
     fn channel_context_does_not_replace_firmware_cursors() {

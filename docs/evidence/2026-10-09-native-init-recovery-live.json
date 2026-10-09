@@ -1,0 +1,394 @@
+{
+  "boot_id": "c7292f21-ae68-4948-b694-e773a22946d0",
+  "module_sha256": "c76cb717a2b3a9a82a76abc9c73f33e47f9657019bc3ab2a77a40b693835a0ec",
+  "capture": "out/native-init-recovery/resident-candidate/asc-graph-init/boot-c7292f21-ae68-4948-b694-e773a22946d0",
+  "result": "First host recovery pre-phase reached; after host2, phase3 did not arrive in5seconds. No crash notification or EHLC. Resident mode not entered; triangle not submitted.",
+  "completed_cycles": 0,
+  "resident_session_active": false,
+  "work_submitted": false,
+  "post_state": {
+    "counter": 1,
+    "phase": 2,
+    "host_stop": 1,
+    "request_state": 2,
+    "request_flag": 1,
+    "control": [
+      32,
+      32,
+      32
+    ]
+  },
+  "native_initializers": {
+    "hardware_f30": [
+      0,
+      1,
+      1,
+      0
+    ],
+    "engine_masks": [
+      3,
+      7,
+      7
+    ],
+    "temperature_epoch_pointer": "0xfffffc200014f000",
+    "temperature_epoch": 0
+  },
+  "crash_header_hex": "efefefef",
+  "log_evidence": [
+    "[   94.481435] m4rch recovery-state: cycle=0 phase=baseline counter=0 state=0 host_stop=0 request_state=0 request_flag=0 control=32/32/32",
+    "[   94.481615] m4rch recovery-idle: active_ta_records=0",
+    "[   94.481800] m4rch recovery-idle: active_ta_records=0",
+    "[   94.481804] m4rch recovery-send: endpoint=33 packet=0x86000000000000",
+    "[   94.483353] m4rch recovery-state: cycle=1 phase=pre counter=1 state=1 host_stop=1 request_state=2 request_flag=1 control=32/32/32",
+    "[   94.483563] m4rch recovery-idle: active_ta_records=0",
+    "[   99.483113] m4rch recovery-state: cycle=1 phase=final counter=1 state=2 host_stop=1 request_state=2 request_flag=1 control=32/32/32",
+    "[   99.483127] m4rch recovery-result: completed=0 requested=2 allocations_retained=1 work_submitted=0",
+    "[  101.483039] m4rch ASC crashlog: AP_QUIESCED_ACK=1 IOP_SLEEP_ACK=0",
+    "[  101.583030] m4rch ASC crashlog: final control=0x0 status=0x6c stop_readback=0"
+  ],
+  "lifetime": "AP QUIESCED ACK1, IOP SLEEP ACK0. ASC control0/status6c, stop unverified. All174 pages/context/GFX retained, refcount1; do not force unload, wake or retry.",
+  "usb_pd_bound_after": [
+    "0-0a",
+    "0-0c",
+    "2-0c"
+  ],
+  "qualification": "Native partial recovery and initialized-field observations only. No repeated recovery, DMA retirement, execution or rendering established.",
+  "saved_state_analysis": {
+    "schema": "m4rch-recovery-stall-audit-v1",
+    "source_capture": "/home/alice/Desktop/m4rch/out/native-init-recovery/resident-candidate/asc-graph-init/boot-c7292f21-ae68-4948-b694-e773a22946d0",
+    "new_hardware_access": false,
+    "capture_hashes": {
+      "data-after.bin": "2b1702be58aad31d37e60fcae1bf0ca01ec23602041003e8361cee3f8df5b025",
+      "objects-after.bin": "6b49e8c0e314048089f4e743f01b11d47476078048907ea045f9fb248f1b7d89",
+      "text.bin": "3cc40f498fcf547d005d5a2c64c7453c14a04bbbd2569524e03941fac9ad83b0"
+    },
+    "instruction_spans": [
+      {
+        "name": "worker_down_up",
+        "start": "0x3923c",
+        "end": "0x39288",
+        "sha256": "aa8b1ffdcf7965d59666b7753db0f79657eaa4d5940a8aea17e39b5324b3fbd2"
+      },
+      {
+        "name": "down_entry_markers",
+        "start": "0xc954",
+        "end": "0xca38",
+        "sha256": "e96713a40f070d06dd44f1eee927fccd8347833f7b25f39c5a0ac018488d3d96"
+      },
+      {
+        "name": "temperature_postfault_stores",
+        "start": "0x301a4",
+        "end": "0x30224",
+        "sha256": "f6563dcaeef4f10ac52cfbef214615c271dc92387d980099074f439d3e69f7a8"
+      },
+      {
+        "name": "down_transition_call",
+        "start": "0xcd80",
+        "end": "0xcdb4",
+        "sha256": "fc8e3f75e6d26ea38dafaa8fdbb7069df052b41a0285fe0603b2c61c77de6674"
+      },
+      {
+        "name": "f38_first_poll",
+        "start": "0x2beac",
+        "end": "0x2bed8",
+        "sha256": "d80e1a141adcb447facbb6f55e8c527040a7b95777e1df06ff44515c9f37b264"
+      },
+      {
+        "name": "down_idle_ack",
+        "start": "0x2bfd0",
+        "end": "0x2c040",
+        "sha256": "e4d916984f1c76f9d8df2d6c8126724aaac31aadeb0e9c048247e1edac6c23ab"
+      },
+      {
+        "name": "transition_write_and_second_poll",
+        "start": "0x2c07c",
+        "end": "0x2c0d0",
+        "sha256": "207907863f74a42167280ac03a719ae5ff8995c52510b9fca97ba0e2652c5ea3"
+      },
+      {
+        "name": "pstate_completion",
+        "start": "0x2c108",
+        "end": "0x2c19c",
+        "sha256": "e03a914880011ecd2520bed1244080609735799392c5df19454c3499b051633c"
+      },
+      {
+        "name": "mode0_startup",
+        "start": "0xd3c0",
+        "end": "0xd3e0",
+        "sha256": "0b91b038e8bdfb7e69377e35d89307b5fdf84c0529491dc977481e5635471491"
+      },
+      {
+        "name": "mode0_restart_counter",
+        "start": "0xd808",
+        "end": "0xd81c",
+        "sha256": "a8e75a76038ae094299ea7732b95cb14f8db417392d78eab2ab119b62326543b"
+      },
+      {
+        "name": "f38_irq_handlers",
+        "start": "0x29efc",
+        "end": "0x29f54",
+        "sha256": "6d609766bfe244a48d34503a672e7b2207dff489ddcf9ef22594c6c8c578dd70"
+      }
+    ],
+    "power": {
+      "0x38": "0x1",
+      "0x78": "0x1",
+      "0x210": "0xa7a8e97b",
+      "0x3b24": "0x7fffffff",
+      "0x3b28": "0x80000000",
+      "0x63c8": "0x1",
+      "0x63ec": "0xa7a8e9a7",
+      "0x63fc": "0xa7a8e999",
+      "0x6414": "0xa7a8e9a7",
+      "0x652c": "0x1"
+    },
+    "firmware_globals": {
+      "0x18fc78": "0x0",
+      "0x18f6d0": "0xfffffc2000200000",
+      "0x18f8b0": "0xfffffc2000f10000",
+      "0x18f950": "0xfffffc2000f44000",
+      "0x18f978": "0xfffffc2000f4c000"
+    },
+    "saved_task6": {
+      "tcb": "0x180240",
+      "task_id": 6,
+      "name": "agx_power",
+      "wait_object": "0xfffffc000018e858",
+      "saved_context": "0xfffffc000017fef0",
+      "saved_frame_return": "0x38f4c",
+      "qualification": "Off-core capture, no dirty firmware-cache flush proved; saved frame may precede current active recovery and cannot locate live PC."
+    },
+    "conclusions": [
+      "The previous301a8 null dereference is bypassed: post-read stores30214/30218 produced the new power+3b24/+3b28 sentinels. A periodic caller39d00 also reaches this helper; shared state63c8 and matched previous null capture support recovery descent but no live PC is claimed.",
+      "power+652c is incremented by d808..d810 in platform mode0. Value1 is consistent with only initial power-up; successful recovery d2b4 would add a second increment.",
+      "power+38 remains1 until down transition reaches2c02c; power+78 remains1 untilcdb0. Their final1 together with652c1 place the leading hypothesis insidec8f0 before completing its down transition.",
+      "f38 introduces first unbounded MMIO poll at2becc: primary+5960&7 must become0. Then down transition writesprimary+5880=1,primary+5978=1 and waits5978 bit1 at2bfec. These have no timer or recovery-state escape. No saved MMIO values distinguish them.",
+      "Native Apple AGX89cd1fc explicitly writes hardware+f20=0, which binds firmware18fc78. Do not change platform mode merely to dodge its valid native branch."
+    ],
+    "recommended_diagnostics": {
+      "when": "before phase1 acknowledgement, during phase2 wait, and immediately after timeout before shutdown",
+      "read_only_mmio": [
+        {
+          "physical": "0x288005958",
+          "width": 8,
+          "meaning": "f38 gate request, IRQ29f2c clears0"
+        },
+        {
+          "physical": "0x288005960",
+          "width": 8,
+          "meaning": "firstf38 wait exits iff value&7==0"
+        },
+        {
+          "physical": "0x288005880",
+          "width": 8,
+          "meaning": "down-transition request set1"
+        },
+        {
+          "physical": "0x288005978",
+          "width": 8,
+          "meaning": "down-transition ack must setbit1"
+        },
+        {
+          "physical": "0x288d4c004",
+          "width": 4,
+          "meaning": "PState transaction command low5 mustbe0 afterwrite0x10"
+        },
+        {
+          "physical": "0x288e01010",
+          "width": 4,
+          "meaning": "interrupt enable mask for29f2c sources"
+        },
+        {
+          "physical": "0x288e01014",
+          "width": 4,
+          "meaning": "29f2c acknowledges7 here"
+        }
+      ],
+      "shared_markers": [
+        "power+38",
+        "power+78",
+        "power+63c8",
+        "power+652c",
+        "status_b+4900",
+        "shared_3+0"
+      ]
+    },
+    "not_proven": [
+      "Exact livePC",
+      "5960 nonzero",
+      "5978 missingack",
+      "PState hardwaretransition",
+      "recovery completion",
+      "safe DMA retirement",
+      "rendering"
+    ]
+  },
+  "host_contract_recheck": {
+    "private_binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+    "native_interval": {
+      "begin": "0x8964018",
+      "end": "0x8966650",
+      "sha256": "7f771316dc9dea6b01dd2415f2bf8d02d657a0ec1ba1da5ffb63132c29c1ea22"
+    },
+    "resolved_slots": [
+      {
+        "receiver": "ASC",
+        "slot": "0x1a0",
+        "target": "0xfffffe00089d18cc",
+        "symbol": "_ZN11AGXFirmware31snapshotInspectionCriticalStateEv.4736"
+      },
+      {
+        "receiver": "ASC",
+        "slot": "0x1d8",
+        "target": "0xfffffe00089ca40c",
+        "symbol": "__ZN14AGXArmFirmware22getNumDeviceRecoveriesEv"
+      },
+      {
+        "receiver": "ASC",
+        "slot": "0x200",
+        "target": "0xfffffe00089ca3a0",
+        "symbol": "__ZN14AGXArmFirmware30updateLastSubmittedHWTimestampEjby"
+      },
+      {
+        "receiver": "ASC",
+        "slot": "0x338",
+        "target": "0xfffffe00089c8a1c",
+        "symbol": "__ZN14AGXArmFirmware21dumpFirmwareRegistersEb"
+      },
+      {
+        "receiver": "ASC",
+        "slot": "0x340",
+        "target": "0xfffffe00089a578c",
+        "symbol": "__ZN11AGXFirmware23dumpFirmwareMemoryStateEv"
+      },
+      {
+        "receiver": "ASC",
+        "slot": "0x348",
+        "target": "0xfffffe00089a5268",
+        "symbol": "__ZN11AGXFirmware21dumpFirmwareRingStateEv"
+      },
+      {
+        "receiver": "ASC",
+        "slot": "0x370",
+        "target": "0xfffffe00089c895c",
+        "symbol": "__ZN14AGXArmFirmware21isGPUCorePowerEnabledEv"
+      },
+      {
+        "receiver": "ASC",
+        "slot": "0x460",
+        "target": "0xfffffe00089d1650",
+        "symbol": "_ZN14AGXArmFirmware24resetFirmwareForRecoveryEv.4724"
+      },
+      {
+        "receiver": "ASC",
+        "slot": "0x468",
+        "target": "0xfffffe00089c28b8",
+        "symbol": "__ZN14AGXArmFirmware25resumeFirmwarePreRecoveryEv"
+      },
+      {
+        "receiver": "ASC",
+        "slot": "0x6e8",
+        "target": "0xfffffe00089c0754",
+        "symbol": "__ZN14AGXArmFirmware17printFirmwareInfoEP14AGXRestartInfo"
+      },
+      {
+        "receiver": "ASC",
+        "slot": "0x708",
+        "target": "0xfffffe00089d15ac",
+        "symbol": "_ZN14AGXArmFirmware11isGFXBootedEPy.4714"
+      },
+      {
+        "receiver": "G16X",
+        "slot": "0xad0",
+        "target": "0xfffffe00089d8ff4",
+        "symbol": "__ZN17AGXAcceleratorG1612printAGXInfoEv"
+      },
+      {
+        "receiver": "G16X",
+        "slot": "0xaf0",
+        "target": "0xfffffe00089d8f10",
+        "symbol": "__ZN17AGXAcceleratorG1615getMMUFaultInfoEjRN14AGXAccelerator12MMUFaultInfoEb"
+      },
+      {
+        "receiver": "G16X",
+        "slot": "0xb10",
+        "target": "0xfffffe00089d8c6c",
+        "symbol": "__ZN17AGXAcceleratorG1619getUSCExceptionInfoER19_AGFIDataMasterType"
+      },
+      {
+        "receiver": "G16X",
+        "slot": "0x1210",
+        "target": "0xfffffe00089d5fb0",
+        "symbol": "__ZN17AGXAcceleratorG1622printKSMKickQueueStateEb"
+      },
+      {
+        "receiver": "G16X",
+        "slot": "0xca0",
+        "target": "0xfffffe0008961dac",
+        "symbol": "__ZNK14AGXAccelerator30getSecondLevelIndirectShiftValEj"
+      },
+      {
+        "receiver": "G16X",
+        "slot": "0xc90",
+        "target": "0xfffffe0008961dc4",
+        "symbol": "__ZNK14AGXAccelerator28getSecondLevelIndirectMaxValEj"
+      },
+      {
+        "receiver": "G16X",
+        "slot": "0xb08",
+        "target": "0xfffffe00089d8c78",
+        "symbol": "__ZN17AGXAcceleratorG1617printUSCSlotUsageEv"
+      },
+      {
+        "receiver": "G16X",
+        "slot": "0xae8",
+        "target": "0xfffffe00089a0e3c",
+        "symbol": "__ZN20AGXFamilyAccelerator27printMMURegisterStateCommonEv"
+      }
+    ],
+    "table_binding": {
+      "cpu": "firmware-host+0x2e8",
+      "mapping": "firmware-host+0x330",
+      "published": "main+0x274",
+      "object": "shared_4",
+      "stride": 16,
+      "slots": 128,
+      "fields": {
+        "0": "active u32",
+        "8": "submitted timestamp u64"
+      }
+    },
+    "table_snapshots": [
+      {
+        "path": "out/native-init-recovery/prepared/graph/graph-before.bin",
+        "offset": "0x28000",
+        "length": 2048,
+        "nonzero": 0,
+        "sha256": "e5a00aa9991ac8a5ee3109844d84a55583bd20572ad3ffcd42792f3c36b183ad"
+      },
+      {
+        "path": "out/native-init-recovery/resident-prepared/graph-before.bin",
+        "offset": "0x28000",
+        "length": 2048,
+        "nonzero": 0,
+        "sha256": "e5a00aa9991ac8a5ee3109844d84a55583bd20572ad3ffcd42792f3c36b183ad"
+      },
+      {
+        "path": "out/native-init-recovery/resident-candidate/asc-graph-init/boot-c7292f21-ae68-4948-b694-e773a22946d0/objects-before.bin",
+        "offset": "0x28000",
+        "length": 2048,
+        "nonzero": 0,
+        "sha256": "e5a00aa9991ac8a5ee3109844d84a55583bd20572ad3ffcd42792f3c36b183ad"
+      },
+      {
+        "path": "out/native-init-recovery/resident-candidate/asc-graph-init/boot-c7292f21-ae68-4948-b694-e773a22946d0/objects-after.bin",
+        "offset": "0x28000",
+        "length": 2048,
+        "nonzero": 0,
+        "sha256": "e5a00aa9991ac8a5ee3109844d84a55583bd20572ad3ffcd42792f3c36b183ad"
+      }
+    ],
+    "conclusion": "No mandatory omitted accelerator power/reset/MMU/RCE call identified before phase2. No direct resetFirmwareForRecovery slot460 call in restartWorkQueue pre-resume interval. Timestamp table is already all-zero in prepared and captured native idle candidate. Optional printAGXInfo includes bank-selector register writes, so not categorically side-effect-free; nested targets are diagnostics. This does not qualify execution, DMA retirement, or recovery success.",
+    "recommendation": "Do not add speculative host reset/wake action. Locate firmware stall after phase2 in its hardware reset/init consumers and preserve retained allocations."
+  }
+}
