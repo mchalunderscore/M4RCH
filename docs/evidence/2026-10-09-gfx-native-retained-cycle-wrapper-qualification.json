@@ -1,0 +1,447 @@
+{
+  "schema": "m4rch.gfx-native-retained-cycle-wrapper-final-selection.v1",
+  "passed": true,
+  "hardware_actions": [],
+  "reviewer_live_reads": [],
+  "case_count": 69,
+  "actual_cold_main_flows": 4,
+  "actual_resident_main_flows": 10,
+  "selected_wrapper_qualification": {
+    "path": "out/gfx-native-retained-cycle/wrapper-qualification-final-v2.json",
+    "bytes": 24444,
+    "sha256": "bfbe8fe6be21f2588061c012c8aa25be1b494e94182dba37dd45ce5cb10e525f"
+  },
+  "selected_core_source_receipt": {
+    "path": "out/gfx-native-retained-cycle/prepared-owner-v1/native-retained-cycle-owner-source-receipt.json",
+    "bytes": 14202,
+    "sha256": "59ca87b903980cac6dc9c5ea4fa44d4a346f1f9737a083eff7c50d1b6b0a7b44"
+  },
+  "selected_core_qualification": {
+    "path": "out/gfx-native-retained-cycle/owner-qualification-final-v1.json",
+    "bytes": 28680,
+    "sha256": "3db52593e9929d6cecb63602aa9d70dcaa3e77ef9576824617946e295fa2c2d0"
+  },
+  "selected_core_case_count": 115,
+  "actual_receive_worker_qualified": true,
+  "actual_second_coordinate_core_qualified": true,
+  "selected_core_profile_checked_offline": true,
+  "new_log_rows_bounded": true,
+  "measured_maximum_new_log_row_bytes": 422,
+  "required_maximum_new_log_row_bytes": 511,
+  "log_comparison": "measured integer within bound; no equality requirement",
+  "composed_frozen_python_cases": 101,
+  "composed_frozen_cold_main_flows": 6,
+  "composed_frozen_resident_main_flows": 10,
+  "composed_frozen_C_cases": 102,
+  "unchanged_cases_repeated": false,
+  "first_off_predicates_delegate_frozen": true,
+  "first_off_source": "Original completed hash-bound first terminal report/captures/logs only",
+  "first_epoch_proof_preserved": true,
+  "second_intent_durable_before_open": true,
+  "after_second_intent": [
+    "sample",
+    "gfx-snapshot"
+  ],
+  "maximum_triangle_publications": 0,
+  "native_known_status_operands": [
+    106,
+    108
+  ],
+  "native_status_values_are_success_proof": false,
+  "fresh_operand_checks": [
+    "before second paired ON",
+    "after second paired ON",
+    "after START-intent log"
+  ],
+  "immediate_start_fresh_ctrl_rmw": true,
+  "separate_second_PM_reference": true,
+  "separate_second_coordinator_epoch": true,
+  "source_count_expected": 20,
+  "changed_source_files": [
+    "Makefile",
+    "asc-graph-init.c",
+    "recovery-cycle.h"
+  ],
+  "added_source_files": [
+    "gfx-native-retained-cycle.h"
+  ],
+  "removed_source_files": [
+    "gfx-retained-power-cycle.h"
+  ],
+  "refused_boots": [
+    "94cb4163-fc21-43ec-9489-07c54e549885",
+    "d841b8bf-bf1f-4499-9508-caf275909695",
+    "16868560-efd7-4c98-b58d-45cb88280d46",
+    "5bf0a178-e6d8-4def-8088-74ad7ea87727"
+  ],
+  "new_native_order_hardware_trial_performed": false,
+  "new_candidate_build_or_finalizer_run_by_reviewer": false,
+  "all_Python_inputs_frozen": true,
+  "qualification": "Targeted actual Python paths intercepted in RAM; selected C115 replay, source profile and all current input pins joined offline. Root owns build/finalization and future fresh-boot hardware.",
+  "inputs": [
+    {
+      "path": "docs/evidence/2026-10-09-gfx-native-retained-cycle-c-qualification.json",
+      "bytes": 31347,
+      "sha256": "04ac82e92c4333ebd914571bf745eb5b282ed70775f918002f5715b441553b52"
+    },
+    {
+      "path": "docs/evidence/2026-10-09-gfx-native-retained-cycle-wrapper-qualification.md",
+      "bytes": 2784,
+      "sha256": "87e644ae523d9db72bf95ac0db63d1f70b897c36b6880cb44a177ca2764021a1"
+    },
+    {
+      "path": "docs/evidence/2026-10-09-gfx-retained-cycle-status6c-native-start.json",
+      "bytes": 20190,
+      "sha256": "95696a0f17dd167d085e49aec3f70079aa49d7927b24e9f0d37946b40586ca4f"
+    },
+    {
+      "path": "docs/evidence/2026-10-09-gfx-retained-power-cycle-live-outcome.json",
+      "bytes": 28669,
+      "sha256": "2dd1be415dfec58bd3c1f52a94b4c2e4dc0a85a2ea48a6efec69f964466b8584"
+    },
+    {
+      "path": "docs/evidence/2026-10-09-gfx-retained-power-cycle-live-startup-review.json",
+      "bytes": 36104,
+      "sha256": "79160ca6670f835d09a6c013d11a6232737baf4e822d65dcf96f8a295341de82"
+    },
+    {
+      "path": "docs/evidence/2026-10-09-gfx-retained-power-cycle-live-terminal-review.json",
+      "bytes": 96699,
+      "sha256": "0f41aaaf8e1925cc757778df53b11979c8da41ed63447eaf86df5fb791029a8e"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-coordinate-trial/test-coordinate-runners.py",
+      "bytes": 35443,
+      "sha256": "7a9f31d8aebc953f6ab8b24b797bb8b73fec61c3e60b607e3a17a642b525a0c3"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-powergate/test-powergate-runners.py",
+      "bytes": 35279,
+      "sha256": "d500624756533c9ffe73a5045773766ba93dbcd3409f8921a69540477bb47711"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-retained-cycle/README.md",
+      "bytes": 2073,
+      "sha256": "c7c88a0b20a110274d799eec834c433716b45a1c08c30c5571a5e60ccc86c837"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-retained-cycle/WRAPPER-QUALIFICATION.md",
+      "bytes": 3803,
+      "sha256": "54eab7881d6d4525cda5688ac5c26697f28c1184ba85cc4186fd871dbbb7652a"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-retained-cycle/finalize-powergate.py",
+      "bytes": 15824,
+      "sha256": "7912c9fa9c3dfe78733ee92ef601d690422c73d27a3bcf830c945777288ffeac"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-retained-cycle/gfx-native-retained-cycle.h",
+      "bytes": 27591,
+      "sha256": "246930202a7c1c3866ccfc997d7523720dff89651b874d29bf67f638b28d5d39"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-retained-cycle/gfx-retained-power-cycle-coordinate.h",
+      "bytes": 3427,
+      "sha256": "d11e7a243b629dc834f5f986668bad1bd0e9eefb205d51a5c839f7d35fe90c23"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-retained-cycle/gfx_native_retained_cycle_contract.py",
+      "bytes": 3894,
+      "sha256": "55db8b571c94eadc4789a658cb3af5512befc359403eb989c25e489989343361"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-retained-cycle/native_retained_wrapper.py",
+      "bytes": 1054,
+      "sha256": "f3af59317738bc96d68b00953c173d454da73951937c961966d756f42d5363fb"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-retained-cycle/preflight-fresh.py",
+      "bytes": 786,
+      "sha256": "b0bf9ad970acf4de0217f6b0ac01afae3c863c5fe46392021b59b7396e6f9366"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-retained-cycle/prepare-native-retained-cycle-owner.py",
+      "bytes": 6007,
+      "sha256": "9f2dd81d57912f5daf4b05046e2a9c68d22c56408cedc695a7a24dc9f8698a3c"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-retained-cycle/run-powergate.py",
+      "bytes": 8397,
+      "sha256": "0d46f3f0b1e18589ea4ad2dc630dc5fae2b8e42ef179ff70d48bacdc5c3dfad5"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-retained-cycle/run-root-powergate.py",
+      "bytes": 622,
+      "sha256": "d4f5c01c0665219ddea546e527f8852dba9ab34bc2b8ceee82df5de2d259d410"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-retained-cycle/test-native-retained-cycle-owner.py",
+      "bytes": 30749,
+      "sha256": "74487f1064926cf190972d4b16a06df096e689c11cb6d88fb1d20cd728cfc648"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-retained-cycle/test-native-retained-runners.py",
+      "bytes": 14358,
+      "sha256": "b9fbe1af78b813b1ad634ae1d073da83cc6c0f004697e4bbe7323f738edbae96"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-retained-power-cycle/gfx_retained_power_cycle_contract.py",
+      "bytes": 9798,
+      "sha256": "68ee7b4b986903a9c720c9912f165a5e402f63aa3b77eb2427d556d8a2957fe8"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-retained-power-cycle/preflight-fresh.py",
+      "bytes": 772,
+      "sha256": "e7d28ee5229d7a1e94135db59ffc2ca7d214379f22d9bc1acc4bfa52b600c901"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-retained-power-cycle/run-powergate.py",
+      "bytes": 9727,
+      "sha256": "08660f6def60a6d37b43acb692b04dee1b412e86b8211f20883f58f8d3f5735f"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-retained-power-cycle/run-root-powergate.py",
+      "bytes": 636,
+      "sha256": "dd0ea64980de5f195fb16d9ba2dd1e8c13ae5d94a690f28ecc7257f7ef054029"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-retained-power-cycle/test-powergate-runners.py",
+      "bytes": 24810,
+      "sha256": "fcaedb8f010b1f62be555c0efdef28aba2809aa04e8d2dcf3c96856d72b8da9c"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-root-envelope/build-receipt.json",
+      "bytes": 25706,
+      "sha256": "2f45d761f1ba9a4b95bdb1a848c06aae9a47740cf4536ce39dc45dddd19ae29c"
+    },
+    {
+      "path": "out/gfx-native-coordinate-live/boot-493814fd-b859-42b5-b257-c0ac4960e8a1/linux-dt-current.json",
+      "bytes": 76430,
+      "sha256": "e2adc89815e82eba3b67b3d0b466d1c1d4a47ba94f7acbe18773403952de5759"
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/boot.adt",
+      "bytes": 606208,
+      "sha256": "72f30734bb926e681fb1c759d03ad5230b2e21546f76aa7cf0a4fe190ccca0b2"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/owner-qualification-final-v1.json",
+      "bytes": 28680,
+      "sha256": "3db52593e9929d6cecb63602aa9d70dcaa3e77ef9576824617946e295fa2c2d0"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/prepared-owner-v1/Makefile",
+      "bytes": 371,
+      "sha256": "0f1ca84c24e78dc34469e3c84fe987fbe17a624dcd294f6abb70c50a7a5774f7"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/prepared-owner-v1/asc-graph-init.c",
+      "bytes": 23286,
+      "sha256": "e8a335d6a8573ac3c82f92baabfdf1dcf4fe2d531d964c26039f013f8849b39e"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/prepared-owner-v1/backing.bin",
+      "bytes": 917504,
+      "sha256": "35112ef3c261673bda227a3867a0d2b9dd58ac89f35f7bba9c8c05f1dee118d3"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/prepared-owner-v1/boot-contract.h",
+      "bytes": 72,
+      "sha256": "5194505b49f3b40acdc80f29bf1e8c5c5f11374f483ed6a22df2c22ea904e082"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/prepared-owner-v1/command-pool-map.h",
+      "bytes": 8357,
+      "sha256": "1e4696787075de13a56f4946018221803a5a01a3c5a653bbbdbd48f319e74b6b"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/prepared-owner-v1/coordinate-owner-source-receipt.json",
+      "bytes": 6959,
+      "sha256": "3b911506a115c7d9218419b5c0c2691e75d41b94dfdf8e1462d0a577b975a263"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/prepared-owner-v1/execution-owner-source-receipt.json",
+      "bytes": 7242,
+      "sha256": "9c3af71b46eb0ebe956d4164125a57dcf280f64bbd1effca25d94abacdd2ca1d"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/prepared-owner-v1/gfx-coordinate-core.h",
+      "bytes": 8066,
+      "sha256": "b7a7376ab2a7e1b054e0338ce37efe035b85acaa6ba5072ed7231b6dcb245a95"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/prepared-owner-v1/gfx-coordinate-owner.h",
+      "bytes": 10259,
+      "sha256": "9798b26320e2b0f9b270da9b598f21e909cf037e58070154a6818ac6156601b4"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/prepared-owner-v1/gfx-native-powergate-drain.h",
+      "bytes": 19348,
+      "sha256": "f3f4429f6b372157cedcbcce1d29ef61ddaf8654fab2afabf035da8322152787"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/prepared-owner-v1/gfx-native-retained-cycle.h",
+      "bytes": 27591,
+      "sha256": "246930202a7c1c3866ccfc997d7523720dff89651b874d29bf67f638b28d5d39"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/prepared-owner-v1/gfx-reset-scope.h",
+      "bytes": 11319,
+      "sha256": "78cff00b01dfafa8f37c24cfc694b0da2b3233bbdc781777fd7be3f24abe893f"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/prepared-owner-v1/gfx-reset-startup.h",
+      "bytes": 684,
+      "sha256": "f33ff5251683d7bc2aaca7f6e559d6b95696b2f1524ff68a6ab8e82fab18aecd"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/prepared-owner-v1/gfx-retained-power-cycle-coordinate.h",
+      "bytes": 3427,
+      "sha256": "d11e7a243b629dc834f5f986668bad1bd0e9eefb205d51a5c839f7d35fe90c23"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/prepared-owner-v1/graph-before.bin",
+      "bytes": 1130496,
+      "sha256": "287f2c53bc6ef7ed226c4a2995b9d9904e7623acae9713af105be6b04fc690a9"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/prepared-owner-v1/graph-contract.h",
+      "bytes": 24313,
+      "sha256": "f8c5a1536aa88ef7a1eb09b9a862cece4a2e822dd2eda54a449e6b3c11b20410"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/prepared-owner-v1/graph-map.h",
+      "bytes": 9974,
+      "sha256": "704836d10b86e3d2bcb20b457853a700a2153aae505b0aae473aea4daee7f13e"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/prepared-owner-v1/graph-receipt.json",
+      "bytes": 131999,
+      "sha256": "92771b8036464c8dc9bdadd1dd4e1458a6c5a9f95f87fbdac34696bd2b3af219"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/prepared-owner-v1/job-data.h",
+      "bytes": 13182,
+      "sha256": "c18ede083b691fbd3044237aaf30eb1e34c775e9391d3c6f1bea8e61561e0913"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/prepared-owner-v1/joined-context-init.h",
+      "bytes": 1849,
+      "sha256": "1851e697907d50a3f47d153879f47f1b6b07065f5d58055fa6269bc436bc15b2"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/prepared-owner-v1/native-retained-cycle-owner-source-receipt.json",
+      "bytes": 14202,
+      "sha256": "59ca87b903980cac6dc9c5ea4fa44d4a346f1f9737a083eff7c50d1b6b0a7b44"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/prepared-owner-v1/native-status-owner-source-receipt.json",
+      "bytes": 7172,
+      "sha256": "5566c838e18f82335b4c8daded1d7e6a48d3b1729f9d7cc97bb4fb1b762b827b"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/prepared-owner-v1/powergate-drain-owner-source-receipt.json",
+      "bytes": 10723,
+      "sha256": "e55cf8f6bf8a5b8d979a567412cada0b1df38b5d7750183a34e448a38d9c39c1"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/prepared-owner-v1/preparation.json",
+      "bytes": 84712,
+      "sha256": "c22c59c0735c84554f954f581f94978894a9c78e87b6ec06f8f7ba8c763580db"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/prepared-owner-v1/receive-service.h",
+      "bytes": 3787,
+      "sha256": "bab356c9a2467fbb46760345102a7fb8369a9efe8db31efd058b1fd918b11043"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/prepared-owner-v1/recovery-contract.h",
+      "bytes": 1177,
+      "sha256": "9bce940061421a78fde0e509fdeba59a8c66c3d5ab32c4faf59dd613c14d4b23"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/prepared-owner-v1/recovery-cycle.h",
+      "bytes": 11329,
+      "sha256": "0d44583b43a19b55f4a6f419122c519bba1b3945c573f13de93469f5c73dfb9a"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/prepared-owner-v1/render-backing-map.h",
+      "bytes": 2541,
+      "sha256": "ade8cedde4da68f2f463ed8604f47ab6b56cdf1c8ff3984d592e00f4a065978b"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/prepared-owner-v1/render-data.h",
+      "bytes": 268144,
+      "sha256": "3bdbf04b9a3219c8e818beb464b5f55626e8a9b3d184680e3fd05a6361c47cbd"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/prepared-owner-v1/retained-power-cycle-owner-source-receipt.json",
+      "bytes": 12787,
+      "sha256": "4f8288982b3d2e926cce11ebe800744ea92f668008e77600929d691319e3ec9a"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/wrapper-qualification-final-v2.json",
+      "bytes": 24444,
+      "sha256": "bfbe8fe6be21f2588061c012c8aa25be1b494e94182dba37dd45ce5cb10e525f"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/attempt.json",
+      "bytes": 33028,
+      "sha256": "9028e9039fa752da0b943f10734d244a02a34688f127f7e4d2185ef359a4ded1"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/dmesg-after.log",
+      "bytes": 131453,
+      "sha256": "f1b48b875636c6e1f68b692a69cd756af3a4fe7c6280fdd6442fc734cf6d05bf"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/dmesg-before.log",
+      "bytes": 130608,
+      "sha256": "bd1d93dc79ee8101e74bb8cd1be7ea478f13372bd0c72d5821466e3083a775ae"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/notifications-after.bin",
+      "bytes": 5242944,
+      "sha256": "b6b752e7a45d0167185a4209ca66d26d5221dd562f92d2aae863894d38ad5ce8"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/notifications-after.json",
+      "bytes": 15338140,
+      "sha256": "9659bfe06ec066555664f759c994f4116ccf66df4feaf968816625db74b82157"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/objects-after.bin",
+      "bytes": 1130496,
+      "sha256": "9937847b05535f0f41dc3e10b34ea75802404c0d2632ffe158240b2d862ba96f"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/owned-after.bin",
+      "bytes": 2850816,
+      "sha256": "81eeb6eb83e744f592f7472ffc3605fded8f304513feacde145f7b0e12fa3a10"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/first-off-raw-proof-5bf0.json",
+      "bytes": 5569,
+      "sha256": "13f272bf15e68e3577594111a28fde6c17427c63d1b6ee835434928875cf01df"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/owner-qualification-final-v6.json",
+      "bytes": 23523,
+      "sha256": "0bcc3860d865fe22ba4adec88aff4f405196548246ebc22fe84e6917deccc305"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/wrapper-qualification-final-v3.json",
+      "bytes": 31273,
+      "sha256": "4c2b2d272e80df4c42a5db8d57e75df17303d9f32300224dcca6d89eea1a9856"
+    }
+  ],
+  "limits": [
+    "All system reads/processes/command writes are intercepted in RAM; saved5bf0 data is copied only.",
+    "The native paired-ON/START guards are qualified by the separate actual C/header replay.",
+    "Mocked new command success is no HELLO/map/ACK/secondOFF or restart proof.",
+    "Frozen101/6/10 wrapper qualification is composed through exact pins without repeating unchanged negative capture/syscall cases.",
+    "Saved first OFF captures are non-atomic; current kernel identity, physical, accounting and transport gates remain mandatory.",
+    "The selected C115 replay uses RAM callbacks; measured row bound and guards do not prove actual GPU reentry.",
+    "Actual second OFF, application reuse, repeatable execution, rendering, DMA retirement and all new hardware remain unverified."
+  ]
+}
