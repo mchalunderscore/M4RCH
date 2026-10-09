@@ -1,0 +1,370 @@
+{
+  "schema": "m4rch.gfx-native-powergate-drain-final-prepared.v1",
+  "candidate": "out/gfx-native-powergate-drain/candidate",
+  "owner_sha256": "de75ef4b8c772a56de3026ceb622b940206ed7d0a1ac660a25cae323216681f3",
+  "receipt_sha256": "393049662c9966922fda7f66cbfa1c762efc2f0840492042b581e96271a7b6a5",
+  "preparation_sha256": "f0fbf1090d73aad478f5b06a76a2f3900d672834c83a4201e0d01103e03fd923",
+  "source_receipt_sha256": "e55cf8f6bf8a5b8d979a567412cada0b1df38b5d7750183a34e448a38d9c39c1",
+  "candidate_state": "ready-never-loaded",
+  "actual_W1_build_returncode": 0,
+  "actual_W1_warnings": 0,
+  "kernel_release": "7.1.13-m4rch-gpu-native-reset",
+  "kernel_notes_sha256": "85c56f7a3d7409747dd67fe1dcbf8839562aafab16a9124f9304689a14de437d",
+  "actual_c_sanitizer_cases": 85,
+  "retained_c_cases_replayed_on_new_header": 55,
+  "new_admission_c_cases": 30,
+  "actual_python_wrapper_cases": 94,
+  "original_c_cases_composed_without_repeating": 55,
+  "original_wrapper_cases_composed_without_repeating": 196,
+  "independent_c_replay_matches_author": true,
+  "artifact_pins_checked": 10,
+  "owner_source_pins_checked": 18,
+  "preparation_inputs_checked": 16,
+  "graph_object_pages": 69,
+  "all_owned_pages": 174,
+  "profile": {
+    "version": 6,
+    "provider_path": "/soc/power-management@288e80000/power-controller@110",
+    "snapshot_api": "apple_pmgr_t6040_gfx_snapshot",
+    "power_off_api": "pm_runtime_put_sync_suspend",
+    "maximum_power_off_commands": 1,
+    "requires_host_stop": true,
+    "requires_owned_pm_usage_count": 1,
+    "work_submitted": false,
+    "allocations_retained": true,
+    "mappings_retained": true,
+    "consumer_retained": true,
+    "owned_pm_reference_released_once": true,
+    "reset_pulse": false,
+    "automatic_restart": false,
+    "backing_release": false,
+    "off_observation_mask": 2415926527,
+    "off_observation_expected": 0,
+    "off_requires_domain_on": 0,
+    "maximum_snapshot_samples": 101,
+    "minimum_poll_delay_us": 1000,
+    "off_proves_dma_retirement": false,
+    "no_asc_sgx_mailbox_access_after_attempt": true,
+    "commands": [
+      "sample",
+      "gfx-snapshot",
+      "gfx-powergate"
+    ],
+    "after_attempt": [
+      "sample",
+      "gfx-snapshot"
+    ],
+    "paired_native_coordination": true,
+    "native_policy_hypothesis": {
+      "pmp": 2,
+      "pmc": 1,
+      "pmc_pmgr": 63
+    },
+    "hardware_policy_equivalent_observed": false,
+    "on_order": [
+      "physical-active",
+      "pmp-request-and-native-success",
+      "pmc-rail-votes",
+      "firmware-start"
+    ],
+    "off_order": [
+      "bounded-fresh-qualified-ep32-admission-drain",
+      "management-powergate-202-and-own-ack",
+      "native-checked-cpu-stop",
+      "pmp-request-and-native-success",
+      "pmc-rail-votes",
+      "physical-off"
+    ],
+    "pmp_physical_base": 21478768640,
+    "pmp_size": 196608,
+    "request_entry": 480,
+    "ack_entry": 488,
+    "status_entry": 1,
+    "request_bit": 13,
+    "ack_raw_status_bit": 1,
+    "require_nonzero_status_for_ack_wait": true,
+    "zero_status_proves_inactivity": false,
+    "pmc_physical_base": 21541945344,
+    "pmc_size": 16777216,
+    "pmc_vote_offsets": [
+      9093120,
+      9093124,
+      9093128
+    ],
+    "pmc_vote_bit": 2,
+    "maximum_on_notifications": 1,
+    "maximum_off_notifications": 1,
+    "maximum_ack_samples": 15001,
+    "ack_deadline_ns": 15000000000,
+    "ack_minimum_delay_us": 1000,
+    "startup_retained_before_coordination": true,
+    "failed_startup_commands": [],
+    "unrelated_bits_preserved_from_read_snapshot": true,
+    "atomicity_against_external_writers_verified": false,
+    "native_evidence_sha256": "a9c0ca4b3cc6aa0ebe668ae5fb95e63643f4edd0b3d941b7907f5a60b148dffe",
+    "native_adt_sha256": "838ce60f5f5d88aebfbfd39a1159bfff239ca20e432c38a31e2d327869554561",
+    "linux_dt_layout_sha256": "71236d89511e3689fef2d7485f2e7d7557f50603c83cbc3ce6bffa77d9d9b32b",
+    "conditional_execution_profile": false,
+    "minimum_completed_idle_recovery_cycles": 4,
+    "requires_successful_native_trace_off": true,
+    "maximum_triangle_publications": 0,
+    "work_intent_quarantines_before_first_publication": true,
+    "after_work_intent": [
+      "sample",
+      "gfx-snapshot"
+    ],
+    "off_requires_no_work_intent": true,
+    "typed_work_diagnostics_do_not_drain_receive": true,
+    "healthy_receive_worker_retained_for_completion": true,
+    "rendering_verified": false,
+    "native_status_zero_ack_bypass": true,
+    "native_success_predicate": "After full REQ write: STATUS.payload==0 OR ACK.raw_status.bit1 and matching ACK.bit13; before deadline",
+    "native_status_branches": {
+      "zero": "Skip ACK WAIT after REQ; diagnostic ACK preflight remains; not ACK or inactivity",
+      "nonzero": "Read raw ACK; require valid bit1 and requested bit13 before deadline"
+    },
+    "success_requires_nonzero_status": false,
+    "status_zero_is_acknowledgement": false,
+    "status_word_observation_required": true,
+    "ack_bypass_and_acknowledgement_mutually_exclusive": true,
+    "bounded_single_phram_flash_relocation": true,
+    "flash_layout_guard_sha256": "abad8c1f67d8d6974672f9790ee6b43ea57c615046ee60339cbf909b0fe9a07d",
+    "work_publication_admitted": false,
+    "dormant_draw_fixture_preserved_for_comparison_only": true,
+    "powergate_management_request": 27021597764223490,
+    "powergate_ack": "Own published 202 request, fresh empty RX, EP0 type nibble7 and low8 in {1,2}; other frames recorded",
+    "maximum_powergate_intents": 1,
+    "maximum_powergate_requests": 1,
+    "maximum_powergate_ack_ms": 2000,
+    "maximum_powergate_ack_polls": 2001,
+    "maximum_powergate_rx_messages": 64,
+    "pre_stop_idle_polls": 11,
+    "fresh_cpu_stop_rmw_masks": [
+      16,
+      32
+    ],
+    "paired_off_requires_own_ack_and_checked_cpu_stop": true,
+    "unknown_ack_or_stop_keeps_pm_held": true,
+    "powergate_intent_durable_before_command_open": true,
+    "after_powergate_intent": [
+      "sample",
+      "gfx-snapshot"
+    ],
+    "after_unknown_operation": [
+      "sample",
+      "gfx-snapshot"
+    ],
+    "initial_recovery_cycles_unchanged": true,
+    "initial_admitted_states": [
+      "healthy2cycles",
+      "diagnostic0or1cycles"
+    ],
+    "separate_stop_off_recover_control_trace_submit_admitted": false,
+    "restart_allowed": false,
+    "dma_retirement_verified": false,
+    "bounded_admission_drain": true,
+    "nominal_admission_deadline_ms": 11,
+    "maximum_admission_wait_polls": 12,
+    "maximum_admission_rx_messages": 64,
+    "maximum_successful_admission_rx_messages": 63,
+    "qualified_admission_endpoint32_only": true,
+    "stale_ep0_refused": true,
+    "precise_admission_operands_logged": true
+  },
+  "selected_source": "out/gfx-native-powergate-drain/prepared-owner-v2",
+  "refused_boots": [
+    "94cb4163-fc21-43ec-9489-07c54e549885",
+    "d841b8bf-bf1f-4499-9508-caf275909695"
+  ],
+  "current_retained_owner": "out/gfx-native-powergate/candidate, consumed pre-request intent; held1; diagnostics only",
+  "current_boot": "d841b8bf-bf1f-4499-9508-caf275909695",
+  "fresh_normal_boot_required": true,
+  "current_owner_unloaded_or_replaced": false,
+  "new_hardware_trial_performed": false,
+  "boot_configuration_changed": false,
+  "private_native_findings_reused": "matched25G83 native request/ACK/CPU/provider bindings, already qualified; no new disassembly published",
+  "next_hardware_sequence": [
+    "newfreshpreflight",
+    "ONEcold-no-work",
+    "qualifiedbaselinegfx-snapshot",
+    "ONEgfx-powergate",
+    "admittedretaineddiagnosticsonly"
+  ],
+  "physical_off_verified": false,
+  "restart_verified": false,
+  "rendering_verified": false,
+  "joined_dma_retirement_verified": false,
+  "backing_release_allowed": false,
+  "inputs": [
+    {
+      "path": "out/gfx-native-powergate-drain/candidate/asc-root-envelope/build-receipt.json",
+      "bytes": 27415,
+      "sha256": "393049662c9966922fda7f66cbfa1c762efc2f0840492042b581e96271a7b6a5"
+    },
+    {
+      "path": "out/gfx-native-powergate-drain/candidate/powergate-drain-preparation.json",
+      "bytes": 8089,
+      "sha256": "f0fbf1090d73aad478f5b06a76a2f3900d672834c83a4201e0d01103e03fd923"
+    },
+    {
+      "path": "out/gfx-native-powergate-drain/candidate/asc-graph-init/asc-graph-init.ko",
+      "bytes": 7971072,
+      "sha256": "de75ef4b8c772a56de3026ceb622b940206ed7d0a1ac660a25cae323216681f3"
+    },
+    {
+      "path": "out/gfx-native-powergate-drain/candidate/asc-graph-init/powergate-drain-owner-source-receipt.json",
+      "bytes": 10723,
+      "sha256": "e55cf8f6bf8a5b8d979a567412cada0b1df38b5d7750183a34e448a38d9c39c1"
+    },
+    {
+      "path": "out/gfx-native-powergate-drain/candidate/asc-graph-init/graph-before.bin",
+      "bytes": 1130496,
+      "sha256": "287f2c53bc6ef7ed226c4a2995b9d9904e7623acae9713af105be6b04fc690a9"
+    },
+    {
+      "path": "out/gfx-native-powergate-drain/candidate/asc-graph-init/graph-receipt.json",
+      "bytes": 131999,
+      "sha256": "92771b8036464c8dc9bdadd1dd4e1458a6c5a9f95f87fbdac34696bd2b3af219"
+    },
+    {
+      "path": "out/gfx-native-powergate-drain/candidate/asc-graph-init/backing.bin",
+      "bytes": 917504,
+      "sha256": "35112ef3c261673bda227a3867a0d2b9dd58ac89f35f7bba9c8c05f1dee118d3"
+    },
+    {
+      "path": "out/gfx-native-powergate-drain/owner-build.log",
+      "bytes": 534,
+      "sha256": "fc3ae0023fe65e3fa0ba8508e3b4e8a00305af5e9cc89e882ba413b6df19952e"
+    },
+    {
+      "path": "out/gfx-native-powergate-drain/owner-qualification-final-v2.json",
+      "bytes": 9099,
+      "sha256": "041aed9b5ef9fc08bc9344477b835c56359133dcbaf5e79eb1ea40ff19c48e5f"
+    },
+    {
+      "path": "out/gfx-native-powergate-drain/independent-owner-qualification-v2.json",
+      "bytes": 9099,
+      "sha256": "041aed9b5ef9fc08bc9344477b835c56359133dcbaf5e79eb1ea40ff19c48e5f"
+    },
+    {
+      "path": "out/gfx-native-powergate-drain/wrapper-qualification.json",
+      "bytes": 31476,
+      "sha256": "af990df129fdb30dcf93c5a5d66fc78f688af9fb43399d37324d63bff1ac24ca"
+    },
+    {
+      "path": "out/gfx-native-powergate-drain/clone-candidate.py",
+      "bytes": 2035,
+      "sha256": "76d267f4ad9f00c82eda7e7719343f20c3407cde1f815232e56ff1b171ad4984"
+    },
+    {
+      "path": "out/gfx-native-powergate-drain/root-prepared-validation.json",
+      "bytes": 1067,
+      "sha256": "6e16e59360975c2f12f4f8c31847ff05488e6019907c422be9bc8f665af9e113"
+    },
+    {
+      "path": "out/gfx-native-powergate/loaded-identity-d841.json",
+      "bytes": 582,
+      "sha256": "9cabc378ee3b58701fe8375bae52c526ced5786d54f786079594730a8e5a2120"
+    },
+    {
+      "path": "docs/evidence/2026-10-09-gfx-native-powergate-live-outcome.json",
+      "bytes": 29215,
+      "sha256": "fedf80e347a135c806c68ee2c8238cd6f5c8ca9c132f0b892d6e30ac8cd6ba2c"
+    },
+    {
+      "path": "out/gfx-native-powergate/native-ranges.json",
+      "bytes": 4961,
+      "sha256": "a438f9167860e6518169c3881b944e693ad5867d081fbad8020f752a08691ae3"
+    },
+    {
+      "path": "out/gfx-native-powergate/owner-qualification-final-v5.json",
+      "bytes": 5373,
+      "sha256": "dc07f9c1b37de7ba4aa7ccfb5328af89b16dabc64e7e95bd7c3c04ad1256e914"
+    },
+    {
+      "path": "out/gfx-native-powergate/wrapper-qualification.json",
+      "bytes": 113714,
+      "sha256": "d0f27bceb4ccc535b1126ca895b66ac9536d8c0a24dde43623db6c2d9c4515ab"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-powergate-drain/READY.md",
+      "bytes": 1591,
+      "sha256": "2c29ebf21b73de21a29fc6c483c7f22e1847af4968c9d3c02b8072776bebda70"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-powergate-drain/WRAPPER-QUALIFICATION.md",
+      "bytes": 3009,
+      "sha256": "423aeab73f63d229f17bbf7f1dd6491259d900c015df089f829ce6af53a13ff9"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-powergate-drain/finalize-powergate.py",
+      "bytes": 12060,
+      "sha256": "cc759a9b8efa2b419bf6b40775af3daecb50997e8fdf1ac2648eea1889adc4f6"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-powergate-drain/frozen_wrapper.py",
+      "bytes": 832,
+      "sha256": "18f1403842be36251f55c0b40f4c7ebfae4eda76d7c3e800caa1ba511c228860"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-powergate-drain/gfx-native-powergate-drain.h",
+      "bytes": 19348,
+      "sha256": "f3f4429f6b372157cedcbcce1d29ef61ddaf8654fab2afabf035da8322152787"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-powergate-drain/gfx_native_powergate_drain_contract.py",
+      "bytes": 3135,
+      "sha256": "884956c2d75e6001b85453a440e28c5cbfabae10cba1b57089facd7d971c75ca"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-powergate-drain/preflight-fresh.py",
+      "bytes": 905,
+      "sha256": "b3df956f8f9d794df4855b048a0f05a9cccb7dbc8f72bdec69af7dfafa45a368"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-powergate-drain/prepare-powergate-drain-owner.py",
+      "bytes": 6413,
+      "sha256": "e9f12ea681e5729b626c7648a51cea6ed87e548d737a93d7a36f5c4943cfe13d"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-powergate-drain/run-powergate.py",
+      "bytes": 1015,
+      "sha256": "5a639cb079b19715b5f1748033e6958a4abcb2fd24ee6e8798e3d39c270e735e"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-powergate-drain/run-root-powergate.py",
+      "bytes": 631,
+      "sha256": "714727da88a230a35bbee49adfcacb89f7dbd0267688358602c4e73fa28e20c6"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-powergate-drain/test-powergate-drain-owner.py",
+      "bytes": 34469,
+      "sha256": "524fb7d21e2b804038a393a6f970ab65aa72af807f8c7ea5eb2e8d194e623429"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-powergate-drain/test-powergate-runners.py",
+      "bytes": 15085,
+      "sha256": "d65e5ce5dd13d732953dad1be89b21198ceab69367bc377797f9147de6b04218"
+    },
+    {
+      "path": "docs/evidence/2026-10-09-gfx-native-powergate-drain-c-qualification.json",
+      "bytes": 8406,
+      "sha256": "ac7e07c2bbc2e92cb618e71e8086bdcf7c95aa7ea1d8e9e059ece1b816e9f2ab"
+    },
+    {
+      "path": "docs/evidence/2026-10-09-gfx-native-powergate-drain-wrapper-qualification.json",
+      "bytes": 34150,
+      "sha256": "8e6869e59f828356fe53e5b10987baef16bfe5496754237ce373524f3743dbdd"
+    },
+    {
+      "path": "docs/evidence/2026-10-09-gfx-native-powergate-drain-independent-review.json",
+      "bytes": 25680,
+      "sha256": "6fc6a84a2c106820542fdd4b73e3035cebb813b036f17e3b390374dd5c59c31e"
+    },
+    {
+      "path": "out/gfx-native-powergate-drain/save-prepared.py",
+      "bytes": 5198,
+      "sha256": "30131a897078a815cd1e947a2b77ab28bd18195c10d6d63624ff61ae3e2c3884"
+    }
+  ]
+}
