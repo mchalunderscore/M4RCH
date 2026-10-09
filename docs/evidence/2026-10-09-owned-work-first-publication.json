@@ -1,0 +1,169 @@
+{
+  "boot_id": "7f61235c-5ff7-41ad-8e57-cb2b5cdfcce0",
+  "candidate_module_sha256": "238fa33ab43a08c99cf2f5c9722e25c391266a51f649c76445847cec27a146d0",
+  "root_channels": [
+    {
+      "channel": 0,
+      "cursors": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "channel": 1,
+      "cursors": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "channel": 12,
+      "cursors": [
+        32,
+        32,
+        32
+      ]
+    }
+  ],
+  "queues": [
+    {
+      "stage": "ta",
+      "chosen_queue_id": 0,
+      "completed_cursor": 2,
+      "prefetch_cursor": 2,
+      "host_producer": 2,
+      "sentinel50": "0xffffffff",
+      "state_firmware_cursors": [
+        0,
+        2,
+        0
+      ],
+      "changed_bytes": 3
+    },
+    {
+      "stage": "3d",
+      "chosen_queue_id": 1,
+      "completed_cursor": 2,
+      "prefetch_cursor": 2,
+      "host_producer": 2,
+      "sentinel50": "0xffffffff",
+      "state_firmware_cursors": [
+        0,
+        2,
+        0
+      ],
+      "changed_bytes": 3
+    }
+  ],
+  "changed_backing_pages": [
+    {
+      "page": 48,
+      "device_va": "0x10000c8000",
+      "changed_bytes": 3,
+      "first_changed_offsets": [
+        "0x1c",
+        "0x100",
+        "0x130"
+      ]
+    },
+    {
+      "page": 50,
+      "device_va": "0x10000d0000",
+      "changed_bytes": 3,
+      "first_changed_offsets": [
+        "0x1c",
+        "0x100",
+        "0x130"
+      ]
+    }
+  ],
+  "target_changed_bytes": 0,
+  "target_sha256": "add4fa3e6dbfb8723b21cfe7debadbed5d5f2ca1ab88c666470daed16afbe21a",
+  "completion_changed_bytes": 0,
+  "work_notification_sent": true,
+  "reboot_required": true,
+  "qualification": "Post-return non-atomic owned-memory capture. Root-channel consumption, job pointer prefetch/completion cursors and changed target storage are distinct evidence; none alone proves GPU execution, valid shader completion or a rendered triangle. Context/backing remain pinned.",
+  "firmware_identity": {
+    "raw_sha256": "e3c2d27140bfbfce3a9d4ba2e5779dce606cc92d426510ee6927a7198fa92460",
+    "normalized_sha256": "190cef1946a23dfbde180592629631c3b28d0509a17eb76108b7c9a52accd9ac",
+    "observed_variable_payloads": [
+      {
+        "offset": "0x59841",
+        "tag_bytes": "GKTS",
+        "payload_hex": "9f31cf3600c1a085"
+      },
+      {
+        "offset": "0x59924",
+        "tag_bytes": "ECAP",
+        "payload_hex": "b6d922c3f1888ca4"
+      }
+    ],
+    "qualification": "Exact match outside two tagged eight-byte boot metadata payloads; tags and lengths are also checked. No instruction bytes excluded."
+  },
+  "firmware_scheduler": {
+    "queues": [
+      {
+        "stage": "ta",
+        "queue_id": 0,
+        "config_install_flag": 0,
+        "installed_flags": 0,
+        "firmware_ring": "0x0",
+        "device_ring": "0x0",
+        "header_word": 0,
+        "encoded_geometry": 0,
+        "data_master": 0,
+        "row_changed_bytes": 0
+      },
+      {
+        "stage": "3d",
+        "queue_id": 1,
+        "config_install_flag": 0,
+        "installed_flags": 0,
+        "firmware_ring": "0x0",
+        "device_ring": "0x0",
+        "header_word": 0,
+        "encoded_geometry": 0,
+        "data_master": 0,
+        "row_changed_bytes": 0
+      }
+    ],
+    "added_kick_counter_before": 0,
+    "added_kick_counter_after": 4,
+    "crashlog_header_present": false,
+    "qualification": "Matched opcode15 handler installs a40-byte row at13dbd8+queueID*40 only if config1a is nonzero. Opcode14 increments13c390 by its count; that counter does not prove hardware execution. These are post-shutdown snapshots."
+  },
+  "next_candidate": {
+    "path": "out/owned-queue-bind/live-candidate",
+    "module_sha256": "d954dce9f5f20260f8eb5f10d289a43ad43bc4ad7c05c987caaabaf8a3886c49",
+    "change": "Set opcode15 config1a=1 in both queue records. All other workload, queue/context/baseline hypotheses preserved.",
+    "build": "W=1 clean"
+  },
+  "user_smoke_check": "Everything normal: desktop, built-in input, USB and networking",
+  "hypotheses": [
+    "Config1a=0 demonstrably skips native firmware KSM queue installation; installing rows is necessary but may expose further faults.",
+    "Initial NOPtimestamp0 dependency on previous0 remains unqualified; potential scheduling stall, not established by current capture.",
+    "Config52=0 skips owner context association. This remains a separate explicit provisional binding and is not silently enabled."
+  ],
+  "consumer_evidence": {
+    "opcode15_dispatch": "0x191f8",
+    "opcode14_dispatch": "0x1941c",
+    "config_flag_branch_range": [
+      "0x1926c",
+      "0x19274"
+    ],
+    "config_flag_branch_sha256": "d618ae02625d7e601dd88e5a934416a40ac3176f5f5de745bc5329d97e59f0ff",
+    "queue_install_pair_range": [
+      "0x19754",
+      "0x1977c"
+    ],
+    "queue_install_pair_sha256": "a3b437c0d2d265a06c2428ccc0ea01e5a67efccb9f0276fd70d2e68f4ab85a7d",
+    "add_kicks_range": [
+      "0x1941c",
+      "0x194d8"
+    ],
+    "add_kicks_sha256": "10dcaacf6194895905e0700feba49ae0f27db1c1cfc5d12c32584a419531ed47",
+    "qualification": "Static matched firmware consumer plus independent captured state. No instruction emulation performed in this pass."
+  }
+}
