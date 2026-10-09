@@ -1,0 +1,294 @@
+{
+  "schema": "m4rch-gpc-startup-path-v1",
+  "scope": "Read-only analysis of saved matched firmware and captures; no hardware access. Bounds producer and minimum-active policy investigated separately.",
+  "firmware_text": {
+    "path": "out/gpc-recovery/candidate/asc-graph-init/boot-706d9e50-c897-4479-8587-f19835a40166/text.bin",
+    "sha256": "a09ee5a1369cb50f98d9ac0f998756f538b0cc9c44a5ec2085aba438012cc149",
+    "raw_sha256": "a09ee5a1369cb50f98d9ac0f998756f538b0cc9c44a5ec2085aba438012cc149",
+    "normalized_sha256": "190cef1946a23dfbde180592629631c3b28d0509a17eb76108b7c9a52accd9ac",
+    "observed_variable_payloads": [
+      {
+        "offset": "0x59841",
+        "tag_bytes": "GKTS",
+        "payload_hex": "004022edec281ace"
+      },
+      {
+        "offset": "0x59924",
+        "tag_bytes": "ECAP",
+        "payload_hex": "82ee0c7c95480cb8"
+      }
+    ],
+    "qualification": "Exact match outside two tagged eight-byte boot metadata payloads; tags and lengths are also checked. No instruction bytes excluded."
+  },
+  "firmware_span_address_convention": "TEXT-relative offsets, start inclusive/end exclusive; SHA-256 over exact binary bytes, no normalization within spans.",
+  "firmware_spans": [
+    {
+      "name": "startup_wrapper",
+      "start": "0xe55c",
+      "end": "0xe580",
+      "sha256": "912fc967bfc4aee3bc2768164df20bc46bfee75dbbb0661bfb549556f3e11e6f"
+    },
+    {
+      "name": "gpc_startup_clamp_and_calls",
+      "start": "0xd364",
+      "end": "0xd428",
+      "sha256": "070e3e5b78c146e9738dc82c26e881b87d1330b5ee482ffcbc30eafccc6728b9"
+    },
+    {
+      "name": "bounds_parser_base",
+      "start": "0x2f5d4",
+      "end": "0x2f5e8",
+      "sha256": "d675eb30cb81c4831c965b949cd4a93ae0af33ecf2d484998f50ba5f2c42bbc2"
+    },
+    {
+      "name": "bounds_parser_copy",
+      "start": "0x2f78c",
+      "end": "0x2f7a4",
+      "sha256": "d051876b8dd0c23cfc8ed7c43a21b6c9a5a0ac357e13273fc49fd00da7b0a20f"
+    },
+    {
+      "name": "auxiliary_initial_state",
+      "start": "0x39490",
+      "end": "0x394bc",
+      "sha256": "266f7020a348acc41b23457ca59abe8f4245cb40f13117f604b9895c499c97a0"
+    },
+    {
+      "name": "auxiliary_no_change_return",
+      "start": "0x32248",
+      "end": "0x3228c",
+      "sha256": "ba56f4adca472fe17512bca3cd6f36fac957c673584b53ef09a91ac35cedc19c"
+    },
+    {
+      "name": "main_transition_arguments",
+      "start": "0x2bdd0",
+      "end": "0x2bdfc",
+      "sha256": "ce7e8fb549549ac873b3264d941c3f12ae653b836f6183c0c88765012bdd4dbb"
+    },
+    {
+      "name": "main_earlier_prc_gate",
+      "start": "0x2be78",
+      "end": "0x2beac",
+      "sha256": "0e53f76393f80aab6ffdf676ee7587334446faaf7341b67d86ee33ca06d1a41b"
+    },
+    {
+      "name": "generic_poll_operand",
+      "start": "0x29fc8",
+      "end": "0x2a030",
+      "sha256": "f6ee3635f7876efcfa51c551f32ea4c8078cb2185edfcc363c640f759c139471"
+    },
+    {
+      "name": "main_zero_to_nonzero_predicate",
+      "start": "0x2beac",
+      "end": "0x2bf50",
+      "sha256": "2e84d956b22168a3843ab9fa047b8ae3be76387c28ca4d35dde69b0bb8a663a9"
+    },
+    {
+      "name": "cluster_count_identification",
+      "start": "0x29e78",
+      "end": "0x29ec8",
+      "sha256": "f91ac4a3bdf44a7df488974f7eba0ffd82e194ddc3116fc0e6f4ad1e1bdd4c32"
+    },
+    {
+      "name": "register_descriptor_parser_and_slot32_fallback",
+      "start": "0x32ec0",
+      "end": "0x32f64",
+      "sha256": "696f5efa2dd313faa40b67e52d462bd5f024dbaff20d62dea9af2a0266063271"
+    },
+    {
+      "name": "timestamp_pointer_install",
+      "start": "0x3720",
+      "end": "0x3730",
+      "sha256": "0a47d38b6b385a1a35d8e5680bf23636c502948a3767f0ee131ffbab78c3164a"
+    },
+    {
+      "name": "timestamp_store_pair",
+      "start": "0xd978",
+      "end": "0xd988",
+      "sha256": "a18fb6cd71e02143880e11af35f0b167829afe6405d14f2f708d5f13b9f6145b"
+    },
+    {
+      "name": "periodic_timestamp_store_pair",
+      "start": "0x39ba0",
+      "end": "0x39bb0",
+      "sha256": "a81d37ee396c1d3a09eda774539338973778d92ff1986a622004a66061c31c3d"
+    },
+    {
+      "name": "startup_timer_schedule",
+      "start": "0xd820",
+      "end": "0xd8ac",
+      "sha256": "2a774a48135679333c4fe9734d61e6e2da3ea6f030959a8a96d5198b12167326"
+    }
+  ],
+  "instruction_checks": {
+    "0x2f5e0": "0x911b22b5",
+    "0x2f790": "0x52837209",
+    "0x2f794": "0x912962a0",
+    "0x2f79c": "0x52802902",
+    "0x2f7a0": "0x97ff4d4f",
+    "0x29ea8": "0xb9401129",
+    "0x29eac": "0x53083d2a",
+    "0x29eb0": "0xd3504d29",
+    "0x29eb4": "0x1b097d4a",
+    "0x29ec4": "0x2906a50a",
+    "0x2bf44": "0xb9407109",
+    "0x2bf48": "0x6b29239f",
+    "0x32f48": "0xf9474508",
+    "0x32f60": "0xf90a8528",
+    "0xd980": "0xf9000109",
+    "0xd984": "0xf900210b",
+    "0x39ba8": "0xf9000149",
+    "0x39bac": "0xf9002148"
+  },
+  "capture": {
+    "boot_id": "706d9e50-c897-4479-8587-f19835a40166",
+    "module_sha256": "246de548859b7b70fbdd762cedc32d3947524e1b4b2ffe11c3f0e038202aa220",
+    "graph_receipt": {
+      "path": "out/gpc-recovery/candidate/asc-graph-init/graph-receipt.json",
+      "sha256": "b301caed70209ee9b4f15265097b73f54e841ccccba9b9dd3b8944377ada5464"
+    },
+    "objects_before": {
+      "path": "out/gpc-recovery/candidate/asc-graph-init/boot-706d9e50-c897-4479-8587-f19835a40166/objects-before.bin",
+      "sha256": "a858e6ef8c8336f3cfddc15a31b74ee515de6175696effce4ed31c00624292df"
+    },
+    "objects_after": {
+      "path": "out/gpc-recovery/candidate/asc-graph-init/boot-706d9e50-c897-4479-8587-f19835a40166/objects-after.bin",
+      "sha256": "d33d9a709218dd0479991f1c2ab5a3f7528ff301ef9bc00ecf85417dba51c829"
+    },
+    "hardware_arena_offset": "0x8000",
+    "power_arena_offset": "0x30000",
+    "hardware_before": {
+      "0xea0": 1,
+      "0xf20": 0,
+      "0xf38": 1,
+      "0x1b90": 0,
+      "0x1b94": 0
+    },
+    "hardware_after": {
+      "0x1b90": 0,
+      "0x1b94": 0
+    },
+    "power_after": {
+      "0x38": 0,
+      "0x78": 0,
+      "0x63c8": 0,
+      "0x652c": 0
+    },
+    "fixed_read_only_poll_capture": {
+      "path": "out/gpc-recovery/candidate/asc-graph-init/boot-706d9e50-c897-4479-8587-f19835a40166/startup-power-polls/attempt.json",
+      "sha256": "e04357d1b77fc2907292e450f30e30c42e2d0494ee5eb8893d29fbb7581fa7a3"
+    },
+    "observed_poll_values": [
+      "[  379.602614] m4rch power-poll-sample: asc_control=0x10 asc_status=0x6c raw5960=0x0 raw5970=0x0 raw5978=0x0",
+      "[  379.602634] m4rch power-poll-sample: rawd4c000=0x0 rawd4c004=0x0",
+      "[  379.602644] m4rch power-poll-sample: rawd44070=0x0"
+    ]
+  },
+  "auxiliary_target": {
+    "parser": "2f5dc/2f5e0 sets x21=18f6c8; 2f78c..2f7a0 memcpy(hardware+1b90, length148) to x21+a58=190120. Thus190120=hardware1b90 and190124=hardware1b94.",
+    "prepared_bounds": [
+      0,
+      0
+    ],
+    "startup": "e55c wrapper calls d2b4 with w1=1,w2=1,w3=0. At d3e4..d3ec the upper bound190124 clamps w22 to0; d404 calls32248(0); d410 stores power+78=0 only after return; d424 separately calls2bdac(main target1, flags2, timeout1000, mode1).",
+    "state_initialization": "39490..394b8 initializes auxiliary current/requested globals18e334/18e338 from PRCd4c000&0xf. Observed current PRC0 is0; this observation is not a captured initialization-time value.",
+    "no_op": "When initialized current=requested=target=0,3227c..32288 branches to return32578. Hence power+78=0 is compatible with successful no-op completion of32248; it does not prove a32248 stall.",
+    "fix_status": "The zero upper bound is a concrete prepared-graph omission candidate, but this report does not invent its native replacement or prove causality. Native producer/policy work is separate."
+  },
+  "main_transition": {
+    "target": 1,
+    "previous_power38": 0,
+    "earlier_prc_predicate": "2be78..2bea8 calls29f54(slot34, d4c000, d4c004, expected0, mask0x10, timeout1000, mode0). 2a020 reads PRC+4 and2a024..2a02c compares masked value0. Captured rawd4c004=0 satisfies this condition.",
+    "first_handshake": "hardwaref38=1 gates primary5960 poll at2becc; predicate(raw5960&7)==0 is satisfied by saved0.",
+    "cluster_wait": "2bed8..2bee8 takes startup branch for previous0/requested nonzero. 2bef0..2bf00 computes required mask=(1<<runtime18ceac)-1. 2bf40..2bf4c polls slot33+70 and compares its low16 bits with mask.",
+    "required_mask": 3,
+    "observed_d44070": 0,
+    "interpretation": "This is the strongest unsatisfied startup predicate among sampled operands, consistent with waiting before the main PRC+4 transition request. No live PC was captured; locks, intervening unsampled code or differing current runtime values cannot be excluded."
+  },
+  "cluster_mask_provenance": {
+    "producer": "29e78 base18ce78;29ea4 loads cached slot26 GPU VA18f838;29ea8 reads MMIO+10 physical288d04010;29eac extracts bits8..15,29eb0 extracts bits16..19,29eb4 multiplies,29ec4 stores count at18ceac and second factor at18ceb0.",
+    "saved_raw_identification": {
+      "path": "docs/evidence/2026-10-07-gravity-gpu-bumper-scan-hang.json",
+      "sha256": "c6ca67c000f64a7461e4240a5f352f4c4fe1277db2a99a385eba5f7966c1391b",
+      "address": "0x288d04010",
+      "value": "0x0011020a"
+    },
+    "calculation": "((0x0011020a>>8)&0xff)*((0x0011020a>>16)&0xf)=2; (1<<2)-1=3.",
+    "prior_runtime": {
+      "path": "out/native-init-recovery/resident-candidate/asc-graph-init/boot-c7292f21-ae68-4948-b694-e773a22946d0/data-after.bin",
+      "sha256": "2b1702be58aad31d37e60fcae1bf0ca01ec23602041003e8361cee3f8df5b025",
+      "boot_id": "c7292f21-ae68-4948-b694-e773a22946d0",
+      "data_relative_base": "0x60000",
+      "values": {
+        "0x18ceac": 2,
+        "0x18ceb0": 1,
+        "0x18f838": "0xfffffc2000f04000"
+      }
+    },
+    "qualification": "Prior runtime count is corroboration from the previous boot, not a fresh706d DATA-after sample. This count is derived from the MMIO identification register, not hardware254c/2550/2554 engine masks or hardwarefc0."
+  },
+  "slot32_timestamp_mapping": {
+    "descriptor": {
+      "slot": 32,
+      "physical": "0x288d60000",
+      "gpu_va": "0xfffffc2000f60000",
+      "size": "0x20000",
+      "readonly": true,
+      "mapped_pages": 8,
+      "role_qualification": "matching25G83 static table extent",
+      "effective_writable_pages": []
+    },
+    "hardware_e88_override": "0x0",
+    "binding": "32ec0..32f40 copies hardware descriptor slot32 to cached record18f920, GPU VA at18f928.32f44..32f60 chooses hardwaree88 when nonzero, otherwise this slot32 VA, and stores190e30.3720..372c copies190e30 to14a1e8.",
+    "saved_pointer_values": {
+      "0x18f928": "0xfffffc2000f60000",
+      "0x190e30": "0xfffffc2000f60000",
+      "0x14a1e8": "0xfffffc2000f60000"
+    },
+    "stores": [
+      {
+        "pc": "0xd980",
+        "width": 8,
+        "offset": "0x0"
+      },
+      {
+        "pc": "0xd984",
+        "width": 8,
+        "offset": "0x40"
+      },
+      {
+        "pc": "0x39ba8",
+        "width": 8,
+        "offset": "0x0"
+      },
+      {
+        "pc": "0x39bac",
+        "width": 8,
+        "offset": "0x40"
+      }
+    ],
+    "required_leaf": {
+      "physical": "0x288d60000",
+      "gpu_va": "0xfffffc2000f60000",
+      "bytes": "0x4000",
+      "writable": true
+    },
+    "remaining_descriptor_pages": "Other seven16KiB pages retain read-only PTEs; these stores justify no wider grant.",
+    "stage": "Later startup/timer timestamp paths; does not explain the present stall before power-up completion.",
+    "implementation_points": [
+      "experiments/t6040-gpu/prepare-native-init-recovery.py: patch hardware descriptor32 flag at640+32*28+20=b60, layout descriptor/first-leaf metadata, and the first leaf writable bit in graph-contract.h prefix when regenerating graph bytes; preserve other leaves and owned draw files.",
+      "experiments/t6040-gpu/run-root-envelope.py: qualified writable physical-page allowlist.",
+      "experiments/t6040-gpu/asc-graph-init/graph-map.h: kernel writable physical-page allowlist; existing mapping code already selects FW_MMIO_RW per leaf.",
+      "experiments/t6040-gpu/graph-register-batch.py: base generator WRITABLE_SLOTS/WRITABLE_PAGES only if regenerating this base graph; changing these alone does not update an existing prepared snapshot."
+    ],
+    "descriptor_flag_qualification": "Flag is copied by firmware parser; writable naming follows graph builder convention. Effective permission is enforced by leaf PTEs, so the descriptor flag alone is insufficient."
+  },
+  "analyzer_constraints": [
+    "Zero5960/5970 low3 bits satisfies the respective handshake conditions; do not call it an observed completed transition without stage/target evidence.",
+    "5978 bit1 and32248 d44088 down-transition waits do not establish the initial0-to1 main startup stage.",
+    "PRC0 and PRC+4 are distinct auxiliary/main state-machine operands. Main startup expects1; recovery down expects0.",
+    "Power+78 is a software auxiliary value, not the requested main target at2c11c; during down it can remain1 until after2bdac returns.",
+    "Later down-stage diagnostics that suppress reads once power38 clears leave the second5960/PRC+4 interval unsampled; absence of samples is not proof those polls completed.",
+    "Do not read write-only command/selector offsets5958/5968 to infer progress."
+  ],
+  "coverage_limit": "Bounded direct GPC startup operands were checked against existing mappings and guarded optional pointers. No immediate null or unmapped direct operand was found. This is not a complete transitive firmware audit."
+}

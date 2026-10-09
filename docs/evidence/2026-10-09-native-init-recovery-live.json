@@ -163,7 +163,7 @@
       "power+652c is incremented by d808..d810 in platform mode0. Value1 is consistent with only initial power-up; successful recovery d2b4 would add a second increment.",
       "power+38 remains1 until down transition reaches2c02c; power+78 remains1 untilcdb0. Their final1 together with652c1 place the leading hypothesis insidec8f0 before completing its down transition.",
       "f38 introduces first unbounded MMIO poll at2becc: primary+5960&7 must become0. Then down transition writesprimary+5880=1,primary+5978=1 and waits5978 bit1 at2bfec. These have no timer or recovery-state escape. No saved MMIO values distinguish them.",
-      "Native Apple AGX89cd1fc explicitly writes hardware+f20=0, which binds firmware18fc78. Do not change platform mode merely to dodge its valid native branch."
+      "CORRECTED after GPC-policy review: native hardware+f20=0 maps to firmware18fcc8. Firmware18fc78 instead comes from hardware+ea0, which was incorrectly zero in this trial; native default GPC policy requires1. See2026-10-09-native-gpc-policy.json and gpc-recovery-live evidence."
     ],
     "recommended_diagnostics": {
       "when": "before phase1 acknowledgement, during phase2 wait, and immediately after timeout before shutdown",
@@ -221,7 +221,8 @@
       "recovery completion",
       "safe DMA retirement",
       "rendering"
-    ]
+    ],
+    "correction": "The earlier f20->18fc78 interpretation was wrong; raw capture values and hashes are unchanged. ea0->18fc78 controls real GPC startup."
   },
   "host_contract_recheck": {
     "private_binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",

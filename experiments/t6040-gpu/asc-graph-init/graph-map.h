@@ -132,7 +132,7 @@ static int root_prepare(bool install)
    goto fail_root;
   if (afr && mmio_leaves[i].writable && ((pa-0x28b000000ULL)%0x10000ULL)) goto fail_root;
   if (mmio_leaves[i].writable && pa!=0x288000000ULL && pa!=0x288004000ULL && pa!=0x288008000ULL && pa!=0x28800c000ULL && pa!=0x288010000ULL && pa!=0x288014000ULL && pa!=0x288018000ULL && pa!=0x28801c000ULL && pa!=0x288020000ULL && pa!=0x288d04000ULL && pa!=0x288d10000ULL &&
-      pa!=0x288d40000ULL && pa!=0x288d44000ULL && pa!=0x288d4c000ULL &&
+      pa!=0x288d40000ULL && pa!=0x288d44000ULL && pa!=0x288d4c000ULL && pa!=0x288d60000ULL &&
       pa!=0x288e00000ULL && pa!=0x288e1c000ULL && pa!=0x288e40000ULL && pa!=0x289004000ULL && !platform && !afr) goto fail_root;
   l2[((va>>14)&2047)]=pa|(mmio_leaves[i].writable?FW_MMIO_RW:FW_MMIO_RO);
  }

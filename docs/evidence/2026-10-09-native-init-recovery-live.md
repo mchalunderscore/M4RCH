@@ -37,8 +37,11 @@ completing a second power-up. The leading hypothesis is inside the firmware's
 
 No saved register values distinguish these waits. Cached task context does not
 establish the live PC because firmware cache writeback was not proven. Do not
-claim an exact stuck instruction. Native platform mode `hardware+f20 = 0` is
-explicitly initialized by Apple and must not be changed merely to bypass a poll.
+claim an exact stuck instruction. The later GPC review corrected an important
+binding error: `hardware+f20` maps to `18fcc8`, while the real power-up gate
+`18fc78` comes from `hardware+ea0`. Native `f20=0` remains correct; the missing
+`ea0=1` initializer was restored in the next GPC candidate. See
+`2026-10-09-native-gpc-policy.json` and `2026-10-09-gpc-recovery-live.md`.
 
 The host restart interval contains no identified missing mandatory reset/MMU
 operation before phase 2. Its submitted-timestamp table is `main+274 -> shared_4`,
@@ -51,8 +54,10 @@ that the entire power constructor is complete.
 
 `out/recovery-power-wait/candidate` retains the same native initialization and
 immutable draw backing. Work roots remain empty during recovery. It samples
-the owned phase/power markers and, only during phase 2 with nonzero power state,
-the three exact poll operands above. It performs no selector or poll-register
+the owned phase/power markers and, in its original version, only during phase 2
+with nonzero power state, the three exact poll operands above. Before the live
+trial, `phase-aware-candidate` removed the nonzero-state restriction: firmware
+clears `power+38` before later polls. It performs no selector or poll-register
 writes. Samples occur at 100 ms and one-second intervals in the bounded wait,
 at return, and through the typed sample command.
 
@@ -64,6 +69,7 @@ pinned. If both cycles succeed and consume fresh controls, the same instance
 allows further idle recovery checks and one prepared triangle submission.
 
 The module builds with `W=1`. Source/artifact receipts and wrapper interruption
-quarantine are checked offline; there is no live result for this candidate yet.
+quarantine are checked offline. The subsequent diagnostic and GPC-enabled live
+results are recorded in `2026-10-09-gpc-recovery-live.md`.
 See `2026-10-09-recovery-power-wait-candidate.json` for exact hashes. Repeatable
 recovery, safe DMA retirement, GPU execution and rendered pixels remain unproven.

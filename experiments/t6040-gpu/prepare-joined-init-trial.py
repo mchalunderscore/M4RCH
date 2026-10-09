@@ -16,7 +16,7 @@ a.output.mkdir(exist_ok=False,parents=True)
 for tag in ['adt-current','sample-pagetables','root-text-sample','root-data-sample','arena-l2-sample','asc-root-envelope','asc-arena-preflight']:
  shutil.copytree(a.sampler_workspace/tag,a.output/tag)
 g=a.output/'asc-graph-init';shutil.copytree(a.integrated_backing,g)
-for name in ['asc-graph-init.c','joined-context-init.h']:shutil.copy2(kit/'asc-graph-init'/name,g/name)
+for name in ['asc-graph-init.c','joined-context-init.h','graph-map.h']:shutil.copy2(kit/'asc-graph-init'/name,g/name)
 recovery='recovery_trial' in prep
 if recovery:shutil.copy2(kit/'asc-graph-init/recovery-cycle.h',g/'recovery-cycle.h')
 for name in ['graph-before.bin','graph-receipt.json']:

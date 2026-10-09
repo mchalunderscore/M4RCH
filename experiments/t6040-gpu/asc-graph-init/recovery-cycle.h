@@ -51,23 +51,34 @@ static void recovery_power_sample(const char *phase)
 {
  u32 state=recovery_read32(RECOVERY_STATUS+0x4900);
  u32 pstate=recovery_read32(RECOVERY_POWER+0x38);
- void __iomem *primary,*prc;
- pr_info("m4rch recovery-power: phase=%s recovery_phase=%u pstate=%u target=%u down_active=%u up_count=%u\n",
+ void __iomem *primary,*prc,*engines;
+ pr_info("m4rch recovery-power: phase=%s recovery_phase=%u pstate=%u power78=%u down_active=%u up_count=%u\n",
   phase,state,pstate,recovery_read32(RECOVERY_POWER+0x78),
   recovery_read32(RECOVERY_POWER+0x63c8),recovery_read32(RECOVERY_POWER+0x652c));
- /* Exact firmware poll operands, sampled only in the still-powered phase2
-  * interval that stalled on c7292f21. No selector, command-register read or write.
-  * 2becc/2c0c4:5960 u64; 2bfec:5978 u64; 2c1xx:d4c004 u32. */
- if(state!=2 || !pstate) return;
+ /* Exact firmware poll operands while application recovery holds ASC/GFX.
+  * Firmware clears power+38 at2c02c before its second5960 and PRC polls;
+  * a zero software pstate must not suppress those diagnostics. power+78
+  * remains old until cdb0, not the requested down target (w19=0).
+  * Also diagnose initial GPC startup when no control record was consumed.
+  * No selector writes. 2becc/2c0c4:5960; 2bfec:5978; 2c11c:d4c004;
+  * 322ec/2a1b4:5970; 2a21c:d4c000; 2bf44:d44070. */
+ if(state!=2 && !(state==0 && recovery_read32(RECOVERY_CONTROL)==0)) return;
  primary=ioremap(0x288004000ULL,PAGE_SIZE);
  prc=ioremap(0x288d4c000ULL,PAGE_SIZE);
  if(primary) {
   pr_info("m4rch recovery-poll: phase=%s raw5960=%#llx raw5978=%#llx\n",phase,readq(primary+0x1960),readq(primary+0x1978));
+  pr_info("m4rch recovery-aux-poll: phase=%s raw5970=%#llx\n",phase,readq(primary+0x1970));
   iounmap(primary);
  }
  if(prc) {
   pr_info("m4rch recovery-prc: phase=%s rawd4c004=%#x\n",phase,readl(prc+4));
+  pr_info("m4rch recovery-aux-prc: phase=%s rawd4c000=%#x\n",phase,readl(prc));
   iounmap(prc);
+ }
+ engines=ioremap(0x288d44000ULL,PAGE_SIZE);
+ if(engines) {
+  pr_info("m4rch recovery-engine-poll: phase=%s rawd44070=%#x\n",phase,readl(engines+0x70));
+  iounmap(engines);
  }
 }
 static bool recovery_idle(void)
