@@ -1,0 +1,2166 @@
+{
+  "schema": "m4rch.gfx-retained-power-cycle-live-terminal-independent-review.v1",
+  "boot_id": "5bf0a178-e6d8-4def-8088-74ad7ea87727",
+  "reviewer_hardware_actions": [],
+  "reviewer_live_reads": [],
+  "qualification_reexecutions": [],
+  "owner_sha256": "abf4ef3c709c3a775db2fa897dbbe1ba7edbb9868000848ac8283417f9fb7608",
+  "receipt_sha256": "1762f50dcaa0a321c0003cee3ad63dba83cb50159599bc72bbf9c2444b5afe69",
+  "conclusion": "First native shutdown repeated successfully. One second PM get restored physical ACTIVE, but exact0x6a admission refused observed0x6c before separate ON or START. The second reference remains held; no second shutdown occurred.",
+  "artifact_pins_verified": 10,
+  "owner_source_pins_verified": 20,
+  "captures": [
+    {
+      "label": "cold",
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727",
+      "capture_digests_extents_verified": true,
+      "complete": null,
+      "error": null,
+      "commands": [],
+      "capture_errors": [],
+      "state": {
+        "resident_session_usable": null,
+        "operation_failed": null,
+        "operation_uncertain": null,
+        "powergate_attempted": null,
+        "retained_cycle_attempted": null,
+        "reboot_required": true,
+        "allocations_retained": null
+      },
+      "objects_sha256": "7e40a9778325063e05467fd9b737cdf3d19f9656f4c4b909cd4bd41295128db1",
+      "owned_sha256": "1536deedc5e60a2fc676a16abc73d5292dbc03f6a5b2f94cc9b4e635a8fce006",
+      "journal_sha256": "b8630b9a4bb5885d37f39eefb0c9459bec30bb5b60c0b25bde76705c08de80e7",
+      "journal_header": {
+        "magic": 1481787213,
+        "version": 1,
+        "entry_bytes": 80,
+        "capacity": 65536,
+        "used": 50410,
+        "status_flags": 0,
+        "doorbells": 0
+      },
+      "raw_journal_entries_all_verified": true,
+      "power_field": {
+        "objects_offset": "0x3652c",
+        "owned_offset": "0x3e52c",
+        "objects_value": 1229,
+        "owned_value": 1221
+      },
+      "render56_pages_fixture_exact": true,
+      "job35_pages_match_cold": true,
+      "work12_cursor_triplets_zero": true,
+      "control_triplet": [
+        32,
+        32,
+        32
+      ],
+      "deferred_work_rings_fixture_exact": true
+    },
+    {
+      "label": "baseline",
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214741.741036Z-gfx-snapshot-584e278c",
+      "capture_digests_extents_verified": true,
+      "complete": true,
+      "error": null,
+      "commands": [
+        {
+          "command": "gfx-snapshot",
+          "stage": "returned",
+          "started_monotonic": 255.473362041,
+          "result": "success",
+          "finished_monotonic": 255.474499546
+        }
+      ],
+      "capture_errors": [],
+      "state": {
+        "resident_session_usable": false,
+        "operation_failed": true,
+        "operation_uncertain": false,
+        "powergate_attempted": false,
+        "retained_cycle_attempted": false,
+        "reboot_required": true,
+        "allocations_retained": true
+      },
+      "objects_sha256": "bb66fe666381ecd6c5d4ed62db4176f2c5ea7f41bd88c2700b1ae682a8987be2",
+      "owned_sha256": "e612520263a77e48bcb35fa2c27e76b6683dd09d31b44fc418237e09073dae74",
+      "journal_sha256": "b8630b9a4bb5885d37f39eefb0c9459bec30bb5b60c0b25bde76705c08de80e7",
+      "journal_header": {
+        "magic": 1481787213,
+        "version": 1,
+        "entry_bytes": 80,
+        "capacity": 65536,
+        "used": 50410,
+        "status_flags": 0,
+        "doorbells": 0
+      },
+      "raw_journal_entries_all_verified": true,
+      "power_field": {
+        "objects_offset": "0x3652c",
+        "owned_offset": "0x3e52c",
+        "objects_value": 18348,
+        "owned_value": 18348
+      },
+      "render56_pages_fixture_exact": true,
+      "job35_pages_match_cold": true,
+      "work12_cursor_triplets_zero": true,
+      "control_triplet": [
+        32,
+        32,
+        32
+      ],
+      "deferred_work_rings_fixture_exact": true
+    },
+    {
+      "label": "first-OFF",
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e",
+      "capture_digests_extents_verified": true,
+      "complete": true,
+      "error": null,
+      "commands": [
+        {
+          "command": "gfx-powergate",
+          "stage": "returned",
+          "started_monotonic": 261.826708265,
+          "result": "success",
+          "finished_monotonic": 261.833897509
+        }
+      ],
+      "capture_errors": [],
+      "state": {
+        "resident_session_usable": false,
+        "operation_failed": true,
+        "operation_uncertain": false,
+        "powergate_attempted": true,
+        "retained_cycle_attempted": false,
+        "reboot_required": true,
+        "allocations_retained": true
+      },
+      "objects_sha256": "9937847b05535f0f41dc3e10b34ea75802404c0d2632ffe158240b2d862ba96f",
+      "owned_sha256": "81eeb6eb83e744f592f7472ffc3605fded8f304513feacde145f7b0e12fa3a10",
+      "journal_sha256": "b6b752e7a45d0167185a4209ca66d26d5221dd562f92d2aae863894d38ad5ce8",
+      "journal_header": {
+        "magic": 1481787213,
+        "version": 1,
+        "entry_bytes": 80,
+        "capacity": 65536,
+        "used": 51176,
+        "status_flags": 0,
+        "doorbells": 8
+      },
+      "raw_journal_entries_all_verified": true,
+      "power_field": {
+        "objects_offset": "0x3652c",
+        "owned_offset": "0x3e52c",
+        "objects_value": 19110,
+        "owned_value": 19110
+      },
+      "render56_pages_fixture_exact": true,
+      "job35_pages_match_cold": true,
+      "work12_cursor_triplets_zero": true,
+      "control_triplet": [
+        32,
+        32,
+        32
+      ],
+      "deferred_work_rings_fixture_exact": true
+    },
+    {
+      "label": "second-refusal",
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214814.484578Z-gfx-retained-cycle-9cfd283d",
+      "capture_digests_extents_verified": true,
+      "complete": false,
+      "error": "OSError(16, 'Device or resource busy')",
+      "commands": [
+        {
+          "command": "gfx-retained-cycle",
+          "stage": "failed-or-interrupted",
+          "started_monotonic": 288.318807399,
+          "result": "OSError(16, 'Device or resource busy')",
+          "finished_monotonic": 288.320635036
+        }
+      ],
+      "capture_errors": [],
+      "state": {
+        "resident_session_usable": false,
+        "operation_failed": true,
+        "operation_uncertain": true,
+        "powergate_attempted": true,
+        "retained_cycle_attempted": true,
+        "reboot_required": true,
+        "allocations_retained": true
+      },
+      "objects_sha256": "9937847b05535f0f41dc3e10b34ea75802404c0d2632ffe158240b2d862ba96f",
+      "owned_sha256": "81eeb6eb83e744f592f7472ffc3605fded8f304513feacde145f7b0e12fa3a10",
+      "journal_sha256": "b6b752e7a45d0167185a4209ca66d26d5221dd562f92d2aae863894d38ad5ce8",
+      "journal_header": {
+        "magic": 1481787213,
+        "version": 1,
+        "entry_bytes": 80,
+        "capacity": 65536,
+        "used": 51176,
+        "status_flags": 0,
+        "doorbells": 8
+      },
+      "raw_journal_entries_all_verified": true,
+      "power_field": {
+        "objects_offset": "0x3652c",
+        "owned_offset": "0x3e52c",
+        "objects_value": 19110,
+        "owned_value": 19110
+      },
+      "render56_pages_fixture_exact": true,
+      "job35_pages_match_cold": true,
+      "work12_cursor_triplets_zero": true,
+      "control_triplet": [
+        32,
+        32,
+        32
+      ],
+      "deferred_work_rings_fixture_exact": true
+    },
+    {
+      "label": "later-diagnostic",
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214919.918717Z-gfx-snapshot-a4e9c5df",
+      "capture_digests_extents_verified": true,
+      "complete": true,
+      "error": null,
+      "commands": [
+        {
+          "command": "gfx-snapshot",
+          "stage": "returned",
+          "started_monotonic": 353.65180289,
+          "result": "success",
+          "finished_monotonic": 353.65325494
+        }
+      ],
+      "capture_errors": [],
+      "state": {
+        "resident_session_usable": false,
+        "operation_failed": true,
+        "operation_uncertain": true,
+        "powergate_attempted": true,
+        "retained_cycle_attempted": true,
+        "reboot_required": true,
+        "allocations_retained": true
+      },
+      "objects_sha256": "9937847b05535f0f41dc3e10b34ea75802404c0d2632ffe158240b2d862ba96f",
+      "owned_sha256": "81eeb6eb83e744f592f7472ffc3605fded8f304513feacde145f7b0e12fa3a10",
+      "journal_sha256": "b6b752e7a45d0167185a4209ca66d26d5221dd562f92d2aae863894d38ad5ce8",
+      "journal_header": {
+        "magic": 1481787213,
+        "version": 1,
+        "entry_bytes": 80,
+        "capacity": 65536,
+        "used": 51176,
+        "status_flags": 0,
+        "doorbells": 8
+      },
+      "raw_journal_entries_all_verified": true,
+      "power_field": {
+        "objects_offset": "0x3652c",
+        "owned_offset": "0x3e52c",
+        "objects_value": 19110,
+        "owned_value": 19110
+      },
+      "render56_pages_fixture_exact": true,
+      "job35_pages_match_cold": true,
+      "work12_cursor_triplets_zero": true,
+      "control_triplet": [
+        32,
+        32,
+        32
+      ],
+      "deferred_work_rings_fixture_exact": true
+    }
+  ],
+  "first_shutdown": {
+    "admission": [
+      {
+        "monotonic": 261.823574,
+        "line": 1213,
+        "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/dmesg-after.log",
+        "raw": "[  261.823574] m4rch gfx-native-powergate-drain-admission: phase=poll result=0 refused_condition=none intent=1 hardware_sampled=1 status_samples=1 wait_polls=0 messages=0 complete=0 control44=0x10 status48=0x4e rx_status=0x816e01 tx_status=0x2aa01 journal_used=50410 journal_status=0x0 receive_crashed=0 held=1 usage=1 runtime_error=0 request_attempted=0",
+        "phase": "poll",
+        "result": 0,
+        "refused_condition": "none",
+        "intent": 1,
+        "hardware_sampled": 1,
+        "status_samples": 1,
+        "wait_polls": 0,
+        "messages": 0,
+        "complete": 0,
+        "control44": 16,
+        "status48": 78,
+        "rx_status": 8482305,
+        "tx_status": 174593,
+        "journal_used": 50410,
+        "journal_status": 0,
+        "receive_crashed": 0,
+        "held": 1,
+        "usage": 1,
+        "runtime_error": 0,
+        "request_attempted": 0,
+        "payload_bytes": 339
+      },
+      {
+        "monotonic": 261.824462,
+        "line": 1215,
+        "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/dmesg-after.log",
+        "raw": "[  261.824462] m4rch gfx-native-powergate-drain-admission: phase=poll result=0 refused_condition=none intent=1 hardware_sampled=1 status_samples=2 wait_polls=0 messages=1 complete=0 control44=0x10 status48=0x4e rx_status=0x707e01 tx_status=0x2aa01 journal_used=51176 journal_status=0x0 receive_crashed=0 held=1 usage=1 runtime_error=0 request_attempted=0",
+        "phase": "poll",
+        "result": 0,
+        "refused_condition": "none",
+        "intent": 1,
+        "hardware_sampled": 1,
+        "status_samples": 2,
+        "wait_polls": 0,
+        "messages": 1,
+        "complete": 0,
+        "control44": 16,
+        "status48": 78,
+        "rx_status": 7372289,
+        "tx_status": 174593,
+        "journal_used": 51176,
+        "journal_status": 0,
+        "receive_crashed": 0,
+        "held": 1,
+        "usage": 1,
+        "runtime_error": 0,
+        "request_attempted": 0,
+        "payload_bytes": 339
+      },
+      {
+        "monotonic": 261.824488,
+        "line": 1217,
+        "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/dmesg-after.log",
+        "raw": "[  261.824488] m4rch gfx-native-powergate-drain-admission: phase=poll result=0 refused_condition=none intent=1 hardware_sampled=1 status_samples=3 wait_polls=0 messages=2 complete=0 control44=0x10 status48=0x4e rx_status=0x608e01 tx_status=0x2aa01 journal_used=51176 journal_status=0x0 receive_crashed=0 held=1 usage=1 runtime_error=0 request_attempted=0",
+        "phase": "poll",
+        "result": 0,
+        "refused_condition": "none",
+        "intent": 1,
+        "hardware_sampled": 1,
+        "status_samples": 3,
+        "wait_polls": 0,
+        "messages": 2,
+        "complete": 0,
+        "control44": 16,
+        "status48": 78,
+        "rx_status": 6327809,
+        "tx_status": 174593,
+        "journal_used": 51176,
+        "journal_status": 0,
+        "receive_crashed": 0,
+        "held": 1,
+        "usage": 1,
+        "runtime_error": 0,
+        "request_attempted": 0,
+        "payload_bytes": 339
+      },
+      {
+        "monotonic": 261.824507,
+        "line": 1219,
+        "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/dmesg-after.log",
+        "raw": "[  261.824507] m4rch gfx-native-powergate-drain-admission: phase=poll result=0 refused_condition=none intent=1 hardware_sampled=1 status_samples=4 wait_polls=0 messages=3 complete=0 control44=0x10 status48=0x4e rx_status=0x509e01 tx_status=0x2aa01 journal_used=51176 journal_status=0x0 receive_crashed=0 held=1 usage=1 runtime_error=0 request_attempted=0",
+        "phase": "poll",
+        "result": 0,
+        "refused_condition": "none",
+        "intent": 1,
+        "hardware_sampled": 1,
+        "status_samples": 4,
+        "wait_polls": 0,
+        "messages": 3,
+        "complete": 0,
+        "control44": 16,
+        "status48": 78,
+        "rx_status": 5283329,
+        "tx_status": 174593,
+        "journal_used": 51176,
+        "journal_status": 0,
+        "receive_crashed": 0,
+        "held": 1,
+        "usage": 1,
+        "runtime_error": 0,
+        "request_attempted": 0,
+        "payload_bytes": 339
+      },
+      {
+        "monotonic": 261.824524,
+        "line": 1221,
+        "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/dmesg-after.log",
+        "raw": "[  261.824524] m4rch gfx-native-powergate-drain-admission: phase=poll result=0 refused_condition=none intent=1 hardware_sampled=1 status_samples=5 wait_polls=0 messages=4 complete=0 control44=0x10 status48=0x4e rx_status=0x40ae01 tx_status=0x2aa01 journal_used=51176 journal_status=0x0 receive_crashed=0 held=1 usage=1 runtime_error=0 request_attempted=0",
+        "phase": "poll",
+        "result": 0,
+        "refused_condition": "none",
+        "intent": 1,
+        "hardware_sampled": 1,
+        "status_samples": 5,
+        "wait_polls": 0,
+        "messages": 4,
+        "complete": 0,
+        "control44": 16,
+        "status48": 78,
+        "rx_status": 4238849,
+        "tx_status": 174593,
+        "journal_used": 51176,
+        "journal_status": 0,
+        "receive_crashed": 0,
+        "held": 1,
+        "usage": 1,
+        "runtime_error": 0,
+        "request_attempted": 0,
+        "payload_bytes": 339
+      },
+      {
+        "monotonic": 261.824542,
+        "line": 1223,
+        "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/dmesg-after.log",
+        "raw": "[  261.824542] m4rch gfx-native-powergate-drain-admission: phase=poll result=0 refused_condition=none intent=1 hardware_sampled=1 status_samples=6 wait_polls=0 messages=5 complete=0 control44=0x10 status48=0x4e rx_status=0x30be01 tx_status=0x2aa01 journal_used=51176 journal_status=0x0 receive_crashed=0 held=1 usage=1 runtime_error=0 request_attempted=0",
+        "phase": "poll",
+        "result": 0,
+        "refused_condition": "none",
+        "intent": 1,
+        "hardware_sampled": 1,
+        "status_samples": 6,
+        "wait_polls": 0,
+        "messages": 5,
+        "complete": 0,
+        "control44": 16,
+        "status48": 78,
+        "rx_status": 3194369,
+        "tx_status": 174593,
+        "journal_used": 51176,
+        "journal_status": 0,
+        "receive_crashed": 0,
+        "held": 1,
+        "usage": 1,
+        "runtime_error": 0,
+        "request_attempted": 0,
+        "payload_bytes": 339
+      },
+      {
+        "monotonic": 261.824559,
+        "line": 1225,
+        "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/dmesg-after.log",
+        "raw": "[  261.824559] m4rch gfx-native-powergate-drain-admission: phase=poll result=0 refused_condition=none intent=1 hardware_sampled=1 status_samples=7 wait_polls=0 messages=6 complete=0 control44=0x10 status48=0x4e rx_status=0x20ce01 tx_status=0x2aa01 journal_used=51176 journal_status=0x0 receive_crashed=0 held=1 usage=1 runtime_error=0 request_attempted=0",
+        "phase": "poll",
+        "result": 0,
+        "refused_condition": "none",
+        "intent": 1,
+        "hardware_sampled": 1,
+        "status_samples": 7,
+        "wait_polls": 0,
+        "messages": 6,
+        "complete": 0,
+        "control44": 16,
+        "status48": 78,
+        "rx_status": 2149889,
+        "tx_status": 174593,
+        "journal_used": 51176,
+        "journal_status": 0,
+        "receive_crashed": 0,
+        "held": 1,
+        "usage": 1,
+        "runtime_error": 0,
+        "request_attempted": 0,
+        "payload_bytes": 339
+      },
+      {
+        "monotonic": 261.824576,
+        "line": 1227,
+        "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/dmesg-after.log",
+        "raw": "[  261.824576] m4rch gfx-native-powergate-drain-admission: phase=poll result=0 refused_condition=none intent=1 hardware_sampled=1 status_samples=8 wait_polls=0 messages=7 complete=0 control44=0x10 status48=0x4e rx_status=0x10de01 tx_status=0x2aa01 journal_used=51176 journal_status=0x0 receive_crashed=0 held=1 usage=1 runtime_error=0 request_attempted=0",
+        "phase": "poll",
+        "result": 0,
+        "refused_condition": "none",
+        "intent": 1,
+        "hardware_sampled": 1,
+        "status_samples": 8,
+        "wait_polls": 0,
+        "messages": 7,
+        "complete": 0,
+        "control44": 16,
+        "status48": 78,
+        "rx_status": 1105409,
+        "tx_status": 174593,
+        "journal_used": 51176,
+        "journal_status": 0,
+        "receive_crashed": 0,
+        "held": 1,
+        "usage": 1,
+        "runtime_error": 0,
+        "request_attempted": 0,
+        "payload_bytes": 339
+      },
+      {
+        "monotonic": 261.824593,
+        "line": 1229,
+        "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/dmesg-after.log",
+        "raw": "[  261.824593] m4rch gfx-native-powergate-drain-admission: phase=poll result=0 refused_condition=none intent=1 hardware_sampled=1 status_samples=9 wait_polls=0 messages=8 complete=0 control44=0x10 status48=0x6e rx_status=0x2ee01 tx_status=0x2aa01 journal_used=51176 journal_status=0x0 receive_crashed=0 held=1 usage=1 runtime_error=0 request_attempted=0",
+        "phase": "poll",
+        "result": 0,
+        "refused_condition": "none",
+        "intent": 1,
+        "hardware_sampled": 1,
+        "status_samples": 9,
+        "wait_polls": 0,
+        "messages": 8,
+        "complete": 0,
+        "control44": 16,
+        "status48": 110,
+        "rx_status": 192001,
+        "tx_status": 174593,
+        "journal_used": 51176,
+        "journal_status": 0,
+        "receive_crashed": 0,
+        "held": 1,
+        "usage": 1,
+        "runtime_error": 0,
+        "request_attempted": 0,
+        "payload_bytes": 338
+      },
+      {
+        "monotonic": 261.824594,
+        "line": 1230,
+        "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/dmesg-after.log",
+        "raw": "[  261.824594] m4rch gfx-native-powergate-drain-admission: phase=ready result=0 refused_condition=none intent=1 hardware_sampled=1 status_samples=9 wait_polls=1 messages=8 complete=1 control44=0x10 status48=0x6e rx_status=0x2ee01 tx_status=0x2aa01 journal_used=51176 journal_status=0x0 receive_crashed=0 held=1 usage=1 runtime_error=0 request_attempted=0",
+        "phase": "ready",
+        "result": 0,
+        "refused_condition": "none",
+        "intent": 1,
+        "hardware_sampled": 1,
+        "status_samples": 9,
+        "wait_polls": 1,
+        "messages": 8,
+        "complete": 1,
+        "control44": 16,
+        "status48": 110,
+        "rx_status": 192001,
+        "tx_status": 174593,
+        "journal_used": 51176,
+        "journal_status": 0,
+        "receive_crashed": 0,
+        "held": 1,
+        "usage": 1,
+        "runtime_error": 0,
+        "request_attempted": 0,
+        "payload_bytes": 339
+      },
+      {
+        "monotonic": 261.824597,
+        "line": 1231,
+        "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/dmesg-after.log",
+        "raw": "[  261.824597] m4rch gfx-native-powergate-drain-admission: phase=before-request result=0 refused_condition=none intent=1 hardware_sampled=1 status_samples=10 wait_polls=1 messages=8 complete=1 control44=0x10 status48=0x6e rx_status=0x2ee01 tx_status=0x2aa01 journal_used=51176 journal_status=0x0 receive_crashed=0 held=1 usage=1 runtime_error=0 request_attempted=0",
+        "phase": "before-request",
+        "result": 0,
+        "refused_condition": "none",
+        "intent": 1,
+        "hardware_sampled": 1,
+        "status_samples": 10,
+        "wait_polls": 1,
+        "messages": 8,
+        "complete": 1,
+        "control44": 16,
+        "status48": 110,
+        "rx_status": 192001,
+        "tx_status": 174593,
+        "journal_used": 51176,
+        "journal_status": 0,
+        "receive_crashed": 0,
+        "held": 1,
+        "usage": 1,
+        "runtime_error": 0,
+        "request_attempted": 0,
+        "payload_bytes": 349
+      }
+    ],
+    "removed_frames": [
+      {
+        "monotonic": 261.823578,
+        "line": 1214,
+        "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/dmesg-after.log",
+        "raw": "[  261.823578] m4rch gfx-native-powergate-drain-rx: phase=admission index=1 message=0x42000000000000 metadata=0x816e0000000020 rx_status=0x816e01 tx_status=0x2aa01 control44=0x10 status48=0x4e",
+        "phase": "admission",
+        "index": 1,
+        "message": 18577348462903296,
+        "metadata": 36431218274730016,
+        "rx_status": 8482305,
+        "tx_status": 174593,
+        "control44": 16,
+        "status48": 78,
+        "payload_bytes": 177
+      },
+      {
+        "monotonic": 261.824471,
+        "line": 1216,
+        "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/dmesg-after.log",
+        "raw": "[  261.824471] m4rch gfx-native-powergate-drain-rx: phase=admission index=2 message=0x42000000000000 metadata=0x707e0000000020 rx_status=0x707e01 tx_status=0x2aa01 control44=0x10 status48=0x4e",
+        "phase": "admission",
+        "index": 2,
+        "message": 18577348462903296,
+        "metadata": 31663735856693280,
+        "rx_status": 7372289,
+        "tx_status": 174593,
+        "control44": 16,
+        "status48": 78,
+        "payload_bytes": 177
+      },
+      {
+        "monotonic": 261.824492,
+        "line": 1218,
+        "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/dmesg-after.log",
+        "raw": "[  261.824492] m4rch gfx-native-powergate-drain-rx: phase=admission index=3 message=0x42000000000000 metadata=0x608e0000000020 rx_status=0x608e01 tx_status=0x2aa01 control44=0x10 status48=0x4e",
+        "phase": "admission",
+        "index": 3,
+        "message": 18577348462903296,
+        "metadata": 27177728415367200,
+        "rx_status": 6327809,
+        "tx_status": 174593,
+        "control44": 16,
+        "status48": 78,
+        "payload_bytes": 177
+      },
+      {
+        "monotonic": 261.82451,
+        "line": 1220,
+        "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/dmesg-after.log",
+        "raw": "[  261.824510] m4rch gfx-native-powergate-drain-rx: phase=admission index=4 message=0x42000000000000 metadata=0x509e0000000020 rx_status=0x509e01 tx_status=0x2aa01 control44=0x10 status48=0x4e",
+        "phase": "admission",
+        "index": 4,
+        "message": 18577348462903296,
+        "metadata": 22691720974041120,
+        "rx_status": 5283329,
+        "tx_status": 174593,
+        "control44": 16,
+        "status48": 78,
+        "payload_bytes": 177
+      },
+      {
+        "monotonic": 261.824528,
+        "line": 1222,
+        "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/dmesg-after.log",
+        "raw": "[  261.824528] m4rch gfx-native-powergate-drain-rx: phase=admission index=5 message=0x42000000000000 metadata=0x40ae0000000020 rx_status=0x40ae01 tx_status=0x2aa01 control44=0x10 status48=0x4e",
+        "phase": "admission",
+        "index": 5,
+        "message": 18577348462903296,
+        "metadata": 18205713532715040,
+        "rx_status": 4238849,
+        "tx_status": 174593,
+        "control44": 16,
+        "status48": 78,
+        "payload_bytes": 177
+      },
+      {
+        "monotonic": 261.824544,
+        "line": 1224,
+        "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/dmesg-after.log",
+        "raw": "[  261.824544] m4rch gfx-native-powergate-drain-rx: phase=admission index=6 message=0x42000000000000 metadata=0x30be0000000020 rx_status=0x30be01 tx_status=0x2aa01 control44=0x10 status48=0x4e",
+        "phase": "admission",
+        "index": 6,
+        "message": 18577348462903296,
+        "metadata": 13719706091388960,
+        "rx_status": 3194369,
+        "tx_status": 174593,
+        "control44": 16,
+        "status48": 78,
+        "payload_bytes": 177
+      },
+      {
+        "monotonic": 261.824562,
+        "line": 1226,
+        "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/dmesg-after.log",
+        "raw": "[  261.824562] m4rch gfx-native-powergate-drain-rx: phase=admission index=7 message=0x42000000000000 metadata=0x20ce0000000020 rx_status=0x20ce01 tx_status=0x2aa01 control44=0x10 status48=0x4e",
+        "phase": "admission",
+        "index": 7,
+        "message": 18577348462903296,
+        "metadata": 9233698650062880,
+        "rx_status": 2149889,
+        "tx_status": 174593,
+        "control44": 16,
+        "status48": 78,
+        "payload_bytes": 177
+      },
+      {
+        "monotonic": 261.824578,
+        "line": 1228,
+        "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/dmesg-after.log",
+        "raw": "[  261.824578] m4rch gfx-native-powergate-drain-rx: phase=admission index=8 message=0x42000000000000 metadata=0x10de0000000020 rx_status=0x10de01 tx_status=0x2aa01 control44=0x10 status48=0x4e",
+        "phase": "admission",
+        "index": 8,
+        "message": 18577348462903296,
+        "metadata": 4747691208736800,
+        "rx_status": 1105409,
+        "tx_status": 174593,
+        "control44": 16,
+        "status48": 78,
+        "payload_bytes": 177
+      },
+      {
+        "monotonic": 261.829038,
+        "line": 1233,
+        "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/dmesg-after.log",
+        "raw": "[  261.829038] m4rch gfx-native-powergate-drain-rx: phase=ack index=1 message=0x70000000000201 metadata=0x10ef0000000000 rx_status=0x10ef01",
+        "phase": "ack",
+        "index": 1,
+        "message": 31525197391593985,
+        "metadata": 4766382906408960,
+        "rx_status": 1109761,
+        "payload_bytes": 124
+      }
+    ],
+    "powergate_stages": [
+      {
+        "monotonic": 261.8234,
+        "line": 1211,
+        "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/dmesg-after.log",
+        "raw": "[  261.823400] m4rch gfx-native-powergate-drain: phase=intent result=0 intent=1 initial_recovery_failed=1 initial_completed_cycles=0 request_attempted=0 request=0x60000000000202 ack_observed=0 ack_message=0x0 ack_metadata=0x0 ack_polls=0 rx_messages=0 rx_empty_after_ack=0 rx_empty_before_cpu=0 idle_observed=0 idle_polls=0 idle_status=0x0 clear10_attempted=0 control_before=0x0 control_after10=0x0 clear20_attempted=0 control_after20=0x0 cpu_stopped=0 off_delegated=0 held=1 allocations_retained=174 restart_allowed=0 dma_retirement_verified=0",
+        "phase": "intent",
+        "result": 0,
+        "intent": 1,
+        "initial_recovery_failed": 1,
+        "initial_completed_cycles": 0,
+        "request_attempted": 0,
+        "request": 27021597764223490,
+        "ack_observed": 0,
+        "ack_message": 0,
+        "ack_metadata": 0,
+        "ack_polls": 0,
+        "rx_messages": 0,
+        "rx_empty_after_ack": 0,
+        "rx_empty_before_cpu": 0,
+        "idle_observed": 0,
+        "idle_polls": 0,
+        "idle_status": 0,
+        "clear10_attempted": 0,
+        "control_before": 0,
+        "control_after10": 0,
+        "clear20_attempted": 0,
+        "control_after20": 0,
+        "cpu_stopped": 0,
+        "off_delegated": 0,
+        "held": 1,
+        "allocations_retained": 174,
+        "restart_allowed": 0,
+        "dma_retirement_verified": 0,
+        "payload_bytes": 529
+      },
+      {
+        "monotonic": 261.8246,
+        "line": 1232,
+        "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/dmesg-after.log",
+        "raw": "[  261.824600] m4rch gfx-native-powergate-drain: phase=request-published result=0 intent=1 initial_recovery_failed=1 initial_completed_cycles=0 request_attempted=1 request=0x60000000000202 ack_observed=0 ack_message=0x0 ack_metadata=0x0 ack_polls=0 rx_messages=0 rx_empty_after_ack=0 rx_empty_before_cpu=0 idle_observed=0 idle_polls=0 idle_status=0x0 clear10_attempted=0 control_before=0x0 control_after10=0x0 clear20_attempted=0 control_after20=0x0 cpu_stopped=0 off_delegated=0 held=1 allocations_retained=174 restart_allowed=0 dma_retirement_verified=0",
+        "phase": "request-published",
+        "result": 0,
+        "intent": 1,
+        "initial_recovery_failed": 1,
+        "initial_completed_cycles": 0,
+        "request_attempted": 1,
+        "request": 27021597764223490,
+        "ack_observed": 0,
+        "ack_message": 0,
+        "ack_metadata": 0,
+        "ack_polls": 0,
+        "rx_messages": 0,
+        "rx_empty_after_ack": 0,
+        "rx_empty_before_cpu": 0,
+        "idle_observed": 0,
+        "idle_polls": 0,
+        "idle_status": 0,
+        "clear10_attempted": 0,
+        "control_before": 0,
+        "control_after10": 0,
+        "clear20_attempted": 0,
+        "control_after20": 0,
+        "cpu_stopped": 0,
+        "off_delegated": 0,
+        "held": 1,
+        "allocations_retained": 174,
+        "restart_allowed": 0,
+        "dma_retirement_verified": 0,
+        "payload_bytes": 540
+      },
+      {
+        "monotonic": 261.829044,
+        "line": 1234,
+        "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/dmesg-after.log",
+        "raw": "[  261.829044] m4rch gfx-native-powergate-drain: phase=handshake-return result=0 intent=1 initial_recovery_failed=1 initial_completed_cycles=0 request_attempted=1 request=0x60000000000202 ack_observed=1 ack_message=0x70000000000201 ack_metadata=0x10ef0000000000 ack_polls=5 rx_messages=1 rx_empty_after_ack=1 rx_empty_before_cpu=0 idle_observed=0 idle_polls=0 idle_status=0x0 clear10_attempted=0 control_before=0x0 control_after10=0x0 clear20_attempted=0 control_after20=0x0 cpu_stopped=0 off_delegated=0 held=1 allocations_retained=174 restart_allowed=0 dma_retirement_verified=0",
+        "phase": "handshake-return",
+        "result": 0,
+        "intent": 1,
+        "initial_recovery_failed": 1,
+        "initial_completed_cycles": 0,
+        "request_attempted": 1,
+        "request": 27021597764223490,
+        "ack_observed": 1,
+        "ack_message": 31525197391593985,
+        "ack_metadata": 4766382906408960,
+        "ack_polls": 5,
+        "rx_messages": 1,
+        "rx_empty_after_ack": 1,
+        "rx_empty_before_cpu": 0,
+        "idle_observed": 0,
+        "idle_polls": 0,
+        "idle_status": 0,
+        "clear10_attempted": 0,
+        "control_before": 0,
+        "control_after10": 0,
+        "clear20_attempted": 0,
+        "control_after20": 0,
+        "cpu_stopped": 0,
+        "off_delegated": 0,
+        "held": 1,
+        "allocations_retained": 174,
+        "restart_allowed": 0,
+        "dma_retirement_verified": 0,
+        "payload_bytes": 565
+      },
+      {
+        "monotonic": 261.829052,
+        "line": 1235,
+        "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/dmesg-after.log",
+        "raw": "[  261.829052] m4rch gfx-native-powergate-drain: phase=cpu-stop-return result=0 intent=1 initial_recovery_failed=1 initial_completed_cycles=0 request_attempted=1 request=0x60000000000202 ack_observed=1 ack_message=0x70000000000201 ack_metadata=0x10ef0000000000 ack_polls=5 rx_messages=1 rx_empty_after_ack=1 rx_empty_before_cpu=1 idle_observed=1 idle_polls=1 idle_status=0x6d clear10_attempted=1 control_before=0x10 control_after10=0x0 clear20_attempted=1 control_after20=0x0 cpu_stopped=1 off_delegated=0 held=1 allocations_retained=174 restart_allowed=0 dma_retirement_verified=0",
+        "phase": "cpu-stop-return",
+        "result": 0,
+        "intent": 1,
+        "initial_recovery_failed": 1,
+        "initial_completed_cycles": 0,
+        "request_attempted": 1,
+        "request": 27021597764223490,
+        "ack_observed": 1,
+        "ack_message": 31525197391593985,
+        "ack_metadata": 4766382906408960,
+        "ack_polls": 5,
+        "rx_messages": 1,
+        "rx_empty_after_ack": 1,
+        "rx_empty_before_cpu": 1,
+        "idle_observed": 1,
+        "idle_polls": 1,
+        "idle_status": 109,
+        "clear10_attempted": 1,
+        "control_before": 16,
+        "control_after10": 0,
+        "clear20_attempted": 1,
+        "control_after20": 0,
+        "cpu_stopped": 1,
+        "off_delegated": 0,
+        "held": 1,
+        "allocations_retained": 174,
+        "restart_allowed": 0,
+        "dma_retirement_verified": 0,
+        "payload_bytes": 566
+      },
+      {
+        "monotonic": 261.82953,
+        "line": 1274,
+        "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/dmesg-after.log",
+        "raw": "[  261.829530] m4rch gfx-native-powergate-drain: phase=paired-off-return result=0 intent=1 initial_recovery_failed=1 initial_completed_cycles=0 request_attempted=1 request=0x60000000000202 ack_observed=1 ack_message=0x70000000000201 ack_metadata=0x10ef0000000000 ack_polls=5 rx_messages=1 rx_empty_after_ack=1 rx_empty_before_cpu=1 idle_observed=1 idle_polls=1 idle_status=0x6d clear10_attempted=1 control_before=0x10 control_after10=0x0 clear20_attempted=1 control_after20=0x0 cpu_stopped=1 off_delegated=1 held=0 allocations_retained=174 restart_allowed=0 dma_retirement_verified=0",
+        "phase": "paired-off-return",
+        "result": 0,
+        "intent": 1,
+        "initial_recovery_failed": 1,
+        "initial_completed_cycles": 0,
+        "request_attempted": 1,
+        "request": 27021597764223490,
+        "ack_observed": 1,
+        "ack_message": 31525197391593985,
+        "ack_metadata": 4766382906408960,
+        "ack_polls": 5,
+        "rx_messages": 1,
+        "rx_empty_after_ack": 1,
+        "rx_empty_before_cpu": 1,
+        "idle_observed": 1,
+        "idle_polls": 1,
+        "idle_status": 109,
+        "clear10_attempted": 1,
+        "control_before": 16,
+        "control_after10": 0,
+        "clear20_attempted": 1,
+        "control_after20": 0,
+        "cpu_stopped": 1,
+        "off_delegated": 1,
+        "held": 0,
+        "allocations_retained": 174,
+        "restart_allowed": 0,
+        "dma_retirement_verified": 0,
+        "payload_bytes": 568
+      }
+    ],
+    "strict_word": {
+      "monotonic": 261.829518,
+      "line": 1267,
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/dmesg-after.log",
+      "raw": "[  261.829518] m4rch gfx-poweroff-word: phase=after-off index=0 value=0xf000300 actual=0 target=0 auto=0 reset=0 disable=0 ps_reset=0 busy=0",
+      "phase": "after-off",
+      "index": 0,
+      "value": 251659008,
+      "actual": 0,
+      "target": 0,
+      "auto": 0,
+      "reset": 0,
+      "disable": 0,
+      "ps_reset": 0,
+      "busy": 0,
+      "payload_bytes": 125
+    },
+    "snapshot": {
+      "monotonic": 261.829516,
+      "line": 1266,
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/dmesg-after.log",
+      "raw": "[  261.829516] m4rch gfx-poweroff-snapshot: phase=after-off index=0 result=0 valid=0x1 domain_on=0 operation_error=0 cleanup_error=0 word_valid=1",
+      "phase": "after-off",
+      "index": 0,
+      "result": 0,
+      "valid": 1,
+      "domain_on": 0,
+      "operation_error": 0,
+      "cleanup_error": 0,
+      "word_valid": 1,
+      "payload_bytes": 130
+    },
+    "pm_final": {
+      "monotonic": 261.82952,
+      "line": 1270,
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/dmesg-after.log",
+      "raw": "[  261.829520] m4rch gfx-poweroff-pm: phase=poweroff-final available=1 usage_count=0 runtime_status=2 runtime_error=0 enabled=1 active=0 suspended=1 held=0 pm_attempted=1",
+      "phase": "poweroff-final",
+      "available": 1,
+      "usage_count": 0,
+      "runtime_status": 2,
+      "runtime_error": 0,
+      "enabled": 1,
+      "active": 0,
+      "suspended": 1,
+      "held": 0,
+      "pm_attempted": 1,
+      "payload_bytes": 155
+    },
+    "result": {
+      "monotonic": 261.829528,
+      "line": 1273,
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/dmesg-after.log",
+      "raw": "[  261.829528] m4rch gfx-poweroff-result: command=gfx-powergate operation=2 result=0 gate_consumed=1 pm_attempted=1 pm_result=0 snapshot_result=0 snapshot_count=1 poll_min_delay_us=0 provider_off_observed=1 accounting_ok=1 held=0 host_stopped=1 sealed=1 allocations_retained=174 restart_allowed=0 dma_retirement_verified=0",
+      "command": "gfx-powergate",
+      "operation": 2,
+      "result": 0,
+      "gate_consumed": 1,
+      "pm_attempted": 1,
+      "pm_result": 0,
+      "snapshot_result": 0,
+      "snapshot_count": 1,
+      "poll_min_delay_us": 0,
+      "provider_off_observed": 1,
+      "accounting_ok": 1,
+      "held": 0,
+      "host_stopped": 1,
+      "sealed": 1,
+      "allocations_retained": 174,
+      "restart_allowed": 0,
+      "dma_retirement_verified": 0,
+      "payload_bytes": 307
+    },
+    "paired_OFF": {
+      "monotonic": 261.829499,
+      "line": 1263,
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/dmesg-after.log",
+      "raw": "[  261.829499] m4rch gfx-coordinate-observation: enabled=0 result=0 request_attempted=1 request_acked=0 ack_samples=0 votes_attempted=3 votes_verified=3 request_before=0x2000 request_written=0x0 ack_payload=0x0 ack_status=0x0 status_wait_events=1 ack_wait_events=0 ack_bypassed=1 status_payload=0x0 status_raw=0x0",
+      "enabled": 0,
+      "result": 0,
+      "request_attempted": 1,
+      "request_acked": 0,
+      "ack_samples": 0,
+      "votes_attempted": 3,
+      "votes_verified": 3,
+      "request_before": 8192,
+      "request_written": 0,
+      "ack_payload": 0,
+      "ack_status": 0,
+      "status_wait_events": 1,
+      "ack_wait_events": 0,
+      "ack_bypassed": 1,
+      "status_payload": 0,
+      "status_raw": 0,
+      "payload_bytes": 298
+    }
+  },
+  "second_cycle": {
+    "fresh_before_get": {
+      "monotonic": 288.315897,
+      "line": 1238,
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214814.484578Z-gfx-retained-cycle-9cfd283d/dmesg-after.log",
+      "raw": "[  288.315897] m4rch gfx-poweroff-word: phase=retained-cycle-before-get index=0 value=0xf000300 actual=0 target=0 auto=0 reset=0 disable=0 ps_reset=0 busy=0",
+      "phase": "retained-cycle-before-get",
+      "index": 0,
+      "value": 251659008,
+      "actual": 0,
+      "target": 0,
+      "auto": 0,
+      "reset": 0,
+      "disable": 0,
+      "ps_reset": 0,
+      "busy": 0,
+      "payload_bytes": 141
+    },
+    "fresh_after_get": {
+      "monotonic": 288.315932,
+      "line": 1241,
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214814.484578Z-gfx-retained-cycle-9cfd283d/dmesg-after.log",
+      "raw": "[  288.315932] m4rch gfx-poweroff-word: phase=retained-cycle-after-get index=0 value=0x1f0003ff actual=15 target=15 auto=1 reset=0 disable=0 ps_reset=0 busy=0",
+      "phase": "retained-cycle-after-get",
+      "index": 0,
+      "value": 520094719,
+      "actual": 15,
+      "target": 15,
+      "auto": 1,
+      "reset": 0,
+      "disable": 0,
+      "ps_reset": 0,
+      "busy": 0,
+      "payload_bytes": 143
+    },
+    "cold_boundary": {
+      "monotonic": 288.315935,
+      "line": 1242,
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214814.484578Z-gfx-retained-cycle-9cfd283d/dmesg-after.log",
+      "raw": "[  288.315935] m4rch gfx-retained-cycle: phase=cold-boundary result=0 refused_condition=none intent=1 identity_captured=1 identities_preserved=1 first_off_preserved=1 first_off_fields_historical=1 pm_get_attempted=1 pm_get_result=0 second_ref_held=1 held=1 usage=1 runtime_error=0 runtime_status=0 active=1 suspended=0 second_on_attempted=0 second_on_complete=0 boundary_qualified=0 control44=0x0 status48=0x6c rx_status=0x20001 tx_status=0x20001 start_attempted=0 hello_reply_attempts=0 hello_replied=0 map_reply_attempts=0 endpoint_map=0 appmap=0x0 map_seen=0x0 protocol_records=0 protocol_polls=0 second_request_attempted=0 second_ack_observed=0 second_ack_message=0x0 second_ack_metadata=0x0 second_ack_polls=0 second_idle_polls=0 second_clear10_attempted=0 second_clear20_attempted=0 second_cpu_stopped=0 second_off_attempted=0 second_off_complete=0 second_pm_put_attempted=0 second_pm_put_result=0 second_off_snapshot_result=0 second_off_samples=0 second_provider_off_observed=0 second_accounting_ok=0 powercycle_complete=0 applic",
+      "phase": "cold-boundary",
+      "result": 0,
+      "refused_condition": "none",
+      "intent": 1,
+      "identity_captured": 1,
+      "identities_preserved": 1,
+      "first_off_preserved": 1,
+      "first_off_fields_historical": 1,
+      "pm_get_attempted": 1,
+      "pm_get_result": 0,
+      "second_ref_held": 1,
+      "held": 1,
+      "usage": 1,
+      "runtime_error": 0,
+      "runtime_status": 0,
+      "active": 1,
+      "suspended": 0,
+      "second_on_attempted": 0,
+      "second_on_complete": 0,
+      "boundary_qualified": 0,
+      "control44": 0,
+      "status48": 108,
+      "rx_status": 131073,
+      "tx_status": 131073,
+      "start_attempted": 0,
+      "hello_reply_attempts": 0,
+      "hello_replied": 0,
+      "map_reply_attempts": 0,
+      "endpoint_map": 0,
+      "appmap": 0,
+      "map_seen": 0,
+      "protocol_records": 0,
+      "protocol_polls": 0,
+      "second_request_attempted": 0,
+      "second_ack_observed": 0,
+      "second_ack_message": 0,
+      "second_ack_metadata": 0,
+      "second_ack_polls": 0,
+      "second_idle_polls": 0,
+      "second_clear10_attempted": 0,
+      "second_clear20_attempted": 0,
+      "second_cpu_stopped": 0,
+      "second_off_attempted": 0,
+      "second_off_complete": 0,
+      "second_pm_put_attempted": 0,
+      "second_pm_put_result": 0,
+      "second_off_snapshot_result": 0,
+      "second_off_samples": 0,
+      "second_provider_off_observed": 0,
+      "second_accounting_ok": 0,
+      "powercycle_complete": 0,
+      "payload_bytes": 1021
+    },
+    "typed_refusal": {
+      "monotonic": 288.315938,
+      "line": 1226,
+      "path": "out/gfx-retained-power-cycle/late-readonly-kernel-log-5bf0.log",
+      "raw": "[  288.315938] m4rch gfx-retained-cycle: phase=retained-return result=-16 refused_condition=cold-boundary-unqualified intent=1 identity_captured=1 identities_preserved=1 first_off_preserved=1 first_off_fields_historical=1 pm_get_attempted=1 pm_get_result=0 second_ref_held=1 held=1 usage=1 runtime_error=0 runtime_status=0 active=1 suspended=0 second_on_attempted=0 second_on_complete=0 boundary_qualified=0 control44=0x0 status48=0x6c rx_status=0x20001 tx_status=0x20001 start_attempted=0 hello_reply_attempts=0 hello_replied=0 map_reply_attempts=0 endpoint_map=0 appmap=0x0 map_seen=0x0 protocol_records=0 protocol_polls=0 second_request_attempted=0 second_ack_observed=0 second_ack_message=0x0 second_ack_metadata=0x0 second_ack_polls=0 second_idle_polls=0 second_clear10_attempted=0 second_clear20_attempted=0 second_cpu_stopped=0 second_off_attempted=0 second_off_complete=0 second_pm_put_attempted=0 second_pm_put_result=0 second_off_snapshot_result=0 second_off_samples=0 second_provider_off_observed=0 second_accounting_ok=0 pow",
+      "phase": "retained-return",
+      "result": -16,
+      "refused_condition": "cold-boundary-unqualified",
+      "intent": 1,
+      "identity_captured": 1,
+      "identities_preserved": 1,
+      "first_off_preserved": 1,
+      "first_off_fields_historical": 1,
+      "pm_get_attempted": 1,
+      "pm_get_result": 0,
+      "second_ref_held": 1,
+      "held": 1,
+      "usage": 1,
+      "runtime_error": 0,
+      "runtime_status": 0,
+      "active": 1,
+      "suspended": 0,
+      "second_on_attempted": 0,
+      "second_on_complete": 0,
+      "boundary_qualified": 0,
+      "control44": 0,
+      "status48": 108,
+      "rx_status": 131073,
+      "tx_status": 131073,
+      "start_attempted": 0,
+      "hello_reply_attempts": 0,
+      "hello_replied": 0,
+      "map_reply_attempts": 0,
+      "endpoint_map": 0,
+      "appmap": 0,
+      "map_seen": 0,
+      "protocol_records": 0,
+      "protocol_polls": 0,
+      "second_request_attempted": 0,
+      "second_ack_observed": 0,
+      "second_ack_message": 0,
+      "second_ack_metadata": 0,
+      "second_ack_polls": 0,
+      "second_idle_polls": 0,
+      "second_clear10_attempted": 0,
+      "second_clear20_attempted": 0,
+      "second_cpu_stopped": 0,
+      "second_off_attempted": 0,
+      "second_off_complete": 0,
+      "second_pm_put_attempted": 0,
+      "second_pm_put_result": 0,
+      "second_off_snapshot_result": 0,
+      "second_off_samples": 0,
+      "second_provider_off_observed": 0,
+      "second_accounting_ok": 0,
+      "payload_bytes": 1021
+    },
+    "later_current_marker": {
+      "monotonic": 353.648362,
+      "line": 1235,
+      "path": "out/gfx-retained-power-cycle/late-readonly-kernel-log-5bf0.log",
+      "raw": "[  353.648362] m4rch gfx-retained-cycle: phase=diagnostic-current result=0 refused_condition=cold-boundary-unqualified intent=1 identity_captured=1 identities_preserved=1 first_off_preserved=1 first_off_fields_historical=1 pm_get_attempted=1 pm_get_result=0 second_ref_held=1 held=1 usage=1 runtime_error=0 runtime_status=0 active=1 suspended=0 second_on_attempted=0 second_on_complete=0 boundary_qualified=0 control44=0x0 status48=0x6c rx_status=0x20001 tx_status=0x20001 start_attempted=0 hello_reply_attempts=0 hello_replied=0 map_reply_attempts=0 endpoint_map=0 appmap=0x0 map_seen=0x0 protocol_records=0 protocol_polls=0 second_request_attempted=0 second_ack_observed=0 second_ack_message=0x0 second_ack_metadata=0x0 second_ack_polls=0 second_idle_polls=0 second_clear10_attempted=0 second_clear20_attempted=0 second_cpu_stopped=0 second_off_attempted=0 second_off_complete=0 second_pm_put_attempted=0 second_pm_put_result=0 second_off_snapshot_result=0 second_off_samples=0 second_provider_off_observed=0 second_accounting_ok=0 po",
+      "phase": "diagnostic-current",
+      "result": 0,
+      "refused_condition": "cold-boundary-unqualified",
+      "intent": 1,
+      "identity_captured": 1,
+      "identities_preserved": 1,
+      "first_off_preserved": 1,
+      "first_off_fields_historical": 1,
+      "pm_get_attempted": 1,
+      "pm_get_result": 0,
+      "second_ref_held": 1,
+      "held": 1,
+      "usage": 1,
+      "runtime_error": 0,
+      "runtime_status": 0,
+      "active": 1,
+      "suspended": 0,
+      "second_on_attempted": 0,
+      "second_on_complete": 0,
+      "boundary_qualified": 0,
+      "control44": 0,
+      "status48": 108,
+      "rx_status": 131073,
+      "tx_status": 131073,
+      "start_attempted": 0,
+      "hello_reply_attempts": 0,
+      "hello_replied": 0,
+      "map_reply_attempts": 0,
+      "endpoint_map": 0,
+      "appmap": 0,
+      "map_seen": 0,
+      "protocol_records": 0,
+      "protocol_polls": 0,
+      "second_request_attempted": 0,
+      "second_ack_observed": 0,
+      "second_ack_message": 0,
+      "second_ack_metadata": 0,
+      "second_ack_polls": 0,
+      "second_idle_polls": 0,
+      "second_clear10_attempted": 0,
+      "second_clear20_attempted": 0,
+      "second_cpu_stopped": 0,
+      "second_off_attempted": 0,
+      "second_off_complete": 0,
+      "second_pm_put_attempted": 0,
+      "second_pm_put_result": 0,
+      "second_off_snapshot_result": 0,
+      "second_off_samples": 0,
+      "second_provider_off_observed": 0,
+      "second_accounting_ok": 0,
+      "payload_bytes": 1021
+    },
+    "sole_failing_cold_operand": "STATUS48=0x6c != admitted0x6a; all operands valid, START clear, RX EMPTY set, TX FULL clear.",
+    "never_attempted": [
+      "second_on_attempted",
+      "second_on_complete",
+      "boundary_qualified",
+      "start_attempted",
+      "hello_reply_attempts",
+      "hello_replied",
+      "map_reply_attempts",
+      "endpoint_map",
+      "protocol_records",
+      "protocol_polls",
+      "second_request_attempted",
+      "second_ack_observed",
+      "second_clear10_attempted",
+      "second_clear20_attempted",
+      "second_cpu_stopped",
+      "second_off_attempted",
+      "second_off_complete",
+      "second_pm_put_attempted",
+      "second_off_samples",
+      "second_provider_off_observed",
+      "second_accounting_ok"
+    ],
+    "second_pm_get_result": 0,
+    "second_pm_reference_retained": true,
+    "controls_consumed": true,
+    "not_second_success": "Zero result/snapshot fields with attempt0 are defaults. Historical first OFF/accounting/hoststop values do not establish current second OFF."
+  },
+  "latest_fresh_physical_state": {
+    "word": {
+      "monotonic": 353.64834,
+      "line": 1230,
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214919.918717Z-gfx-snapshot-a4e9c5df/dmesg-after.log",
+      "raw": "[  353.648340] m4rch gfx-poweroff-word: phase=diagnostic index=0 value=0x1f0003ff actual=15 target=15 auto=1 reset=0 disable=0 ps_reset=0 busy=0",
+      "phase": "diagnostic",
+      "index": 0,
+      "value": 520094719,
+      "actual": 15,
+      "target": 15,
+      "auto": 1,
+      "reset": 0,
+      "disable": 0,
+      "ps_reset": 0,
+      "busy": 0,
+      "payload_bytes": 129
+    },
+    "pm": {
+      "monotonic": 353.648351,
+      "line": 1232,
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214919.918717Z-gfx-snapshot-a4e9c5df/dmesg-after.log",
+      "raw": "[  353.648351] m4rch gfx-poweroff-pm: phase=gfx-snapshot available=1 usage_count=1 runtime_status=0 runtime_error=0 enabled=1 active=1 suspended=0 held=1 pm_attempted=1",
+      "phase": "gfx-snapshot",
+      "available": 1,
+      "usage_count": 1,
+      "runtime_status": 0,
+      "runtime_error": 0,
+      "enabled": 1,
+      "active": 1,
+      "suspended": 0,
+      "held": 1,
+      "pm_attempted": 1,
+      "payload_bytes": 153
+    },
+    "asc": {
+      "monotonic": 353.648349,
+      "line": 1231,
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214919.918717Z-gfx-snapshot-a4e9c5df/dmesg-after.log",
+      "raw": "[  353.648349] m4rch gfx-poweroff-asc: phase=gfx-snapshot sampled=0 gate_consumed=1 mmio_after_off_allowed=0",
+      "phase": "gfx-snapshot",
+      "sampled": 0,
+      "gate_consumed": 1,
+      "mmio_after_off_allowed": 0,
+      "payload_bytes": 93
+    },
+    "freshness": "Fresh provider/accounting observations at353.64834/353.648351. Late OS log exposes the353.648362 diagnostic marker; its CTRL/STATUS/RX/TX are cached288.315935 operands, not new MMIO."
+  },
+  "retained_buffers": {
+    "first_power_dram": {
+      "monotonic": 261.829527,
+      "line": 1272,
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/dmesg-after.log",
+      "raw": "[  261.829527] m4rch gfx-poweroff-dram: phase=poweroff-final power652c=19110 records=51176 status=0x0 doorbells=8 allocations_retained=174 dma_retirement_verified=0",
+      "phase": "poweroff-final",
+      "power652c": 19110,
+      "records": 51176,
+      "status": 0,
+      "doorbells": 8,
+      "allocations_retained": 174,
+      "dma_retirement_verified": 0,
+      "payload_bytes": 149
+    },
+    "later_power_dram": {
+      "monotonic": 353.648359,
+      "line": 1234,
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214919.918717Z-gfx-snapshot-a4e9c5df/dmesg-after.log",
+      "raw": "[  353.648359] m4rch gfx-poweroff-dram: phase=gfx-snapshot power652c=19110 records=51176 status=0x0 doorbells=8 allocations_retained=174 dma_retirement_verified=0",
+      "phase": "gfx-snapshot",
+      "power652c": 19110,
+      "records": 51176,
+      "status": 0,
+      "doorbells": 8,
+      "allocations_retained": 174,
+      "dma_retirement_verified": 0,
+      "payload_bytes": 147
+    },
+    "logged_interval_seconds": 91.818832,
+    "objects69_pages_entire_equal": true,
+    "owned174_pages_entire_equal": true,
+    "raw_journal_entire_equal": true,
+    "power_field": 19110,
+    "journal_used": 51176,
+    "doorbells": 8,
+    "journal_flags": 0,
+    "new_first_admission_records": 766,
+    "added_type_counts": [
+      {
+        "ring": 10,
+        "type": 5,
+        "count": 511
+      },
+      {
+        "ring": 11,
+        "type": 17,
+        "count": 37
+      },
+      {
+        "ring": 11,
+        "type": 18,
+        "count": 36
+      },
+      {
+        "ring": 11,
+        "type": 25,
+        "count": 73
+      },
+      {
+        "ring": 11,
+        "type": 27,
+        "count": 36
+      },
+      {
+        "ring": 11,
+        "type": 28,
+        "count": 73
+      }
+    ],
+    "atomic": false,
+    "whole_gpu_DMA_retirement_verified": false
+  },
+  "logging": {
+    "long_record_payload_bytes": 1021,
+    "tails_truncated": true,
+    "retained_return_absent_in_immediate_cycle_capture": true,
+    "retained_return_present_in_later_capture": true,
+    "diagnostic_current_absent_in_immediate_diagnostic_capture": true,
+    "diagnostic_current_present_in_late_readonly_OS_log": true,
+    "source_ends_full_format_with_newline": true,
+    "diagnosis": "Observed bounded1021-byte payloads lose the source format tail/newline; later unrelated printk exposes the prior timestamped row. Incomplete-record finalization is the supported mechanism inference. Immediate omission does not mean the helper failed to run; missing tail fields cannot be treated as zero.",
+    "no_fresh_hardware_at_late_OS_log": true
+  },
+  "host_state": {
+    "boot_id": "5bf0a178-e6d8-4def-8088-74ad7ea87727",
+    "candidate_module_sha256": "abf4ef3c709c3a775db2fa897dbbe1ba7edbb9868000848ac8283417f9fb7608",
+    "resident_session_active": true,
+    "submit_attempted": false,
+    "operation_failed": true,
+    "in_flight": null,
+    "completed_idle_cycles": 0,
+    "trace_disabled": false,
+    "powergate_attempted": true,
+    "powergate_ready": true,
+    "operation_uncertain": true,
+    "family": "gfx_retained_power_cycle_scope",
+    "retained_cycle_attempted": true,
+    "first_off_proof": {
+      "schema": "m4rch.gfx-retained-first-off-proof.v1",
+      "qualified": true,
+      "boot_id": "5bf0a178-e6d8-4def-8088-74ad7ea87727",
+      "owner_sha256": "abf4ef3c709c3a775db2fa897dbbe1ba7edbb9868000848ac8283417f9fb7608",
+      "operation_directory": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e",
+      "native": {
+        "result": {
+          "command": "gfx-powergate",
+          "operation": 2,
+          "result": 0,
+          "gate_consumed": 1,
+          "pm_attempted": 1,
+          "pm_result": 0,
+          "snapshot_result": 0,
+          "snapshot_count": 1,
+          "poll_min_delay_us": 0,
+          "provider_off_observed": 1,
+          "accounting_ok": 1,
+          "held": 0,
+          "host_stopped": 1,
+          "sealed": 1,
+          "allocations_retained": 174,
+          "restart_allowed": 0,
+          "dma_retirement_verified": 0
+        },
+        "paired_off": {
+          "phase": "paired-off-return",
+          "result": 0,
+          "intent": 1,
+          "initial_recovery_failed": 1,
+          "initial_completed_cycles": 0,
+          "request_attempted": 1,
+          "request": 27021597764223490,
+          "ack_observed": 1,
+          "ack_message": 31525197391593985,
+          "ack_metadata": 4766382906408960,
+          "ack_polls": 5,
+          "rx_messages": 1,
+          "rx_empty_after_ack": 1,
+          "rx_empty_before_cpu": 1,
+          "idle_observed": 1,
+          "idle_polls": 1,
+          "idle_status": 109,
+          "clear10_attempted": 1,
+          "control_before": 16,
+          "control_after10": 0,
+          "clear20_attempted": 1,
+          "control_after20": 0,
+          "cpu_stopped": 1,
+          "off_delegated": 1,
+          "held": 0,
+          "allocations_retained": 174,
+          "restart_allowed": 0,
+          "dma_retirement_verified": 0
+        },
+        "physical_words": [
+          {
+            "phase": "after-off",
+            "index": 0,
+            "value": 251659008,
+            "actual": 0,
+            "target": 0,
+            "auto": 0,
+            "reset": 0,
+            "disable": 0,
+            "ps_reset": 0,
+            "busy": 0
+          }
+        ],
+        "physical_snapshot": {
+          "phase": "after-off",
+          "index": 0,
+          "result": 0,
+          "valid": 1,
+          "domain_on": 0,
+          "operation_error": 0,
+          "cleanup_error": 0,
+          "word_valid": 1
+        },
+        "pm_final": {
+          "phase": "poweroff-final",
+          "available": 1,
+          "usage_count": 0,
+          "runtime_status": 2,
+          "runtime_error": 0,
+          "enabled": 1,
+          "active": 0,
+          "suspended": 1,
+          "held": 0,
+          "pm_attempted": 1
+        },
+        "coordination_owner": {
+          "phase": "before-target-zero-off",
+          "result": 0,
+          "startup_retained": 1,
+          "module_pinned": 1,
+          "pmp_region": 1,
+          "pmc_region": 1,
+          "pmp_mapped": 1,
+          "pmc_mapped": 1,
+          "on_attempted": 1,
+          "on_complete": 1,
+          "off_attempted": 1,
+          "off_complete": 1,
+          "held": 1,
+          "started": 1,
+          "retirement_verified": 0
+        }
+      },
+      "owned_pages": 174,
+      "journal_used": 51176,
+      "raw_input_pins": [
+        {
+          "path": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/attempt.json",
+          "sha256": "9028e9039fa752da0b943f10734d244a02a34688f127f7e4d2185ef359a4ded1",
+          "bytes": 33028
+        },
+        {
+          "path": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/objects-after.bin",
+          "sha256": "9937847b05535f0f41dc3e10b34ea75802404c0d2632ffe158240b2d862ba96f",
+          "bytes": 1130496
+        },
+        {
+          "path": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/owned-after.bin",
+          "sha256": "81eeb6eb83e744f592f7472ffc3605fded8f304513feacde145f7b0e12fa3a10",
+          "bytes": 2850816
+        },
+        {
+          "path": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/notifications-after.bin",
+          "sha256": "b6b752e7a45d0167185a4209ca66d26d5221dd562f92d2aae863894d38ad5ce8",
+          "bytes": 5242944
+        },
+        {
+          "path": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/dmesg-after.log",
+          "sha256": "f1b48b875636c6e1f68b692a69cd756af3a4fe7c6280fdd6442fc734cf6d05bf",
+          "bytes": 131453
+        },
+        {
+          "path": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/notifications-after.json",
+          "sha256": "9659bfe06ec066555664f759c994f4116ccf66df4feaf968816625db74b82157",
+          "bytes": 15338140
+        },
+        {
+          "path": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/dmesg-before.log",
+          "sha256": "bd1d93dc79ee8101e74bb8cd1be7ea478f13372bd0c72d5821466e3083a775ae",
+          "bytes": 130608
+        }
+      ],
+      "snapshots_atomic": false,
+      "qualification": "Saved first physical OFF and accounting only; current identity/physical/transport gates remain mandatory in the kernel."
+    }
+  },
+  "first_off_raw_proof": {
+    "schema": "m4rch.gfx-retained-first-off-proof.v1",
+    "qualified": true,
+    "boot_id": "5bf0a178-e6d8-4def-8088-74ad7ea87727",
+    "owner_sha256": "abf4ef3c709c3a775db2fa897dbbe1ba7edbb9868000848ac8283417f9fb7608",
+    "operation_directory": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e",
+    "native": {
+      "result": {
+        "command": "gfx-powergate",
+        "operation": 2,
+        "result": 0,
+        "gate_consumed": 1,
+        "pm_attempted": 1,
+        "pm_result": 0,
+        "snapshot_result": 0,
+        "snapshot_count": 1,
+        "poll_min_delay_us": 0,
+        "provider_off_observed": 1,
+        "accounting_ok": 1,
+        "held": 0,
+        "host_stopped": 1,
+        "sealed": 1,
+        "allocations_retained": 174,
+        "restart_allowed": 0,
+        "dma_retirement_verified": 0
+      },
+      "paired_off": {
+        "phase": "paired-off-return",
+        "result": 0,
+        "intent": 1,
+        "initial_recovery_failed": 1,
+        "initial_completed_cycles": 0,
+        "request_attempted": 1,
+        "request": 27021597764223490,
+        "ack_observed": 1,
+        "ack_message": 31525197391593985,
+        "ack_metadata": 4766382906408960,
+        "ack_polls": 5,
+        "rx_messages": 1,
+        "rx_empty_after_ack": 1,
+        "rx_empty_before_cpu": 1,
+        "idle_observed": 1,
+        "idle_polls": 1,
+        "idle_status": 109,
+        "clear10_attempted": 1,
+        "control_before": 16,
+        "control_after10": 0,
+        "clear20_attempted": 1,
+        "control_after20": 0,
+        "cpu_stopped": 1,
+        "off_delegated": 1,
+        "held": 0,
+        "allocations_retained": 174,
+        "restart_allowed": 0,
+        "dma_retirement_verified": 0
+      },
+      "physical_words": [
+        {
+          "phase": "after-off",
+          "index": 0,
+          "value": 251659008,
+          "actual": 0,
+          "target": 0,
+          "auto": 0,
+          "reset": 0,
+          "disable": 0,
+          "ps_reset": 0,
+          "busy": 0
+        }
+      ],
+      "physical_snapshot": {
+        "phase": "after-off",
+        "index": 0,
+        "result": 0,
+        "valid": 1,
+        "domain_on": 0,
+        "operation_error": 0,
+        "cleanup_error": 0,
+        "word_valid": 1
+      },
+      "pm_final": {
+        "phase": "poweroff-final",
+        "available": 1,
+        "usage_count": 0,
+        "runtime_status": 2,
+        "runtime_error": 0,
+        "enabled": 1,
+        "active": 0,
+        "suspended": 1,
+        "held": 0,
+        "pm_attempted": 1
+      },
+      "coordination_owner": {
+        "phase": "before-target-zero-off",
+        "result": 0,
+        "startup_retained": 1,
+        "module_pinned": 1,
+        "pmp_region": 1,
+        "pmc_region": 1,
+        "pmp_mapped": 1,
+        "pmc_mapped": 1,
+        "on_attempted": 1,
+        "on_complete": 1,
+        "off_attempted": 1,
+        "off_complete": 1,
+        "held": 1,
+        "started": 1,
+        "retirement_verified": 0
+      }
+    },
+    "owned_pages": 174,
+    "journal_used": 51176,
+    "raw_input_pins": [
+      {
+        "path": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/attempt.json",
+        "sha256": "9028e9039fa752da0b943f10734d244a02a34688f127f7e4d2185ef359a4ded1",
+        "bytes": 33028
+      },
+      {
+        "path": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/objects-after.bin",
+        "sha256": "9937847b05535f0f41dc3e10b34ea75802404c0d2632ffe158240b2d862ba96f",
+        "bytes": 1130496
+      },
+      {
+        "path": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/owned-after.bin",
+        "sha256": "81eeb6eb83e744f592f7472ffc3605fded8f304513feacde145f7b0e12fa3a10",
+        "bytes": 2850816
+      },
+      {
+        "path": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/notifications-after.bin",
+        "sha256": "b6b752e7a45d0167185a4209ca66d26d5221dd562f92d2aae863894d38ad5ce8",
+        "bytes": 5242944
+      },
+      {
+        "path": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/dmesg-after.log",
+        "sha256": "f1b48b875636c6e1f68b692a69cd756af3a4fe7c6280fdd6442fc734cf6d05bf",
+        "bytes": 131453
+      },
+      {
+        "path": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/notifications-after.json",
+        "sha256": "9659bfe06ec066555664f759c994f4116ccf66df4feaf968816625db74b82157",
+        "bytes": 15338140
+      },
+      {
+        "path": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/dmesg-before.log",
+        "sha256": "bd1d93dc79ee8101e74bb8cd1be7ea478f13372bd0c72d5821466e3083a775ae",
+        "bytes": 130608
+      }
+    ],
+    "snapshots_atomic": false,
+    "qualification": "Saved first physical OFF and accounting only; current identity/physical/transport gates remain mandatory in the kernel."
+  },
+  "loaded_identity": {
+    "boot_id": "5bf0a178-e6d8-4def-8088-74ad7ea87727",
+    "stage": "after_completed_cold_before_terminal_intent",
+    "uptime": "234.46 2307.85",
+    "kernel_notes_sha256": "85c56f7a3d7409747dd67fe1dcbf8839562aafab16a9124f9304689a14de437d",
+    "owner_sha256": "abf4ef3c709c3a775db2fa897dbbe1ba7edbb9868000848ac8283417f9fb7608",
+    "loaded_note_hex": "040000001400000003000000474e550000c255c272e979641fcd5f8670436d64e31232e9",
+    "file_note_hex": "040000001400000003000000474e550000c255c272e979641fcd5f8670436d64e31232e9",
+    "note_matches": true,
+    "refcount": 1,
+    "grub_sha256": "0ec2ace33d48d701930d03f869b2a67127421fdeebab55a0968e132aa65193cb",
+    "read_only": true,
+    "note_parser": "existing pure module_build_note",
+    "identity_file_correction": "out/gfx-retained-power-cycle/identity-extraction-correction-5bf0.json"
+  },
+  "software_file_correction": {
+    "boot_id": "5bf0a178-e6d8-4def-8088-74ad7ea87727",
+    "cause": "Root identity extraction used llvm-objcopy --dump-section without an output ELF path, rewriting the input layout; this was not a cold-runner build.",
+    "preserved_rewritten_artifact": "out/gfx-retained-power-cycle/identity-extraction-rewritten-5bf0.ko",
+    "rewritten_sha256": "c2bb01022f65bcafd9a7e38b4d6686bb3ab85e7ccfde4a6c33fa486a9992f022",
+    "original_source": "out/gfx-retained-power-cycle/candidate-v6-second-finalized-historical/asc-graph-init/asc-graph-init.ko",
+    "restored_sha256": "abf4ef3c709c3a775db2fa897dbbe1ba7edbb9868000848ac8283417f9fb7608",
+    "loaded_note_equals_original_and_rewritten": true,
+    "source_changed": false,
+    "receipt_changed": false,
+    "kernel_owner_changed": false,
+    "hardware_operation": false,
+    "terminal_intent_consumed": false,
+    "future_identity_parser": "Use the existing pure module_build_note byte parser; never invoke in-place objcopy."
+  },
+  "work_or_triangle_submitted": false,
+  "all174_allocations_retained": true,
+  "application_rejoined": false,
+  "repeatable_same_boot_reentry_verified": false,
+  "second_physical_OFF_verified": false,
+  "backing_release_allowed": false,
+  "input_pin_count": 91,
+  "inputs": [
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-root-envelope/build-receipt.json",
+      "bytes": 29627,
+      "sha256": "1762f50dcaa0a321c0003cee3ad63dba83cb50159599bc72bbf9c2444b5afe69"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/adt-current/m4rch_gpu_adt.ko",
+      "bytes": 8784,
+      "sha256": "def441398eb34e1c4e23e5ccfa1676ae8e9980dd7d1611f8d34e4b53a404f9de"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/sample-pagetables/gpu-data-sample.ko",
+      "bytes": 7896,
+      "sha256": "d986ed773dd4a1b1e8ad1ee946d0f810743d5a209ced937bc458eeea913b4567"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/root-text-sample/gpu-data-sample.ko",
+      "bytes": 7896,
+      "sha256": "34343f515a083d36def91159f27adf83e493c6a787ea4691b782919eb40c6f0a"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/root-data-sample/gpu-data-sample.ko",
+      "bytes": 7936,
+      "sha256": "4c3bb5783f4d8164b817ee80ccb95f0e3cc8daf74d4041a03e9b03e0a708c25d"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/arena-l2-sample/gpu-data-sample.ko",
+      "bytes": 7896,
+      "sha256": "1c7f20511d02006fdea087775733856da64dc867ed6a5d5b784685a3bcb3765a"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-root-envelope/asc-root-envelope.ko",
+      "bytes": 27304,
+      "sha256": "5f03da53d65581ab743ab445725279970684e80d8833bb3d1c72cea521614779"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-arena-preflight/asc-arena-preflight.ko",
+      "bytes": 26408,
+      "sha256": "f03278368ac5a6487c7f8f043e94c72d4697b28e8965037443aef5e21f2ff220"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/asc-graph-init.ko",
+      "bytes": 8007880,
+      "sha256": "abf4ef3c709c3a775db2fa897dbbe1ba7edbb9868000848ac8283417f9fb7608"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/kernel-qualification.json",
+      "bytes": 124518,
+      "sha256": "133370f18dc105e7fe310c4945073ad49b64b480e4ca828ced63289a7e34e0d2"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/kernel.notes.bin",
+      "bytes": 84,
+      "sha256": "85c56f7a3d7409747dd67fe1dcbf8839562aafab16a9124f9304689a14de437d"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/joined-context-init.h",
+      "bytes": 1849,
+      "sha256": "1851e697907d50a3f47d153879f47f1b6b07065f5d58055fa6269bc436bc15b2"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/graph-contract.h",
+      "bytes": 24313,
+      "sha256": "f8c5a1536aa88ef7a1eb09b9a862cece4a2e822dd2eda54a449e6b3c11b20410"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/render-data.h",
+      "bytes": 268144,
+      "sha256": "3bdbf04b9a3219c8e818beb464b5f55626e8a9b3d184680e3fd05a6361c47cbd"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/gfx-reset-scope.h",
+      "bytes": 11319,
+      "sha256": "78cff00b01dfafa8f37c24cfc694b0da2b3233bbdc781777fd7be3f24abe893f"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/recovery-contract.h",
+      "bytes": 1177,
+      "sha256": "9bce940061421a78fde0e509fdeba59a8c66c3d5ab32c4faf59dd613c14d4b23"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/receive-service.h",
+      "bytes": 3787,
+      "sha256": "bab356c9a2467fbb46760345102a7fb8369a9efe8db31efd058b1fd918b11043"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/job-data.h",
+      "bytes": 13182,
+      "sha256": "c18ede083b691fbd3044237aaf30eb1e34c775e9391d3c6f1bea8e61561e0913"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/gfx-reset-startup.h",
+      "bytes": 684,
+      "sha256": "f33ff5251683d7bc2aaca7f6e559d6b95696b2f1524ff68a6ab8e82fab18aecd"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/render-backing-map.h",
+      "bytes": 2541,
+      "sha256": "ade8cedde4da68f2f463ed8604f47ab6b56cdf1c8ff3984d592e00f4a065978b"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/command-pool-map.h",
+      "bytes": 8357,
+      "sha256": "1e4696787075de13a56f4946018221803a5a01a3c5a653bbbdbd48f319e74b6b"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/recovery-cycle.h",
+      "bytes": 11328,
+      "sha256": "121fe9b7f5ee283bea4e84231a2ca0a8fea0ed992743d1e405940c0a8e4c8e44"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/graph-map.h",
+      "bytes": 9974,
+      "sha256": "704836d10b86e3d2bcb20b457853a700a2153aae505b0aae473aea4daee7f13e"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-contract.h",
+      "bytes": 72,
+      "sha256": "5194505b49f3b40acdc80f29bf1e8c5c5f11374f483ed6a22df2c22ea904e082"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/asc-graph-init.c",
+      "bytes": 23287,
+      "sha256": "9ac197adeda6cf5f8532afbd6e38018eed809516361420b6cb80d191377a32a2"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/Makefile",
+      "bytes": 370,
+      "sha256": "5748b6f140fc72271ea638bbfeef3cf5aaa2f125f4fce611a4fd1a8c7450ce5a"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/gfx-coordinate-core.h",
+      "bytes": 8066,
+      "sha256": "b7a7376ab2a7e1b054e0338ce37efe035b85acaa6ba5072ed7231b6dcb245a95"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/gfx-coordinate-owner.h",
+      "bytes": 10259,
+      "sha256": "9798b26320e2b0f9b270da9b598f21e909cf037e58070154a6818ac6156601b4"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/gfx-native-powergate-drain.h",
+      "bytes": 19348,
+      "sha256": "f3f4429f6b372157cedcbcce1d29ef61ddaf8654fab2afabf035da8322152787"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/gfx-retained-power-cycle.h",
+      "bytes": 26848,
+      "sha256": "3f2d7d7d64c88cc734dec4657fe36dec0a35c73150681ed7a652b681a0e67f81"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/gfx-retained-power-cycle-coordinate.h",
+      "bytes": 3427,
+      "sha256": "d11e7a243b629dc834f5f986668bad1bd0e9eefb205d51a5c839f7d35fe90c23"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/retained-power-cycle-preparation.json",
+      "bytes": 8397,
+      "sha256": "aca3b33c2b35cafe31b1e8d6463f8b56181f0644dc2499a14fc5c4a4fcde7aed"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/retained-power-cycle-owner-source-receipt.json",
+      "bytes": 12787,
+      "sha256": "4f8288982b3d2e926cce11ebe800744ea92f668008e77600929d691319e3ec9a"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/graph-receipt.json",
+      "bytes": 131999,
+      "sha256": "92771b8036464c8dc9bdadd1dd4e1458a6c5a9f95f87fbdac34696bd2b3af219"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/graph-before.bin",
+      "bytes": 1130496,
+      "sha256": "287f2c53bc6ef7ed226c4a2995b9d9904e7623acae9713af105be6b04fc690a9"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/backing.bin",
+      "bytes": 917504,
+      "sha256": "35112ef3c261673bda227a3867a0d2b9dd58ac89f35f7bba9c8c05f1dee118d3"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/attempt.json",
+      "bytes": 43937,
+      "sha256": "7a34a22c1c98339f547b2e991645f3dbe3dcea568c8a3ac41bb5f2822e664152"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/objects-after.bin",
+      "bytes": 1130496,
+      "sha256": "7e40a9778325063e05467fd9b737cdf3d19f9656f4c4b909cd4bd41295128db1"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/owned-after.bin",
+      "bytes": 2850816,
+      "sha256": "1536deedc5e60a2fc676a16abc73d5292dbc03f6a5b2f94cc9b4e635a8fce006"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/notifications-after.bin",
+      "bytes": 5242944,
+      "sha256": "b8630b9a4bb5885d37f39eefb0c9459bec30bb5b60c0b25bde76705c08de80e7"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/dmesg-before.log",
+      "bytes": 69961,
+      "sha256": "62c7d142e562817dd3f1e0350bdcb5e099e41573c3e2f2f4d97b0b56f7ed662b"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/dmesg-after.log",
+      "bytes": 131716,
+      "sha256": "33d8230f4d1216727d979405f6fc732cb57475afb84dd919cb07c08317c71218"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/notifications-after.json",
+      "bytes": 15108304,
+      "sha256": "8f0ae6821259117f7ca200e2406caa0fe7bb1432c2042859d68d7413a517dcc6"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/objects-before.bin",
+      "bytes": 1130496,
+      "sha256": "287f2c53bc6ef7ed226c4a2995b9d9904e7623acae9713af105be6b04fc690a9"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/text.bin",
+      "bytes": 393216,
+      "sha256": "5a2dfd92ba006c7f99f9550757180dad783a6eba350886c2620739d77c8389e3"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214741.741036Z-gfx-snapshot-584e278c/attempt.json",
+      "bytes": 33027,
+      "sha256": "59eab807428f504a1409f301b6f5db2a1953d5b5aae4e608ec116467a7ce40ee"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214741.741036Z-gfx-snapshot-584e278c/objects-after.bin",
+      "bytes": 1130496,
+      "sha256": "bb66fe666381ecd6c5d4ed62db4176f2c5ea7f41bd88c2700b1ae682a8987be2"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214741.741036Z-gfx-snapshot-584e278c/owned-after.bin",
+      "bytes": 2850816,
+      "sha256": "e612520263a77e48bcb35fa2c27e76b6683dd09d31b44fc418237e09073dae74"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214741.741036Z-gfx-snapshot-584e278c/notifications-after.bin",
+      "bytes": 5242944,
+      "sha256": "b8630b9a4bb5885d37f39eefb0c9459bec30bb5b60c0b25bde76705c08de80e7"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214741.741036Z-gfx-snapshot-584e278c/dmesg-before.log",
+      "bytes": 131759,
+      "sha256": "a6a000c5fa3e88bfdb329b512ebbe2ea4421b1e17a9a5ebdeb1e1b44366da529"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214741.741036Z-gfx-snapshot-584e278c/dmesg-after.log",
+      "bytes": 130608,
+      "sha256": "bd1d93dc79ee8101e74bb8cd1be7ea478f13372bd0c72d5821466e3083a775ae"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214741.741036Z-gfx-snapshot-584e278c/notifications-after.json",
+      "bytes": 15108304,
+      "sha256": "8f0ae6821259117f7ca200e2406caa0fe7bb1432c2042859d68d7413a517dcc6"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214741.741036Z-gfx-snapshot-584e278c/objects-before.bin",
+      "bytes": 1130496,
+      "sha256": "287f2c53bc6ef7ed226c4a2995b9d9904e7623acae9713af105be6b04fc690a9"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214741.741036Z-gfx-snapshot-584e278c/text.bin",
+      "bytes": 393216,
+      "sha256": "5a2dfd92ba006c7f99f9550757180dad783a6eba350886c2620739d77c8389e3"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/attempt.json",
+      "bytes": 33028,
+      "sha256": "9028e9039fa752da0b943f10734d244a02a34688f127f7e4d2185ef359a4ded1"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/objects-after.bin",
+      "bytes": 1130496,
+      "sha256": "9937847b05535f0f41dc3e10b34ea75802404c0d2632ffe158240b2d862ba96f"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/owned-after.bin",
+      "bytes": 2850816,
+      "sha256": "81eeb6eb83e744f592f7472ffc3605fded8f304513feacde145f7b0e12fa3a10"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/notifications-after.bin",
+      "bytes": 5242944,
+      "sha256": "b6b752e7a45d0167185a4209ca66d26d5221dd562f92d2aae863894d38ad5ce8"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/dmesg-before.log",
+      "bytes": 130608,
+      "sha256": "bd1d93dc79ee8101e74bb8cd1be7ea478f13372bd0c72d5821466e3083a775ae"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/dmesg-after.log",
+      "bytes": 131453,
+      "sha256": "f1b48b875636c6e1f68b692a69cd756af3a4fe7c6280fdd6442fc734cf6d05bf"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/notifications-after.json",
+      "bytes": 15338140,
+      "sha256": "9659bfe06ec066555664f759c994f4116ccf66df4feaf968816625db74b82157"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/objects-before.bin",
+      "bytes": 1130496,
+      "sha256": "287f2c53bc6ef7ed226c4a2995b9d9904e7623acae9713af105be6b04fc690a9"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214748.089738Z-gfx-powergate-5cbfd01e/text.bin",
+      "bytes": 393216,
+      "sha256": "5a2dfd92ba006c7f99f9550757180dad783a6eba350886c2620739d77c8389e3"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214814.484578Z-gfx-retained-cycle-9cfd283d/attempt.json",
+      "bytes": 39000,
+      "sha256": "49a68c836f865ee6755d380f8152f5e2de1cddf31fe7e8f531a7734f9e0cad75"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214814.484578Z-gfx-retained-cycle-9cfd283d/objects-after.bin",
+      "bytes": 1130496,
+      "sha256": "9937847b05535f0f41dc3e10b34ea75802404c0d2632ffe158240b2d862ba96f"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214814.484578Z-gfx-retained-cycle-9cfd283d/owned-after.bin",
+      "bytes": 2850816,
+      "sha256": "81eeb6eb83e744f592f7472ffc3605fded8f304513feacde145f7b0e12fa3a10"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214814.484578Z-gfx-retained-cycle-9cfd283d/notifications-after.bin",
+      "bytes": 5242944,
+      "sha256": "b6b752e7a45d0167185a4209ca66d26d5221dd562f92d2aae863894d38ad5ce8"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214814.484578Z-gfx-retained-cycle-9cfd283d/dmesg-before.log",
+      "bytes": 131453,
+      "sha256": "f1b48b875636c6e1f68b692a69cd756af3a4fe7c6280fdd6442fc734cf6d05bf"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214814.484578Z-gfx-retained-cycle-9cfd283d/dmesg-after.log",
+      "bytes": 130427,
+      "sha256": "2da49abebfa0a096385a6bf36a90cf8fc921d614de5ef6a54d43aa58c5dc79fc"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214814.484578Z-gfx-retained-cycle-9cfd283d/notifications-after.json",
+      "bytes": 15338140,
+      "sha256": "9659bfe06ec066555664f759c994f4116ccf66df4feaf968816625db74b82157"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214814.484578Z-gfx-retained-cycle-9cfd283d/objects-before.bin",
+      "bytes": 1130496,
+      "sha256": "287f2c53bc6ef7ed226c4a2995b9d9904e7623acae9713af105be6b04fc690a9"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214814.484578Z-gfx-retained-cycle-9cfd283d/text.bin",
+      "bytes": 393216,
+      "sha256": "5a2dfd92ba006c7f99f9550757180dad783a6eba350886c2620739d77c8389e3"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214919.918717Z-gfx-snapshot-a4e9c5df/attempt.json",
+      "bytes": 38888,
+      "sha256": "98eddba25fbaaf8b47c247db7dce003e2a799a2fba8bb00573d40f1ba700818b"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214919.918717Z-gfx-snapshot-a4e9c5df/objects-after.bin",
+      "bytes": 1130496,
+      "sha256": "9937847b05535f0f41dc3e10b34ea75802404c0d2632ffe158240b2d862ba96f"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214919.918717Z-gfx-snapshot-a4e9c5df/owned-after.bin",
+      "bytes": 2850816,
+      "sha256": "81eeb6eb83e744f592f7472ffc3605fded8f304513feacde145f7b0e12fa3a10"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214919.918717Z-gfx-snapshot-a4e9c5df/notifications-after.bin",
+      "bytes": 5242944,
+      "sha256": "b6b752e7a45d0167185a4209ca66d26d5221dd562f92d2aae863894d38ad5ce8"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214919.918717Z-gfx-snapshot-a4e9c5df/dmesg-before.log",
+      "bytes": 131455,
+      "sha256": "1d89fb03ac5a7f484ece051802adf9b341ffcb6e989480407f17cff336952f99"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214919.918717Z-gfx-snapshot-a4e9c5df/dmesg-after.log",
+      "bytes": 130387,
+      "sha256": "bfe5313aca3b10f2568555af85a6e2b0aa8f6b78a982f2afd121c9d3635914ee"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214919.918717Z-gfx-snapshot-a4e9c5df/notifications-after.json",
+      "bytes": 15338140,
+      "sha256": "9659bfe06ec066555664f759c994f4116ccf66df4feaf968816625db74b82157"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214919.918717Z-gfx-snapshot-a4e9c5df/objects-before.bin",
+      "bytes": 1130496,
+      "sha256": "287f2c53bc6ef7ed226c4a2995b9d9904e7623acae9713af105be6b04fc690a9"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214919.918717Z-gfx-snapshot-a4e9c5df/text.bin",
+      "bytes": 393216,
+      "sha256": "5a2dfd92ba006c7f99f9550757180dad783a6eba350886c2620739d77c8389e3"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/late-readonly-kernel-log-5bf0.log",
+      "bytes": 131507,
+      "sha256": "c4c76a8b098b32ff32a52f2b9cad703e2525b794a26da504f63969604ff89ade"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/state.json",
+      "bytes": 6387,
+      "sha256": "cd3b4eb39ef77f555f8e0ddccac992f92937881f3f4b1ced5968610d056d8ce6"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/first-off-raw-proof-5bf0.json",
+      "bytes": 5569,
+      "sha256": "13f272bf15e68e3577594111a28fde6c17427c63d1b6ee835434928875cf01df"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/loaded-identity-5bf0.json",
+      "bytes": 817,
+      "sha256": "53410d4a4b1af88996f0737f279190c60f45e487082b83ee924b3ce42aad08b9"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/identity-extraction-correction-5bf0.json",
+      "bytes": 952,
+      "sha256": "784307792a7098e28b95b68e71e1b236cd8cde9739add75990f2041d0170adfe"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/identity-extraction-rewritten-5bf0.ko",
+      "bytes": 8007528,
+      "sha256": "c2bb01022f65bcafd9a7e38b4d6686bb3ab85e7ccfde4a6c33fa486a9992f022"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate-v6-second-finalized-historical/asc-graph-init/asc-graph-init.ko",
+      "bytes": 8007880,
+      "sha256": "abf4ef3c709c3a775db2fa897dbbe1ba7edbb9868000848ac8283417f9fb7608"
+    },
+    {
+      "path": "docs/evidence/2026-10-09-gfx-native-retained-cycle-independent-review.json",
+      "bytes": 43527,
+      "sha256": "1bb6b6206aabd1566d0a5545b331c1b6574b9b9023e5ba4a313432461a4b15a1"
+    },
+    {
+      "path": "docs/evidence/2026-10-09-gfx-retained-power-cycle-final-candidate-review.json",
+      "bytes": 42249,
+      "sha256": "98cafe4e61fe2c08be81947bddb3420a121418836c8a94157419cd222d75a4f5"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/live-review-5bf0.py",
+      "bytes": 17069,
+      "sha256": "21d02f0c7c59a9cef4826082fa46963518a271274e85176267dc763a9a8ad407"
+    }
+  ],
+  "qualification": "Saved-file stage/PM/physical review only. Host second complete=false and operation_uncertain remain unchanged despite clean final data capture. Existing frozen v6 cannot retry, compensate the PM reference, change its cold predicate or publish work."
+}
