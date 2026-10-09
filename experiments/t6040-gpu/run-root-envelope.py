@@ -98,6 +98,13 @@ def main():
         validate((work/'asc-graph-init/graph-before.bin').read_bytes(),layout)
         for key,digest in layout.get('voltage_input_sha256',{}).items():
             require(sha(sgx[key])==digest,'Fresh voltage input differs: '+key)
+        native_init=layout.get('native_init_recovery')
+        if native_init is not None:
+            require(not any('no-gpc' in node for node in tree.values()),'Fresh ADT overrides native GPC policy')
+            require(int.from_bytes(sgx['has-kf'],'little')==1,'Fresh auxiliary board guard differs')
+            for domain in native_init['auxiliary_power']['domains']:
+                key=domain['adt_property']
+                require(sha(sgx[key])==domain['adt_property_sha256'],'Fresh auxiliary voltage input differs: '+key)
         timing=layout.get('power_timing_trial')
         if timing is not None:
             require(int.from_bytes(sgx['gpu-pwr-sample-period-aic-clks'],'little')==timing['period_aic_clocks'],'Fresh AIC sampling period differs')
@@ -106,7 +113,7 @@ def main():
         require(regs==[(0x88000000,0x3758000),(0x88d00000,0x16c000)],'SGX MMIO apertures differ')
         for leaf in layout.get('mmio_leaves',[]):
             pa,va=leaf['physical'],leaf['gpu_va']
-            platform=(pa,va) in ((0x502414000,0xfffffc2001a00000),(0x5003d8000,0xfffffc2001b18000))
+            platform=(pa,va) in ((0x502414000,0xfffffc2001a00000),(0x5003d0000,0xfffffc2001b10000),(0x5003d8000,0xfffffc2001b18000))
             afr=0x28b000000<=pa<0x28b640000 and (pa-0x28b000000)%0x200000<0x40000 and va==0xfffffc2001c00000+(pa-0x28b000000)//0x200000*0x40000+(pa-0x28b000000)%0x200000
             sgx=0x288000000<=pa and pa+0x4000<=0x28b758000 and va==0xfffffc2000200000+pa-0x288000000
             require((platform and not leaf['readonly']) or (afr and (leaf['readonly'] or (pa-0x28b000000)%0x10000==0)) or (sgx and (leaf['readonly'] or pa in (0x288000000,0x288004000,0x288008000,0x28800c000,0x288010000,0x288014000,0x288018000,0x28801c000,0x288020000,0x288d04000,0x288d10000,0x288d40000,0x288d44000,0x288d4c000,0x288d60000,0x288e00000,0x288e1c000,0x288e40000,0x289004000))),'Unqualified MMIO leaf range')

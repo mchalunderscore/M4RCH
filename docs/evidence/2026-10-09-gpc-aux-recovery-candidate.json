@@ -1,6 +1,6 @@
 {
   "schema": "m4rch-gpc-aux-recovery-candidate-v1",
-  "stage": "prepared and reviewed; not run",
+  "stage": "Executed on boot0140aa26; see 2026-10-09-gpc-aux-recovery-live.json. Superseded by telemetry mapping candidate.",
   "candidate": "out/gpc-aux-recovery/candidate",
   "prepared": "out/gpc-aux-recovery/prepared",
   "module_sha256": "399e92e2b25fcafd3aa4ca7214bce65e41398310c8772f7c030311a7f6a5cf5e",

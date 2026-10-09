@@ -1,0 +1,159 @@
+{
+  "schema": "m4rch-gpc-aux-recovery-live-v1",
+  "boot_id": "0140aa26-6f9e-40f2-beb1-ff2cf3bfd59f",
+  "capture": "out/gpc-aux-recovery/candidate/asc-graph-init/boot-0140aa26-6f9e-40f2-beb1-ff2cf3bfd59f",
+  "candidate_module_sha256": "399e92e2b25fcafd3aa4ca7214bce65e41398310c8772f7c030311a7f6a5cf5e",
+  "firmware_identity": {
+    "raw_sha256": "8c02b8c8a4cbdffc652905ba957406b23b879ac82ba675ac46ecdc4855f46b60",
+    "normalized_sha256": "190cef1946a23dfbde180592629631c3b28d0509a17eb76108b7c9a52accd9ac",
+    "observed_variable_payloads": [
+      {
+        "offset": "0x59841",
+        "tag_bytes": "GKTS",
+        "payload_hex": "009846819e5febbe"
+      },
+      {
+        "offset": "0x59924",
+        "tag_bytes": "ECAP",
+        "payload_hex": "070ff3e00da27480"
+      }
+    ],
+    "qualification": "Exact match outside two tagged eight-byte boot metadata payloads; tags and lengths are also checked. No instruction bytes excluded."
+  },
+  "input_sha256": {
+    "attempt.json": "4534d3758ccac948a9fc3174f0c87066fb4e5a4e8b9348cecbf9a9d3bb734d40",
+    "objects-before.bin": "d24883291a3650a3716b5f14b20387cde1ee529ae680425fcbce01e1f0638ee5",
+    "objects-after.bin": "d6a6a5d5b01a03ad0ec934c498f5d67978803211a0d5d4dc71b83592f4be76ec",
+    "dmesg-before.log": "4849f06701004e94360035cd80a276d885f18642b8f77ea0d5bfb8a3d87f2a9b",
+    "dmesg-after.log": "9a7777fe46a1961aa87e854e6b7ff2a19965b8617745de8b8b582235fc3057b1"
+  },
+  "log_interval_bound": true,
+  "log_boundary": "retained-32-line-tail",
+  "log_interval_error": null,
+  "owned_state": {
+    "counter": 0,
+    "phase": 0,
+    "host_stop": 0,
+    "request_state": 0,
+    "request_flag": 0,
+    "control": [
+      0,
+      0,
+      32
+    ],
+    "pstate": 1,
+    "power78": 1,
+    "down_active": 0,
+    "up_count": 0,
+    "work_roots": [
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ]
+    ]
+  },
+  "phase_trace": [],
+  "power_samples": [],
+  "cycle_results": [],
+  "operations": [],
+  "session_flags": {
+    "resident_session_active": false,
+    "resident_session_usable": null,
+    "diagnostic_session_active": false,
+    "submit_attempted": null,
+    "reboot_required": true
+  },
+  "qualification": "Owned snapshots and sequential MMIO observations only. Missing registers are unknown. A satisfied predicate does not show firmware reached that poll; an unsatisfied predicate does not locate its live PC. Native down target is zero; power+78 is the old value until transition returns. No recovery reuse, DMA retirement or rendering is established by this summary.",
+  "crash": {
+    "pc": "0xfffffc0000025674",
+    "far": "0xf98",
+    "esr": "0x96000044",
+    "write_fault": true,
+    "x1": "0x10f98",
+    "x2": "0x2000000000000001",
+    "x9": "0x0",
+    "stack": [
+      "0x25674",
+      "0x2c2a8",
+      "0xd424",
+      "0x3a4a4",
+      "0x38f9c"
+    ]
+  },
+  "crash_proof": {
+    "path": "docs/evidence/2026-10-09-native-telemetry-slot9-crash.json",
+    "sha256": "cac4462e4aaf1822d438971fc6e7c0defa2a7a2a396c4799324310fa24d5087b"
+  },
+  "data_after_sha256": "7e1951c531152a9584921212907b9388b22098563de20b457f5a88a4045317d4",
+  "hardware_completion_config": [
+    "0x400010000d8001",
+    "0x400010000dc001",
+    "0x400010000e0001",
+    "0x400010000e4001"
+  ],
+  "final_asc": {
+    "control": 0,
+    "status": "0x4e",
+    "ap_quiesced_ack": false,
+    "iop_sleep_ack": false,
+    "stop_readback": true,
+    "dma_retirement_verified": false
+  },
+  "outcome": "Startup passed engine-on predicate and reached telemetry callback; null slot9 causes synchronous write fault before initial controls. Recovery skipped, no work submitted. Main module and all174pages retained; session stopped and not reusable."
+}

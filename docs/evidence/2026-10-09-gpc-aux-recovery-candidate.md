@@ -1,6 +1,7 @@
 # Native CS/AFR initialization recovery candidate
 
-Prepared, built and reviewed; no live result yet. This extends the GPC-enabled
+Historical preparation record. This candidate has now run on boot0140aa26;
+see `2026-10-09-gpc-aux-recovery-live.md`. It must not be retried unchanged. This extends the GPC-enabled
 trial that stalled before consuming the initial controls on boot
 `706d9e50-c897-4479-8587-f19835a40166`.
 

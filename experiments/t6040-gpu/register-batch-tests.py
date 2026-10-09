@@ -16,7 +16,9 @@ class BatchTests(unittest.TestCase):
   runtime_tuple=re.search(r'pa in \((.*?)\)\)',runner).group(1)
   runtime_grants={int(x,16) for x in re.findall(r'0x[0-9a-f]+',runtime_tuple)}
   self.assertTrue(mods['batch'].WRITABLE_PAGES<=native_grants)
-  self.assertEqual(mods['batch'].WRITABLE_PAGES,runtime_grants)
+  # The later native-init stage qualifies the slot32 timestamp page as well.
+  self.assertEqual(mods['batch'].WRITABLE_PAGES|{0x288d60000},runtime_grants)
+  self.assertEqual(native_grants,runtime_grants)
  def setUp(self):self.data,self.receipt=mods['batch'].extend(*mods['model'].graph_fixture(True),raw)
  def test_gfender_descriptor_and_partial_write_grant(self):
   h=next(o['arena_offset'] for o in self.receipt['objects'] if o['name']=='hardware')

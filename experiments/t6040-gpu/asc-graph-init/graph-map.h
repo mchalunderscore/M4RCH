@@ -119,6 +119,7 @@ static int root_prepare(bool install)
  for (i=0;i<ARRAY_SIZE(mmio_leaves);i++) {
   u64 pa=mmio_leaves[i].physical,va=mmio_leaves[i].gpu_va;
   bool platform=(pa==0x502414000ULL && va==0xfffffc2001a00000ULL) ||
+                (pa==0x5003d0000ULL && va==0xfffffc2001b10000ULL) ||
                 (pa==0x5003d8000ULL && va==0xfffffc2001b18000ULL);
   bool afr=pa>=0x28b000000ULL && pa<0x28b640000ULL &&
            ((pa-0x28b000000ULL)%0x200000ULL)<0x40000ULL &&

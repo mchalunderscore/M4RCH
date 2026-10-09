@@ -115,6 +115,12 @@ def prepare(source, macho, firmware_text, identity_log, recovery_audit, output, 
         0x89a7e20: 0x94b673e0,  # generic allocation block zeroing
         0x89cc55c: 0xf91da900,  # mapped epoch -> power+3b50
         0x89d0fa0: 0xf91da900,  # same pointer in configuration refresh
+        0x89ea504: 0xd2900019,  # telemetry config base -> x25
+        0x89ea508: 0xf2a007b9,
+        0x89ea50c: 0xf2c000b9,
+        0x89ea788: 0xb92f8268,  # slot9 extent = 0x4000
+        0x89ea790: 0xd1402329,  # slot9 PA = x25 - 0x8000
+        0x89ea794: 0xf916c269,  # slot9 PA -> accelerator+0x2d80
     }
     firmware_checks = {
         0x2f868: 0xb9141ea8, 0x2f874: 0xb91422a8, 0x2f880: 0xb91426a8,
@@ -162,6 +168,23 @@ def prepare(source, macho, firmware_text, identity_log, recovery_audit, output, 
     leaf = next(x for x in layout['mmio_leaves'] if x['physical'] == 0x288d60000)
     assert leaf['readonly'] and leaf['gpu_va'] == 0xfffffc2000f60000
     leaf['readonly'] = False
+    # GPC transition reporting writes PushTelemetryDashboard through slot9.
+    # The 0140aa26 crash at25674 reached this store with cached VA18f590=0.
+    # This platform PA comes from the native constructor, not SGX arithmetic.
+    telemetry_pa, telemetry_va = 0x5003d0000, 0xfffffc2001b10000
+    assert not any(d['slot'] == 9 for d in layout['mmio_descriptors'])
+    assert not any(x['physical'] == telemetry_pa or x['gpu_va'] == telemetry_va
+                   for x in layout['mmio_leaves'])
+    assert telemetry_va not in layout['owned_page_vas']
+    assert telemetry_va >> 25 == int(layout['base'], 0) >> 25
+    layout['mmio_descriptors'].append(dict(
+        slot=9, physical=hex(telemetry_pa), gpu_va=hex(telemetry_va), size='0x4000',
+        readonly=False, mapped_pages=1, mapping_class='platform',
+        effective_writable_pages=[hex(telemetry_pa)],
+        role_qualification='Native PushTelemetryDashboard; captured fault and firmware25668 stores +f98/+f9c'))
+    layout['mmio_leaves'].append(dict(physical=telemetry_pa, gpu_va=telemetry_va, readonly=False))
+    layout['mmio_leaves'].sort(key=lambda x: x['gpu_va'])
+    layout['mapped_pages'] = len(blob)//0x4000 + len(layout['mmio_leaves'])
     assert status['input_bytes'] <= STATUS_NATIVE_BYTES <= EPOCH_OFFSET
     assert EPOCH_OFFSET % 64 == 0 and EPOCH_OFFSET+EPOCH_BYTES <= status['reserved_bytes']
     # This is a separate suballocation in unused page-rounded allocation tail,
@@ -176,6 +199,7 @@ def prepare(source, macho, firmware_text, identity_log, recovery_audit, output, 
     epoch_va = int(status['gpu_va'], 0)+EPOCH_OFFSET
     changes = []
     initializers = [
+            ('hardware', 0x640+9*0x28, struct.pack('<QQIIQI', telemetry_pa, telemetry_va, 0x4000, 0x4000, 0, 1)),
             ('hardware', 0x640+32*0x28+0x20, struct.pack('<I', 1)),
             ('hardware', 0xea0, struct.pack('<I', gpc_policy['value'])),
             ('hardware', 0xf30, vector),
@@ -216,6 +240,13 @@ def prepare(source, macho, firmware_text, identity_log, recovery_audit, output, 
     old_leaf = '{ 0x288d60000ULL, 0xfffffc2000f60000ULL, 0 }'
     assert graph_prefix.count(old_leaf) == 1
     graph_prefix = graph_prefix.replace(old_leaf, '{ 0x288d60000ULL, 0xfffffc2000f60000ULL, 1 }')
+    platform_leaf = ' { 0x5003d8000ULL, 0xfffffc2001b18000ULL, 1 },'
+    assert graph_prefix.count(platform_leaf) == 1
+    graph_prefix = graph_prefix.replace(platform_leaf,
+        ' { 0x5003d0000ULL, 0xfffffc2001b10000ULL, 1 },\n'+platform_leaf)
+    graph_prefix, replacements = re.subn(r'#define GRAPH_MAPPED_PAGES \d+U',
+        f'#define GRAPH_MAPPED_PAGES {layout["mapped_pages"]}U', graph_prefix)
+    assert replacements == 1
     graph = graph_prefix+f'static const u8 graph_bytes[{len(blob)}]={{\n'
     graph += ''.join(f'[{i:#x}]={value:#x},\n' for i, value in enumerate(blob) if value)+'};\n'
     report = dict(
@@ -226,6 +257,11 @@ def prepare(source, macho, firmware_text, identity_log, recovery_audit, output, 
         native_counts=counts, native_masks=masks, expected_primary_1710='0x1010',
         gpc_policy=gpc_policy,
         auxiliary_power=auxiliary_report,
+        telemetry_mapping=dict(slot=9, physical=hex(telemetry_pa), gpu_va=hex(telemetry_va),
+                               bytes=0x4000, writable=True, firmware_cached_va='0x18f590',
+                               fault_pc='0x25674', selectors=['0x10f98', '0x10f9c'],
+                               mapping_offsets=['0xf98', '0xf9c'],
+                               qualification='Native constructor and captured null mapping fault; firmware performs transition reporting writes, no host register poke'),
         gpc_timestamp_mapping=dict(slot=32, physical='0x288d60000', gpu_va='0xfffffc2000f60000',
                                    writable_bytes=0x4000, descriptor_bytes=0x20000,
                                    firmware_stores=['0xd980','0xd984','0x39ba8','0x39bac'],
