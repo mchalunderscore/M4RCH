@@ -20,12 +20,15 @@ import time
 from datetime import datetime, timezone
 from uuid import uuid4
 
+from gfx_reset_contract import validate_receipt as validate_gfx_reset_receipt
+
 
 SYSFS = Path('/sys/kernel/m4rch_gpu_graph_trial')
 MODULE = Path('/sys/module/asc_graph_init')
 MODULE_ARTIFACT = 'asc-graph-init/asc-graph-init.ko'
 PAGE_SIZE = 0x4000
-COMMANDS = ('sample', 'control', 'recover', 'trace-off', 'submit', 'stop')
+COMMANDS = ('sample', 'control', 'recover', 'trace-off', 'submit', 'stop',
+            'gfx-snapshot', 'gfx-reset')
 
 
 def require(condition, explanation):
@@ -181,6 +184,10 @@ def command(name, output, report, state, state_path):
     # An interrupted submit is quarantined even when its write outcome is unknown.
     if name == 'submit':
         state['submit_attempted'] = True
+    if name == 'gfx-reset':
+        # Persist before opening sysfs: an interrupted write may have pulsed.
+        state['gfx_reset_attempted'] = True
+        state['operation_failed'] = True
     save_json(output / 'attempt.json', report)
     save_json(state_path, state)
     descriptor = None
@@ -191,8 +198,12 @@ def command(name, output, report, state, state_path):
         require(count == len(payload), 'Short resident command write; outcome uncertain')
         operation.update(stage='returned', result='success')
         if name == 'stop':
-            state['resident_session_active'] = False
-            report['resident_session_active'] = False
+            if validate_gfx_reset_receipt(report['validated_build_receipt']):
+                state['host_stop_requested'] = True
+                state['operation_failed'] = True
+            else:
+                state['resident_session_active'] = False
+                report['resident_session_active'] = False
             report['reboot_required'] = True
     except BaseException as error:
         operation.update(stage='failed-or-interrupted', result=repr(error))
@@ -207,6 +218,27 @@ def command(name, output, report, state, state_path):
         state['in_flight'] = None
         save_json(output / 'attempt.json', report)
         save_json(state_path, state)
+
+
+def admit_command(name, receipt, state):
+    """Separate read-only diagnostics from a single deliberately sealed pulse."""
+    feature = validate_gfx_reset_receipt(receipt)
+    if name in ('gfx-snapshot', 'gfx-reset'):
+        require(feature, 'Candidate has no checked GFX reset command contract')
+    diagnostics = ('sample', 'stop') + (('gfx-snapshot',) if feature else ())
+    if name == 'gfx-reset':
+        require(not state.get('gfx_reset_attempted') and not state.get('in_flight'),
+                'A GFX reset was already attempted or has an uncertain outcome')
+        require(not state.get('host_stop_requested'),
+                'Host stop permanently closed the reset command gate')
+        require(not state.get('interrupted_operation'),
+                'Prior interrupted operation must remain diagnostic only')
+        require(not state['submit_attempted'], 'Submitted work excludes this reset scope')
+        return
+    require(name in diagnostics or (not state['operation_failed'] and not state['in_flight']),
+            'Prior command failed or was interrupted; only diagnostic commands are permitted')
+    require(name in diagnostics or not state['submit_attempted'],
+            'An immutable work batch was already attempted; no further publication or recovery')
 
 
 def main():
@@ -238,10 +270,7 @@ def main():
                 receipt['artifact_sha256'][MODULE_ARTIFACT], 'Resident operation history differs')
         require(state['resident_session_active'], 'Resident stop was already requested')
         seal_interrupted_operation(state, state_path)
-        require(args.command in ('sample', 'stop') or (not state['operation_failed'] and not state['in_flight']),
-                'Prior command failed or was interrupted; only sample/stop is permitted')
-        require(args.command in ('sample', 'stop') or not state['submit_attempted'],
-                'An immutable work batch was already attempted; no further publication or recovery')
+        admit_command(args.command, receipt, state)
         name = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S.%fZ') + '-' + args.command + '-' + uuid4().hex[:8]
         output = operations / name
         output.mkdir()
@@ -286,6 +315,8 @@ def main():
             report['diagnostic_session_active'] = state['resident_session_active'] and state['operation_failed']
             report['reboot_required'] = not report['resident_session_usable']
             report['submit_attempted'] = state['submit_attempted']
+            report['gfx_reset_attempted'] = state.get('gfx_reset_attempted', False)
+            report['host_stop_requested'] = state.get('host_stop_requested', False)
             report['complete'] = error is None and not report['capture_errors']
             save_json(output / 'attempt.json', report)
         print(output)

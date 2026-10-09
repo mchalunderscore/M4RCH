@@ -16,6 +16,11 @@
 #include <linux/workqueue.h>
 #include "boot-contract.h"
 #include "graph-map.h"
+#ifdef GFX_RESET_SCOPE_TRIAL
+#if !defined(GRAPH_RECOVERY_EXPERIMENT) || !defined(GRAPH_JOINED_INIT_EXPERIMENT) || defined(GRAPH_JOINED_WORK_EXPERIMENT)
+#error GFX_RESET_SCOPE_TRIAL requires the retained joined recovery fixture without startup work
+#endif
+#endif
 #define ASC_BASE 0x28a600000ULL
 #define MBOX_BASE (ASC_BASE + 0x8000)
 #define START BIT(4)
@@ -278,6 +283,10 @@ static int __init hello_init(void)
  u32 appmap = 0;
  u8 apps_started = 0;
  u8 map_seen = 0;
+#ifdef GFX_RESET_SCOPE_TRIAL
+ if(run_gate!=2 || !resident_session || request_shutdown || warm_restart || release_on_shutdown)
+  return -EINVAL;
+#endif
 #if defined(GRAPH_COMMAND_POOL_EXPERIMENT) && !defined(GRAPH_JOINED_INIT_EXPERIMENT)
  if (run_gate!=1) return -EINVAL; /* Own allocations only until context/ring lifecycle is joined. */
 #endif
@@ -466,12 +475,19 @@ static int __init hello_init(void)
     if(observation_ok) recovered=recovery_cycles();
     if(resident_session && !receive_crashed) {
      __module_get(THIS_MODULE);recovery_resident=true;recovery_session_failed=!recovered;
+#ifdef GFX_RESET_SCOPE_TRIAL
+     gfx_reset_scope_owner_pinned=true;
+#endif
      if(recovered) schedule_delayed_work(&recovery_receive_work,msecs_to_jiffies(10));
     }
     mutex_unlock(&graph_io_lock);
     if(resident_session && !receive_crashed) {
      if(recovered) pr_info("m4rch recovery-session: resident=1 control_ready=1 work_submitted=0 allocations_retained=1\n");
-     else pr_info("m4rch recovery-session: diagnostic=1 sealed=1 control_ready=0 work_submitted=0 allocations_retained=1; only sample/stop allowed\n");
+     else pr_info("m4rch recovery-session: diagnostic=1 sealed=1 control_ready=0 work_submitted=0 allocations_retained=1; only sample/stop"
+#ifdef GFX_RESET_SCOPE_TRIAL
+      "/gfx-snapshot and guarded one-attempt gfx-reset"
+#endif
+      " allowed\n");
      return 0;
     }
    }

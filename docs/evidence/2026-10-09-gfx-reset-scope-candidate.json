@@ -1,0 +1,84 @@
+{
+  "schema": "m4rch-gfx-reset-scope-candidate-v1",
+  "baseline_commit": "8df046c80941134f7034fe539022b390302a22f4",
+  "old_boot_id": "278a044e-6204-4893-83dd-0ef198566470",
+  "old_live_owner_sealed": true,
+  "candidate_path": "out/gfx-reset-scope/candidate",
+  "future_kernel_release": "7.1.13-m4rch-gpu-reset",
+  "kernel_installed": false,
+  "hardware_reset_performed": false,
+  "dma_pages_retained": 174,
+  "gpu_work_submitted": false,
+  "repeat_failed_wake_performed": false,
+  "read_only_apfs_retrieval_completed_and_unmounted": true,
+  "driver_cases": 98,
+  "owner_cases": 513,
+  "default_off_cases": 88,
+  "root_wrapper_cases": 31,
+  "independent_wrapper_cases": 26,
+  "reset_scope_verified": false,
+  "recovery_verified": false,
+  "dma_retirement_verified": false,
+  "artifacts": [
+    {
+      "path": "docs/evidence/2026-10-09-gfx-reset-scope-candidate.md",
+      "sha256": "6c71b337844ad348112f479525b0c3d84441b401f47d31a25a2fa883e2f4442d",
+      "bytes": 6368
+    },
+    {
+      "path": "out/gfx-reset-scope/root-final-qualification.json",
+      "sha256": "8adcb7a40ea5362cef33266e3860afcd95ad14e912500fe2eed8d2b271635af3",
+      "bytes": 2175
+    },
+    {
+      "path": "out/gfx-reset-scope/wrapper-final-validation.json",
+      "sha256": "644ce657fcb975565840b34b13bdcfef9bf4a293ea7a55e76aa764083a67a132",
+      "bytes": 1008
+    },
+    {
+      "path": "out/gfx-reset-scope/candidate/asc-root-envelope/build-receipt.json",
+      "sha256": "a60d3e4d2a0e54ad3f6818480cbe9c021fc7bbffe4eff7c2495c1c34706144ac",
+      "bytes": 21657
+    },
+    {
+      "path": "out/gfx-reset-scope/candidate/gfx-reset-preparation.json",
+      "sha256": "236e7b04c81170791e8d09d681804422a65a35b13dfe4823815592156fbb3faa",
+      "bytes": 4909
+    },
+    {
+      "path": "docs/evidence/2026-10-09-gfx-reset-api-review.json",
+      "sha256": "48261c9fa230b45e3db6de4c72a4ac3c8bad080c447b72f94dc87cbc87bbc79b",
+      "bytes": 4404
+    },
+    {
+      "path": "docs/evidence/2026-10-09-gfx-reset-owner-review.json",
+      "sha256": "58b6bbda707c24161fd774c60e53bd80fadc13386b6e8a10fdb367b4ce3e584c",
+      "bytes": 8808
+    },
+    {
+      "path": "docs/evidence/2026-10-09-gfx-reset-resident-owner.json",
+      "sha256": "bd77b755fdac78e333e46e96d86887cd90680d8afc76648b71f51377efd1eefe",
+      "bytes": 7450
+    },
+    {
+      "path": "docs/evidence/2026-10-09-gfx-reset-kernel-candidate.json",
+      "sha256": "0023d3bb02cdb71a7066166b81a0da1e53f2bf0041c7fcb4bd56868e2a809d72",
+      "bytes": 9452
+    },
+    {
+      "path": "docs/evidence/2026-10-09-matched-kernelcache-retrieval.json",
+      "sha256": "46727e2153ee235b777e33464c523df2258ef0ada42539e293d0096a926d46a5",
+      "bytes": 4828
+    },
+    {
+      "path": "docs/evidence/2026-10-09-rtbuddy-matched-provider.json",
+      "sha256": "8606640b84e12fc8f18891b53ed1ebc913123bfc533e5108fd703f5c139a0027",
+      "bytes": 25743
+    },
+    {
+      "path": "docs/evidence/2026-10-09-rtbuddy-reset-review.json",
+      "sha256": "c43a596e018b705d33652437e87a6673433019d169b56adefb15307cd713fb87",
+      "bytes": 37336
+    }
+  ]
+}

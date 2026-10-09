@@ -232,6 +232,9 @@ static void recovery_receive_worker(struct work_struct *work)
  }
  mutex_unlock(&graph_io_lock);
 }
+#ifdef GFX_RESET_SCOPE_TRIAL
+#include "gfx-reset-scope.h"
+#endif
 static ssize_t recovery_command_store(struct kobject *kobj,struct kobj_attribute *attr,
  const char *buf,size_t count)
 {
@@ -239,16 +242,31 @@ static ssize_t recovery_command_store(struct kobject *kobj,struct kobj_attribute
  mutex_lock(&graph_io_lock);
  if(!recovery_resident) {ret=-ENODEV;goto out;}
  if(sysfs_streq(buf,"stop")) {
+#ifdef GFX_RESET_SCOPE_TRIAL
+  ret=gfx_reset_scope_stop();goto out;
+#else
   bool ap=power_ack(0xb,0xb,0x10),sleep=false;
   if(ap) sleep=power_ack(6,7,1);
   writel(readl(asc+0x44)&~START,asc+0x44);readl(asc+0x44);
   recovery_resident=false;
   cancel_delayed_work(&recovery_receive_work);
   pr_info("m4rch recovery-session: stop_requested_and_pinned=1 ap_ack=%d sleep_ack=%d control=%#x status=%#x\n",ap,sleep,readl(asc+0x44),readl(asc+0x48));
+#endif
  } else if(sysfs_streq(buf,"sample")) {
+#ifdef GFX_RESET_SCOPE_TRIAL
+  if(gfx_reset_scope_sealed || gfx_reset_scope_attempted || gfx_reset_scope_host_stopped) {
+   gfx_reset_scope_protocol("sample");goto out;
+  }
+#endif
   if(!recovery_session_failed && !recovery_messages()) {recovery_session_failed=true;ret=-EIO;}
   recovery_sample(0,"resident");recovery_power_sample("resident");
   if(!recovery_session_failed) {ksm_status_sample("resident");joined_output_sample("resident");}
+#ifdef GFX_RESET_SCOPE_TRIAL
+ } else if(sysfs_streq(buf,"gfx-snapshot")) {
+  ret=gfx_reset_scope_snapshot();goto out;
+ } else if(sysfs_streq(buf,"gfx-reset")) {
+  ret=gfx_reset_scope_reset();goto out;
+#endif
  } else if(recovery_session_failed) {ret=-EIO;goto out;}
  else if(sysfs_streq(buf,"control")) {
   if(recovery_work_submitted) {ret=-EBUSY;goto out;}

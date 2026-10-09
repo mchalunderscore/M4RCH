@@ -1,0 +1,385 @@
+--- a/drivers/pmdomain/apple/pmgr-pwrstate.c
++++ b/drivers/pmdomain/apple/pmgr-pwrstate.c
+@@ -16,6 +16,9 @@
+ #include <linux/mfd/syscon.h>
+ #include <linux/reset-controller.h>
+ #include <linux/module.h>
++#include <linux/delay.h>
++#include <linux/of_platform.h>
++#include <linux/soc/apple/pmgr-gfx-reset.h>
+ 
+ #define APPLE_PMGR_RESET        BIT(31)
+ #define APPLE_PMGR_AUTO_ENABLE  BIT(28)
+@@ -53,6 +56,206 @@
+ 
+ #define genpd_to_apple_pmgr_ps(_genpd) container_of(_genpd, struct apple_pmgr_ps, genpd)
+ #define rcdev_to_apple_pmgr_ps(_rcdev) container_of(_rcdev, struct apple_pmgr_ps, rcdev)
++
++/* BEGIN T6040 GFX CHECKED CORE: also compiled by the offline fault harness. */
++#define APPLE_PMGR_GFX_POLL_ATTEMPTS 101
++#define APPLE_PMGR_GFX_PULSE_US 10
++#define APPLE_PMGR_GFX_RUNNING_MASK \
++	(APPLE_PMGR_PS_ACTUAL | APPLE_PMGR_PS_TARGET | APPLE_PMGR_AUTO_ENABLE | \
++	 APPLE_PMGR_PS_RESET | APPLE_PMGR_BUSY)
++#define APPLE_PMGR_GFX_RUNNING_VALUE \
++	(FIELD_PREP(APPLE_PMGR_PS_ACTUAL, APPLE_PMGR_PS_ACTIVE) | \
++	 FIELD_PREP(APPLE_PMGR_PS_TARGET, APPLE_PMGR_PS_ACTIVE))
++
++static int apple_pmgr_gfx_read(struct apple_pmgr_ps *ps, u32 *value, u32 valid_bit,
++			       struct apple_pmgr_gfx_reset_observation *observation)
++{
++	u32 sampled_reg;
++	int ret = regmap_read(ps->regmap, ps->offset, &sampled_reg);
++
++	if (!ret) {
++		*value = sampled_reg;
++		observation->valid |= valid_bit;
++	}
++	return ret;
++}
++
++static int apple_pmgr_gfx_poll(struct apple_pmgr_ps *ps, u32 mask, u32 expected,
++			       u32 *value, u32 valid_bit,
++			       struct apple_pmgr_gfx_reset_observation *observation)
++{
++	unsigned int i;
++	int ret;
++
++	for (i = 0; i < APPLE_PMGR_GFX_POLL_ATTEMPTS; ++i) {
++		ret = apple_pmgr_gfx_read(ps, value, valid_bit, observation);
++		if (ret)
++			return ret;
++		if ((*value & mask) == expected)
++			return 0;
++		if (i + 1 < APPLE_PMGR_GFX_POLL_ATTEMPTS)
++			udelay(1);
++	}
++	return -ETIMEDOUT;
++}
++
++static int apple_pmgr_gfx_update(struct apple_pmgr_ps *ps, u32 mask, u32 value)
++{
++	/* Match the existing driver's zero writes to historical flag bits. */
++	return regmap_update_bits(ps->regmap, ps->offset,
++				 APPLE_PMGR_FLAGS | mask, value);
++}
++
++static void apple_pmgr_gfx_cleanup(struct apple_pmgr_ps *ps, u32 original_auto,
++				   struct apple_pmgr_gfx_reset_observation *observation)
++{
++	int ret;
++
++	/* Every update may have reached the device even when it reports failure. */
++	ret = apple_pmgr_gfx_update(ps, APPLE_PMGR_AUTO_ENABLE, 0);
++	if (ret && !observation->cleanup_error)
++		observation->cleanup_error = ret;
++	ret = apple_pmgr_gfx_update(ps, APPLE_PMGR_RESET, 0);
++	if (ret && !observation->cleanup_error)
++		observation->cleanup_error = ret;
++	ret = apple_pmgr_gfx_update(ps, APPLE_PMGR_DEV_DISABLE, 0);
++	if (ret && !observation->cleanup_error)
++		observation->cleanup_error = ret;
++	ret = apple_pmgr_gfx_poll(ps, APPLE_PMGR_RESET | APPLE_PMGR_DEV_DISABLE |
++				  APPLE_PMGR_AUTO_ENABLE, 0,
++				  &observation->cleanup_final,
++				  APPLE_PMGR_GFX_VALID_CLEANUP_FINAL, observation);
++	if (ret) {
++		if (!observation->cleanup_error)
++			observation->cleanup_error = ret;
++		/* Never restore auto-PM with an unconfirmed synchronous reset line. */
++		return;
++	}
++	ret = apple_pmgr_gfx_update(ps, APPLE_PMGR_AUTO_ENABLE, original_auto);
++	if (ret && !observation->cleanup_error)
++		observation->cleanup_error = ret;
++	ret = apple_pmgr_gfx_poll(ps,
++		APPLE_PMGR_RESET | APPLE_PMGR_DEV_DISABLE | APPLE_PMGR_AUTO_ENABLE,
++		original_auto, &observation->cleanup_final,
++		APPLE_PMGR_GFX_VALID_CLEANUP_FINAL, observation);
++	if (ret && !observation->cleanup_error)
++		observation->cleanup_error = ret;
++	if (!ret)
++		observation->auto_policy_restored = 1;
++}
++
++static int apple_pmgr_gfx_snapshot_locked(struct apple_pmgr_ps *ps,
++				       struct apple_pmgr_gfx_reset_observation *observation)
++{
++	if (ps->offset != 0x110 || strcmp(ps->genpd.name, "gfx"))
++		return -ENODEV;
++	observation->domain_on = ps->genpd.status == GENPD_STATE_ON;
++	return apple_pmgr_gfx_read(ps, &observation->before,
++				    APPLE_PMGR_GFX_VALID_BEFORE, observation);
++}
++
++static int apple_pmgr_gfx_pulse_locked(struct apple_pmgr_ps *ps,
++				    struct apple_pmgr_gfx_reset_observation *observation)
++{
++	u32 original_auto, expected, mask;
++	int ret;
++
++	ret = apple_pmgr_gfx_snapshot_locked(ps, observation);
++	if (ret)
++		return ret;
++	if (!observation->domain_on ||
++	    FIELD_GET(APPLE_PMGR_PS_ACTUAL, observation->before) != APPLE_PMGR_PS_ACTIVE ||
++	    FIELD_GET(APPLE_PMGR_PS_TARGET, observation->before) != APPLE_PMGR_PS_ACTIVE ||
++	    observation->before & (APPLE_PMGR_RESET | APPLE_PMGR_DEV_DISABLE |
++				   APPLE_PMGR_PS_RESET | APPLE_PMGR_BUSY))
++		return -EBUSY;
++	original_auto = observation->before & APPLE_PMGR_AUTO_ENABLE;
++	/* From this first attempted update onward, every failure runs cleanup. */
++	ret = apple_pmgr_gfx_update(ps, APPLE_PMGR_AUTO_ENABLE, 0);
++	if (ret)
++		goto cleanup;
++	mask = APPLE_PMGR_GFX_RUNNING_MASK | APPLE_PMGR_RESET | APPLE_PMGR_DEV_DISABLE;
++	expected = APPLE_PMGR_GFX_RUNNING_VALUE;
++	ret = apple_pmgr_gfx_poll(ps, mask, expected, &observation->auto_held,
++				  APPLE_PMGR_GFX_VALID_AUTO_HELD, observation);
++	if (ret)
++		goto cleanup;
++	ret = apple_pmgr_gfx_update(ps, APPLE_PMGR_DEV_DISABLE, APPLE_PMGR_DEV_DISABLE);
++	if (ret)
++		goto cleanup;
++	expected |= APPLE_PMGR_DEV_DISABLE;
++	ret = apple_pmgr_gfx_poll(ps, mask, expected, &observation->disabled,
++				  APPLE_PMGR_GFX_VALID_DISABLED, observation);
++	if (ret)
++		goto cleanup;
++	ret = apple_pmgr_gfx_update(ps, APPLE_PMGR_RESET, APPLE_PMGR_RESET);
++	if (ret)
++		goto cleanup;
++	expected |= APPLE_PMGR_RESET;
++	ret = apple_pmgr_gfx_poll(ps, mask, expected, &observation->asserted,
++				  APPLE_PMGR_GFX_VALID_ASSERTED, observation);
++	if (ret)
++		goto cleanup;
++	udelay(APPLE_PMGR_GFX_PULSE_US);
++	ret = apple_pmgr_gfx_update(ps, APPLE_PMGR_RESET, 0);
++	if (ret)
++		goto cleanup;
++	expected &= ~APPLE_PMGR_RESET;
++	ret = apple_pmgr_gfx_poll(ps, mask, expected, &observation->deasserted,
++				  APPLE_PMGR_GFX_VALID_DEASSERTED, observation);
++	if (ret)
++		goto cleanup;
++	ret = apple_pmgr_gfx_update(ps, APPLE_PMGR_DEV_DISABLE, 0);
++	if (ret)
++		goto cleanup;
++	expected &= ~APPLE_PMGR_DEV_DISABLE;
++	ret = apple_pmgr_gfx_poll(ps, mask, expected, &observation->released,
++				  APPLE_PMGR_GFX_VALID_RELEASED, observation);
++	if (ret)
++		goto cleanup;
++	ret = apple_pmgr_gfx_update(ps, APPLE_PMGR_AUTO_ENABLE, original_auto);
++	if (ret)
++		goto cleanup;
++	/* Restored automatic policy can immediately gate ACTUAL; that is permitted. */
++	mask = APPLE_PMGR_RESET | APPLE_PMGR_DEV_DISABLE | APPLE_PMGR_AUTO_ENABLE |
++	       APPLE_PMGR_PS_TARGET | APPLE_PMGR_PS_RESET | APPLE_PMGR_BUSY;
++	expected = original_auto | FIELD_PREP(APPLE_PMGR_PS_TARGET, APPLE_PMGR_PS_ACTIVE);
++	if (!original_auto) {
++		mask |= APPLE_PMGR_PS_ACTUAL;
++		expected |= FIELD_PREP(APPLE_PMGR_PS_ACTUAL, APPLE_PMGR_PS_ACTIVE);
++	}
++	ret = apple_pmgr_gfx_poll(ps, mask, expected, &observation->final,
++				  APPLE_PMGR_GFX_VALID_FINAL, observation);
++	if (ret)
++		goto cleanup;
++	observation->auto_policy_restored = 1;
++	return 0;
++
++cleanup:
++	apple_pmgr_gfx_cleanup(ps, original_auto, observation);
++	return ret;
++}
++static int apple_pmgr_gfx_pulse_available(struct apple_pmgr_ps *ps,
++					 struct apple_pmgr_gfx_reset_observation *observation)
++{
++	unsigned long flags;
++	int ret;
++
++	/* Block new references and refuse all existing shared/exclusive users. */
++	mutex_lock(&ps->rcdev.lock);
++	if (!list_empty(&ps->rcdev.reset_control_head)) {
++		observation->reset_users_present = 1;
++		ret = -EBUSY;
++		goto unlock;
++	}
++	spin_lock_irqsave(&ps->genpd.slock, flags);
++	ret = apple_pmgr_gfx_pulse_locked(ps, observation);
++	spin_unlock_irqrestore(&ps->genpd.slock, flags);
++unlock:
++	mutex_unlock(&ps->rcdev.lock);
++	return ret;
++}
++/* END T6040 GFX CHECKED CORE. */
+ 
+ static int apple_pmgr_ps_set(struct generic_pm_domain *genpd, u32 pstate, bool auto_enable)
+ {
+@@ -359,6 +562,7 @@
+ 	if (ret < 0)
+ 		goto err_remove;
+ 
++	platform_set_drvdata(pdev, ps);
+ 	return 0;
+ err_remove:
+ 	of_genpd_del_provider(node);
+@@ -382,6 +586,99 @@
+ 	},
+ };
+ 
++static int apple_pmgr_t6040_gfx_provider_get(struct platform_device **result)
++{
++	struct device_node *node;
++	struct platform_device *pdev;
++	struct apple_pmgr_ps *ps;
++	const char *label, *compatible;
++	u32 reg[2], cells;
++	int ret = -ENODEV;
++
++	if (!of_machine_is_compatible("apple,t6040") ||
++	    !of_machine_is_compatible("apple,j614s"))
++		return -ENODEV;
++	node = of_find_node_by_path("/soc/power-management@288e80000/power-controller@110");
++	if (!node)
++		return -ENODEV;
++	if (of_property_count_u32_elems(node, "reg") != 2 ||
++	    of_property_read_u32_array(node, "reg", reg, 2) ||
++	    reg[0] != 0x110 || reg[1] != 4 ||
++	    of_property_count_u32_elems(node, "#reset-cells") != 1 ||
++	    of_property_read_u32(node, "#reset-cells", &cells) || cells ||
++	    of_property_count_strings(node, "label") != 1 ||
++	    of_property_read_string(node, "label", &label) || strcmp(label, "gfx") ||
++	    of_property_count_strings(node, "compatible") != 2 ||
++	    of_property_read_string_index(node, "compatible", 0, &compatible) ||
++	    strcmp(compatible, "apple,t6041-pmgr-pwrstate") ||
++	    of_property_read_string_index(node, "compatible", 1, &compatible) ||
++	    strcmp(compatible, "apple,t8103-pmgr-pwrstate"))
++		goto put_node;
++	pdev = of_find_device_by_node(node);
++	if (!pdev)
++		goto put_node;
++	device_lock(&pdev->dev);
++	ps = dev_get_drvdata(&pdev->dev);
++	if (pdev->dev.driver != &apple_pmgr_ps_driver.driver || !ps ||
++	    ps->dev != &pdev->dev || ps->offset != 0x110 ||
++	    strcmp(ps->genpd.name, "gfx") ||
++	    strcmp(dev_name(&pdev->dev),
++		   "288e80000.power-management:power-controller@110")) {
++		device_unlock(&pdev->dev);
++		put_device(&pdev->dev);
++		goto put_node;
++	}
++	of_node_put(node);
++	*result = pdev; /* Device reference and device lock belong to the caller. */
++	return 0;
++
++put_node:
++	of_node_put(node);
++	return ret;
++}
++
++static int apple_pmgr_t6040_gfx_observe(bool pulse,
++				     struct apple_pmgr_gfx_reset_observation *observation)
++{
++	struct platform_device *pdev;
++	struct apple_pmgr_ps *ps;
++	unsigned long flags;
++	int ret;
++
++	if (!observation)
++		return -EINVAL;
++	memset(observation, 0, sizeof(*observation));
++	ret = apple_pmgr_t6040_gfx_provider_get(&pdev);
++	if (ret)
++		goto result;
++	ps = dev_get_drvdata(&pdev->dev);
++	if (pulse) {
++		ret = apple_pmgr_gfx_pulse_available(ps, observation);
++	} else {
++		spin_lock_irqsave(&ps->genpd.slock, flags);
++		ret = apple_pmgr_gfx_snapshot_locked(ps, observation);
++		spin_unlock_irqrestore(&ps->genpd.slock, flags);
++	}
++	device_unlock(&pdev->dev);
++	put_device(&pdev->dev);
++
++result:
++	observation->operation_error = ret;
++	return ret;
++}
++
++int apple_pmgr_t6040_gfx_snapshot(struct apple_pmgr_gfx_reset_observation *observation)
++{
++	return apple_pmgr_t6040_gfx_observe(false, observation);
++}
++EXPORT_SYMBOL_GPL(apple_pmgr_t6040_gfx_snapshot);
++
++int apple_pmgr_t6040_gfx_checked_pulse(struct apple_pmgr_gfx_reset_observation *observation)
++{
++	return apple_pmgr_t6040_gfx_observe(true, observation);
++}
++EXPORT_SYMBOL_GPL(apple_pmgr_t6040_gfx_checked_pulse);
++
+ MODULE_AUTHOR("Hector Martin <marcan@marcan.st>");
+ MODULE_DESCRIPTION("PMGR power state driver for Apple SoCs");
+ 
+--- /dev/null
++++ b/include/linux/soc/apple/pmgr-gfx-reset.h
+@@ -0,0 +1,55 @@
++/* SPDX-License-Identifier: GPL-2.0-only OR MIT */
++#ifndef _LINUX_SOC_APPLE_PMGR_GFX_RESET_H
++#define _LINUX_SOC_APPLE_PMGR_GFX_RESET_H
++
++#include <linux/bits.h>
++#include <linux/types.h>
++
++#define APPLE_PMGR_GFX_VALID_BEFORE	BIT(0)
++#define APPLE_PMGR_GFX_VALID_AUTO_HELD	BIT(1)
++#define APPLE_PMGR_GFX_VALID_DISABLED	BIT(2)
++#define APPLE_PMGR_GFX_VALID_ASSERTED	BIT(3)
++#define APPLE_PMGR_GFX_VALID_DEASSERTED	BIT(4)
++#define APPLE_PMGR_GFX_VALID_RELEASED	BIT(5)
++#define APPLE_PMGR_GFX_VALID_FINAL		BIT(6)
++#define APPLE_PMGR_GFX_VALID_CLEANUP_FINAL	BIT(7)
++
++/* Valid bits describe successful register reads, including timed-out polls. */
++struct apple_pmgr_gfx_reset_observation {
++	u32 valid;
++	u32 domain_on;
++	u32 reset_users_present;
++	u32 before;
++	u32 auto_held;
++	u32 disabled;
++	u32 asserted;
++	u32 deasserted;
++	u32 released;
++	u32 final;
++	u32 cleanup_final;
++	u32 auto_policy_restored;
++	int operation_error;
++	int cleanup_error;
++};
++
++/* Exact T6040/J614s GFX provider only. Snapshot performs no register writes. */
++int apple_pmgr_t6040_gfx_snapshot(struct apple_pmgr_gfx_reset_observation *observation);
++
++/*
++ * Experimental explicit device-reset pulse, inactive unless called.
++ * Caller holds GFX runtime-PM ownership, serializes its resident worker, stops
++ * publication, excludes other reset users and retains all GPU/DMA backing.
++ * The pulse refuses existing reset-core references and blocks new references
++ * under the reset-controller lock. It uses the existing domain lock for the
++ * register sequence. Both APIs are sleepable; callers must not already hold
++ * the provider device lock, reset-controller lock or domain spinlock. Success proves
++ * command readback only; no ASC/GPU reset coverage or DMA retirement guarantee.
++ * AUTO_ENABLE is temporarily inhibited and restored after confirmed release.
++ * Cleanup attempts to inhibit AUTO_ENABLE before release; failed bus operations
++ * can leave that inhibition unconfirmed. It restores policy only after confirmed
++ * inhibition and release, and reports errors/readback for uncertain cleanup.
++ * Inspect both errors and valid observation fields; do not release backing.
++ */
++int apple_pmgr_t6040_gfx_checked_pulse(struct apple_pmgr_gfx_reset_observation *observation);
++
++#endif
