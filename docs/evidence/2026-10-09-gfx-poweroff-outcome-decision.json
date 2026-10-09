@@ -1,0 +1,124 @@
+{
+  "schema": "m4rch.gfx-power-off-outcome-decision.v1",
+  "date": "2026-10-09",
+  "boot_id": "339b9e8e-4535-4550-97d6-840301c6baac",
+  "kernel_release": "7.1.13-m4rch-gpu-native-reset",
+  "owner_sha256": "4b4914b677c15b55718e6e96f4d6683a0dd295f4337659aff709a8ffef931be0",
+  "candidate_receipt_sha256": "8644ae827a06da50d9793199a7c780305cff85abb9c9e826cde41b967971f471",
+  "candidate_loaded_once": true,
+  "start_clear_writes": 1,
+  "known_stop_eagain_confirmed_with_later_read_only_idle": true,
+  "confirmation_changed_only_host_metadata": true,
+  "normal_pm_puts": 1,
+  "normal_pm_put_return": 0,
+  "retained_owned_pages": 174,
+  "own_pm_reference_held": false,
+  "consumer_retained_and_suspended": true,
+  "pm_usage_count": 0,
+  "strict_off_observed": false,
+  "after_off_word": "0x0f000b00",
+  "after_off_actual": 0,
+  "after_off_target": 0,
+  "after_off_auto": 0,
+  "after_off_busy11": 1,
+  "after_off_domain_on": 0,
+  "post_put_loop_samples": 101,
+  "terminal_command_return": -110,
+  "objects_power_counter_initial_final": [
+    40513,
+    67067
+  ],
+  "owned_power_counter_initial_final": [
+    40514,
+    67068
+  ],
+  "post_off_interval_seconds": 221.286058,
+  "qualified_shared_producer_cessation_observed": false,
+  "physical_all_gpu_cessation_verified": false,
+  "dma_or_fabric_drain_verified": false,
+  "restart_qualified": false,
+  "backing_release_qualified": false,
+  "execution_or_rendering_verified": false,
+  "recovery_phase": 2,
+  "recovery_counter": 1,
+  "consumed_control_cursors": [
+    32,
+    32,
+    32
+  ],
+  "submitted_work": false,
+  "admitted_current_commands": [
+    "sample",
+    "gfx-snapshot"
+  ],
+  "forbidden_current_actions": [
+    "second PM put",
+    "resume/get",
+    "STOP",
+    "ASC/SGX/mailbox access",
+    "reset retry",
+    "START/INIT/warm wake",
+    "recover/control/trace-off/submit",
+    "new owner/root",
+    "unmap/free",
+    "consumer detach",
+    "module unload"
+  ],
+  "next_hardware_candidate_ready": false,
+  "next_action": "Trace selected native shutdown coordination and the unresolved runtime mapper binding; do not repeat the consumed leaf-reset or power-off trials.",
+  "native_findings": {
+    "virtual401_real_parent386": true,
+    "dedicated_virtual401_ps_write": false,
+    "afr385_flags9_forces_on": true,
+    "extra_native_power_disable_write": false,
+    "mapper_terminal": "IOResources setActive property, actual runtime service unresolved",
+    "target_zero_conditional_bit11_wait_mask": "0x800",
+    "target_zero_conditional_bit11_wait_expected": 0
+  },
+  "raw_live_input_bindings_verified": 94,
+  "stop_confirmation_negative_cases": 17,
+  "hardware_operations_pending": false,
+  "files": [
+    {
+      "path": "docs/evidence/2026-10-09-gfx-poweroff-live-review.md",
+      "sha256": "32b6079c168cb42a23aa4dc86908a09cca686496877cd420315e932e4e2595db",
+      "bytes": 6345
+    },
+    {
+      "path": "docs/evidence/2026-10-09-gfx-poweroff-live-review.json",
+      "sha256": "4e5c070940c7e932d287704b3423e9af85031fcb4e1ef7bbea348570b6513811",
+      "bytes": 95700
+    },
+    {
+      "path": "docs/evidence/2026-10-09-gfx-mapper-terminal.md",
+      "sha256": "57d95da44fc5226ac7dff89e361bcbf5dff01db3d2467c87e43632db7662c4a1",
+      "bytes": 10619
+    },
+    {
+      "path": "docs/evidence/2026-10-09-gfx-mapper-terminal.json",
+      "sha256": "cb639bcf673773456b7d32f71254339a86ebaf063ac6239ac2ebd257a0a9547b",
+      "bytes": 48493
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-poweroff-observation/confirm-stop.py",
+      "sha256": "ff6aecb9010e81c8bc9474e1913e8a195036d0802f153d0573560a9e745b7b36",
+      "bytes": 8523
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-poweroff-observation/test-confirm-stop.py",
+      "sha256": "80566cd8e580ad6889b2c21abe9267f32eae98d17d09e9d71a611d966a36bc72",
+      "bytes": 3964
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-poweroff-observation/README.md",
+      "sha256": "de6d79d82288bf93f9316487170147bb39266b14f6b7cf864d9ef9621fe32166",
+      "bytes": 1698
+    },
+    {
+      "path": "out/gfx-poweroff-observation/known-stop-eagain-replay.json",
+      "sha256": "204b45e22efb46702c5069b53c197a4d5d884199c5f0db7c99a9647955b88daa",
+      "bytes": 3683
+    }
+  ],
+  "qualification": "Normal GFX PM accounting and ACTUAL/TARGET0 are proved in scope; strict OFF/whole-GPU cessation, retirement, recovery, restart and rendering are contradicted or unproved."
+}
