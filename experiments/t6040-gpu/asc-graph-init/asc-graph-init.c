@@ -95,6 +95,14 @@ static void ksm_status_sample(const char *phase)
  /* Matched snapshot164a4/164b0 and service1ac1c/1ac24; no bank-selector writes. */
  pr_info("m4rch ksm-live: phase=%s raw21048=%#llx raw21050=%#llx raw21058=%#llx raw21060=%#llx raw211c0=%#llx\n",
          phase,readq(ksm+0x1048),readq(ksm+0x1050),readq(ksm+0x1058),readq(ksm+0x1060),readq(ksm+0x11c0));
+#ifdef RENDER_HW_COMPLETION_FIRST
+ {
+  unsigned int q;
+  /* Matched firmware15ee0..16070: config21148+8*q/status21168+8*q. */
+  for(q=0;q<4;q++)
+   pr_info("m4rch hw-completion-register: phase=%s queue=%u config=%#llx status=%#llx\n",phase,q,readq(ksm+0x1148+q*8),readq(ksm+0x1168+q*8));
+ }
+#endif
  iounmap(ksm);
  fault=ioremap(0x28800c000ULL,0x4000);
  if(fault){
@@ -108,8 +116,13 @@ static void ksm_status_sample(const char *phase)
  * write these pages after publication. A byte change is not rendering proof. */
 static void joined_output_sample(const char *phase)
 {
- static const unsigned int pages[]={20,47};
- unsigned int counts[2]={0,0},i,j;
+ static const unsigned int pages[]={20,47,
+#ifdef RENDER_HW_COMPLETION_FIRST
+  RENDER_HW_COMPLETION_FIRST,RENDER_HW_COMPLETION_FIRST+1,
+  RENDER_HW_COMPLETION_FIRST+2,RENDER_HW_COMPLETION_FIRST+3,
+#endif
+ };
+ unsigned int counts[ARRAY_SIZE(pages)]={0},i,j;
  for(i=0;i<ARRAY_SIZE(pages);i++) {
   u8 *cpu=page_address(owned[RENDER_FIRST_PAGE+pages[i]]);
   const u8 *old=render_bytes+pages[i]*PAGE_SIZE;
@@ -120,6 +133,10 @@ static void joined_output_sample(const char *phase)
   for(j=0;j<PAGE_SIZE;j++) counts[i]+=READ_ONCE(cpu[j])!=old[j];
  }
  pr_info("m4rch joined-live-output: phase=%s target_changed=%u completion_changed=%u\n",phase,counts[0],counts[1]);
+#ifdef RENDER_HW_COMPLETION_FIRST
+ for(i=2;i<ARRAY_SIZE(pages);i++)
+  pr_info("m4rch joined-hw-completion: phase=%s queue=%u changed=%u\n",phase,i-2,counts[i]);
+#endif
 }
 #endif
 static int graph_snapshot_create(void)

@@ -11,7 +11,7 @@ p.add_argument('sampler_workspace',type=Path);p.add_argument('integrated_backing
 kit=Path(__file__).resolve().parent
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 prep=json.loads((a.integrated_backing/'preparation.json').read_text())
-if prep['pages'] not in (47,48,52) or 'integrated_pair' not in prep or prep['submission_ready'] is not False:raise ValueError('Require a staged47/48/52-page native pair backing')
+if prep['pages'] not in (47,48,52,56) or 'integrated_pair' not in prep or prep['submission_ready'] is not False:raise ValueError('Require a staged47/48/52/56-page native pair backing')
 a.output.mkdir(exist_ok=False,parents=True)
 for tag in ['adt-current','sample-pagetables','root-text-sample','root-data-sample','arena-l2-sample','asc-root-envelope','asc-arena-preflight']:
  shutil.copytree(a.sampler_workspace/tag,a.output/tag)
