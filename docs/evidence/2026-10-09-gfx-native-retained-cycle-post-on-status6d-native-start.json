@@ -1,0 +1,304 @@
+{
+  "schema": "m4rch.gfx-native-retained-cycle-post-on-status6d-native-start.v1",
+  "offline_only": true,
+  "hardware_actions": [],
+  "source_changes": [],
+  "new_policy_prepared": false,
+  "new_candidate_built": false,
+  "boot_id": "96264748-b049-403f-9240-975716f71d0c",
+  "operation_directory": "out/gfx-native-retained-cycle/candidate/asc-graph-init/boot-96264748-b049-403f-9240-975716f71d0c/resident-operations/20261009T222043.608818Z-gfx-native-retained-cycle-c58ef894",
+  "selected_owner_sha256": "4f9d6ea85df700166583e6992e57d935a8b68ea19b695cde07e1a93bb783d062",
+  "container": {
+    "path": "out/private-apple/kernelcache.decoded",
+    "bytes": 119308288,
+    "previously_bound_sha256": "6158e1c0d591240808e26ff1da050b2fa0ed3eb17c1779d2ddde3171b959536f",
+    "whole_container_rehash_performed_this_review": false
+  },
+  "bounded_native_ranges_reverified": [
+    {
+      "label": "common_startCPUWithOptions",
+      "start": "0xfffffe0008a42f40",
+      "end_exclusive": "0xfffffe0008a43260",
+      "bytes": 800,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 27520832,
+      "sha256": "7a758f60ea99876e999d7843fa55fd2f7bcb988da402c440e5033598142100f7",
+      "provenance": "existing matched reset range reused"
+    },
+    {
+      "label": "V6_runCPU",
+      "start": "0xfffffe0008a3fcf4",
+      "end_exclusive": "0xfffffe0008a3fda4",
+      "bytes": 176,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 27507956,
+      "sha256": "d875ef3271218b40d767f2428ffe91f340c0f34cbc05ee6867462437ca604278",
+      "provenance": "existing matched reset range reused"
+    },
+    {
+      "label": "V6_isIdle",
+      "start": "0xfffffe0008a3fc54",
+      "end_exclusive": "0xfffffe0008a3fcf4",
+      "file_offset": 27507796,
+      "bytes": 160,
+      "sha256": "4ff5abbdbfe25f8aa81495cf25db2047005c4fc8d3eb08c0967e82e05fa5d031"
+    },
+    {
+      "label": "V6_idle_ctrl_check_property_setup",
+      "start": "0xfffffe0008a3f9d4",
+      "end_exclusive": "0xfffffe0008a3f9e8",
+      "file_offset": 27507156,
+      "bytes": 20,
+      "sha256": "693165e3a0230501e92830bce169cbe2605799e53a433bdda6e6a726d9f09456"
+    }
+  ],
+  "bounded_property_string": {
+    "address": "0xfffffe0007147b98",
+    "file_offset": 1325976,
+    "bytes": 16,
+    "value": "idle-ctrl-check",
+    "sha256": "3dafa22ef3dcb57bb9db09745ff50d0817b864ae00892f62612b7f7bacbacab8"
+  },
+  "current_adt_selected_properties": {
+    "idle-ctrl-check": {
+      "present": false,
+      "hex": ""
+    },
+    "cpu-ctrl-filtered": {
+      "present": false,
+      "hex": ""
+    },
+    "running": {
+      "present": false,
+      "hex": ""
+    },
+    "force-timebase-sync": {
+      "present": false,
+      "hex": ""
+    },
+    "no-activate-mapper": {
+      "present": false,
+      "hex": ""
+    }
+  },
+  "actual_stage": {
+    "first_off_qualified": true,
+    "first_stop_idle_status": "0x6d",
+    "first_stop_control_after10": "0x0",
+    "first_stop_control_after20": "0x0",
+    "before_second_on": {
+      "control44": "0x0",
+      "status48": "0x6c",
+      "rx114": "0x20001",
+      "tx110": "0x20001"
+    },
+    "second_on": {
+      "result": 0,
+      "on_complete": true,
+      "request_written": "0x2000",
+      "votes_verified": 3,
+      "status_zero_ack_bypass": true,
+      "request_acked": false
+    },
+    "after_second_on": {
+      "control44": "0x0",
+      "status48": "0x6d",
+      "rx114": "0x20001",
+      "tx110": "0x20001"
+    },
+    "refusal": "cold-boundary-unqualified",
+    "result": -16,
+    "start_attempted": false,
+    "protocol_records": 0,
+    "second_request_attempted": false,
+    "second_off_attempted": false,
+    "second_pm_put_attempted": false,
+    "second_ref_held": true,
+    "held": true,
+    "usage": 1,
+    "runtime_error": 0,
+    "objects_owned_notifications_equal_first_off": true,
+    "allocations_retained": 174
+  },
+  "actual_rows": [
+    {
+      "path": "out/gfx-native-retained-cycle/candidate/asc-graph-init/boot-96264748-b049-403f-9240-975716f71d0c/resident-operations/20261009T222016.219857Z-gfx-powergate-229fe379/dmesg-after.log",
+      "line": 1236,
+      "text": "[  217.842398] m4rch gfx-native-powergate-drain: phase=cpu-stop-return result=0 intent=1 initial_recovery_failed=1 initial_completed_cycles=0 request_attempted=1 request=0x60000000000202 ack_observed=1 ack_message=0x70000000000201 ack_metadata=0x10ef0000000000 ack_polls=4 rx_messages=1 rx_empty_after_ack=1 rx_empty_before_cpu=1 idle_observed=1 idle_polls=1 idle_status=0x6d clear10_attempted=1 control_before=0x10 control_after10=0x0 clear20_attempted=1 control_after20=0x0 cpu_stopped=1 off_delegated=0 held=1 allocations_retained=174 restart_allowed=0 dma_retirement_verified=0"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/candidate/asc-graph-init/boot-96264748-b049-403f-9240-975716f71d0c/resident-operations/20261009T222043.608818Z-gfx-native-retained-cycle-c58ef894/dmesg-after.log",
+      "line": 1179,
+      "text": "[  245.302792] m4rch gfx-native-retained-cycle: phase=cold-boundary result=0 refused_condition=none intent=1 first_off_fields_historical=1 powercycle_complete=0 application_rejoined=0 allocations_retained=174 restart_allowed=0 dma_retirement_verified=0"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/candidate/asc-graph-init/boot-96264748-b049-403f-9240-975716f71d0c/resident-operations/20261009T222043.608818Z-gfx-native-retained-cycle-c58ef894/dmesg-after.log",
+      "line": 1180,
+      "text": "[  245.302793] m4rch gfx-native-retained-cycle-state: phase=cold-boundary identity_captured=1 identities_preserved=1 first_off_preserved=1 pm_get_attempted=1 pm_get_result=0 second_ref_held=1 held=1 usage=1 runtime_error=0 runtime_status=0 active=1 suspended=0"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/candidate/asc-graph-init/boot-96264748-b049-403f-9240-975716f71d0c/resident-operations/20261009T222043.608818Z-gfx-native-retained-cycle-c58ef894/dmesg-after.log",
+      "line": 1181,
+      "text": "[  245.302794] m4rch gfx-native-retained-cycle-transport: phase=cold-boundary second_on_attempted=0 second_on_complete=0 boundary_qualified=0 control44=0x0 status48=0x6c rx_status=0x20001 tx_status=0x20001 start_attempted=0 hello_reply_attempts=0 hello_replied=0 map_reply_attempts=0 endpoint_map=0 appmap=0x0 map_seen=0x0 protocol_records=0 protocol_polls=0"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/candidate/asc-graph-init/boot-96264748-b049-403f-9240-975716f71d0c/resident-operations/20261009T222043.608818Z-gfx-native-retained-cycle-c58ef894/dmesg-after.log",
+      "line": 1182,
+      "text": "[  245.302795] m4rch gfx-native-retained-cycle-management: phase=cold-boundary second_request_attempted=0 second_ack_observed=0 second_ack_message=0x0 second_ack_metadata=0x0 second_ack_polls=0 second_idle_polls=0 second_clear10_attempted=0 second_clear20_attempted=0 second_cpu_stopped=0"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/candidate/asc-graph-init/boot-96264748-b049-403f-9240-975716f71d0c/resident-operations/20261009T222043.608818Z-gfx-native-retained-cycle-c58ef894/dmesg-after.log",
+      "line": 1183,
+      "text": "[  245.302796] m4rch gfx-native-retained-cycle-off: phase=cold-boundary second_off_attempted=0 second_off_complete=0 second_pm_put_attempted=0 second_pm_put_result=0 second_off_snapshot_result=0 second_off_samples=0 second_provider_off_observed=0 second_accounting_ok=0"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/candidate/asc-graph-init/boot-96264748-b049-403f-9240-975716f71d0c/resident-operations/20261009T222043.608818Z-gfx-native-retained-cycle-c58ef894/dmesg-after.log",
+      "line": 1207,
+      "text": "[  245.303000] m4rch gfx-retained-cycle-coordinate: epoch=2 enabled=1 result=0 on_attempted=1 on_complete=1 request_attempted=1 request_acked=0 ack_bypassed=1 request_before=0x0 request_written=0x2000 status_payload=0x0 status_raw=0x0 votes_attempted=3 votes_verified=3 first_on_complete=1 first_off_complete=1 first_session_reset=0"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/candidate/asc-graph-init/boot-96264748-b049-403f-9240-975716f71d0c/resident-operations/20261009T222043.608818Z-gfx-native-retained-cycle-c58ef894/dmesg-after.log",
+      "line": 1208,
+      "text": "[  245.303002] m4rch gfx-native-retained-cycle: phase=cold-boundary result=0 refused_condition=none intent=1 first_off_fields_historical=1 powercycle_complete=0 application_rejoined=0 allocations_retained=174 restart_allowed=0 dma_retirement_verified=0"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/candidate/asc-graph-init/boot-96264748-b049-403f-9240-975716f71d0c/resident-operations/20261009T222043.608818Z-gfx-native-retained-cycle-c58ef894/dmesg-after.log",
+      "line": 1209,
+      "text": "[  245.303003] m4rch gfx-native-retained-cycle-state: phase=cold-boundary identity_captured=1 identities_preserved=1 first_off_preserved=1 pm_get_attempted=1 pm_get_result=0 second_ref_held=1 held=1 usage=1 runtime_error=0 runtime_status=0 active=1 suspended=0"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/candidate/asc-graph-init/boot-96264748-b049-403f-9240-975716f71d0c/resident-operations/20261009T222043.608818Z-gfx-native-retained-cycle-c58ef894/dmesg-after.log",
+      "line": 1210,
+      "text": "[  245.303004] m4rch gfx-native-retained-cycle-transport: phase=cold-boundary second_on_attempted=1 second_on_complete=1 boundary_qualified=0 control44=0x0 status48=0x6d rx_status=0x20001 tx_status=0x20001 start_attempted=0 hello_reply_attempts=0 hello_replied=0 map_reply_attempts=0 endpoint_map=0 appmap=0x0 map_seen=0x0 protocol_records=0 protocol_polls=0"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/candidate/asc-graph-init/boot-96264748-b049-403f-9240-975716f71d0c/resident-operations/20261009T222043.608818Z-gfx-native-retained-cycle-c58ef894/dmesg-after.log",
+      "line": 1211,
+      "text": "[  245.303005] m4rch gfx-native-retained-cycle-management: phase=cold-boundary second_request_attempted=0 second_ack_observed=0 second_ack_message=0x0 second_ack_metadata=0x0 second_ack_polls=0 second_idle_polls=0 second_clear10_attempted=0 second_clear20_attempted=0 second_cpu_stopped=0"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/candidate/asc-graph-init/boot-96264748-b049-403f-9240-975716f71d0c/resident-operations/20261009T222043.608818Z-gfx-native-retained-cycle-c58ef894/dmesg-after.log",
+      "line": 1212,
+      "text": "[  245.303006] m4rch gfx-native-retained-cycle-off: phase=cold-boundary second_off_attempted=0 second_off_complete=0 second_pm_put_attempted=0 second_pm_put_result=0 second_off_snapshot_result=0 second_off_samples=0 second_provider_off_observed=0 second_accounting_ok=0"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/candidate/asc-graph-init/boot-96264748-b049-403f-9240-975716f71d0c/resident-operations/20261009T222043.608818Z-gfx-native-retained-cycle-c58ef894/dmesg-after.log",
+      "line": 1213,
+      "text": "[  245.303006] m4rch gfx-native-retained-cycle: phase=retained-return result=-16 refused_condition=cold-boundary-unqualified intent=1 first_off_fields_historical=1 powercycle_complete=0 application_rejoined=0 allocations_retained=174 restart_allowed=0 dma_retirement_verified=0"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/candidate/asc-graph-init/boot-96264748-b049-403f-9240-975716f71d0c/resident-operations/20261009T222043.608818Z-gfx-native-retained-cycle-c58ef894/dmesg-after.log",
+      "line": 1214,
+      "text": "[  245.303007] m4rch gfx-native-retained-cycle-state: phase=retained-return identity_captured=1 identities_preserved=1 first_off_preserved=1 pm_get_attempted=1 pm_get_result=0 second_ref_held=1 held=1 usage=1 runtime_error=0 runtime_status=0 active=1 suspended=0"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/candidate/asc-graph-init/boot-96264748-b049-403f-9240-975716f71d0c/resident-operations/20261009T222043.608818Z-gfx-native-retained-cycle-c58ef894/dmesg-after.log",
+      "line": 1215,
+      "text": "[  245.303008] m4rch gfx-native-retained-cycle-transport: phase=retained-return second_on_attempted=1 second_on_complete=1 boundary_qualified=0 control44=0x0 status48=0x6d rx_status=0x20001 tx_status=0x20001 start_attempted=0 hello_reply_attempts=0 hello_replied=0 map_reply_attempts=0 endpoint_map=0 appmap=0x0 map_seen=0x0 protocol_records=0 protocol_polls=0"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/candidate/asc-graph-init/boot-96264748-b049-403f-9240-975716f71d0c/resident-operations/20261009T222043.608818Z-gfx-native-retained-cycle-c58ef894/dmesg-after.log",
+      "line": 1216,
+      "text": "[  245.303009] m4rch gfx-native-retained-cycle-management: phase=retained-return second_request_attempted=0 second_ack_observed=0 second_ack_message=0x0 second_ack_metadata=0x0 second_ack_polls=0 second_idle_polls=0 second_clear10_attempted=0 second_clear20_attempted=0 second_cpu_stopped=0"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/candidate/asc-graph-init/boot-96264748-b049-403f-9240-975716f71d0c/resident-operations/20261009T222043.608818Z-gfx-native-retained-cycle-c58ef894/dmesg-after.log",
+      "line": 1217,
+      "text": "[  245.303009] m4rch gfx-native-retained-cycle-off: phase=retained-return second_off_attempted=0 second_off_complete=0 second_pm_put_attempted=0 second_pm_put_result=0 second_off_snapshot_result=0 second_off_samples=0 second_provider_off_observed=0 second_accounting_ok=0"
+    }
+  ],
+  "native_findings": {
+    "idle": "V6_isIdle returns (STATUS48 & 3) != 0; optional CTRL40.bit0 prerequisite is selected by idle-ctrl-check, absent in this boot. Exact6d has low bits1 and satisfies this reviewed idle predicate. Upper bits are not decoded by the helper.",
+    "run_true": "V6_runCPU is conditional on native backend control flag0x132. When selected, true freshly reads CTRL44 and writes OR0x10. It reads no STATUS48 and invokes no idle check.",
+    "common_start": "Options0 checks native host already-running bookkeeping, calls provider enable, selected mapper/firmware callbacks, host mailbox/outbox setup and optional timebase sync, then runCPU(true). The body has no STATUS48 equality or low-bit gate; external callbacks remain separate qualification scopes.",
+    "host_vs_register": "RTBuddy IOP status1/2/4/5/6/7 is host protocol bookkeeping, distinct from ASC hardware STATUS48 values6c/6d. STATUS6d does not prove host status6 or management/application readiness."
+  },
+  "distinct_future_hypothesis": {
+    "admitted_by_this_report": false,
+    "pre_on_statuses_unchanged": [
+      "0x6a",
+      "0x6c"
+    ],
+    "post_qualified_second_on_statuses": [
+      "0x6a",
+      "0x6c",
+      "0x6d"
+    ],
+    "six_d_requires_separate_second_on_complete": true,
+    "six_d_requires_owned_second_ref": true,
+    "six_d_before_second_on_refused": true,
+    "requires": "Own first202 ACK/checked CPU stop/strict physicalOFF and accounting, unchanged174 pages/root/context/first fields, fresh same-consumer secondPMget and ACTIVE, separate secondON completion, STARTclear/RXempty/TXvalidavailable; fresh four operands after intent log and immediate freshCTRL RMW.",
+    "maximum_start_writes": 1,
+    "unsupported_states_still_refused": [
+      "0x6e",
+      "0x48",
+      "0x0",
+      "invalid",
+      "START-set",
+      "RX-pending",
+      "TX-full"
+    ],
+    "init220_or_application_work_admitted": false,
+    "root_context_data_restore_mapper_reset_admitted": false,
+    "current_owner_retry_admitted": false
+  },
+  "unknowns": [
+    "No actual START performed; HELLO/map/second202/secondOFF remain untested.",
+    "Complete STATUS48 bit meanings unknown; low-bit idle is not firmware bootability or app recovery.",
+    "Native mapper setActive and retained hardware translation state are not proved.",
+    "Current second reference remains held; no cleanup or retry qualified."
+  ],
+  "raw_input_pins": [
+    {
+      "path": "docs/evidence/2026-10-09-gfx-retained-cycle-status6c-native-start.json",
+      "bytes": 20190,
+      "sha256": "95696a0f17dd167d085e49aec3f70079aa49d7927b24e9f0d37946b40586ca4f"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/candidate/asc-graph-init/boot-96264748-b049-403f-9240-975716f71d0c/resident-operations/20261009T222043.608818Z-gfx-native-retained-cycle-c58ef894/attempt.json",
+      "bytes": 39653,
+      "sha256": "71b793181091fbf807554a0e9c215673a9fd91c181ce798491bf389d63ecd5fa"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/candidate/asc-graph-init/boot-96264748-b049-403f-9240-975716f71d0c/resident-operations/20261009T222043.608818Z-gfx-native-retained-cycle-c58ef894/dmesg-after.log",
+      "bytes": 131318,
+      "sha256": "da1699e6924130a023f5f4ffc0bd079d46a92a8df6c362d6277f304819d6fdc4"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/candidate/asc-graph-init/boot-96264748-b049-403f-9240-975716f71d0c/resident-operations/20261009T222016.219857Z-gfx-powergate-229fe379/attempt.json",
+      "bytes": 33659,
+      "sha256": "f116e82437fc593a413c6479af825dbf02f85b8a9ca1610e75d11a82a2a23edf"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/candidate/asc-graph-init/boot-96264748-b049-403f-9240-975716f71d0c/resident-operations/20261009T222016.219857Z-gfx-powergate-229fe379/dmesg-after.log",
+      "bytes": 131445,
+      "sha256": "9362f93f613cb8b7a23d43eeb12e9072e886c26ee137e54bd671d268fc95d346"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/candidate/asc-graph-init/boot-96264748-b049-403f-9240-975716f71d0c/boot.adt",
+      "bytes": 606208,
+      "sha256": "99f7dde316043dbdfa93aca5acef553dd8dfa1572359ab681858b17bc5fa71c4"
+    },
+    {
+      "path": "experiments/t6040-gpu/adt.py",
+      "bytes": 2738,
+      "sha256": "09ff91633924f1e352c288fd62323861fb80e417775fc802b625cebb2782a23a"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-retained-cycle/gfx-native-retained-cycle.h",
+      "bytes": 27591,
+      "sha256": "246930202a7c1c3866ccfc997d7523720dff89651b874d29bf67f638b28d5d39"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/prepared-owner-v1/native-retained-cycle-owner-source-receipt.json",
+      "bytes": 14202,
+      "sha256": "59ca87b903980cac6dc9c5ea4fa44d4a346f1f9737a083eff7c50d1b6b0a7b44"
+    },
+    {
+      "path": "out/gfx-native-retained-cycle/owner-qualification-final-v1.json",
+      "bytes": 28680,
+      "sha256": "3db52593e9929d6cecb63602aa9d70dcaa3e77ef9576824617946e295fa2c2d0"
+    }
+  ],
+  "private_native_payloads_included": false
+}
