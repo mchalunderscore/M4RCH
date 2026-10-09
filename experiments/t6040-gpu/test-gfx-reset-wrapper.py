@@ -28,6 +28,7 @@ def main():
     assert not args.output.exists()
     runner = load('resident_offline_test', 'run-resident-gpu.py')
     preparer = load('reset_preparer_offline_test', 'prepare-gfx-reset-trial.py')
+    root_runner = load('reset_root_runner_offline_test', 'run-root-envelope.py')
     base_receipt = args.baseline_candidate / 'asc-root-envelope/build-receipt.json'
     old = json.loads(base_receipt.read_text())
     assert old['artifact_sha256']['asc-graph-init/asc-graph-init.ko'] == preparer.BASE_MODULE_SHA
@@ -35,7 +36,38 @@ def main():
     new['kernel_release'] = RELEASE
     new['kernel_gfx_reset_api'] = {'patch_sha256': PATCH_SHA}
     new['graph_recovery_trial']['gfx_reset_scope'] = copy.deepcopy(CONTRACT)
+    new['graph_power_retirement_probe'] = False
     checks = 0
+    assert root_runner.owner_parameters(new, graph=True) == [
+        'run_gate=2', 'observe_ms=5000', 'resident_session=1']
+    checks += 1
+    for key in ('graph_power_retirement_probe', 'graph_release_on_shutdown',
+                'graph_submit_work'):
+        incompatible = copy.deepcopy(new)
+        incompatible[key] = True
+        try:
+            root_runner.owner_parameters(incompatible, graph=True)
+        except ValueError:
+            checks += 1
+        else:
+            raise AssertionError('Unsafe reset startup accepted: ' + key)
+    try:
+        root_runner.owner_parameters(new, graph=True, warm_restart=True)
+    except ValueError:
+        checks += 1
+    else:
+        raise AssertionError('Reset warm startup accepted')
+    assert root_runner.owner_parameters(old, graph=True) == [
+        'run_gate=2', 'request_shutdown=1', 'observe_ms=5000', 'resident_session=1']
+    assert root_runner.owner_parameters(old, arena=True) == ['run_gate=1']
+    checks += 2
+    for mode in ({}, {'arena': True}):
+        try:
+            root_runner.owner_parameters(new, **mode)
+        except ValueError:
+            checks += 1
+        else:
+            raise AssertionError('Reset receipt accepted outside graph mode')
 
     def state():
         return dict(boot_id='offline', resident_session_active=True,
@@ -132,9 +164,10 @@ def main():
         'successful_and_failed_write_keep_permanent_seal': True,
         'feature_and_default_stop_contracts_verified': True,
         'boot_header_preserved_while_capture_directories_excluded': True,
+        'reset_startup_excludes_shutdown_release_work_and_warm_restart': True,
         'input_receipt_sha256': sha(base_receipt),
         'source_sha256': {name: sha(KIT / name) for name in
-                          ('run-resident-gpu.py', 'prepare-gfx-reset-trial.py',
+                          ('run-resident-gpu.py', 'run-root-envelope.py', 'prepare-gfx-reset-trial.py',
                            'gfx_reset_contract.py', 'test-gfx-reset-wrapper.py')},
         'hardware_access': False,
         'qualification': 'Actual admission and persistence functions, fake regular-file sysfs only. '

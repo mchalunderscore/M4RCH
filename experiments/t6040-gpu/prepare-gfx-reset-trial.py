@@ -70,7 +70,7 @@ def main():
         shutil.copytree(base / tag, output / tag, ignore=ignore_outputs)
     graph = output / 'asc-graph-init'
     for name in ('asc-graph-init.c', 'joined-context-init.h', 'recovery-cycle.h',
-                 'receive-service.h', 'gfx-reset-scope.h'):
+                 'receive-service.h', 'gfx-reset-scope.h', 'gfx-reset-startup.h'):
         shutil.copyfile(KIT / 'asc-graph-init' / name, graph / name)
     makefile = graph / 'Makefile'
     makefile.write_text(makefile.read_text() + '\nccflags-y += -DGFX_RESET_SCOPE_TRIAL\n')
@@ -96,7 +96,8 @@ def main():
             'Frozen graph or backing changed')
     receipt = copy.deepcopy(receipt)
     receipt.update(kernel_release=kernel['kernel_release'],
-                   kernel_notes_sha256=kernel['kernel_notes_sha256'])
+                   kernel_notes_sha256=kernel['kernel_notes_sha256'],
+                   graph_power_retirement_probe=False)
     receipt['graph_recovery_trial']['gfx_reset_scope'] = copy.deepcopy(CONTRACT)
     receipt['kernel_gfx_reset_api'] = {
         'patch_sha256': kernel['patch_sha256'],

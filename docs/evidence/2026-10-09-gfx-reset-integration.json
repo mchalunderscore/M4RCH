@@ -1,0 +1,82 @@
+{
+  "schema": "m4rch-gfx-reset-integration-v1",
+  "boot_id": "ce6572c9-2491-4c87-8e27-6e82cc0ac657",
+  "kernel": "7.1.13-m4rch-gpu-reset",
+  "candidate": "out/gfx-reset-scope/candidate-v2",
+  "startup_load_returncode": 0,
+  "root_published": true,
+  "work_submitted": false,
+  "reset_commands": 1,
+  "reset_assertion_attempted": false,
+  "reset_operation_error": -110,
+  "reset_cleanup_error": 0,
+  "backing_pages_retained": 174,
+  "host_stopped": true,
+  "gate_sealed": true,
+  "reboot_performed": false,
+  "unload_performed": false,
+  "retirement_verified": false,
+  "rendered_pixels_verified": false,
+  "artifacts": [
+    {
+      "path": "docs/evidence/2026-10-09-gfx-reset-integration.md",
+      "sha256": "85891f64fdf83da118bf356f7bd010d89fba6655082e3e63d4214b3f8fef64e9",
+      "bytes": 5042
+    },
+    {
+      "path": "out/gfx-reset-scope/boot-preflight/ce6572c9-2491-4c87-8e27-6e82cc0ac657/before.json",
+      "sha256": "a7510b75c4efe124eaad34a42caeea0529184a838e9864793bb7ed6a94d6b304",
+      "bytes": 1210
+    },
+    {
+      "path": "out/gfx-reset-scope/boot-preflight/ce6572c9-2491-4c87-8e27-6e82cc0ac657/before-v2.json",
+      "sha256": "b89f8430aed8104f14f9e05d738e3dc70db5086ab522661e2feb32d0433a24b5",
+      "bytes": 1257
+    },
+    {
+      "path": "out/gfx-reset-scope/candidate-v2/gfx-reset-preparation.json",
+      "sha256": "e749c53a7a4f5bab7cf9ba0a64c7ab3e72c70c676435f7368c728ca9d25326ed",
+      "bytes": 4884
+    },
+    {
+      "path": "out/gfx-reset-scope/startup-admission-v2-validation.json",
+      "sha256": "16f833b2726fa42c4ab628563eb3b4c2c36997b33ad83f2c414bc69a3bb1a192",
+      "bytes": 3852
+    },
+    {
+      "path": "out/gfx-reset-scope/wrapper-v2-validation.json",
+      "sha256": "3222698a35352cae0ad9c52f266942ea11620096d88a8ee769e794dea70898f1",
+      "bytes": 1177
+    },
+    {
+      "path": "out/gfx-reset-scope/startup-python-independent-review.json",
+      "sha256": "ce6934e96efb6747be46d01526a10f9f67b83ed6306ecf1e7efd2ca61da3c747",
+      "bytes": 2853
+    },
+    {
+      "path": "out/gfx-reset-usb-fix/promotion/result.json",
+      "sha256": "94eb45773e02c6c7ebb3a8eb1b7767db7802892676cabfcab3394da57c6afbd6",
+      "bytes": 996
+    },
+    {
+      "path": "docs/evidence/2026-10-09-gfx-reset-scope-live-review.json",
+      "sha256": "b224d218df61fdeab40fd2bd643888f036b9e6adc78e0a6b747d5f946efe2aae",
+      "bytes": 15254
+    },
+    {
+      "path": "docs/evidence/2026-10-09-gfx-reset-usb-live-persistence.json",
+      "sha256": "0e861cc0179c2983216922361db7d29ebaf3b48eab0a039c9f63b32d80074eff",
+      "bytes": 6146
+    },
+    {
+      "path": "docs/evidence/2026-10-09-gfx-reset-native-disable-semantics.md",
+      "sha256": "fbbc4813a905176cd0a381c927c22a6f73d79bf3cabbbcaa5e296b467580e4e3",
+      "bytes": 8253
+    },
+    {
+      "path": "docs/evidence/2026-10-09-gfx-reset-native-disable-semantics.json",
+      "sha256": "7d66d0662fd77dbb5a1fcede306bc136143a3782bde1536178b8e6e0128ce09d",
+      "bytes": 12399
+    }
+  ]
+}

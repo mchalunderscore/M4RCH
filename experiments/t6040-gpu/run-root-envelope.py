@@ -18,6 +18,29 @@ from live_graph_observer import observe
 from pathlib import Path
 from adt import parse
 from firmware_text_contract import qualify
+from gfx_reset_contract import validate_receipt
+
+
+def owner_parameters(receipt, *, graph=False, arena=False, warm_restart=False):
+    """Derive the actual startup parameters before accessing native hardware."""
+    reset_scope = validate_receipt(receipt)
+    if reset_scope:
+        require(graph and not arena, 'Reset scope requires graph mode')
+        require(not (reset_scope and warm_restart), 'Reset scope forbids warm restart')
+    parameters = ['run_gate=1' if arena else 'run_gate=2']
+    if graph and receipt.get('graph_power_retirement_probe', False):
+        parameters.append('request_shutdown=1')
+    if graph and receipt.get('graph_release_on_shutdown', False):
+        parameters.append('release_on_shutdown=1')
+    if graph and receipt.get('graph_submit_work', False):
+        parameters.append('submit_work=1')
+    if graph and receipt.get('graph_recovery_trial'):
+        parameters.append('observe_ms=5000')
+    if graph and receipt.get('graph_recovery_trial', {}).get('resident_session'):
+        parameters.append('resident_session=1')
+    if warm_restart:
+        parameters.append('warm_restart=1')
+    return parameters
 
 
 def sha(data):
@@ -54,6 +77,10 @@ def main():
     work = args.workspace.resolve()
     build = work/'asc-root-envelope'
     receipt = json.loads((build/'build-receipt.json').read_text())
+    reset_scope = validate_receipt(receipt)
+    require(not (reset_scope and args.cycle is not None), 'Reset scope forbids lifecycle cycles')
+    parameters = owner_parameters(receipt, graph=args.graph, arena=args.arena,
+                                  warm_restart=args.warm_restart_from is not None)
     require(os.geteuid() == 0, 'Native sudo required')
     require(os.uname().release == receipt['kernel_release'], 'Kernel release mismatch')
     require(sha(Path('/sys/kernel/notes').read_bytes()) == receipt['kernel_notes_sha256'], 'Kernel identity mismatch')
@@ -172,6 +199,10 @@ def main():
         require(sha((work/'asc-graph-init/graph-before.bin').read_bytes()) == receipt['graph_fixture_sha256'], 'Graph fixture changed')
         require(sha((work/'asc-graph-init/graph-receipt.json').read_bytes()) == receipt['graph_receipt_sha256'], 'Graph relocation receipt changed')
         shadow = subprocess.run(['insmod',str(selected),'run_gate=1'],capture_output=True,text=True)
+        report['shadow_load'] = dict(parameters=['run_gate=1'], returncode=shadow.returncode,
+                                     stdout=shadow.stdout, stderr=shadow.stderr)
+        (out/'attempt.json').write_text(json.dumps(report,indent=2)+'\n')
+        os.sync()
         require(shadow.returncode == 0, 'Owned graph allocation/shadow walk failed: '+shadow.stderr)
         subprocess.run(['rmmod','asc_graph_init'],check=True)
         (out/'objects-before.bin').write_bytes((work/'asc-graph-init/graph-before.bin').read_bytes())
@@ -181,13 +212,6 @@ def main():
         observer=threading.Thread(target=observe,args=(Path('/sys/kernel/m4rch_gpu_graph_trial/objects'),out/'live-objects',layout,done),daemon=True)
         observer.start()
     try:
-        parameters=['run_gate=1' if args.arena else 'run_gate=2']
-        if args.graph and receipt.get('graph_power_retirement_probe',False):parameters.append('request_shutdown=1')
-        if args.graph and receipt.get('graph_release_on_shutdown',False):parameters.append('release_on_shutdown=1')
-        if args.graph and receipt.get('graph_submit_work',False):parameters.append('submit_work=1')
-        if args.graph and receipt.get('graph_recovery_trial'):parameters.append('observe_ms=5000')
-        if args.graph and receipt.get('graph_recovery_trial',{}).get('resident_session'):parameters.append('resident_session=1')
-        if args.warm_restart_from is not None:parameters.append('warm_restart=1')
         result = subprocess.run(['insmod',str(selected)]+parameters,capture_output=True,text=True)
     finally:
         done.set()
@@ -247,6 +271,8 @@ def main():
         report['diagnostic_session_active']=present and result.returncode==0 and 'm4rch recovery-session: diagnostic=1 sealed=1' in delta
         report['reboot_required']=present and not resident
         report['interpretation']='Application recovery trial; all owned backing remains retained. Resident success permits typed control/recovery and one immutable triangle publication; no work reuse, DMA retirement or unload qualification.'
+        if reset_scope:
+            report['interpretation']='Retained no-work GFX reset scope. Only sample/gfx-snapshot, one guarded gfx-reset and packet-free stop are permitted; no restart, submission, backing release or DMA-retirement qualification.'
         if present and receipt['graph_recovery_trial'].get('receive_service'):
             notifications=Path('/sys/kernel/m4rch_gpu_graph_trial/notifications').read_bytes()
             (out/'notifications-after.bin').write_bytes(notifications)
@@ -338,7 +364,9 @@ def main():
         print('Graph retired and unloaded; inspect post-unload proof before another cycle.' if report.get('post_unload_verified') else 'Graph retirement incomplete; inspect evidence; do not retry.')
         return
     os.sync()
-    if report.get('diagnostic_session_active'):
+    if reset_scope and (report.get('diagnostic_session_active') or report.get('resident_session_active')):
+        print('Retained GFX reset scope ready for sampling and one guarded reset. All backing pinned; no restart, work submission or unload.')
+    elif report.get('diagnostic_session_active'):
         print('Recovery incomplete; diagnostic session retained with ASC/GFX held. Only sample/stop allowed; no submission, retry or force unload.')
     elif report.get('resident_session_active'):
         print('Resident session active after recovery; use typed resident commands. All backing retained; never force unload.')

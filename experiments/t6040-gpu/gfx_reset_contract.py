@@ -76,6 +76,7 @@ def validate_receipt(receipt):
     require(receipt.get('joined_owned_pages') == 174 and
             trial.get('resident_session') is True and
             receipt.get('graph_submit_work') is False and
+            receipt.get('graph_power_retirement_probe') is False and
             receipt.get('graph_release_on_shutdown') is False,
             'Unexpected reset owner lifetime')
     return True

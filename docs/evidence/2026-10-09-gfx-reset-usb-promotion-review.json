@@ -1,0 +1,67 @@
+{
+  "schema": "m4rch.gfx-reset-usb-promotion-independent-review.v1",
+  "date": "2026-10-09",
+  "boot_id": "ce6572c9-2491-4c87-8e27-6e82cc0ac657",
+  "hardware_touched": false,
+  "installed_files_changed": false,
+  "source_module_archive_blocker": false,
+  "native_trial_observed_by_this_report": false,
+  "imports_resolved": 39,
+  "modversions_enabled": false,
+  "source_byteidentical_to_promoted": true,
+  "archive_body_mode_changed_members": [
+    "usr/lib/modules/7.1.13-m4rch-gpu-reset/kernel/drivers/usb/dwc3/dwc3-apple.ko"
+  ],
+  "artifacts": [
+    {
+      "path": "docs/evidence/2026-10-09-gfx-reset-usb-promotion-review.md",
+      "sha256": "216c2d987a347a87eb7c221c2e909a24d3eb36d6e68c15225c9516dfd10d10cd",
+      "bytes": 2377
+    },
+    {
+      "path": "out/gfx-reset-usb-fix/independent-module-review.json",
+      "sha256": "f489432092a940c6cfec2beee29b5261088106b3f0485004233a41578ddd9233",
+      "bytes": 4672
+    },
+    {
+      "path": "out/gfx-reset-usb-fix/independent-archive-review.json",
+      "sha256": "b0043bb0fb408e49a9b9184f880f5cdcf19cfcf7567466a801a7e6d4f0cc34f9",
+      "bytes": 1614
+    },
+    {
+      "path": "out/gfx-reset-usb-fix/module-preparation.json",
+      "sha256": "9a55f5264c6b83a2450c6ec35eab5c1f35e8d817d05f830382563a4412805784",
+      "bytes": 6685
+    },
+    {
+      "path": "out/gfx-reset-usb-fix/initramfs-qualification.json",
+      "sha256": "ebd3a54523a0c78f0f9de21dbd57fdfed2048371f40a300306eec7abb8cef233",
+      "bytes": 2566
+    },
+    {
+      "path": "out/gfx-reset-usb-fix/module-build.log",
+      "sha256": "bb18d465febc41f0ce9ff34e94c63e69773f2411b310e85f809ec107f6a01758",
+      "bytes": 454
+    },
+    {
+      "path": "patches/experimental-t6040-fixed-host-role-switch.patch",
+      "sha256": "c138588f8509a41502e22c8ddd2e62fa917b181685673edfc01313d2a27b9365",
+      "bytes": 1591
+    },
+    {
+      "path": "out/gfx-reset-usb-fix/module/dwc3-apple.c",
+      "sha256": "7ca78866b27aa670134ded04820c26b7cabfb17640c410ee5cf3b307e0aa5b0c",
+      "bytes": 22045
+    },
+    {
+      "path": "out/gfx-reset-usb-fix/module/dwc3-apple.ko",
+      "sha256": "6491446266d7ab6ba4ec3b3c0229d609b2b465b73ab065a0834d66265babdd98",
+      "bytes": 17096
+    },
+    {
+      "path": "out/gfx-reset-usb-fix/initramfs.img",
+      "sha256": "86dec6ff3b9a4aef1678632d1fcf2371f01e9755c3f39ec15a42fc0b9485d01d",
+      "bytes": 14688415
+    }
+  ]
+}

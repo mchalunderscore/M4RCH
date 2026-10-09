@@ -1,0 +1,144 @@
+{
+  "schema": "m4rch.gfx-reset-usb-live-persistence.v1",
+  "date": "2026-10-09",
+  "boot_id": "ce6572c9-2491-4c87-8e27-6e82cc0ac657",
+  "kernel_release": "7.1.13-m4rch-gpu-reset",
+  "kernel_notes_sha256": "73827a9260e9c49f49036380e62c14d8f2a535edabb808914af7ecbcec05f013",
+  "result": "USB role providers and all three PD bindings recovered by normal glue replacement without reboot; corrected module and initramfs persisted",
+  "native_operator": "root agent",
+  "documentation_agent_hardware_mutations": false,
+  "normal_unload_and_load_returncodes": [
+    0,
+    0
+  ],
+  "force_unload": false,
+  "reboot_performed": false,
+  "usb_devices_disconnected_and_reenumerated": true,
+  "all_three_pd_bound": true,
+  "pd_bound_post_promotion": {
+    "0-0a": {
+      "bound": true,
+      "driver": "/sys/bus/spmi/drivers/tps6598x-spmi",
+      "waiting_for_supplier": null
+    },
+    "0-0c": {
+      "bound": true,
+      "driver": "/sys/bus/spmi/drivers/tps6598x-spmi",
+      "waiting_for_supplier": null
+    },
+    "2-0c": {
+      "bound": true,
+      "driver": "/sys/bus/spmi/drivers/tps6598x-spmi",
+      "waiting_for_supplier": null
+    }
+  },
+  "usb_role_providers": [
+    "382280000.usb-role-switch",
+    "38a280000.usb-role-switch",
+    "392280000.usb-role-switch"
+  ],
+  "all_three_dwc3_bound": true,
+  "wifi_after": "up",
+  "gpu_operation_during_recorded_usb_reload": false,
+  "gpu_module_present_at_reload_receipt": false,
+  "gpu_recovery_established_by_this_evidence": false,
+  "installed_correction": [
+    {
+      "path": "/usr/lib/modules/7.1.13-m4rch-gpu-reset/kernel/drivers/usb/dwc3/dwc3-apple.ko",
+      "sha256": "6491446266d7ab6ba4ec3b3c0229d609b2b465b73ab065a0834d66265babdd98",
+      "matches_promoted_artifact": true,
+      "backup_path": "/boot/GFXR001/usb-before-ce6572c9/dwc3-apple.ko",
+      "backup_sha256": "b43c6cedfa6427c5b3a78e50f7877ad49a3d456dbfaba2780b2c73342bbe4093",
+      "backup_matches_original": true
+    },
+    {
+      "path": "/boot/GFXR001/initramfs.img",
+      "sha256": "86dec6ff3b9a4aef1678632d1fcf2371f01e9755c3f39ec15a42fc0b9485d01d",
+      "matches_promoted_artifact": true,
+      "backup_path": "/boot/GFXR001/usb-before-ce6572c9/initramfs.img",
+      "backup_sha256": "21343273658f7bef4d0e1e335408ac73f6c5eea5e3c34f183874617bcd8dbdda",
+      "backup_matches_original": true
+    }
+  ],
+  "grub_default_preserved": 4,
+  "grub_cfg_sha256": "5cc925334d3b9d783251dc6ae4c6950597e9415cef46d5102fbc0940bedce07a",
+  "installed_kernel_image_sha256": "39f25240a6d4ccfdea340c1c8a88915c22e6997b30d1146e3bbba88868a7cbba",
+  "kernel_image_changed": false,
+  "future_boot_with_corrected_initramfs_verified": false,
+  "cold_boot_verified": false,
+  "all_physical_ports_and_orientations_retested": false,
+  "maintained_source_patch_integration_future_build_requirement": "Future kernel-source rebuilds must include experimental-t6040-fixed-host-role-switch.patch or its equivalent; retained maintained baseline source still omits promoted fix",
+  "historical_offline_documents_unchanged": true,
+  "artifacts": [
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-09-gfx-reset-usb-live-persistence.md",
+      "sha256": "56bd7cbb4001ac20e017961b5cb04f3a2738a787e0364f16e68c63748bdaa4d8",
+      "bytes": 2475
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-09-gfx-reset-usb-source-gap.json",
+      "sha256": "c159f7b5da8a2af8d3b8918a14c443cd55c36df5441ea89201f592456dddb087",
+      "bytes": 4262
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-09-gfx-reset-usb-promotion-review.json",
+      "sha256": "ba89c3d0ee9e73dd81e48bf6028fa0bef8476fb91f04292a93fc48615cf81890",
+      "bytes": 2379
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-reset-usb-fix/boot-ce6572c9-2491-4c87-8e27-6e82cc0ac657/live-reload.json",
+      "sha256": "53e95aed959e0666e98bc33a8b2de37fd6f0188b9f961d4f577798b6bef5496a",
+      "bytes": 1318
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-reset-usb-fix/boot-ce6572c9-2491-4c87-8e27-6e82cc0ac657/dmesg-before.log",
+      "sha256": "2adebe1cab315f34a664e4c68d12724c376a1fe35974a0a48a32d47840f9f1a1",
+      "bytes": 65184
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-reset-usb-fix/boot-ce6572c9-2491-4c87-8e27-6e82cc0ac657/dmesg-after.log",
+      "sha256": "603547ee33f26148c9d8545e00b9809ef4141289cf5a25928c56ab2c3dbcce3d",
+      "bytes": 70948
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-reset-usb-fix/boot-ce6572c9-2491-4c87-8e27-6e82cc0ac657/modules-before.txt",
+      "sha256": "f9ee61acd09b2103a24dc80d1c7325e1e63c367dc083626e0a1b5b251d8dabc7",
+      "bytes": 1443
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-reset-usb-fix/boot-ce6572c9-2491-4c87-8e27-6e82cc0ac657/modules-after.txt",
+      "sha256": "54dc22d3309dd35e841460152e2131ecfd5e28c2cb25d48365011dba6ea9be76",
+      "bytes": 1447
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-reset-usb-fix/promotion/install.py",
+      "sha256": "fc6a59b1cfb2a889ca990dcc333ae70904041fcbf68ee085268343e1f1704606",
+      "bytes": 2527
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-reset-usb-fix/promotion/result.json",
+      "sha256": "94eb45773e02c6c7ebb3a8eb1b7767db7802892676cabfcab3394da57c6afbd6",
+      "bytes": 996
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-reset-usb-fix/post-promotion-readonly.json",
+      "sha256": "4bda53cdb4552d24991bea7c0a8cc26de6f9a256d94f798baf50ca3471f6545f",
+      "bytes": 2199
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-reset-usb-fix/initramfs-qualification.json",
+      "sha256": "ebd3a54523a0c78f0f9de21dbd57fdfed2048371f40a300306eec7abb8cef233",
+      "bytes": 2566
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-reset-usb-fix/module-preparation.json",
+      "sha256": "9a55f5264c6b83a2450c6ec35eab5c1f35e8d817d05f830382563a4412805784",
+      "bytes": 6685
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-reset-install/default-selection.json",
+      "sha256": "8dabfbec9a0b3a2f4e3224bb56f4cbbbe2cd335fc61c4c08d790ae60e4982431",
+      "bytes": 711
+    }
+  ]
+}
