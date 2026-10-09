@@ -32,13 +32,15 @@ static int __init sample_init(void)
   for(q=0;q<2;q++){
    writeq(q,selector+0x3a8);readq(selector+0x3a8);
    /* Matched firmware snapshot16514..1652c reads these banked words. */
-   pr_info("m4rch ksm-bank: queue=%u ring_config=%#llx raw21010=%#llx raw21020=%#llx raw211e0=%#llx\n",q,readq(ksm+0x1008),readq(ksm+0x1010),readq(ksm+0x1020),readq(ksm+0x11e0));
+   pr_info("m4rch ksm-bank: queue=%u ring_config=%#llx raw21010=%#llx raw21020=%#llx raw211e0=%#llx raw21028=%#llx\n",q,readq(ksm+0x1008),readq(ksm+0x1010),readq(ksm+0x1020),readq(ksm+0x11e0),readq(ksm+0x1028));
   }
   writeq(saved,selector+0x3a8);
   pr_info("m4rch ksm-bank: restored_selector=%#llx expected=%#llx\n",readq(selector+0x3a8),saved);
   if(readq(selector+0x3a8)!=saved){iounmap(selector);iounmap(ksm);return -EIO;}
   iounmap(selector);
  }
+ /* Startup ad48/ad54/adc8 preserves upper bits and sets low7=0x11. */
+ pr_info("m4rch ksm-startup: raw211c0=%#llx\n",readq(ksm+0x11c0));
  /* Matched firmware16544..16568 snapshots four global words. */
  pr_info("m4rch ksm-global: raw210e8=%#llx raw210f0=%#llx raw210f8=%#llx raw21100=%#llx\n",readq(ksm+0x10e8),readq(ksm+0x10f0),readq(ksm+0x10f8),readq(ksm+0x1100));
  iounmap(ksm);
