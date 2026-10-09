@@ -3,8 +3,10 @@
 Candidate: `out/gpc-rx-recovery/candidate`.
 Module SHA256:
 `f123d1dbe97705f1ad9bfe3b98aa1e4f33cea95ee7002de3a553ecbf98ce0650`.
-Prepared and reviewed; not yet run. Its GPU graph and immutable draw bytes are
-identical to the telemetry candidate. This changes the host transport.
+Executed once on boot `bba7a8f2-e6d3-49b8-88ed-bc5be2d17c0a`. RX servicing
+passed the observed workload; the first recovery stalled in phase2. See
+`2026-10-09-gpc-rx-recovery-live.md/.json`. Do not repeat this unchanged candidate.
+Its GPU graph and immutable draw bytes are identical to the telemetry candidate.
 
 The host accepts exactly EP32/`0042000000000000` as a receive doorbell and
 consumes validated records instead of echoing a mailbox reply. All twelve native
@@ -41,15 +43,7 @@ mailbox classification. The pinned native consumer independently consumes the
 same255records correctly in emulated RAM. None of these establish live recovery,
 safe teardown, GPU execution or rendering.
 
-After a fresh reboot and clean preflight, run once:
-
-```sh
-sudo -n python experiments/t6040-gpu/run-root-envelope.py out/gpc-rx-recovery/candidate --graph --run
-```
-
-If two idle cycles finish with cleared request state and fresh controls consumed,
-run typed `recover` on the same instance for two more cycles, then its single
-immutable `submit` with captures at1/5/15/30seconds. Inspect journal flags and
-session state before each step. A diagnostic failure permits only sample/stop;
-the stopped session from the preceding trial cannot be reused. No work follows
-the submitted batch, and all backing stays pinned until reboot.
+This historical candidate has run and must not be repeated unchanged. Its
+failed session permits only typed sample/stop, with all backing retained.
+The next distinct candidate is documented in
+`2026-10-09-recovery-progress-candidate.md/.json`.

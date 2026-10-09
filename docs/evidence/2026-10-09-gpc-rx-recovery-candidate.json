@@ -1,6 +1,6 @@
 {
   "schema": "m4rch-gpc-rx-recovery-candidate-v1",
-  "stage": "Prepared, built and reviewed; not run",
+  "stage": "Executed once on bootbba7a8f2; RXservicing passed, first recoveryphase2 stalled. Diagnostic session retained. Do not repeat unchanged candidate.",
   "candidate": "out/gpc-rx-recovery/candidate",
   "prepared": "out/gpc-rx-recovery/prepared",
   "module_sha256": "f123d1dbe97705f1ad9bfe3b98aa1e4f33cea95ee7002de3a553ecbf98ce0650",
@@ -118,5 +118,7 @@
   "owned_dma_pages": 174,
   "journal_cpu_bytes": 5242944,
   "worker_interval_ms": 10,
-  "qualification": "Hostreceive transport correction only; originalgraph/shaders/draw/control bytes retained. Hardwarequalification pending; no teardown/recovery/rendering success claimed."
+  "qualification": "Observed RX workload qualified live consumer advancement and retained journal. First recovery did not complete. No teardown, recovery or rendering success. Do not repeat unchanged.",
+  "live_result": "docs/evidence/2026-10-09-gpc-rx-recovery-live.json",
+  "next_candidate": "docs/evidence/2026-10-09-recovery-progress-candidate.json"
 }

@@ -154,6 +154,13 @@ static bool recovery_cycles(void)
   recovery_sample(cycle,"pre");
   recovery_power_sample("before-pre-ack");
   if(!recovery_idle()) goto done;
+  /* Firmware is waiting in phase1. Drain earlier trace records before the
+   * acknowledgement and log the observed journal prefix. Producers may keep
+   * running; this boundary is not global firmware quiescence. Interpret later
+   * markers with their role, arguments, timestamps and recovery chronology. */
+  if(!recovery_messages()) goto done;
+  pr_info("m4rch recovery-trace-boundary: cycle=%u before_host_phase2_records=%u status=%#x\n",
+   cycle,receive_journal.used,receive_journal.status);
   recovery_write32(RECOVERY_STATUS+0x4900,2);
   if(!recovery_wait(3,token+1)) goto done;
   recovery_sample(cycle,"post");

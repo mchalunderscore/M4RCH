@@ -106,6 +106,10 @@ def main():
             for domain in native_init['auxiliary_power']['domains']:
                 key=domain['adt_property']
                 require(sha(sgx[key])==domain['adt_property_sha256'],'Fresh auxiliary voltage input differs: '+key)
+        if layout.get('recovery_progress_trial'):
+            for key in ('gpu-idle-off-delay-ms', 'gpu-fender-idle-off-delay-ms'):
+                require(not any(key in node for node in tree.values()),
+                        'Fresh ADT overrides the staged native idle default: '+key)
         timing=layout.get('power_timing_trial')
         if timing is not None:
             require(int.from_bytes(sgx['gpu-pwr-sample-period-aic-clks'],'little')==timing['period_aic_clocks'],'Fresh AIC sampling period differs')
