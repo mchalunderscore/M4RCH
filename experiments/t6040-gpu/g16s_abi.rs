@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: GPL-2.0-only
 //! Candidate 25G83 G16S wire codecs from the owner-supplied standalone ABI note,
-//! with separate queue-pointer fields corrected from matched native evidence.
+//! with queue-pointer fields and channel PID naming corrected from native evidence.
 //! These do not allocate firmware objects or authorize GPU startup.
 pub const INTERFACE: u64 = 0x0c8aa322039604c0;
 pub const MAIN_POINTERS: usize = 0x254;
@@ -28,18 +28,21 @@ fn get32(input: &[u8], offset: usize) -> u32 {
 }
 
 /// Separate from the queue-pointer record: firmware owns cursor words 18/1c/20.
+/// Native getPid reads state+48; its value is a supplied process identity.
+/// Scheduling word+38 remains supplied; native getSubPriority reads word+40.
+/// See docs/evidence/2026-10-09-native-scheduler-state.md.
 pub struct ChannelState(pub [u8; 0xc0]);
 impl ChannelState {
-    pub fn new(context: u64, uuid: u32, priority: [u32; 2], mask: u64,
-               ranges: [u32; 2]) -> Self {
+    pub fn new(context: u64, pid: u32, priority: [u32; 2], mask: u64,
+               scheduling: [u32; 2]) -> Self {
         let mut out = [0; 0xc0];
         put64(&mut out, 0x9c, context);
-        put32(&mut out, 0x48, uuid);
+        put32(&mut out, 0x48, pid);
         put32(&mut out, 0x28, priority[0]);
         put32(&mut out, 0x2c, priority[1]);
         put64(&mut out, 0x30, mask);
-        put32(&mut out, 0x38, ranges[0]);
-        put32(&mut out, 0x40, ranges[1]);
+        put32(&mut out, 0x38, scheduling[0]);
+        put32(&mut out, 0x40, scheduling[1]);
         Self(out)
     }
 }
