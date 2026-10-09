@@ -18,7 +18,8 @@ for tag in ['adt-current','sample-pagetables','root-text-sample','root-data-samp
 g=a.output/'asc-graph-init';shutil.copytree(a.integrated_backing,g)
 for name in ['asc-graph-init.c','joined-context-init.h','graph-map.h']:shutil.copy2(kit/'asc-graph-init'/name,g/name)
 recovery='recovery_trial' in prep
-if recovery:shutil.copy2(kit/'asc-graph-init/recovery-cycle.h',g/'recovery-cycle.h')
+if recovery:
+ for name in ('recovery-cycle.h','receive-service.h'):shutil.copy2(kit/'asc-graph-init'/name,g/name)
 for name in ['graph-before.bin','graph-receipt.json']:
  source=a.integrated_backing/name if (a.integrated_backing/name).exists() else a.sampler_workspace/'asc-graph-init'/name
  shutil.copy2(source,g/name)

@@ -11,6 +11,7 @@ import fcntl
 import hashlib
 import json
 import os
+import runpy
 from pathlib import Path
 import struct
 import subprocess
@@ -128,6 +129,8 @@ def validate(work, boot):
                 'Prepared graph source changed: ' + name)
     for name in ('command', 'objects', 'owned'):
         require((SYSFS / name).exists(), 'Resident interface is missing: ' + name)
+    if receipt['graph_recovery_trial'].get('receive_service'):
+        require((SYSFS / 'notifications').exists(), 'Resident receive journal is missing')
     require((session / 'text.bin').is_file(), 'Original qualified firmware TEXT capture missing')
     require(sha((session / 'text.bin').read_bytes()) == attempt['text_sha256'],
             'Original firmware TEXT evidence changed')
@@ -149,6 +152,16 @@ def capture(destination, receipt, report):
         except Exception as error:
             results[name] = {'error': repr(error)}
             report['capture_errors'].append(str(output) + ': ' + repr(error))
+    if receipt['graph_recovery_trial'].get('receive_service'):
+        try:
+            data=(SYSFS/'notifications').read_bytes()
+            (destination/'notifications-after.bin').write_bytes(data)
+            decoded=runpy.run_path(str(Path(__file__).with_name('decode-receive-journal.py')))['decode'](data)
+            (destination/'notifications-after.json').write_text(json.dumps(decoded,indent=2)+'\n')
+            results['notifications']=dict(decoded['header'],sha256=sha(data),authoritative_records_sha256=decoded['authoritative_records_sha256'])
+        except Exception as error:
+            results['notifications']={'error':repr(error)}
+            report['capture_errors'].append('Receive journal: '+repr(error))
     try:
         logs = subprocess.check_output(['dmesg', '--color=never'], text=True, timeout=10)
         (destination / 'dmesg-after.log').write_text(logs)
@@ -257,6 +270,10 @@ def main():
             report['error'] = repr(exception)
         finally:
             report['final_capture'] = capture(output, receipt, report)
+            notification=report['final_capture'].get('notifications',{})
+            if notification.get('status_flags') or notification.get('error'):
+                state['operation_failed']=True
+                save_json(state_path,state)
             report['module_present'] = MODULE.exists()
             report['resident_session_active'] = state['resident_session_active']
             report['operation_failed'] = state['operation_failed']

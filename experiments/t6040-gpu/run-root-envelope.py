@@ -13,6 +13,7 @@ import re
 import struct
 import subprocess
 import threading
+import runpy
 from live_graph_observer import observe
 from pathlib import Path
 from adt import parse
@@ -242,6 +243,14 @@ def main():
         report['diagnostic_session_active']=present and result.returncode==0 and 'm4rch recovery-session: diagnostic=1 sealed=1' in delta
         report['reboot_required']=present and not resident
         report['interpretation']='Application recovery trial; all owned backing remains retained. Resident success permits typed control/recovery and one immutable triangle publication; no work reuse, DMA retirement or unload qualification.'
+        if present and receipt['graph_recovery_trial'].get('receive_service'):
+            notifications=Path('/sys/kernel/m4rch_gpu_graph_trial/notifications').read_bytes()
+            (out/'notifications-after.bin').write_bytes(notifications)
+            decoded=runpy.run_path(str(Path(__file__).with_name('decode-receive-journal.py')))['decode'](notifications)
+            (out/'notifications-after.json').write_text(json.dumps(decoded,indent=2)+'\n')
+            report['receive_journal']=dict(decoded['header'],sha256=sha(notifications),authoritative_records_sha256=decoded['authoritative_records_sha256'])
+            if decoded['header']['status_flags'] and resident:
+                report.update(resident_session_active=False,diagnostic_session_active=True,reboot_required=True)
     if args.graph and receipt.get('joined_context_init') and present:
         owned=Path('/sys/kernel/m4rch_gpu_graph_trial/owned').read_bytes()
         require(len(owned)==receipt['joined_owned_pages']*0x4000,'Joined owned snapshot extent mismatch')

@@ -31,13 +31,16 @@ static void recovery_write32(unsigned int offset,u32 value)
  recovery_invalidate(p,sizeof(*p));WRITE_ONCE(*p,value);
  asm volatile("dmb ish\n\tdc cvac, %0\n\tdsb sy" :: "r"(p) : "memory");
 }
+#include "receive-service.h"
 static bool recovery_messages(void)
 {
  unsigned int n=0;
+ if(!receive_drain()) return false;
  while(!(readl(mbox+0x114)&EMPTY)) {
   u64 msg=readq(mbox+0x830),meta=readq(mbox+0x838);
-  pr_info("m4rch recovery-message: message=%#llx metadata=%#llx\n",msg,meta);
-  if((meta&0xff)==1 || ++n>=64) return false;
+  if(!receive_mailbox(msg,meta)) return false;
+  /* A bounded batch is not a crash. The next wait/worker poll continues it. */
+  if(++n>=64) break;
  }
  return true;
 }
@@ -174,6 +177,17 @@ done:
  * the session; stop-and-pin remains available. Sysfs calls are bounded. */
 static bool recovery_session_failed;
 static unsigned int recovery_operation;
+static void recovery_receive_worker(struct work_struct *work);
+static DECLARE_DELAYED_WORK(recovery_receive_work,recovery_receive_worker);
+static void recovery_receive_worker(struct work_struct *work)
+{
+ mutex_lock(&graph_io_lock);
+ if(recovery_resident && !recovery_session_failed) {
+  if(!recovery_messages()) recovery_session_failed=true;
+  if(!recovery_session_failed) schedule_delayed_work(&recovery_receive_work,msecs_to_jiffies(10));
+ }
+ mutex_unlock(&graph_io_lock);
+}
 static ssize_t recovery_command_store(struct kobject *kobj,struct kobj_attribute *attr,
  const char *buf,size_t count)
 {
@@ -185,8 +199,10 @@ static ssize_t recovery_command_store(struct kobject *kobj,struct kobj_attribute
   if(ap) sleep=power_ack(6,7,1);
   writel(readl(asc+0x44)&~START,asc+0x44);readl(asc+0x44);
   recovery_resident=false;
+  cancel_delayed_work(&recovery_receive_work);
   pr_info("m4rch recovery-session: stop_requested_and_pinned=1 ap_ack=%d sleep_ack=%d control=%#x status=%#x\n",ap,sleep,readl(asc+0x44),readl(asc+0x48));
  } else if(sysfs_streq(buf,"sample")) {
+  if(!recovery_session_failed && !recovery_messages()) {recovery_session_failed=true;ret=-EIO;}
   recovery_sample(0,"resident");recovery_power_sample("resident");
   if(!recovery_session_failed) {ksm_status_sample("resident");joined_output_sample("resident");}
  } else if(recovery_session_failed) {ret=-EIO;goto out;}
@@ -216,6 +232,7 @@ failed:
  recovery_operation++;
  if(!ok) {recovery_session_failed=true;ret=-EIO;}
  pr_info("m4rch recovery-operation: id=%u result=%d resident=%d sealed=%d work_submitted=%d allocations_retained=1\n",recovery_operation,ret,recovery_resident,recovery_session_failed,recovery_work_submitted);
+ pr_info("m4rch receive-status: records=%u status=%#x doorbells=%u\n",receive_journal.used,receive_journal.status,receive_journal.doorbells);
 out:
  mutex_unlock(&graph_io_lock);return ret?ret:count;
 }

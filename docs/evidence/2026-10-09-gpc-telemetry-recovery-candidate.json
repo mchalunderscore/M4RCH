@@ -1,6 +1,6 @@
 {
   "schema": "m4rch-gpc-telemetry-recovery-candidate-v1",
-  "stage": "Prepared, built and reviewed locally; not run",
+  "stage": "Executed on bootf5f3a7cc; see telemetry-recovery-live report. Superseded by RX servicing candidate.",
   "candidate": "out/gpc-telemetry-recovery/candidate",
   "prepared": "out/gpc-telemetry-recovery/prepared",
   "module_sha256": "0c7c32b00592aa0d42a2a96313e26fe87a426175f03b17739a125ecb5bfd8f3d",

@@ -13,6 +13,7 @@
 #include <linux/kobject.h>
 #include <linux/sysfs.h>
 #include <linux/mutex.h>
+#include <linux/workqueue.h>
 #include "boot-contract.h"
 #include "graph-map.h"
 #define ASC_BASE 0x28a600000ULL
@@ -168,6 +169,7 @@ static int graph_snapshot_create(void)
 #endif
 #ifdef GRAPH_RECOVERY_EXPERIMENT
  if (!ret) ret=sysfs_create_file(graph_directory,&recovery_command.attr);
+ if (!ret) ret=sysfs_create_bin_file(graph_directory,&receive_raw);
 #endif
  return ret;
 }
@@ -249,7 +251,12 @@ static bool power_ack(unsigned int request, unsigned int reply, u16 state)
    u64 msg=readq(mbox+0x830),meta=readq(mbox+0x838);
    unsigned int type=(msg>>52)&0xff;
    pr_info("m4rch ASC crashlog: power response message=%#llx metadata=%#llx\n",msg,meta);
-   if ((meta&0xff)!=0) return false;
+   if ((meta&0xff)!=0) {
+#ifdef GRAPH_RECOVERY_EXPERIMENT
+    if(receive_enabled && receive_mailbox(msg,meta)) continue;
+#endif
+    return false;
+   }
    if (type==reply && (msg&0xffff)==state) return true;
    if (++messages>=16) return false;
   }
@@ -392,9 +399,15 @@ static int __init hello_init(void)
   if (apps_started==3 && !(readl(mbox+0x110)&BIT(16))) {
    unsigned long observe_until;
    unsigned int observed=0, status_stage=0;
+#ifdef GRAPH_RECOVERY_EXPERIMENT
+   bool observation_ok=true;
+#endif
    unsigned long observation_start;
    ksm_status_sample("before-root");
    root_sent=true; /* pin even if delivery/consumption cannot be established */
+#ifdef GRAPH_RECOVERY_EXPERIMENT
+   receive_enabled=true;
+#endif
    wmb();writeq(0x00810c2000100000ULL,mbox+0x800);writeq(32,mbox+0x808);
    pr_warn("m4rch graph-init: G16S root sent to EP32; host allocations enabled; structural fixture, NOT rendering readiness\n");
 #ifdef GRAPH_JOINED_WORK_EXPERIMENT
@@ -424,34 +437,45 @@ static int __init hello_init(void)
 #endif
       status_stage++;
      }
+#ifdef GRAPH_RECOVERY_EXPERIMENT
+    if(!recovery_messages()) {observation_ok=false;break;}
+    observed=receive_journal.doorbells;
+#else
     if (!(readl(mbox+0x114)&EMPTY)) {
      u64 msg=readq(mbox+0x830),meta=readq(mbox+0x838);
      pr_info("m4rch graph-init: after-publication message=%#llx metadata=%#llx; no reply\n",msg,meta);
      if (++observed>=64) break;
     }
+#endif
     usleep_range(1000,2000);
    } while(time_before(jiffies,observe_until));
    ksm_status_sample("before-stop");
 #ifdef GRAPH_JOINED_WORK_EXPERIMENT
    joined_output_sample("before-stop");
 #endif
+#ifdef GRAPH_RECOVERY_EXPERIMENT
+   pr_info("m4rch graph-init: observation doorbells=%u records=%u receive_status=%#x\n",observed,receive_journal.used,receive_journal.status);
+#else
    pr_info("m4rch graph-init: observation messages=%u; capture crashlog before reboot\n",observed);
+#endif
 #ifdef GRAPH_RECOVERY_EXPERIMENT
    /* Keep every mapping/allocation alive throughout the application handshake. */
-   if (!observed) {
-    bool recovered;
-    mutex_lock(&graph_io_lock);recovered=recovery_cycles();
-    if(resident_session) {
+   {
+    bool recovered=false;
+    mutex_lock(&graph_io_lock);
+    if(observation_ok) recovered=recovery_cycles();
+    if(resident_session && !receive_crashed) {
      __module_get(THIS_MODULE);recovery_resident=true;recovery_session_failed=!recovered;
+     if(recovered) schedule_delayed_work(&recovery_receive_work,msecs_to_jiffies(10));
     }
     mutex_unlock(&graph_io_lock);
-    if(resident_session) {
+    if(resident_session && !receive_crashed) {
      if(recovered) pr_info("m4rch recovery-session: resident=1 control_ready=1 work_submitted=0 allocations_retained=1\n");
      else pr_info("m4rch recovery-session: diagnostic=1 sealed=1 control_ready=0 work_submitted=0 allocations_retained=1; only sample/stop allowed\n");
      return 0;
     }
    }
-   else pr_warn("m4rch recovery-result: skipped after initial mailbox activity; allocations retained\n");
+   if(receive_crashed) pr_warn("m4rch recovery-result: stopped after crash endpoint; allocations retained\n");
 #endif
   }
 retire_firmware:

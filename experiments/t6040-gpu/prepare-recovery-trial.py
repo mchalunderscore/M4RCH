@@ -76,6 +76,27 @@ def prepare(source, audit_path, output, resident=False):
     contract += 'static const unsigned int recovery_work_cursors[] = {'+','.join(str(x)+'U' for x in cursors)+'};\n'
     contract += 'static const unsigned int recovery_work_rings[] = {'+','.join(str(x[1])+'U' for x in deferred)+'};\n'
     contract += 'static const u8 recovery_work_records[2][24] = {'+','.join('{'+','.join(str(b) for b in x[2])+'}' for x in deferred)+'};\n'
+    # Native receive validators use state+0 consumer, state+0x20 producer,
+    # and 72-byte records. Preserve a copied record before acknowledging it.
+    receive_specs = [('receive13_state_a', 'receive13_aux', 0, 0, 256, 0x2000ffd3)]
+    receive_specs += [('receive13_state_b', 'receive13_ring', i*48, i*0x4800, 256, 4) for i in range(9)]
+    receive_specs += [('receive14_state_a', 'receive14_aux', 0, 0, 512, 0x20),
+                      ('receive14_state_b', 'receive14_ring', 0, 0, 256, 0x5fff0000)]
+    receive_rings = []
+    contract += 'static const struct { unsigned int state, ring, capacity, type_mask; } receive_rings[] = {\n'
+    for state_name, ring_name, state_offset, ring_offset, capacity, type_mask in receive_specs:
+        state_object, ring_object = objects[state_name], objects[ring_name]
+        assert state_offset+48 <= state_object['input_bytes']
+        assert ring_offset+capacity*72 <= ring_object['input_bytes']
+        state_at, ring_at = state_object['arena_offset']+state_offset, ring_object['arena_offset']+ring_offset
+        assert not any(blob[state_at:state_at+48])
+        contract += f' {{{state_at}U, {ring_at}U, {capacity}U, {type_mask:#x}U}},\n'
+        receive_rings.append(dict(state=state_at, ring=ring_at, capacity=capacity, type_mask=type_mask))
+    contract += '};\n'
+    report['receive_service'] = dict(rings=receive_rings, record_bytes=72,
+        journal_capacity=65536, journal_record_bytes=80, journal_header_bytes=64,
+        doorbell_endpoint=32, doorbell_message='0x0042000000000000',
+        qualification='Copy validated records to retained CPU journal before advancing host consumer only; no mailbox echo. Event callbacks do not authorize job retirement.')
     graph = (source/'graph-contract.h').read_text().split('static const u8 graph_bytes[')[0]
     graph += f'static const u8 graph_bytes[{len(blob)}]={{\n'+''.join(f'[{i:#x}]={v:#x},\n' for i,v in enumerate(blob) if v)+'};\n'
     shutil.copytree(source, output)

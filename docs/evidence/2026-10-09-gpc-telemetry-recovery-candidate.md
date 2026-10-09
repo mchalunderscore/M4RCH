@@ -3,7 +3,8 @@
 Prepared candidate: `out/gpc-telemetry-recovery/candidate`.
 Module SHA256:
 `0c7c32b00592aa0d42a2a96313e26fe87a426175f03b17739a125ecb5bfd8f3d`.
-This candidate has not run.
+Historical preparation record: this candidate ran on bootf5f3a7cc.
+See `2026-10-09-gpc-telemetry-recovery-live.md`; do not repeat unchanged.
 
 The preceding live trial passed engine-on and then crashed while reporting the
 transition through a null PushTelemetryDashboard mapping. This candidate adds
