@@ -1,0 +1,188 @@
+{
+  "boot_id": "98ab7030-1dc4-4113-a435-360c0c7209e2",
+  "candidate_module_sha256": "d954dce9f5f20260f8eb5f10d289a43ad43bc4ad7c05c987caaabaf8a3886c49",
+  "root_channels": [
+    {
+      "channel": 0,
+      "cursors": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "channel": 1,
+      "cursors": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "channel": 12,
+      "cursors": [
+        32,
+        32,
+        32
+      ]
+    }
+  ],
+  "queues": [
+    {
+      "stage": "ta",
+      "chosen_queue_id": 0,
+      "completed_cursor": 2,
+      "prefetch_cursor": 2,
+      "host_producer": 2,
+      "sentinel50": "0xffffffff",
+      "state_firmware_cursors": [
+        0,
+        2,
+        0
+      ],
+      "changed_bytes": 3
+    },
+    {
+      "stage": "3d",
+      "chosen_queue_id": 1,
+      "completed_cursor": 2,
+      "prefetch_cursor": 2,
+      "host_producer": 2,
+      "sentinel50": "0xffffffff",
+      "state_firmware_cursors": [
+        0,
+        2,
+        0
+      ],
+      "changed_bytes": 3
+    }
+  ],
+  "changed_backing_pages": [
+    {
+      "page": 48,
+      "device_va": "0x10000c8000",
+      "changed_bytes": 3,
+      "first_changed_offsets": [
+        "0x1c",
+        "0x100",
+        "0x130"
+      ]
+    },
+    {
+      "page": 50,
+      "device_va": "0x10000d0000",
+      "changed_bytes": 3,
+      "first_changed_offsets": [
+        "0x1c",
+        "0x100",
+        "0x130"
+      ]
+    }
+  ],
+  "target_changed_bytes": 0,
+  "target_sha256": "add4fa3e6dbfb8723b21cfe7debadbed5d5f2ca1ab88c666470daed16afbe21a",
+  "completion_changed_bytes": 0,
+  "work_notification_sent": true,
+  "reboot_required": true,
+  "qualification": "Post-return non-atomic owned-memory capture. Root-channel consumption, job pointer prefetch/completion cursors and changed target storage are distinct evidence; none alone proves GPU execution, valid shader completion or a rendered triangle. Context/backing remain pinned.",
+  "firmware_identity": {
+    "raw_sha256": "46534454889a958ffd4a35f7b141f6e786b250d0cb7000ffe484099eada20be4",
+    "normalized_sha256": "190cef1946a23dfbde180592629631c3b28d0509a17eb76108b7c9a52accd9ac",
+    "observed_variable_payloads": [
+      {
+        "offset": "0x59841",
+        "tag_bytes": "GKTS",
+        "payload_hex": "11e1c30113cd5c00"
+      },
+      {
+        "offset": "0x59924",
+        "tag_bytes": "ECAP",
+        "payload_hex": "4b7a220442f960d2"
+      }
+    ],
+    "qualification": "Exact match outside two tagged eight-byte boot metadata payloads; tags and lengths are also checked. No instruction bytes excluded."
+  },
+  "firmware_scheduler": {
+    "queues": [
+      {
+        "stage": "ta",
+        "queue_id": 0,
+        "config_install_flag": 1,
+        "installed_flags": 1,
+        "firmware_ring": "0xfffffc2000b1c000",
+        "device_ring": "0x10000cc000",
+        "header_word": 0,
+        "encoded_geometry": 10,
+        "data_master": 0,
+        "row_changed_bytes": 11,
+        "baseline_after": "0x0",
+        "context_binding_after": "0x0",
+        "context_after_hex": "ffff00000001000000000000000000000000000000000000000000000000000000000000000002000000000000000000000000ff00000000"
+      },
+      {
+        "stage": "3d",
+        "queue_id": 1,
+        "config_install_flag": 1,
+        "installed_flags": 1,
+        "firmware_ring": "0xfffffc2000b24000",
+        "device_ring": "0x10000d4000",
+        "header_word": 0,
+        "encoded_geometry": 10,
+        "data_master": 1,
+        "row_changed_bytes": 12,
+        "baseline_after": "0x0",
+        "context_binding_after": "0x0",
+        "context_after_hex": "ffff00000001000000000000000000000000000000000000000000000000000000000000000002000000000000000000000000ff00000000"
+      }
+    ],
+    "added_kick_counter_before": 0,
+    "added_kick_counter_after": 4,
+    "crashlog_header_present": false,
+    "qualification": "Matched opcode15 handler installs a40-byte row at13dbd8+queueID*40 only if config1a is nonzero. Opcode14 increments13c390 by its count; that counter does not prove hardware execution. These are post-shutdown snapshots."
+  },
+  "user_smoke_check": "Everything normal: desktop, built-in input, USB and networking",
+  "next_candidate": {
+    "path": "out/owned-scheduler-start/live-candidate",
+    "module_sha256": "2c35a0f8eccc2193b7de73390170d3fc299c5c3cd1096bf47589d6e946669971",
+    "build": "Matching W=1 clean; Python compile and diff checks passed",
+    "stage": {
+      "firmware": {
+        "raw_sha256": "46534454889a958ffd4a35f7b141f6e786b250d0cb7000ffe484099eada20be4",
+        "normalized_sha256": "190cef1946a23dfbde180592629631c3b28d0509a17eb76108b7c9a52accd9ac",
+        "observed_variable_payloads": [
+          {
+            "offset": "0x59841",
+            "tag_bytes": "GKTS",
+            "payload_hex": "11e1c30113cd5c00"
+          },
+          {
+            "offset": "0x59924",
+            "tag_bytes": "ECAP",
+            "payload_hex": "4b7a220442f960d2"
+          }
+        ],
+        "qualification": "Exact match outside two tagged eight-byte boot metadata payloads; tags and lengths are also checked. No instruction bytes excluded."
+      },
+      "shared_context_fw": "0xfffffc2000b18200",
+      "timeline": {
+        "nop": 0,
+        "nop_predecessor": "0xffffffffff",
+        "work": 1,
+        "ta_predecessor": 0,
+        "fragment_dependency": {
+          "queue": 0,
+          "timestamp": 1
+        },
+        "fragment_predecessor": 0
+      },
+      "context_flags": {
+        "config52": 1,
+        "config56": 0,
+        "config5a": 0,
+        "config5e": 0
+      },
+      "changed_bytes": 28,
+      "qualification": "Explicit experimental modulo40 baseline and shared owner-context activation. Gravity seed retained; raw service fields56/5a/5e remain zero hypotheses, not asserted ASID or native defaults. Context association is separate from UAT context1. No hardware attempt or completion."
+    }
+  }
+}

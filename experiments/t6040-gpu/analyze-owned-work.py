@@ -34,4 +34,11 @@ r['firmware_scheduler']=dict(queues=[],added_kick_counter_before=word(prior,0x13
 for j,q in enumerate(prep['owned_scheduler']):
  row=0x13dbd8+q['queue_id']*40
  r['firmware_scheduler']['queues'].append(dict(stage=q['stage'],queue_id=q['queue_id'],config_install_flag=word(before,0x60000+(48+j*2)*16384+0x101a,'I'),installed_flags=word(data,row,'B'),firmware_ring=hex(word(data,row+8,'Q')),device_ring=hex(word(data,row+16,'Q')),header_word=word(data,row+24,'I'),encoded_geometry=word(data,row+28,'I'),data_master=word(data,row+32,'I'),row_changed_bytes=sum(x!=y for x,y in zip(prior[row-0x60000:row-0x60000+40],data[row-0x60000:row-0x60000+40]))))
+ item=r['firmware_scheduler']['queues'][-1]
+ item['baseline_after']=hex(word(data,0x13c3a0+q['queue_id']*8,'Q'))
+ item['context_binding_after']=hex(word(data,0x13bf88+q['queue_id']*8,'Q'))
+ context=int(q['context_fw'],0)
+ context_page=next(i for i,alias in enumerate(prep['firmware_aliases']) if int(alias,0)<=context<int(alias,0)+16384 and int(alias,0)!=0)
+ offset=context-int(prep['firmware_aliases'][context_page],0)
+ item['context_after_hex']=after[context_page*16384+offset:context_page*16384+offset+0x38].hex()
 (a.output/'result.json').write_text(json.dumps(r,indent=2)+'\n');print(json.dumps(r,indent=2))
