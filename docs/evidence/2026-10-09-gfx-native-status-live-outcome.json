@@ -1,0 +1,624 @@
+{
+  "schema": "m4rch-native-status-live-outcome-v1",
+  "boot_id": "94cb4163-fc21-43ec-9489-07c54e549885",
+  "owner_sha256": "ad9a2908673247c66ed97383785a290ef566a4e9b7638abf57d23640801e842c",
+  "receipt_sha256": "2f45d761f1ba9a4b95bdb1a848c06aae9a47740cf4536ce39dc45dddd19ae29c",
+  "kernel_release": "7.1.13-m4rch-gpu-native-reset",
+  "kernel_notes_sha256": "85c56f7a3d7409747dd67fe1dcbf8839562aafab16a9124f9304689a14de437d",
+  "checked_artifacts": 10,
+  "checked_owner_sources": 17,
+  "cold_capture": "out/gfx-coordinate-native-status/candidate/asc-graph-init/boot-94cb4163-fc21-43ec-9489-07c54e549885",
+  "cold_root_published": true,
+  "cold_diagnostic_startup": true,
+  "completed_idle_cycles": 0,
+  "work_submitted": false,
+  "native_on": {
+    "monotonic": 179.334787,
+    "enabled": 1,
+    "result": 0,
+    "request_attempted": 1,
+    "request_acked": 0,
+    "ack_samples": 0,
+    "votes_attempted": 3,
+    "votes_verified": 3,
+    "request_before": 0,
+    "request_written": 8192,
+    "ack_payload": 0,
+    "ack_status": 0,
+    "status_wait_events": 1,
+    "ack_wait_events": 0,
+    "ack_bypassed": 1,
+    "status_payload": 0,
+    "status_raw": 0
+  },
+  "packet_free_stop": {
+    "monotonic": 355.476934,
+    "clear_attempted": 1,
+    "start_clear": 1,
+    "native_idle": 1,
+    "management_packets": 0,
+    "allocations_retained": 174
+  },
+  "native_off": {
+    "monotonic": 392.470601,
+    "enabled": 0,
+    "result": 0,
+    "request_attempted": 1,
+    "request_acked": 0,
+    "ack_samples": 0,
+    "votes_attempted": 3,
+    "votes_verified": 3,
+    "request_before": 8192,
+    "request_written": 0,
+    "ack_payload": 0,
+    "ack_status": 0,
+    "status_wait_events": 1,
+    "ack_wait_events": 0,
+    "ack_bypassed": 1,
+    "status_payload": 0,
+    "status_raw": 0
+  },
+  "terminal_off_result": {
+    "monotonic": 392.584687,
+    "command": "gfx-poweroff",
+    "operation": 3,
+    "result": -110,
+    "gate_consumed": 1,
+    "pm_attempted": 1,
+    "pm_result": 0,
+    "snapshot_result": -110,
+    "snapshot_count": 101,
+    "poll_min_delay_us": 100000,
+    "provider_off_observed": 0,
+    "accounting_ok": 1,
+    "held": 0,
+    "host_stopped": 1,
+    "sealed": 1,
+    "allocations_retained": 174,
+    "restart_allowed": 0,
+    "dma_retirement_verified": 0
+  },
+  "initial_physical_observation": {
+    "count": 101,
+    "word": 251661056,
+    "strict_mask": 2415926527,
+    "masked_value": 2048,
+    "first": {
+      "monotonic": 392.470616,
+      "phase": "after-off",
+      "index": 0,
+      "value": 251661056,
+      "actual": 0,
+      "target": 0,
+      "auto": 0,
+      "reset": 0,
+      "disable": 0,
+      "ps_reset": 0,
+      "busy": 1
+    },
+    "last": {
+      "monotonic": 392.584665,
+      "phase": "after-off",
+      "index": 100,
+      "value": 251661056,
+      "actual": 0,
+      "target": 0,
+      "auto": 0,
+      "reset": 0,
+      "disable": 0,
+      "ps_reset": 0,
+      "busy": 1
+    },
+    "measured_seconds": 0.11404899999996587,
+    "reported_poll_min_delay_us_is_not_per_read_delay_proof": true
+  },
+  "later_physical_word": {
+    "monotonic": 654.80995,
+    "phase": "diagnostic",
+    "index": 0,
+    "value": 251661056,
+    "actual": 0,
+    "target": 0,
+    "auto": 0,
+    "reset": 0,
+    "disable": 0,
+    "ps_reset": 0,
+    "busy": 1
+  },
+  "later_pm": {
+    "monotonic": 654.809957,
+    "phase": "gfx-snapshot",
+    "available": 1,
+    "usage_count": 0,
+    "runtime_status": 2,
+    "runtime_error": 0,
+    "enabled": 1,
+    "active": 0,
+    "suspended": 1,
+    "held": 0,
+    "pm_attempted": 1
+  },
+  "later_asc_access": {
+    "monotonic": 654.809955,
+    "phase": "gfx-snapshot",
+    "sampled": 0,
+    "gate_consumed": 1,
+    "mmio_after_off_allowed": 0
+  },
+  "post_off_retained_dram": {
+    "terminal": {
+      "monotonic": 392.584685,
+      "phase": "poweroff-final",
+      "power652c": 25589,
+      "records": 50410,
+      "status": 0,
+      "doorbells": 0,
+      "allocations_retained": 174,
+      "dma_retirement_verified": 0
+    },
+    "later": {
+      "monotonic": 654.809965,
+      "phase": "gfx-snapshot",
+      "power652c": 57056,
+      "records": 50410,
+      "status": 0,
+      "doorbells": 0,
+      "allocations_retained": 174,
+      "dma_retirement_verified": 0
+    },
+    "elapsed_seconds": 262.22528000000005,
+    "counter_delta": 31467,
+    "qualified_field_meaning": "firmware initialization completion count, not application recovery completion",
+    "globally_atomic": false,
+    "writer_identity_or_whole_gpu_cessation_verified": false
+  },
+  "state": {
+    "boot_id": "94cb4163-fc21-43ec-9489-07c54e549885",
+    "candidate_module_sha256": "ad9a2908673247c66ed97383785a290ef566a4e9b7638abf57d23640801e842c",
+    "resident_session_active": true,
+    "submit_attempted": false,
+    "operation_failed": true,
+    "in_flight": null,
+    "completed_idle_cycles": 0,
+    "trace_disabled": false,
+    "host_stop_requested": true,
+    "power_off_attempted": true
+  },
+  "pure_actual_wrapper_admission": {
+    "sample": {
+      "allowed": true
+    },
+    "gfx-snapshot": {
+      "allowed": true
+    },
+    "stop": {
+      "allowed": false,
+      "reason": "OFF intent admits retained diagnostics only"
+    },
+    "gfx-poweroff": {
+      "allowed": false,
+      "reason": "OFF intent admits retained diagnostics only"
+    },
+    "recover": {
+      "allowed": false,
+      "reason": "OFF intent admits retained diagnostics only"
+    },
+    "control": {
+      "allowed": false,
+      "reason": "OFF intent admits retained diagnostics only"
+    },
+    "trace-off": {
+      "allowed": false,
+      "reason": "OFF intent admits retained diagnostics only"
+    },
+    "submit": {
+      "allowed": false,
+      "reason": "OFF intent admits retained diagnostics only"
+    }
+  },
+  "operations": [
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-graph-init/boot-94cb4163-fc21-43ec-9489-07c54e549885/resident-operations/20261009T193610.732657Z-gfx-snapshot-b32f4ce5",
+      "requested_command": "gfx-snapshot",
+      "complete": true,
+      "error": null,
+      "commands": [
+        {
+          "command": "gfx-snapshot",
+          "stage": "returned",
+          "started_monotonic": 304.536676058,
+          "result": "success",
+          "finished_monotonic": 304.538035514
+        }
+      ],
+      "final_capture": {
+        "objects": {
+          "bytes": 1130496,
+          "sha256": "7fbca030a881ca514303c3b86b46e469528f701c9b191dd2e2b8e7f48f1fccd9"
+        },
+        "owned": {
+          "bytes": 2850816,
+          "sha256": "cd8d76c9300079db09bbfb1f0f97c7345391a4c8eb4ca29e4795e7a0b2992b0f"
+        },
+        "notifications": {
+          "magic": 1481787213,
+          "version": 1,
+          "entry_bytes": 80,
+          "capacity": 65536,
+          "used": 50410,
+          "status_flags": 0,
+          "doorbells": 0,
+          "sha256": "a5f4200540b235a486c9383c11cd88983ec516d267c2a11fcc65dada7c6e74ed",
+          "authoritative_records_sha256": "13e2711177967183953ca4e2dd9efbd697845b77c8cf97f7d62479c0588cfdc2"
+        },
+        "dmesg": {
+          "sha256": "cd0b85e61f8568d7c9da1275f7dfcc0b14bb60abc98316cb8a33e61d542dd7de"
+        }
+      },
+      "diagnostic_session_active": true,
+      "snapshots_atomic": false
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-graph-init/boot-94cb4163-fc21-43ec-9489-07c54e549885/resident-operations/20261009T193701.396652Z-stop-3da78764",
+      "requested_command": "stop",
+      "complete": true,
+      "error": null,
+      "commands": [
+        {
+          "command": "stop",
+          "stage": "returned",
+          "started_monotonic": 355.311091014,
+          "result": "success",
+          "finished_monotonic": 355.313413434
+        }
+      ],
+      "final_capture": {
+        "objects": {
+          "bytes": 1130496,
+          "sha256": "b03f2129024136175d769b7ee6e7d65a198df8525144ef933f023015e69698df"
+        },
+        "owned": {
+          "bytes": 2850816,
+          "sha256": "b3e240800e9eefe4b634e674389e3f999fac88978f2bfa4bba267257f9bfca65"
+        },
+        "notifications": {
+          "magic": 1481787213,
+          "version": 1,
+          "entry_bytes": 80,
+          "capacity": 65536,
+          "used": 50410,
+          "status_flags": 0,
+          "doorbells": 0,
+          "sha256": "a5f4200540b235a486c9383c11cd88983ec516d267c2a11fcc65dada7c6e74ed",
+          "authoritative_records_sha256": "13e2711177967183953ca4e2dd9efbd697845b77c8cf97f7d62479c0588cfdc2"
+        },
+        "dmesg": {
+          "sha256": "fc36e5ce369c90d5e8b16eddb13faeed656c5a401f572f8c160576d74d993718"
+        }
+      },
+      "diagnostic_session_active": true,
+      "snapshots_atomic": false
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-graph-init/boot-94cb4163-fc21-43ec-9489-07c54e549885/resident-operations/20261009T193738.502506Z-gfx-poweroff-3f88653c",
+      "requested_command": "gfx-poweroff",
+      "complete": false,
+      "error": "TimeoutError(110, 'Connection timed out')",
+      "commands": [
+        {
+          "command": "gfx-poweroff",
+          "stage": "failed-or-interrupted",
+          "started_monotonic": 392.305697916,
+          "result": "TimeoutError(110, 'Connection timed out')",
+          "finished_monotonic": 392.421451124
+        }
+      ],
+      "final_capture": {
+        "objects": {
+          "bytes": 1130496,
+          "sha256": "e33a1e4403e8b24279c9f67c6d59dc31513db0cf83b7f6c5386323ed5cd269b4"
+        },
+        "owned": {
+          "bytes": 2850816,
+          "sha256": "d99b38abea9820aeba8a0d0c513e81e9daac0b306b5de2ea837d12f950e093e4"
+        },
+        "notifications": {
+          "magic": 1481787213,
+          "version": 1,
+          "entry_bytes": 80,
+          "capacity": 65536,
+          "used": 50410,
+          "status_flags": 0,
+          "doorbells": 0,
+          "sha256": "a5f4200540b235a486c9383c11cd88983ec516d267c2a11fcc65dada7c6e74ed",
+          "authoritative_records_sha256": "13e2711177967183953ca4e2dd9efbd697845b77c8cf97f7d62479c0588cfdc2"
+        },
+        "dmesg": {
+          "sha256": "c1f15be03521214163d42c685679077ac66059eaac0343a9a245b7fed25c2a52"
+        }
+      },
+      "diagnostic_session_active": true,
+      "snapshots_atomic": false
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-graph-init/boot-94cb4163-fc21-43ec-9489-07c54e549885/resident-operations/20261009T194200.846368Z-gfx-snapshot-a4450a54",
+      "requested_command": "gfx-snapshot",
+      "complete": true,
+      "error": null,
+      "commands": [
+        {
+          "command": "gfx-snapshot",
+          "stage": "returned",
+          "started_monotonic": 654.647433712,
+          "result": "success",
+          "finished_monotonic": 654.648445213
+        }
+      ],
+      "final_capture": {
+        "objects": {
+          "bytes": 1130496,
+          "sha256": "7cad06c84a9237469f2d96218fbd91d140263e80133ea9471bb40ae8eca821bd"
+        },
+        "owned": {
+          "bytes": 2850816,
+          "sha256": "5106330a8298c64ae2d591ca4aad828b947a6036f00b414bdbc705d3c9a54f8f"
+        },
+        "notifications": {
+          "magic": 1481787213,
+          "version": 1,
+          "entry_bytes": 80,
+          "capacity": 65536,
+          "used": 50410,
+          "status_flags": 0,
+          "doorbells": 0,
+          "sha256": "a5f4200540b235a486c9383c11cd88983ec516d267c2a11fcc65dada7c6e74ed",
+          "authoritative_records_sha256": "13e2711177967183953ca4e2dd9efbd697845b77c8cf97f7d62479c0588cfdc2"
+        },
+        "dmesg": {
+          "sha256": "4275955b399b4557c096c90be958382e8fbef63fe0383d54b18fa7ded019ffb5"
+        }
+      },
+      "diagnostic_session_active": true,
+      "snapshots_atomic": false
+    }
+  ],
+  "inputs": [
+    {
+      "path": "out/gfx-coordinate-native-status/fresh-preflight.json",
+      "bytes": 2382,
+      "sha256": "26e8e876b38204075688030795bd86223ac848180502e8f92a2f496aa27a4bbf"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-root-envelope/build-receipt.json",
+      "bytes": 25706,
+      "sha256": "2f45d761f1ba9a4b95bdb1a848c06aae9a47740cf4536ce39dc45dddd19ae29c"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/native-status-preparation.json",
+      "bytes": 8933,
+      "sha256": "af522a6f563d2bdc194c0a30fc31dc3bc9d21fa872bad2557a29e483c6cacbf2"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-graph-init/boot-94cb4163-fc21-43ec-9489-07c54e549885/attempt.json",
+      "bytes": 38904,
+      "sha256": "f149515e8e1dd2bdc24b36a1f63b6c9d385c59793b32df8c152ca525a2533485"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-graph-init/boot-94cb4163-fc21-43ec-9489-07c54e549885/dmesg-after.log",
+      "bytes": 131808,
+      "sha256": "25d201645258494d21e712c308ef3ac313f10ddecf22fcb9556b0bd219f1843f"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-graph-init/boot-94cb4163-fc21-43ec-9489-07c54e549885/resident-operations/state.json",
+      "bytes": 385,
+      "sha256": "0675576c1e11ecaa84267079194e5f4435607dbe829c8b86cc40c3d81ff5e2ce"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-graph-init/boot-94cb4163-fc21-43ec-9489-07c54e549885/resident-operations/20261009T193610.732657Z-gfx-snapshot-b32f4ce5/attempt.json",
+      "bytes": 28814,
+      "sha256": "686d429c4f82fcfea3125c2d5bb0d7b887b00acc1c4bb0e0006145b177cd82a9"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-graph-init/boot-94cb4163-fc21-43ec-9489-07c54e549885/resident-operations/20261009T193610.732657Z-gfx-snapshot-b32f4ce5/dmesg-after.log",
+      "bytes": 131748,
+      "sha256": "cd0b85e61f8568d7c9da1275f7dfcc0b14bb60abc98316cb8a33e61d542dd7de"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-graph-init/boot-94cb4163-fc21-43ec-9489-07c54e549885/resident-operations/20261009T193610.732657Z-gfx-snapshot-b32f4ce5/dmesg-before.log",
+      "bytes": 131793,
+      "sha256": "cc6277f587f14f2f701437334baf90d59f0ad2ae86ce18d058e6056d7e43ef3c"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-graph-init/boot-94cb4163-fc21-43ec-9489-07c54e549885/resident-operations/20261009T193610.732657Z-gfx-snapshot-b32f4ce5/notifications-after.bin",
+      "bytes": 5242944,
+      "sha256": "a5f4200540b235a486c9383c11cd88983ec516d267c2a11fcc65dada7c6e74ed"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-graph-init/boot-94cb4163-fc21-43ec-9489-07c54e549885/resident-operations/20261009T193610.732657Z-gfx-snapshot-b32f4ce5/notifications-after.json",
+      "bytes": 15108304,
+      "sha256": "638ba342fe50ae9c8d257cde7c0b2619a9fc6772bd2a580259503e816444b3a3"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-graph-init/boot-94cb4163-fc21-43ec-9489-07c54e549885/resident-operations/20261009T193610.732657Z-gfx-snapshot-b32f4ce5/objects-after.bin",
+      "bytes": 1130496,
+      "sha256": "7fbca030a881ca514303c3b86b46e469528f701c9b191dd2e2b8e7f48f1fccd9"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-graph-init/boot-94cb4163-fc21-43ec-9489-07c54e549885/resident-operations/20261009T193610.732657Z-gfx-snapshot-b32f4ce5/objects-before.bin",
+      "bytes": 1130496,
+      "sha256": "287f2c53bc6ef7ed226c4a2995b9d9904e7623acae9713af105be6b04fc690a9"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-graph-init/boot-94cb4163-fc21-43ec-9489-07c54e549885/resident-operations/20261009T193610.732657Z-gfx-snapshot-b32f4ce5/owned-after.bin",
+      "bytes": 2850816,
+      "sha256": "cd8d76c9300079db09bbfb1f0f97c7345391a4c8eb4ca29e4795e7a0b2992b0f"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-graph-init/boot-94cb4163-fc21-43ec-9489-07c54e549885/resident-operations/20261009T193610.732657Z-gfx-snapshot-b32f4ce5/text.bin",
+      "bytes": 393216,
+      "sha256": "518eb6fc87b5d968d1abc2f9ece1a1447c236674d02ace83cc6dcadda2be1ba7"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-graph-init/boot-94cb4163-fc21-43ec-9489-07c54e549885/resident-operations/20261009T193701.396652Z-stop-3da78764/attempt.json",
+      "bytes": 28797,
+      "sha256": "1220cd1aab23fb55f2a2cf3b8f85e69ea3ab026ed5b111db11e95ca4c0de0873"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-graph-init/boot-94cb4163-fc21-43ec-9489-07c54e549885/resident-operations/20261009T193701.396652Z-stop-3da78764/dmesg-after.log",
+      "bytes": 131753,
+      "sha256": "fc36e5ce369c90d5e8b16eddb13faeed656c5a401f572f8c160576d74d993718"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-graph-init/boot-94cb4163-fc21-43ec-9489-07c54e549885/resident-operations/20261009T193701.396652Z-stop-3da78764/dmesg-before.log",
+      "bytes": 131770,
+      "sha256": "198995dd8db5338ee62675515c6e870b60cced2b8baaa2dd292b038b254b48ba"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-graph-init/boot-94cb4163-fc21-43ec-9489-07c54e549885/resident-operations/20261009T193701.396652Z-stop-3da78764/notifications-after.bin",
+      "bytes": 5242944,
+      "sha256": "a5f4200540b235a486c9383c11cd88983ec516d267c2a11fcc65dada7c6e74ed"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-graph-init/boot-94cb4163-fc21-43ec-9489-07c54e549885/resident-operations/20261009T193701.396652Z-stop-3da78764/notifications-after.json",
+      "bytes": 15108304,
+      "sha256": "638ba342fe50ae9c8d257cde7c0b2619a9fc6772bd2a580259503e816444b3a3"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-graph-init/boot-94cb4163-fc21-43ec-9489-07c54e549885/resident-operations/20261009T193701.396652Z-stop-3da78764/objects-after.bin",
+      "bytes": 1130496,
+      "sha256": "b03f2129024136175d769b7ee6e7d65a198df8525144ef933f023015e69698df"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-graph-init/boot-94cb4163-fc21-43ec-9489-07c54e549885/resident-operations/20261009T193701.396652Z-stop-3da78764/objects-before.bin",
+      "bytes": 1130496,
+      "sha256": "287f2c53bc6ef7ed226c4a2995b9d9904e7623acae9713af105be6b04fc690a9"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-graph-init/boot-94cb4163-fc21-43ec-9489-07c54e549885/resident-operations/20261009T193701.396652Z-stop-3da78764/owned-after.bin",
+      "bytes": 2850816,
+      "sha256": "b3e240800e9eefe4b634e674389e3f999fac88978f2bfa4bba267257f9bfca65"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-graph-init/boot-94cb4163-fc21-43ec-9489-07c54e549885/resident-operations/20261009T193701.396652Z-stop-3da78764/text.bin",
+      "bytes": 393216,
+      "sha256": "518eb6fc87b5d968d1abc2f9ece1a1447c236674d02ace83cc6dcadda2be1ba7"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-graph-init/boot-94cb4163-fc21-43ec-9489-07c54e549885/resident-operations/20261009T193738.502506Z-gfx-poweroff-3f88653c/attempt.json",
+      "bytes": 28916,
+      "sha256": "a650e105489d387128875d79178d49b9aeab2e0c4041cd3e7556dedef3dc0fa9"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-graph-init/boot-94cb4163-fc21-43ec-9489-07c54e549885/resident-operations/20261009T193738.502506Z-gfx-poweroff-3f88653c/dmesg-after.log",
+      "bytes": 131509,
+      "sha256": "c1f15be03521214163d42c685679077ac66059eaac0343a9a245b7fed25c2a52"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-graph-init/boot-94cb4163-fc21-43ec-9489-07c54e549885/resident-operations/20261009T193738.502506Z-gfx-poweroff-3f88653c/dmesg-before.log",
+      "bytes": 131744,
+      "sha256": "ada057feea55f8079c9b96e96a76489d7f93f107928939e10d63bb8152f33800"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-graph-init/boot-94cb4163-fc21-43ec-9489-07c54e549885/resident-operations/20261009T193738.502506Z-gfx-poweroff-3f88653c/notifications-after.bin",
+      "bytes": 5242944,
+      "sha256": "a5f4200540b235a486c9383c11cd88983ec516d267c2a11fcc65dada7c6e74ed"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-graph-init/boot-94cb4163-fc21-43ec-9489-07c54e549885/resident-operations/20261009T193738.502506Z-gfx-poweroff-3f88653c/notifications-after.json",
+      "bytes": 15108304,
+      "sha256": "638ba342fe50ae9c8d257cde7c0b2619a9fc6772bd2a580259503e816444b3a3"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-graph-init/boot-94cb4163-fc21-43ec-9489-07c54e549885/resident-operations/20261009T193738.502506Z-gfx-poweroff-3f88653c/objects-after.bin",
+      "bytes": 1130496,
+      "sha256": "e33a1e4403e8b24279c9f67c6d59dc31513db0cf83b7f6c5386323ed5cd269b4"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-graph-init/boot-94cb4163-fc21-43ec-9489-07c54e549885/resident-operations/20261009T193738.502506Z-gfx-poweroff-3f88653c/objects-before.bin",
+      "bytes": 1130496,
+      "sha256": "287f2c53bc6ef7ed226c4a2995b9d9904e7623acae9713af105be6b04fc690a9"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-graph-init/boot-94cb4163-fc21-43ec-9489-07c54e549885/resident-operations/20261009T193738.502506Z-gfx-poweroff-3f88653c/owned-after.bin",
+      "bytes": 2850816,
+      "sha256": "d99b38abea9820aeba8a0d0c513e81e9daac0b306b5de2ea837d12f950e093e4"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-graph-init/boot-94cb4163-fc21-43ec-9489-07c54e549885/resident-operations/20261009T193738.502506Z-gfx-poweroff-3f88653c/text.bin",
+      "bytes": 393216,
+      "sha256": "518eb6fc87b5d968d1abc2f9ece1a1447c236674d02ace83cc6dcadda2be1ba7"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-graph-init/boot-94cb4163-fc21-43ec-9489-07c54e549885/resident-operations/20261009T194200.846368Z-gfx-snapshot-a4450a54/attempt.json",
+      "bytes": 28812,
+      "sha256": "e288ed68148db99d169f8dcce7ef4e1f77630181d7d10f9ff3df6053193e3034"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-graph-init/boot-94cb4163-fc21-43ec-9489-07c54e549885/resident-operations/20261009T194200.846368Z-gfx-snapshot-a4450a54/dmesg-after.log",
+      "bytes": 131527,
+      "sha256": "4275955b399b4557c096c90be958382e8fbef63fe0383d54b18fa7ded019ffb5"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-graph-init/boot-94cb4163-fc21-43ec-9489-07c54e549885/resident-operations/20261009T194200.846368Z-gfx-snapshot-a4450a54/dmesg-before.log",
+      "bytes": 131513,
+      "sha256": "48b8ebc3420baca31b74aa1910d363172a722cb0e2f66229389210f19047aeb2"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-graph-init/boot-94cb4163-fc21-43ec-9489-07c54e549885/resident-operations/20261009T194200.846368Z-gfx-snapshot-a4450a54/notifications-after.bin",
+      "bytes": 5242944,
+      "sha256": "a5f4200540b235a486c9383c11cd88983ec516d267c2a11fcc65dada7c6e74ed"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-graph-init/boot-94cb4163-fc21-43ec-9489-07c54e549885/resident-operations/20261009T194200.846368Z-gfx-snapshot-a4450a54/notifications-after.json",
+      "bytes": 15108304,
+      "sha256": "638ba342fe50ae9c8d257cde7c0b2619a9fc6772bd2a580259503e816444b3a3"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-graph-init/boot-94cb4163-fc21-43ec-9489-07c54e549885/resident-operations/20261009T194200.846368Z-gfx-snapshot-a4450a54/objects-after.bin",
+      "bytes": 1130496,
+      "sha256": "7cad06c84a9237469f2d96218fbd91d140263e80133ea9471bb40ae8eca821bd"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-graph-init/boot-94cb4163-fc21-43ec-9489-07c54e549885/resident-operations/20261009T194200.846368Z-gfx-snapshot-a4450a54/objects-before.bin",
+      "bytes": 1130496,
+      "sha256": "287f2c53bc6ef7ed226c4a2995b9d9904e7623acae9713af105be6b04fc690a9"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-graph-init/boot-94cb4163-fc21-43ec-9489-07c54e549885/resident-operations/20261009T194200.846368Z-gfx-snapshot-a4450a54/owned-after.bin",
+      "bytes": 2850816,
+      "sha256": "5106330a8298c64ae2d591ca4aad828b947a6036f00b414bdbc705d3c9a54f8f"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-graph-init/boot-94cb4163-fc21-43ec-9489-07c54e549885/resident-operations/20261009T194200.846368Z-gfx-snapshot-a4450a54/text.bin",
+      "bytes": 393216,
+      "sha256": "518eb6fc87b5d968d1abc2f9ece1a1447c236674d02ace83cc6dcadda2be1ba7"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-coordinate-native-status/run-native-status.py",
+      "bytes": 1867,
+      "sha256": "f37a1c9a65b60f8b8636dc6edfd7be16987cc5ff6574a757ae2dfbc0a40e14c6"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-coordinate-native-status/gfx_native_status_contract.py",
+      "bytes": 6172,
+      "sha256": "a8d70c3bf2c09525a6742015a282cc59f0c10c27c524e3d295d294e781cae912"
+    },
+    {
+      "path": "docs/evidence/2026-10-09-gfx-native-status-independent-startup-review.json",
+      "bytes": 11498,
+      "sha256": "fe64d971c741ca5e82ee0425a3361bcb52e3c53c16080fe0e4616439d5eb815c"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/save-live-outcome.py",
+      "bytes": 8024,
+      "sha256": "1753100b7fea14c229b0ecd3968ea7f7684449961fa5e6ab3baa287d501b5cd4"
+    }
+  ],
+  "qualification": "Actual one cold, one STOP, one pairedOFF and admitted diagnostics; captured ranges are non-atomic. No repeat control, startup, put, get, reset, work, release or reboot performed by this evidence saver.",
+  "gpu_execution_verified": false,
+  "physical_off_verified": false,
+  "whole_gpu_dma_retirement_verified": false,
+  "restart_verified": false,
+  "backing_release_allowed": false,
+  "next_hypothesis": "Native PWRGATE202 management and checked CPU-stop boundary before paired provider OFF; distinct offline preparation, not an admitted current-boot control."
+}
