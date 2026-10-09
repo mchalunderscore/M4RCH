@@ -85,12 +85,19 @@ static struct bin_attribute graph_raw = {
  * Raw values, not independently established queue-execution semantics. */
 static void ksm_status_sample(const char *phase)
 {
+ void __iomem *fault;
  void __iomem *ksm=ioremap(0x288020000ULL,0x4000);
  if (!ksm) {pr_warn("m4rch ksm-status: phase=%s map failed\n",phase);return;}
  /* Matched TEXT reads21038/21040 at19858/19900 and211c8 at19644. */
  pr_info("m4rch ksm-status: phase=%s offset21038=%#llx offset21040=%#llx offset211c8=%#llx\n",
          phase,readq(ksm+0x1038),readq(ksm+0x1040),readq(ksm+0x11c8));
+ pr_info("m4rch ksm-detail: phase=%s pause_ack=%#llx\n",phase,readq(ksm+0x11d0));
  iounmap(ksm);
+ fault=ioremap(0x28800c000ULL,0x4000);
+ if(fault){
+  pr_info("m4rch ksm-fault: phase=%s info=%#llx addr=%#llx\n",phase,readq(fault+0x18c0),readq(fault+0x18c8));
+  iounmap(fault);
+ }
 }
 static int graph_snapshot_create(void)
 {

@@ -43,4 +43,7 @@ for j,q in enumerate(prep['owned_scheduler']):
  item['context_after_hex']=after[context_page*16384+offset:context_page*16384+offset+0x38].hex()
 r['firmware_pending']=dict(queue_flags=[hex(word(data,0x18cee0+q['queue_id']*40+0x40,'Q')) for q in prep['owned_scheduler']],queue_mask=hex(word(data,0x18cee0+0x1420,'Q')),config_write_bypass=word(data,0x18fd0c,'I'),qualification='Matched config sets bit0 and kick handler sets bit1 in queue flags; both mark pending mask. These indicate requests, not hardware completion.')
 r['live_ksm_status']=[dict(phase=m.group(1),offset21038=hex(int(m.group(2),0)),offset21040=hex(int(m.group(3),0)),offset211c8=hex(int(m.group(4),0))) for m in re.finditer(r'm4rch ksm-status: phase=(\S+) offset21038=(0x[0-9a-f]+|0) offset21040=(0x[0-9a-f]+|0) offset211c8=(0x[0-9a-f]+|0)',(a.capture/'dmesg-after.log').read_text())]
+r['live_pause_ack']=[dict(phase=m.group(1),value=hex(int(m.group(2),0))) for m in re.finditer(r'm4rch ksm-detail: phase=(\S+) pause_ack=(0x[0-9a-f]+|0)',(a.capture/'dmesg-after.log').read_text())]
+r['live_faults']=[dict(phase=m.group(1),info=hex(int(m.group(2),0)),addr_raw=hex(int(m.group(3),0))) for m in re.finditer(r'm4rch ksm-fault: phase=(\S+) info=(0x[0-9a-f]+|0) addr=(0x[0-9a-f]+|0)',(a.capture/'dmesg-after.log').read_text())]
+r['fragment_hold254_after']=bool(struct.unpack_from('<Q',after,51*16384+512+0x140)[0]&(1<<62))
 (a.output/'result.json').write_text(json.dumps(r,indent=2)+'\n');print(json.dumps(r,indent=2))
