@@ -92,6 +92,9 @@ static void ksm_status_sample(const char *phase)
  pr_info("m4rch ksm-status: phase=%s offset21038=%#llx offset21040=%#llx offset211c8=%#llx\n",
          phase,readq(ksm+0x1038),readq(ksm+0x1040),readq(ksm+0x11c8));
  pr_info("m4rch ksm-detail: phase=%s pause_ack=%#llx\n",phase,readq(ksm+0x11d0));
+ /* Matched snapshot164a4/164b0 and service1ac1c/1ac24; no bank-selector writes. */
+ pr_info("m4rch ksm-live: phase=%s raw21048=%#llx raw21050=%#llx raw21058=%#llx raw21060=%#llx raw211c0=%#llx\n",
+         phase,readq(ksm+0x1048),readq(ksm+0x1050),readq(ksm+0x1058),readq(ksm+0x1060),readq(ksm+0x11c0));
  iounmap(ksm);
  fault=ioremap(0x28800c000ULL,0x4000);
  if(fault){
@@ -99,6 +102,26 @@ static void ksm_status_sample(const char *phase)
   iounmap(fault);
  }
 }
+#ifdef GRAPH_JOINED_WORK_EXPERIMENT
+/* Read owned output while firmware is alive, before quiesce can change state.
+ * This follows the existing owned sysfs invalidation discipline; host does not
+ * write these pages after publication. A byte change is not rendering proof. */
+static void joined_output_sample(const char *phase)
+{
+ static const unsigned int pages[]={20,47};
+ unsigned int counts[2]={0,0},i,j;
+ for(i=0;i<ARRAY_SIZE(pages);i++) {
+  u8 *cpu=page_address(owned[RENDER_FIRST_PAGE+pages[i]]);
+  const u8 *old=render_bytes+pages[i]*PAGE_SIZE;
+  unsigned long address;
+  for(address=(unsigned long)cpu;address<(unsigned long)cpu+PAGE_SIZE;address+=16)
+   asm volatile("dc ivac, %0" :: "r"(address) : "memory");
+  asm volatile("dsb sy" ::: "memory");
+  for(j=0;j<PAGE_SIZE;j++) counts[i]+=READ_ONCE(cpu[j])!=old[j];
+ }
+ pr_info("m4rch joined-live-output: phase=%s target_changed=%u completion_changed=%u\n",phase,counts[0],counts[1]);
+}
+#endif
 static int graph_snapshot_create(void)
 {
  int ret;
@@ -357,7 +380,13 @@ static int __init hello_init(void)
     static const char * const status_labels[]={"1s","5s","15s"};
     if(status_stage<ARRAY_SIZE(status_times) &&
        time_after_eq(jiffies,observation_start+msecs_to_jiffies(status_times[status_stage])))
-      ksm_status_sample(status_labels[status_stage++]);
+     {
+      ksm_status_sample(status_labels[status_stage]);
+#ifdef GRAPH_JOINED_WORK_EXPERIMENT
+      joined_output_sample(status_labels[status_stage]);
+#endif
+      status_stage++;
+     }
     if (!(readl(mbox+0x114)&EMPTY)) {
      u64 msg=readq(mbox+0x830),meta=readq(mbox+0x838);
      pr_info("m4rch graph-init: after-publication message=%#llx metadata=%#llx; no reply\n",msg,meta);
@@ -366,6 +395,9 @@ static int __init hello_init(void)
     usleep_range(1000,2000);
    } while(time_before(jiffies,observe_until));
    ksm_status_sample("before-stop");
+#ifdef GRAPH_JOINED_WORK_EXPERIMENT
+   joined_output_sample("before-stop");
+#endif
    pr_info("m4rch graph-init: observation messages=%u; capture crashlog before reboot\n",observed);
   }
 retire_firmware:

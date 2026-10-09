@@ -45,5 +45,8 @@ r['firmware_pending']=dict(queue_flags=[hex(word(data,0x18cee0+q['queue_id']*40+
 r['live_ksm_status']=[dict(phase=m.group(1),offset21038=hex(int(m.group(2),0)),offset21040=hex(int(m.group(3),0)),offset211c8=hex(int(m.group(4),0))) for m in re.finditer(r'm4rch ksm-status: phase=(\S+) offset21038=(0x[0-9a-f]+|0) offset21040=(0x[0-9a-f]+|0) offset211c8=(0x[0-9a-f]+|0)',(a.capture/'dmesg-after.log').read_text())]
 r['live_pause_ack']=[dict(phase=m.group(1),value=hex(int(m.group(2),0))) for m in re.finditer(r'm4rch ksm-detail: phase=(\S+) pause_ack=(0x[0-9a-f]+|0)',(a.capture/'dmesg-after.log').read_text())]
 r['live_faults']=[dict(phase=m.group(1),info=hex(int(m.group(2),0)),addr_raw=hex(int(m.group(3),0))) for m in re.finditer(r'm4rch ksm-fault: phase=(\S+) info=(0x[0-9a-f]+|0) addr=(0x[0-9a-f]+|0)',(a.capture/'dmesg-after.log').read_text())]
+log=(a.capture/'dmesg-after.log').read_text()
+r['live_ksm_progress']=[dict(phase=m.group(1),**{name:hex(int(value,0)) for name,value in zip(['raw21048','raw21050','raw21058','raw21060','raw211c0'],m.groups()[1:])}) for m in re.finditer(r'm4rch ksm-live: phase=(\S+) raw21048=(0x[0-9a-f]+|0) raw21050=(0x[0-9a-f]+|0) raw21058=(0x[0-9a-f]+|0) raw21060=(0x[0-9a-f]+|0) raw211c0=(0x[0-9a-f]+|0)',log)]
+r['live_output']=[dict(phase=m.group(1),target_changed_bytes=int(m.group(2)),completion_changed_bytes=int(m.group(3))) for m in re.finditer(r'm4rch joined-live-output: phase=(\S+) target_changed=(\d+) completion_changed=(\d+)',log)]
 r['fragment_hold254_after']=bool(struct.unpack_from('<Q',after,51*16384+512+0x140)[0]&(1<<62))
 (a.output/'result.json').write_text(json.dumps(r,indent=2)+'\n');print(json.dumps(r,indent=2))
