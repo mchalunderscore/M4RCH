@@ -1,0 +1,410 @@
+{
+  "schema": "m4rch.gfx-native-poweroff-boundary.v1",
+  "date": "2026-10-09",
+  "scope": "Source-derived offline implementation recommendation; no hardware actions, code/candidate/boot changes, release or restart authority.",
+  "kernelcache": {
+    "path": "out/private-apple/kernelcache.decoded",
+    "bytes": 119308288,
+    "sha256": "6158e1c0d591240808e26ff1da050b2fa0ed3eb17c1779d2ddde3171b959536f",
+    "uuid": "41811D69-3027-674E-E0DB-2F6F64C70EEB"
+  },
+  "inputs": [
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/boot.adt",
+      "bytes": 606208,
+      "sha256": "72f30734bb926e681fb1c759d03ad5230b2e21546f76aa7cf0a4fe190ccca0b2"
+    },
+    {
+      "path": "out/private-apple/fileset-index.json",
+      "bytes": 46925,
+      "sha256": "2e6da5e27a485a5639afe1663a2a340594181e56dccd926eda34dd0847cfef31"
+    },
+    {
+      "path": "out/private-apple/kernel-symbols.json",
+      "bytes": 92043155,
+      "sha256": "eff79feadb6a570f2856baa5d8950c3e77101b22a37f3999c12d9879404163e2"
+    },
+    {
+      "path": "out/private-apple/agx-disassembly.txt",
+      "bytes": 11343250,
+      "sha256": "45921fcdb496c8d914848f63bffdf1d8bd583bf8bc9620606c09f3dcec7a0317"
+    },
+    {
+      "path": "out/private-apple/a7iop-disassembly.txt",
+      "bytes": 334118,
+      "sha256": "fdfd967d76a141588b463a28790f285da3c49907df0f0dc393a0581c9599fe91"
+    },
+    {
+      "path": "out/private-apple/armio-poweroff-boundary.dis",
+      "bytes": 14669,
+      "sha256": "a078e19b288e9145fe242f596598464a3389d4da7a1a6c9e0f00d53f022cc80b"
+    },
+    {
+      "path": "out/private-apple/h16io-poweroff-boundary.dis",
+      "bytes": 11031,
+      "sha256": "b3bb8a53c7a16befbe1a73cebad7210adfac9c2d7869a8f8fec8d6014e004272"
+    },
+    {
+      "path": "out/private-apple/ioservice-poweroff-boundary.dis",
+      "bytes": 12718,
+      "sha256": "055fb2b016420928e94bc02402cfe3432259b297f9c8ebbdae8d8560b0ca47f5"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-reset-capability/pmgr-pwrstate.c",
+      "bytes": 31951,
+      "sha256": "04910407755d029a2acd131f873359bd14983ace946a469725612883835abb61"
+    },
+    {
+      "path": "experiments/t6040-gpu/asc-graph-init/asc-graph-init.c",
+      "bytes": 23912,
+      "sha256": "fbf44de2310e301d111e3b17dbe0eb213c6004fe9c7d3668d70a96b717d5f5dc"
+    },
+    {
+      "path": "experiments/t6040-gpu/asc-graph-init/gfx-reset-scope.h",
+      "bytes": 9679,
+      "sha256": "0da5611ee7601f21a102886a7f0d79c7259fd11d471a456bed23d830b3638147"
+    },
+    {
+      "path": "out/gfx-native-reset-kernel/linux/drivers/pmdomain/core.c",
+      "bytes": 105003,
+      "sha256": "b310e39444ff5c24c7102818a5f3c52eddc3836175e48e893a7c4a4dabe9c7fd"
+    },
+    {
+      "path": "out/gfx-native-reset-kernel/linux/drivers/iommu/apple-dart.c",
+      "bytes": 45609,
+      "sha256": "f48a05cf9ae17cc1871211cfd7a634f75d3bcdc131c0d7e896a8c8a80451a845"
+    },
+    {
+      "path": "out/gfx-native-reset-kernel/linux/drivers/gpu/drm/asahi/mmu.rs",
+      "bytes": 51709,
+      "sha256": "e87ed1cb70327029eb18b4708adfae639f7152ee850bf9702473bf49c894e6ec"
+    },
+    {
+      "path": "out/gfx-native-reset-kernel/linux/drivers/gpu/drm/asahi/regs.rs",
+      "bytes": 16289,
+      "sha256": "13aaa8ddc0fbbf81544de2432545a6aff8e096d5507a76ca53eb864a76965446"
+    },
+    {
+      "path": "out/gfx-native-reset-kernel/linux/drivers/gpu/drm/asahi/driver.rs",
+      "bytes": 7658,
+      "sha256": "7a81fbdbd582edff0d30346576d98d842a18977489300ac395928aab8b589a36"
+    },
+    {
+      "path": "docs/evidence/2026-10-09-rtbuddy-reset-review.json",
+      "bytes": 37336,
+      "sha256": "c43a596e018b705d33652437e87a6673433019d169b56adefb15307cd713fb87"
+    },
+    {
+      "path": "docs/evidence/2026-10-09-pmgr-reset-scope.json",
+      "bytes": 18360,
+      "sha256": "5bb570bfe4ece08b429c741083b7685bd7a5e77ecb925f02733f8c89b1dacf2d"
+    },
+    {
+      "path": "out/gfx-native-reset-live/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/genpd-summary-after-stop.txt",
+      "bytes": 20351,
+      "sha256": "bf7d56c1347a860b8dd01178e9df9611dfe4f5b136d86e44926faa2cd9ea3a35"
+    }
+  ],
+  "saved_adt": {
+    "/device-tree/arm-io/gfx-asc": {
+      "compatible": {
+        "hex": "696f702c617363777261702d763600",
+        "bytes": 15,
+        "sha256": "75c5bc1f4741c46209358afd33ee187d65ecc22c714189a8c4ac6778075e19f9"
+      },
+      "iommu-parent": {
+        "hex": "b5010000",
+        "bytes": 4,
+        "sha256": "00f4a61262966c320b116310fcda74c9e6aa4ef21427b4baf4bec5e7b0fab7ee"
+      },
+      "clock-gates": {
+        "hex": "91010000",
+        "bytes": 4,
+        "sha256": "e1299afaae72d55c4415bd670d42b3be00b47439ae12479b5672d718e4ce8ed5"
+      },
+      "AAPL,phandle": {
+        "hex": "b3010000",
+        "bytes": 4,
+        "sha256": "96576fd25428b71e3a9fac3b8b98d16c7e6c79cfa4f69af33b089988777c1bed"
+      },
+      "power-gates": {
+        "hex": "91010000",
+        "bytes": 4,
+        "sha256": "e1299afaae72d55c4415bd670d42b3be00b47439ae12479b5672d718e4ce8ed5"
+      }
+    },
+    "/device-tree/arm-io/mapper-gfx-asc": {
+      "compatible": {
+        "hex": "696f6d6d752d6d61707065722c67667800",
+        "bytes": 17,
+        "sha256": "76d418f568449f8babe72a35ae7ec4bfd3de15485eade052a3a8f024115aa2b3"
+      },
+      "AAPL,phandle": {
+        "hex": "b5010000",
+        "bytes": 4,
+        "sha256": "00f4a61262966c320b116310fcda74c9e6aa4ef21427b4baf4bec5e7b0fab7ee"
+      }
+    },
+    "/device-tree/arm-io": {
+      "compatible": {
+        "hex": "61726d2d696f2c743630343100",
+        "bytes": 13,
+        "sha256": "3ae7162ec6f716f0b1c9b15d0f62a863b81bc427c17724c6c709ae6e46a22821"
+      },
+      "AAPL,phandle": {
+        "hex": "2d000000",
+        "bytes": 4,
+        "sha256": "28276425d45829d4e6f5e18aefbf1f62862f07260a904532fb6e2106dec973e6"
+      }
+    }
+  },
+  "personalities": {
+    "AGXArmFirmwareMapper": {
+      "CFBundleIdentifier": "com.apple.AGXG16X",
+      "IOClass": "AGXArmFirmwareMapper",
+      "IONameMatch": "iommu-mapper,gfx",
+      "IOPersonalityPublisher": "com.apple.AGXG16X",
+      "IOProviderClass": "AppleARMIODevice"
+    },
+    "AppleH16IO": {
+      "CFBundleIdentifier": "com.apple.driver.AppleT6041",
+      "IOClass": "AppleH16GFamilyIO",
+      "IONameMatch": [
+        "arm-io,t6041"
+      ],
+      "IOPersonalityPublisher": "com.apple.driver.AppleT6041",
+      "IOPlatformActiveAction": 80000,
+      "IOProviderClass": "IOPlatformDevice"
+    }
+  },
+  "mapper": {
+    "reference": 437,
+    "path": "/device-tree/arm-io/mapper-gfx-asc",
+    "class": "AGXArmFirmwareMapper",
+    "direct_platform_branch": "retrieveVMLimits only; setActive forwarded via IOService provider chain",
+    "direct_isolation_or_drain_ack_found": false,
+    "forwarded_terminal_effect_resolved": false,
+    "linux_dart_frontend_applicable": false,
+    "uat_cached_unmap_requires_firmware_flush": true
+  },
+  "native_ranges": [
+    {
+      "name": "AGXArmFirmwareMapper::callPlatformFunction",
+      "start": "0xfffffe00089d37d4",
+      "end_exclusive": "0xfffffe00089d38c4",
+      "file_offset": 27064276,
+      "bytes": 240,
+      "sha256": "21b55d8fc07dddb75d282d1f936c4be605c74d6606b4937ac4bd4bf6e90c34dd"
+    },
+    {
+      "name": "AGXArmFirmwareMapper::start",
+      "start": "0xfffffe00089d39d0",
+      "end_exclusive": "0xfffffe00089d3af4",
+      "file_offset": 27064784,
+      "bytes": 292,
+      "sha256": "53614a7257fdc1e8c8de6b3b0b2f6350e9bf426afb5a753a1dab1231e99d3493"
+    },
+    {
+      "name": "AppleA7IOP::_setMapperActive",
+      "start": "0xfffffe0008a43bd0",
+      "end_exclusive": "0xfffffe0008a43c2c",
+      "file_offset": 27524048,
+      "bytes": 92,
+      "sha256": "9887c617a0886ac525d0216b6ad7bfba754d7922a971e81ac54fa064ca82aac1"
+    },
+    {
+      "name": "AppleA7IOP::_enablePower",
+      "start": "0xfffffe0008a42d88",
+      "end_exclusive": "0xfffffe0008a42e2c",
+      "file_offset": 27520392,
+      "bytes": 164,
+      "sha256": "5495aa938202b32ea0ab4de65561ab1bb25b25302408db853f415658c519739f"
+    },
+    {
+      "name": "AppleARMIODevice::enableDeviceClock",
+      "start": "0xfffffe0008aa3b64",
+      "end_exclusive": "0xfffffe0008aa3c74",
+      "file_offset": 27917156,
+      "bytes": 272,
+      "sha256": "ff14a4a3a4f2ac14e5201a5cc459a185ed9a18a32239f23757c1434cff0bb3d3"
+    },
+    {
+      "name": "AppleARMIODevice::enableDevicePower",
+      "start": "0xfffffe0008aa3c74",
+      "end_exclusive": "0xfffffe0008aa3d90",
+      "file_offset": 27917428,
+      "bytes": 284,
+      "sha256": "871a4509cd09c56c9a0acec3b43a583f050d6a562add8c0682654390a3387e30"
+    },
+    {
+      "name": "IOService::callPlatformFunction provider forwarding",
+      "start": "0xfffffe000bf39158",
+      "end_exclusive": "0xfffffe000bf391f4",
+      "file_offset": 83054936,
+      "bytes": 156,
+      "sha256": "0b5a890e67d7df8783f0186bca37fd76fe3d10f488c4902b8874dcdb21877a11"
+    },
+    {
+      "name": "AppleH16GFamilyIO::callPlatformFunction",
+      "start": "0xfffffe0009b823f0",
+      "end_exclusive": "0xfffffe0009b82534",
+      "file_offset": 45605872,
+      "bytes": 324,
+      "sha256": "99ea830bccfa935d02d1448dad176fd27f535108dd97754a06bca262c598ea26"
+    },
+    {
+      "name": "AppleH16GFamilyIO::enableDeviceClock",
+      "start": "0xfffffe0009b82560",
+      "end_exclusive": "0xfffffe0009b82634",
+      "file_offset": 45606240,
+      "bytes": 212,
+      "sha256": "a9968f386be6354b23ccaa41a9c4dd3aba13b81da53068a8cb31dfced374d158"
+    },
+    {
+      "name": "AppleH16GFamilyIO::enableDevicePower",
+      "start": "0xfffffe0009b82634",
+      "end_exclusive": "0xfffffe0009b8270c",
+      "file_offset": 45606452,
+      "bytes": 216,
+      "sha256": "5b6cf4f1c85636ce56cbad770bfcd7dc71312a4b9671c9ab2b4591de8c2a0eea"
+    }
+  ],
+  "vtable_pointers": [
+    {
+      "class_vtable": "__ZTV8IOMapper",
+      "vtable": "0xfffffe0007e46840",
+      "address_point": "0xfffffe0007e46850",
+      "slot": "0x6e8",
+      "word_va": "0xfffffe0007e46f38",
+      "encoded_word": "0x8011098804f3505c",
+      "target": "0xfffffe000bf3905c",
+      "symbol": "__ZN9IOService20callPlatformFunctionEPK8OSSymbolbPvS3_S3_S3_"
+    },
+    {
+      "class_vtable": "__ZTV16AppleARMIODevice",
+      "vtable": "0xfffffe0007ef48c0",
+      "address_point": "0xfffffe0007ef48d0",
+      "slot": "0x6e8",
+      "word_va": "0xfffffe0007ef4fb8",
+      "encoded_word": "0x8011098804f3505c",
+      "target": "0xfffffe000bf3905c",
+      "symbol": "__ZN9IOService20callPlatformFunctionEPK8OSSymbolbPvS3_S3_S3_"
+    },
+    {
+      "class_vtable": "__ZTV16AppleARMIODevice",
+      "vtable": "0xfffffe0007ef48c0",
+      "address_point": "0xfffffe0007ef48d0",
+      "slot": "0x8a8",
+      "word_va": "0xfffffe0007ef5178",
+      "encoded_word": "0x8011d07d01a9fb64",
+      "target": "0xfffffe0008aa3b64",
+      "symbol": "__ZN16AppleARMIODevice17enableDeviceClockEjj"
+    },
+    {
+      "class_vtable": "__ZTV16AppleARMIODevice",
+      "vtable": "0xfffffe0007ef48c0",
+      "address_point": "0xfffffe0007ef48d0",
+      "slot": "0x8b0",
+      "word_va": "0xfffffe0007ef5180",
+      "encoded_word": "0x8011a51501a9fc74",
+      "target": "0xfffffe0008aa3c74",
+      "symbol": "__ZN16AppleARMIODevice17enableDevicePowerEjPjj"
+    },
+    {
+      "class_vtable": "__ZTV17AppleH16GFamilyIO",
+      "vtable": "0xfffffe0008259cb8",
+      "address_point": "0xfffffe0008259cc8",
+      "slot": "0x6e8",
+      "word_va": "0xfffffe000825a3b0",
+      "encoded_word": "0x8011098802b7e3f0",
+      "target": "0xfffffe0009b823f0",
+      "symbol": "__ZN17AppleH16GFamilyIO20callPlatformFunctionEPK8OSSymbolbPvS3_S3_S3_"
+    },
+    {
+      "class_vtable": "__ZTV17AppleH16GFamilyIO",
+      "vtable": "0xfffffe0008259cb8",
+      "address_point": "0xfffffe0008259cc8",
+      "slot": "0x8a8",
+      "word_va": "0xfffffe000825a570",
+      "encoded_word": "0x801161db02b7e560",
+      "target": "0xfffffe0009b82560",
+      "symbol": "__ZN17AppleH16GFamilyIO17enableDeviceClockEjj"
+    },
+    {
+      "class_vtable": "__ZTV17AppleH16GFamilyIO",
+      "vtable": "0xfffffe0008259cb8",
+      "address_point": "0xfffffe0008259cc8",
+      "slot": "0x8b0",
+      "word_va": "0xfffffe000825a578",
+      "encoded_word": "0x801117da02b7e634",
+      "target": "0xfffffe0009b82634",
+      "symbol": "__ZN17AppleH16GFamilyIO17enableDevicePowerEjjPj"
+    }
+  ],
+  "strings": [
+    {
+      "va": "0xfffffe000713a64f",
+      "file_offset": 1271375,
+      "text": "retrieveVMLimits",
+      "sha256": "7745741925af892b4b9b9afab91ba853bc881a7020aaf7bfd4947e057e148991"
+    },
+    {
+      "va": "0xfffffe00071493c9",
+      "file_offset": 1332169,
+      "text": "setActive",
+      "sha256": "a2a65695d79d999014eac86e3064b408283c155f570d7c9465c461187b9d0fdb"
+    }
+  ],
+  "provider": {
+    "saved_clock_gates": [
+      401
+    ],
+    "saved_power_gates": [
+      401
+    ],
+    "virtual_parent_real_device": 386,
+    "linux_provider": "/soc/power-management@288e80000/power-controller@110",
+    "physical_word": "0x288e80110",
+    "native_enablePower_false_order": "provider enableDeviceClock(false,index0), then enableDevicePower(false,null,index0); wrapper ignores statuses and returns0",
+    "native_platform_function_objects_resolved": false
+  },
+  "recommended_future_candidate": {
+    "profile": "Separate retained no-work owner on a fresh boot; sole terminal power-off attempt, permanently sealed afterward",
+    "reuse_existing_kernel_snapshot_api": true,
+    "ordinary_consumer_operation": "pm_runtime_put_sync_suspend on the owner-held GFX genpd consumer, keep device attached and all mappings/pages/module pinned",
+    "no_RAW_PMGR_override": true,
+    "off_readback": {
+      "domain_on": 0,
+      "actual": 0,
+      "target": 0,
+      "AUTO28": 0,
+      "RESET31": 0,
+      "DEV_DISABLE10": 0,
+      "PS_RESET12": 0,
+      "BUSY11": 0,
+      "historical_8_9_not_ACK": true
+    },
+    "runtime_suspend_return_zero_is_off_proof": false,
+    "provider_callback_generic_write_errors_checked": false,
+    "snapshot_preserves_read_error_and_validity": true,
+    "observation_after_attempt": [
+      "driver-owned PMGR snapshot",
+      "qualified firmware-owned DRAM words only"
+    ],
+    "no_ASC_SGX_or_mailbox_access_after_off_attempt": true,
+    "no_unmap_free_detach_resume_START_INIT_or_work": true
+  },
+  "limits": [
+    "Native setActive terminal handler/effect is not fully resolved; no DART-style block/drain operation inferred.",
+    "Generic PMGR power-off attempts TARGET0/AUTO0 and polls ACTUAL0, but ignores regmap_write errors; genpd suspend can return0 while hardware remains on. Off must be independently sampled.",
+    "Provider ACTUAL0 plus stable FW-owned DRAM is stronger cessation evidence, not complete outstanding-transaction/cache/UAT/GPU-wide drain proof or release authority.",
+    "Preloaded fixup skips DATA copy; saved GFX SRAM restoration route unselected; no reset-vector write. Fresh firmware DATA/host mapping protocol needed before qualified restart.",
+    "Current sealed owner does not admit this operation and its capture/backing predicates require held PM/runtime-active; use distinct future owner and OFF-aware DRAM-only capture."
+  ],
+  "root_collected_software_genpd": {
+    "source": "out/gfx-native-reset-live/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/genpd-summary-after-stop.txt",
+    "hardware_state_proof": false,
+    "gfx": "ON, only m4rch-asc-crashlog active",
+    "parent": "AFR ON, child GFX"
+  }
+}

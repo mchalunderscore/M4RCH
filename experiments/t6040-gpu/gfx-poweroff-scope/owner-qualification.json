@@ -1,0 +1,149 @@
+{
+  "schema": "m4rch.gfx-poweroff-owner-qualification.v1",
+  "date": "2026-10-09",
+  "hardware_access": false,
+  "qualification_complete": true,
+  "profile_flags": [
+    "GFX_RESET_SCOPE_TRIAL",
+    "GFX_POWER_OFF_SCOPE_TRIAL"
+  ],
+  "excluded_flag": "GFX_RESET_NATIVE_SEQUENCE_TRIAL",
+  "baseline_source_dir": "/home/alice/Desktop/m4rch/out/gfx-native-reset-owner/candidate/asc-graph-init",
+  "baseline_files": [
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-reset-owner/candidate/asc-graph-init/gfx-reset-scope.h",
+      "sha256": "0da5611ee7601f21a102886a7f0d79c7259fd11d471a456bed23d830b3638147",
+      "bytes": 9679
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-reset-owner/candidate/asc-graph-init/recovery-cycle.h",
+      "sha256": "94a52c7d5901eecc26b512f21e2f82f5c72099051f4cd814b8b7cf44c1518f09",
+      "bytes": 14084
+    }
+  ],
+  "source_files": [
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/gfx-poweroff-scope/gfx-poweroff-scope.h",
+      "sha256": "9ac963d90d9b54f209fb47f934ced4387e51f44cdd4a45626a6c4b9f9f05a05f",
+      "bytes": 11106
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/gfx-poweroff-scope/recovery-cycle.h",
+      "sha256": "e465ccbc1365e2a745a9a6f7c6eaf91d64a785f62925dc2ad4243048fd5e9500",
+      "bytes": 14512
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/gfx-poweroff-scope/recovery-poweroff-command.patch",
+      "sha256": "6d81f276044abf40d8eea666deced0a25b72d6b29133cab75448cf0b03d41dbd",
+      "bytes": 1382
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/gfx-poweroff-scope/retained-poweroff-owner.patch",
+      "sha256": "b3a45144d9a55a8d0031d90fe49aa79c27282b340a4a0c5bcd3c01b39eafe14c",
+      "bytes": 21519
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/gfx-poweroff-scope/test-gfx-poweroff-owner.c",
+      "sha256": "4ab6b4de69637cd8ded112aa17eb43a5588e6bcf20cfdaa3a5176823280ca6e9",
+      "bytes": 20234
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/gfx-poweroff-scope/test-gfx-poweroff-owner.py",
+      "sha256": "29c96640aa6031cbcae1fbd6144a382243b6f9a41a687409e4b8a5cf0bbf57fb",
+      "bytes": 5667
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/gfx-poweroff-scope/README.md",
+      "sha256": "70f8cfb5a5be45cdd6467748e7d0d2de8dceb77b05b6ed14ece4d5f0cffc5001",
+      "bytes": 5575
+    }
+  ],
+  "validation_report": {
+    "path": "/home/alice/Desktop/m4rch/out/gfx-poweroff-scope/owner-validation.json",
+    "sha256": "4541b1833283bbe25128c38770dbe39852c7e4c949f2c5d49514505f6bdfb83d",
+    "bytes": 2918
+  },
+  "input_evidence": [
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-09-gfx-native-poweroff-boundary.md",
+      "sha256": "d861c3bbb26ab40ed9c84bf9f7f8e889e5a6177e12b97d1fc2ab070f2ef04d28",
+      "bytes": 7679
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-09-gfx-native-poweroff-boundary.json",
+      "sha256": "68e841dbf960b1739357c9c47857c0b38ead40b9c32482b8f03c2db1be59fbd0",
+      "bytes": 15354
+    }
+  ],
+  "patch_application": {
+    "combined_patch_exact_output_match": true,
+    "fuzz": 0,
+    "original_inputs_unchanged": true,
+    "destination_header_name": "gfx-reset-scope.h",
+    "destination_recovery_name": "recovery-cycle.h"
+  },
+  "actual_c_cases": 592,
+  "sanitizers": [
+    "ASan",
+    "UBSan"
+  ],
+  "typed_commands": [
+    "stop",
+    "sample",
+    "gfx-snapshot",
+    "gfx-poweroff"
+  ],
+  "other_typed_commands": "-EPERM (or -ENODEV outside resident diagnostics); no old reset/recovery/control/trace-off/submit route compiled",
+  "one_attempt": {
+    "every_explicit_request_consumes_gate": true,
+    "pm_put_sync_suspend_calls_maximum": 1,
+    "held_false_before_pm_entry": true,
+    "usage_count_precondition": 1,
+    "owner_runtime_pm_enabled_and_active_required": true,
+    "all_backing_pages_retained": 174,
+    "context_mappings_consumer_module_retained": true,
+    "no_compensating_resume_or_second_put": true
+  },
+  "off_observation": {
+    "api": "apple_pmgr_t6040_gfx_snapshot",
+    "valid_before_required": true,
+    "domain_on_required": 0,
+    "pmgr_zero_mask": "0x90001cff",
+    "historical_bits_8_9_ignored": true,
+    "software_accounting_required_for_success": [
+      "runtime_enabled",
+      "usage_count==0",
+      "runtime_suspended",
+      "runtime_inactive",
+      "runtime_error==0",
+      "held==false"
+    ],
+    "negative_pm_result_preserved_if_off_observed": true,
+    "pm_success_still_on_result": "-ETIMEDOUT",
+    "provider_off_inconsistent_accounting_result": "-EIO",
+    "maximum_post_snapshots": 101,
+    "maximum_poll_delays": 100,
+    "poll_minimum_delay_us": 1000,
+    "poll_requested_upper_delay_us": 1100,
+    "runtime_suspend_wall_time_bounded_by_this_kit": false
+  },
+  "post_gate_diagnostics": {
+    "every_outcome_including_precondition_refusal": true,
+    "allowed": "driver-owned PMGR snapshot, software accounting, retained DRAM only",
+    "asc_sgx_mailbox_access": false,
+    "host_publication_or_receive_drain": false,
+    "off_or_stable_dram_authorizes_retirement_or_restart": false
+  },
+  "not_qualified": [
+    "real kernel concurrency",
+    "actual genpd callbacks or provider lifetime",
+    "physical hardware OFF",
+    "firmware shared-memory coherence",
+    "fabric or cache drain",
+    "all GPU DMA cessation",
+    "fresh firmware DATA",
+    "repeatable restart",
+    "safe joined backing release"
+  ],
+  "qualification": "Source integration, actual-C admission/retained lifetime and safe post-attempt diagnostic dispatch only. No hardware or kernel/API rebuild."
+}

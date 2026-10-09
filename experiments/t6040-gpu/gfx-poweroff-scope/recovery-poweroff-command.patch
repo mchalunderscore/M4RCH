@@ -1,0 +1,34 @@
+--- a/recovery-cycle.h
++++ b/recovery-cycle.h
+@@ -238,9 +238,22 @@
+ static ssize_t recovery_command_store(struct kobject *kobj,struct kobj_attribute *attr,
+  const char *buf,size_t count)
+ {
+- int ret=0;unsigned int i;bool ok=true;
++ int ret=0;
++#ifndef GFX_POWER_OFF_SCOPE_TRIAL
++ unsigned int i;bool ok=true;
++#endif
+  mutex_lock(&graph_io_lock);
++#ifdef GFX_POWER_OFF_SCOPE_TRIAL
++ if(sysfs_streq(buf,"gfx-poweroff")) {ret=gfx_poweroff_attempt();goto out;}
++#endif
+  if(!recovery_resident) {ret=-ENODEV;goto out;}
++#ifdef GFX_POWER_OFF_SCOPE_TRIAL
++ if(sysfs_streq(buf,"stop")) ret=gfx_reset_scope_stop();
++ else if(sysfs_streq(buf,"sample")) ret=gfx_poweroff_sample();
++ else if(sysfs_streq(buf,"gfx-snapshot")) ret=gfx_reset_scope_snapshot();
++ else ret=-EPERM;
++ goto out;
++#else
+  if(sysfs_streq(buf,"stop")) {
+ #ifdef GFX_RESET_SCOPE_TRIAL
+   ret=gfx_reset_scope_stop();goto out;
+@@ -302,6 +315,7 @@
+  if(!ok) {recovery_session_failed=true;ret=-EIO;}
+  pr_info("m4rch recovery-operation: id=%u result=%d resident=%d sealed=%d work_submitted=%d allocations_retained=1\n",recovery_operation,ret,recovery_resident,recovery_session_failed,recovery_work_submitted);
+  pr_info("m4rch receive-status: records=%u status=%#x doorbells=%u\n",receive_journal.used,receive_journal.status,receive_journal.doorbells);
++#endif
+ out:
+  mutex_unlock(&graph_io_lock);return ret?ret:count;
+ }

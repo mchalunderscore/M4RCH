@@ -1,0 +1,371 @@
+{
+  "schema": "m4rch.gfx-power-off-wrapper-qualification.v1",
+  "hardware_access": false,
+  "qualification_complete": true,
+  "case_count": 84,
+  "cases": [
+    {
+      "case": "valid-contract",
+      "passed": true
+    },
+    {
+      "case": "changed-contract-version",
+      "passed": true
+    },
+    {
+      "case": "changed-contract-provider_path",
+      "passed": true
+    },
+    {
+      "case": "changed-contract-snapshot_api",
+      "passed": true
+    },
+    {
+      "case": "changed-contract-power_off_api",
+      "passed": true
+    },
+    {
+      "case": "changed-contract-maximum_power_off_commands",
+      "passed": true
+    },
+    {
+      "case": "changed-contract-requires_host_stop",
+      "passed": true
+    },
+    {
+      "case": "changed-contract-requires_owned_pm_usage_count",
+      "passed": true
+    },
+    {
+      "case": "changed-contract-work_submitted",
+      "passed": true
+    },
+    {
+      "case": "changed-contract-allocations_retained",
+      "passed": true
+    },
+    {
+      "case": "changed-contract-mappings_retained",
+      "passed": true
+    },
+    {
+      "case": "changed-contract-consumer_retained",
+      "passed": true
+    },
+    {
+      "case": "changed-contract-owned_pm_reference_released_once",
+      "passed": true
+    },
+    {
+      "case": "changed-contract-reset_pulse",
+      "passed": true
+    },
+    {
+      "case": "changed-contract-automatic_restart",
+      "passed": true
+    },
+    {
+      "case": "changed-contract-backing_release",
+      "passed": true
+    },
+    {
+      "case": "changed-contract-off_observation_mask",
+      "passed": true
+    },
+    {
+      "case": "changed-contract-off_observation_expected",
+      "passed": true
+    },
+    {
+      "case": "changed-contract-off_requires_domain_on",
+      "passed": true
+    },
+    {
+      "case": "changed-contract-maximum_snapshot_samples",
+      "passed": true
+    },
+    {
+      "case": "changed-contract-minimum_poll_delay_us",
+      "passed": true
+    },
+    {
+      "case": "changed-contract-off_proves_dma_retirement",
+      "passed": true
+    },
+    {
+      "case": "changed-contract-no_asc_sgx_mailbox_access_after_attempt",
+      "passed": true
+    },
+    {
+      "case": "changed-contract-commands",
+      "passed": true
+    },
+    {
+      "case": "changed-contract-after_attempt",
+      "passed": true
+    },
+    {
+      "case": "old-reset-owner-rejected",
+      "passed": true
+    },
+    {
+      "case": "old-reset-resident-rejected",
+      "passed": true
+    },
+    {
+      "case": "actual-cold-parameters",
+      "passed": true
+    },
+    {
+      "case": "invalid-startup-{}",
+      "passed": true
+    },
+    {
+      "case": "invalid-startup-{'arena': True}",
+      "passed": true
+    },
+    {
+      "case": "invalid-startup-{'graph': True, 'arena': True}",
+      "passed": true
+    },
+    {
+      "case": "invalid-startup-{'graph': True, 'warm_restart': True}",
+      "passed": true
+    },
+    {
+      "case": "untyped-command-control",
+      "passed": true
+    },
+    {
+      "case": "untyped-command-recover",
+      "passed": true
+    },
+    {
+      "case": "untyped-command-trace-off",
+      "passed": true
+    },
+    {
+      "case": "untyped-command-submit",
+      "passed": true
+    },
+    {
+      "case": "untyped-command-gfx-reset",
+      "passed": true
+    },
+    {
+      "case": "untyped-command-warm-restart",
+      "passed": true
+    },
+    {
+      "case": "untyped-command-unknown",
+      "passed": true
+    },
+    {
+      "case": "before-stop-sample",
+      "passed": true
+    },
+    {
+      "case": "before-stop-gfx-snapshot",
+      "passed": true
+    },
+    {
+      "case": "before-stop-stop",
+      "passed": true
+    },
+    {
+      "case": "before-stop-gfx-poweroff",
+      "passed": true
+    },
+    {
+      "case": "after-stop-sample",
+      "passed": true
+    },
+    {
+      "case": "after-stop-gfx-snapshot",
+      "passed": true
+    },
+    {
+      "case": "after-stop-stop",
+      "passed": true
+    },
+    {
+      "case": "after-stop-gfx-poweroff",
+      "passed": true
+    },
+    {
+      "case": "sealed-{'power_off_attempted': True}-sample",
+      "passed": true
+    },
+    {
+      "case": "sealed-{'power_off_attempted': True}-gfx-snapshot",
+      "passed": true
+    },
+    {
+      "case": "sealed-{'power_off_attempted': True}-stop",
+      "passed": true
+    },
+    {
+      "case": "sealed-{'power_off_attempted': True}-gfx-poweroff",
+      "passed": true
+    },
+    {
+      "case": "sealed-{'in_flight': {'command': 'stop'}}-sample",
+      "passed": true
+    },
+    {
+      "case": "sealed-{'in_flight': {'command': 'stop'}}-gfx-snapshot",
+      "passed": true
+    },
+    {
+      "case": "sealed-{'in_flight': {'command': 'stop'}}-stop",
+      "passed": true
+    },
+    {
+      "case": "sealed-{'in_flight': {'command': 'stop'}}-gfx-poweroff",
+      "passed": true
+    },
+    {
+      "case": "sealed-{'interrupted_operation': {'command': 'stop'}}-sample",
+      "passed": true
+    },
+    {
+      "case": "sealed-{'interrupted_operation': {'command': 'stop'}}-gfx-snapshot",
+      "passed": true
+    },
+    {
+      "case": "sealed-{'interrupted_operation': {'command': 'stop'}}-stop",
+      "passed": true
+    },
+    {
+      "case": "sealed-{'interrupted_operation': {'command': 'stop'}}-gfx-poweroff",
+      "passed": true
+    },
+    {
+      "case": "work-excludes-sample",
+      "passed": true
+    },
+    {
+      "case": "work-excludes-gfx-snapshot",
+      "passed": true
+    },
+    {
+      "case": "work-excludes-stop",
+      "passed": true
+    },
+    {
+      "case": "work-excludes-gfx-poweroff",
+      "passed": true
+    },
+    {
+      "case": "durable-off-none",
+      "passed": true
+    },
+    {
+      "case": "no-second-off-none",
+      "passed": true
+    },
+    {
+      "case": "no-stop-after-off-none",
+      "passed": true
+    },
+    {
+      "case": "diagnostics-after-off-none",
+      "passed": true
+    },
+    {
+      "case": "durable-off-open",
+      "passed": true
+    },
+    {
+      "case": "no-second-off-open",
+      "passed": true
+    },
+    {
+      "case": "no-stop-after-off-open",
+      "passed": true
+    },
+    {
+      "case": "diagnostics-after-off-open",
+      "passed": true
+    },
+    {
+      "case": "durable-off-write",
+      "passed": true
+    },
+    {
+      "case": "no-second-off-write",
+      "passed": true
+    },
+    {
+      "case": "no-stop-after-off-write",
+      "passed": true
+    },
+    {
+      "case": "diagnostics-after-off-write",
+      "passed": true
+    },
+    {
+      "case": "durable-off-short",
+      "passed": true
+    },
+    {
+      "case": "no-second-off-short",
+      "passed": true
+    },
+    {
+      "case": "no-stop-after-off-short",
+      "passed": true
+    },
+    {
+      "case": "diagnostics-after-off-short",
+      "passed": true
+    },
+    {
+      "case": "durable-off-interrupt",
+      "passed": true
+    },
+    {
+      "case": "no-second-off-interrupt",
+      "passed": true
+    },
+    {
+      "case": "no-stop-after-off-interrupt",
+      "passed": true
+    },
+    {
+      "case": "diagnostics-after-off-interrupt",
+      "passed": true
+    },
+    {
+      "case": "interrupted-intent-never-erased",
+      "passed": true
+    }
+  ],
+  "source_files": [
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/gfx-poweroff-trial/derive-runners.py",
+      "sha256": "db5808eaba7fc1f5bb5124656495f2aa1e15e585fb79075c2571c0d475b63031"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/gfx-poweroff-trial/gfx_poweroff_contract.py",
+      "sha256": "d1be1e696f18cbd43184f7bf3a0da8e32efbf750e1e96892f87a473833d7e69e"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/gfx-poweroff-trial/prepare-trial.py",
+      "sha256": "d83b7596100ad1e1f21866229aade681d6448a91182b5d62496b95aa4900e148"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/gfx-poweroff-trial/run-poweroff.py",
+      "sha256": "1cc38f25f0c7615ffdd2886ba92d8ab76113a4039508639d46bd8ed8bf38b2b7"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/gfx-poweroff-trial/run-root-poweroff.py",
+      "sha256": "b166fc4560d45f2a40b62ea45efc11e02857f49b2259cacb5348a38347de92e7"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/gfx-poweroff-trial/test-runners.py",
+      "sha256": "726d0707f61e23ab37addba2f9b028a1d39c0760e713947e3d458c968dfb0c29"
+    }
+  ],
+  "qualification": "Real Python admission and simulated sysfs intent/write handling; no actual PM, MMIO or firmware effect."
+}
