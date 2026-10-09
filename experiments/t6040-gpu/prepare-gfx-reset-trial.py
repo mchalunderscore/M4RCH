@@ -13,7 +13,7 @@ from pathlib import Path
 import shutil
 import subprocess
 
-from gfx_reset_contract import CONTRACT, validate_kernel, validate_receipt, require, sha
+from gfx_reset_contract import profile, validate_kernel, validate_receipt, require, sha
 
 KIT = Path(__file__).resolve().parent
 BASE_MODULE_SHA = '332d9d04f3dc2ada1de5b312910a5d5e65eb92165a28f9a6f3768cb627b81191'
@@ -48,6 +48,8 @@ def main():
     args = parser.parse_args()
     base = args.baseline_candidate.resolve()
     kernel, tree, notes = validate_kernel(args.kernel_manifest)
+    native = kernel.get('api_profile') == 'native-command-v1'
+    contract = profile(native)['contract']
     receipt = json.loads((base / 'asc-root-envelope/build-receipt.json').read_text())
     require(receipt['artifact_sha256']['asc-graph-init/asc-graph-init.ko'] == BASE_MODULE_SHA and
             receipt['graph_fixture_sha256'] == BASE_GRAPH_SHA, 'Wrong baseline candidate')
@@ -74,6 +76,8 @@ def main():
         shutil.copyfile(KIT / 'asc-graph-init' / name, graph / name)
     makefile = graph / 'Makefile'
     makefile.write_text(makefile.read_text() + '\nccflags-y += -DGFX_RESET_SCOPE_TRIAL\n')
+    if native:
+        makefile.write_text(makefile.read_text() + '\nccflags-y += -DGFX_RESET_NATIVE_SEQUENCE_TRIAL\n')
     (output / 'kernel-qualification.json').write_bytes(args.kernel_manifest.read_bytes())
     (output / 'kernel.notes.bin').write_bytes(notes)
     commands, build_logs = [], []
@@ -98,7 +102,7 @@ def main():
     receipt.update(kernel_release=kernel['kernel_release'],
                    kernel_notes_sha256=kernel['kernel_notes_sha256'],
                    graph_power_retirement_probe=False)
-    receipt['graph_recovery_trial']['gfx_reset_scope'] = copy.deepcopy(CONTRACT)
+    receipt['graph_recovery_trial']['gfx_reset_scope'] = copy.deepcopy(contract)
     receipt['kernel_gfx_reset_api'] = {
         'patch_sha256': kernel['patch_sha256'],
         'qualification_sha256': sha(args.kernel_manifest),
@@ -109,6 +113,10 @@ def main():
         'qualification_path': 'kernel-qualification.json',
         'notes_path': 'kernel.notes.bin',
     }
+    if native:
+        receipt['kernel_gfx_reset_api']['api_profile'] = 'native-command-v1'
+        receipt['kernel_gfx_reset_api']['legacy_checked_patch_sha256'] = kernel['legacy_checked_patch_sha256']
+        receipt['kernel_gfx_reset_api']['usb_role_patch_sha256'] = kernel['usb_role_patch_sha256']
     receipt['artifact_sha256'] = {tag + '/' + name: sha(output / tag / name)
                                   for tag, name in TARGETS.items()}
     receipt['artifact_sha256'].update({
@@ -122,7 +130,8 @@ def main():
     validate_receipt(receipt)
     (output / 'asc-root-envelope/build-receipt.json').write_text(json.dumps(receipt, indent=2) + '\n')
     preparation = {
-        'schema': 'm4rch-gfx-reset-owner-preparation-v1',
+        'schema': ('m4rch-gfx-native-reset-owner-preparation-v1' if native else
+                   'm4rch-gfx-reset-owner-preparation-v1'),
         'baseline_candidate': str(base), 'baseline_module_sha256': BASE_MODULE_SHA,
         'baseline_build_receipt_sha256': sha(base / 'asc-root-envelope/build-receipt.json'),
         'kernel_qualification_sha256': sha(args.kernel_manifest),

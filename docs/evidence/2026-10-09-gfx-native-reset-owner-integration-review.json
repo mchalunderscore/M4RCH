@@ -1,0 +1,99 @@
+{
+  "schema": "m4rch.gfx-native-reset-owner-integration-review.v1",
+  "review": "actual source/diff and SHA-bound existing validation reports",
+  "hardware_access": false,
+  "current_owner_untouched": true,
+  "source_control_blocker": false,
+  "native_contract_version": 2,
+  "kernel_release": "7.1.13-m4rch-gpu-native-reset",
+  "owner_native_ram_cases": 517,
+  "wrapper_checks": 54,
+  "validation_inputs_independently_matched": true,
+  "new_test_runs": 0,
+  "one_attempt_seal_preserved": true,
+  "intent_persisted_before_sysfs_open": true,
+  "mandatory_shadow_and_retained_owner_preserved": true,
+  "shutdown_release_work_warm_restart_excluded": true,
+  "logging_command_errors_and_read_provenance_separate": true,
+  "physical_reset_acknowledged": false,
+  "retirement_verified": false,
+  "restart_reuse_unload_authorized": false,
+  "kernel_artifact_closure_reviewed": false,
+  "artifacts": [
+    {
+      "path": "docs/evidence/2026-10-09-gfx-native-reset-owner-integration-review.md",
+      "bytes": 3405,
+      "sha256": "7e92488db7fcb09e272f01af03a5b67390cdf1ad33b42cc1e140654f5671e274"
+    },
+    {
+      "path": "out/gfx-native-reset-owner/owner-validation.json",
+      "bytes": 2397,
+      "sha256": "dd3b85aaa1f4a37fae39f16257c61aea42ab637741140c3c280de658612ba890"
+    },
+    {
+      "path": "out/gfx-native-reset-owner/wrapper-validation.json",
+      "bytes": 1177,
+      "sha256": "86ae448805193edcb8c19a34340247a7b8b4ff80694020a47b3635e3d3c1a7f6"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx_reset_contract.py",
+      "bytes": 9170,
+      "sha256": "55e6ff0e87c5ed1488d9a4c299f8b924cec066f20011f0317c14ef3d78d25eeb"
+    },
+    {
+      "path": "experiments/t6040-gpu/prepare-gfx-reset-trial.py",
+      "bytes": 8393,
+      "sha256": "9a1bf66d88d238cd087154c26138c34b8a84c8b04aaf268802db38c34fde59cf"
+    },
+    {
+      "path": "experiments/t6040-gpu/run-root-envelope.py",
+      "bytes": 27326,
+      "sha256": "d4d5a8228ade3574fe876f5dcef8279091a84acfd286e4b0effa9c8f64214a2f"
+    },
+    {
+      "path": "experiments/t6040-gpu/run-resident-gpu.py",
+      "bytes": 17573,
+      "sha256": "16f30d6251b2c1f55a0af05263dfd789bab61d5eb8075e61c443b076d53068b4"
+    },
+    {
+      "path": "experiments/t6040-gpu/test-gfx-reset-owner.py",
+      "bytes": 5369,
+      "sha256": "56df3a77604c928f2d1b5ce1188ee40c1085699a7220d2ed35cf1a538772cc11"
+    },
+    {
+      "path": "experiments/t6040-gpu/test-gfx-reset-wrapper.py",
+      "bytes": 9718,
+      "sha256": "876d26d61577c80054ddc35f9bcac0a9903347d16d28f21845162067ad7d123c"
+    },
+    {
+      "path": "experiments/t6040-gpu/asc-graph-init/gfx-reset-scope.h",
+      "bytes": 9679,
+      "sha256": "0da5611ee7601f21a102886a7f0d79c7259fd11d471a456bed23d830b3638147"
+    },
+    {
+      "path": "experiments/t6040-gpu/asc-graph-init/gfx-reset-startup.h",
+      "bytes": 684,
+      "sha256": "f33ff5251683d7bc2aaca7f6e559d6b95696b2f1524ff68a6ab8e82fab18aecd"
+    },
+    {
+      "path": "experiments/t6040-gpu/asc-graph-init/asc-graph-init.c",
+      "bytes": 23912,
+      "sha256": "fbf44de2310e301d111e3b17dbe0eb213c6004fe9c7d3668d70a96b717d5f5dc"
+    },
+    {
+      "path": "experiments/t6040-gpu/asc-graph-init/recovery-cycle.h",
+      "bytes": 14084,
+      "sha256": "94a52c7d5901eecc26b512f21e2f82f5c72099051f4cd814b8b7cf44c1518f09"
+    },
+    {
+      "path": "experiments/t6040-gpu/asc-graph-init/test-gfx-reset-owner.c",
+      "bytes": 15302,
+      "sha256": "c4fe16b0adcd0b34c39b44e1f049e106d4f9ec418353cf54ef606888b54b5622"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-reset-capability/pmgr-gfx-reset.h",
+      "bytes": 5053,
+      "sha256": "4fbdca1e18ed9c3ee030bad9a94f35c2f70b213d038dfb0555350f35809df9a0"
+    }
+  ]
+}

@@ -26,6 +26,34 @@ CONTRACT = {
     'commands': ['gfx-snapshot', 'gfx-reset'],
     'after_attempt': ['sample', 'gfx-snapshot', 'stop'],
 }
+NATIVE_RELEASE = '7.1.13-m4rch-gpu-native-reset'
+NATIVE_PATCH_SHA = '5df46ea05dbf84d0245a6a74b97f309ca07c1b1d54d3848497ee7cf430bd5264'
+NATIVE_DRIVER_SHA = '04910407755d029a2acd131f873359bd14983ace946a469725612883835abb61'
+NATIVE_HEADER_SHA = '4fbdca1e18ed9c3ee030bad9a94f35c2f70b213d038dfb0555350f35809df9a0'
+USB_PATCHED_SHA = '7ca78866b27aa670134ded04820c26b7cabfb17640c410ee5cf3b307e0aa5b0c'
+USB_PATCH_SHA = 'c138588f8509a41502e22c8ddd2e62fa917b181685673edfc01313d2a27b9365'
+NATIVE_CONTRACT = dict(
+    CONTRACT, version=2, pulse_api='apple_pmgr_t6040_gfx_native_probe', pulse_us=1,
+    disable_completion='minimum-1us-then-busy-clear',
+    command_bits_latch_required=False,
+    commands_forced=['disable', 'combined-reset', 'release'],
+    all_command_writes_forced=True, desired_words_full_register=True,
+    physical_reset_acknowledged=False,
+)
+
+
+def profile(native=False):
+    if native:
+        require(all(isinstance(h, str) and len(h) == 64 for h in
+                    (NATIVE_PATCH_SHA, NATIVE_DRIVER_SHA, NATIVE_HEADER_SHA)),
+                'Native command API has not been qualified')
+        return dict(contract=NATIVE_CONTRACT, release=NATIVE_RELEASE,
+                    patch=NATIVE_PATCH_SHA, driver=NATIVE_DRIVER_SHA,
+                    header=NATIVE_HEADER_SHA,
+                    schema='m4rch.gfx-native-reset-kernel-qualification.v1')
+    return dict(contract=CONTRACT, release=RELEASE, patch=PATCH_SHA,
+                driver=DRIVER_SHA, header=HEADER_SHA,
+                schema='m4rch.gfx-reset-kernel-qualification.v1')
 
 
 def require(condition, message):
@@ -69,10 +97,17 @@ def validate_receipt(receipt):
     trial = receipt.get('graph_recovery_trial', {})
     if 'gfx_reset_scope' not in trial:
         return False
-    require(trial['gfx_reset_scope'] == CONTRACT, 'Unknown GFX reset command contract')
-    require(receipt['kernel_release'] == RELEASE and
-            receipt.get('kernel_gfx_reset_api', {}).get('patch_sha256') == PATCH_SHA,
+    native = trial['gfx_reset_scope'] == NATIVE_CONTRACT
+    spec = profile(native)
+    require(trial['gfx_reset_scope'] == spec['contract'], 'Unknown GFX reset command contract')
+    require(receipt['kernel_release'] == spec['release'] and
+            receipt.get('kernel_gfx_reset_api', {}).get('patch_sha256') == spec['patch'],
             'GFX reset API kernel binding missing')
+    if native:
+        require(receipt['kernel_gfx_reset_api'].get('api_profile') == 'native-command-v1' and
+                receipt['kernel_gfx_reset_api'].get('legacy_checked_patch_sha256') == PATCH_SHA and
+                receipt['kernel_gfx_reset_api'].get('usb_role_patch_sha256') == USB_PATCH_SHA,
+                'Native command profile binding missing')
     require(receipt.get('joined_owned_pages') == 174 and
             trial.get('resident_session') is True and
             receipt.get('graph_submit_work') is False and
@@ -84,11 +119,17 @@ def validate_receipt(receipt):
 
 def validate_kernel(path):
     manifest = json.loads(Path(path).read_text())
-    require(manifest['schema'] == 'm4rch.gfx-reset-kernel-qualification.v1' and
-            manifest['kernel_release'] == RELEASE and manifest['patch_sha256'] == PATCH_SHA,
+    native = manifest.get('api_profile') == 'native-command-v1'
+    spec = profile(native)
+    require(manifest['schema'] == spec['schema'] and
+            manifest['kernel_release'] == spec['release'] and manifest['patch_sha256'] == spec['patch'],
             'Wrong checked-reset kernel manifest')
+    if native:
+        require(manifest.get('legacy_checked_patch_sha256') == PATCH_SHA and
+                manifest.get('usb_role_patch_sha256') == USB_PATCH_SHA,
+                'Legacy reset API or promoted USB correction binding missing')
     tree = Path(manifest['kernel_tree']).resolve()
-    require((tree / 'include/config/kernel.release').read_text().strip() == RELEASE,
+    require((tree / 'include/config/kernel.release').read_text().strip() == spec['release'],
             'Kernel release changed')
     require({'vmlinux', 'arch/arm64/boot/Image', '.config', 'Module.symvers',
              'drivers/pmdomain/apple/pmgr-pwrstate.c',
@@ -102,8 +143,8 @@ def validate_kernel(path):
     require(sha(tree / 'vmlinux') == manifest['vmlinux_sha256'] and
             sha(tree / 'arch/arm64/boot/Image') == manifest['image_sha256'],
             'Compiled kernel image identity differs')
-    require(sha(tree / 'drivers/pmdomain/apple/pmgr-pwrstate.c') == DRIVER_SHA and
-            sha(tree / 'include/linux/soc/apple/pmgr-gfx-reset.h') == HEADER_SHA,
+    require(sha(tree / 'drivers/pmdomain/apple/pmgr-pwrstate.c') == spec['driver'] and
+            sha(tree / 'include/linux/soc/apple/pmgr-gfx-reset.h') == spec['header'],
             'Checked-reset API source differs from reviewed patch')
     baseline = ROOT / 'out/gpu-gravity-contract'
     source = json.loads((baseline / 'source-receipt.json').read_text())
@@ -111,12 +152,15 @@ def validate_kernel(path):
             'Maintained-source baseline differs')
     for name, expected in source['protected_maintained_files'].items():
         require(sha(baseline / 'linux' / name) == expected, 'Original source changed: ' + name)
-        if name != 'drivers/pmdomain/apple/pmgr-pwrstate.c':
+        if native and name == 'drivers/usb/dwc3/dwc3-apple.c':
+            require(sha(tree / name) == USB_PATCHED_SHA, 'Promoted USB source correction missing')
+        elif name != 'drivers/pmdomain/apple/pmgr-pwrstate.c':
             require(sha(tree / name) == expected, 'Maintained source changed: ' + name)
     base_config = (baseline / 'linux/.config').read_text()
     require(sha(baseline / 'linux/.config') == manifest['baseline_config_sha256'] and
             (tree / '.config').read_text() == base_config.replace(
-                'CONFIG_LOCALVERSION=""\n', 'CONFIG_LOCALVERSION="-m4rch-gpu-reset"\n'),
+                'CONFIG_LOCALVERSION=""\n',
+                'CONFIG_LOCALVERSION="' + spec['release'].removeprefix('7.1.13') + '"\n'),
             'Configuration change extends beyond the release suffix')
     notes = elf_section((tree / 'vmlinux').read_bytes(), b'.notes')
     require(notes == Path(manifest['kernel_notes_path']).read_bytes() and
@@ -124,6 +168,9 @@ def validate_kernel(path):
             'Compiled kernel notes differ from manifest')
     exports = {line.split()[1]: line.split()[3] for line in
                (tree / 'Module.symvers').read_text().splitlines() if len(line.split()) >= 4}
-    for api in (CONTRACT['snapshot_api'], CONTRACT['pulse_api']):
+    apis = [spec['contract']['snapshot_api'], spec['contract']['pulse_api']]
+    if native:
+        apis.append(CONTRACT['pulse_api'])
+    for api in apis:
         require(exports.get(api) == 'EXPORT_SYMBOL_GPL', 'Checked-reset API not exported')
     return manifest, tree, notes

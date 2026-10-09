@@ -73,6 +73,28 @@ static int gfx_reset_scope_result(const char *command,int ret)
  return ret;
 }
 
+#ifdef GFX_RESET_NATIVE_SEQUENCE_TRIAL
+static void gfx_reset_scope_native_observation(const struct apple_pmgr_gfx_native_observation *o)
+{
+ const char * const commands[]={"inhibit","disable","combined-assert","release",
+  "restore","cleanup-inhibit","cleanup-release","cleanup-restore"};
+ const char * const reads[]={"before","auto-held","disabled","asserted",
+  "released","final","cleanup-release","cleanup-final"};
+ unsigned int i;
+ pr_info("m4rch gfx-native-contract: api=apple_pmgr_t6040_gfx_native_probe command_bit_ack_required=0 full_word_forced_writes=1 physical_reset_acknowledged=0 retirement_verified=0\n");
+ pr_info("m4rch gfx-native-result: command_attempts=%#x base=%#x base_from_auto_held=%u original_auto=%#x release_command_verified=%u sequence_completed=%u disable_delay_us=%u pulse_delay_us=%u read_attempts=%#x\n",
+  o->command_attempts,o->command_base,o->base_from_auto_held,o->original_auto,
+  o->release_command_verified,o->sequence_completed,o->disable_delay_us,
+  o->pulse_delay_us,o->read_attempts);
+ for(i=0;i<ARRAY_SIZE(commands);i++)
+  pr_info("m4rch gfx-native-command: field=%s attempted=%u forced=1 desired_full_word=%#x write_error=%d\n",
+   commands[i],!!(o->command_attempts&BIT(i)),o->desired[i],o->write_error[i]);
+ for(i=0;i<ARRAY_SIZE(reads);i++)
+  pr_info("m4rch gfx-native-read: field=%s attempted=%u count=%u poll_delay_us=%u read_error=%d\n",
+   reads[i],!!(o->read_attempts&BIT(i)),o->read_count[i],o->poll_delay_us[i],o->read_error[i]);
+}
+#endif
+
 static int gfx_reset_scope_snapshot(void)
 {
  struct apple_pmgr_gfx_reset_observation observation={};
@@ -113,6 +135,9 @@ static int gfx_reset_scope_preconditions(void)
 static int gfx_reset_scope_reset(void)
 {
  struct apple_pmgr_gfx_reset_observation observation={};
+#ifdef GFX_RESET_NATIVE_SEQUENCE_TRIAL
+ struct apple_pmgr_gfx_native_observation native_observation={};
+#endif
  int ret;
  lockdep_assert_held(&graph_io_lock);
  if (gfx_reset_scope_sealed || gfx_reset_scope_attempted)
@@ -137,7 +162,21 @@ static int gfx_reset_scope_reset(void)
   */
  gfx_reset_scope_attempted=true;
  gfx_reset_scope_protocol("gfx-reset-before");
+#ifdef GFX_RESET_NATIVE_SEQUENCE_TRIAL
+ ret=apple_pmgr_t6040_gfx_native_probe(&native_observation);
+ observation=native_observation.common;
+ gfx_reset_scope_native_observation(&native_observation);
+ if(!ret && (!native_observation.sequence_completed ||
+             !native_observation.release_command_verified ||
+             !observation.auto_policy_restored ||
+             (native_observation.command_attempts &
+              (BIT(APPLE_PMGR_GFX_NATIVE_DISABLE) | BIT(APPLE_PMGR_GFX_NATIVE_ASSERT) |
+               BIT(APPLE_PMGR_GFX_NATIVE_RELEASE))) !=
+              (BIT(APPLE_PMGR_GFX_NATIVE_DISABLE) | BIT(APPLE_PMGR_GFX_NATIVE_ASSERT) |
+               BIT(APPLE_PMGR_GFX_NATIVE_RELEASE)))) ret=-EIO;
+#else
  ret=apple_pmgr_t6040_gfx_checked_pulse(&observation);
+#endif
  gfx_reset_scope_observation("gfx-reset",ret,&observation);
  gfx_reset_scope_protocol("gfx-reset-after");
  if (!ret && (observation.operation_error || observation.cleanup_error))

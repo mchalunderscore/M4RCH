@@ -30,6 +30,7 @@ def main():
     parser.add_argument('--contract', type=Path, default=ROOT / 'out/recovery-dispatch/prepared/recovery-contract.h')
     parser.add_argument('--api-header', type=Path, default=ROOT / 'out/gfx-reset-capability/driver-api-v1/include/linux/soc/apple/pmgr-gfx-reset.h')
     parser.add_argument('--output', type=Path)
+    parser.add_argument('--native', action='store_true', help='Replay the distinct native command API path')
     args = parser.parse_args()
     source = args.source.read_text()
     functions = [extract(source, n, t) for n, t in
@@ -63,6 +64,8 @@ def main():
                    '-Wno-unused-variable', '-Wno-unused-function', '-Wno-unused-parameter',
                    '-fsanitize=address,undefined', '-fno-omit-frame-pointer',
                    '-I', str(temp / 'include'), str(temp / 'replay.c'), '-o', str(executable)]
+        if args.native:
+            command.insert(1, '-DGFX_RESET_NATIVE_SEQUENCE_TRIAL')
         result = subprocess.run(command, capture_output=True, text=True)
         if result.returncode:
             raise RuntimeError(result.stdout + result.stderr)
@@ -74,6 +77,7 @@ def main():
     if args.output:
         sha = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
         report = dict(schema='m4rch-gfx-reset-owner-c-replay-v1', hardware_access=False,
+                      native_command_profile=args.native,
                       inputs=[dict(path=str(p), sha256=sha(p)) for p in
                               (args.source, args.owner, args.contract, args.api_header,
                                KIT / 'test-gfx-reset-owner.c', Path(__file__))],

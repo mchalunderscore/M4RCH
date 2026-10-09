@@ -8,7 +8,8 @@ import json
 from pathlib import Path
 import tempfile
 
-from gfx_reset_contract import CONTRACT, RELEASE, PATCH_SHA, sha
+from gfx_reset_contract import (CONTRACT, RELEASE, PATCH_SHA, NATIVE_CONTRACT,
+                                NATIVE_RELEASE, NATIVE_PATCH_SHA, USB_PATCH_SHA, sha)
 
 KIT = Path(__file__).resolve().parent
 
@@ -68,6 +69,34 @@ def main():
             checks += 1
         else:
             raise AssertionError('Reset receipt accepted outside graph mode')
+    native = copy.deepcopy(new)
+    native['kernel_release'] = NATIVE_RELEASE
+    native['graph_recovery_trial']['gfx_reset_scope'] = copy.deepcopy(NATIVE_CONTRACT)
+    native['kernel_gfx_reset_api'] = dict(patch_sha256=NATIVE_PATCH_SHA,
+                                        api_profile='native-command-v1',
+                                        legacy_checked_patch_sha256=PATCH_SHA,
+                                        usb_role_patch_sha256=USB_PATCH_SHA)
+    assert root_runner.owner_parameters(native, graph=True) == [
+        'run_gate=2', 'observe_ms=5000', 'resident_session=1']
+    checks += 1
+    for key in ('patch_sha256', 'api_profile', 'legacy_checked_patch_sha256',
+                'usb_role_patch_sha256'):
+        incompatible = copy.deepcopy(native)
+        incompatible['kernel_gfx_reset_api'].pop(key)
+        try:
+            root_runner.owner_parameters(incompatible, graph=True)
+        except ValueError:
+            checks += 1
+        else:
+            raise AssertionError('Native profile accepted without ' + key)
+    incompatible = copy.deepcopy(native)
+    incompatible['graph_recovery_trial']['gfx_reset_scope']['command_bits_latch_required'] = True
+    try:
+        root_runner.owner_parameters(incompatible, graph=True)
+    except ValueError:
+        checks += 1
+    else:
+        raise AssertionError('Unknown native completion contract accepted')
 
     def state():
         return dict(boot_id='offline', resident_session_active=True,
@@ -86,6 +115,7 @@ def main():
     for name in runner.COMMANDS:
         admits(name, old, state(), name in ('sample', 'stop'))
         admits(name, new, state(), name in ('sample', 'stop', 'gfx-snapshot', 'gfx-reset'))
+        admits(name, native, state(), name in ('sample', 'stop', 'gfx-snapshot', 'gfx-reset'))
     for key in ('gfx_reset_attempted', 'host_stop_requested', 'submit_attempted',
                 'interrupted_operation'):
         history = state()

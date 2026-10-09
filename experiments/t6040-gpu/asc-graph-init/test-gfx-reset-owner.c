@@ -40,6 +40,9 @@ static unsigned int pulse_calls,snapshot_calls,asc_reads,asc_writes,ram_writes;
 static unsigned int control_calls,cycle_calls,trace_calls,send_calls,gpu_samples;
 static unsigned int snapshot_error,pulse_error;
 static struct apple_pmgr_gfx_reset_observation api_observation;
+#ifdef GFX_RESET_NATIVE_SEQUENCE_TRIAL
+static unsigned int native_bad_metadata;
+#endif
 static char logs[65536];static size_t log_used;
 static void test_log(const char *fmt,...)
 {
@@ -98,6 +101,25 @@ int apple_pmgr_t6040_gfx_checked_pulse(struct apple_pmgr_gfx_reset_observation *
  for(unsigned int i=0;i<sizeof(*o);i++) assert(!((u8 *)o)[i]);
  pulse_calls++;*o=api_observation;return -(int)pulse_error;
 }
+#ifdef GFX_RESET_NATIVE_SEQUENCE_TRIAL
+int apple_pmgr_t6040_gfx_native_probe(struct apple_pmgr_gfx_native_observation *o)
+{
+ int ret;
+ for(unsigned int i=0;i<sizeof(*o);i++) assert(!((u8 *)o)[i]);
+ ret=apple_pmgr_t6040_gfx_checked_pulse(&o->common);
+ if(!ret) {
+  o->sequence_completed=o->release_command_verified=1;
+  o->common.auto_policy_restored=1;
+  o->command_attempts=BIT(APPLE_PMGR_GFX_NATIVE_DISABLE) |
+   BIT(APPLE_PMGR_GFX_NATIVE_ASSERT) | BIT(APPLE_PMGR_GFX_NATIVE_RELEASE);
+  if(native_bad_metadata==1) o->sequence_completed=0;
+  if(native_bad_metadata==2) o->release_command_verified=0;
+  if(native_bad_metadata==3) o->common.auto_policy_restored=0;
+  if(native_bad_metadata==4) o->command_attempts=0;
+ }
+ return ret;
+}
+#endif
 static unsigned int cases;
 static ssize_t command(const char *s) {ssize_t r=recovery_command_store(NULL,NULL,s,strlen(s));assert(!mutex_depth);return r;}
 static void cursors(u32 n) {put32(RECOVERY_CONTROL,n);put32(RECOVERY_CONTROL+8,n);put32(RECOVERY_CONTROL+16,n);}
@@ -113,6 +135,9 @@ static void fixture(bool diagnostic)
  recovery_operation=0;mutex_depth=cancel_calls=schedule_calls=receive_calls=ack_calls=0;
  pulse_calls=snapshot_calls=asc_reads=asc_writes=ram_writes=control_calls=cycle_calls=trace_calls=send_calls=gpu_samples=0;
  snapshot_error=pulse_error=0;memset(&receive_journal,0,sizeof(receive_journal));
+#ifdef GFX_RESET_NATIVE_SEQUENCE_TRIAL
+ native_bad_metadata=0;
+#endif
  cursors(RECOVERY_CONTROL_INITIAL);put32(RECOVERY_STATUS+0x4900,diagnostic?2:0);
  if(diagnostic) {put32(RECOVERY_REQUEST,2);put32(RECOVERY_REQUEST+4,1);put32(RECOVERY_STATUS+0x4910,1);}
  u32 v=0x30;memcpy(asc_bytes+0x44,&v,4);
@@ -225,6 +250,17 @@ int main(void)
  assert(command("control")==-EIO && command("submit")==-EIO);recovery_receive_worker(NULL);assert(!receive_calls && !schedule_calls);cases++;
  fixture(true);held=false;assert(command("gfx-snapshot")==-EBUSY && !snapshot_calls && !asc_reads);cases++;
  puts("PASS API refusal/error/cleanup uncertainty, attempt-before-entry, full valid-field logging and poisoned invalid observations");
+#ifdef GFX_RESET_NATIVE_SEQUENCE_TRIAL
+ for(unsigned int bad=1;bad<=4;bad++) {
+  fixture(true);native_bad_metadata=bad;
+  assert(command("gfx-reset")==-EIO && pulse_calls==1);
+  assert(gfx_reset_scope_attempted && gfx_reset_scope_sealed);
+  assert(strstr(logs,"physical_reset_acknowledged=0") &&
+         strstr(logs,"field=combined-assert") && strstr(logs,"read_attempts="));
+  blocked_after_reset();
+ }
+ puts("PASS native command evidence inconsistencies refuse success and keep the one-attempt seal");
+#endif
 
  fixture(true);assert(command("stop")==4 && !gfx_reset_scope_attempted && gfx_reset_scope_sealed && recovery_resident);
  assert(command("gfx-reset")==-EALREADY && !pulse_calls);no_publication();cases++;

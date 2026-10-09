@@ -1,0 +1,83 @@
+{
+  "schema": "m4rch.gfx-native-reset-api-independent-review.v1",
+  "date": "2026-10-09",
+  "hardware_access_by_reviewer": false,
+  "current_owner_untouched": true,
+  "api_profile": "native-command-v1",
+  "reviewed_api": "apple_pmgr_t6040_gfx_native_probe",
+  "source_control_blocker": false,
+  "legacy_source_and_ABI_preserved": true,
+  "forced_combined_assert_and_release": true,
+  "uncertain_assertion_minimum_delay_path_present": true,
+  "command_bits_used_as_assertion_ack": false,
+  "independent_actual_C_cases": 396,
+  "independent_models": 9,
+  "asan_ubsan": true,
+  "physical_reset_acknowledgement_verified": false,
+  "reset_coverage_verified": false,
+  "dma_retirement_verified": false,
+  "reuse_release_restart_authorized": false,
+  "kernel_artifact_closure_reviewed": false,
+  "artifacts": [
+    {
+      "path": "docs/evidence/2026-10-09-gfx-native-reset-api-review.md",
+      "sha256": "0984a53b932c85e27e10445ea48a2e2426c770f84cb5445e2d9f61ebcbb71c91",
+      "bytes": 4819
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-reset-capability/pmgr-pwrstate.c",
+      "sha256": "04910407755d029a2acd131f873359bd14983ace946a469725612883835abb61",
+      "bytes": 31951
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-reset-capability/pmgr-gfx-reset.h",
+      "sha256": "4fbdca1e18ed9c3ee030bad9a94f35c2f70b213d038dfb0555350f35809df9a0",
+      "bytes": 5053
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-reset-capability/gfx-native-reset-observation.patch",
+      "sha256": "5df46ea05dbf84d0245a6a74b97f309ca07c1b1d54d3848497ee7cf430bd5264",
+      "bytes": 14085
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-reset-capability/test-gfx-native-reset-api.py",
+      "sha256": "fbd13e97ad73952240a7fffa12e9bc1fcd7a24aff7d3cffd5445d9db56a683bd",
+      "bytes": 3939
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-reset-capability/test-gfx-native-reset-api.c",
+      "sha256": "8061875a7d4db4b8bc81b988c103a450b3b3b2af73e04892e4a6b4224f23433f",
+      "bytes": 13492
+    },
+    {
+      "path": "out/gfx-native-reset-api/staged/pmgr-pwrstate.c",
+      "sha256": "04910407755d029a2acd131f873359bd14983ace946a469725612883835abb61",
+      "bytes": 31951
+    },
+    {
+      "path": "out/gfx-native-reset-api/staged/include/linux/soc/apple/pmgr-gfx-reset.h",
+      "sha256": "4fbdca1e18ed9c3ee030bad9a94f35c2f70b213d038dfb0555350f35809df9a0",
+      "bytes": 5053
+    },
+    {
+      "path": "out/gfx-native-reset-api/validation-independent-review/report.json",
+      "sha256": "a8f46b249eb8333eee202cb3b87804b371ba682ac53a7ff932c6838102683bb0",
+      "bytes": 1471
+    },
+    {
+      "path": "out/gfx-native-reset-api/validation-v2/report.json",
+      "sha256": "ac3860d06d82e63a0144a96cab29969f711826bdc503bbc919f706788de14516",
+      "bytes": 1439
+    },
+    {
+      "path": "out/gfx-reset-kernel/linux/drivers/pmdomain/apple/pmgr-pwrstate.c",
+      "sha256": "93df185e68c3e69d428460db7fc725b85ed191f75d24753a0563536a0dd1da61",
+      "bytes": 21723
+    },
+    {
+      "path": "out/gfx-reset-kernel/linux/include/linux/soc/apple/pmgr-gfx-reset.h",
+      "sha256": "22392cd82cfdabcc1796166612bbb1d7b935cc34111bc1bf930e72d8e328c71e",
+      "bytes": 2223
+    }
+  ]
+}
