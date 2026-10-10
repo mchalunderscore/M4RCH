@@ -1,0 +1,332 @@
+{
+  "schema": "m4rch.gfx-cold-render-pause-release-C-handoff.v1",
+  "status": "SOURCE_AND_OFFLINE_C_QUALIFICATION_FROZEN",
+  "selected_source": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/prepared-owner-v1",
+  "selected_source_receipt": {
+    "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/prepared-owner-v1/cold-render-pause-release-owner-source-receipt.json",
+    "bytes": 13861,
+    "sha256": "92cdefc69b6940f00c98188c19055cd939ff819c8c5d9c03cf01a9dd1168f85f"
+  },
+  "owner_qualification": {
+    "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/owner-qualification-v3.json",
+    "bytes": 27955,
+    "sha256": "771b56f8e0e5ae8b573663011ad72ed0ece5f640e3e077049c56cca941d39462"
+  },
+  "successful_actual_c_fixture": {
+    "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/owner-qualification-v3.success.log",
+    "bytes": 36961,
+    "sha256": "0223f8bc387ff0774b5a015cd8d13b4801c79e9066f8e96746e53eeb0e1bb6c6"
+  },
+  "source_profile": {
+    "family": "gfx_cold_render_pause_release_scope",
+    "version": 14,
+    "compile_macro": "GFX_COLD_RENDER_PAUSE_RELEASE_TRIAL",
+    "typed_commands": [
+      "sample",
+      "gfx-snapshot"
+    ],
+    "automatic_startup": true,
+    "management_only": false,
+    "retained_pages": 174,
+    "startup_recovery_cycles": 0,
+    "recovery_phase_writes": 0,
+    "maximum_cold_ap20_requests": 1,
+    "maximum_control_notifications": 1,
+    "maximum_draw_notifications": 1,
+    "fresh_control_before": 32,
+    "fresh_control_after": 33,
+    "trace_mask_before": 3,
+    "trace_mask_after": 0,
+    "control_opcode": 22,
+    "control_record_index": 32,
+    "observation_ms": 15000,
+    "observation_poll_max": 15001,
+    "control_timeout_ms": 5000,
+    "control_poll_max": 5001,
+    "original_identity_capture_only": true,
+    "automatic_draw_once": true,
+    "preserved_ta_3d_recipe": true,
+    "outstanding_work_backing_retained": true,
+    "pm_reference_retained_after_draw": true,
+    "pm_put_after_draw": false,
+    "off_after_draw": false,
+    "asc_stop_after_draw": false,
+    "unload_allowed": false,
+    "warm_restart_allowed": false,
+    "firmware_cursor_reset_allowed": false,
+    "unknown_seals_mutations": true,
+    "diagnostics_after_stop_cached": true,
+    "delayed_worker_scheduled": false,
+    "synchronous_rx_during_pipeline": true,
+    "receive_journal_stopped_on_return": true,
+    "no_hardware_fetch_or_software_power38_admission_gate": true,
+    "sample_indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "post_submit_sample_offsets_ms": [
+      0,
+      100,
+      1000,
+      5000,
+      15000
+    ],
+    "sample_fields": [
+      "sample_index",
+      "elapsed_ms",
+      "sample_jiffies",
+      "operand_samples_atomic"
+    ],
+    "log_prefix": "m4rch gfx-cold-render:",
+    "terminal_phase": "retained-final",
+    "gpu_execution_verified": false,
+    "rendering_verified": false,
+    "retirement_verified": false,
+    "maximum_scheduler_request_writes": 1,
+    "scheduler_request_offset": "0x211c8",
+    "scheduler_ack_offset": "0x211d0",
+    "scheduler_request_before": 3,
+    "scheduler_request_after": 2,
+    "scheduler_request_formula": "last_fresh_request & ~1ULL",
+    "scheduler_expected_ack_lowbit": 0,
+    "scheduler_release_sample_index": 2,
+    "scheduler_release_min_elapsed_ms": 100,
+    "scheduler_release_timeout_ms": 100,
+    "scheduler_release_poll_max": 101,
+    "scheduler_ack_writes": 0,
+    "scheduler_preserve_bit1": true,
+    "scheduler_other_bits_preserved": true,
+    "scheduler_observe_firmware_rewrite": true,
+    "scheduler_requires_no_output_completion_progress": true,
+    "scheduler_requires_own_work_consumption": true,
+    "native_reason_mutex_owned": false,
+    "native_reason_lifecycle_reproduced": false,
+    "scheduler_log_prefix": "m4rch gfx-cold-pause-release:"
+  },
+  "changed_files": [
+    "Makefile",
+    "asc-graph-init.c",
+    "gfx-cold-render.h",
+    "gfx-coordinate-owner.h",
+    "graph-receipt.json",
+    "preparation.json",
+    "recovery-cycle.h"
+  ],
+  "added_files": [
+    "gfx-cold-pause-state.h",
+    "gfx-cold-pause-release.h"
+  ],
+  "removed_files": [],
+  "new_source_pins": [
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/prepared-owner-v1/Makefile",
+      "bytes": 230,
+      "sha256": "e7995e5382a24b52dc8530892b2ada4faf2e0a5e2e205155c337bb770e3f951f"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/prepared-owner-v1/asc-graph-init.c",
+      "bytes": 24110,
+      "sha256": "21252b26f998cb0d9845e7e316494e9a42e9f7b7ccb192032a5de642a3d55edc"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/prepared-owner-v1/gfx-cold-render.h",
+      "bytes": 18615,
+      "sha256": "dbddfb99b5cf6ab96d23bd331f432fd543c0c64d8c7e11ce342332ba98c2ad2e"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/prepared-owner-v1/gfx-coordinate-owner.h",
+      "bytes": 9524,
+      "sha256": "28dedb0da9d94e10bf133e08efaf9b7174f7b3a9bb661beddf29d7357b82a89d"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/prepared-owner-v1/graph-receipt.json",
+      "bytes": 133011,
+      "sha256": "2104ff60f59b2429985186c86e3d13bf05de4364e649d2321370eabc4bd15375"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/prepared-owner-v1/preparation.json",
+      "bytes": 85513,
+      "sha256": "c706992c7216940a1425c3ce640246e2be2af139c7c7a37fc74ee6d61f279e36"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/prepared-owner-v1/recovery-cycle.h",
+      "bytes": 2483,
+      "sha256": "e07188297f17545a1f9e43288f2759e553de544ced5f05613229789d0f9edd2a"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/prepared-owner-v1/gfx-cold-pause-state.h",
+      "bytes": 272,
+      "sha256": "9603a6deeae42146220fbece29599bfdc31a1de2392b05402b4ff143a3b75e7e"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/prepared-owner-v1/gfx-cold-pause-release.h",
+      "bytes": 5991,
+      "sha256": "10a821052c487e438fa6cb2aeac9980adc08a531d8516d12543e498e0d9bf263"
+    }
+  ],
+  "input_pins": [
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/prepared-owner-v1/cold-render-pause-release-owner-source-receipt.json",
+      "bytes": 13861,
+      "sha256": "92cdefc69b6940f00c98188c19055cd939ff819c8c5d9c03cf01a9dd1168f85f"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/owner-qualification-v3.json",
+      "bytes": 27955,
+      "sha256": "771b56f8e0e5ae8b573663011ad72ed0ece5f640e3e077049c56cca941d39462"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/owner-qualification-v3.success.log",
+      "bytes": 36961,
+      "sha256": "0223f8bc387ff0774b5a015cd8d13b4801c79e9066f8e96746e53eeb0e1bb6c6"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/owner-qualification-v3.actual-owner.c",
+      "bytes": 67468,
+      "sha256": "b14b76c42ec8cc67717d54661fd9a737cdbc25a784c2c786eae90299ecacd2fa"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/owner-qualification-v3.tester.py",
+      "bytes": 12313,
+      "sha256": "8b1e0c7b8dc41bcea1071300b4c89e03e1192398787d0355813b356ecaa53e24"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/gfx-cold-render-pause-release/prepare-pause-release-owner.py",
+      "bytes": 6816,
+      "sha256": "d53f0fc7816f588045f7bcfa8e5861ee0bbd526a73721fb4b9eadaf274cc6710"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/gfx-cold-render-pause-release/test-pause-release-owner.py",
+      "bytes": 12313,
+      "sha256": "8b1e0c7b8dc41bcea1071300b4c89e03e1192398787d0355813b356ecaa53e24"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render/owner-qualification-v8.json",
+      "bytes": 33622,
+      "sha256": "deea9356799207aba1d07c08c6858a2200abaf8ff3d5189d0ae401d9c89b0cf2"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render/prepared-owner-v2/cold-render-owner-source-receipt.json",
+      "bytes": 13070,
+      "sha256": "2ebd9dbe52a5e0be4de5793d9c3c6ee454ead602569e52ed16e5260e3a4cfec7"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-10-gfx-cold-render-1241-execution-review.json",
+      "bytes": 94722,
+      "sha256": "216eefb218747925cb8f07145c893e605280ccb622024d230de29a20b59462b6"
+    }
+  ],
+  "qualification": {
+    "actual_new_c_cases": 39,
+    "sanitizers": [
+      "address",
+      "undefined"
+    ],
+    "maximum_complete_log_row_bytes": 360,
+    "frozen_v13_56_case_composition": {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render/owner-qualification-v8.json",
+      "sha256": "deea9356799207aba1d07c08c6858a2200abaf8ff3d5189d0ae401d9c89b0cf2",
+      "case_count": 56,
+      "rerun": false
+    },
+    "full_actual_cold_ap_root_control_draw_and_intervention": true,
+    "allocation_context_physical_pm_cache_services_mocked": true,
+    "hardware_access": false,
+    "kernel_or_module_build": false
+  },
+  "native_formula": {
+    "firmware_ranges": [
+      "1b1f0..1b1fc",
+      "32130..32138",
+      "32178..32184"
+    ],
+    "request_offset": "0x211c8",
+    "ack_offset": "0x211d0",
+    "formula": "last_fresh_request & ~1ULL",
+    "expected_exact_before": 3,
+    "expected_write": 2,
+    "expected_ack_lowbit": 0,
+    "preserve_bit1_and_all_other_bits": true,
+    "ack_written": false,
+    "reason_mutex_and_lifecycle_reproduced": false
+  },
+  "eligibility": [
+    "Own fresh cold AP20, actual EP32/33 starts, root and freshcontrol33 before the original once draw.",
+    "Initial nominal100ms post-publication sampleindex2, elapsed>=100ms, exactly three own samples (before-submit/post0/post100).",
+    "Sample request3,ACK2,enabled masks3/0, fresh valid zero fault info/address.",
+    "Four completion configs exactly BIT54|originalrender_vas[52+i]|1 and zero status; six owned target/software/hardware completion changed counts zero.",
+    "Freshheld PM/accounting/identity/control33/recovery-zero guard and own TA/3D root cursors1/1/1; repeat fresh config/fault/register checks after onceintent.",
+    "Final fresh request remains3 after guards andwrite-intent log, immediatelybefore deriving3&~1 and the sole write."
+  ],
+  "sequence": [
+    "Keep all base v13 cold pipeline behavior and its source rows.",
+    "Eligible->intent->freshrecheck->write-intent->lastfreshrequest->onewrite2.",
+    "Boundedreadback withACKlowbit0 expected;100ms/101pollcap, no retry/ACKwrite/bit1clear/doorbell.",
+    "Later1000/5000/15000ms samplewatch records rawrequest/ACK and sticky rewritten/reasserted flags without writes.",
+    "Seal software/RX journal writer and retain module/all174pages/context/maps/ownPM; noOFF/PMput/ASCstop/unload."
+  ],
+  "wire_schema": {
+    "prefix": "m4rch gfx-cold-pause-release:",
+    "phases": [
+      "eligible",
+      "intent",
+      "write-intent",
+      "readback",
+      "released",
+      "observe",
+      "refused",
+      "retained-final"
+    ],
+    "keys": [
+      "phase",
+      "result",
+      "refused_condition",
+      "intent",
+      "write_attempted",
+      "write_issued",
+      "complete",
+      "before",
+      "written",
+      "after",
+      "ack",
+      "polls",
+      "rewritten",
+      "reasserted",
+      "sample_index",
+      "elapsed_ms",
+      "operand_samples_atomic"
+    ],
+    "base_v13_rows_preserved": true,
+    "release_complete_means": "Request2 readback and ACKbit0 clear after the one write only. ACK2 already had lowbit0 before the intervention."
+  },
+  "development": {
+    "prepared_source_version": 1,
+    "selected_qualification_version": 3,
+    "source_modified_after_freeze": false,
+    "preserved_prior_qualification_attempts": [
+      "v1: tester logical-operator parenthesis warning; saved actual-owner C and tester snapshot.",
+      "v2: inherited v13 fault-name collision caused an earlier control refusal; saved snapshots and partial actual log fixtures."
+    ],
+    "v3_changes": "Tester-only parenthesis/name correction and durable failure recording; selected Csourcev1 unchanged."
+  },
+  "hardware_status": {
+    "live_v14_trial": false,
+    "hardware_execution_verified": false,
+    "rendering_verified": false,
+    "retirement_verified": false,
+    "hardware_permission_owner": "root",
+    "module_build_and_finalization": "root-owned, separate handoff"
+  },
+  "limitations": [
+    "The intervention bypasses native firmware mutex/reason-owner lifecycle. A concurrent firmware request change can race the final request read/write; this limitation is explicit.",
+    "The distinct native ACKbit1 wait remains possible and is not cleared or tested by3\u21922.",
+    "Request2/ACKlow0 readback is not hardware fetch/dispatch/completion/pixels or whole-power initialization proof.",
+    "Later firmware rewrite/reassertion is observed without retry; complete retains its initial effect history.",
+    "Sequential sample groups and cross-object dumps remain non-atomic.",
+    "Cqualification mocks memory/PM/cache/device services; it establishes source behavior, not actual hardware behavior."
+  ]
+}
