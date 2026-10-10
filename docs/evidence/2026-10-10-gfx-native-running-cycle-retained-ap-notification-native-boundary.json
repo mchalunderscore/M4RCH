@@ -1,0 +1,296 @@
+{
+  "schema": "m4rch.gfx-native-running-cycle-retained-ap-notification-native-boundary.v1",
+  "offline_only": true,
+  "hardware_actions": [],
+  "source_changes": [],
+  "next_owner_prepared": false,
+  "boot_id": "df540c1c-5ec4-44f5-894c-37be6c2f3527",
+  "private_container": {
+    "path": "out/private-apple/kernelcache.decoded",
+    "bytes": 119308288,
+    "previously_bound_sha256": "6158e1c0d591240808e26ff1da050b2fa0ed3eb17c1779d2ddde3171b959536f",
+    "whole_container_rehash_performed": false
+  },
+  "bounded_complete_native_functions": [
+    {
+      "label": "parent_change",
+      "symbol": "__ZN7RTBuddy17_changePowerStateE17RTBuddyPowerStateb",
+      "start": "0xfffffe000b1de104",
+      "end_exclusive": "0xfffffe000b1de5a4",
+      "bytes": 1184,
+      "file_offset": 69050628,
+      "sha256": "4ce84c150886cf7b85841e1e192fccf0cf905a910f55f39f7744725c5dc6ea31"
+    },
+    {
+      "label": "notify_all_routes",
+      "symbol": "__ZN7RTBuddy32_notifyPowerStateChangeAllRoutesE17RTBuddyPowerStateS0_",
+      "start": "0xfffffe000b1de91c",
+      "end_exclusive": "0xfffffe000b1dea38",
+      "bytes": 284,
+      "file_offset": 69052700,
+      "sha256": "19a882001187d6e37bdce7a52303b3161976505bf0cc15c3dbd26090421ae8d9"
+    },
+    {
+      "label": "endpoint_notify",
+      "symbol": "__ZN7RTBuddy22notifyPowerStateChangeE17RTBuddyPowerStateS0_",
+      "start": "0xfffffe000b1deccc",
+      "end_exclusive": "0xfffffe000b1def38",
+      "bytes": 620,
+      "file_offset": 69053644,
+      "sha256": "96eb78798c97cdb14a19eb9b5ef4116371844cbbdaf55935d5205f9ebc37cb8e"
+    },
+    {
+      "label": "infer_power_action",
+      "symbol": "__ZNK7RTBuddy17_inferPowerActionE17RTBuddyPowerStateb",
+      "start": "0xfffffe000b1df380",
+      "end_exclusive": "0xfffffe000b1df3fc",
+      "bytes": 124,
+      "file_offset": 69055360,
+      "sha256": "8b91b6b6aa0aef516d9c7d6b8b359e8c519b57c1433f0c01006e5b365c6e5f7d"
+    },
+    {
+      "label": "perform_selector",
+      "symbol": "__ZN7RTBuddy32_setPowerStatePerformChangeGatedEPK17RTBuddyPowerStatePKb",
+      "start": "0xfffffe000b1df3fc",
+      "end_exclusive": "0xfffffe000b1df4e4",
+      "bytes": 232,
+      "file_offset": 69055484,
+      "sha256": "3d9a30954320effd173d68bc22793092bb27337e67aa3bfda8941e8cc1fe2ecb"
+    },
+    {
+      "label": "managed_selector",
+      "symbol": "__ZN7RTBuddy21_setManagedStateGatedE17RTBuddyPowerState",
+      "start": "0xfffffe000b1df5b4",
+      "end_exclusive": "0xfffffe000b1df614",
+      "bytes": 96,
+      "file_offset": 69055924,
+      "sha256": "b427c1713903609bef4a7ed5acfe2ba16fdbb18a9150968e359579c0822cec39"
+    },
+    {
+      "label": "perform_all_routes",
+      "symbol": "__ZN7RTBuddy33_performPowerStateChangeAllRoutesE17RTBuddyPowerState",
+      "start": "0xfffffe000b1dff30",
+      "end_exclusive": "0xfffffe000b1e0028",
+      "bytes": 248,
+      "file_offset": 69058352,
+      "sha256": "9a624602c322d162e3e64c2bc74f2af839971e152a0123ff9a1372a4c84bb5c5"
+    },
+    {
+      "label": "perform_gated",
+      "symbol": "__ZN7RTBuddy29_performPowerStateChangeGatedEPK17RTBuddyPowerState",
+      "start": "0xfffffe000b1e00c8",
+      "end_exclusive": "0xfffffe000b1e08ac",
+      "bytes": 2020,
+      "file_offset": 69058760,
+      "sha256": "b0f0812f136a87574c3d645a517a364e32d8a6615e706c3a52044c53b903d3fd"
+    },
+    {
+      "label": "management_init",
+      "symbol": "__ZN25RTBuddyManagementEndpoint16_initWithOptionsEP16IOSlaveProcessor",
+      "start": "0xfffffe000b1f1bc4",
+      "end_exclusive": "0xfffffe000b1f1e58",
+      "bytes": 660,
+      "file_offset": 69131204,
+      "sha256": "a191b63ffd4ed669cda8569f2e5bbdecc17c65ff8f1481a28bb4b31011bbdd30"
+    },
+    {
+      "label": "management_notify",
+      "symbol": "__ZN25RTBuddyManagementEndpoint18_onPowerStateGatedEPmS0_",
+      "start": "0xfffffe000b1f2308",
+      "end_exclusive": "0xfffffe000b1f241c",
+      "bytes": 276,
+      "file_offset": 69133064,
+      "sha256": "f7ef936356b70e2af29c15c7e1e19511f7125c71a863749672efff9e67475588"
+    },
+    {
+      "label": "signal_AP",
+      "symbol": "__ZN25RTBuddyManagementEndpoint19_signalApPowerGatedEm",
+      "start": "0xfffffe000b1f2498",
+      "end_exclusive": "0xfffffe000b1f259c",
+      "bytes": 260,
+      "file_offset": 69133464,
+      "sha256": "8c5f6424be9f355236ecd90015da5abf5f5b209d051532797155790e99ad5a1d"
+    },
+    {
+      "label": "request_IOP",
+      "symbol": "__ZN25RTBuddyManagementEndpoint17requestPowerStateE17RTBuddyPowerState",
+      "start": "0xfffffe000b1f27e0",
+      "end_exclusive": "0xfffffe000b1f2870",
+      "bytes": 144,
+      "file_offset": 69134304,
+      "sha256": "58e696739370931ac11a868e367ac0c082864408351c65966c195bea396e3bd1"
+    },
+    {
+      "label": "message_dispatch",
+      "symbol": "__ZN25RTBuddyManagementEndpoint15_messageHandlerEPvS0_",
+      "start": "0xfffffe000b1f1e58",
+      "end_exclusive": "0xfffffe000b1f2038",
+      "bytes": 480,
+      "file_offset": 69131864,
+      "sha256": "9740a15b128fb51c5757aa68f586fa4c92ecdd61b60a1a353ec8fab5f61368f3"
+    },
+    {
+      "label": "IOP_ack",
+      "symbol": "__ZN25RTBuddyManagementEndpoint15_handlePowerAckEy",
+      "start": "0xfffffe000b1f2f7c",
+      "end_exclusive": "0xfffffe000b1f3014",
+      "bytes": 152,
+      "file_offset": 69136252,
+      "sha256": "345cdd10658a1202811f8d619ae4091e7c13d5d9b80455232cd6486abfe08348"
+    },
+    {
+      "label": "handleRemotePowerState",
+      "start": "0xfffffe000b1f3014",
+      "end_exclusive": "0xfffffe000b1f30a4",
+      "file_offset": 69136404,
+      "bytes": 144,
+      "sha256": "56ae626cce7b8b8fb4625ead463ef3b753ca09ad0dcc915073b14f60722e7826",
+      "qualification": "Reused exact complete range from frozen matched native report, rather than re-extracting."
+    }
+  ],
+  "management_request_table": {
+    "address": "0xfffffe0007bfe338",
+    "bytes": 32,
+    "sha256": "4ffd451f7888c049df63fc0a165d9368092bf42d2b6a46fbc04d0895d8877d9d",
+    "fullwords": [
+      "0x60000000000201",
+      "0x60000000000220",
+      "0x60000000000202",
+      "0x60000000000000"
+    ]
+  },
+  "wire_domains": {
+    "parent_enum0": {
+      "AP_notification_typeB": "0x00b0000000000201",
+      "management_IOP_request_type6": "0x0060000000000201",
+      "scope": "Parent OFF0; two separate messages, neither is202."
+    },
+    "parent_enum1": {
+      "AP_notification_typeB": "0x00b0000000000020",
+      "management_IOP_request_type6": "0x0060000000000220",
+      "scope": "Parent ON1. The full native boot route can startCPU before its post-ON AP notification; this report authorizes no INIT220."
+    },
+    "parent_enum2": {
+      "AP_notification_typeB": null,
+      "AP_signal_result": "0xe00002c7 invalid argument before send",
+      "management_IOP_request_type6": "0x0060000000000202",
+      "scope": "Retained Sleep/PWRGATE2 route; no implicit AP OFF0 notification in these bounded functions."
+    },
+    "parent_enum3": {
+      "AP_notification_typeB": "0x00b0000000000000",
+      "management_IOP_request_type6": "0x0060000000000000",
+      "scope": "Distinct state3/quiesce route."
+    }
+  },
+  "call_order": {
+    "parent_change": "Complete _changePowerState pins desired newstate, calls notification routes(new,currentparentstate) atb1de2f4..300, performs and records the requested transition, then calls notification routes(recordedcurrent,recordedcurrent) atb1de410..41c.",
+    "managed_perform": "The complete perform selector uses inferred action and calls _setManagedStateGated when action2 is selected. That selector may first performON1 if required, then passes the original requested state to performAllRoutes; it does not silently rewrite requestedOFF0 toPWRGATE2. Other action/runtime configurations remain conditional.",
+    "pre_ON_from_Sleep2": "Management callback new1/old2 takes no AP signal because newON has old!=ON.",
+    "post_ON": "Management callback1/1 clears watchdog10c/110/118 underparent10c flag and processes skip123, then signalApPower(1). It does not clear cachedremote108.",
+    "pre_OFF0_from_ON1": "Callback0/1 reaches signalApPower(0) before perform, subjectskip123; that emitsB201 only when cachedremote108 differs201, waits/checksremote201, then quiesceswatchdog. Managed perform0 later requeststable0\u2192type6/201. No universalB201-before202 requirement follows.",
+    "pre_Sleep2_from_ON1": "Callback2/1 reaches signalApPower(2), which rejects without publishing a message; callback ignores return and quiesces watchdog. Perform2 chooses retained branch, setsparentIOP7 and requeststable2\u2192type6/202.",
+    "post_Sleep2": "Callback2/2 returns without AP signal.",
+    "physical_OFF_limit": "The experimental successful physical PMGR OFF aftermanagement202 does not prove that native parent enumOFF0 or AP OFF0 was performed."
+  },
+  "cached_remote_state_lifecycle": {
+    "initialization": "Complete management init zeroslocal108 atb1f1c30. The parent performON body reuses existing management endpoint whenparent21f0 isnonnull, bypassing that init; repeated native retained ON need not start with remote0.",
+    "publication": "Actual native typeB message dispatch atb1f1f6c stores the incominglow32 into managementendpoint108, then wakes its waiters. Complete handleRemotePowerState provides the same explicit publication/wake. This field is distinct from parenthostflagbyte108 and from firmware internalAPstate33.",
+    "skip": "signalApPower convertsparentON1\u2192wire20, reads cachedremote108 atb1f24d8, and equality at24dc..24e0 jumps to successfulreturn257c before message creation/send/wait. A skipped path does not receive a new HOST reply.",
+    "retained_shutdown": "Management type7 powerACK updates parentIOPstatus. Its complete body does not update managementremote108. The retained target2 path has no AP B201 publication and ON postcallback does not clear108. This establishes a native object/cache preservation basis for already20 skip, conditional on actual runtime route/flags and absenceofotherAP state changes.",
+    "freshness_limit": "This is a matched native implementation fact. Our Linux manual owner does not contain the native host object; reading firmware AP33 is not equivalent to obtaining native hostremote108. A new manual owner would need its own explicit successfully received coldB20 state proof retained under the same consumer and nointerveningAP statechanges."
+  },
+  "actual_connection": {
+    "cold_HOST_B20_success": true,
+    "first_direct_IOP_202_success": true,
+    "B201_in_saved_actual_crash_mailbox_history": false,
+    "first_direct202_header_has_no_AP_notification_stage": true,
+    "postevent_firmware_AP_state33": true,
+    "second_unconditional_B20_duplicate_panic": true,
+    "diagnosis": "Current crash explains why a cold HOST handshake cannot simply be repeated after retained shutdown. The omissionofB201 during direct202 matches native target2 semantics; it does not show an accidental omissionofparentOFF0."
+  },
+  "bounded_next_offline_hypothesis": {
+    "description": "Qualify a carried APwire20 state from the same owner owncoldHOST B20/fresh exactreply, preserve it through the retained management202/OFF interval, observe fresh Running7/20 afterreentry, and skip duplicate B20 onlywhen that explicit retainedstate proof remains valid. Then evaluate the existing exactown202/low1or2 ACK managementonly boundary withfreshPM/identity/CPU/FIFO guards.",
+    "admission_not_yet_implemented_or_qualified": true,
+    "no_new_HOST_reply_should_be_claimed_for_skip": true,
+    "do_not_add_B201_as_unproved_prerequisite": true,
+    "no_INIT220": true,
+    "application_rejoin": false,
+    "work": 0,
+    "current_retry": false,
+    "current_control_or_echo": false,
+    "runtime_route_skip123_and_parent_flags_unbound": true
+  },
+  "conclusion": "Native retained target2 permitsAPONstate to survive. Native laterON uses a cachedremote20 comparison to suppressduplicateB20. FullparentOFF0 is a different pathwithB201 thentype6/201. Saved actualduplicate33panic andexactnativepublication/order make carriedAPstate proof/skip the nextmeaningfuloffline lead; they do not authorizecurrentretry, apprejoin oraddingfullOFF0notifications.",
+  "input_pins": [
+    {
+      "path": "docs/evidence/2026-10-10-gfx-native-running-cycle-crashlog-diagnosis.json",
+      "bytes": 21067,
+      "sha256": "b8b218602d959f21b6f945def61117d65019895814d35761a0d28bf796efb35d"
+    },
+    {
+      "path": "docs/evidence/2026-10-09-gfx-native-idle-cycle-running20-native-boundary.json",
+      "bytes": 21311,
+      "sha256": "c4d530a7480945e6d3dfb03969c18abea5fb71001d61354bc890a79caa0d0d64"
+    },
+    {
+      "path": "docs/evidence/2026-10-10-gfx-native-running-cycle-ep1-crashlog-native-boundary.json",
+      "bytes": 32463,
+      "sha256": "318dcdc531dc97a1fb62b8b1d1ccb0c55a2aeaf7641a9953dffa6581e0e9d673"
+    },
+    {
+      "path": "docs/evidence/2026-10-10-gfx-native-running-cycle-live-terminal-review.json",
+      "bytes": 240556,
+      "sha256": "b37de85e26887dac1c3d45abb1ad2c45b42bf16fb951c7867620d2c33d0831c7"
+    },
+    {
+      "path": "docs/evidence/2026-10-10-gfx-native-running-cycle-data-capture-review.json",
+      "bytes": 7164,
+      "sha256": "86a065049ee1a2e38ac774a3058d02787d77cdc314021ab9693fcf0018802960"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/df540-fw-crashlog-lens/native-ap-notification-ranges.json",
+      "bytes": 5110,
+      "sha256": "c5ed81446a5a878c9ab8633d4be14d4526906d04e62d6dc92bd3e3443ff75329"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/df540-fw-crashlog-lens/ap-power-data-state.json",
+      "bytes": 741,
+      "sha256": "ffc34363d09d52a95155abb623c02de318c25450af621674c9f2c0d2ae4c9d86"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/df540-fw-crashlog-lens/mailbox-raw-stamps.json",
+      "bytes": 6790,
+      "sha256": "6657cf9f090197ced8a0674b1fda82af2b6abab61edec6e45e2e7ba2add627c5"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/offline-crashlog-decode-df540.json",
+      "bytes": 23017,
+      "sha256": "631faeb0081bf2d0564b4554631febe654d1bbcce5d2121a66ebec1ae4a895d7"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/prepared-owner-v2/gfx-native-running-cycle.h",
+      "bytes": 34833,
+      "sha256": "aa44ebd534597879567b75989318f52db48e7bd33c99c27effa52df718f0f38a"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/prepared-owner-v2/gfx-native-powergate-drain.h",
+      "bytes": 19348,
+      "sha256": "f3f4429f6b372157cedcbcce1d29ef61ddaf8654fab2afabf035da8322152787"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/prepared-owner-v2/asc-graph-init.c",
+      "bytes": 23293,
+      "sha256": "b6924899d235e874581b9a08b99432a588929089ba80b675b7e37ad07466bc2a"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/prepared-owner-v2/native-running-cycle-owner-source-receipt.json",
+      "bytes": 15985,
+      "sha256": "d5ed3909257d659816e2c23cebe43f72308aa0677efa3660b5e76758b56ee36d"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/post-event-fw-data-df540/capture.json",
+      "bytes": 3717,
+      "sha256": "f802354348632c34e8f7bf422d0edb860059142c5018177cd56775c7b826da6d"
+    }
+  ]
+}
