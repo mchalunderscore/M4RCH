@@ -1,0 +1,9 @@
+# Bounded retained E1/E2/E3 C handoff
+
+Selected source: `out/gfx-native-ap-repeat-cycle/prepared-owner-v5`; profile `gfx_native_ap_repeat_cycle_scope`, version12, macro `GFX_NATIVE_AP_REPEAT_CYCLE_TRIAL`. Selected actual C qualification: `owner-qualification-v8.json`, 172 ASan/UBSan cases, maximum complete checked row510 bytes including prefix/newline. All43 qualification input pins match.
+
+The actual RAM mock flow runs the owned cold AP/root gate, E1 native202 and checked/paired OFF, then independent E2/E3 management roundtrips. E3 requires clean E2 terminal result and refusal, its own ACK journal, checked stop, paired OFF/votes, oneput, strict physical OFF and accounting, then fresh current OFF/accounting plus original E1 identities/AP20. Every static E2 field is byte-compared across E3. Duplicate commands preserve terminal history and seal global controls. Post-put fault placement uses the current epoch own put ledger and checks counts. Both retained epochs accept their own low1 or low2 ACK in qualified full-flow cases.
+
+Six state rows carry phase/epoch; RX/TX, paired coordinator and PMGR observations bind epochs. The transport fields `guard_jiffies`, `cached=1`, and `operand_samples_atomic=0` describe the last complete four-operand guard and later separate operand updates. Full successful raw logs and separate E1/E2/E3 deltas are pinned; all three passed direct read-only replay through the current host qualifiers. The startup agent owns the independent frozen wrapper qualification.
+
+Earlier source/test iterations remain saved and superseded. Only v5/v8 is selected. Frozen v11 qualifications compose without repeating unchanged tests. No module build, live/sysfs operation or hardware action occurred here. Fixed protocol polls do not bound runtime-PM callback wallclock; management-only repetition establishes no application rejoin, pixels, DMA retirement or unload.
