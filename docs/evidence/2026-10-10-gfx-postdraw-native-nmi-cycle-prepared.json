@@ -1,0 +1,121 @@
+{
+  "schema": "m4rch.gfx-postdraw-native-nmi-cycle-prepared.v1",
+  "ready": true,
+  "version": 17,
+  "candidate": "/home/alice/Desktop/m4rch/out/gfx-postdraw-native-nmi-cycle/candidate",
+  "owner_sha256": "89ee8eb89e3301386d239cb643ed768ad3dde974f29ab8e1be74c09c1e2b9c8d",
+  "owner_GNU_note_hex": "040000001400000003000000474e55006d9abfa8ca76f22b2f6ec93f0a54301091327749",
+  "candidate_receipt_sha256": "670a26121de6bf5114403c434eca84184b0504f5d73edde5ba5c8689492ac1d9",
+  "preparation_sha256": "a29f0dd3390ea3ae95e7eb5fbf0abf2f54c27a22d9dadd215d6d405e00d8a57c",
+  "source_receipt_sha256": "d1f95e0cc08d13fbc46a457f715ccc0f439afd366da1eb78360716d99543b1a7",
+  "selected_source": "/home/alice/Desktop/m4rch/out/gfx-postdraw-native-nmi-cycle/prepared-owner-v1",
+  "new_native_C_cases": 64,
+  "new_preasc_C_cases": 39,
+  "new_host_cases": 41,
+  "actual_host_main_flows": 10,
+  "unchanged_main_flows_repeated_after_fixture_refinement": false,
+  "clean_module_build": true,
+  "module_loaded": false,
+  "kernel_rebuilt": false,
+  "kernel_GRUB_unchanged": true,
+  "hardware_controls": [],
+  "consumed_boot": "5e129c21-c840-4540-b4f7-3a3b3ef2cf56",
+  "manual_reboot_required": true,
+  "combined_trial": [
+    "Gravity source-derived preASC prefix: owned16Kpages, GPU ID_VERSION and three baselines, fresh RMWbit0 at1000104/108 then literal6 atd06030, individually verified before firstSTART.",
+    "Same nativePID/subpriority recipe, trace3throughcontrol33, oneTA/3Ddraw and15sobservation with full sealed rawcapture.",
+    "One native202; only a clean own-requestACKtimeout may attempt one firmware-side nativeNMI EP0f thenFIQ1004=10/1014=1, bounded250ms/256frames drain.",
+    "Fresh nativeidle plusRXempty is mandatory before checkedCPUstop, pairedOFF/onePMput, independent physicalOFF/accounting, then one separate pairedON/PMget and retained managementrejoin."
+  ],
+  "retained_resources": "All174pages/context/maps/module retained; additional claimedMMIOresources stayowned.",
+  "limitations": [
+    "NormalGravityT6040/G16Sstartup remainsclosed; this transfers only its source-derived prefix experimentally.",
+    "NativehostNMI wrapper hasfatalcrashpolicy; onlyfirmware-sideoperationistestedhere, withoutinvokinghostpanic. NMIisnotACK.",
+    "EP1transportisrawpreserved, neverrespondedtoorinterpretedascrashbufferABI/ACK. Unknownframesorerrorsseal.",
+    "Freshidlenotobserved meansnoCPUstop/OFF. No skipidle, arbitraryACK/statebitclear orDMAretirement/free.",
+    "No application/root/workreplay, cursorreset, DATArestore, secondcycle, unload/free. Managementrejoinisnotrebootlessrenderrestart.",
+    "Capturedlatecoverageallones andACK2 identifyapause-route blocker butnotlivePC/specificwait orcause."
+  ],
+  "inputs": [
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-postdraw-native-nmi-cycle/candidate/cold-render-preparation.json",
+      "bytes": 60469,
+      "sha256": "a29f0dd3390ea3ae95e7eb5fbf0abf2f54c27a22d9dadd215d6d405e00d8a57c"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-postdraw-native-nmi-cycle/candidate/asc-root-envelope/build-receipt.json",
+      "bytes": 25705,
+      "sha256": "670a26121de6bf5114403c434eca84184b0504f5d73edde5ba5c8689492ac1d9"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-postdraw-native-nmi-cycle/owner-qualification-v3.json",
+      "bytes": 41340,
+      "sha256": "066f25f9c608865b73c453a1d85edac49db7df8ad24d678dea184715b1b499d1"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-postdraw-native-nmi-cycle/host-qualification-v2.json",
+      "bytes": 81219,
+      "sha256": "6d37d82fc657216feb85c327d92ac572fe7ad2af198a852fcfef3b4e7b199486"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-postdraw-native-nmi-cycle/preasc-qualification-v1.json",
+      "bytes": 28553,
+      "sha256": "286f47a9cfadfe3d9317f42b6d7e2c1423a9db006a677e6118e87721b0991e61"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-postdraw-native-nmi-cycle/owner-build-command.json",
+      "bytes": 1466,
+      "sha256": "483b2f649dec853fe82a3fb44a082c583afdec4d8b03d6d98329b3723c80f9a9"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-postdraw-native-nmi-cycle/owner-build.log",
+      "bytes": 540,
+      "sha256": "832c2ceab4fa3ce8ee5a3e19908dd8295e59ae1b3054d0fced16a819838242a5"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-postdraw-native-nmi-cycle/current-5e12-preflight-refusal.json",
+      "bytes": 591,
+      "sha256": "29cf501a9e3e9c1ea239b9e32f8c968cc50dd990d8331473a853304a70074523"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-postdraw-native-nmi-cycle/current-5e12-preflight-refusal.log",
+      "bytes": 1066,
+      "sha256": "ba60a32b0106b23074ea2258b6aaa7693bc751634030fc04e0112f6224a24a57"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-postdraw-native-nmi-cycle/compose-host-final-v2.py",
+      "bytes": 2281,
+      "sha256": "8754efad5181b9968f06b350742e9312a1a6b7d4d52659c5c3f8cf4c15870352"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-postdraw-native-nmi-cycle/build-owner.py",
+      "bytes": 2088,
+      "sha256": "1bce1bb0b1f3a508b556034bb4a60991a4daa473567d6486c8e3639f7a9171ca"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-postdraw-native-cycle/live-state-5e12.json",
+      "bytes": 10523,
+      "sha256": "abb294255de14bf031b47dc5dddee7efd5a8d7b73dbd1f0d0d3ba8af280ebe58"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-10-gfx-postdraw-native-cycle-5e12-live.json",
+      "bytes": 22946,
+      "sha256": "a6ac5706ae9e8185083fcb9d24beda47d65ba98b628769dec5be7a2115fb011d"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-10-gpu-dispatch-pause-and-native-nmi.json",
+      "bytes": 5058,
+      "sha256": "3c1b2acdd2b259f6c0fcd8ca94415ec4307911938cc9588b39c4ea06e5d522db"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-10-gpu-dispatch-pause-and-native-nmi.md",
+      "bytes": 2838,
+      "sha256": "06215e25f533d0e138ce132f03b78ea39a223e99badbce0ac22bdf0f46e8b01b"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/gfx-postdraw-native-nmi-cycle/README.md",
+      "bytes": 2734,
+      "sha256": "8c8c331c6c0907ff45f3d8d90a4dc4124afdf2fa4475bba7bfbd504a4bdd4e13"
+    }
+  ]
+}
