@@ -1,0 +1,505 @@
+{
+  "schema": "m4rch.gpu-desktop-critical-path.cold-render-design.v1",
+  "status": "design-only; no cold-render owner prepared, built, qualified or run",
+  "date": "2026-10-10",
+  "changes_authorized_and_performed": "Created only this distinct JSON/Markdown design. No source mutation, builds, tests, hardware reads/controls or failed-trial repeats.",
+  "objective": "Shortest decisive fresh-cold trial of the existing authored TA/3D triangle using accumulated native initialization, with direct post-submit device/completion/pixel evidence.",
+  "recommendation": "Prepare a distinct once-only cold-render owner. Omit startup class86 recovery entirely. Automatically qualify fresh cold control consumption, then publish the preserved draw once. Do not make management-only cycles, arbitrary recovery counts or backing retirement prerequisites to the first frame.",
+  "current_boot": {
+    "boot_id": "911ae710-78af-4702-8dfc-f4145decbd38",
+    "owner": "Consumed v11 retained AP owner; initial application recovery failed, followed by successful no-work management OFF/restart/OFF.",
+    "admission_for_this_design": false,
+    "next_execution_requires": "A fresh cold Linux boot and a distinct cold-render owner, after offline implementation/qualification; no current-boot flag clearing, owner replacement or warm INIT."
+  },
+  "evidence": {
+    "latest_pre_recovery_cold_baseline": {
+      "capture": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/dmesg-after.log",
+      "exact_rows": [
+        {
+          "line": 1339,
+          "text": "[  239.505354] m4rch ksm-fault: phase=before-stop info=0x0 addr=0x0"
+        },
+        {
+          "line": 1340,
+          "text": "[  239.505360] m4rch graph-init: observation doorbells=0 records=22792 receive_status=0x0"
+        },
+        {
+          "line": 1341,
+          "text": "[  239.505372] m4rch recovery-state: cycle=0 phase=baseline counter=0 state=0 host_stop=0 request_state=0 request_flag=0 control=32/32/32"
+        },
+        {
+          "line": 1342,
+          "text": "[  239.505565] m4rch recovery-idle: active_ta_records=0"
+        },
+        {
+          "line": 1343,
+          "text": "[  239.505781] m4rch recovery-idle: active_ta_records=0"
+        },
+        {
+          "line": 1344,
+          "text": "[  239.505788] m4rch recovery-send: endpoint=33 packet=0x86000000000000"
+        },
+        {
+          "line": 1345,
+          "text": "[  239.511272] m4rch recovery-state: cycle=1 phase=pre counter=1 state=1 host_stop=1 request_state=2 request_flag=1 control=32/32/32"
+        }
+      ],
+      "facts": [
+        "Clean recovery phase0/request_state0/request_flag0/host_stop0/counter0 and fresh control32/32/32 before first class86; active TA records0.",
+        "Four completion descriptors already installed; no work had been published.",
+        "Later failure is specifically the class86 recovery path, not a failed cold triangle attempt."
+      ]
+    },
+    "latest_recovery_failure": {
+      "exact_rows": [
+        {
+          "line": 1379,
+          "text": "[  244.509160] m4rch recovery-state: cycle=1 phase=final counter=1 state=2 host_stop=1 request_state=0 request_flag=1 control=32/32/32"
+        },
+        {
+          "line": 1380,
+          "text": "[  244.509178] m4rch recovery-power: phase=recovery-return recovery_phase=2 pstate=0 power78=0 down_active=1 up_count=1200"
+        },
+        {
+          "line": 1381,
+          "text": "[  244.509213] m4rch recovery-poll: phase=recovery-return raw5960=0x0 raw5978=0x0"
+        },
+        {
+          "line": 1382,
+          "text": "[  244.509231] m4rch recovery-aux-poll: phase=recovery-return raw5970=0x0"
+        },
+        {
+          "line": 1383,
+          "text": "[  244.509235] m4rch recovery-prc: phase=recovery-return rawd4c004=0x0"
+        },
+        {
+          "line": 1384,
+          "text": "[  244.509236] m4rch recovery-aux-prc: phase=recovery-return rawd4c000=0x0"
+        },
+        {
+          "line": 1385,
+          "text": "[  244.509238] m4rch recovery-engine-poll: phase=recovery-return rawd44070=0x0"
+        },
+        {
+          "line": 1386,
+          "text": "[  244.509239] m4rch recovery-result: completed=0 requested=2 allocations_retained=1 work_submitted=0"
+        },
+        {
+          "line": 1387,
+          "text": "[  244.509240] m4rch recovery-session: diagnostic=1 sealed=1 control_ready=0 work_submitted=0 allocations_retained=1; only sample/gfx-snapshot and one terminal gfx-powergate allowed"
+        },
+        {
+          "line": 1388,
+          "text": "[  244.509241] m4rch gfx-native-ap-retained-cycle-session: ready=1 initial_recovery_failed=1 initial_completed_cycles=0 startup_work_submitted=0"
+        }
+      ],
+      "facts": [
+        "Class86 reached phase2 and stalled; completed0/2; no work submitted; diagnostic seal applied.",
+        "No permission to reuse that failed session or write its phase/request fields back to zero."
+      ]
+    },
+    "last_actual_draw": {
+      "boot_id": "520da35a-487e-4575-97b3-af12afa2936c",
+      "result": "out/owned-hw-completions/result-520da35a/result.json",
+      "module_sha256": "d87f930cf070db5758f361f782d66494564193c467ba49ef7878c99ce80ee8be",
+      "work_notification_sent": true,
+      "root_channels": [
+        {
+          "channel": 0,
+          "cursors": [
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "channel": 1,
+          "cursors": [
+            1,
+            1,
+            1
+          ]
+        },
+        {
+          "channel": 12,
+          "cursors": [
+            32,
+            32,
+            32
+          ]
+        }
+      ],
+      "target_changed_bytes": 0,
+      "completion_changed_bytes": 0,
+      "hardware_completion_rings": [
+        {
+          "index": 0,
+          "backing_page": 52,
+          "changed_bytes": 0
+        },
+        {
+          "index": 1,
+          "backing_page": 53,
+          "changed_bytes": 0
+        },
+        {
+          "index": 2,
+          "backing_page": 54,
+          "changed_bytes": 0
+        },
+        {
+          "index": 3,
+          "backing_page": 55,
+          "changed_bytes": 0
+        }
+      ],
+      "interpretation": "Firmware consumed queue/root records and installed completion configurations; no GPU fetch, valid completion or pixels proved. This draw predates the native init/GPC/auxiliary/telemetry/RX fixes now present in the selected graph."
+    },
+    "policies_blocking_render": [
+      {
+        "path": "out/gfx-native-ap-repeat-cycle/prepared-owner-v5/asc-graph-init.c",
+        "lines": [
+          537,
+          555
+        ],
+        "meaning": "The recent startup unconditionally attempts recovery_cycles() after cold root/observation and seals failed application sessions before later work."
+      },
+      {
+        "path": "out/gfx-native-ap-repeat-cycle/prepared-owner-v5/recovery-cycle.h",
+        "lines": [
+          145,
+          172
+        ],
+        "meaning": "recovery_cycles() sends class86 and host forces recovery phase2 then0; the distinct cold-render profile must omit this operation altogether."
+      },
+      {
+        "path": "out/gfx-coordinate-execution/prepared-owner/recovery-cycle.h",
+        "lines": [
+          190,
+          215
+        ],
+        "meaning": "trace-off requires four completed recovery cycles; this is experiment admission policy, not an established native first-submit prerequisite."
+      },
+      {
+        "path": "out/gfx-coordinate-execution/prepared-owner/recovery-cycle.h",
+        "lines": [
+          328,
+          347
+        ],
+        "meaning": "submit requires trace-off/four completed cycles, followed by meaningful idle/current-control guards. Reuse publication ordering/records, replace the arbitrary cycle/trace admission policy explicitly."
+      }
+    ],
+    "latest_native_initialization": {
+      "source": "out/gfx-native-ap-repeat-cycle/prepared-owner-v5/graph-receipt.json",
+      "field": "native_init_recovery",
+      "preserve": [
+        "hardware f30/f34/f38/f3c=(0,1,1,0)",
+        "T6040 masks3/7/7; expected primary1710=0x1010",
+        "owned zero8-byte temperature epoch bound at power3b50; sensors remain disabled",
+        "GPC hardwareea0=1, distinct from f20",
+        "native CS/AFR tables, first active338MHz main policy and existing timing",
+        "slot32 first timestamp page writable and slot9 telemetry mapping",
+        "shared native RX service including healthy statistics/trace/event records",
+        "all current root/context/UAT/MMIO bindings and exact existing draw/job/backing bytes"
+      ],
+      "preserved_draw_files": {
+        "backing.bin": "35112ef3c261673bda227a3867a0d2b9dd58ac89f35f7bba9c8c05f1dee118d3",
+        "job-data.h": "c18ede083b691fbd3044237aaf30eb1e34c775e9391d3c6f1bea8e61561e0913",
+        "render-data.h": "3bdbf04b9a3219c8e818beb464b5f55626e8a9b3d184680e3fd05a6361c47cbd"
+      },
+      "qualification": "These are verified preparation/source bindings and prior startup observations, not a proof of the whole Apple constructor or device execution."
+    }
+  },
+  "candidate_contract": {
+    "distinct_family": "new cold-render family and source receipt; never edit or relabel frozen v11/v12/execution files",
+    "single_pipeline": [
+      "allocation/identity/mapping preflight",
+      "one cold native coordinated ON + fresh management HELLO/maps/EP32+33 start + own AP20 + root publication",
+      "bounded healthy RX service to initial control32/32/32",
+      "one automatic fresh control transaction33",
+      "one immutable authored TA/3D publication and class83 notify",
+      "bounded post-submit evidence/capture",
+      "retain all backing and PM on success/failure for diagnostics"
+    ],
+    "fresh_cold_guards": [
+      "Original cold startup identity bound to this boot/kernel/owner/module/TEXT, validated owned objects/root/table/context/physical pages and generated extents; capture baseline once.",
+      "Cold own AP20 reply and actual EP32/33 starts precede root; physical GFX ON and the same held runtime-PM reference with usage/accounting/error recorded; checked coordinator gate.",
+      "RX health/no crash/unsupported record/journal overflow; consume only validated receive records, never reset firmware RX producer.",
+      "Invalidate before reads; require control read/prefetch/producer exactly32/32/32; all12 work cursor triplets zero and native active TA records zero.",
+      "Recovery phase/status4900, request state/flag, host_stop4910 and counter48f0 remain original cold zero. Reject an inherited recovery request/failure; never clear those values.",
+      "Draw and job pool hash-match the immutable authored recipe; target still16384bytes of A5; completion/hardware rings at their declared initial contents.",
+      "Mapping/context correctness is checked from the owned recipe and fresh allocation proof; prior hardware fetch or software power38==1 is not an admission prerequisite."
+    ],
+    "automatic_control": {
+      "control_cursor_arena_offset": "0xb4000",
+      "read_offset": 0,
+      "prefetch_offset": 8,
+      "host_producer_offset": 16,
+      "initial_graph_cursors": [
+        0,
+        0,
+        32
+      ],
+      "required_live_cursors_before": [
+        32,
+        32,
+        32
+      ],
+      "record_index": 32,
+      "record_arena_offset": "0xb8800",
+      "record_bytes": 64,
+      "record_opcode_hex": "0x16",
+      "record_opcode_decimal": 22,
+      "record_hex": "16000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "record_sha256": "9bafe1e1bba60370394a65ea3482db84eae9080636a6ca2a54b5fe69c5440fb0",
+      "staged_capacity": 128,
+      "metadata_correction_required": "Existing graph control_refresh describes only the initial32. A new receipt must separately name/pin the extra staged record32 exposed by producer33; do not claim metadata count32 already certifies it.",
+      "preferred_trace_policy": "As the same cold readiness stage, replace host-owned native trace mask3 at arena0x3c000 with0 after idle/identity checks, cache-clean it, then expose the staged forced-configuration record32. Remove the historical four-cycle condition only in the new profile. Bound opcode22 copy semantics from pinned native/FW evidence. This prevents trace journal growth from hiding the draw; it is not a recovery/reset.",
+      "publication": "No new record builder or ring overwrite: ensure the immutable pre-root-cleaned record32 matches the receipt, cache-clean any host-owned mask/cursor, set only host producer32\u219233, send exactly one EP33 class84 packet0x0084000000000000. Never write control read/prefetch.",
+      "proof": "Within a monotonic5s maximum while servicing RX, repeatedly invalidate and require read/prefetch/producer33/33/33. Recheck RX health, trace mask0, original zero recovery request/state/counter, empty work/active TA and retained identities/PM. The new33 consumption proves a fresh application transaction; old32 equality alone does not.",
+      "failure": "Durable intent precedes mutation. If publication/notify/wait/check fails or becomes unknown, seal further mutations; no class84 resend, no recovery/wake fallback or draw."
+    },
+    "one_draw": {
+      "source_recipe": "out/gfx-native-ap-repeat-cycle/prepared-owner-v5/recovery-contract.h",
+      "records_hex": [
+        "01000000000000000080b10020fcffff0000000002000101",
+        "01000000000000000000b20020fcffff0100000003000101"
+      ],
+      "publication": "Durable once-only intent before any work write. Under the same mutex copy two existing24-byte TA/3D records into root channels0/1, cache-clean each complete record before producer0\u21921, barrier, then one EP33 class83 packet0x0083000000000000. No new compute ABI, packet/count/selector/context hypothesis, second draw or automatic retry.",
+      "job_stamp_qualification": "Preserve existing KSM work timestamp1/NOP timestamp0 and dependency recipe. Do not reinterpret these as Gravity u32 completion stamps; actual per-stage completion/event identities need their own binding.",
+      "disabled_optional_3d_completion": false,
+      "lifetime": "All174 pages, root/context/UAT/maps, command pool and module stay retained with PM held; no queue/backing reuse after intent even if notification fails."
+    },
+    "post_submit": {
+      "observation_window_ms": 15000,
+      "sample_offsets_ms": [
+        0,
+        100,
+        1000,
+        5000,
+        15000
+      ],
+      "binding": "Every new row/capture binds boot/owner/source/intent, explicit before-submit versus post-submit phase, monotonic time and receive journal prefix bounds. Fresh operation deltas only; existing analyzer whole-boot live_* arrays can otherwise report stale startup samples. Sequential/cache-invalidated snapshots are non-atomic and must say so.",
+      "capture": [
+        "Fresh root/control and queue metadata including firmware consumed/prefetch pointers, selected queue install/device+FW rings/context, job target timestamps/hold state.",
+        "Fresh fixed already-bound SGX KSM raw21038/21040/211c8/211d0/21048/21050/21058/21060/211c0 and faults at28800c000+18c0/+18c8; no selector writes or arbitrary MMIO.",
+        "All four installed completion configs21148+8q/status21168+8q and full four64-byte-entry hardware completion ring pages; preserve payload/cursor data, not just changed-byte totals.",
+        "Full authoritative general72-byte RX journal prefix and new event records with selector/masks; keep separate from64-byte device completion entries.",
+        "Full fresh target/completion/queue pages with dc ivac and dsb sy, full174-page retained snapshot and byte/hash provenance. Targetrender20=owned132, completion47=owned159, queue48..51=owned160..163, hardware rings52..55=owned164..167.",
+        "No CPU writes to target/completion pages after root; record exact shader/target bindings and pre-submit sentinel hash. Render RGBA8 target64x64/stride256 from full16384-byte dump offline."
+      ],
+      "early_terminal": "If a crash, malformed protocol, fault, overflow or completion appears, close the bounded observation at that stage with a fresh safely accessible snapshot and retain all state. Do not send another job to distinguish the result.",
+      "completion_limits": "Root/queue cursor movement and register-shadow flags are firmware acceptance evidence. Raw hardware status/ring byte changes are device clues until payload/queue/stage/stamp association is decoded. The optional3D completion pointer is disabled; do not promise it will produce a notification or enable guessed fields. A type1 event mask alone is not command completion."
+    },
+    "stop_semantics": "Stop software observation/worker under the owning lock and freeze journal/captures; preserve only typed read diagnostics thereafter, all backing/module and the held PM reference. Do not apply a no-work terminal AP202/OFF/PMput sequence to submitted work by analogy. No forced unload/free, warm INIT, phase clearing, lifecycle restart, second draw or power gate is needed for this first-frame result. A later operator reboot retires the prototype if needed.",
+    "implementation_qualification_focus": [
+      "Compose frozen unchanged allocation/native ON/RX/draw qualifications. Qualify only new cold admission/fresh33 control/once submission path and exact source log/capture boundaries.",
+      "Actual C must reject stale32-as33 proof, nonzero recovery fields, changed identities or any RX failure; prove cache/publication order, at most one control and one draw notify, and no work on failed admission.",
+      "Exercise timeout/partial publication/notify/worker failure without clearing state or dropping PM/backing. Saved actual-C success log must replay through the new operation-delta parser. This is future implementation work; no tests were run for this design."
+    ]
+  },
+  "observable_milestones": [
+    {
+      "name": "fresh_application_ready",
+      "witness": "Fresh own33/33/33 after sole class84 with clean cold state and healthy RX.",
+      "proves": "Application firmware responds to the present cold owner; useful gate, not GPU execution."
+    },
+    {
+      "name": "firmware_accepted_draw",
+      "witness": "Published root records consumed, installed queue/command pointers and kicks associated with this intent.",
+      "proves": "Firmware submission handling; not GPU fetch or dispatch."
+    },
+    {
+      "name": "device_fetch_or_dispatch",
+      "witness": "Decode a new engine/UAT fault against an owned command/shader address and stage/context, or a matched hardware completion entry with the submitted queue/target; GPU-only shader/target writes also provide execution evidence.",
+      "proves": "GPU attempted fetch/dispatch, or stronger actual execution, according to the decoded witness. Raw KSM values/nonzero fault alone remain unclassified."
+    },
+    {
+      "name": "stage_completion",
+      "witness": "Native/FW-decoded TA then3D completion payload/cursor/event/stamp bound to this sole job and expected stage target, with coherent storage.",
+      "proves": "Stage/command completion only at the strength of those exact bindings. Use modular stamp rules for real wrapping stamps; do not adopt zero-as-sentinel or transplant donor addresses."
+    },
+    {
+      "name": "first_rendered_frame",
+      "witness": "GPU-only coherent target changes produce the expected triangle interior and background under a validated image layout, backed by exact shader/store bindings and absence of CPU output writes. Save full target and rendered preview; existing eight-point checker is a preliminary discriminator, not a full-image/completion proof.",
+      "proves": "Actual shader/raster/tile-store pixels. Completion qualification remains a separate requirement before general buffer reuse/fencing."
+    }
+  ],
+  "outcome_actions": {
+    "control33_fails": "Investigate native cold application startup/control path from this one capture; no class86 fallback.",
+    "control33_passes_draw_only_consumed": "Investigate the now-consolidated job/context/device command-fetch path using the one post-submit capture, not more management epochs.",
+    "decoded_device_fault": "Address the precise mapped resource/packet/native stage implicated by the captured fault.",
+    "completed_wrong_pixels": "Focus image/target-store/layout/dependency correctness instead of management reset.",
+    "correct_pixels": "Port this proved cold/startup/initdata/owned submission contract into the existing Gravity DRM/Mesa T6040/G16S path and qualify normal fences/presentation; full suspend/unload/native DCP need not block headless graphics."
+  },
+  "remaining_unknowns": [
+    "Complete native constructor/device/context/scene setup and exact hardware fetch path remain experimental.",
+    "Hardware completion entry/cursor/event/stamp decoder and3D completion binding are incomplete; preserve raw evidence instead of inventing a fence.",
+    "Target orientation/quantization and complete image correctness are not established by the eight selected pixels.",
+    "Submitted-work DMA retirement, safe unload, repeatable application recovery and accelerated desktop remain unverified."
+  ],
+  "input_pin_count": 32,
+  "input_pins": [
+    {
+      "path": "out/gfx-native-ap-repeat-cycle/prepared-owner-v5/asc-graph-init.c",
+      "sha256": "5a11bc292aea507f570c5b118c8f665eae7ebd850e9c4a72c175b8f644ec5be3",
+      "bytes": 25283
+    },
+    {
+      "path": "out/gfx-native-ap-repeat-cycle/prepared-owner-v5/recovery-cycle.h",
+      "sha256": "2fc59a9140a61bcc03b696cfebff5c541b7ea843a987db0fdf0837331a04975c",
+      "bytes": 11472
+    },
+    {
+      "path": "out/gfx-native-ap-repeat-cycle/prepared-owner-v5/recovery-contract.h",
+      "sha256": "9bce940061421a78fde0e509fdeba59a8c66c3d5ab32c4faf59dd613c14d4b23",
+      "bytes": 1177
+    },
+    {
+      "path": "out/gfx-native-ap-repeat-cycle/prepared-owner-v5/receive-service.h",
+      "sha256": "bab356c9a2467fbb46760345102a7fb8369a9efe8db31efd058b1fd918b11043",
+      "bytes": 3787
+    },
+    {
+      "path": "out/gfx-native-ap-repeat-cycle/prepared-owner-v5/graph-before.bin",
+      "sha256": "287f2c53bc6ef7ed226c4a2995b9d9904e7623acae9713af105be6b04fc690a9",
+      "bytes": 1130496
+    },
+    {
+      "path": "out/gfx-native-ap-repeat-cycle/prepared-owner-v5/graph-contract.h",
+      "sha256": "f8c5a1536aa88ef7a1eb09b9a862cece4a2e822dd2eda54a449e6b3c11b20410",
+      "bytes": 24313
+    },
+    {
+      "path": "out/gfx-native-ap-repeat-cycle/prepared-owner-v5/graph-map.h",
+      "sha256": "704836d10b86e3d2bcb20b457853a700a2153aae505b0aae473aea4daee7f13e",
+      "bytes": 9974
+    },
+    {
+      "path": "out/gfx-native-ap-repeat-cycle/prepared-owner-v5/graph-receipt.json",
+      "sha256": "92771b8036464c8dc9bdadd1dd4e1458a6c5a9f95f87fbdac34696bd2b3af219",
+      "bytes": 131999
+    },
+    {
+      "path": "out/gfx-native-ap-repeat-cycle/prepared-owner-v5/preparation.json",
+      "sha256": "c22c59c0735c84554f954f581f94978894a9c78e87b6ec06f8f7ba8c763580db",
+      "bytes": 84712
+    },
+    {
+      "path": "out/gfx-native-ap-repeat-cycle/prepared-owner-v5/backing.bin",
+      "sha256": "35112ef3c261673bda227a3867a0d2b9dd58ac89f35f7bba9c8c05f1dee118d3",
+      "bytes": 917504
+    },
+    {
+      "path": "out/gfx-native-ap-repeat-cycle/prepared-owner-v5/job-data.h",
+      "sha256": "c18ede083b691fbd3044237aaf30eb1e34c775e9391d3c6f1bea8e61561e0913",
+      "bytes": 13182
+    },
+    {
+      "path": "out/gfx-native-ap-repeat-cycle/prepared-owner-v5/render-data.h",
+      "sha256": "3bdbf04b9a3219c8e818beb464b5f55626e8a9b3d184680e3fd05a6361c47cbd",
+      "bytes": 268144
+    },
+    {
+      "path": "out/gfx-native-ap-repeat-cycle/prepared-owner-v5/joined-context-init.h",
+      "sha256": "1851e697907d50a3f47d153879f47f1b6b07065f5d58055fa6269bc436bc15b2",
+      "bytes": 1849
+    },
+    {
+      "path": "out/gfx-native-ap-repeat-cycle/prepared-owner-v5/native-ap-repeat-cycle-owner-source-receipt.json",
+      "sha256": "bf52cabe10ab41df883c22907a9a66d4ff338cebc93b3d82d66ea5e27004ffa1",
+      "bytes": 19790
+    },
+    {
+      "path": "out/gfx-coordinate-execution/prepared-owner/recovery-cycle.h",
+      "sha256": "9971b319f7bbcc265ec6a9eca5b2f9bdf00e44a7c19eabce301eb48cc0debe71",
+      "bytes": 16067
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/asc-graph-init.c",
+      "sha256": "bc290b6aea00d43592ee1f98ba86e8c41240df4b714cbc1b2d2d32794adf32d1",
+      "bytes": 25206
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/dmesg-after.log",
+      "sha256": "f241900a46ccac3d1f06e008dbd08a7eb6e99362177d56b61000ffd3e3585c84",
+      "bytes": 131764
+    },
+    {
+      "path": "docs/evidence/2026-10-10-gfx-native-ap-retained-cycle-live-startup.json",
+      "sha256": "176d23691d733291f7300d0b0b57ddf3983dc7d5aaad19d9ed8767555a3556d2",
+      "bytes": 38356
+    },
+    {
+      "path": "docs/evidence/2026-10-09-owned-hw-completions-live.json",
+      "sha256": "6636ee7c204835d8a75f29fea5456133aa135a5659e7de4feebacb5b9e4a6de7",
+      "bytes": 13994
+    },
+    {
+      "path": "out/owned-hw-completions/result-520da35a/result.json",
+      "sha256": "d64f56e865c5926510d46d510a68ac3fb822aba74031900f563123ad863219e3",
+      "bytes": 12286
+    },
+    {
+      "path": "docs/evidence/2026-10-09-execution-integration-review.md",
+      "sha256": "6130d449ab3e6e10383e262ee2d93f454d32a6aad94facbbf01b34318093f69c",
+      "bytes": 11298
+    },
+    {
+      "path": "docs/evidence/2026-10-09-gpc-aux-recovery-candidate.json",
+      "sha256": "4c3a855e37f1b18ab2179ea12f0bb3d979754904e5b801f1be81fc5ca5327253",
+      "bytes": 2287
+    },
+    {
+      "path": "docs/evidence/2026-10-09-gpc-telemetry-recovery-candidate.json",
+      "sha256": "954f73cb5d1b8be8ec8b9677a9b62ff3f9bf3d5aba65ce23b4e8df1d1b0e2a8c",
+      "bytes": 2945
+    },
+    {
+      "path": "docs/evidence/2026-10-09-gpc-rx-recovery-candidate.json",
+      "sha256": "b7f672a6de25c8d339919fedc86c5675ed79ec6fa918491ed5e96cf4fd24cefa",
+      "bytes": 4904
+    },
+    {
+      "path": "docs/evidence/2026-10-09-gfx-native-status-execution-handoff.json",
+      "sha256": "116ce0237e550a8b51e316167d8c1b94717fa0edf83c7286afcd58c8f1f17dcb",
+      "bytes": 11073
+    },
+    {
+      "path": "docs/evidence/2026-10-09-owned-completion-pair.json",
+      "sha256": "41ec1334c60858b186154282b5a0acb5974ce1afe0cbaa462079b1d5a15b30bc",
+      "bytes": 1450
+    },
+    {
+      "path": "docs/evidence/2026-10-08-private-completion-queues.md",
+      "sha256": "7d9c5e12d5518c84cbc3ae4699c5ee6ea6aa6f8be11df7bb699c7a84263400b9",
+      "bytes": 4245
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/analysis-inputs/target-receipt.json",
+      "sha256": "c6008f792f60569d9ff186168c397a90b221586bd6f30cb6190647232441befa",
+      "bytes": 6776
+    },
+    {
+      "path": "experiments/t6040-gpu/analyze-owned-work.py",
+      "sha256": "3a3bb4447c02a60d161c156beca6709b25a710b6800dd0142138b036f976558f",
+      "bytes": 8435
+    },
+    {
+      "path": "experiments/t6040-gpu/check-first-render-readback.py",
+      "sha256": "e5fe5791767e205af97667a751783ce7ec00624330f3c2eeacd53dd70514afc6",
+      "bytes": 2669
+    },
+    {
+      "path": "out/gpu-gravity-contract/linux/drivers/gpu/drm/asahi/g16_stamp.rs",
+      "sha256": "59ce7ae92d9bfb4360c6cfccd1e2d1cf3231cf3f373c75c8802f6362efc441b1",
+      "bytes": 924
+    },
+    {
+      "path": "out/gpu-gravity-contract/linux/drivers/gpu/drm/asahi/workqueue.rs",
+      "sha256": "6ddfcbdbf88dc6e4088c3c7516b8651874cdaaeedfc9bf54dd98bc3f60b95b1f",
+      "bytes": 31761
+    }
+  ],
+  "private_provenance": "Private implementation-derived research; paths/hashes/numeric ABI findings only here. Exclude private binaries/full firmware TEXT/full disassembly from exports."
+}
