@@ -1,0 +1,139 @@
+{
+  "schema": "m4rch.gfx-native-dispatch-contract-prepared.v1",
+  "ready": true,
+  "candidate": "/home/alice/Desktop/m4rch/out/gfx-native-dispatch-contract/candidate",
+  "owner_sha256": "bd3ee4134d2ac69ea61268ce6372d4c8ff89b44707dd48f8735ab80eb1e0c474",
+  "owner_GNU_note_hex": "040000001400000003000000474e55008dc112b50b29062ff40b1ccf093a070b4d1c998d",
+  "selected_source": "/home/alice/Desktop/m4rch/out/gfx-native-dispatch-contract/prepared-owner-v1",
+  "source_receipt_sha256": "e8783d245414dfcffffbbb62d17b6cbf93ec91479c901ae78f0ff21d538203e4",
+  "candidate_receipt_sha256": "f1f59bed1d8e83f9fc20a3af20bba4b16b05ae71764e4ad16889403bc39575ec",
+  "preparation_sha256": "dafb767df7d5aa9d374c3b39e5a033846e7feaa1ccec3b1768b10eaecd8c62a3",
+  "module_loaded": false,
+  "new_C_cases": 16,
+  "new_host_cases": 35,
+  "clean_module_build": true,
+  "kernel_rebuilt": false,
+  "kernel_GRUB_unchanged": true,
+  "consumed_boot": "eff8eafa-d845-429e-b98c-9a5f053bcc46",
+  "hardware_controls": [],
+  "changes": [
+    "Four queue configuration bytes now agree with the same native channel-state PID/subpriority getters.",
+    "One shared trace-mask restoration after control33 keeps firmware tracing enabled through the draw.",
+    "Raw image/completions/owned pages/journal are retained before optional analysis; final DATA and cache-invalidated page-table RAM captures are added."
+  ],
+  "evidence": [
+    "The prior bit0 clear 3 to 2 completed without target or completion progress; it will not be repeated.",
+    "Current firmware callers preserve bit1. Native reason/mutex and mask reconciliation are not reproduced by a host register clear.",
+    "Retained page tables resolve the selected BSS/global rows to their expected physical DATA addresses.",
+    "Late physical DATA zeros do not bind active firmware state or dirty IOP cache visibility."
+  ],
+  "limits": [
+    "PID/subpriority consistency is an experimental correction, not proof that this blocked rendering.",
+    "Postdraw trace generation and full capture are bounded; snapshots are sequential and IOP visibility remains unqualified.",
+    "Rendering, submitted-work retirement, safe teardown and rebootless restart remain unproved."
+  ],
+  "next_trial": "One fresh cold initialization, control33, one TA/3D draw and 15-second observation. No scheduler-bit intervention, extra work notification or owner OFF/put/free/unload/retry.",
+  "manual_reboot_required": true,
+  "inputs": [
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-dispatch-contract/candidate/cold-render-preparation.json",
+      "bytes": 49072,
+      "sha256": "dafb767df7d5aa9d374c3b39e5a033846e7feaa1ccec3b1768b10eaecd8c62a3"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-dispatch-contract/candidate/asc-root-envelope/build-receipt.json",
+      "bytes": 24135,
+      "sha256": "f1f59bed1d8e83f9fc20a3af20bba4b16b05ae71764e4ad16889403bc39575ec"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-dispatch-contract/owner-qualification-v1.json",
+      "bytes": 18139,
+      "sha256": "4aab6fd97353c3731584b615c71354989df1d3634d708e3a1513aad470d5ac21"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-dispatch-contract/host-qualification-v2.json",
+      "bytes": 82416,
+      "sha256": "71c17999000bfe01085274fc0761a8a2516628efb2f770ff0e737e6e297e0d2d"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-dispatch-contract/owner-build-command.json",
+      "bytes": 2137,
+      "sha256": "453dc7da1b8dbfc7f56a55febac269d7c1a2504daa656ff33053fa0b33afa623"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-dispatch-contract/owner-build.log",
+      "bytes": 538,
+      "sha256": "7c3aa3e3c7c0529e5eedff8cd99ef755a9394bb25db745bd3596696f0b3724ae"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-dispatch-contract/recipe-v1/receipt.json",
+      "bytes": 10126,
+      "sha256": "2f66948af31aa7803f6298a97d8eba4412590b9e72e6876a64c3383886731ee8"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-dispatch-contract/current-eff8-preflight-refusal.json",
+      "bytes": 548,
+      "sha256": "f208fc3c9b083c97de3e82da289e1593800ba735809ca8935dbe2362e9758400"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-dispatch-contract/current-eff8-preflight-refusal.log",
+      "bytes": 1062,
+      "sha256": "70fa6da1dbfcfc3288c223d02afc132290afe529f30de537e42009b9344884d7"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/live-state-eff8.json",
+      "bytes": 7280,
+      "sha256": "0d22f8d04eb9906899eaf93103aeca218a2bf65f4ffa9b0e3cf42b4c58338f60"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/retained-data-eff8-v1/result.json",
+      "bytes": 807,
+      "sha256": "5781b0625cf31d847e33371a29573893ee86319941a4d3a5120f0f4513ae43ad"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/retained-data-eff8-v1/data-retained.bin",
+      "bytes": 1277952,
+      "sha256": "a62dcc19235b95b41e6d67b7655a557b017162b057dd6735b076b060cb3a5e44"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-dispatch-contract/retained-pt-eff8-v1/readback/result.json",
+      "bytes": 818,
+      "sha256": "497a14f79eea42afd5d2024e1928297750314b1646ad40ab732c2ddaca7426ee"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-dispatch-contract/retained-pt-eff8-v1/readback/pagetables-retained.bin",
+      "bytes": 262144,
+      "sha256": "e136e6caac7fedb3e84d91303710b293b79579b396ac74e00256badfeb68546c"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-dispatch-contract/retained-pt-eff8-v1/selected-translations.json",
+      "bytes": 2483,
+      "sha256": "ed2befbd424428cfee5d0c1117d0bde64c66890086ec1ee97fc2a366a34f30a2"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-10-gfx-bit1-native-owner-review.json",
+      "bytes": 39927,
+      "sha256": "feb587374810f92f1e6929e1254abd4b35d46096d178196ddd78d669fbae7d0d"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-10-gfx-draw-fetch-contract-review.json",
+      "bytes": 45008,
+      "sha256": "0bd4775397ee7536f776e36721068c064da953177e465e013c224523b7d250bc"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-10-gfx-variable-mask-dispatch-review.json",
+      "bytes": 31374,
+      "sha256": "21823e4f73a6b85c1eee3206ead58c2ffe094deeae9ae8ffb14290b6e3e534a8"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-10-gfx-native-dispatch-contract-c-handoff.json",
+      "bytes": 7333,
+      "sha256": "0c5952249e913e7ce8258836e280cb84f172c4c8478848050b7b9c9a733a8697"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-10-gfx-native-dispatch-contract-host-handoff.json",
+      "bytes": 6255,
+      "sha256": "8fee853ac0e7ecee5e27973ddd382b8ee92f846db828cf8f67eb37d4a0a6552d"
+    }
+  ]
+}

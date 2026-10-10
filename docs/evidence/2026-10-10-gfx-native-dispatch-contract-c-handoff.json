@@ -1,0 +1,207 @@
+{
+  "schema": "m4rch.gfx-native-dispatch-contract-C-handoff.v1",
+  "source_selected": true,
+  "source_path": "/home/alice/Desktop/m4rch/out/gfx-native-dispatch-contract/prepared-owner-v1",
+  "source_receipt": {
+    "path": "/home/alice/Desktop/m4rch/out/gfx-native-dispatch-contract/prepared-owner-v1/native-dispatch-contract-owner-source-receipt.json",
+    "bytes": 19300,
+    "sha256": "e8783d245414dfcffffbbb62d17b6cbf93ec91479c901ae78f0ff21d538203e4"
+  },
+  "profile": {
+    "family": "gfx_native_dispatch_contract_scope",
+    "version": 15,
+    "compile_macro": "GFX_NATIVE_DISPATCH_CONTRACT_TRIAL",
+    "typed_commands": [
+      "sample",
+      "gfx-snapshot"
+    ],
+    "automatic_startup": true,
+    "management_only": false,
+    "retained_pages": 174,
+    "startup_recovery_cycles": 0,
+    "recovery_phase_writes": 0,
+    "maximum_cold_ap20_requests": 1,
+    "maximum_control_notifications": 1,
+    "maximum_draw_notifications": 1,
+    "fresh_control_before": 32,
+    "fresh_control_after": 33,
+    "trace_mask_before": 3,
+    "trace_mask_after": 3,
+    "control_opcode": 22,
+    "control_record_index": 32,
+    "observation_ms": 15000,
+    "observation_poll_max": 15001,
+    "control_timeout_ms": 5000,
+    "control_poll_max": 5001,
+    "original_identity_capture_only": true,
+    "automatic_draw_once": true,
+    "preserved_ta_3d_recipe": true,
+    "outstanding_work_backing_retained": true,
+    "pm_reference_retained_after_draw": true,
+    "pm_put_after_draw": false,
+    "off_after_draw": false,
+    "asc_stop_after_draw": false,
+    "unload_allowed": false,
+    "warm_restart_allowed": false,
+    "firmware_cursor_reset_allowed": false,
+    "unknown_seals_mutations": true,
+    "diagnostics_after_stop_cached": true,
+    "delayed_worker_scheduled": false,
+    "synchronous_rx_during_pipeline": true,
+    "receive_journal_stopped_on_return": true,
+    "no_hardware_fetch_or_software_power38_admission_gate": true,
+    "sample_indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "post_submit_sample_offsets_ms": [
+      0,
+      100,
+      1000,
+      5000,
+      15000
+    ],
+    "sample_fields": [
+      "sample_index",
+      "elapsed_ms",
+      "sample_jiffies",
+      "operand_samples_atomic"
+    ],
+    "log_prefix": "m4rch gfx-cold-render:",
+    "terminal_phase": "retained-final",
+    "gpu_execution_verified": false,
+    "rendering_verified": false,
+    "retirement_verified": false,
+    "trace_mask_after_control": 0,
+    "trace_mask_before_draw": 3,
+    "trace_mask_retained_after_draw": 3,
+    "maximum_trace_restore_writes": 1,
+    "trace_restore_after_fresh_control": true,
+    "trace_restore_before_draw": true,
+    "trace_restore_log_prefix": "m4rch gfx-native-dispatch-trace:",
+    "maximum_scheduler_request_writes": 0,
+    "native_config_getter_changed_bytes": 4,
+    "no_extra_notification_for_trace": true,
+    "native_reason_mutex_owned": false,
+    "native_reason_lifecycle_reproduced": false
+  },
+  "source_outputs": 34,
+  "compiled_source_files": 20,
+  "C_and_header_source_files": 19,
+  "source_changed_files": [
+    "Makefile",
+    "asc-graph-init.c",
+    "backing.bin",
+    "gfx-cold-render.h",
+    "gfx-coordinate-owner.h",
+    "graph-receipt.json",
+    "preparation.json",
+    "recovery-cycle.h",
+    "render-data.h"
+  ],
+  "source_added_files": [
+    "gfx-dispatch-trace.h"
+  ],
+  "qualification": {
+    "path": "/home/alice/Desktop/m4rch/out/gfx-native-dispatch-contract/owner-qualification-v1.json",
+    "bytes": 18139,
+    "sha256": "4aab6fd97353c3731584b615c71354989df1d3634d708e3a1513aad470d5ac21"
+  },
+  "actual_C_case_count": 16,
+  "sanitizers": [
+    "address",
+    "undefined"
+  ],
+  "success_fixture": {
+    "case": "success",
+    "path": "/home/alice/Desktop/m4rch/out/gfx-native-dispatch-contract/owner-qualification-v1.success.log",
+    "bytes": 35834,
+    "sha256": "4244bd07c27f0603a25bc6edb87969a524febf044cd27ee1931121493fcb12fc"
+  },
+  "maximum_new_log_row_bytes": 329,
+  "frozen_v13_composition": {
+    "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render/owner-qualification-v8.json",
+    "sha256": "deea9356799207aba1d07c08c6858a2200abaf8ff3d5189d0ae401d9c89b0cf2",
+    "case_count": 56,
+    "rerun": false
+  },
+  "recipe_receipt": {
+    "path": "/home/alice/Desktop/m4rch/out/gfx-native-dispatch-contract/recipe-v1/receipt.json",
+    "sha256": "2f66948af31aa7803f6298a97d8eba4412590b9e72e6876a64c3383886731ee8"
+  },
+  "hardware_actions": false,
+  "kernel_build": false,
+  "selected_owner_built": false,
+  "typed_trace": {
+    "prefix": "m4rch gfx-native-dispatch-trace:",
+    "success_phases": [
+      "intent",
+      "write-intent",
+      "readback",
+      "retained-final"
+    ],
+    "intent_before": 0,
+    "readback_written": 3,
+    "readback_after": 3,
+    "control_ready_cursors": [
+      33,
+      33,
+      33
+    ],
+    "control_ready_trace": 0,
+    "after_restore_control_trace": 3,
+    "before_sample_index": 0,
+    "extra_notifications": 0,
+    "scheduler_request_writes": 0,
+    "log_operands_nonatomic": true,
+    "post_restore_mask_check": "Currenttrace in subsequent cold-control rows; restore after field itself is the cached initial readback."
+  },
+  "limits": [
+    "RAM physical/PM/cache/MMIO service emulation, not GPU execution or actual cache/firmware behavior",
+    "Native process/PID and QoS ownership remain supplied; four-byte patch closes getter/config discrepancy only",
+    "Full postdraw DATA/page-table capture is root/host work, not this Csource",
+    "Shared trace remainsenabled when software RX stops; retainedjournal is a boundedprefix, not FWproducer quiescence",
+    "No release/OFF/PMput/free/retry/scheduler-bit intervention introduced"
+  ],
+  "input_pins": [
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-dispatch-contract/prepared-owner-v1/native-dispatch-contract-owner-source-receipt.json",
+      "bytes": 19300,
+      "sha256": "e8783d245414dfcffffbbb62d17b6cbf93ec91479c901ae78f0ff21d538203e4"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-dispatch-contract/owner-qualification-v1.json",
+      "bytes": 18139,
+      "sha256": "4aab6fd97353c3731584b615c71354989df1d3634d708e3a1513aad470d5ac21"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-dispatch-contract/owner-qualification-v1.success.log",
+      "bytes": 35834,
+      "sha256": "4244bd07c27f0603a25bc6edb87969a524febf044cd27ee1931121493fcb12fc"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/gfx-native-dispatch-contract/prepare-dispatch-owner.py",
+      "bytes": 7954,
+      "sha256": "cc6305a873e12923210463e63812928c0da39c5b63de617abf416df2823a6588"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/gfx-native-dispatch-contract/gfx-dispatch-trace.h",
+      "bytes": 2829,
+      "sha256": "f28864c39b9050ca6cbb38620be1a9a6ec049a10ed445cabeee4becaeb6f1ca2"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/gfx-native-dispatch-contract/test-dispatch-owner.py",
+      "bytes": 10573,
+      "sha256": "ffc9ad35fa9d94a4d2e7a3b297ceeb165474ed31171876f418863783413e9a41"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-dispatch-contract/recipe-v1/receipt.json",
+      "bytes": 10126,
+      "sha256": "2f66948af31aa7803f6298a97d8eba4412590b9e72e6876a64c3383886731ee8"
+    }
+  ]
+}
