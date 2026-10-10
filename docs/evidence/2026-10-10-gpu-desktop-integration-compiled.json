@@ -1,0 +1,88 @@
+{
+  "schema": "m4rch.gpu-desktop-integration.compiled.v1",
+  "selected_version": 2,
+  "linux_external_module_compiled": true,
+  "linux_diagnostics_clean": false,
+  "linux_warning_count": 15,
+  "linux_warning_summary": [
+    "use of deprecated method `core::sync::atomic::Atomic::<u64>::fetch_update`: renamed to `try_update` for consistency",
+    "method `enabled_cores` is never used",
+    "struct `Step` is never constructed",
+    "function `ladder` is never used",
+    "constant `UAT_AP_BITS` is never used",
+    "constant `UAT_HIGH_BITS` is never used",
+    "constant `UAT_MEMATTR_BITS` is never used",
+    "constant `PTE_ADDR_BITS` is never used",
+    "constant `PF_RW` is never used",
+    "constant `PF_RX` is never used",
+    "constant `PROT_TO_PERMS_FW` is never used",
+    "constant `PROT_TO_PERMS_OS` is never used",
+    "associated items `from_pte` and `elf_flags` are never used",
+    "struct `DumpedPage` is never constructed",
+    "method `dump_pages` is never used",
+    "15 warnings emitted"
+  ],
+  "mesa_device_translation_unit_compiled": true,
+  "mesa_device_diagnostics_clean": true,
+  "full_mesa_linked": false,
+  "headless_harness_linked": true,
+  "headless_harness_executed": false,
+  "normal_T6040_startup_implemented": false,
+  "G16S_graphics_layout_qualified": false,
+  "kernel_rebuilt": false,
+  "module_loaded": false,
+  "hardware_actions": [],
+  "inputs": [
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-integration-v2/selected-source-receipt.json",
+      "bytes": 3481,
+      "sha256": "8912abf6dc6a3166327149a84bffe74d16d61627d5ed45077c1f8cb12747108d"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-integration-v2/asahi-module-build-command.json",
+      "bytes": 1195,
+      "sha256": "e465e2126a6d6f3f64b9f51a4172999ba05e9e7780277d33b9c51c57760e81dd"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-integration-v2/asahi-module-build.log",
+      "bytes": 3870,
+      "sha256": "62e39c8559d112be5e419818f1ef1a35caae13e0fa3e716062a69539bffaae54"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-integration-v2/build-owner/asahi_m4.ko",
+      "bytes": 387368,
+      "sha256": "edd947da9ef4a05570aec2c2f6e166d8f695dbc7b2cf6beff341b36e6ff8205b"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-integration-v1/mesa-device-build-command.json",
+      "bytes": 6807,
+      "sha256": "c69d249666b5a2a4aaa926369752ff0db781526b57b6312d8e6ff12ec757f158"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-integration-v1/mesa-device-build.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-integration-v1/agx-device.o",
+      "bytes": 298576,
+      "sha256": "e15898a18206d6ba70424669e130397424d7a52548c1f5a15c3b49e12e82c19e"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-integration-v2/qualification-v1/qualification.json",
+      "bytes": 16272,
+      "sha256": "c6b94c67df11510130c4478b2ab36fb380c28486e407194e15e307dc80226be4"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/README-v2.md",
+      "bytes": 1494,
+      "sha256": "5118e07e225b4e2a22d94049c090b77856a266171e1ab0dc78257ccba0fd1d07"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-10-gpu-desktop-integration-v2.json",
+      "bytes": 4515,
+      "sha256": "732c2eeb794fd420540ffa61171f4ce2554c2fdcf1946f5aff69213ccad98d3d"
+    }
+  ],
+  "qualification": "The selected topology/profile caller changes compile in an isolated external asahi_m4 module. The patched Mesa device translation unit compiles under its actual saved Mesa command, and unchanged source hashes match v2. Pure profile/metadata/smoke acceptance tests and exact patch replay pass. Rust warnings are retained for review; no hardware, desktop acceleration or completed full GPU port is claimed."
+}

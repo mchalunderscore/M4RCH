@@ -1,0 +1,147 @@
+{
+  "schema": "m4rch.gpu-desktop-integration-handoff.v1",
+  "date": "2026-10-10",
+  "selected_staging": "/home/alice/Desktop/m4rch/out/gpu-desktop-integration-v1",
+  "tracked_kit": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration",
+  "scope": "Substantive selected-source integration patches and headless harness; no frozen-source changes, live reads/controls, system/desktop/GRUB changes or full kernel/Mesa builds.",
+  "implemented": [
+    "Selected OF chip profile now flows through probe, DRM registration, bootstrap and platform construction. Each donor initialization constructor checks an explicit T8132-only selector before its resource operations.",
+    "Pure kernel Topology separates logical slots from enabled cores, validates chip/variant and exact cluster mask count, preserves explicit masks, rejects absent/empty/out-of-range masks, and never substitutes a captured board mask. GET_PARAMS consumes the runtime-bound topology instead of hardcoded G/0x8132/one-cluster identity. Revision continues to come from the existing raw ID read.",
+    "Platform hardware-data chip binding now follows the selected topology; donor builders still accept only T8132. T6040 metadata and pure topology are supported, but its normal runtime path remains refused until a native implementation exists.",
+    "Mesa decodes complete G16 chip/die/variant/cluster/logical-slot/mask identity immediately after GET_PARAMS, including rejection of nonzero trailing masks. The G16S packet/layout refusal now happens before VM creation and host heap/mutex allocation.",
+    "A linked but unexecuted headless GBM/EGL GLES3 harness requires an explicit Asahi render node, complete captured J614s T6040/B1 identity, hardware Apple M4 Pro/G16S renderer, two bounded GL completion waits and two different full RGBA8 triangle/background readbacks. It also tests exported native EGL fences when advertised and writes captures exclusively."
+  ],
+  "changed_linux_files": [
+    "drivers/gpu/drm/asahi/asahi_m4.rs",
+    "drivers/gpu/drm/asahi/g16_profile.rs",
+    "drivers/gpu/drm/asahi/g16_drm.rs",
+    "drivers/gpu/drm/asahi/g16.rs",
+    "drivers/gpu/drm/asahi/g16_platform.rs"
+  ],
+  "changed_mesa_files": [
+    "src/asahi/lib/agx_device.c",
+    "src/asahi/lib/agx_g16_model.h"
+  ],
+  "qualification": {
+    "passed": true,
+    "rust_tests": 6,
+    "mesa_topology_assertions": 5194,
+    "smoke_criteria_assertions": 22,
+    "exact_kernel_mesa_j614_topology": "BIND,16,24640,83,1,2,10,16,987,987",
+    "full_valid_one_cluster_masks": 1023,
+    "c_address_and_undefined_sanitizers": true,
+    "leak_sanitizer": "Disabled: thread inspection is unsupported in this execution environment. Pure header/criteria tests do not allocate heap storage; address/undefined checks remain enabled.",
+    "patch_replay_exact": true,
+    "frozen_sources_unchanged": true,
+    "input_pin_count": 27,
+    "headless_harness_linked": true,
+    "headless_harness_executed": false,
+    "hardware_execution_qualified": false
+  },
+  "preserved_failure": {
+    "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-integration-v1/qualification-v1",
+    "reason": "LeakSanitizer thread-inspection failure in execution environment; Qv2 disables only leak inspection for heap-free pure C tests, retains address and undefined checks. Original logs/result and 11 kit input snapshots are preserved."
+  },
+  "remaining_critical_gaps": [
+    "Implement and qualify the actual T6040 initialization/power/application command and completion contract before normal startup; constructor gating intentionally remains closed.",
+    "Bind multi-cluster boot inputs and live fuse/topology identity to the T6040 runtime. Pure metadata acceptance is not that live binding. Current donor platform still consumes its single-cluster, eleven-row property format.",
+    "Qualify G16S TA/3D scene, firmware work, tiling/resource and Apple9 shader-entry/graphics layout deltas, then update Mesa execution selection with those proven layouts. No packet fields were guessed or render gate lifted.",
+    "Compile the patched normal DRM module and Mesa in isolated builds. Root may overlay the five Linux files on an isolated copy of the Asahi module directory for a targeted external-module compile.",
+    "With a functioning runtime and reviewed loaded kernel/Mesa identities, run the explicit headless harness once to establish real renderer/fence/pixel evidence. Offline CPU acceptance fixtures and a linked harness are not that proof.",
+    "Desktop presentation still requires formats/modifiers, dma-buf import or a viable copy path, fences and compositor device selection; KWin software overrides and native DCP integration remain untouched."
+  ],
+  "hardware_smoke_provenance": "The future hardware owner must pin the loaded kernel/Mesa and capture environment, excluding software or DRM-shim/preload substitution. Renderer strings and synthetic offline fixtures alone do not prove hardware. Native fence export support is reported separately and is not implied by a GL fence.",
+  "not_attempted": [
+    "Full kernel or Mesa builds",
+    "Driver installation or hardware harness execution",
+    "Desktop/KWin/DCP/GRUB configuration changes",
+    "Any firmware root/queue/MMIO mutation"
+  ],
+  "input_pins": [
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-integration-v1/selected-source-receipt.json",
+      "sha256": "ae4feb67f3c7b4d58ebc317a0ef503651fc74f228fb473be993c1cd56203235b",
+      "bytes": 3095
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-integration-v1/qualification-v2/qualification.json",
+      "sha256": "b92ebe540dcc310664c09ae184cfd986fb14b85a7bd6f8482de443c5147e49b0",
+      "bytes": 15292
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-integration-v1/qualification-v1/qualification.json",
+      "sha256": "f768582204abe1541b813863c71c7205bc193523643dd281dd2afb997e658975",
+      "bytes": 5477
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-integration-v1/qualification-v1/failure-source-receipt.json",
+      "sha256": "4bc562b099e51dcaaf10106265b4fab54af574f1685b20c1114295e871f98fb4",
+      "bytes": 2819
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-10-gpu-desktop-critical-path-stack.json",
+      "sha256": "c87ddc822746df597bc109c39117b9e88bf7c0790276ba5942a110cdcba8e9b0",
+      "bytes": 16725
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-07-gravity-gpu-binding.json",
+      "sha256": "154828011ac98c5c9a14cde75b3e8308438d44ffe1c4d9cfe1702e87a4991d95",
+      "bytes": 3835
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/README.md",
+      "sha256": "133adf6179793d91196d6ac1b552e27d84776617c8eb01c168ef9ad2ae7d2646",
+      "bytes": 4485
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/base-inputs.json",
+      "sha256": "b0c2e44fb3439e2d999098e3d70f01f5ce6867ed4d950ff58c3cbf441326d6df",
+      "bytes": 2824
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/gravity-linux-g16-topology-binding.patch",
+      "sha256": "6c24a37b18dacbf3f98057ee8b704e7a07587dc7fb554d9043e9fb5e093f21ab",
+      "bytes": 10961
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/gravity-mesa-g16-device-metadata.patch",
+      "sha256": "271c079474b208bbc9b4dff3b483834e527f274e388e9af34e675353cbd79890",
+      "bytes": 4843
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/headless-smoke.c",
+      "sha256": "aba70a27df594fb5213ad4e35c416f16f2e5681f26162624224ec0b77a5c155b",
+      "bytes": 12219
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/mesa-topology-tests.c",
+      "sha256": "aacae19dc7dbe8c1eb99a0dae5a727a87b02997b138de44988ab422db5107528",
+      "bytes": 2383
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/qualify.py",
+      "sha256": "2c5576be81e5d11a29dbc5d9d09d44c0abb114009f3d088d20730eca796dad78",
+      "bytes": 8446
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/smoke-criteria-tests.c",
+      "sha256": "a032c6257215fc3515aae8096f6a65da55c10115bde086464ea5cfe75f3cda47",
+      "bytes": 2107
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/smoke-criteria.h",
+      "sha256": "361d7e855ee61c3d0e9b0dbf9c675090bcd85c3240706e9c0bf1e333af5db4f8",
+      "bytes": 2203
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/stage.py",
+      "sha256": "b6a6d268d90979a7116ea81c1605bbdda6667f4529acd3df1a02abf1bc44e8f2",
+      "bytes": 3248
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/topology-tests.rs",
+      "sha256": "a8f46ca6826299d6c236382a1189c7817c0cafc417c4580c9482144b4ee922af",
+      "bytes": 2536
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "schema": "m4rch.gpu-desktop-integration-inputs.v1",
+  "source_roots": {
+    "linux": "/home/alice/Desktop/m4rch/out/gfx-native-reset-kernel/linux",
+    "mesa": "/home/alice/Desktop/m4rch/out/gpu-native-20261006/mesa-full"
+  },
+  "input_pins": [
+    {
+      "family": "linux",
+      "relative_path": "drivers/gpu/drm/asahi/asahi_m4.rs",
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-reset-kernel/linux/drivers/gpu/drm/asahi/asahi_m4.rs",
+      "sha256": "563df26be675ef3b2f8159232e384231ec034a684fc06503dd23aafb4c62536e",
+      "bytes": 5296
+    },
+    {
+      "family": "linux",
+      "relative_path": "drivers/gpu/drm/asahi/g16_profile.rs",
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-reset-kernel/linux/drivers/gpu/drm/asahi/g16_profile.rs",
+      "sha256": "54fda3a8ed3d0a907c2ca2ca6da74d6a81e0e6a1830a62d76906ec6f4282ebd3",
+      "bytes": 2607
+    },
+    {
+      "family": "linux",
+      "relative_path": "drivers/gpu/drm/asahi/g16_drm.rs",
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-reset-kernel/linux/drivers/gpu/drm/asahi/g16_drm.rs",
+      "sha256": "630f320e9759364ec3fef7314d2cee6d39be30e5f8680fdd6a0fc1b2c8b4202e",
+      "bytes": 69450
+    },
+    {
+      "family": "linux",
+      "relative_path": "drivers/gpu/drm/asahi/g16.rs",
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-reset-kernel/linux/drivers/gpu/drm/asahi/g16.rs",
+      "sha256": "605f15066d3abb5e65da9fe9505e21d4e9e3725a342a7a8cd9fd61e3e1923677",
+      "bytes": 36625
+    },
+    {
+      "family": "linux",
+      "relative_path": "drivers/gpu/drm/asahi/g16_platform.rs",
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-reset-kernel/linux/drivers/gpu/drm/asahi/g16_platform.rs",
+      "sha256": "a051ce1add8bd67fb925637bffa578818b64601f115ee784f123123ef97de3e3",
+      "bytes": 12359
+    },
+    {
+      "family": "linux",
+      "relative_path": "include/uapi/drm/asahi_drm.h",
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-reset-kernel/linux/include/uapi/drm/asahi_drm.h",
+      "sha256": "eb9f39e87dfe448dc044f54ab2d11b7493bf1359faca8fb76ece5f3583469015",
+      "bytes": 36599
+    },
+    {
+      "family": "mesa",
+      "relative_path": "src/asahi/lib/agx_device.c",
+      "path": "/home/alice/Desktop/m4rch/out/gpu-native-20261006/mesa-full/src/asahi/lib/agx_device.c",
+      "sha256": "511e68453f88a4195341edf8e3516898bb137ffe04ab0e9610f695e3ed22c084",
+      "bytes": 34854
+    },
+    {
+      "family": "mesa",
+      "relative_path": "src/asahi/lib/agx_g16_model.h",
+      "path": "/home/alice/Desktop/m4rch/out/gpu-native-20261006/mesa-full/src/asahi/lib/agx_g16_model.h",
+      "sha256": "9cff0565b7c6c90115b54d3a50a11d2e3f03f82644c9aafc157bf254393882f3",
+      "bytes": 652
+    }
+  ],
+  "scope": "Selected source staging only. No frozen source edits, full builds or hardware."
+}
