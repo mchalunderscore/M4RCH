@@ -1,0 +1,96 @@
+{
+  "schema": "m4rch.gfx-postdraw-native-cycle-prepared.v1",
+  "ready": true,
+  "candidate": "/home/alice/Desktop/m4rch/out/gfx-postdraw-native-cycle/candidate",
+  "version": 16,
+  "owner_sha256": "37ade18e241273dfcaea73fd5ccb9643f1f043c4683347c45f794552e5f76c3c",
+  "owner_GNU_note_hex": "040000001400000003000000474e5500d77822b95f86213557cfb37e089c4b5295298303",
+  "source_receipt_sha256": "08383fcfe70b92f5562288f2ec60b01f7712d5e4f9cf40a7a728dce7e05ed1c5",
+  "candidate_receipt_sha256": "05b198f8b799fd9a762c90d14d293de4bd2cb9d2f84591a32d5bcde9eca3c9d8",
+  "preparation_sha256": "53595bc13f3e326d31c47acb5a0b726f99b3937aa721fc93217e36396bdf0ed6",
+  "selected_source": "/home/alice/Desktop/m4rch/out/gfx-postdraw-native-cycle/prepared-owner-v1",
+  "new_C_cases": 36,
+  "new_host_cases": 24,
+  "clean_module_build": true,
+  "module_loaded": false,
+  "kernel_rebuilt": false,
+  "kernel_GRUB_unchanged": true,
+  "hardware_controls": [],
+  "consumed_boot": "d83451f8-42c7-4466-9983-f1b3fbea5963",
+  "manual_reboot_required": true,
+  "combined_trial": [
+    "Preserve sharedtrace3 through existing opcode22/control33, refreshing the actual firmware trace cache before the same one TA/3D draw.",
+    "Capture15s and immutably retain full raw image/completions/queues/journal/objects/DATA/page tables before the postdraw command.",
+    "One experimental post-submission native202 cycle: bounded admission drain, ownACK, nativeidle and checkedCPUstop before pairedOFF/onePMput.",
+    "Independent physicalOFF/accounting can admit one separate pairedON/PMget, coldSTART/HELLO/map and carriedAP20 management rejoin."
+  ],
+  "postdraw_admission_budget": {
+    "milliseconds": 250,
+    "maximum_EP32_frames": 256
+  },
+  "retained_resources": "All174 pages, mappings, root/context and owner remain pinned on every result.",
+  "limitations": [
+    "The command tests submitted-work shutdown; prior rebootless results were management-only.",
+    "Management rejoin does not establish root/application reuse, GPU execution, DMA retirement or safe backing release.",
+    "Continuous trace3 may exhaust the inherited 65536-record journal before15s; overflow retains the captured prefix and refuses the postdraw cycle.",
+    "No root/app/work replay, cursorreset, DATArestore, unsupportedexternal-kill2c, arbitrarybitclear, secondcycle or ownerunload/free.",
+    "On unknownOFF, only cached metadata/PMGR and qualifiedDRAM may be observed; no device access until a separately qualifiedON."
+  ],
+  "inputs": [
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-postdraw-native-cycle/candidate/cold-render-preparation.json",
+      "bytes": 55037,
+      "sha256": "53595bc13f3e326d31c47acb5a0b726f99b3937aa721fc93217e36396bdf0ed6"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-postdraw-native-cycle/candidate/asc-root-envelope/build-receipt.json",
+      "bytes": 24627,
+      "sha256": "05b198f8b799fd9a762c90d14d293de4bd2cb9d2f84591a32d5bcde9eca3c9d8"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-postdraw-native-cycle/owner-qualification-v1.json",
+      "bytes": 26888,
+      "sha256": "a158bc59474049f7512f9512b89bab0dab9d0ed0d89e9d11329350a9eb3f91b6"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-postdraw-native-cycle/host-qualification-v1.json",
+      "bytes": 77054,
+      "sha256": "64ac7e9e204b18c4c8155ea9cd409ddce61f554d197b33cb142b477ff2a91066"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-postdraw-native-cycle/owner-build-command.json",
+      "bytes": 2125,
+      "sha256": "463acb7a7b8d81e31b1325d4e79cf6e06dc84440db00b99d66909fdfb2e2a118"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-postdraw-native-cycle/owner-build.log",
+      "bytes": 532,
+      "sha256": "8b7370de19e37082974e0f9d4e64de7f5b9d251916473c852a04b3fe7c7ea5d4"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-postdraw-native-cycle/current-d834-preflight-refusal.json",
+      "bytes": 539,
+      "sha256": "94e25db74aeebb6c7812fc75361352fecb98119df91cc97dc411c1b0ec20af51"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-postdraw-native-cycle/current-d834-preflight-refusal.log",
+      "bytes": 1050,
+      "sha256": "bc3d228d1e9b9e18f387f4911eaa7d39e5306b37e0821e381603f4b0a82f27c2"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-dispatch-contract/live-state-d834.json",
+      "bytes": 8491,
+      "sha256": "76985911f96e30266ceccad5032acbc6bdebc6e2490f88590ba6f11cdaab38e7"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-10-gfx-native-dispatch-d834-live.json",
+      "bytes": 36781,
+      "sha256": "32aedab1d41e988b48f5bc8b3ed522ef1e81280c772cc5e87e2643daf5690c67"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-postdraw-native-cycle/native-integration-notes.md",
+      "bytes": 5793,
+      "sha256": "e05a30b0717049d481209c2ba956e3f9444b3bf9952fb0164f8009e27ec247ea"
+    }
+  ]
+}
