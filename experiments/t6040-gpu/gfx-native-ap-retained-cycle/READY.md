@@ -1,0 +1,13 @@
+# Ready for one fresh-boot retained AP management trial
+
+Selected source: `out/gfx-native-ap-retained-cycle/prepared-owner-v2`. Candidate: `out/gfx-native-ap-retained-cycle/candidate`. Family `gfx_native_ap_retained_cycle_scope`, version11. The candidate has never been loaded; hardware preflight is pending.
+
+Owner SHA `0749398ea268f3c4048674483d6d178c25e1c73bcd05569212d462792c2683a5`; receipt `a8a24d16dc8ea0f6836b7a03697c55a4a60954de01bc663c756a49574bb4efb9`; preparation `89cb8e11c4ffeaa3865410d5a8550659bf340f986d6b626a354b1aeb83d67b9b`. Expected loaded GNU note `040000001400000003000000474e550029745bb0404ca8ee7d430d63de988256902b6a20`. Actual C122 ASan/UBSan, Python137 with18 intercepted cold and10 resident main flows, clean LLVM1 W1 module build, and all10 artifacts/20 owner sources/18 preparation inputs verified. Six complete E2 rows have maximum425bytes including prefix/newline. Frozen earlier qualifications compose without repeating old hardware trials.
+
+This corrects the actual duplicate AP ON panic. Owned exact cold B20/reply establishes known wireAP20 before root publication. First management202 preserves it; missing mirror refuses before the secondPMget. One separately coordinated ON/START/HELLO/maps/exact bootRunning precedes a guarded logged retainedAP20 skip. No secondB20 exists, and the skip creates no fresh reply. One own202 then requires the unchanged low1/2 ACK/checkedCPUstop/pairedOFF/PMput/strictphysicalOFF predicates. Unknown results seal all further controls and retain backing.
+
+Current df540 remains the sealed v10 owner, second reference held/all174 retained. Only the v10 typed sample/snapshot family is admitted on that boot. Do not load this candidate, retry controls, echo EP1, unload/free the owner or reset intents there. Do not repeat v10 or known failed warm START/INIT trials. Root alone performs hardware; subagents offline. Never reboot through tools.
+
+After an actual changed boot and successful new preflight, root runs the cold no-work session, baseline snapshot and ONE first gfx-powergate. Only after reconstructing/verifying its exact seven-input firstOFF proof, loaded identity, strict physical/accounting observations and current transport may root invoke ONE gfx-native-ap-retained-cycle. Every failed or unknown outcome retains all resources and admits diagnostics only. Native runtime flags/full framework parity remain unbound. No INIT220/APB201/B0/app/root/context restoration/work/free path is admitted. Application rejoin, DMA retirement and triangle rendering remain unverified.
+
+Use /boot/GPUC003/ASTRA-RESTART.md for the latest guarded sequence and actual boot state. Earlier ready and live handoffs retain their original identities.

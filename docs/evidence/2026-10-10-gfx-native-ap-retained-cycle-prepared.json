@@ -1,0 +1,184 @@
+{
+  "schema": "m4rch.gfx-native-ap-retained-cycle-prepared.v1",
+  "ready": true,
+  "module_loaded": false,
+  "hardware_actions": [],
+  "candidate": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/candidate",
+  "selected_source": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/prepared-owner-v2",
+  "family": "gfx_native_ap_retained_cycle_scope",
+  "version": 11,
+  "owner_sha256": "0749398ea268f3c4048674483d6d178c25e1c73bcd05569212d462792c2683a5",
+  "receipt_sha256": "a8a24d16dc8ea0f6836b7a03697c55a4a60954de01bc663c756a49574bb4efb9",
+  "preparation_sha256": "89cb8e11c4ffeaa3865410d5a8550659bf340f986d6b626a354b1aeb83d67b9b",
+  "source_receipt_sha256": "f8cc352fce19be8a959fdd6c4a386360cbea746934d5cfa09defa09222faf9d1",
+  "expected_loaded_GNU_note_hex": "040000001400000003000000474e550029745bb0404ca8ee7d430d63de988256902b6a20",
+  "C_actual_cases": 122,
+  "C_ASan_UBSan": true,
+  "maximum_new_complete_row_bytes": 425,
+  "wrapper_actual_cases": 137,
+  "actual_cold_main_flows": 18,
+  "actual_resident_main_flows": 10,
+  "artifact_count": 10,
+  "owner_source_count": 20,
+  "preparation_input_count": 18,
+  "no_second_HOST_B20": true,
+  "cold_AP_exact_owned_reply_required_before_root": true,
+  "retained_AP_skip_is_fresh_reply": false,
+  "fresh_hardware_preflight_pending": true,
+  "hardware_management_roundtrip_verified": false,
+  "application_rejoin_verified": false,
+  "DMA_retirement_verified": false,
+  "rendering_verified": false,
+  "input_pins": [
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-root-envelope/build-receipt.json",
+      "bytes": 31662,
+      "sha256": "a8a24d16dc8ea0f6836b7a03697c55a4a60954de01bc663c756a49574bb4efb9"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/native-ap-retained-cycle-preparation.json",
+      "bytes": 9379,
+      "sha256": "89cb8e11c4ffeaa3865410d5a8550659bf340f986d6b626a354b1aeb83d67b9b"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/prepared-owner-v2/native-ap-retained-cycle-owner-source-receipt.json",
+      "bytes": 17106,
+      "sha256": "f8cc352fce19be8a959fdd6c4a386360cbea746934d5cfa09defa09222faf9d1"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/owner-qualification-v2.json",
+      "bytes": 32941,
+      "sha256": "aa875ccdecb07b2944dee2066a53d955b613582929e6e232581dd4b4b096d334"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/wrapper-qualification-v1.json",
+      "bytes": 68057,
+      "sha256": "44a869162bbe382302b5f7dc78a77c084a9e90d4da1ff98051a072cf376c1686"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/root-prepared-validation.json",
+      "bytes": 12248,
+      "sha256": "bd4e43fb9798af9ba8ea5ccde370a05be12d0a3114a82dd88bdabdd82bedd603"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/owner-build.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/current-df540-preflight-refusal.log",
+      "bytes": 896,
+      "sha256": "fac867f2ab975e9bac107897c3f953ca342bf448ccb54ef2df4bff7d97c3631d"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/clone-candidate.py",
+      "bytes": 2184,
+      "sha256": "e9d4004db54d6e265875b7e868660ee25fd5869bb10e3b8b4310a062e839bf44"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/validate-prepared.py",
+      "bytes": 2460,
+      "sha256": "ae4de505b8d0c8cc34c26e772504b2003c83d9d6ff5e60ccb6f26a41bd86fa07"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/save-prepared.py",
+      "bytes": 6574,
+      "sha256": "dbed1ec717bbb650dd18aac402893de6f7f14c7fc68c4d2f8dd6896e3a6f344b"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-ap-retained-cycle/README.md",
+      "bytes": 3271,
+      "sha256": "8471cc8f8f538108be0bd8561fc210d8e79d0653de5c9a9e35923c2bc7da8aac"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-ap-retained-cycle/READY.md",
+      "bytes": 2710,
+      "sha256": "94d9bee782feff63b58e9fac003092d3356a6902b742c7e86f95fd6c79e66d3a"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-ap-retained-cycle/WRAPPER-QUALIFICATION.md",
+      "bytes": 1085,
+      "sha256": "5b36bdc7d684ee62308edc5f34754867b01be1cf995558d0660d4240c90236fb"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-ap-retained-cycle/ap_retained_cycle_wrapper.py",
+      "bytes": 1024,
+      "sha256": "9ebb07d530611c1f815a557ade249426b97b0ba5b8a8fb9caa730663b331c8c9"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-ap-retained-cycle/finalize-powergate.py",
+      "bytes": 16624,
+      "sha256": "0c9e7df39fc5040af582e5a84e872198103aaf61c2f07a93f11168fd507de0c9"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-ap-retained-cycle/gfx-native-ap-retained-cycle.h",
+      "bytes": 35716,
+      "sha256": "7bf2d260bdf38f8766b04a8e6811ca0354e1ead22d3452be5e38324cd5dff3f2"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-ap-retained-cycle/gfx_native_ap_retained_cycle_contract.py",
+      "bytes": 6135,
+      "sha256": "058706e562468d97698c5c64dcb89aa9cb88bfe5b2d2d9fd7d9a629de7b45f51"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-ap-retained-cycle/preflight-fresh.py",
+      "bytes": 796,
+      "sha256": "2fb0859dd5104eb965dc084d38289ab098d7f630aeea41910cc5fffcef99e88e"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-ap-retained-cycle/prepare-native-ap-retained-cycle-owner.py",
+      "bytes": 10377,
+      "sha256": "f60d99a912ebdfdb447dcd3a0701c2905537729ab59d21d5e4adfb06214bebc2"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-ap-retained-cycle/run-powergate.py",
+      "bytes": 8417,
+      "sha256": "e5f94dcabf1d340c73051efdeb1ae84b270f03cc451b84b3282cfc2de054d415"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-ap-retained-cycle/run-root-powergate.py",
+      "bytes": 626,
+      "sha256": "e17f91fb809ae7d6bb699a803c94c67ff428e9313f203a6863d1efe15f2da045"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-ap-retained-cycle/test-native-ap-retained-cycle-owner.py",
+      "bytes": 23191,
+      "sha256": "30a202db12b322b058f284e165046c0c8ff93ac569e6bf0f922944b170c672e5"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-ap-retained-cycle/test-native-ap-retained-runners.py",
+      "bytes": 19966,
+      "sha256": "cbdfcc12e199acb986222e176fe03658690c60a7fb8df0aa29cbb208a3444e6f"
+    },
+    {
+      "path": "docs/evidence/2026-10-10-gfx-native-ap-retained-cycle-c-qualification.json",
+      "bytes": 34815,
+      "sha256": "1310086bcf6ac4b4b3bbb40281f365901de288b6f91774fb267b7304c8715149"
+    },
+    {
+      "path": "docs/evidence/2026-10-10-gfx-native-ap-retained-cycle-final-candidate-review.json",
+      "bytes": 87455,
+      "sha256": "0c70e1026755d366cde3fb7e16dbd05c121194326ec2294e76723e53650e917c"
+    },
+    {
+      "path": "docs/evidence/2026-10-10-gfx-native-ap-retained-cycle-independent-source-review.json",
+      "bytes": 16193,
+      "sha256": "d205bb2f68fd7fa9ee7722ab412c95161e94eb87f74405d3c11c6e5e40eaad74"
+    },
+    {
+      "path": "docs/evidence/2026-10-10-gfx-native-ap-retained-cycle-wrapper-independent-review.json",
+      "bytes": 56926,
+      "sha256": "7a1ebbf359d4a9ea4a068741e37eda7bfa1b9a416239543f3586bde4c2f97d4a"
+    },
+    {
+      "path": "docs/evidence/2026-10-10-gfx-native-ap-retained-cycle-wrapper-qualification.json",
+      "bytes": 68057,
+      "sha256": "44a869162bbe382302b5f7dc78a77c084a9e90d4da1ff98051a072cf376c1686"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/owner-build-initial-compiler-refusal.log",
+      "bytes": 712,
+      "sha256": "4bccf06fff95bec6b0b65486b28dce1df731fc6f0648cc02d3f24272bb834428"
+    }
+  ]
+}
