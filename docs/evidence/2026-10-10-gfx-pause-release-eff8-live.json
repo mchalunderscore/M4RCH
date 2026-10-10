@@ -1,0 +1,278 @@
+{
+  "schema": "m4rch.gfx-pause-release-eff8-live.v1",
+  "boot_id": "eff8eafa-d845-429e-b98c-9a5f053bcc46",
+  "source_checkpoint": "1b9ece51c14f366b8ea1fc7a9ba8b0e69bb4c946",
+  "kernel_release": "7.1.13-m4rch-gpu-native-reset",
+  "owner_sha256": "ab2998bf8a8e309e3b044638034c1f222478cc72efffac1fbaa791523d3ede22",
+  "loaded_GNU_note_hex": "040000001400000003000000474e550090dcf2208f2ce71caaed14ed226903f660dfe250",
+  "module_refcnt": 1,
+  "session": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/candidate/asc-graph-init/boot-eff8eafa-d845-429e-b98c-9a5f053bcc46",
+  "capture_complete": true,
+  "capture_errors": [],
+  "capture_pins_verified": 14,
+  "exact_log_association": {
+    "qualified": true,
+    "method": "unique-exact-suffix",
+    "before_discarded_bytes": 52850,
+    "exact_overlap_bytes": 10760,
+    "delta_bytes": 120577,
+    "delta_sha256": "65cef2a45923f197c0c92361610a9ca8f83a14ab61d089cf0edff50cbb9745c2"
+  },
+  "cold_pipeline_qualified": true,
+  "firmware_accepted_one_draw": true,
+  "fresh_control_cursors": [
+    33,
+    33,
+    33
+  ],
+  "work_cursors": [
+    {
+      "channel": 0,
+      "cursors": [
+        1,
+        1,
+        1
+      ]
+    },
+    {
+      "channel": 1,
+      "cursors": [
+        1,
+        1,
+        1
+      ]
+    }
+  ],
+  "pause_release": {
+    "qualified": true,
+    "request_bit0_intervention_completed": true,
+    "request_before": 3,
+    "request_written": 2,
+    "preserve_bit1": true,
+    "initial_ack_low_bit_already_zero": true,
+    "firmware_rewritten": false,
+    "firmware_reasserted": false,
+    "native_reason_lifecycle_reproduced": false,
+    "gpu_execution_verified": false,
+    "rendering_verified": false
+  },
+  "observed_request_ACK": "3/2 before intervention;2/2 at readback and1/5/15s samples",
+  "whole_image": {
+    "bytes": 16384,
+    "sha256": "add4fa3e6dbfb8723b21cfe7debadbed5d5f2ca1ab88c666470daed16afbe21a",
+    "untouched_sentinel": true,
+    "changed_bytes": 0,
+    "changed_pixels": 0
+  },
+  "software_completion_changed_bytes": 0,
+  "four_hardware_completion_changed_bytes": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "all56_draw_backing_pages_identical_to_boot1241": true,
+  "fault_samples": "Six complete samples have valid1/info0/address0 and journal_status0; no recorded fault in these samples.",
+  "primary_and_engine_values": "Zero at all saved samples; PRCd4c004/d4c0001/1 from100ms onward.",
+  "mask21058_21060": "All-ones at100ms and1/5/15s; unchanged by the bit0 intervention.",
+  "receive_journal": {
+    "header": {
+      "magic": 1481787213,
+      "version": 1,
+      "entry_bytes": 80,
+      "capacity": 65536,
+      "used": 3454,
+      "status_flags": 0,
+      "doorbells": 6
+    },
+    "authoritative_records_sha256": "669d54e2ec99a7b4729f0467b3ef1194e91f2480d8df65c9a90e816e0606b20e"
+  },
+  "native_wait_caveat": "FW1a994 ACKbit1 wait is conditional on new queue mask bits; saved reason2 caller passes(0,0,1) and bypasses that wait. A nonzero-mask live caller/current PC has not been bound. ACK2 alone does not identify the blocked instruction.",
+  "result": "The exact one-bit request intervention succeeded but was insufficient to produce observable rendering or completion under this draw recipe. Native pause ownership/reason lifecycle was not reproduced.",
+  "GPU_execution_verified": false,
+  "rendering_verified": false,
+  "submitted_work_retirement_verified": false,
+  "rebootless_recovery_verified": false,
+  "last_logged_state": {
+    "phase": "retained-final",
+    "identities_captured": 1,
+    "identities_preserved": 1,
+    "held": 1,
+    "usage": 1,
+    "runtime_error": 0,
+    "active": 1,
+    "suspended": 0,
+    "apps_started": 3,
+    "ap_known": 1,
+    "journal_used": 3454,
+    "journal_status": 0,
+    "receive_crashed": 0,
+    "running": 0,
+    "sample_index": 5,
+    "elapsed_ms": 15000,
+    "operand_samples_atomic": 0
+  },
+  "all174_pages_context_maps_module_PM_retained": true,
+  "post_trial_hardware_controls": [],
+  "fresh_post_trial_register_sample": false,
+  "kernel_GRUB_unchanged": true,
+  "target_png": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/candidate/asc-graph-init/boot-eff8eafa-d845-429e-b98c-9a5f053bcc46/target-after.png",
+  "independent_reviews": [
+    "/home/alice/Desktop/m4rch/docs/evidence/2026-10-10-gfx-pause-release-eff8-execution-review.json",
+    "/home/alice/Desktop/m4rch/docs/evidence/2026-10-10-gfx-pause-release-eff8-capture-review-v2.json",
+    "/home/alice/Desktop/m4rch/docs/evidence/2026-10-10-gfx-pause-release-eff8-remaining-gate.json"
+  ],
+  "next_offline_work": "Bind actual nonzero queue-mask caller and mask/reason cache ownership to work dispatch; use saved firmware/native bytes and ABI evidence. Do not infer that arbitrary ACKbit1 clearing or another identical wake trial will recover execution.",
+  "inputs": [
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/live-state-eff8.json",
+      "bytes": 7280,
+      "sha256": "0d22f8d04eb9906899eaf93103aeca218a2bf65f4ffa9b0e3cf42b4c58338f60"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/fresh-preflight.json",
+      "bytes": 1863,
+      "sha256": "5aa2b90c38afc2c0131aea28693a87f771de21b27609f0029f44e5eea0847d07"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/candidate/asc-graph-init/boot-eff8eafa-d845-429e-b98c-9a5f053bcc46/attempt.json",
+      "bytes": 49891,
+      "sha256": "11254bb0366411f67237204c680c0d4d7c49c0d45534fcbd289f9fb9f6ea210b"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/candidate/asc-graph-init/boot-eff8eafa-d845-429e-b98c-9a5f053bcc46/analysis/result.json",
+      "bytes": 45773,
+      "sha256": "d0172f2ce1c439e91dd0d4ded5977472d513eea24f864bc16448b6f62ebf2ea0"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/candidate/asc-root-envelope/build-receipt.json",
+      "bytes": 24381,
+      "sha256": "c4857411810a16baf1b8bece91b728483181a238634193641e4417c81722b4fb"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/candidate/cold-render-preparation.json",
+      "bytes": 41073,
+      "sha256": "793197721600b03ca12e09172a6bd9735b12757efadf6a4979cf59765327a43c"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/candidate/asc-graph-init/cold-render-pause-release-owner-source-receipt.json",
+      "bytes": 13861,
+      "sha256": "92cdefc69b6940f00c98188c19055cd939ff819c8c5d9c03cf01a9dd1168f85f"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-10-gfx-cold-render-pause-release-prepared.json",
+      "bytes": 10732,
+      "sha256": "75340c167a3b3b423f108a639d2672d70008b887bae469f427edceae2fe82c1b"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-10-gfx-pause-release-native-formula-review.json",
+      "bytes": 5163,
+      "sha256": "99ddfb264e1ccd9f621a32a0ecd0d8360141aa943167e0849567083b1dbf58a0"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-10-gfx-cold-render-1241-live.json",
+      "bytes": 10003,
+      "sha256": "8eb0e75afd81f52ba2582f58ace9c78ddb813062bff3cdd6130a3f4e6afe78b3"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/candidate/asc-graph-init/boot-eff8eafa-d845-429e-b98c-9a5f053bcc46/objects-before.bin",
+      "bytes": 1130496,
+      "sha256": "287f2c53bc6ef7ed226c4a2995b9d9904e7623acae9713af105be6b04fc690a9"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/candidate/asc-graph-init/boot-eff8eafa-d845-429e-b98c-9a5f053bcc46/objects-after.bin",
+      "bytes": 1130496,
+      "sha256": "2e73f2742554002b336db66e71e89161dca4bd1ec8a6832d20ab0cca421429db"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/candidate/asc-graph-init/boot-eff8eafa-d845-429e-b98c-9a5f053bcc46/owned-after.bin",
+      "bytes": 2850816,
+      "sha256": "270e5808c061bb364631044cc9d88ea9b409216da0f138d167b2d20ceb88d86d"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/candidate/asc-graph-init/boot-eff8eafa-d845-429e-b98c-9a5f053bcc46/notifications-after.bin",
+      "bytes": 5242944,
+      "sha256": "4863bd04f7c5dbc35cbaabd9c7a73f889cb3cfeb40bc9a26a50655c9856ec20b"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/candidate/asc-graph-init/boot-eff8eafa-d845-429e-b98c-9a5f053bcc46/notifications-after.json",
+      "bytes": 1032922,
+      "sha256": "c295794ae6b006e73aaac80023572541b4f38cf2d5339726315e3f24c12fa58e"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/candidate/asc-graph-init/boot-eff8eafa-d845-429e-b98c-9a5f053bcc46/target-after.bin",
+      "bytes": 16384,
+      "sha256": "add4fa3e6dbfb8723b21cfe7debadbed5d5f2ca1ab88c666470daed16afbe21a"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/candidate/asc-graph-init/boot-eff8eafa-d845-429e-b98c-9a5f053bcc46/completion-after.bin",
+      "bytes": 16384,
+      "sha256": "4fe7b59af6de3b665b67788cc2f99892ab827efae3a467342b3bb4e3bc8e5bfe"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/candidate/asc-graph-init/boot-eff8eafa-d845-429e-b98c-9a5f053bcc46/queues-after.bin",
+      "bytes": 65536,
+      "sha256": "23918ce843f0ed8a8482f86e52cb4b1d52a7c723851bc6e009704d9b625f5203"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/candidate/asc-graph-init/boot-eff8eafa-d845-429e-b98c-9a5f053bcc46/hardware-completions-after.bin",
+      "bytes": 65536,
+      "sha256": "de2f256064a0af797747c2b97505dc0b9f3df0de4f489eac731c23ae9ca9cc31"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/candidate/asc-graph-init/boot-eff8eafa-d845-429e-b98c-9a5f053bcc46/target-after.png",
+      "bytes": 204,
+      "sha256": "b762dcbb726b6874a02df835eb6397f15a20361606da2f12a9f6af7bc3619461"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/candidate/asc-graph-init/boot-eff8eafa-d845-429e-b98c-9a5f053bcc46/dmesg-before.log",
+      "bytes": 63610,
+      "sha256": "3c7986b7e1c0b93066fafe4bb85317892490b67168be5cadbb69b1a0056cec5f"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/candidate/asc-graph-init/boot-eff8eafa-d845-429e-b98c-9a5f053bcc46/dmesg-after.log",
+      "bytes": 131337,
+      "sha256": "73b7710dd21f3380f7253310ccfe2b0a559b83846737e144bcb6c23b8ea01e9a"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/candidate/asc-graph-init/boot-eff8eafa-d845-429e-b98c-9a5f053bcc46/operation-delta.log",
+      "bytes": 120577,
+      "sha256": "65cef2a45923f197c0c92361610a9ca8f83a14ab61d089cf0edff50cbb9745c2"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/candidate/asc-graph-init/boot-eff8eafa-d845-429e-b98c-9a5f053bcc46/text.bin",
+      "bytes": 393216,
+      "sha256": "c7ef055672f826231812a42c877f28ed6b47d4174e5ac8d3eb54b0c26a722531"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-10-gfx-pause-release-eff8-execution-review.json",
+      "bytes": 33047,
+      "sha256": "4f0ff490ae9f88e808bfd9f4ce3a17c6e3dccab6b8374617ebad60df0d94886b"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-10-gfx-pause-release-eff8-execution-review.md",
+      "bytes": 2464,
+      "sha256": "73e711111153e6579caff5f988f077b8479eb36c1cc8bb6a8a79b8e55921e9b3"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-10-gfx-pause-release-eff8-capture-review-v2.json",
+      "bytes": 63074,
+      "sha256": "607bee423e3eff1ac73a1308e20917b7d7f412e5568ce3dbea6e4f83b9aa1cf3"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-10-gfx-pause-release-eff8-capture-review-v2.md",
+      "bytes": 1691,
+      "sha256": "38d30e93b437a760b2fac161e2dc7be7e63f30ff5c1beb5bdf448d8747e0ec33"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-10-gfx-pause-release-eff8-remaining-gate.json",
+      "bytes": 17250,
+      "sha256": "6f967d3f0f51b02ef59981af4aed7c15ed24ae823fb5712f8f3be9d300041f81"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-10-gfx-pause-release-eff8-remaining-gate.md",
+      "bytes": 1924,
+      "sha256": "177e74b6808968047cdf8ab6d2edef2dbfea48d8f188c2c3e3cd5513895bca2a"
+    }
+  ]
+}

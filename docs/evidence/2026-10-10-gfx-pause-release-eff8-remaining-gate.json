@@ -1,0 +1,459 @@
+{
+  "schema": "m4rch.gfx-pause-release-eff8.remaining-native-gate.v1",
+  "date": "2026-10-10",
+  "boot_id": "eff8eafa-d845-429e-b98c-9a5f053bcc46",
+  "scope": {
+    "saved_evidence_only": true,
+    "hardware_or_sysfs_access": false,
+    "module_controls": false,
+    "builds_or_execution_tests": false,
+    "candidate_or_prior_evidence_mutations": false,
+    "private_binary_or_full_disassembly_exported": false
+  },
+  "result": "Durable one-shot bit0 release did not render. Conditional ACKbit1 wait remains a lead; known zero-mask startup reason2 caller is excluded from that wait.",
+  "actual_result": {
+    "request_before": 3,
+    "request_written": 2,
+    "request_after": 2,
+    "ACK_after": 2,
+    "later_sample_ms": [
+      1000,
+      5000,
+      15000
+    ],
+    "firmware_rewrite_or_bit0_reassertion_observed": false,
+    "target_changed_bytes": 0,
+    "software_completion_changed_bytes": 0,
+    "hardware_completion_changed_bytes": 0,
+    "firmware_accepted_draw": true,
+    "GPU_execution_verified": false,
+    "raw21058_21060_from100ms": "all ones",
+    "first_missing_proof": "GPU command fetch/dispatch/execution and job-bound completion",
+    "limit": "Negative result excludes bit0 clear as sufficient in this draw, not every scheduler/power hypothesis."
+  },
+  "new_operand_closure": {
+    "function": "FW1a994",
+    "cached_masks": "6c3c8 low,6c3d0 high",
+    "new_masks": "x21=x0&~cached_low at1a9c8; x20=x1&~cached_high at1a9cc; cached masks OR inputs saved1a9e4",
+    "entry_gate": "If(x21|x20)==0,1a9f4 jumps1ab88 and bypasses210a8/210b0 requests,21058/21060 coverage waits and ACKbit1 wait.",
+    "nonzero_path": "Writes high new mask210b0 at1aad0 and low210a8 at1aadc; waits(new_high&~read21060)==0 and(new_low&~read21058)==0, or main+26c pointee u32state2; then ACK211d0bit1clear or state2.",
+    "known_startup_caller": "163b8..163c4 passes(0,0,1); this reason2 caller must skip the ACKbit1 wait regardless of cached masks.",
+    "inventory": "14 immediate direct call/branch sites:13 zero/zero, one variable-mask tail1a958 from1a8c0. Indirect/computed entry is not excluded.",
+    "variable_owner": "1a8c0 takes owner indexw0 and queue masksx1/x2, updates per-owner/global mask bookkeeping and tail-calls1a994(x1,x2,0); overlap guard can branch1a95c. Current caller/owner remains unknown.",
+    "readback_limit": "All-ones21058/21060 satisfy any64-bit coverage predicate; they do not identify current PC, owner, progress or ACKbit1 meaning."
+  },
+  "omitted_native_contract": {
+    "reasonword": "13f018 protected by mutex18e3b0; own reason2/16 is cleared, and requestbit0 is cleared only when entire remaining reasonword is zero.",
+    "queue_lifecycle": "1a994 also snapshots/reconciles per-queue config/cursors and conditionally replays kicks; host3to2 reproduces none of this lifecycle or mutex ownership.",
+    "bit1": "No authoritative producer/clear or paired transition is bound. Explicit17958/16c04 set/clear bit2, not bit1. Aliases, computed/table writes or hardware semantics remain possible.",
+    "state2_escape": "Changing main+26c state would be another protocol action, not a passive diagnostic or proven render fix.",
+    "PC_final_DATA": "Unavailable: current saved DATA is before start. No held postdraw reasonword or active bit1 wait is proved."
+  },
+  "trace": {
+    "header": {
+      "magic": 1481787213,
+      "version": 1,
+      "entry_bytes": 80,
+      "capacity": 65536,
+      "used": 3454,
+      "status_flags": 0,
+      "doorbells": 6
+    },
+    "authoritative_records_sha256": "669d54e2ec99a7b4729f0467b3ef1194e91f2480d8df65c9a90e816e0606b20e",
+    "type_counts": {
+      "5": 1623,
+      "17": 5,
+      "25": 9,
+      "28": 9,
+      "27": 1804,
+      "18": 4
+    },
+    "trace_records": 1623,
+    "last_trace_sequence": 1629,
+    "startup_reason_records": [
+      {
+        "sequence": 1,
+        "role": 0,
+        "event": "0x46",
+        "function": 0,
+        "args": [
+          0,
+          2,
+          0,
+          0
+        ]
+      },
+      {
+        "sequence": 54,
+        "role": 0,
+        "event": "0x46",
+        "function": 0,
+        "args": [
+          1,
+          8,
+          8,
+          0
+        ]
+      },
+      {
+        "sequence": 55,
+        "role": 0,
+        "event": "0x46",
+        "function": 0,
+        "args": [
+          1,
+          2,
+          10,
+          0
+        ]
+      },
+      {
+        "sequence": 56,
+        "role": 0,
+        "event": "0x46",
+        "function": 0,
+        "args": [
+          1,
+          16,
+          26,
+          0
+        ]
+      },
+      {
+        "sequence": 57,
+        "role": 0,
+        "event": "0x46",
+        "function": 0,
+        "args": [
+          0,
+          16,
+          10,
+          0
+        ]
+      },
+      {
+        "sequence": 58,
+        "role": 0,
+        "event": "0x46",
+        "function": 0,
+        "args": [
+          0,
+          8,
+          2,
+          0
+        ]
+      }
+    ],
+    "startup_role0_function0_mask_request_release_events": [],
+    "journal_used_draw_published": 1644,
+    "postdraw_records": 1810,
+    "postdraw_type_counts": {
+      "17": 2,
+      "25": 3,
+      "28": 3,
+      "27": 1801,
+      "18": 1
+    },
+    "postdraw_trace_records": 0,
+    "limit": "Trace3to0 before control33/draw; six startup tuples repeat1241. Missing later release/mask event cannot bind postdraw owner/reason/caller."
+  },
+  "offline_next": [
+    {
+      "priority": 1,
+      "objective": "Bind variable-mask1a8c0 callers120b8/12144/12350/123f4 and328e4 to actual command/graph operands and per-owner masks; close6c3c8/6c3d0 bookkeeping to determine whether bit1 wait is reachable."
+    },
+    {
+      "priority": 2,
+      "objective": "Close211c8 computed/alias/native init-register-table writes and mandatory consumer to identify bit1 producer plus paired native transition before proposing any bit1 clear."
+    },
+    {
+      "priority": 3,
+      "objective": "Close native resource/GPU-UAT/fetch and job-bound stage decoder; accepted firmware cursors/configurations do not show fetch or completion."
+    }
+  ],
+  "upload_delta": "UploadedABI contains no pause-bit,ACKbit1 or reset lifecycle; it supplies no justified register change.",
+  "range_convention": "Current393216-byte saved firmware TEXT offsets,end exclusive; hashes of machine bytes only.",
+  "firmware_ranges": [
+    {
+      "start": "0x1a994",
+      "end_exclusive": "0x1ab94",
+      "bytes": 512,
+      "sha256": "14814dd16c3ac746b500eab07054ce853b81a48048151a0a0036de54d8847f36",
+      "meaning": "New mask filter, requests, coverage and conditional ACKbit1 wait",
+      "existing_disassembly_matches_current_TEXT": true
+    },
+    {
+      "start": "0x1a8c0",
+      "end_exclusive": "0x1a95c",
+      "bytes": 156,
+      "sha256": "6d9a6dfd8511d288824b036f0afc497d997b52e3abfb805b739540af1333eba4",
+      "meaning": "Variable-mask entry and per-owner bookkeeping",
+      "existing_disassembly_matches_current_TEXT": true
+    },
+    {
+      "start": "0x16340",
+      "end_exclusive": "0x163c8",
+      "bytes": 136,
+      "sha256": "e9461b545ee7cde5911e744e4cf6b2550dc79a5bc55014d9e6f40e64fb0c490a",
+      "meaning": "Reason2 acquire and zero-mask caller",
+      "existing_disassembly_matches_current_TEXT": true
+    },
+    {
+      "start": "0x162bc",
+      "end_exclusive": "0x16340",
+      "bytes": 132,
+      "sha256": "57f948880ed185bd8dc17ed66f0fa75a8ad784def2884e09c8e9edb59caa0fbf",
+      "meaning": "Reason2 mutex-protected release",
+      "existing_disassembly_matches_current_TEXT": true
+    },
+    {
+      "start": "0x1b1bc",
+      "end_exclusive": "0x1b234",
+      "bytes": 120,
+      "sha256": "5bf41da91ce812ecf589a2144f65c07d8579f54bf0315d2e583444037ea93a5f",
+      "meaning": "Reason16 mutex-protected release",
+      "existing_disassembly_matches_current_TEXT": true
+    },
+    {
+      "start": "0x1ac10",
+      "end_exclusive": "0x1b1bc",
+      "bytes": 1452,
+      "sha256": "b207b0627f015a12915fc44dd91a9790d339258fd78b709ff748be01f71f344c",
+      "meaning": "Queue cursor/config bookkeeping and conditional kick replay",
+      "existing_disassembly_matches_current_TEXT": true
+    }
+  ],
+  "direct_1a994_callers": [
+    {
+      "start": "0x158a0",
+      "end_exclusive": "0x158f4",
+      "bytes": 84,
+      "sha256": "587865ba33033fbbcd22d8bf8d3c3228d5a1098f25682a4e0533a0a204a9e052",
+      "meaning": "Immediate caller operand window",
+      "existing_disassembly_matches_current_TEXT": true,
+      "site": "0x158f0",
+      "kind": "bl",
+      "mask_operands": "x0=0,x1=0"
+    },
+    {
+      "start": "0x15a40",
+      "end_exclusive": "0x15a94",
+      "bytes": 84,
+      "sha256": "c84a775327244694578fa75f2d96e5675effbfc46b9cb9617f436ce0b43831c5",
+      "meaning": "Immediate caller operand window",
+      "existing_disassembly_matches_current_TEXT": true,
+      "site": "0x15a90",
+      "kind": "bl",
+      "mask_operands": "x0=0,x1=0"
+    },
+    {
+      "start": "0x16374",
+      "end_exclusive": "0x163c8",
+      "bytes": 84,
+      "sha256": "651ce978815ff85792e82c1b73bbf9d4c148b3e8bf09b165e988d8d43e840237",
+      "meaning": "Immediate caller operand window",
+      "existing_disassembly_matches_current_TEXT": true,
+      "site": "0x163c4",
+      "kind": "bl",
+      "mask_operands": "x0=0,x1=0"
+    },
+    {
+      "start": "0x19b2c",
+      "end_exclusive": "0x19b80",
+      "bytes": 84,
+      "sha256": "b47b95540a92284aef2362e2f9a0f3d6edad3f746e430f37606ba582b71fb7dc",
+      "meaning": "Immediate caller operand window",
+      "existing_disassembly_matches_current_TEXT": true,
+      "site": "0x19b7c",
+      "kind": "bl",
+      "mask_operands": "x0=0,x1=0"
+    },
+    {
+      "start": "0x1a908",
+      "end_exclusive": "0x1a95c",
+      "bytes": 84,
+      "sha256": "f42818432ffe436e7790c49394920a217c2328776b49780a31fcbbde3e01809e",
+      "meaning": "Immediate caller operand window",
+      "existing_disassembly_matches_current_TEXT": true,
+      "site": "0x1a958",
+      "kind": "b",
+      "mask_operands": "x0=caller_x1,x1=caller_x2 from1a8c0"
+    },
+    {
+      "start": "0x1b564",
+      "end_exclusive": "0x1b5b8",
+      "bytes": 84,
+      "sha256": "a7cab79b912236a89b0291cfc9182de7f7d632e52f25ea88d57131b5a38f535e",
+      "meaning": "Immediate caller operand window",
+      "existing_disassembly_matches_current_TEXT": true,
+      "site": "0x1b5b4",
+      "kind": "bl",
+      "mask_operands": "x0=0,x1=0"
+    },
+    {
+      "start": "0x1bb28",
+      "end_exclusive": "0x1bb7c",
+      "bytes": 84,
+      "sha256": "78fcda5eb334acb561be36705a63b25c1f895ca8351978c5693bedafbbedc8e2",
+      "meaning": "Immediate caller operand window",
+      "existing_disassembly_matches_current_TEXT": true,
+      "site": "0x1bb78",
+      "kind": "b",
+      "mask_operands": "x0=0,x1=0"
+    },
+    {
+      "start": "0x1d4e0",
+      "end_exclusive": "0x1d534",
+      "bytes": 84,
+      "sha256": "bcf07795789cdc8401e5fff1922a7094322296eedeeb5dddda945eac3cde55c5",
+      "meaning": "Immediate caller operand window",
+      "existing_disassembly_matches_current_TEXT": true,
+      "site": "0x1d530",
+      "kind": "b",
+      "mask_operands": "x0=0,x1=0"
+    },
+    {
+      "start": "0x1d880",
+      "end_exclusive": "0x1d8d4",
+      "bytes": 84,
+      "sha256": "2bed3e4f4316e7712b05315987e0ce82dabe14a05eeb87934b073441d5a89f11",
+      "meaning": "Immediate caller operand window",
+      "existing_disassembly_matches_current_TEXT": true,
+      "site": "0x1d8d0",
+      "kind": "bl",
+      "mask_operands": "x0=0,x1=0"
+    },
+    {
+      "start": "0x1d9a4",
+      "end_exclusive": "0x1d9f8",
+      "bytes": 84,
+      "sha256": "e1769f9a756dda944f01ce8ce42ac053f17d82629ae8ba073ba298d52dba4bf5",
+      "meaning": "Immediate caller operand window",
+      "existing_disassembly_matches_current_TEXT": true,
+      "site": "0x1d9f4",
+      "kind": "b",
+      "mask_operands": "x0=0,x1=0"
+    },
+    {
+      "start": "0x1e08c",
+      "end_exclusive": "0x1e0e0",
+      "bytes": 84,
+      "sha256": "26851d851639815cc025bac4ca0c43aede730550a91cbcac78a061e02588abbd",
+      "meaning": "Immediate caller operand window",
+      "existing_disassembly_matches_current_TEXT": true,
+      "site": "0x1e0dc",
+      "kind": "bl",
+      "mask_operands": "x0=0,x1=0"
+    },
+    {
+      "start": "0x32acc",
+      "end_exclusive": "0x32b20",
+      "bytes": 84,
+      "sha256": "f0844eada27fe70b8d49417a2545ed14b6596e46fd3979a08098dd0796aca5bb",
+      "meaning": "Immediate caller operand window",
+      "existing_disassembly_matches_current_TEXT": true,
+      "site": "0x32b1c",
+      "kind": "bl",
+      "mask_operands": "x0=0,x1=0"
+    },
+    {
+      "start": "0x352dc",
+      "end_exclusive": "0x35330",
+      "bytes": 84,
+      "sha256": "72b5468dbf949eafc3f4e2c91a86d273d78b581fbd2dc4bf967bbdd2f0d7e41f",
+      "meaning": "Immediate caller operand window",
+      "existing_disassembly_matches_current_TEXT": true,
+      "site": "0x3532c",
+      "kind": "bl",
+      "mask_operands": "x0=0,x1=0"
+    },
+    {
+      "start": "0x35794",
+      "end_exclusive": "0x357e8",
+      "bytes": 84,
+      "sha256": "6a26052728e7d562ba75435564ced25bb6c131676a68c33a51c20df21c5fded7",
+      "meaning": "Immediate caller operand window",
+      "existing_disassembly_matches_current_TEXT": true,
+      "site": "0x357e4",
+      "kind": "bl",
+      "mask_operands": "x0=0,x1=0"
+    }
+  ],
+  "input_pins": [
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-10-gfx-cold-render-1241-native-leads.json",
+      "bytes": 26751,
+      "sha256": "974dbbb84f643dc11be3f2a3b111032734df2749e28761ab567cca8275822e57"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-10-gfx-pause-release-native-formula-review.json",
+      "bytes": 5163,
+      "sha256": "99ddfb264e1ccd9f621a32a0ecd0d8360141aa943167e0849567083b1dbf58a0"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/private-apple/live-text.dis",
+      "bytes": 3783769,
+      "sha256": "d7f6605e8c944ca98b7921d7a9123723335c5bc9c04e5d9462f963f308e3a1f8"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render/candidate-v2/asc-graph-init/boot-1241f6b5-f2c5-4678-9078-dce0ed367d60/text.bin",
+      "bytes": 393216,
+      "sha256": "1d72676691a73eb425e7c6ca0d064be5d31416b0525dae1b4928b282adec9591"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/candidate/asc-graph-init/boot-eff8eafa-d845-429e-b98c-9a5f053bcc46/text.bin",
+      "bytes": 393216,
+      "sha256": "c7ef055672f826231812a42c877f28ed6b47d4174e5ac8d3eb54b0c26a722531"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/candidate/asc-graph-init/boot-eff8eafa-d845-429e-b98c-9a5f053bcc46/data-before.bin",
+      "bytes": 1277952,
+      "sha256": "3a5b8cc02d184f78c42df9bd0cb33c6645ee49b5e3e871c0d14b4535e87efd17"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/candidate/asc-graph-init/boot-eff8eafa-d845-429e-b98c-9a5f053bcc46/attempt.json",
+      "bytes": 49891,
+      "sha256": "11254bb0366411f67237204c680c0d4d7c49c0d45534fcbd289f9fb9f6ea210b"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/candidate/asc-graph-init/boot-eff8eafa-d845-429e-b98c-9a5f053bcc46/analysis/result.json",
+      "bytes": 45773,
+      "sha256": "d0172f2ce1c439e91dd0d4ded5977472d513eea24f864bc16448b6f62ebf2ea0"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/candidate/asc-graph-init/boot-eff8eafa-d845-429e-b98c-9a5f053bcc46/operation-delta.log",
+      "bytes": 120577,
+      "sha256": "65cef2a45923f197c0c92361610a9ca8f83a14ab61d089cf0edff50cbb9745c2"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/candidate/asc-graph-init/boot-eff8eafa-d845-429e-b98c-9a5f053bcc46/notifications-after.json",
+      "bytes": 1032922,
+      "sha256": "c295794ae6b006e73aaac80023572541b4f38cf2d5339726315e3f24c12fa58e"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/candidate/asc-graph-init/boot-eff8eafa-d845-429e-b98c-9a5f053bcc46/notifications-after.bin",
+      "bytes": 5242944,
+      "sha256": "4863bd04f7c5dbc35cbaabd9c7a73f889cb3cfeb40bc9a26a50655c9856ec20b"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/candidate/asc-graph-init/boot-eff8eafa-d845-429e-b98c-9a5f053bcc46/target-after.bin",
+      "bytes": 16384,
+      "sha256": "add4fa3e6dbfb8723b21cfe7debadbed5d5f2ca1ab88c666470daed16afbe21a"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/candidate/asc-graph-init/boot-eff8eafa-d845-429e-b98c-9a5f053bcc46/completion-after.bin",
+      "bytes": 16384,
+      "sha256": "4fe7b59af6de3b665b67788cc2f99892ab827efae3a467342b3bb4e3bc8e5bfe"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/candidate/asc-graph-init/boot-eff8eafa-d845-429e-b98c-9a5f053bcc46/hardware-completions-after.bin",
+      "bytes": 65536,
+      "sha256": "de2f256064a0af797747c2b97505dc0b9f3df0de4f489eac731c23ae9ca9cc31"
+    },
+    {
+      "path": "/home/alice/Downloads/M4-PRO-GPU-HARDWARE-ABI.md",
+      "bytes": 9527,
+      "sha256": "2818ced00eea77f662be9339ee6dae717bd1330e2a46bc927e53190edf6b98db"
+    }
+  ]
+}
