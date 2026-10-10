@@ -1,0 +1,160 @@
+{
+  "schema": "m4rch.gravity-native-t6040-components.production-integration.v3",
+  "date": "2026-10-11",
+  "actual_producers": [
+    "Platform::hwdata",
+    "FirmwareSpace native page plan",
+    "RootPointers::encode/publication",
+    "Platform::new_t6040/Hardware::from_adt"
+  ],
+  "validation": {
+    "pure_actual_rust_qualification_complete": true,
+    "whole_component_bytes_compared": 9600,
+    "cluster_voltage_steps": 22,
+    "native_descriptors": 22,
+    "unique_mapped_pages": 126,
+    "writable_pages": 38,
+    "actual_root_serializer_bytes_compared": 200,
+    "root_test_pointer_bindings": "caller-supplied independent values; production pointer owners unqualified",
+    "full_module_compiled_and_linked": true,
+    "make_returncode": 0,
+    "immutable_input_changes": [],
+    "immutable_source_files": 67
+  },
+  "linked_module": {
+    "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v3/build-owner/asahi_m4.ko",
+    "bytes": 401568,
+    "sha256": "dd77dea3c5fdac7cf2c344b40b654ff32cc50fea50e52a1c56de7d8cd970d30c"
+  },
+  "bindings": {
+    "native_geometry_slots": [
+      3,
+      22,
+      39,
+      41
+    ],
+    "canonical_absent_slot27": {
+      "physical": 0,
+      "virtual": 0,
+      "size": 0,
+      "stride": 0,
+      "relative": 0,
+      "flags": 2,
+      "mapping_pages": 0
+    },
+    "native_descriptor_flag_slots": [
+      3,
+      22,
+      27,
+      39,
+      41
+    ],
+    "native_descriptor_flag_operation": "CPU flags & 2",
+    "native_root_interface": "0x0c8aa322039604c0",
+    "native_gpc_policy": "apple,sgx-no-gpc absent means enabled; hardware+0xea0",
+    "mcc_active_mask": 15,
+    "mcc_segments": 4,
+    "mcc_per_segment_bytes": 98304,
+    "counter_alias": "first page aliases existing writable slot40; second page emitted once"
+  },
+  "pins": [
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/g16_t6040_v3.rs",
+      "bytes": 12305,
+      "sha256": "c41dc8096223bf24351168c8a05ae8a1249adeb6fd5d2def3be07975e19186d7"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/stage_v3.py",
+      "bytes": 4539,
+      "sha256": "5eb79dc95f81abf34b64bb8d7528b45e5e4adbaeafced83f16a2481cb3b52fc9"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/qualify_v3.py",
+      "bytes": 16862,
+      "sha256": "707cd0eba3a9ad294f879418187866aaba835c5da948c31c65c952795eabe865"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/build_module_v3.py",
+      "bytes": 5048,
+      "sha256": "5321b9efedf6babd2f1632a002836bbc14bea3aa163c59206887463bc94c74fc"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/prepare_custom_descriptor_proposal.py",
+      "bytes": 6522,
+      "sha256": "36b4614b98900f3ce85c602dc1b7ea0b2659692d696c7fa851ba295a768ff432"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v3/stage-receipt.json",
+      "bytes": 19244,
+      "sha256": "4bf34016727ccf82cbc04364f76a8acc88e15fb184c9d86e9194896eda38c649"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v3/qualification-v1/qualification.json",
+      "bytes": 7261,
+      "sha256": "04db22361e0e92ccbdb18503484d07ef18c094f1961e2ec7da30add4ed4a075e"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v3/module-make-result.json",
+      "bytes": 593,
+      "sha256": "59cad6128011b1d08f35cb74b3e943024664211d56198cf368a968e6019aa397"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v3/module-build-closure.json",
+      "bytes": 777,
+      "sha256": "4e697667a8160a33a2528481f5c8dea072f562e506ccc18547f69a8a05705a44"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v3/offline-handoff.json",
+      "bytes": 5308,
+      "sha256": "90aa45a3fdb62faca5dad1ecffc2c079873aaa056715d00b8cd71b35738bdb8d"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v3/custom-v19-descriptor-proposal.json",
+      "bytes": 8320,
+      "sha256": "4fffc9d3228f21e1e0289f6d6bf524f6ff4f9e4f740357ffd6da8d2692f2f1b8"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v3-source-evidence/native-counter.json",
+      "bytes": 1699,
+      "sha256": "a76878779cdfd0d9231640199f99257bf96f6a75bb5b892bcfa514cf4f7108f6"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v3-source-evidence/native-slot27-absent.json",
+      "bytes": 5353,
+      "sha256": "59b1992b2e77859e226d6994d17aa3362849bc0c1827cbe3e10f9e4d8cc06cf4"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v3-source-evidence/native-descriptor-flags.json",
+      "bytes": 3761,
+      "sha256": "3d47fdd8c69f433541d6d7b981fbd388c48a23085b065baeded7666e59c122df"
+    }
+  ],
+  "normal_startup_enabled": false,
+  "complete_native_boot_bundle": false,
+  "module_loaded": false,
+  "kernel_rebuilt": false,
+  "hardware_actions": [],
+  "limitations": [
+    "Full native bundle/power/Region C producers and hardware-data remainder remain gated.",
+    "Production channel/root pointer owners and work cursors remain unqualified.",
+    "Descriptor flags newly bound to native source are separate from still-experimental Linux PTE permissions.",
+    "Pure serializer tests and module linkage do not establish GPU submission, execution or rendered pixels."
+  ],
+  "custom_execution_proposal": {
+    "frozen_source": "out/gfx-native-fender-runtime-cycle/prepared-owner-v1",
+    "hardware_arena_offset": "0x8000",
+    "slots": [
+      3,
+      22,
+      27,
+      39,
+      41
+    ],
+    "changed_byte_count": 19,
+    "mappings_changed": false,
+    "backing_changed": false,
+    "candidate_mutated": false,
+    "projected_arena_written": false,
+    "proposed_arena_sha256": "d66603449c3a07b79388c96cb3dc192e4d37ad85e879742b0ac3e7aa2be774e8"
+  }
+}
