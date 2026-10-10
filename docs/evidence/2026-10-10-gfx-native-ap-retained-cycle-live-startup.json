@@ -1,0 +1,1036 @@
+{
+  "schema": "m4rch.gfx-native-ap-retained-cycle-independent-startup-review.v1",
+  "boot_id": "911ae710-78af-4702-8dfc-f4145decbd38",
+  "reviewer_hardware_actions": [],
+  "reviewer_live_reads": [],
+  "scope": "Completed cold startup and first typed baseline only; separate later terminal evidence is excluded",
+  "cold_capture": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38",
+  "baseline_capture": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/resident-operations/20261010T101118.963255Z-gfx-snapshot-d66d098d",
+  "owner_sha256": "0749398ea268f3c4048674483d6d178c25e1c73bcd05569212d462792c2683a5",
+  "candidate_receipt_sha256": "a8a24d16dc8ea0f6836b7a03697c55a4a60954de01bc663c756a49574bb4efb9",
+  "candidate_preparation_sha256": "89cb8e11c4ffeaa3865410d5a8550659bf340f986d6b626a354b1aeb83d67b9b",
+  "checked_artifacts": 10,
+  "checked_owner_sources": 20,
+  "checked_preparation_inputs": 18,
+  "exact_family": "gfx_native_ap_retained_cycle_scope",
+  "exact_family_version": 11,
+  "root_saved_loaded_identity": {
+    "boot_id": "911ae710-78af-4702-8dfc-f4145decbd38",
+    "owner_sha256": "0749398ea268f3c4048674483d6d178c25e1c73bcd05569212d462792c2683a5",
+    "loaded_gnu_note_hex": "040000001400000003000000474e550029745bb0404ca8ee7d430d63de988256902b6a20",
+    "file_gnu_note_hex": "040000001400000003000000474e550029745bb0404ca8ee7d430d63de988256902b6a20",
+    "loaded_note_matches_file": true,
+    "refcount": 1,
+    "kernel_notes_sha256": "85c56f7a3d7409747dd67fe1dcbf8839562aafab16a9124f9304689a14de437d",
+    "grub_sha256": "0ec2ace33d48d701930d03f869b2a67127421fdeebab55a0968e132aa65193cb",
+    "uptime": "312.96 2922.44",
+    "gpu_control_performed": false,
+    "identity_parser": "existing pure module_build_note"
+  },
+  "loaded_ELF_note_pure_parser_verified": true,
+  "identity_clock_qualification": "Saved /proc/uptime312.96 and Python time.monotonic/dmesg270.18 are different clock domains. Numeric cross-clock ordering is not asserted; root saved identity is a separate non-atomic read.",
+  "qualified_startup": {
+    "qualified": true,
+    "initial_recovery_failed": true,
+    "initial_completed_cycles": 0,
+    "startup_work_submitted": false,
+    "session_record": "[  244.509240] m4rch recovery-session: diagnostic=1 sealed=1 control_ready=0 work_submitted=0 allocations_retained=1; only sample/gfx-snapshot and one terminal gfx-powergate allowed",
+    "ready_record": "[  244.509241] m4rch gfx-native-ap-retained-cycle-session: ready=1 initial_recovery_failed=1 initial_completed_cycles=0 startup_work_submitted=0",
+    "commands_admitted": [
+      "sample",
+      "gfx-snapshot",
+      "gfx-powergate",
+      "gfx-native-ap-retained-cycle"
+    ],
+    "cold_ap_power": {
+      "request": {
+        "phase": "request",
+        "request_attempted": 1,
+        "request_write_attempted": 0,
+        "request_message": 49539595901075488,
+        "request_metadata": 0,
+        "reply_observed": 0,
+        "reply_message": 0,
+        "reply_metadata": 0,
+        "ap_remote_state": 0,
+        "ap_remote_known": 0
+      },
+      "reply": {
+        "phase": "reply",
+        "request_attempted": 1,
+        "request_write_attempted": 1,
+        "request_message": 49539595901075488,
+        "request_metadata": 0,
+        "reply_observed": 1,
+        "reply_message": 49539595901075488,
+        "reply_metadata": 4598157627359232,
+        "ap_remote_state": 32,
+        "ap_remote_known": 1
+      },
+      "wire_state": 32,
+      "retained_skip_is_fresh_reply": false
+    }
+  },
+  "startup_parser_pure_replay_matches_saved_result": true,
+  "cold_log_delta_exact_overlap_qualified": true,
+  "cold_log_delta_sha256": "30df9b4ddd586b450c9a5b18395a3f3ca52bf89a65255b92cd5d2a08c6c01070",
+  "cold_owned_AP_rows": [
+    {
+      "monotonic": 234.504836,
+      "phase": "request",
+      "request_attempted": 1,
+      "request_write_attempted": 0,
+      "request_message": 49539595901075488,
+      "request_metadata": 0,
+      "reply_observed": 0,
+      "reply_message": 0,
+      "reply_metadata": 0,
+      "ap_remote_state": 0,
+      "ap_remote_known": 0
+    },
+    {
+      "monotonic": 234.506861,
+      "phase": "reply",
+      "request_attempted": 1,
+      "request_write_attempted": 1,
+      "request_message": 49539595901075488,
+      "request_metadata": 0,
+      "reply_observed": 1,
+      "reply_message": 49539595901075488,
+      "reply_metadata": 4598157627359232,
+      "ap_remote_state": 32,
+      "ap_remote_known": 1
+    }
+  ],
+  "cold_root_publication_monotonic": 234.50831,
+  "cold_ready_monotonic": 244.509241,
+  "cold_exact_owned_reply_precedes_root_and_ready": true,
+  "cold_source_gate": "Pinned actual power_ack checks one request intent, fresh RXempty/TXavailable before and after intent logging, exact full B20/EP0/noninvalid reply before deadline, and fresh postreply RXempty. Root publication additionally requires known getter after reply log.",
+  "native_on": {
+    "monotonic": 234.494732,
+    "enabled": 1,
+    "result": 0,
+    "request_attempted": 1,
+    "request_acked": 0,
+    "ack_samples": 0,
+    "votes_attempted": 3,
+    "votes_verified": 3,
+    "request_before": 0,
+    "request_written": 8192,
+    "ack_payload": 0,
+    "ack_status": 0,
+    "status_wait_events": 1,
+    "ack_wait_events": 0,
+    "ack_bypassed": 1,
+    "status_payload": 0,
+    "status_raw": 0
+  },
+  "post_active_owner": {
+    "monotonic": 234.494733,
+    "phase": "post-active-on",
+    "result": 0,
+    "startup_retained": 1,
+    "module_pinned": 1,
+    "pmp_region": 1,
+    "pmc_region": 1,
+    "pmp_mapped": 1,
+    "pmc_mapped": 1,
+    "on_attempted": 1,
+    "on_complete": 1,
+    "off_attempted": 0,
+    "off_complete": 0,
+    "held": 1,
+    "started": 0,
+    "retirement_verified": 0
+  },
+  "recovery_result": {
+    "monotonic": 244.509239,
+    "completed": 0,
+    "requested": 2,
+    "allocations_retained": 1,
+    "work_submitted": 0
+  },
+  "final_recovery_state": {
+    "monotonic": 244.50916,
+    "cycle": 1,
+    "phase": "final",
+    "counter": 1,
+    "state": 2,
+    "host_stop": 1,
+    "request_state": 0,
+    "request_flag": 1,
+    "control": "32/32/32"
+  },
+  "baseline_operation_success": true,
+  "baseline_complete": true,
+  "baseline_capture_errors": [],
+  "baseline_word": {
+    "monotonic": 270.181527,
+    "phase": "diagnostic",
+    "index": 0,
+    "value": 520094719,
+    "actual": 15,
+    "target": 15,
+    "auto": 1,
+    "reset": 0,
+    "disable": 0,
+    "ps_reset": 0,
+    "busy": 0
+  },
+  "baseline_asc": {
+    "monotonic": 270.181536,
+    "phase": "gfx-snapshot",
+    "control40": 984065,
+    "control44": 16,
+    "status48": 78
+  },
+  "baseline_pm": {
+    "monotonic": 270.181538,
+    "phase": "gfx-snapshot",
+    "available": 1,
+    "usage_count": 1,
+    "runtime_status": 0,
+    "runtime_error": 0,
+    "enabled": 1,
+    "active": 1,
+    "suspended": 0,
+    "held": 1,
+    "pm_attempted": 0
+  },
+  "baseline_dram": {
+    "monotonic": 270.181546,
+    "phase": "gfx-snapshot",
+    "power652c": 4281,
+    "records": 50410,
+    "status": 0,
+    "doorbells": 0,
+    "allocations_retained": 174,
+    "dma_retirement_verified": 0
+  },
+  "baseline_retained_AP_mirror": {
+    "monotonic": 270.181555,
+    "phase": "diagnostic-current",
+    "boot_running_observed": 0,
+    "boot_running_message": 0,
+    "boot_running_metadata": 0,
+    "cold_ap_request_attempted": 1,
+    "cold_ap_reply_observed": 1,
+    "cold_ap_reply_message": 49539595901075488,
+    "cold_ap_reply_metadata": 4598157627359232,
+    "ap_remote_state": 32,
+    "ap_remote_known": 1,
+    "host_on_skip_attempted": 0,
+    "host_on_skipped": 0
+  },
+  "initial_work_submitted": false,
+  "baseline_retained_lifetime_flag_is_usable_session": false,
+  "baseline_inherited_failed_recovery_flag_remains": true,
+  "raw_observations": [
+    {
+      "scope": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38",
+      "owned_pages": 174,
+      "render_pages": 56,
+      "all_render_pages_byte_identical": true,
+      "job_pool_byte_identical": true,
+      "job_pool_sha256": "54afcd0c9801b0eb0fdad12a0b57419e260a251ecf9e91dfa78c3354ca7bf73c",
+      "target_all_sentinel_a5": true,
+      "completion_all_zero": true,
+      "completion_backing_page": 47,
+      "hardware_completion_pages_byte_identical": true,
+      "work_cursor_triplets": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "control_cursor_triplet": [
+        32,
+        32,
+        32
+      ],
+      "mapping_head_tail": [
+        0,
+        35
+      ],
+      "receive_journal": {
+        "header": {
+          "magic": 1481787213,
+          "version": 1,
+          "entry_bytes": 80,
+          "capacity": 65536,
+          "used": 50410,
+          "status_flags": 0,
+          "doorbells": 0
+        },
+        "raw_sha256": "29ccc8c596f3fbf3b0db2fbc695e887ac4e557c2a0c274e1be32cead91726f96",
+        "authoritative_records_sha256": "d1a23a72018098d59533c11e6ca71eff2898f0c871d43d2dd71cdab48b50132b",
+        "decoded_json_matches": true,
+        "ring_type_counts": [
+          {
+            "ring": "rx14_stats_b",
+            "type": 17,
+            "count": 1200
+          },
+          {
+            "ring": "rx14_stats_b",
+            "type": 18,
+            "count": 1200
+          },
+          {
+            "ring": "rx14_stats_b",
+            "type": 25,
+            "count": 2400
+          },
+          {
+            "ring": "rx14_stats_b",
+            "type": 27,
+            "count": 1199
+          },
+          {
+            "ring": "rx14_stats_b",
+            "type": 28,
+            "count": 2400
+          },
+          {
+            "ring": "rx14_trace_a",
+            "type": 5,
+            "count": 42011
+          }
+        ]
+      }
+    },
+    {
+      "scope": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/resident-operations/20261010T101118.963255Z-gfx-snapshot-d66d098d",
+      "owned_pages": 174,
+      "render_pages": 56,
+      "all_render_pages_byte_identical": true,
+      "job_pool_byte_identical": true,
+      "job_pool_sha256": "54afcd0c9801b0eb0fdad12a0b57419e260a251ecf9e91dfa78c3354ca7bf73c",
+      "target_all_sentinel_a5": true,
+      "completion_all_zero": true,
+      "completion_backing_page": 47,
+      "hardware_completion_pages_byte_identical": true,
+      "work_cursor_triplets": [
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ],
+      "control_cursor_triplet": [
+        32,
+        32,
+        32
+      ],
+      "mapping_head_tail": [
+        0,
+        35
+      ],
+      "receive_journal": {
+        "header": {
+          "magic": 1481787213,
+          "version": 1,
+          "entry_bytes": 80,
+          "capacity": 65536,
+          "used": 50410,
+          "status_flags": 0,
+          "doorbells": 0
+        },
+        "raw_sha256": "29ccc8c596f3fbf3b0db2fbc695e887ac4e557c2a0c274e1be32cead91726f96",
+        "authoritative_records_sha256": "d1a23a72018098d59533c11e6ca71eff2898f0c871d43d2dd71cdab48b50132b",
+        "decoded_json_matches": true,
+        "ring_type_counts": [
+          {
+            "ring": "rx14_stats_b",
+            "type": 17,
+            "count": 1200
+          },
+          {
+            "ring": "rx14_stats_b",
+            "type": 18,
+            "count": 1200
+          },
+          {
+            "ring": "rx14_stats_b",
+            "type": 25,
+            "count": 2400
+          },
+          {
+            "ring": "rx14_stats_b",
+            "type": 27,
+            "count": 1199
+          },
+          {
+            "ring": "rx14_stats_b",
+            "type": 28,
+            "count": 2400
+          },
+          {
+            "ring": "rx14_trace_a",
+            "type": 5,
+            "count": 42011
+          }
+        ]
+      }
+    }
+  ],
+  "input_pin_count": 106,
+  "inputs": [
+    {
+      "path": "docs/evidence/2026-10-10-gfx-native-ap-retained-cycle-final-candidate-review.json",
+      "bytes": 87455,
+      "sha256": "0c70e1026755d366cde3fb7e16dbd05c121194326ec2294e76723e53650e917c"
+    },
+    {
+      "path": "docs/evidence/2026-10-10-gfx-native-running-cycle-crashlog-diagnosis.json",
+      "bytes": 21067,
+      "sha256": "b8b218602d959f21b6f945def61117d65019895814d35761a0d28bf796efb35d"
+    },
+    {
+      "path": "docs/evidence/2026-10-10-gfx-native-running-cycle-retained-ap-notification-native-boundary.json",
+      "bytes": 15061,
+      "sha256": "7cbe46bf9f7d72806dec5835aba0ab21693c61cf3c0040901f1f7278c990f845"
+    },
+    {
+      "path": "experiments/t6040-gpu/decode-receive-journal.py",
+      "bytes": 4244,
+      "sha256": "b8da018bbe0eb73bdff485bb9f5e6f7048947371505c318f3a45db4a7c59f7dd"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-coordinate-execution/gfx_execution_contract.py",
+      "bytes": 2263,
+      "sha256": "5e2dc2ebd7bc244bd0b6ef5d8eb53549c74b3105379ae6e755295dce0f8e97d7"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-coordinate-native-status/gfx_native_status_contract.py",
+      "bytes": 6172,
+      "sha256": "a8d70c3bf2c09525a6742015a282cc59f0c10c27c524e3d295d294e781cae912"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-ap-retained-cycle/README.md",
+      "bytes": 3271,
+      "sha256": "8471cc8f8f538108be0bd8561fc210d8e79d0653de5c9a9e35923c2bc7da8aac"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-ap-retained-cycle/READY.md",
+      "bytes": 2710,
+      "sha256": "94d9bee782feff63b58e9fac003092d3356a6902b742c7e86f95fd6c79e66d3a"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-ap-retained-cycle/WRAPPER-QUALIFICATION.md",
+      "bytes": 1085,
+      "sha256": "5b36bdc7d684ee62308edc5f34754867b01be1cf995558d0660d4240c90236fb"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-ap-retained-cycle/ap_retained_cycle_wrapper.py",
+      "bytes": 1024,
+      "sha256": "9ebb07d530611c1f815a557ade249426b97b0ba5b8a8fb9caa730663b331c8c9"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-ap-retained-cycle/finalize-powergate.py",
+      "bytes": 16624,
+      "sha256": "0c9e7df39fc5040af582e5a84e872198103aaf61c2f07a93f11168fd507de0c9"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-ap-retained-cycle/gfx-native-ap-retained-cycle.h",
+      "bytes": 35716,
+      "sha256": "7bf2d260bdf38f8766b04a8e6811ca0354e1ead22d3452be5e38324cd5dff3f2"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-ap-retained-cycle/gfx_native_ap_retained_cycle_contract.py",
+      "bytes": 6135,
+      "sha256": "058706e562468d97698c5c64dcb89aa9cb88bfe5b2d2d9fd7d9a629de7b45f51"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-ap-retained-cycle/preflight-fresh.py",
+      "bytes": 796,
+      "sha256": "2fb0859dd5104eb965dc084d38289ab098d7f630aeea41910cc5fffcef99e88e"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-ap-retained-cycle/prepare-native-ap-retained-cycle-owner.py",
+      "bytes": 10377,
+      "sha256": "f60d99a912ebdfdb447dcd3a0701c2905537729ab59d21d5e4adfb06214bebc2"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-ap-retained-cycle/run-powergate.py",
+      "bytes": 8417,
+      "sha256": "e5f94dcabf1d340c73051efdeb1ae84b270f03cc451b84b3282cfc2de054d415"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-ap-retained-cycle/run-root-powergate.py",
+      "bytes": 626,
+      "sha256": "e17f91fb809ae7d6bb699a803c94c67ff428e9313f203a6863d1efe15f2da045"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-ap-retained-cycle/test-native-ap-retained-cycle-owner.py",
+      "bytes": 23191,
+      "sha256": "30a202db12b322b058f284e165046c0c8ff93ac569e6bf0f922944b170c672e5"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-ap-retained-cycle/test-native-ap-retained-runners.py",
+      "bytes": 19966,
+      "sha256": "cbdfcc12e199acb986222e176fe03658690c60a7fb8df0aa29cbb208a3444e6f"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-coordinate-trial/gfx_coordinate_contract.py",
+      "bytes": 7735,
+      "sha256": "e9bce36d3725fc0b041198e9e0b1ad373a03577f989829e2f6d24fc4f5d04b03"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-idle-cycle/gfx_native_idle_cycle_contract.py",
+      "bytes": 3497,
+      "sha256": "71503ee4dd3350db67eebda25e7d4afdba90151e7e7daffabfbd803a6b749920"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-idle-cycle/idle_cycle_wrapper.py",
+      "bytes": 1019,
+      "sha256": "2a4f91f8bd3eecf90406d89a7a65fb57b69f3793b4768667e6beb1c29f7f993b"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-powergate/gfx_native_powergate_contract.py",
+      "bytes": 5727,
+      "sha256": "4f69ad092660f88207601a5f6ca7992ef33ea15ed89d2c4b4f245cbf82b49e74"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-powergate-drain/frozen_wrapper.py",
+      "bytes": 832,
+      "sha256": "18f1403842be36251f55c0b40f4c7ebfae4eda76d7c3e800caa1ba511c228860"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-powergate-drain/gfx_native_powergate_drain_contract.py",
+      "bytes": 3135,
+      "sha256": "884956c2d75e6001b85453a440e28c5cbfabae10cba1b57089facd7d971c75ca"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-retained-cycle/gfx_native_retained_cycle_contract.py",
+      "bytes": 3894,
+      "sha256": "55db8b571c94eadc4789a658cb3af5512befc359403eb989c25e489989343361"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-retained-cycle/native_retained_wrapper.py",
+      "bytes": 1054,
+      "sha256": "f3af59317738bc96d68b00953c173d454da73951937c961966d756f42d5363fb"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-running-cycle/gfx_native_running_cycle_contract.py",
+      "bytes": 3886,
+      "sha256": "7398c46b2a1cfec55f62240456982063203576ccb9ec158c118e8dd9a7c50282"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-running-cycle/running_cycle_wrapper.py",
+      "bytes": 1021,
+      "sha256": "d719e018f78b5bd22248c9b3b132a13f33826b17d22d78ced398406fc4b78396"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-poweroff-trial/gfx_poweroff_contract.py",
+      "bytes": 2475,
+      "sha256": "d1be1e696f18cbd43184f7bf3a0da8e32efbf750e1e96892f87a473833d7e69e"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-retained-power-cycle/gfx_retained_power_cycle_contract.py",
+      "bytes": 9798,
+      "sha256": "68ee7b4b986903a9c720c9912f165a5e402f63aa3b77eb2427d556d8a2957fe8"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-retained-power-cycle/retained_wrapper.py",
+      "bytes": 1689,
+      "sha256": "6933e0ee9385fcaf3179a16eddc9b7ada5979d9ed7dcc926d7e9a4a521b90da0"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx_reset_contract.py",
+      "bytes": 9170,
+      "sha256": "55e6ff0e87c5ed1488d9a4c299f8b924cec066f20011f0317c14ef3d78d25eeb"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/adt-current/m4rch_gpu_adt.ko",
+      "bytes": 8784,
+      "sha256": "def441398eb34e1c4e23e5ccfa1676ae8e9980dd7d1611f8d34e4b53a404f9de"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/arena-l2-sample/gpu-data-sample.ko",
+      "bytes": 7896,
+      "sha256": "1c7f20511d02006fdea087775733856da64dc867ed6a5d5b784685a3bcb3765a"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-arena-preflight/asc-arena-preflight.ko",
+      "bytes": 26408,
+      "sha256": "f03278368ac5a6487c7f8f043e94c72d4697b28e8965037443aef5e21f2ff220"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/Makefile",
+      "bytes": 374,
+      "sha256": "82afb20c46a935fca42978504f2b3c8cf790ea8c2cefeff421f6320685ec86a6"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/asc-graph-init.c",
+      "bytes": 25206,
+      "sha256": "bc290b6aea00d43592ee1f98ba86e8c41240df4b714cbc1b2d2d32794adf32d1"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/asc-graph-init.ko",
+      "bytes": 8025456,
+      "sha256": "0749398ea268f3c4048674483d6d178c25e1c73bcd05569212d462792c2683a5"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/backing.bin",
+      "bytes": 917504,
+      "sha256": "35112ef3c261673bda227a3867a0d2b9dd58ac89f35f7bba9c8c05f1dee118d3"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/attempt.json",
+      "bytes": 46896,
+      "sha256": "185be70d696311120ceeeff3b93264d0253ee99b2946d39756e0b3d46e217e83"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/boot.adt",
+      "bytes": 606208,
+      "sha256": "a37d33674a15547d3bb62dfc5e0eb6b1b9a5ee018a10f43b719866fce2749880"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/data-before.bin",
+      "bytes": 1277952,
+      "sha256": "3a5b8cc02d184f78c42df9bd0cb33c6645ee49b5e3e871c0d14b4535e87efd17"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/dmesg-after.log",
+      "bytes": 131764,
+      "sha256": "f241900a46ccac3d1f06e008dbd08a7eb6e99362177d56b61000ffd3e3585c84"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/dmesg-before.log",
+      "bytes": 63813,
+      "sha256": "a2c3cdb0db2bf1b706b675359588df46f463bf8c55c1dbd95a365556379e6b19"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/interrupts-after.txt",
+      "bytes": 6470,
+      "sha256": "6b883c462f13d80a4e34f4d183320a807f6d178f3b39e5f5a038cf4bf329c6e0"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/interrupts-before.txt",
+      "bytes": 6470,
+      "sha256": "1690efeb49e70c45f0ed2da4210bec0e06c44ee2c0731924c1d04a4cfeb7c70c"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/notifications-after.bin",
+      "bytes": 5242944,
+      "sha256": "29ccc8c596f3fbf3b0db2fbc695e887ac4e557c2a0c274e1be32cead91726f96"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/notifications-after.json",
+      "bytes": 15108304,
+      "sha256": "36e5aa1a24bbf523675617fb058214d613ec9d227a0823349ee59679c7a2e573"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/objects-after.bin",
+      "bytes": 1130496,
+      "sha256": "5127fbf21852228b01262a7c0d1ee21cf881f6767c71450b6be71ac47bab4757"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/objects-before.bin",
+      "bytes": 1130496,
+      "sha256": "287f2c53bc6ef7ed226c4a2995b9d9904e7623acae9713af105be6b04fc690a9"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/owned-after.bin",
+      "bytes": 2850816,
+      "sha256": "76ed4e314bef58b79e3f63cc60866ff07eb50d7d95bb402defe96a9fb50bab8d"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/pagetables.bin",
+      "bytes": 262144,
+      "sha256": "8a39d2abd3999ab73c34db2476849cddf303ce389b35826850f9a700589b4a90"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/resident-operations/20261010T101118.963255Z-gfx-snapshot-d66d098d/attempt.json",
+      "bytes": 35148,
+      "sha256": "08229bb36896f460d4abf0069ae8e899ed9041faecf3a733d80341a205fbb8f0"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/resident-operations/20261010T101118.963255Z-gfx-snapshot-d66d098d/dmesg-after.log",
+      "bytes": 131682,
+      "sha256": "e54dc514e7abc9246e0d37ead496dc3d12f2e8bb29cfa308723336e1a8ffc11a"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/resident-operations/20261010T101118.963255Z-gfx-snapshot-d66d098d/dmesg-before.log",
+      "bytes": 131764,
+      "sha256": "f241900a46ccac3d1f06e008dbd08a7eb6e99362177d56b61000ffd3e3585c84"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/resident-operations/20261010T101118.963255Z-gfx-snapshot-d66d098d/notifications-after.bin",
+      "bytes": 5242944,
+      "sha256": "29ccc8c596f3fbf3b0db2fbc695e887ac4e557c2a0c274e1be32cead91726f96"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/resident-operations/20261010T101118.963255Z-gfx-snapshot-d66d098d/notifications-after.json",
+      "bytes": 15108304,
+      "sha256": "36e5aa1a24bbf523675617fb058214d613ec9d227a0823349ee59679c7a2e573"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/resident-operations/20261010T101118.963255Z-gfx-snapshot-d66d098d/objects-after.bin",
+      "bytes": 1130496,
+      "sha256": "603a8861865081045e691098cc8d04614bf1cbebe66784265906182f4dc38ce7"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/resident-operations/20261010T101118.963255Z-gfx-snapshot-d66d098d/objects-before.bin",
+      "bytes": 1130496,
+      "sha256": "287f2c53bc6ef7ed226c4a2995b9d9904e7623acae9713af105be6b04fc690a9"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/resident-operations/20261010T101118.963255Z-gfx-snapshot-d66d098d/owned-after.bin",
+      "bytes": 2850816,
+      "sha256": "381e5c59a5cc446c891c6e651d85b5a2a3f399c3d58a254915aaaa5d34ddef55"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/resident-operations/20261010T101118.963255Z-gfx-snapshot-d66d098d/text.bin",
+      "bytes": 393216,
+      "sha256": "211b9912bf071baa208868fc1bfc17299a8793a13503c9b560f4dbe0a231f75f"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/text.bin",
+      "bytes": 393216,
+      "sha256": "211b9912bf071baa208868fc1bfc17299a8793a13503c9b560f4dbe0a231f75f"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/validation.json",
+      "bytes": 35055,
+      "sha256": "74a4c70bf05b712b4cf1fdadf891f8621379706b37d1a26bb0c9b58f153a4d92"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-contract.h",
+      "bytes": 72,
+      "sha256": "5194505b49f3b40acdc80f29bf1e8c5c5f11374f483ed6a22df2c22ea904e082"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/command-pool-map.h",
+      "bytes": 8357,
+      "sha256": "1e4696787075de13a56f4946018221803a5a01a3c5a653bbbdbd48f319e74b6b"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/gfx-coordinate-core.h",
+      "bytes": 8066,
+      "sha256": "b7a7376ab2a7e1b054e0338ce37efe035b85acaa6ba5072ed7231b6dcb245a95"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/gfx-coordinate-owner.h",
+      "bytes": 10259,
+      "sha256": "9798b26320e2b0f9b270da9b598f21e909cf037e58070154a6818ac6156601b4"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/gfx-native-ap-retained-cycle.h",
+      "bytes": 35716,
+      "sha256": "7bf2d260bdf38f8766b04a8e6811ca0354e1ead22d3452be5e38324cd5dff3f2"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/gfx-native-powergate-drain.h",
+      "bytes": 19348,
+      "sha256": "f3f4429f6b372157cedcbcce1d29ef61ddaf8654fab2afabf035da8322152787"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/gfx-reset-scope.h",
+      "bytes": 11319,
+      "sha256": "78cff00b01dfafa8f37c24cfc694b0da2b3233bbdc781777fd7be3f24abe893f"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/gfx-reset-startup.h",
+      "bytes": 684,
+      "sha256": "f33ff5251683d7bc2aaca7f6e559d6b95696b2f1524ff68a6ab8e82fab18aecd"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/gfx-retained-power-cycle-coordinate.h",
+      "bytes": 3427,
+      "sha256": "d11e7a243b629dc834f5f986668bad1bd0e9eefb205d51a5c839f7d35fe90c23"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/graph-before.bin",
+      "bytes": 1130496,
+      "sha256": "287f2c53bc6ef7ed226c4a2995b9d9904e7623acae9713af105be6b04fc690a9"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/graph-contract.h",
+      "bytes": 24313,
+      "sha256": "f8c5a1536aa88ef7a1eb09b9a862cece4a2e822dd2eda54a449e6b3c11b20410"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/graph-map.h",
+      "bytes": 9974,
+      "sha256": "704836d10b86e3d2bcb20b457853a700a2153aae505b0aae473aea4daee7f13e"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/graph-receipt.json",
+      "bytes": 131999,
+      "sha256": "92771b8036464c8dc9bdadd1dd4e1458a6c5a9f95f87fbdac34696bd2b3af219"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/job-data.h",
+      "bytes": 13182,
+      "sha256": "c18ede083b691fbd3044237aaf30eb1e34c775e9391d3c6f1bea8e61561e0913"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/joined-context-init.h",
+      "bytes": 1849,
+      "sha256": "1851e697907d50a3f47d153879f47f1b6b07065f5d58055fa6269bc436bc15b2"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/native-ap-retained-cycle-owner-source-receipt.json",
+      "bytes": 17106,
+      "sha256": "f8cc352fce19be8a959fdd6c4a386360cbea746934d5cfa09defa09222faf9d1"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/preparation.json",
+      "bytes": 84712,
+      "sha256": "c22c59c0735c84554f954f581f94978894a9c78e87b6ec06f8f7ba8c763580db"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/receive-service.h",
+      "bytes": 3787,
+      "sha256": "bab356c9a2467fbb46760345102a7fb8369a9efe8db31efd058b1fd918b11043"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/recovery-contract.h",
+      "bytes": 1177,
+      "sha256": "9bce940061421a78fde0e509fdeba59a8c66c3d5ab32c4faf59dd613c14d4b23"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/recovery-cycle.h",
+      "bytes": 11332,
+      "sha256": "e357f18422a1851f36175091ae68f8b0171c99854c1eb839f4415968a6579ca4"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/render-backing-map.h",
+      "bytes": 2541,
+      "sha256": "ade8cedde4da68f2f463ed8604f47ab6b56cdf1c8ff3984d592e00f4a065978b"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/render-data.h",
+      "bytes": 268144,
+      "sha256": "3bdbf04b9a3219c8e818beb464b5f55626e8a9b3d184680e3fd05a6361c47cbd"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-root-envelope/asc-root-envelope.ko",
+      "bytes": 27304,
+      "sha256": "5f03da53d65581ab743ab445725279970684e80d8833bb3d1c72cea521614779"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-root-envelope/build-receipt.json",
+      "bytes": 31662,
+      "sha256": "a8a24d16dc8ea0f6836b7a03697c55a4a60954de01bc663c756a49574bb4efb9"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/kernel-qualification.json",
+      "bytes": 124518,
+      "sha256": "133370f18dc105e7fe310c4945073ad49b64b480e4ca828ced63289a7e34e0d2"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/kernel.notes.bin",
+      "bytes": 84,
+      "sha256": "85c56f7a3d7409747dd67fe1dcbf8839562aafab16a9124f9304689a14de437d"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/native-ap-retained-cycle-preparation.json",
+      "bytes": 9379,
+      "sha256": "89cb8e11c4ffeaa3865410d5a8550659bf340f986d6b626a354b1aeb83d67b9b"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/root-data-sample/gpu-data-sample.ko",
+      "bytes": 7936,
+      "sha256": "4c3bb5783f4d8164b817ee80ccb95f0e3cc8daf74d4041a03e9b03e0a708c25d"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/root-text-sample/gpu-data-sample.ko",
+      "bytes": 7896,
+      "sha256": "34343f515a083d36def91159f27adf83e493c6a787ea4691b782919eb40c6f0a"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/sample-pagetables/gpu-data-sample.ko",
+      "bytes": 7896,
+      "sha256": "d986ed773dd4a1b1e8ad1ee946d0f810743d5a209ced937bc458eeea913b4567"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/fresh-preflight.json",
+      "bytes": 2353,
+      "sha256": "3ecc493c5587a4f378e7c40019d5b74169b92a6274311ae67e1083dae546801b"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/loaded-identity-911a.json",
+      "bytes": 693,
+      "sha256": "316f4384395086e80add461befc157e60682cb2e508258fede05008ba3c7d56b"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/owner-build.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/owner-qualification-v2.json",
+      "bytes": 32941,
+      "sha256": "aa875ccdecb07b2944dee2066a53d955b613582929e6e232581dd4b4b096d334"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/root-prepared-validation.json",
+      "bytes": 12248,
+      "sha256": "bd4e43fb9798af9ba8ea5ccde370a05be12d0a3114a82dd88bdabdd82bedd603"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/save-independent-startup-911a.py",
+      "bytes": 20537,
+      "sha256": "fb7296646aae3abbd5d823631b3d3c6996053c406b16ed09f81b0b1d6c2e02bd"
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/wrapper-qualification-v1.json",
+      "bytes": 68057,
+      "sha256": "44a869162bbe382302b5f7dc78a77c084a9e90d4da1ff98051a072cf376c1686"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-root-envelope/build-receipt.json",
+      "bytes": 31449,
+      "sha256": "32b2ff0c647eae38a4f74486dc4f85793fdbfe478d60ab96555eb290d4564c65"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/native-running-cycle-preparation.json",
+      "bytes": 8634,
+      "sha256": "a2237389fa172c4f319c482df7ab9b58bbd551339ce690c8789ab2ae90a83303"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/owner-qualification-final-v2.json",
+      "bytes": 44900,
+      "sha256": "aaf2e76d651fbff245b169a500468b507a105cdbdb1d991b9469ea6c240fd50a"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/save-independent-startup-df540.py",
+      "bytes": 29152,
+      "sha256": "f8c0cbafe8410abaca1017bf32f56df663fa2ae72a10d4831f40bee2820a2bf9"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/wrapper-qualification-final-v2.json",
+      "bytes": 29231,
+      "sha256": "bc0a8396c901708854a9036573e54ed52d72d6e21490933170078e3276716d60"
+    }
+  ],
+  "first_OFF_qualified_by_this_review": false,
+  "second_reentry_qualified_by_this_review": false,
+  "gpu_execution_verified": false,
+  "rendering_verified": false,
+  "retirement_verified": false,
+  "general_restart_verified": false,
+  "limits": [
+    "All review reads used saved workspace files; no live sysfs, control, load, build, repeated test or hardware operation.",
+    "Source and typed log proof bind the cold guarded request and exact reply; no separate bus capture or hardware timestamp is available.",
+    "Cold startup completed0 of requested2 recovery cycles, phase2/counter1/requestflag1. Retained lifetime and AP20 knowledge do not establish usable application recovery.",
+    "Native ON STATUS0 used the reviewed bypass and three verified PMC votes. It is not a PMP ACK or inactivity proof.",
+    "Cold and baseline snapshots and root loaded identity are separate non-atomic reads. The firmware can progress between reads.",
+    "The source-bound AP mirror establishes wireAP20; it is distinct from firmware internalAP33, parentIOPpower state and autonomousRunning7/20. No retained skip occurred at this baseline.",
+    "The completed gfx-snapshot command and empty work fixtures establish no terminal physical OFF, application rejoin, completion, pixels or DMA retirement. Later terminal operations require their independent proof."
+  ]
+}
