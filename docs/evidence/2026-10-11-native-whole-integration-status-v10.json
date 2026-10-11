@@ -1,9 +1,9 @@
 {
   "schema": "m4rch.native-whole-integration-status.v10",
-  "status": "whole_source_integrated_and_compiled",
+  "status": "whole_integrated_triangle_trial_ready_for_fresh_boot",
   "user_direction": "Close known source gaps from Apple driver, integrate whole path, then test complete candidate",
   "hardware_actions": [],
-  "trial_ready": false,
+  "trial_ready": true,
   "source_base": "out/gpu-gravity-normal-native-completion-v10-v3",
   "kernel": "out/gpu-gravity-native-integrated-kernel-v10/linux",
   "kernel_Image_attempt_2_returncode": 0,
@@ -11,15 +11,15 @@
     "command": [
       "make",
       "-C",
-      "/home/alice/Desktop/m4rch/out/gpu-gravity-native-integrated-kernel-v10/linux",
+      "out/gpu-gravity-native-integrated-kernel-v10/linux",
       "LLVM=1",
       "-j8",
       "Image",
       "modules"
     ],
     "returncode": 0,
-    "hardware_actions": [],
-    "installed": false
+    "elapsed_seconds": 12.28450608253479,
+    "change": "Fresh OF provider phandle API with private property check removed"
   },
   "closed_source_gaps": [
     "native timeline and event stamp identities",
@@ -37,11 +37,12 @@
     "shared scheduler capacity/initial seed in hardware and queue owners",
     "ordinary native MainConfig defaults and sentinel",
     "retained power-down attempt after recovery failure",
-    "explicit existing opt-in admission and native compute refusal"
+    "explicit existing opt-in admission and native compute refusal",
+    "Graphics-only direct DRM client with CPU readback",
+    "Fresh per-boot loader reservations and existing genpd provider binding"
   ],
   "integration_remaining": [
-    "package/install matching kernel and joined driver with combined boot/submission/recovery launcher",
-    "fresh boot reservations/provider checks and complete hardware trial"
+    "Fresh integrated boot and combined hardware proof"
   ],
   "unproved_hardware_properties": [
     "GPU execution and changed triangle pixels",
@@ -50,17 +51,17 @@
     "cold DATA restoration recovery hypothesis",
     "repeatable restart"
   ],
-  "retention_policy": "Current consumed boot remains retained; no new hardware actions or reboot request",
+  "retention_policy": "Consumed current boot remains untouched and retained; fresh integrated boot required before combined launcher",
   "kernel_artifacts": [
     {
       "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-native-integrated-kernel-v10/linux/arch/arm64/boot/Image",
       "bytes": 28342784,
-      "sha256": "787c13f5e9701053f1761212bd5d895e3cc40e186f3ac40d84c43f5436c41be6"
+      "sha256": "8e329948fab2e4055b104b65c0f844d0ce59396c67366288e20430e58ac98935"
     },
     {
       "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-native-integrated-kernel-v10/linux/Module.symvers",
-      "bytes": 1087098,
-      "sha256": "40864c61acf36b33c10a5167259e1d10debebc09eef8eadd7b871fd440868960"
+      "bytes": 1087160,
+      "sha256": "97ff678a01ac1ce6b3d5659379814130106c47fc86f851e254f9b0d98ed6dfb4"
     }
   ],
   "first_trial_scope": {
@@ -82,34 +83,34 @@
       "make",
       "-C",
       "/home/alice/Desktop/m4rch/out/gpu-gravity-native-integrated-kernel-v10/linux",
-      "M=/home/alice/Desktop/m4rch/out/gpu-gravity-native-integrated-v14/build-owner",
+      "M=/home/alice/Desktop/m4rch/out/gpu-gravity-native-integrated-v16/build-owner",
       "LLVM=1",
       "W=1",
       "modules"
     ],
     "returncode": 0,
     "log": {
-      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-native-integrated-v14/integrated-module-build.log",
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-native-integrated-v16/integrated-module-build.log",
       "bytes": 35815,
-      "sha256": "77f5b8016b38470d86a4b4dca1ef03b4c990791179ba32ace6c4e253192c038e"
+      "sha256": "f2cd9b1e27ecdc13106812a402496701adca37fb4856d8cfbdee38726bc2f173"
     },
     "source_receipt": {
-      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-native-integrated-v14/integrated-source-receipt.json",
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-native-integrated-v16/integrated-source-receipt.json",
       "bytes": 53151,
-      "sha256": "71e473e26ceb93095bc2950671ffe0c4ac653df80a24ab54fb96b0d50eebe98e"
+      "sha256": "21af5db1c5e268fc8fad60d4143d1008dacf1508e05379c67c3caf30b9463b46"
     },
     "hardware_actions": [],
     "module_loaded": false,
     "trial_ready": false,
     "changed_sources": [],
     "module": {
-      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-native-integrated-v14/build-owner/asahi_m4.ko",
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-native-integrated-v16/build-owner/asahi_m4.ko",
       "bytes": 983664,
-      "sha256": "6c00285636b74c3e7ee11bf4f3a0260e465b65255217a37b6e780b6b02b03da7"
+      "sha256": "dc071cfb1301116b5ffdacf15eda0618eab63966638a43de56219b8c9e27104b"
     },
     "whole_module_built": true
   },
-  "source_stage": "out/gpu-gravity-native-integrated-v14",
+  "source_stage": "out/gpu-gravity-native-integrated-v16",
   "whole_module_warnings": {
     "count": 121,
     "kinds": "dead-code and unreachable-public-item warnings under W=1",
@@ -122,5 +123,78 @@
     "Apple numerical/debug seed replaced by consistent explicitly owned Linux policy",
     "crashed/nonrunning RTKit cannot currently force CPU shutdown",
     "strict prior OFF witness still required for fresh fixed-VA application graph"
-  ]
+  ],
+  "kernel_release": "7.1.13-m4rch-gpu-native-integrated+",
+  "metadata_bridge_build": {
+    "schema": "m4rch.current-loader-bridge-build.v15",
+    "returncode": 0,
+    "kernel_release": "7.1.13-m4rch-gpu-native-integrated+",
+    "modules": [
+      {
+        "path": "/home/alice/Desktop/m4rch/out/gpu-native-current-of-bridge-v17/m4rch_native_of_bridge_v15.ko",
+        "bytes": 11040,
+        "sha256": "a50f9179d738760fff4759d4f9d24672e40dbd1bbd9ac31fc0a92a2e0563251b"
+      },
+      {
+        "path": "/home/alice/Desktop/m4rch/out/gpu-native-current-of-bridge-v17/m4rch_gpu_adt.ko",
+        "bytes": 8848,
+        "sha256": "7e0ed3c0fba697f55c0f139038fc84f19de0b2a0f1e13a53e8dfed2a123a6f01"
+      }
+    ],
+    "hardware_actions": [],
+    "loaded": false
+  },
+  "boot_package_receipt": {
+    "path": "/home/alice/Desktop/m4rch/out/gpu-native-integrated-boot-package-v16/boot-package-receipt.json",
+    "bytes": 2748,
+    "sha256": "592e34851516aa26c723427d6d1272182b9bcc42db31b3d5c4dfbbdf9b18a9e8"
+  },
+  "install_receipt": {
+    "schema": "m4rch.integrated-boot-install.v16",
+    "release": "7.1.13-m4rch-gpu-native-integrated+",
+    "package": "/home/alice/Desktop/m4rch/out/gpu-native-integrated-boot-package-v16",
+    "boot": "/boot/NATI001",
+    "module_root": "/usr/lib/modules/7.1.13-m4rch-gpu-native-integrated+",
+    "grub_backup": "/boot/grub/grub.cfg.pre-native-integrated-v16",
+    "grub_default": 6,
+    "hardware_actions": [],
+    "rebooted": false,
+    "module_loaded": false
+  },
+  "launcher_manifest": {
+    "path": "/home/alice/Desktop/m4rch/out/gpu-native-integrated-boot-package-v16/launcher/manifest.json",
+    "bytes": 3434,
+    "sha256": "01cfd00e48e1fbc632071097b92a1af04be5948d06cad24f2dacc0352bdac01a"
+  },
+  "launcher": {
+    "path": "/home/alice/Desktop/m4rch/out/gpu-native-integrated-boot-package-v16/launcher/run_combined_native_triangle_v15.py",
+    "bytes": 8959,
+    "sha256": "4a1d71cd7d5cf5d42a0ed3a3aaac5d21a2ab9440f5c70b7ae14726f12fc8d798"
+  },
+  "triangle_client_receipt": {
+    "path": "/home/alice/Desktop/m4rch/out/gpu-native-integrated-boot-package-v16/launcher/client/receipt.json",
+    "bytes": 4352,
+    "sha256": "eae2ab2585c1af87deb532ac435282b128ff552c0fa00a3b22cdf8e02296b8c8"
+  },
+  "fresh_boot_trial_command": [
+    "sudo",
+    "-n",
+    "python3",
+    "/home/alice/Desktop/m4rch/out/gpu-native-integrated-boot-package-v16/launcher/run_combined_native_triangle_v15.py",
+    "--manifest-sha256",
+    "01cfd00e48e1fbc632071097b92a1af04be5948d06cad24f2dacc0352bdac01a",
+    "--expected-boot",
+    "<fresh-integrated-boot-uuid>",
+    "--output",
+    "/home/alice/Desktop/m4rch/out/gpu-native-integrated-trial-v16/boot-<fresh-integrated-boot-uuid>"
+  ],
+  "validation": {
+    "whole_kernel_build_returncode": 0,
+    "whole_driver_build_returncode": 0,
+    "metadata_modules_build_returncode": 0,
+    "whole_package_identities_agree": true,
+    "packaged_python_compiles": true,
+    "hardware_actions": [],
+    "component_hardware_trials": 0
+  }
 }

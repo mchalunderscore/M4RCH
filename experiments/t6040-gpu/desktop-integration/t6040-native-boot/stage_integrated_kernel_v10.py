@@ -15,7 +15,7 @@ def stage(base, output, bindings):
     subprocess.run(['cp', '--reflink=auto', '-a', str(base), str(output)], check=True)
     names = ['drivers/soc/apple/rtkit.c', 'drivers/soc/apple/rtkit-internal.h',
              'include/linux/soc/apple/rtkit.h', 'rust/kernel/soc/apple/rtkit.rs',
-             'rust/helpers/helpers.c']
+             'rust/helpers/helpers.c', 'drivers/of/dynamic.c', 'include/linux/of.h']
     files = {name: (output / name).read_text() for name in names}
     base_pins = [pin(base / name) for name in names]
     for index, path in enumerate(bindings):
