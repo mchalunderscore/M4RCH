@@ -44,5 +44,12 @@
   },
   "integration_route": "Descriptor TA inputs use the selected mapping user address; fragment inputs use its device address. No extra global firmware-root mapping follows from these getter calls. Ordinary Linux aperture base must be bound to the actual retained VM resource mapping, rather than copied from an unrelated resource.",
   "boot_id_checked": "14343c22-f598-4eae-974a-b0edf7009530",
-  "hardware_trial_state": "v24 READY; current boot consumed and untouched"
+  "hardware_trial_state": "v24 READY; current boot consumed and untouched",
+  "gravity_caller_binding": {
+    "context_base": "0x1000000000",
+    "source": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v9-clock/source/linux/drivers/gpu/drm/asahi/g16_render.rs",
+    "sha256": "718b2fd0492bd3cefe24a6daecf93f8b95cbdb93588f3a285902483b2cf600fa",
+    "selection": "Parameters::set_private selects Linux render aperture base; valid bounds retained TA resources within its four-GiB window. Map native ordinary TA user pointers by this selected base, fragment by original device address.",
+    "remaining_hypothesis": "Linux selected render aperture is equivalent to native allocator region1 for ordinary jobs; actual GPU execution remains unproved."
+  }
 }
