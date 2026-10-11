@@ -1,0 +1,441 @@
+{
+  "schema": "m4rch.gravity-native-t6040-power.component.v7",
+  "component": {
+    "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/g16_t6040_power_v7.rs",
+    "bytes": 16224,
+    "sha256": "554a4d9f92e6f8cc5b57b7c264066d06b4adaabf9d5cf67a00617c1c84be7c30"
+  },
+  "qualification": {
+    "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-native-power-v7-qualification-v5/qualification.json",
+    "bytes": 35139,
+    "sha256": "7f2bd5cb31a2121297d816ae64b8f421980511b275a8ac0428821125c2aeb4d6"
+  },
+  "input_pins": [
+    {
+      "path": "/boot/GPUC003/private-apple/com.apple.AGXG16X",
+      "bytes": 1566304,
+      "sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-fender-runtime-cycle/candidate/asc-graph-init/boot-f4a7b737-ed3d-4851-8fcd-cac56eb233d7/boot.adt",
+      "bytes": 606208,
+      "sha256": "01fb4c838a75aac89a3ddaa90996a65c394c07933a5b6927ec7ec13f6867cf39"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/adt.py",
+      "bytes": 2738,
+      "sha256": "09ff91633924f1e352c288fd62323861fb80e417775fc802b625cebb2782a23a"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v6-source-evidence/native-power.json",
+      "bytes": 17484,
+      "sha256": "df3411781630ef92d84c37d50c40ca2d243d63be928993cc77994e401a13d1bd"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v6/source/linux/drivers/gpu/drm/asahi/float.rs",
+      "bytes": 11049,
+      "sha256": "e6c2a8f3a574b8f3058f42b0ab2d359af78c67dc68b2bfdcc85bbe683d7edde1"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/qualify_power_v7.py",
+      "bytes": 19440,
+      "sha256": "6e854d1fdcf79b220bf13a33561f3dfe1011715f9915bd929e269eb003f4574a"
+    }
+  ],
+  "source_spans": [
+    {
+      "name": "G16X_controller_defaults",
+      "start": "0x89ea270",
+      "end": "0x89ea464",
+      "bytes": 500,
+      "sha256": "f54d8efb45b45ffa03bfebb608ead97f2ad4cb876e9156f8b5d4fccb52f9b278"
+    },
+    {
+      "name": "base_controller_defaults",
+      "start": "0x8963724",
+      "end": "0x8963b40",
+      "bytes": 1052,
+      "sha256": "2ce0c9df86d2a50e282c8e0aa762852e5c98395b4799f1107d5f58af8f144895"
+    },
+    {
+      "name": "G16X_sram_scale",
+      "start": "0x89e9678",
+      "end": "0x89e974c",
+      "bytes": 212,
+      "sha256": "cc8d4c371d589c72e6ffa426f9eb8f16a0e7a1192ec74c31c91d5dc02e4f935b"
+    },
+    {
+      "name": "generic_setup_config",
+      "start": "0x89ac408",
+      "end": "0x89acecc",
+      "bytes": 2756,
+      "sha256": "1f3b3a0a6e7243d0f1e72e4646ad1e05cd711b8f3ecefae5ace995e82dceec23"
+    },
+    {
+      "name": "generic_power_lifecycle",
+      "start": "0x89a862c",
+      "end": "0x89a8ddc",
+      "bytes": 1968,
+      "sha256": "8b481947a0871db227a379fbc43a2d2f73972f2750434be928299d9732468433"
+    },
+    {
+      "name": "ARM_preserve_and_array",
+      "start": "0x89cad50",
+      "end": "0x89caf20",
+      "bytes": 464,
+      "sha256": "0f5ccadcdb89162da7bc10514acee2fafda49f9746d6902b33eacdb37a04a074"
+    },
+    {
+      "name": "interface_limits",
+      "start": "0x89a8ddc",
+      "end": "0x89a91d4",
+      "bytes": 1016,
+      "sha256": "857b4782c04248e25dd56efe4814ebf8dcfac5af9de0c9e56078bab5bc3a2c79"
+    },
+    {
+      "name": "native_maximum_power_unbound",
+      "start": "0x89e8628",
+      "end": "0x89e8a9c",
+      "bytes": 1140,
+      "sha256": "f6336a5f9c1019c7f0412a57d42537fa91f7a4eca533eb79b9851ad92355802c",
+      "execution_qualified": false
+    },
+    {
+      "name": "native_chip_leakage_fuse_unbound",
+      "start": "0x89e9844",
+      "end": "0x89e9d7c",
+      "bytes": 1336,
+      "sha256": "31fe4ac4e78ecad8375790dd892432996777c87e5ecc2a88b7c6ca71035682a6",
+      "execution_qualified": false
+    }
+  ],
+  "logical_bytes": 25976,
+  "native_bundle_child": 4,
+  "native_bundle_offset": 21056,
+  "native_controller_image": {
+    "cpu_source": "AGXFirmware+0x980",
+    "power_destination": "0xa0",
+    "bytes": 352,
+    "selected_fresh_initial_zero": true,
+    "sram_scale_array": {
+      "offset": "0x20",
+      "count": 16,
+      "u32_value": 1065520988
+    },
+    "qualification": "Saved native population executes against an explicitly fresh zero controller allocation; this does not provide an arbitrary reused native controller owner."
+  },
+  "native_lifecycle": {
+    "capture_ranges": [
+      "0x6530..0x6538",
+      "0x2888..0x28b8"
+    ],
+    "clear_bytes": 25976,
+    "restore_after_generic": true,
+    "native_absolute_ticks_offset": "0x63d4",
+    "tick_bytes": 8,
+    "full_ARM_override": false,
+    "ARM_execution_end_exclusive": "0x89caf20"
+  },
+  "default_native_power_words": [
+    {
+      "offset": "0x4",
+      "u32": 200000
+    },
+    {
+      "offset": "0x8",
+      "u32": 200000
+    },
+    {
+      "offset": "0x9bc",
+      "u32": 0
+    },
+    {
+      "offset": "0x9c4",
+      "u32": 1065299615
+    },
+    {
+      "offset": "0x9cc",
+      "u32": 995189076
+    },
+    {
+      "offset": "0x9d4",
+      "u32": 1017484678
+    },
+    {
+      "offset": "0x9dc",
+      "u32": 0
+    },
+    {
+      "offset": "0x9e0",
+      "u32": 1187205120
+    },
+    {
+      "offset": "0x9e4",
+      "u32": 1084821467
+    },
+    {
+      "offset": "0x9ec",
+      "u32": 3178611343
+    },
+    {
+      "offset": "0x9f0",
+      "u32": 40
+    },
+    {
+      "offset": "0x9f4",
+      "u32": 1500
+    },
+    {
+      "offset": "0x9f8",
+      "u32": 1500
+    },
+    {
+      "offset": "0xa04",
+      "u32": 25000
+    },
+    {
+      "offset": "0xa34",
+      "u32": 0
+    },
+    {
+      "offset": "0xa38",
+      "u32": 1500
+    },
+    {
+      "offset": "0xa3c",
+      "u32": 0
+    },
+    {
+      "offset": "0xb28",
+      "u32": 80
+    },
+    {
+      "offset": "0xb44",
+      "u32": 1
+    },
+    {
+      "offset": "0xb48",
+      "u32": 0
+    },
+    {
+      "offset": "0xb4c",
+      "u32": 1061997773
+    },
+    {
+      "offset": "0xb50",
+      "u32": 1065269330
+    },
+    {
+      "offset": "0xb54",
+      "u32": 1045220557
+    },
+    {
+      "offset": "0xb58",
+      "u32": 1000593162
+    },
+    {
+      "offset": "0xb5c",
+      "u32": 1063569798
+    },
+    {
+      "offset": "0xb60",
+      "u32": 1063569798
+    },
+    {
+      "offset": "0xb64",
+      "u32": 0
+    },
+    {
+      "offset": "0xb68",
+      "u32": 1119748096
+    },
+    {
+      "offset": "0xb6c",
+      "u32": 1077848048
+    },
+    {
+      "offset": "0xb70",
+      "u32": 1077848048
+    },
+    {
+      "offset": "0xb74",
+      "u32": 1097583131
+    },
+    {
+      "offset": "0xb78",
+      "u32": 100
+    },
+    {
+      "offset": "0xb7c",
+      "u32": 1500
+    },
+    {
+      "offset": "0xb80",
+      "u32": 100
+    },
+    {
+      "offset": "0xb8c",
+      "u32": 80
+    },
+    {
+      "offset": "0xb94",
+      "u32": 0
+    },
+    {
+      "offset": "0xbbc",
+      "u32": 0
+    },
+    {
+      "offset": "0xbc0",
+      "u32": 100
+    },
+    {
+      "offset": "0xbc4",
+      "u32": 0
+    },
+    {
+      "offset": "0x2218",
+      "u32": 1120403456
+    },
+    {
+      "offset": "0x221c",
+      "u32": 1500
+    },
+    {
+      "offset": "0x2224",
+      "u32": 1061997773
+    },
+    {
+      "offset": "0x2228",
+      "u32": 1045220557
+    },
+    {
+      "offset": "0x2870",
+      "u32": 1500
+    }
+  ],
+  "original_adt_inputs": [
+    {
+      "name": "perf-state-count",
+      "fixture": {
+        "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-native-power-v7-qualification-v5/property-0.bin",
+        "bytes": 4,
+        "sha256": "097328e8c957de2428283954f6a1ee8ff7ad7def12e100a600178407f5decf24"
+      }
+    },
+    {
+      "name": "perf-state-table-count",
+      "fixture": {
+        "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-native-power-v7-qualification-v5/property-1.bin",
+        "bytes": 4,
+        "sha256": "26b25d457597a7b0463f9620f666dd10aa2c4373a505967c7c8d70922a2d6ece"
+      }
+    },
+    {
+      "name": "perf-states",
+      "fixture": {
+        "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-native-power-v7-qualification-v5/property-2.bin",
+        "bytes": 256,
+        "sha256": "38feca543ed40a6d76c7c8ea39ce5f6c3b2909755be4b1b8ba0f4affe3723926"
+      }
+    },
+    {
+      "name": "gpu-pwr-sample-period-aic-clks",
+      "fixture": {
+        "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-native-power-v7-qualification-v5/property-3.bin",
+        "bytes": 4,
+        "sha256": "347e4e96ea7158b26c991f7d6b9cd4ead625dc82ab2296c9dc277cbcdb164f8f"
+      }
+    },
+    {
+      "name": "gpu-power-sample-period",
+      "fixture": {
+        "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-native-power-v7-qualification-v5/property-4.bin",
+        "bytes": 4,
+        "sha256": "dc765660b06ee03dd16fd7ca5b957e8c805161ac2c4af28c5a100ab2ab432ca1"
+      }
+    },
+    {
+      "name": "gpu-num-perf-states",
+      "fixture": {
+        "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-native-power-v7-qualification-v5/property-5.bin",
+        "bytes": 4,
+        "sha256": "972b8373b897c65c4f631c6bdf2443d0d817a88f224b54d8e593fdcf32488d60"
+      }
+    }
+  ],
+  "performance_policy": {
+    "perf_state_count": 16,
+    "perf_state_table_count": 2,
+    "nominal_gpu_num_perf_states": 15,
+    "maximum_index": 15,
+    "hardware_main_count_offset": "0xfc4",
+    "hardware_main_mhz_offset": "0xfc8",
+    "hardware_secondary_mhz_offset": "0x1808",
+    "native_hz_conversion": "(u64(hz)*0x431bde83)>>50",
+    "frequency_cap_is_voltage_group_count": false,
+    "secondary_frequency_owner": "AGXAccelerator CPU+0x19f20; supplied typed values only, actual provider unbound"
+  },
+  "maximum_power": {
+    "required_provider": "native G16X chip fuse/voltage/topology calculation",
+    "chip_fuse_physical": "0x508374000",
+    "intermediate_property_priority": [
+      "gpu-device-max-power",
+      "gpu-max-power"
+    ],
+    "intermediate_property_overwritten": true,
+    "CPU_final": "AGXAccelerator+0xf2a0",
+    "firmware_initial_interface_fields": [
+      "0xbd8",
+      "0xbdc"
+    ],
+    "region_c_offset": "0x84",
+    "actual_provider_bound": false,
+    "artificial_apple_m4_max_power_property_accepted": false,
+    "native_fuse_mapping_call": "0x89e98dc..0x89e98f0; physical508374000/bytes1000/provider callbfa4df4",
+    "native_maximum_producer": "0x89e8628..0x89e8a9c; consumes native leakage, per-cluster voltages, frequencies and topology; remains unbound"
+  },
+  "qualification_scope": {
+    "native_lifecycle_cases": 4,
+    "whole_power_comparison_bytes": 25992,
+    "whole_hardware_comparison_bytes": 10024,
+    "region_c_component_offsets": [
+      "0x84",
+      "0x88",
+      "0x8c"
+    ],
+    "rust_compile_returncode": 0,
+    "rust_run_returncode": 0,
+    "native_source_instructions_modified": false,
+    "fixture_external_services": [
+      "OSData property/cast/metaclass",
+      "memset/memcpy",
+      "native absolute time",
+      "locks",
+      "power service"
+    ],
+    "fixture_maximum_calculation": true,
+    "fixture_chip_class": 28,
+    "synthetic_raw_property_case": true,
+    "full_v6_audits_or_qualifications_repeated": false
+  },
+  "production_interface": {
+    "constructor": "PowerData::from_adt(&[(&str,&[u8])])->Option<Self>",
+    "power_partial": "write_component(&mut native_child4)",
+    "hardware": "write_hardware_component(&mut native_hardware_child0)",
+    "secondary": "write_secondary_hardware_component(&mut hardware,&[u32;16])",
+    "lifecycle": "LifecycleProviders::capture(owned_power,maximum,ticks); write_lifecycle_component(owned_power,&providers)",
+    "region_c": "write_region_c_component(&mut native_region_c,&providers)"
+  },
+  "unbound_providers": [
+    "calculated maximum power: G16X chip fuse508374000/voltage/topology result",
+    "native absolute-time domain provider",
+    "secondary CPU frequency owner19f20",
+    "remaining ARM override controller/tails after89caf20"
+  ],
+  "power_complete": false,
+  "bundle_complete": false,
+  "normal_startup_enabled": false,
+  "hardware_actions": [],
+  "private_binary_or_instruction_bytes_exported": false
+}

@@ -1,0 +1,56 @@
+{
+  "schema": "m4rch.gravity-native-t6040-joined-v7.progress.v1",
+  "source_checkpoint_parent": "5c6f4d2",
+  "previous_goal_turn": "progress",
+  "pins": [
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v7/stage-receipt.json",
+      "bytes": 20980,
+      "sha256": "893761c16df0c28b4b594278558f1426202c3651693b368cea3b36204f976072"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v7/qualification-v1/qualification.json",
+      "bytes": 22501,
+      "sha256": "34cd7a15a4ca79ad9a80b853f403418f0718e9c33e8eefbd21655b80988e6a1e"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v7/module-build-closure.json",
+      "bytes": 862,
+      "sha256": "c35cc3db52ad67739f9b2e18a719e69e39a8c8fa8a84421b2b381492f67e1333"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-native-full-arm-power-v7-source-v1/source-execution.json",
+      "bytes": 13211,
+      "sha256": "9b8a2317d2f68415ad85d7d5114250d9543da70082faa7f559bf0adf7abc59ff"
+    }
+  ],
+  "module": {
+    "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v7/build-owner/asahi_m4.ko",
+    "bytes": 452128,
+    "sha256": "9738cf937c9dbd85493d5bf4a7405a8ca8d0c2af1bed8742ca31d855bbb8b867"
+  },
+  "source_count": 75,
+  "make_returncode": 0,
+  "compiler_warnings": 42,
+  "compiler_errors": 0,
+  "full_module_compiled_and_linked": true,
+  "immutable_input_changes": [],
+  "joined_queue_owner_check_passed": true,
+  "native_startup_omits_donor_bootstrap_work": true,
+  "native_submission_config_before_work": true,
+  "native_qos_persistent_registration_compiled": true,
+  "native_storage_retained_without_gpu_off_retirement": true,
+  "full_native_arm_setup_and_power_returned": true,
+  "full_arm_scope": "Full native control flow and normal returns only; not complete Rust output agreement.",
+  "normal_startup_enabled": false,
+  "triangle_trial_ready": false,
+  "hardware_actions": [],
+  "system_installed": false,
+  "remaining": [
+    "Compare draft complete Rust power producer with full native ARM outputs using actual performance/voltage owners",
+    "Integrate startup performance map provider, power aliases and timestamp GPU/FW mapping",
+    "Close or explicitly select Linux UAT/root and firmware-loader reservation policy",
+    "Join native Work publication/layout and actual bounded triangle launcher",
+    "Run one fresh-boot trial; completion/pixels and qualified teardown remain unproved"
+  ]
+}
