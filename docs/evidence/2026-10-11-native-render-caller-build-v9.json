@@ -1,0 +1,93 @@
+{
+  "schema": "m4rch.native-render-caller-build.v9",
+  "returncode": 0,
+  "observed_session_id": 48375,
+  "command": [
+    "make",
+    "-C",
+    "/home/alice/Desktop/m4rch/out/gfx-native-reset-kernel/linux",
+    "M=/home/alice/Desktop/m4rch/out/gpu-gravity-normal-native-render-caller-v9-v6/build-owner",
+    "LLVM=1",
+    "W=1",
+    "modules"
+  ],
+  "module": {
+    "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-native-render-caller-v9-v6/build-owner/asahi_m4.ko",
+    "bytes": 919952,
+    "sha256": "f8a569d5a5dc76c85d5eeb71bf08e47417fa8085d3185efd570405bdf4d41ca1"
+  },
+  "log": {
+    "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-native-render-caller-v9-v6/module-build.log",
+    "bytes": 34925,
+    "sha256": "49d52938d8f8b0cc226cdc76a3d3686c5f9e756325978169e46e7fd50e1bb5a5"
+  },
+  "warnings": 117,
+  "errors": 0,
+  "source_files_verified": 94,
+  "kernel_rebuilt": false,
+  "module_installed": false,
+  "module_loaded": false,
+  "hardware_actions": [],
+  "stage_receipt": {
+    "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-native-render-caller-v9-v6/stage-receipt.json",
+    "bytes": 26809,
+    "sha256": "910f890e57cdf3436ebbf1a71b871571fdb72aebc7fd4b5f240cc359f47fe240"
+  },
+  "caller": {
+    "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/native_render_caller_v9.rs",
+    "bytes": 24405,
+    "sha256": "1df6901bf5b1b6c4de46600f233289ee9673cc79c212b4084cdd9f8cf05c7d45"
+  },
+  "staging_script": {
+    "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/stage_native_render_caller_v9.py",
+    "bytes": 8180,
+    "sha256": "1b0f557480b47f684f93a54ca2ee9e6f4209f51a8a810eb8a1deeac1dde9c07e"
+  },
+  "submission_enabled": false,
+  "runtime_connected": true,
+  "hardware_execution_proved": false,
+  "teardown_proved": false,
+  "linux_hypotheses": {
+    "pm": {
+      "initial_blocks": 11,
+      "scene_count": 36,
+      "state_count": 36,
+      "scene_stride": 16384,
+      "registration_stride": 16384,
+      "parameter_field_1d4": 0,
+      "native_count_154": 0,
+      "native_count_15c": 0,
+      "support_count": 1,
+      "capacity": "tvb_max_blocks"
+    },
+    "scheduler": {
+      "initial": "fw_counter_start",
+      "initial_prior": "initial minus one modulo40bits",
+      "capacity": 256,
+      "no_scheduling_nops": true
+    },
+    "event": {
+      "epochs": [
+        1,
+        1
+      ],
+      "stamps": "Gravity per-lane g16_stamp progression",
+      "notifier": "owned uncached Work18100; source initialization unbound"
+    },
+    "ta_aperture": "private allocator relative to1000000000",
+    "qos": [
+      0,
+      16,
+      0
+    ],
+    "mask_placement": "ADT core masks in first two words",
+    "first_draw_growth_disabled": true
+  },
+  "additional_unproved_bindings": [
+    "Envelope ordinary zero source/frame/context policy is not a source-resolved initializer",
+    "Notifier field policy, event bank epochs and Gravity stamps are not proven equivalent to Apple event machine",
+    "Native protected/secondary/partial/growth routes refuse or remain disabled; no donor growth calls",
+    "Profiling/timestamp requests remain unsupported while native timestamp emission is suppressed",
+    "Native cache attribute equivalence of Work command alias is inherited from Gravity and not hardware-proved"
+  ]
+}
