@@ -1,0 +1,93 @@
+{
+  "schema": "m4rch.gravity-native-t6040-queue-component.v7",
+  "source_checkpoint": "66206542464b2c017cbfbfdd72e7dd634dc7f79d",
+  "source_component": {
+    "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/g16_t6040_queue_v7.rs",
+    "bytes": 6357,
+    "sha256": "6e33577c6585a89e8c5883f08724ddbbc04ad7e44a9fb3a329ce7e0a2d888f7d"
+  },
+  "qualification_report": {
+    "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-native-queue-v7-qualification-v1/qualification.json",
+    "bytes": 106024,
+    "sha256": "a6fcb51d256887204843ec62a47bfcb9a52b3484835be09d1e5020d3f26bb0d4"
+  },
+  "actual_native_priority": {
+    "range": [
+      "0xfffffe00089bff08",
+      "0xfffffe00089c004c"
+    ],
+    "binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+    "slice_sha256": "2adb472e634180c232d49984a6d6b0aea8055f3c2ebf90c7867b76518d897619",
+    "joined_cases": 80,
+    "boundary_cases": 10
+  },
+  "composition": {
+    "frozen_reset_prefix_cases_not_repeated": 256,
+    "frozen_pointer_publication_cases_not_repeated": 554,
+    "frozen_scheduler_allocator_cases_not_repeated": true
+  },
+  "source_pins": [
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/qualify_queue_v7.py",
+      "bytes": 10530,
+      "sha256": "a1e39fbb3ef398bbbe35605f2f9ccbe3c6be78ca10f1066a1a27e48b808df93c"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/g16_t6040_queue_v7.rs",
+      "bytes": 6357,
+      "sha256": "6e33577c6585a89e8c5883f08724ddbbc04ad7e44a9fb3a329ce7e0a2d888f7d"
+    },
+    {
+      "path": "/boot/GPUC003/private-apple/com.apple.AGXG16X",
+      "bytes": 1566304,
+      "sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/private_channel_reset.py",
+      "bytes": 1122,
+      "sha256": "14182eaf3adfb4d89c38ac2e5e15b8db8f7aeda01a45addea7092a3f30aafc88"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-09-native-scheduler-state.json",
+      "bytes": 11512,
+      "sha256": "2f199727f13f3900de696bf209887dc3f08cd0980f26300c73ecf87d5b09c0da"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-08-private-channel-reset.json",
+      "bytes": 679,
+      "sha256": "768feb96bb2de5e01a142625d3bb9d97a84faf3b997267f4c84b418ea9bf9a55"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-08-private-queue-pointer.json",
+      "bytes": 833,
+      "sha256": "0276cfa39afb40772135bfca007067ba442bea97637960e235a89bcf210f0506"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-native-queue-v7-qualification-v1/queue-tests.rs",
+      "bytes": 106421,
+      "sha256": "56ac23e83d5aee8b051b60f70e147fef189dcc8f7bac3a4456093c40f1cbeb27"
+    }
+  ],
+  "changes": [
+    "Native c0 state reset and priority fields replace donor b0 offsets.",
+    "Queue sentinel at50 is preserved as ffffffff; capacity at60 and producer at40 are distinct.",
+    "Native priority input is context enum plus QoS and requested subpriority; mapped lane is derived, not used as context input.",
+    "Scheduler clears38 bytes and preserves last8 of40-byte slot; owner byte120 is an input.",
+    "Config4a/56/5a/5e join separate owned scheduler slot/QoS ID and same-channel PID48/getter subpriority40.",
+    "Validated command pointer plan reserves one slot; caller retains record/barrier/producer ordering."
+  ],
+  "required_caller_inputs": [
+    "Native host88/90/98 pointer sources and channelf8 context source, with allocation/mapping ownership.",
+    "Actual Linux process/PID association and explicit context-priority/QoS policy.",
+    "Owned scheduler FW slot, allocated hardware-buffer QoS ID and owning-object byte120.",
+    "Live firmware cursor sampling and DMA/cache publication service."
+  ],
+  "limitations": [
+    "This is a qualified component; not a complete native Work/queue lifecycle.",
+    "Native sequential RAM execution does not establish GPU cache coherency, DMA retirement or mapping correctness.",
+    "No install, load, kernel rebuild or hardware execution."
+  ],
+  "queue_complete": false,
+  "stage_ready": false,
+  "hardware_actions": []
+}
