@@ -29,6 +29,8 @@ def review(receipt, output):
         assert digest(path) == pin['sha256'], path
         checked.append(str(path))
     stage = Path(data['stage'])
+    assert '#define GFX_COLD_PAGES ARRAY_SIZE(owned)' in (stage/'gfx-cold-runtime.h').read_text()
+    assert 'static_assert(GFX_COLD_PAGES == ARRAY_SIZE(owned));' in (stage/'gfx-cold-render.h').read_text()
     source = json.loads((stage / 'v24-source-receipt.json').read_text())
     old = Path(source['source'])
     preserved = []

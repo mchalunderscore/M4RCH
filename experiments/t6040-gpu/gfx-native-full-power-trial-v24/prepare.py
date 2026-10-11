@@ -46,6 +46,17 @@ def prepare(source,destination,adt):
  g=g.replace('  WRITE_ONCE(*target_slot,page_to_phys(owned[1])|3);','  if(!gfx_full_power_timestamp_borrowed_available(borrowed_l1)) {ret=-EBUSY;goto fail_root;}\n  WRITE_ONCE(*target_slot,page_to_phys(owned[1])|3);')
  g=g.replace(' installed=true;clean_page(target_page);invalidate_root_va();',' installed=true;\n if(borrowed_l1 && !gfx_full_power_timestamp_publish_borrowed(borrowed_l1)) {ret=-EIO;goto fail_root;}\n clean_page(target_page);invalidate_root_va();')
  (destination/'graph-map.h').write_text(g)
+ # Snapshot/retention guards must cover the same owner array as the allocator,
+ # including timestamp table/data pages added above. A stale174 constant made
+ # the full-power176 owner refuse before control/draw on its first real boot.
+ runtime_path=destination/'gfx-cold-runtime.h';runtime=runtime_path.read_text()
+ marker='#define GFX_COLD_PAGES 174U';assert runtime.count(marker)==1
+ runtime=runtime.replace(marker,'#define GFX_COLD_PAGES ARRAY_SIZE(owned)')
+ runtime_path.write_text(runtime)
+ cold_path=destination/'gfx-cold-render.h';cold=cold_path.read_text()
+ marker='static struct page *gfx_cold_pages[GFX_COLD_PAGES];';assert cold.count(marker)==1
+ cold=cold.replace(marker,'static_assert(GFX_COLD_PAGES == ARRAY_SIZE(owned));\n'+marker)
+ cold_path.write_text(cold)
  for name in ['gfx-full-power.h','power_bridge.rs','full-power-timestamp-contract.h','full-power-timestamp-map.h']:shutil.copyfile(KIT/name,destination/name)
  # Root/clock owner supplies this typed experimental time-domain helper.
  shutil.copyfile(ROOT/'experiments/t6040-gpu/desktop-integration/t6040-native-boot/gfx_native_clock_v24.h',destination/'gfx-full-power-clock.h')
