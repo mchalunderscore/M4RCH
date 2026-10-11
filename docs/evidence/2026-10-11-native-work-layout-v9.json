@@ -1,0 +1,39 @@
+{
+  "schema": "m4rch.native-work-layout-v9.v1",
+  "leases": 256,
+  "stages": 512,
+  "disjoint_extents": 3328,
+  "boundary_refusals": 5,
+  "pins": [
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/g16_t6040_work_layout_v9.rs",
+      "sha256": "36f5bfba093f93b320d1629ae267ff05fba0e4e781f055a12c5217d062bcc3d5",
+      "bytes": 2017
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/qualify_work_layout_v9.py",
+      "sha256": "fa01dd9d28e440ae77a061ebd5fcb21651a0d0c974106b45829835ae47e44c39",
+      "bytes": 3481
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v9-clock/source/linux/drivers/gpu/drm/asahi/g16_runtime.rs",
+      "sha256": "754dd79e98dcb443bc7be7f8bb74db7784c5ed4b3005b1c3fdd644e51a4b9fea",
+      "bytes": 78103
+    }
+  ],
+  "hardware_actions": [],
+  "runtime_enabled": false,
+  "scope": "Compiled typed addresses and nonoverlap across256retained leases, matching actual Gravity16KiBpage/1c000lease geometry. Requires caller to map both address views to same physical backing and keep leases until retirement; no page or lifetime proof from this address plan.",
+  "receipt": {
+    "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-native-work-layout-v9/qualification.json",
+    "sha256": "33d5f98b4c428a7c6ef6ed978cc1a3c54204bf3bff0b112dfddd3a4d28993254"
+  },
+  "runtime_join_contract": [
+    "Use Layout::new(allocate_work(true)?) while holding existing runtime ownership mutex.",
+    "Map both returned pages: firmware_space.physical(page.firmware) then backend and retained client map_work_alias(page.device, physical); sync and invalidate before publication.",
+    "Use KSM record address in native ring; native command pointer is the KSM payload, a separate address.",
+    "GPU register-list pointers use device command view plus native register-list offsets; SKU pointer uses firmware view.",
+    "CPU descriptor/context/scene and RCE scratch are separately borrowed heap buffers; do not place them over command or KSM outputs.",
+    "Keep free_work release behind final notifier, driver stamps and transport retirement; ambiguous outcomes quarantine entire existinglease and roots."
+  ]
+}
