@@ -1,0 +1,197 @@
+#![allow(dead_code)]
+#[path = @HARDWARE_MODULE@] mod g16_t6040;
+#[path = @PROFILE_MODULE@] mod g16_profile;
+#[path = @REGION_MODULE@] mod g16_t6040_region_c;
+#[path = @BUNDLE_MODULE@] mod g16_t6040_bundle;
+#[path = @POWER_MODULE@] mod g16_t6040_power;
+@FW_CONTEXT@
+
+mod actual_platform {
+use std::{cell::RefCell, collections::BTreeMap, ops::{Deref,DerefMut}, rc::Rc};
+type Result<T=()> = std::result::Result<T,i32>;
+const EINVAL:i32=22;const ENOENT:i32=2;const ENODEV:i32=19;const ENOTSUPP:i32=95;
+const GFP_KERNEL:u32=0;
+macro_rules! c_str {($v:literal)=>{$v};}
+#[derive(Clone,Debug,PartialEq,Eq)] pub struct KVec<T>(pub Vec<T>);
+impl<T> KVec<T> {
+    pub fn new()->Self {Self(Vec::new())}
+    pub fn as_slice(&self)->&[T] {self.0.as_slice()}
+    pub fn push(&mut self,value:T,_flags:u32)->Result {self.0.push(value);Ok(())}
+}
+impl<T> Deref for KVec<T> {type Target=Vec<T>;fn deref(&self)->&Vec<T>{&self.0}}
+impl<T> DerefMut for KVec<T> {fn deref_mut(&mut self)->&mut Vec<T>{&mut self.0}}
+#[derive(Clone)] pub enum Property {Raw(Vec<u8>),Words(Vec<u32>),Word(u32),Error(i32)}
+pub trait Decode:Sized {fn decode(value:&Property)->Result<Self>;}
+impl Decode for KVec<u8> {fn decode(value:&Property)->Result<Self>{
+    match value {Property::Raw(v)=>Ok(Self(v.clone())),_=>Err(EINVAL)}}}
+impl Decode for KVec<u32> {fn decode(value:&Property)->Result<Self>{
+    match value {Property::Words(v)=>Ok(Self(v.clone())),_=>Err(EINVAL)}}}
+impl Decode for u32 {fn decode(value:&Property)->Result<Self>{
+    match value {Property::Word(v)=>Ok(*v),_=>Err(EINVAL)}}}
+mod of {
+    use super::*;
+    #[derive(Clone)] pub struct Node {
+        pub properties:BTreeMap<&'static str,Property>,
+        pub reads:Rc<RefCell<Vec<&'static str>>>,
+    }
+    impl Node {
+        pub fn get_property<T:Decode>(&self,name:&'static str)->Result<T>{
+            self.reads.borrow_mut().push(name);
+            match self.properties.get(name) {
+                Some(Property::Error(e))=>Err(*e),Some(v)=>T::decode(v),None=>Err(ENOENT),
+            }
+        }
+    }
+}
+mod device {
+    use super::of;
+    pub struct Device {pub node:Option<of::Node>}
+    impl Device {pub fn of_node(&self)->Option<of::Node>{self.node.clone()}}
+}
+fn zeroed(size:usize)->Result<KVec<u8>>{Ok(KVec(vec![0;size]))}
+fn put32(out:&mut[u8],offset:usize,value:u32){out[offset..offset+4].copy_from_slice(&value.to_le_bytes());}
+fn put64(out:&mut[u8],offset:usize,value:u64){out[offset..offset+8].copy_from_slice(&value.to_le_bytes());}
+fn adt_word(node:&of::Node,name:&'static str,default:Option<u32>)->Result<u32>{
+    match node.get_property::<KVec<u8>>(name) {
+        Ok(raw)=>Ok(u32::from_le_bytes(raw.as_slice().try_into().map_err(|_|EINVAL)?)),
+        Err(ENOENT)=>default.ok_or(ENOENT),Err(e)=>Err(e),
+    }
+}
+@PLATFORM_STRUCTS@
+impl Platform {
+@NATIVE_CONSTRUCTOR@
+@NATIVE_PERIOD_INPUTS@
+@BUNDLE_METHODS@
+    fn hwdata(&self)->Result<KVec<u8>>{panic!("Donor hardware must not enter native qualification")}
+    fn power_data(&self,_out:&mut[u8])->Result {panic!("Donor power must not enter native qualification")}
+}
+pub struct Fixture {pub device:device::Device}
+impl Fixture {
+    pub fn captured()->Self {
+        let mut properties=BTreeMap::new();
+        // The first four reg words are unused by this constructor. Last four
+        // are the previously bound native SGX physical base/extent fixture.
+        properties.insert("reg",Property::Words(vec![@REG_WORDS@]));
+        properties.insert("apple,m4-core-masks",Property::Words(vec![@CORE_MASKS@]));
+        properties.insert("apple,sgx-perf-states",Property::Raw(include_bytes!(@CORE_BYTES@).to_vec()));
+        properties.insert("apple,sgx-perf-states-sram",Property::Raw(include_bytes!(@SRAM_BYTES@).to_vec()));
+        properties.insert("apple,sgx-active-mcc-bit-vector",Property::Raw(@MCC_MASK@u32.to_le_bytes().to_vec()));
+        properties.insert("apple,m4-max-power-mw",Property::Word(12345));
+        properties.insert("apple,chip-revision",Property::Word(1));
+        properties.insert("apple,sgx-gpu-pwr-sample-period-aic-clks",Property::Raw(200000u32.to_le_bytes().to_vec()));
+        properties.insert("apple,sgx-gpu-power-sample-period",Property::Raw(8u32.to_le_bytes().to_vec()));
+        Self {device:device::Device {node:Some(of::Node {
+            properties,reads:Rc::new(RefCell::new(Vec::new()))})}}
+    }
+    pub fn set(&mut self,name:&'static str,value:Option<Property>){
+        let n=self.device.node.as_mut().unwrap();
+        if let Some(v)=value {n.properties.insert(name,v);} else {n.properties.remove(name);}
+    }
+    pub fn construct(&self)->Result<Platform>{Platform::new_t6040(&self.device,&crate::g16_profile::T6040)}
+    pub fn ms_read(&self)->bool{self.device.node.as_ref().unwrap().reads.borrow().contains(&"apple,sgx-gpu-power-sample-period")}
+}
+}
+
+fn main() {
+use g16_t6040_power::PowerData;
+use actual_platform::{Fixture,Property};
+let expected_power=include_bytes!(@EXPECTED_POWER@);
+let expected_hardware=include_bytes!(@EXPECTED_HARDWARE@);
+let expected_bundle=include_bytes!(@EXPECTED_BUNDLE@);
+assert_eq!(g16_t6040_power::LOGICAL_BYTES,0x6578);
+assert!(!g16_t6040_power::POWER_COMPLETE);
+assert!(!g16_t6040_bundle::BUNDLE_COMPLETE);
+assert!(!g16_t6040_region_c::REGION_C_COMPLETE);
+assert!(g16_profile::T6040.initialization().is_none());
+let clocks=200000u32.to_le_bytes();let ms=8u32.to_le_bytes();
+let captured=PowerData::from_adt(Some(&clocks),Some(&ms)).unwrap();
+assert_eq!((captured.period_aic_clocks,captured.period_ms),(200000,8));
+let mut out=vec![0xa5;0x6578];captured.write_component(&mut out).unwrap();
+assert_eq!(out.as_slice(),expected_power);
+let mut hardware=vec![0xa5;0x2718];captured.write_hardware_component(&mut hardware).unwrap();
+assert_eq!(hardware.as_slice(),expected_hardware);
+for length in [0,4,0x21ef,0x6577] {
+    let mut small=vec![0xa5;length];let saved=small.clone();
+    assert!(captured.write_component(&mut small).is_none());assert_eq!(small,saved);
+}
+let mut extended=vec![0xa5;0x6580];captured.write_component(&mut extended).unwrap();
+assert_eq!(&extended[..0x6578],expected_power);assert_eq!(&extended[0x6578..],&[0xa5;8]);
+let mut small_hw=vec![0xa5;0x2717];let saved=small_hw.clone();
+assert!(captured.write_hardware_component(&mut small_hw).is_none());assert_eq!(small_hw,saved);
+for invalid in [PowerData{period_aic_clocks:0,period_ms:8},
+                PowerData{period_aic_clocks:200000,period_ms:0},
+                PowerData{period_aic_clocks:200000,period_ms:16}] {
+    let mut untouched=vec![0xa5;0x6578];let saved=untouched.clone();
+    assert!(invalid.write_component(&mut untouched).is_none());assert_eq!(untouched,saved);
+}
+for (raw,expected_ms) in @NATIVE_AIC_CASES@ {
+    let raw=raw.to_le_bytes();let actual=PowerData::from_adt(Some(&raw),None);
+    if expected_ms==0 {assert!(actual.is_none());} else {
+        let actual=actual.unwrap();assert_eq!(actual.period_ms,expected_ms);
+        assert_eq!(actual.period_aic_clocks,u32::from_le_bytes(raw));
+        let mut bytes=vec![0xa5;0x6578];actual.write_component(&mut bytes).unwrap();
+        let mut expected=expected_power.to_vec();expected[4..8].copy_from_slice(&raw);
+        expected[8..12].copy_from_slice(&raw);assert_eq!(bytes,expected);
+    }
+}
+for (raw,expected_clocks) in @NATIVE_MS_CASES@ {
+    let value=raw.to_le_bytes();let actual=PowerData::from_adt(None,Some(&value));
+    if raw==0 || raw.checked_mul(24000).is_none() {assert!(actual.is_none());} else {
+        let actual=actual.unwrap();assert_eq!(actual.period_ms,raw);
+        assert_eq!(actual.period_aic_clocks,expected_clocks);
+    }
+}
+assert_eq!(PowerData::from_adt(None,None).unwrap(),PowerData{period_aic_clocks:384000,period_ms:16});
+for length in [0,1,3,5,8] {
+    let bytes=vec![0;length];
+    assert!(PowerData::from_adt(Some(&bytes),Some(&ms)).is_none());
+    assert!(PowerData::from_adt(None,Some(&bytes)).is_none());
+    assert_eq!(PowerData::from_adt(Some(&clocks),Some(&bytes)),Some(captured));
+}
+let fixture=Fixture::captured();let platform=fixture.construct().unwrap();
+assert_eq!((platform.period_clocks,platform.period_ms),(200000,8));
+assert!(!fixture.ms_read());
+assert_eq!(platform.topology.enabled_cores(),16);
+assert_eq!(platform.topology.clusters,2);assert_eq!(platform.topology.core_masks,[0x3db,0x3db]);
+let native=platform.native_hardware.as_ref().unwrap();
+assert_eq!(native.steps.map(|s|s.len()),[11,11]);
+assert_eq!(native.steps,@EXPECTED_STEPS@);
+let produced=platform.native_bundle_component().unwrap();
+assert_eq!(produced.as_slice(),expected_bundle);
+assert_eq!(&produced[0x28..0x30],&[0;8]);
+for entropy in [0,0x12345678,u32::MAX] {assert_eq!(platform.bundle(entropy).err(),Some(95));}
+let mut fixture=Fixture::captured();
+fixture.set("apple,sgx-gpu-power-sample-period",Some(Property::Error(74)));
+let platform=fixture.construct().unwrap();assert!(!fixture.ms_read());
+assert_eq!(platform.native_bundle_component().unwrap().as_slice(),expected_bundle);
+fixture.set("apple,sgx-gpu-pwr-sample-period-aic-clks",None);
+assert_eq!(fixture.construct().err(),Some(74));assert!(fixture.ms_read());
+for (aic,ms,error) in [(Some(Property::Raw(vec![0;3])),Some(Property::Error(74)),22),
+    (Some(Property::Error(73)),None,73),(Some(Property::Raw(1u32.to_le_bytes().to_vec())),None,22),
+    (None,Some(Property::Raw(vec![0;3])),22),
+    (None,Some(Property::Raw(u32::MAX.to_le_bytes().to_vec())),22)] {
+    let mut f=Fixture::captured();f.set("apple,sgx-gpu-pwr-sample-period-aic-clks",aic);
+    f.set("apple,sgx-gpu-power-sample-period",ms);assert_eq!(f.construct().err(),Some(error));
+}
+let mut fallback=Fixture::captured();fallback.set("apple,sgx-gpu-pwr-sample-period-aic-clks",None);
+let p=fallback.construct().unwrap();assert_eq!((p.period_clocks,p.period_ms),(192000,8));
+let mut expected=expected_bundle.to_vec();
+expected[0x5244..0x5248].copy_from_slice(&192000u32.to_le_bytes());
+expected[0x5248..0x524c].copy_from_slice(&192000u32.to_le_bytes());
+assert_eq!(p.native_bundle_component().unwrap().as_slice(),expected);
+fallback.set("apple,sgx-gpu-power-sample-period",None);
+let p=fallback.construct().unwrap();assert_eq!((p.period_clocks,p.period_ms),(384000,16));
+expected[0x5244..0x5248].copy_from_slice(&384000u32.to_le_bytes());
+expected[0x5248..0x524c].copy_from_slice(&384000u32.to_le_bytes());
+expected[0xed8..0xedc].copy_from_slice(&16u32.to_le_bytes());
+assert_eq!(p.native_bundle_component().unwrap().as_slice(),expected);
+let mut broken=Fixture::captured();broken.set("apple,m4-core-masks",Some(Property::Words(vec![0,0x3db])));
+assert_eq!(broken.construct().err(),Some(22));
+let mut broken=Fixture::captured();broken.set("apple,sgx-perf-states",Some(Property::Raw(vec![0;248])));
+assert_eq!(broken.construct().err(),Some(22));
+let mut invalid=Fixture::captured().construct().unwrap();invalid.period_ms=0;
+assert_eq!(invalid.native_bundle_component().err(),Some(22));
+let mut absent=Fixture::captured().construct().unwrap();absent.native_hardware=None;
+assert_eq!(absent.native_bundle_component().err(),Some(22));
+println!("native v6: actual constructor input priority, captured perf/topology, complete power component and whole bundle preservation, and closed full startup gates passed");
+}

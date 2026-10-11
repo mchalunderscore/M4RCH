@@ -1,0 +1,205 @@
+{
+  "schema": "m4rch.gravity-native-t6040-components.production-integration.v6",
+  "date": "2026-10-11",
+  "status": "staged-pure-qualified-and-root-module-built",
+  "actual_producers": [
+    "Platform::new_t6040 native periods from original raw ADT with AIC priority",
+    "Platform::native_power_inputs selected-property byte decode and errors",
+    "Platform::native_bundle_component native child4 power prefix/ARM arrays and hardware+ed8 timing",
+    "Platform::bundle complete-power and complete-bundle rejection gates"
+  ],
+  "validation": {
+    "pure_actual_rust_qualification_complete": true,
+    "rust_compile_returncode": 0,
+    "rust_run_returncode": 0,
+    "actual_constructor_exercised": true,
+    "native_source_period_cases": 48,
+    "native_power_selected_written_bytes": 5704,
+    "power_unknown_fields_and_trailing_bytes_preserved": true,
+    "native_power_logical_bytes_compared": 25976,
+    "native_hardware_timing_bytes_compared": 10008,
+    "native_bundle_backing_bytes_compared": 147456,
+    "captured_nominal_performance_states": 15,
+    "native_power_count_assignment_qualified": false,
+    "enabled_cores": 16,
+    "clusters": 2,
+    "independent_cluster_voltage_groups": 22,
+    "full_module_compiled_and_linked": true,
+    "immutable_staged_source_files": 70,
+    "previous_audits_repeated": false,
+    "test_adapter_scope": "Unmodified actual Platform struct, native constructor, period-input helper and bundle methods compile against standalone property/allocation adapters. Max-power/revision and unused first reg words are fixtures; they do not gain producer qualification. Existing frozen v5 expected whole-bundle bytes are reused and changed only at independently source-backed native power/timing stores. No previous broad audits are rerun.",
+    "make_returncode": 0,
+    "immutable_input_changes": []
+  },
+  "native_power_bindings": {
+    "child_index": 4,
+    "bundle_offset": "0x5240",
+    "logical_bytes": "0x6578",
+    "cpu_owner": "0x2d8",
+    "mapping_owner": "0x320",
+    "literal_u32_fields": 16,
+    "fixed_array_initializer_bytes": 5632,
+    "period_clock_fields": [
+      "0x4",
+      "0x8"
+    ],
+    "hardware_period_ms_field": "0xed8",
+    "saved_aic_clocks": 200000,
+    "saved_period_ms": 8,
+    "millisecond_property_consumed_when_aic_present": false,
+    "absent_final_ms": 16,
+    "absent_final_clocks": 384000,
+    "initial_literal_clock400000_used_as_final_default": false,
+    "malformed_selected_input_zero_or_overflow_refused": true
+  },
+  "power_complete": false,
+  "bundle_complete": false,
+  "region_c_complete": false,
+  "normal_startup_enabled": false,
+  "of_input_bridge_installed": false,
+  "mapping_policy_qualified": false,
+  "remaining_power_inputs": [
+    {
+      "range": "0xa0..0x200",
+      "source": "0x89a865c..0x89a8668",
+      "missing": "native firmware CPU controller image+980, size160"
+    },
+    {
+      "offset": "0x63d4",
+      "source": "0x89a86b0..0x89a86c8",
+      "missing": "native uptime provider result at calltargetb928a20"
+    },
+    {
+      "range": "0x9bc onward",
+      "source": "0x89a870c onward",
+      "missing": "native accelerator tuning provider values, performance state/count policy and full controller producer"
+    },
+    {
+      "range": "0x2888..0x28b8 and 0x6530",
+      "source": "0x89cad7c..0x89cadec",
+      "missing": "ARM preserves preexisting owner values around generic bzero; lifecycle owner not resolved"
+    },
+    {
+      "missing": "Linux mapping-policy translation and original ADT bridge remain unqualified"
+    }
+  ],
+  "root_build_command": [
+    "python3",
+    "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/build_module_v6.py",
+    "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v6"
+  ],
+  "pins": [
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/g16_t6040_power_v6.rs",
+      "bytes": 3987,
+      "sha256": "39a521dd10bb1e96e109820a5f2d0954b3c19b1dd91123833002406bf8bc59b1"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/prepare_power_evidence.py",
+      "bytes": 17110,
+      "sha256": "e88121a559c2ef832bb313c895eb738e2e8a38aa0885740747d21af239cbce71"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/stage_v6.py",
+      "bytes": 8830,
+      "sha256": "bec6cda5fd43f6e1b56abf52c5249a759c827a3a292e5c5a20c05bbf74d733cb"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/qualify_v6.py",
+      "bytes": 13144,
+      "sha256": "fced70f79d374431be3c27aad4c6e08a5687908d6c5c65080397dd7db50cccd8"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/power_v6_tests.rs.in",
+      "bytes": 11180,
+      "sha256": "b60a1109de0edf9920a317af6b7fdaef47705a56990fc7e5ee0767142f7fb59b"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/build_module_v6.py",
+      "bytes": 5362,
+      "sha256": "d25fedb95e74dc1ac0dc72c29a88087eca50bf24c87189040a86748c7c6333d0"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v6-source-evidence/native-power.json",
+      "bytes": 17484,
+      "sha256": "df3411781630ef92d84c37d50c40ca2d243d63be928993cc77994e401a13d1bd"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v6/stage-receipt.json",
+      "bytes": 19559,
+      "sha256": "d23243bffe8be52c98312394ec3bf3fae78049cfb078838ecc6be1153d4f28fb"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v6/qualification-v1/qualification.json",
+      "bytes": 23079,
+      "sha256": "705aed72879c49f2058a1806fe97f0c0d23a0f33c009928fc91d6093ec0dbd5b"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-11-gravity-native-t6040-components-v5.json",
+      "bytes": 8166,
+      "sha256": "0037658eee9fa6c2010862d6f28092a7d4664729e28e642197569c976698c7d9"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v6/module-build-intent.json",
+      "bytes": 16749,
+      "sha256": "0da96ac5b9c5557426cfb755baf0097e509035565840ec6b906fd24e6f0eff47"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v6/module-make-result.json",
+      "bytes": 593,
+      "sha256": "81b194ad0b92e95a5582e4a8c7f90eb100d21fb05ee4cc3e67a16a57d3cea1e0"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v6/module-build-closure.json",
+      "bytes": 862,
+      "sha256": "32830cb691507003b251f570716141eecd6329aa0551a63901a694f32053f216"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v6/module-build.log",
+      "bytes": 5225,
+      "sha256": "6d4a8cee85cefabf7f661b4c7d9b3b1b4bbcdbfc8fd9acad6674ada5e8aa3fab"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v6/build-owner/asahi_m4.ko",
+      "bytes": 406104,
+      "sha256": "43063e7a80a4a8861dca849d4a2337e98508bc9d929fc2662f8302461ef2be2e"
+    }
+  ],
+  "hardware_actions": [],
+  "kernel_built": false,
+  "module_loaded": false,
+  "gpu_publication_or_execution": false,
+  "linked_module": {
+    "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v6/build-owner/asahi_m4.ko",
+    "bytes": 406104,
+    "sha256": "43063e7a80a4a8861dca849d4a2337e98508bc9d929fc2662f8302461ef2be2e"
+  },
+  "root_build": {
+    "make_result": {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v6/module-make-result.json",
+      "bytes": 593,
+      "sha256": "81b194ad0b92e95a5582e4a8c7f90eb100d21fb05ee4cc3e67a16a57d3cea1e0"
+    },
+    "closure": {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v6/module-build-closure.json",
+      "bytes": 862,
+      "sha256": "32830cb691507003b251f570716141eecd6329aa0551a63901a694f32053f216"
+    },
+    "log": {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v6/module-build.log",
+      "bytes": 5225,
+      "sha256": "6d4a8cee85cefabf7f661b4c7d9b3b1b4bbcdbfc8fd9acad6674ada5e8aa3fab"
+    },
+    "intent": {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v6/module-build-intent.json",
+      "bytes": 16749,
+      "sha256": "0da96ac5b9c5557426cfb755baf0097e509035565840ec6b906fd24e6f0eff47"
+    },
+    "make_returncode": 0,
+    "source_count": 70,
+    "immutable_input_changes": [],
+    "module_loaded": false,
+    "kernel_rebuilt": false,
+    "hardware_actions": []
+  }
+}
