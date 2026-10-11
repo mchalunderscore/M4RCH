@@ -16,6 +16,7 @@ pub struct Stage {
     pub command:Page,
     pub ksm:Page,
     pub dependency_fw:u64,
+    pub postkick_fw:u64,
     pub sku_fw:u64,
     pub shared_state_fw:u64,
     pub driver_stamp_fw:u64,
@@ -36,7 +37,7 @@ impl Layout {
         let stages=core::array::from_fn(|i|{
             let p=pages[i];
             Stage{command:p,ksm:Page{firmware:p.firmware+RCE_BYTES,device:p.device+RCE_BYTES},
-                dependency_fw:p.firmware+0x3240,sku_fw:p.firmware+PAGE_BYTES,
+                dependency_fw:p.firmware+0x3240,postkick_fw:p.firmware+0x32a0,sku_fw:p.firmware+PAGE_BYTES,
                 shared_state_fw:base+0x10000+i as u64*PAGE_BYTES,
                 driver_stamp_fw:base+0x18000+i as u64*0x40}
         });

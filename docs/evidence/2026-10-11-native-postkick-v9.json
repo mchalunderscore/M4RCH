@@ -1,0 +1,39 @@
+{
+  "schema": "m4rch.native-postkick-v9.v1",
+  "cases": 256,
+  "prewrite_refusals": 256,
+  "native_slices": [
+    {
+      "kind": "Tiling",
+      "start": "0xfffffe0008a1fe9c",
+      "end": "0xfffffe0008a1fecc",
+      "sha256": "f6403e24ca284dd00eb44447947f2a14cf82e0e24424422c88a92b309241e430"
+    },
+    {
+      "kind": "Fragment",
+      "start": "0xfffffe000895c2bc",
+      "end": "0xfffffe000895c2ec",
+      "sha256": "b76bc1298b701fbf07add9007cec531ed43126ee3b508cfe7046797bee89b893"
+    }
+  ],
+  "pins": [
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/g16_t6040_postkick_v9.rs",
+      "bytes": 1484,
+      "sha256": "fa8d7d131abab2d5b20cb820b947f051c910dddeee5d1f9ac40008bc0a2e946e"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/qualify_postkick_v9.py",
+      "bytes": 3661,
+      "sha256": "2895c723553f9328a4a05a0afb810d83aa6e20fd51817c08ff11aba02f9d9f04"
+    },
+    {
+      "path": "/boot/GPUC003/private-apple/com.apple.AGXG16X",
+      "bytes": 1566304,
+      "sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e"
+    }
+  ],
+  "hardware_actions": [],
+  "runtime_enabled": false,
+  "scope": "Actual TA and 3D opcode14 store slices versus compiled Rust, complete32byte backing including preserved tails. Inputs are supplied scheduler identities; no caller timestamp/count update, queue allocation, optional opcode12/16, ring publication or firmware acceptance proved."
+}

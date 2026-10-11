@@ -4,10 +4,28 @@
 //! publication and retained PM/resource/lifetime ownership remain caller duties.
 use super::{g16_t6040_rce_ram_v9 as rce,g16_t6040_render_envelope_v9 as envelope,
     g16_t6040_ta_sku_v9 as ta,g16_t6040_fragment_sku_v9 as fragment,
-    g16_t6040_ksm_work_v8 as ksm,g16_t6040_work_layout_v9 as layout};
+    g16_t6040_ksm_work_v8 as ksm,g16_t6040_work_layout_v9 as layout,
+    g16_t6040_postkick_v9 as postkick};
 #[derive(Debug,PartialEq)]
 pub enum Error { Address, Registers, Producer, Envelope, Stream, Scheduler }
-pub struct ResultInfo {pub stream_bytes:usize,pub next_timeline:u64}
+pub struct ResultInfo {
+    pub stream_bytes:usize,
+    /// Native encode*KickEntry returns this identity for transport/dependencies.
+    pub submitted_timeline:u64,
+    /// Commit this separately to the scheduler owner's counter after encoding.
+    pub next_timeline:u64,
+    kind:postkick::Kind,
+    scheduler_queue_id:u8,
+}
+impl ResultInfo {
+    /// Transport inherits the actual encoded entry identity. Count/mode come
+    /// from the retained descriptor/scheduler owner, not stage routing IDs.
+    pub fn write_transport(&self,out:&mut[u8],descriptor_count:u32,scheduler_mode:u32)->Option<()> {
+        postkick::write(out,&postkick::Bindings{kind:self.kind,
+            firmware_queue_id:u32::from(self.scheduler_queue_id),descriptor_count,
+            scheduler_mode,submitted_timeline:self.submitted_timeline})
+    }
+}
 fn q(b:&[u8],o:usize)->u64{u64::from_le_bytes(b[o..o+8].try_into().unwrap())}
 fn h(b:&[u8],o:usize)->u16{u16::from_le_bytes(b[o..o+2].try_into().unwrap())}
 fn w(b:&[u8],o:usize)->u32{u32::from_le_bytes(b[o..o+4].try_into().unwrap())}
@@ -51,7 +69,8 @@ pub fn tiling(backing:&mut rce::Backing<'_>,construction:&envelope::TaBindings<'
     let command:&mut[u8;0x9c0]=(&mut backing.command[..0x9c0]).try_into().map_err(|_|Error::Envelope)?;
     let stream_bytes=ta::primary_stream(stream,command,backing.descriptor,sku).map_err(|_|Error::Stream)?;
     let next_timeline=schedule(record,command,backing.descriptor,stage,scheduler,true)?;
-    Ok(ResultInfo{stream_bytes,next_timeline})
+    Ok(ResultInfo{stream_bytes,submitted_timeline:scheduler.timestamp,next_timeline,
+        kind:postkick::Kind::Tiling,scheduler_queue_id:scheduler.queue_id})
 }
 pub fn fragment(backing:&mut rce::Backing<'_>,construction:&envelope::FragmentBindings<'_>,
     sku:fragment::Bindings,stream:&mut[u8],sku_stack:&mut[u8;0x300],stage:layout::Stage,
@@ -63,5 +82,6 @@ pub fn fragment(backing:&mut rce::Backing<'_>,construction:&envelope::FragmentBi
     let command:&mut[u8;0x2240]=(&mut backing.command[..0x2240]).try_into().map_err(|_|Error::Envelope)?;
     let stream_bytes=fragment::primary_stream(stream,sku_stack,command,backing.descriptor,sku).map_err(|_|Error::Stream)?;
     let next_timeline=schedule(record,command,backing.descriptor,stage,scheduler,false)?;
-    Ok(ResultInfo{stream_bytes,next_timeline})
+    Ok(ResultInfo{stream_bytes,submitted_timeline:scheduler.timestamp,next_timeline,
+        kind:postkick::Kind::Fragment,scheduler_queue_id:scheduler.queue_id})
 }

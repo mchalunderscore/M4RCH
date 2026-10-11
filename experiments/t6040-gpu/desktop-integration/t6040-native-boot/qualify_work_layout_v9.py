@@ -17,11 +17,11 @@ for i in range(256):
  extents=[(base+0x3200,0x18,'bm')]
  for stage in range(2):
   fw=base+stage*0x8000;dv=device+stage*0x4000
-  fields=dict(dependency_fw=fw+0x3240,sku_fw=fw+0x4000,shared_state_fw=base+0x10000+stage*0x4000,driver_stamp_fw=base+0x18000+stage*0x40)
+  fields=dict(dependency_fw=fw+0x3240,postkick_fw=fw+0x32a0,sku_fw=fw+0x4000,shared_state_fw=base+0x10000+stage*0x4000,driver_stamp_fw=base+0x18000+stage*0x40)
   code+='assert_eq!(l.pages['+str(stage)+'],layout::Page{firmware:'+str(fw)+',device:'+str(dv)+'});\n'
   code+='assert_eq!(l.stages['+str(stage)+'].command,l.pages['+str(stage)+']);assert_eq!(l.stages['+str(stage)+'].ksm,layout::Page{firmware:'+str(fw+0x3000)+',device:'+str(dv+0x3000)+'});\n'
   for k,v in fields.items():code+='assert_eq!(l.stages['+str(stage)+'].'+k+','+str(v)+');\n'
-  extents += [(fw,0x3000,'rce'),(fw+0x3000,0x200,'ksm'),(fw+0x3240,0x48,'dependency'),(fw+0x4000,0x2000,'sku'),(base+0x10000+stage*0x4000,0x4000,'state'),(base+0x18000+stage*0x40,0x40,'stamp')]
+  extents += [(fw,0x3000,'rce'),(fw+0x3000,0x200,'ksm-staging'),(fw+0x3240,0x48,'dependency'),(fw+0x32a0,0x18,'postkick'),(fw+0x4000,0x2000,'sku'),(base+0x10000+stage*0x4000,0x4000,'state'),(base+0x18000+stage*0x40,0x40,'stamp')]
  extents.sort()
  for a,n,name in extents:assert base<=a<a+n<=base+0x1c000
  for (a,n,_),(b,_,_) in zip(extents,extents[1:]):assert a+n<=b
