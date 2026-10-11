@@ -41,3 +41,30 @@ leases on ambiguous publication or retirement.
 Evidence: native-render-job-v9.json, native-postkick-v9.json,
 native-work-layout-v9.json, native-queue-role-integration-v9.json and
 native-render-transport-build-v9.json in this directory.
+
+## Retained enqueue and retirement follow-up
+
+The subsequent stage `out/gpu-gravity-normal-scheduler-enqueue-v9-v3` adds an
+actual Gravity slot writer with source-derived timestamp advancement, owned
+queue identity validation, capacity admission before writes and quarantine on
+an interrupted slot write. Initial timestamp/cached-prior values are explicit
+caller inputs; no zero-epoch default is introduced. The helper returns retained
+entry credits. Adjacent scheduling NOP and real-entry credits can be combined
+without losing either credit on a rejected merge. Retirement refuses duplicate,
+wrong-owner and underflowing credit and requires the real completion consumer.
+
+Offline qualification covers 740 entry transitions across 256 scenarios, with
+256 retirement roundtrips and 256 each of duplicate, wrong-owner, underflow and
+quarantined-write refusals. It reuses the saved native timestamp/publication and
+retirement arithmetic evidence; it does not execute a complete native caller.
+The actual kernel module builds with 54 warnings and zero errors; all79source
+pins match the build-owner copy. Submission remains gated and no module was
+loaded. Production calls, initial device policy and firmware completion/DMA
+retirement remain unjoined.
+
+Saved driver linkage distinguishes TA scheduler ID/count fields e08/e38 from
+fragment964/2dc. Both counts include all emitted scheduler entries, separate
+from Gravity's outstanding-flight count. Native initializer takes its initial
+timestamp from accelerator ee48, not a proven constant. See
+native-ksm-retirement-initialization-v9.json, native-scheduler-owner-v9.json and
+native-scheduler-enqueue-build-v9.json.
