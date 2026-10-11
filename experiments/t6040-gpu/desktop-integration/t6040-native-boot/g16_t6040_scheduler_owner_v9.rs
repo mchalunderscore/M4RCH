@@ -62,9 +62,12 @@ impl State {
     }
     /// Caller requires authoritative descriptor completion and DMA lifetime
     /// evidence. Queue prefetch/type1 bits alone never authorize this call.
+    pub fn can_retire(&self,credit:&Credit)->bool {
+        !self.quarantined&&!credit.retired&&credit.queue_id==self.queue_id
+            &&credit.capacity==self.capacity&&credit.count<=self.pending
+    }
     pub fn retire(&mut self,credit:&mut Credit)->Option<()> {
-        if self.quarantined||credit.retired||credit.queue_id!=self.queue_id
-            ||credit.capacity!=self.capacity||credit.count>self.pending{return None;}
+        if !self.can_retire(credit){return None;}
         self.pending-=credit.count;credit.retired=true;Some(())
     }
 }

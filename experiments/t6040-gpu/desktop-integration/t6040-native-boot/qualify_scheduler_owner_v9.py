@@ -23,9 +23,9 @@ for i in range(cases):
  for name in credits[1:]:code+='c0.append(&mut '+name+').unwrap();assert!(s.retire(&mut '+name+').is_none());\n'
  code+='assert_eq!(c0.count(),'+str(count)+');\n'
  if count==capacity:code+='let before=s;assert!(s.begin(s.timestamp,owner::next_timestamp(s.timestamp,s.capacity).unwrap()).is_none());assert_eq!(s,before);\n'
- code+='let mut wrong=owner::State::from_values('+str((queue_id+1)%128)+','+str(capacity)+','+str(timestamp)+','+str(count)+',None).unwrap();assert!(wrong.retire(&mut c0).is_none());\n'
- code+='let mut empty=owner::State::from_values('+str(queue_id)+','+str(capacity)+','+str(timestamp)+',0,None).unwrap();assert!(empty.retire(&mut c0).is_none());assert_eq!(empty.pending,0);\n'
- code+='s.retire(&mut c0).unwrap();assert_eq!(s.pending,0);assert!(s.retire(&mut c0).is_none());assert_eq!(s.pending,0);\n'
+ code+='let mut wrong=owner::State::from_values('+str((queue_id+1)%128)+','+str(capacity)+','+str(timestamp)+','+str(count)+',None).unwrap();assert!(!wrong.can_retire(&c0));assert!(wrong.retire(&mut c0).is_none());\n'
+ code+='let mut empty=owner::State::from_values('+str(queue_id)+','+str(capacity)+','+str(timestamp)+',0,None).unwrap();assert!(!empty.can_retire(&c0));assert!(empty.retire(&mut c0).is_none());assert_eq!(empty.pending,0);\n'
+ code+='assert!(s.can_retire(&c0));s.retire(&mut c0).unwrap();assert_eq!(s.pending,0);assert!(!s.can_retire(&c0));assert!(s.retire(&mut c0).is_none());assert_eq!(s.pending,0);\n'
  code+='let before=s;assert!(s.begin('+str(old)+',0).is_none());assert_eq!(s,before);\n'
  # Interrupted backing write retains quarantine, pending and counter.
  code+='let p=s.begin(s.timestamp,owner::next_timestamp(s.timestamp,s.capacity).unwrap()).unwrap();assert!(s.quarantined);assert_eq!(s.pending,0);assert!(s.begin(p.submitted,p.next).is_none());\n'

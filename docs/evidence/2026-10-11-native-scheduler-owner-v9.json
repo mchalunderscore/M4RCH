@@ -10,13 +10,13 @@
   "pins": [
     {
       "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/g16_t6040_scheduler_owner_v9.rs",
-      "bytes": 3909,
-      "sha256": "cf3aeea1011da205a3d4360e1cf08e6700a513eeb83cbc01e6e3ab3a2d008944"
+      "bytes": 4003,
+      "sha256": "f3bb92e94d86e8ddea9e1d8493f62709bea486155f48d2df85503c1b10c58f46"
     },
     {
       "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/qualify_scheduler_owner_v9.py",
-      "bytes": 4547,
-      "sha256": "d23b077134a931df24d8f229026fea80207d4f4af01e2cf49a4e17d64d304ea3"
+      "bytes": 4666,
+      "sha256": "53ad8b83cb371d1fca451fed391892bf584c80e1c3bf56601ffbbea75bca9d9b"
     },
     {
       "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/private_nop_header.py",

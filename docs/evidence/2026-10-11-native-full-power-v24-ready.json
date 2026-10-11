@@ -1,6 +1,6 @@
 {
   "schema": "m4rch.native-full-power-v24-root-ready.v1",
-  "ready": true,
+  "ready": false,
   "meaning": "Offline candidate selected for one future fresh-boot trial; no hardware success claimed",
   "candidate": "/home/alice/Desktop/m4rch/out/gfx-native-full-power-trial-v24/candidate-v9",
   "owner": {
@@ -20,8 +20,8 @@
   "launcher_cases": 104,
   "off_qualifier_cases": 12,
   "off_readback_flows": 4,
-  "current_consumed_boot": "ea0dd0a7-6a94-45ed-b0ca-7c85fa993df6",
-  "manual_reboot_required": true,
+  "current_consumed_boot": "af201416-45d8-47ab-937d-7177942b2248",
+  "manual_reboot_required": false,
   "hardware_actions": [],
   "hardware_requirements": [
     "Fresh kernel/module/DT admission",
@@ -57,7 +57,7 @@
     "--run"
   ],
   "trial_output_template": "/home/alice/Desktop/m4rch/out/gfx-native-full-power-trial-v24/candidate-v9/asc-graph-init/boot-<fresh-boot-id>/target-after.png",
-  "status": "v9 source-derived176identity repair selected; one fresh-boot retry",
+  "status": "v9 consumed: identity guard passed; unexpected firmware message before control publication; offline diagnosis in progress",
   "consumed_attempt": {
     "path": "/home/alice/Desktop/m4rch/out/gfx-native-full-power-trial-v24/candidate/asc-graph-init/boot-ea0dd0a7-6a94-45ed-b0ca-7c85fa993df6/attempt.json",
     "bytes": 51763,
