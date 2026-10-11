@@ -1,0 +1,19 @@
+{
+  "schema": "m4rch.native-notification-generation.v10",
+  "binding": "experiments/t6040-gpu/desktop-integration/t6040-native-boot/wire_native_notification_generation_v10.py",
+  "helper": "experiments/t6040-gpu/desktop-integration/t6040-native-boot/g16_notifications_v10.rs",
+  "binding_order": "After native lifecycle, application generation and recovery attribution",
+  "ownership": [
+    "Device and Bootstrap retain the original shared Notifications Arc",
+    "Each BootData and Execution callback carries its immutable generation token",
+    "A pending notification epoch is created before RTKit rearm; current frontend epoch changes only after fresh graph/open_control success",
+    "Old sticky crash tombstones remain retained; stale callbacks update only their original tombstone",
+    "Frontend failure uses a monotonic generation latch so delayed old timeout cannot erase or poison fresh failure state",
+    "Old File descriptors return ESTALE and retain their VM/mapping state when closed",
+    "Old scheduler jobs cannot enqueue into the fresh application; already submitted jobs are not replayed"
+  ],
+  "actual_restart_call": "DRM worker terminal pipeline-error boundary while engine/runtime locks are held; calls native_restart once per generation; failure remains quarantined; old fences receive the original error",
+  "admission": "No BUNDLE_COMPLETE/POWER_COMPLETE gate is opened by this adapter",
+  "hardware_actions": [],
+  "validation": "Whole integrated external-module compilation belongs to parent; no component tests performed"
+}

@@ -1,0 +1,126 @@
+{
+  "schema": "m4rch.native-whole-integration-status.v10",
+  "status": "whole_source_integrated_and_compiled",
+  "user_direction": "Close known source gaps from Apple driver, integrate whole path, then test complete candidate",
+  "hardware_actions": [],
+  "trial_ready": false,
+  "source_base": "out/gpu-gravity-normal-native-completion-v10-v3",
+  "kernel": "out/gpu-gravity-native-integrated-kernel-v10/linux",
+  "kernel_Image_attempt_2_returncode": 0,
+  "final_kernel_Image_modules_build": {
+    "command": [
+      "make",
+      "-C",
+      "/home/alice/Desktop/m4rch/out/gpu-gravity-native-integrated-kernel-v10/linux",
+      "LLVM=1",
+      "-j8",
+      "Image",
+      "modules"
+    ],
+    "returncode": 0,
+    "hardware_actions": [],
+    "installed": false
+  },
+  "closed_source_gaps": [
+    "native timeline and event stamp identities",
+    "completion notifier ownership and constructor fields",
+    "KSM event flags versus physical core masks",
+    "native scene/state geometry and allocation extents",
+    "factory leakage population from actual cold fuse capture",
+    "runtime PM and coordinate ownership",
+    "native managed RTKit powergate and callback retention",
+    "Apple PRE/POST recovery handshake and retained error attribution",
+    "fresh application graph and stale queue rejection",
+    "generation-aware shared DRM notification routing",
+    "retained recovery event packet drain",
+    "reachable frontend restart and duplicate old error suppression",
+    "shared scheduler capacity/initial seed in hardware and queue owners",
+    "ordinary native MainConfig defaults and sentinel",
+    "retained power-down attempt after recovery failure",
+    "explicit existing opt-in admission and native compute refusal"
+  ],
+  "integration_remaining": [
+    "package/install matching kernel and joined driver with combined boot/submission/recovery launcher",
+    "fresh boot reservations/provider checks and complete hardware trial"
+  ],
+  "unproved_hardware_properties": [
+    "GPU execution and changed triangle pixels",
+    "firmware recovery PRE/POST completion on this machine",
+    "BUSY clearance and safe graph rebind",
+    "cold DATA restoration recovery hypothesis",
+    "repeatable restart"
+  ],
+  "retention_policy": "Current consumed boot remains retained; no new hardware actions or reboot request",
+  "kernel_artifacts": [
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-native-integrated-kernel-v10/linux/arch/arm64/boot/Image",
+      "bytes": 28342784,
+      "sha256": "787c13f5e9701053f1761212bd5d895e3cc40e186f3ac40d84c43f5436c41be6"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-native-integrated-kernel-v10/linux/Module.symvers",
+      "bytes": 1087098,
+      "sha256": "40864c61acf36b33c10a5167259e1d10debebc09eef8eadd7b871fd440868960"
+    }
+  ],
+  "first_trial_scope": {
+    "render": "Fixed paired TA/3D triangle with real native PM allocation and growth disabled",
+    "recovery": "Retain old generation; source-bound recovery handshake and complete owned shutdown/restart",
+    "excluded": "Same-generation continuation after native allocator recovery; general desktop workload growth not yet implemented",
+    "admission": "Existing native_t6040_experiment=1 opt-in; POWER_COMPLETE and fallible constructors retained, broad completeness flags false; native compute refuses before allocation/publication"
+  },
+  "validation_order": [
+    "Resolve current source gaps using local Apple driver",
+    "Compose all bindings into one pinned driver source",
+    "Compile whole driver against final kernel Image/modules build",
+    "Prepare coherent combined boot/submission/recovery trial",
+    "Only then request fresh boot/hardware test"
+  ],
+  "whole_module_build": {
+    "schema": "m4rch.native-integrated-build.v10",
+    "command": [
+      "make",
+      "-C",
+      "/home/alice/Desktop/m4rch/out/gpu-gravity-native-integrated-kernel-v10/linux",
+      "M=/home/alice/Desktop/m4rch/out/gpu-gravity-native-integrated-v14/build-owner",
+      "LLVM=1",
+      "W=1",
+      "modules"
+    ],
+    "returncode": 0,
+    "log": {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-native-integrated-v14/integrated-module-build.log",
+      "bytes": 35815,
+      "sha256": "77f5b8016b38470d86a4b4dca1ef03b4c990791179ba32ace6c4e253192c038e"
+    },
+    "source_receipt": {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-native-integrated-v14/integrated-source-receipt.json",
+      "bytes": 53151,
+      "sha256": "71e473e26ceb93095bc2950671ffe0c4ac653df80a24ab54fb96b0d50eebe98e"
+    },
+    "hardware_actions": [],
+    "module_loaded": false,
+    "trial_ready": false,
+    "changed_sources": [],
+    "module": {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-native-integrated-v14/build-owner/asahi_m4.ko",
+      "bytes": 983664,
+      "sha256": "6c00285636b74c3e7ee11bf4f3a0260e465b65255217a37b6e780b6b02b03da7"
+    },
+    "whole_module_built": true
+  },
+  "source_stage": "out/gpu-gravity-native-integrated-v14",
+  "whole_module_warnings": {
+    "count": 121,
+    "kinds": "dead-code and unreachable-public-item warnings under W=1",
+    "errors": 0
+  },
+  "known_mandatory_source_gaps_for_fixed_triangle": [],
+  "source_limitations": [
+    "native allocator growth/partial recovery6/7 and same-generation allocator restoration unsupported",
+    "optional firmware service objects and active-GTP overrides excluded from fixed first triangle",
+    "Apple numerical/debug seed replaced by consistent explicitly owned Linux policy",
+    "crashed/nonrunning RTKit cannot currently force CPU shutdown",
+    "strict prior OFF witness still required for fresh fixed-VA application graph"
+  ]
+}

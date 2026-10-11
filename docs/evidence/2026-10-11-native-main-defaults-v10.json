@@ -1,0 +1,98 @@
+{
+  "schema": "m4rch.native-main-defaults.v10",
+  "hardware_actions": [],
+  "driver_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "vtable_address_point": "0xfffffe0007eae398",
+  "default_usc_tgmem_provider": "0xfffffe00089d7060",
+  "main_300_default": 4,
+  "main_304": "accelerator ed94 active-GTP override absent, fresh typed zero",
+  "main_479_489": "accelerator ecf0 explicitly zeroed at89679d0",
+  "main_3e0": 255,
+  "main_3e1_471": "unconditional native clear144bytes",
+  "main_2d8_2f8": "optional f928/f930 services absent; fresh zero service pointers",
+  "hardware_scheduler": {
+    "2614": "same owned initial timestamp as every KSM queue/event converter",
+    "261c": "same owned capacity as every KSM queue/event converter",
+    "linux_capacity": 256,
+    "apple_seed_numeric_origin": "not claimed"
+  },
+  "notifier": {
+    "record_limit": "f528 override or718, clamped bynonzero f530",
+    "default_limit": 80,
+    "command_buffer_rotating_slots": 36,
+    "linux_record_policy": "fresh retained0x100 record per Work"
+  },
+  "bounded_first_triangle_admission": {
+    "identified_source_gaps_closed_by": [
+      "wire_native_scheduler_policy_v10.py",
+      "wire_native_main_defaults_v10.py"
+    ],
+    "recommended_gate": "existing explicit native_t6040_experiment plus fallible owned providers and extents, POWER_COMPLETE and no-growth restrictions",
+    "historical_gate": "BUNDLE_COMPLETE=false predates composed ownership and would reject before construction",
+    "broad_completeness_booleans": "leave false; they describe broader native completeness",
+    "excluded_source_branches": [
+      "f928/f930 optional service providers",
+      "active-GTP override",
+      "growth recovery allocators6/7",
+      "Apple debug initial-seed policy"
+    ],
+    "hardware_validation_remaining": [
+      "firmware admission",
+      "scheduler fetch/execution",
+      "completion retirement",
+      "nonzero triangle pixels"
+    ]
+  },
+  "ranges": [
+    {
+      "start": "0xfffffe0008967348",
+      "end": "0xfffffe0008967350",
+      "sha256": "cd346fc28634af8e7049301945913e19a85be330bcce78be16f7ce1fab47553e"
+    },
+    {
+      "start": "0xfffffe0008967758",
+      "end": "0xfffffe000896777c",
+      "sha256": "8ab1195921945a97cfb6763b1a171064d888aa414e0dc71f183e611acbd2f8e2"
+    },
+    {
+      "start": "0xfffffe0008967970",
+      "end": "0xfffffe00089679d4",
+      "sha256": "3b33c7760a40b309bd739062df86debb1ec649c2003fad62c460d7669c4e6923"
+    },
+    {
+      "start": "0xfffffe0008972714",
+      "end": "0xfffffe0008972724",
+      "sha256": "f2e21b27cfdaa0b80b4f3e26a58a9e4fc8e8763d54c8a98f39125a4c955e2c37"
+    },
+    {
+      "start": "0xfffffe00089aa434",
+      "end": "0xfffffe00089aa44c",
+      "sha256": "5f415667f9b587a0a7e703789af4e84dab313c36202cabfb24d04ea8353ab2f5"
+    },
+    {
+      "start": "0xfffffe00089cd2dc",
+      "end": "0xfffffe00089cd41c",
+      "sha256": "aca43612c307cabfdbb8254689086ba30969598a8543328b79cd67bb209354fa"
+    },
+    {
+      "start": "0xfffffe00089cd4bc",
+      "end": "0xfffffe00089cd50c",
+      "sha256": "10d80c3935dfd2ec5365b86b4715e5f6fa778bd2e130b4ca9f3e13771cc4aa9e"
+    },
+    {
+      "start": "0xfffffe0008987718",
+      "end": "0xfffffe0008987744",
+      "sha256": "231de89649a44cafb5061da9476243d4e730c34661c0668d22517bcdadf522ec"
+    },
+    {
+      "start": "0xfffffe00089d9c08",
+      "end": "0xfffffe00089d9c14",
+      "sha256": "8cedf9f1d6dc88d7443a7ae552b6653595a2bee6c98c0c66a1f4e9623b7af29c"
+    }
+  ],
+  "limitations": [
+    "Source owner propagation, not hardware execution proof",
+    "Optional service and active-GTP overrides deliberately absent",
+    "Full native bundle completeness remains a separate historical claim"
+  ]
+}
