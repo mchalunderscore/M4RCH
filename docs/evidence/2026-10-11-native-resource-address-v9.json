@@ -1,0 +1,48 @@
+{
+  "schema": "m4rch.native-resource-address-v9.v1",
+  "cases": 128,
+  "actual_native_getters": [
+    "0x8a0ef74",
+    "0x89f11e4"
+  ],
+  "pins": [
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/g16_t6040_resource_address_v9.rs",
+      "sha256": "8c0fb1a37cb90c521e8043f8f42c612c3d217d5521a5f45b6e2b8708a9b15c8c",
+      "bytes": 1106
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/qualify_resource_address_v9.py",
+      "sha256": "0a43c5d44f5e1ab4e52ff3accf37fc0a7f417f838b893ce215e109cc5e712119",
+      "bytes": 4370
+    },
+    {
+      "path": "/boot/GPUC003/private-apple/com.apple.AGXG16X",
+      "sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+      "bytes": 1566304
+    }
+  ],
+  "hardware_actions": [],
+  "runtime_enabled": false,
+  "conclusion": "Slot160 is user/aperture-relative device mapping address, not firmware-root alias. Native flag bit0 selects wrapping base subtraction. Caller must bind actual owning aperture and retain mapping; Linux context_base equivalence still requires selected resource aperture binding.",
+  "qualification_receipt": {
+    "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-native-resource-address-v9/qualification.json",
+    "sha256": "6d34dbf71a2baa0f66deabb39086ba5a3adee1228b886c4025c3aba2d00dc977"
+  },
+  "vtable_evidence": {
+    "class": "IOGPUMemoryMap",
+    "vtable": "0xfffffe0008479d20",
+    "address_point_delta": 16,
+    "slot_158": "0xfffffe000a803200",
+    "slot_160": "0xfffffe000a803240",
+    "slot_158_semantics": "Returns memory-map object +0x28",
+    "slot_160_baseclass_semantics": "Tailcalls slot0x158; AGX subclasses optionally subtract owning aperture base"
+  },
+  "vtable_owner": {
+    "path": "/home/alice/Desktop/m4rch/out/private-apple/com.apple.iokit.IOGPUFamily.fileset-macho",
+    "sha256": "4fd8fd76c166696856e6b2c7450714272aacd5af821f28894a46e7e533c8fbed"
+  },
+  "integration_route": "Descriptor TA inputs use the selected mapping user address; fragment inputs use its device address. No extra global firmware-root mapping follows from these getter calls. Ordinary Linux aperture base must be bound to the actual retained VM resource mapping, rather than copied from an unrelated resource.",
+  "boot_id_checked": "14343c22-f598-4eae-974a-b0edf7009530",
+  "hardware_trial_state": "v24 READY; current boot consumed and untouched"
+}
