@@ -1,0 +1,88 @@
+{
+  "schema": "m4rch.native-ordinary-mesa-policy.v10",
+  "pins": [
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-native-descriptor-provider-v10-qualification-v4/named-qualification.json",
+      "bytes": 3801,
+      "sha256": "09ec242a87e362aa2939cffc5164a75032d3de1c3a9f0ab6f28c786aeaeb6931"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/g16_t6040_descriptor_v10.rs",
+      "bytes": 5545,
+      "sha256": "44b84fbbc489ab411a90013bb65f7f0cd07ce0b58a213536a2e5068602d863f6"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/g16_t6040_descriptor_provider_v10.rs",
+      "bytes": 5787,
+      "sha256": "d60d2b861808c4dabed367a2e5bd18d93a259c54ed44deaf59cd4ae18751600b"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/g16_t6040_render_policy_v9.rs",
+      "bytes": 2327,
+      "sha256": "a08564f3eeff5aa7a0c6fb4634799f71f4e8137d259805af06d2cb9016728220"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/g16_t6040_rce_ram_v9.rs",
+      "bytes": 5168,
+      "sha256": "9adb24715a9799ee846e490120f058b1525e52f06f51895e1c5b29df3f9ae54b"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/qualify_descriptor_provider_v10.py",
+      "bytes": 12635,
+      "sha256": "713ea91f37572e9bdb9c45a1336a69fce9d41a196c8d578c53cd5351c41a6dd0"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-native-rce-typed-v9-qualification-v2/qualification.json",
+      "bytes": 17261,
+      "sha256": "4ddab1e78c79b0ab0f4679a653375137f66a164fa8550694c35ed18ebee5280f"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/source/src/asahi/vulkan/hk_queue.c",
+      "bytes": 33266,
+      "sha256": "8f528cdbfb9c8d44ba6a69bc99a7ca493ffc9def9649ef1d1110a6dd9d245fa0"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/source/src/asahi/genxml/cmdbuf.xml",
+      "bytes": 50929,
+      "sha256": "5ec8b2de0933f0be31857dcfc112815d7a0a9f0a6921145f546aa566e9ac7da3"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v9-clock/source/linux/drivers/gpu/drm/asahi/g16_drm.rs",
+      "bytes": 69806,
+      "sha256": "691df949cdc4c88d4b48c3b03f1b60367f06f28f13ff22ddc20f33de93cbdc60"
+    }
+  ],
+  "PPP": {
+    "native_source_range": "89de29c..89de310 and89df4d8..4dc",
+    "formula": "(descriptor113a&1 ?0x600e:2) | (descriptor1140&1) | ((accelerator6d0>>7)&0x200); context special mode excluded",
+    "Mesa_fields": {
+      "OpenGL": 0,
+      "enable_W_clamp": 1,
+      "default_point_size": 8,
+      "fixed_point_format": 9
+    },
+    "ordinary_supported": [
+      2,
+      3,
+      514,
+      515
+    ],
+    "Vulkan_caller": 514,
+    "fixed_point_provider": "Typed ppp_bit9 boolean to accelerator6d0bit16; caller checks per-device consistency.",
+    "refused": "disabled W clamp,default point size,all unknown bits"
+  },
+  "sample_TIB": "Checked sample_size*utile_width*utile_height*samples /2048 ceil equals supplied blocks, max64; sample byte count aligned8; native descriptor740 and register10051 exactly qualified.",
+  "tile_policy": "Layered bit0 and process-empty bit16 match Parameters.tile_config; PRIMARY native process-empty source descriptor88d lowbit, NOT88c. Partial88e/88f remains controller-owned.",
+  "connected_lifecycle": "Prepare seeds both command8ce/2168 and descriptor e10/100. RCE\u2192envelope retains same lowword. Highword descriptor86c.80connected checks; SKU caller remains separate.",
+  "qualifications": {
+    "typed_native_provider_whole_comparisons": 96,
+    "varied_renders": 40,
+    "RCE_envelope_runs": 80,
+    "named_register_checks": 2400,
+    "borrowed_whole_checks": 80,
+    "refusals": 600
+  },
+  "normal_runtime_enabled": false,
+  "hardware_actions": [],
+  "nonzero_sampler_supported": false
+}

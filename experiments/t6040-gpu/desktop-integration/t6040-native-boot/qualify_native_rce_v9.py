@@ -3,13 +3,13 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[4];sys.path.insert(0,str(ROOT/'experiments/t6040-gpu'))
 import importlib.util
 spec=importlib.util.spec_from_file_location('prepare',ROOT/'experiments/t6040-gpu/prepare-native-sksm-registers.py');p=importlib.util.module_from_spec(spec);spec.loader.exec_module(p)
-out=ROOT/'out/gpu-gravity-native-rce-typed-v9-qualification';out.mkdir(exist_ok=True)
+out=ROOT/'out/gpu-gravity-native-rce-typed-v9-qualification-v2';out.mkdir(exist_ok=True)
 rs='''#[path="/home/alice/Desktop/m4rch/out/private-apple/native-rce-semantic-v9.rs"] mod g16_native_rce_semantic_v9;
 #[path="/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/g16_t6040_rce_ram_v9.rs"] mod typed;
 use std::{env,fs};
 fn q(d:&[u8],o:usize)->u64{u64::from_le_bytes(d[o..o+8].try_into().unwrap())}
 fn main(){let a:Vec<String>=env::args().collect();let mut d=fs::read(&a[1]).unwrap();let pc=u64::from_str_radix(&a[4],16).unwrap();let mapped=u64::from_str_radix(&a[5],16).unwrap();let kind=if pc==0xfffffe00089dd2c4{typed::Kind::Tiling}else{typed::Kind::Fragment};let command_gpu=q(&d,0x26000+if pc==0xfffffe00089dd2c4{0xfa0}else{0x440});
-let providers=typed::Providers{gpu_clusters:q(&d,0x4e4) as u32,address_bit47:q(&d,0x6d0)&(1<<47)!=0,descriptor_policy:d[0x6d9],fragment_policy:d[0x111a8],controller_mode:q(&d,0x29980) as u32,controller_feature:q(&d,0x29810) as u32,command_gpu,parameter_gpu:mapped};
+let providers=typed::Providers{gpu_clusters:q(&d,0x4e4) as u32,address_bit47:q(&d,0x6d0)&(1<<47)!=0,ppp_bit9:q(&d,0x6d0)&(1<<16)!=0,descriptor_policy:d[0x6d9],fragment_policy:d[0x111a8],controller_mode:q(&d,0x29980) as u32,controller_feature:q(&d,0x29810) as u32,command_gpu,parameter_gpu:mapped};
 let mut command:[u8;0x3000]=d[0x22000..0x25000].try_into().unwrap();let mut descriptor:[u8;0x1800]=d[0x26000..0x27800].try_into().unwrap();let context:[u8;0x100]=d[0x2c000..0x2c100].try_into().unwrap();let scene:[u8;0x100]=d[0x38000..0x38100].try_into().unwrap();let mut scratch=[0;0x400];
 let mut backing=typed::Backing{command:&mut command,descriptor:&mut descriptor,scratch:&mut scratch,context:&context,scene:&scene,providers};backing.produce(kind).unwrap();d[0x22000..0x25000].copy_from_slice(&command);d[0x26000..0x27800].copy_from_slice(&descriptor);fs::write(&a[3],d).unwrap();}
 '''.replace('/home/alice/Desktop/m4rch',str(ROOT))
@@ -33,7 +33,7 @@ for kind in ('ta','3d'):
   reloc={0x190:ns['O'],0xb90:ns['R1'],0x918:0x238000,0x1230:0x238000,0x1428:ns['R1'],0xfa0:0x830000000+i*0x10000,0x440:0x830000000+i*0x10000}
   for off,v in reloc.items():struct.pack_into('<Q',desc,off,v)
   context=bytearray(rng.randbytes(0x100));scene=bytearray(rng.randbytes(0x100));context[0x54]=i%2;scene[0x54]=(i//2)%2
-  m.mem_write(ns['O'],bytes(context));m.mem_write(0x238000,bytes(scene));m.mem_write(C,bytes(0x3000));m.mem_write(D,bytes(desc));m.mem_write(A+0x6d0,struct.pack('<Q',(i%2)<<47));m.mem_write(A+0x4e4,struct.pack('<I',1+i%2));m.mem_write(A+0x6d9,bytes([i%2]));m.mem_write(A+0x111a8,bytes([(i//2)%2]));m.mem_write(ns['T']+0x980,struct.pack('<I',(i//4)%2))
+  m.mem_write(ns['O'],bytes(context));m.mem_write(0x238000,bytes(scene));m.mem_write(C,bytes(0x3000));m.mem_write(D,bytes(desc));m.mem_write(A+0x6d0,struct.pack('<Q',((i%2)<<47)|(((i//2)%2)<<16)));m.mem_write(A+0x4e4,struct.pack('<I',1+i%2));m.mem_write(A+0x6d9,bytes([i%2]));m.mem_write(A+0x111a8,bytes([(i//2)%2]));m.mem_write(ns['T']+0x980,struct.pack('<I',(i//4)%2))
   mapped=0x870000000+i*0x10000;ns['mapped']=mapped;ns['pending']=None;ns['entries'].clear();ns['calls'].clear();ns['map_calls']=0
   (out/'input.bin').write_bytes(bytes(m.mem_read(0x200000,0x50000)))
   for r in ns['regs']:m.reg_write(r,0)

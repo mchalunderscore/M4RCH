@@ -8,6 +8,8 @@ use super::g16_native_rce_semantic_v9::{self as native, Error, Ram, State};
 pub struct Providers {
     pub gpu_clusters: u32,
     pub address_bit47: bool,
+    /// Native accelerator6d0 bit16 becomes TA PPP register bit9.
+    pub ppp_bit9: bool,
     pub descriptor_policy: u8,
     pub fragment_policy: u8,
     pub controller_mode: u32,
@@ -48,7 +50,7 @@ impl Ram for Backing<'_> {
             (0x200000,8)=>0x22a000,
             (0x2004e4,4)=>self.providers.gpu_clusters as u64,
             (0x2005b0,8)=>0x228000,
-            (0x2006d0,8)=>u64::from(self.providers.address_bit47)<<47,
+            (0x2006d0,8)=>(u64::from(self.providers.address_bit47)<<47)|(u64::from(self.providers.ppp_bit9)<<16),
             (0x2006d9,1)=>self.providers.descriptor_policy as u64,
             // Linux does not install Apple's optional CPU register overrides.
             (0x20ed48,1)|(0x20ed4c,8)|(0x20ed54,8)=>0,
