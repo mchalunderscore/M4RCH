@@ -1,0 +1,24 @@
+{
+  "schema": "m4rch.native-timestamp-first-job-extent.v24",
+  "hardware_actions": [],
+  "native_source_proves": {
+    "hardware28_base": "0xfffffc2181400000",
+    "GPU_to_FW_conversion": "identity"
+  },
+  "normal_linux_driver_policy": {
+    "window_bytes": 67108864,
+    "reserve_timestamp": "Returns owned page-aligned object subranges, not whole-window backing",
+    "map_timestamp": "Maps the actual requested BO physical extent with firmware shared RW protection"
+  },
+  "selected_cold_trial_policy": {
+    "mapped_bytes": 16384,
+    "backing": "One additional fresh zero Linux-owned RAM page",
+    "adjacent_pages": "Unmapped",
+    "all_64MiB_backed": false,
+    "existing_work_stamp_addresses": "Preserved and still mapped through their original owners"
+  },
+  "first_job_confinement_proven": false,
+  "uncertainty": "We have not bound every first-job firmware timestamp access or special-object offset to the new16KiBpage. Queue/context slot confinement must not be claimed. Native aperture base binding and actual backing are proved; chosen firstobjectextent is experimental.",
+  "diagnostic_limit": "An out-of-page access may still fault or stall this trial; mapping onepage alone does not guarantee dispatch or rendering.",
+  "trial_ready": false
+}

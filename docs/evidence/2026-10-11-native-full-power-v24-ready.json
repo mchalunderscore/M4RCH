@@ -1,0 +1,59 @@
+{
+  "schema": "m4rch.native-full-power-v24-root-ready.v1",
+  "ready": true,
+  "meaning": "Offline candidate selected for one future fresh-boot trial; no hardware success claimed",
+  "candidate": "/home/alice/Desktop/m4rch/out/gfx-native-full-power-trial-v24/candidate",
+  "owner": {
+    "path": "/home/alice/Desktop/m4rch/out/gfx-native-full-power-trial-v24/prepared-owner-v8/asc-graph-init.ko",
+    "bytes": 7983448,
+    "sha256": "ca7b96c72cf6c77e791e973505671bc1becab1108363f697d5de2d84007388be"
+  },
+  "candidate_receipt_sha256": "e26799ef5b223f1df7a0bc4a23b5fbc6de135b7ad049702fb1c4ef10abde9a72",
+  "candidate_preparation_sha256": "4edecbbdab9263b018c0b7531f2996c0a76f04665186f085eb2049f0d8210b20",
+  "source_closure": {
+    "path": "/home/alice/Desktop/m4rch/out/gfx-native-full-power-trial-v24/source-closure-v8-final.json",
+    "sha256": "536590114074f8f6312e5bf942167cafe6a7596696f61bf88f6098ff670b91c0"
+  },
+  "final_declared_pins_checked": 34,
+  "module_build_pins_checked": 98,
+  "launcher_cases": 103,
+  "off_qualifier_cases": 12,
+  "off_readback_flows": 4,
+  "current_consumed_boot": "14343c22-f598-4eae-974a-b0edf7009530",
+  "manual_reboot_required": true,
+  "hardware_actions": [],
+  "hardware_requirements": [
+    "Fresh kernel/module/DT admission",
+    "Fresh raw ADT/provider agreement before GPU start",
+    "One cold native triangle submission and immutable capture",
+    "One bounded OFF retirement; no postdraw wake/rejoin/replay",
+    "Retain owners on ambiguous state"
+  ],
+  "assumptions": [
+    "Linux standard physical counter origin equivalence to Apple custom offset epoch remains experimental",
+    "one16KiB timestamp page covers first-job accesses; complete64MiB aperture not mapped",
+    "triangle payloads unchanged; GPU execution and rendering await fresh trial"
+  ],
+  "gpu_execution_verified": false,
+  "triangle_rendered": false,
+  "rebootless_restart_verified": false,
+  "desktop_verified": false,
+  "fresh_preflight_command": [
+    "sudo",
+    "-n",
+    "python3",
+    "/home/alice/Desktop/m4rch/experiments/t6040-gpu/gfx-native-full-power-trial-v24/preflight-fresh.py",
+    "/home/alice/Desktop/m4rch/out/gfx-native-full-power-trial-v24/candidate",
+    "/home/alice/Desktop/m4rch/out/gfx-native-full-power-trial-v24/fresh-preflight-NEXTBOOT.json"
+  ],
+  "trial_command": [
+    "sudo",
+    "-n",
+    "python3",
+    "/home/alice/Desktop/m4rch/experiments/t6040-gpu/gfx-native-full-power-trial-v24/run-cold-render.py",
+    "/home/alice/Desktop/m4rch/out/gfx-native-full-power-trial-v24/candidate",
+    "--graph",
+    "--run"
+  ],
+  "trial_output_template": "/home/alice/Desktop/m4rch/out/gfx-native-full-power-trial-v24/candidate/asc-graph-init/boot-<fresh-boot-id>/target-after.png"
+}
