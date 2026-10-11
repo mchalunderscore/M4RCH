@@ -8,6 +8,7 @@ and exact frozen object are checked, without claiming transitive source identity
 import argparse
 import hashlib
 import json
+import struct
 from pathlib import Path
 
 
@@ -35,9 +36,37 @@ def review(receipt, output):
     old = Path(source['source'])
     preserved = []
     for name in ['job-data.h', 'render-data.h', 'render-backing-map.h',
-                 'joined-context-init.h', 'graph-before.bin', 'backing.bin']:
+                 'joined-context-init.h', 'backing.bin']:
         assert (stage/name).read_bytes() == (old/name).read_bytes(), name
         preserved.append(dict(name=name, sha256=digest(stage/name)))
+    if (stage/'slot10-patch.json').exists():
+        patch=json.loads((stage/'slot10-patch.json').read_text())
+        for pin in [*patch['source_pins'],patch['script_pin'],*patch['output_pins']]:
+            path=Path(pin['path']);assert path.stat().st_size==pin['bytes'] and digest(path)==pin['sha256']
+        base=Path(patch['source_pins'][0]['path']).parent
+        before=(base/'graph-before.bin').read_bytes();after=(stage/'graph-before.bin').read_bytes()
+        expected=bytearray(before)
+        struct.pack_into('<QQIIQI',expected,0x87d0,0x5003c0000,0xfffffc2001b00000,0x4000,0x4000,0,0)
+        if (stage/'slot14-patch.json').exists():
+            patch14=json.loads((stage/'slot14-patch.json').read_text())
+            for pin in [*patch14['source_pins'],patch14['script_pin'],*patch14['output_pins']]:
+                path=Path(pin['path']);assert path.stat().st_size==pin['bytes'] and digest(path)==pin['sha256']
+            struct.pack_into('<QQIIQI',expected,0x8870,0x500658000,0xfffffc2001b20000,0x10000,0x10000,0,0)
+            assert set(patch14['changed_source_files'])=={'graph-contract.h','graph-receipt.json','graph-before.bin'}
+        assert after==expected and len(before)==len(after)
+        graph=json.loads((stage/'graph-receipt.json').read_text())
+        leaves=[x for x in graph['mmio_leaves'] if x['physical']==0x5003c0000]
+        assert leaves==[dict(physical=0x5003c0000,gpu_va=0xfffffc2001b00000,readonly=True)]
+        assert graph['mapped_pages']==(175 if (stage/'slot14-patch.json').exists() else 171)
+        assert ' { 0x5003c0000ULL, 0xfffffc2001b00000ULL, 0 },' in (stage/'graph-contract.h').read_text()
+        allowed={'graph-contract.h','graph-receipt.json','graph-before.bin'}
+        assert set(patch['changed_source_files'])==allowed
+        for name in data['source_changes_from_v9']:
+            assert name in allowed
+        preserved.append(dict(name='graph-before.bin',sha256=digest(stage/'graph-before.bin'),only_change='Exact slot10 and optional slot14 descriptors; read-only leaves added'))
+    else:
+        assert (stage/'graph-before.bin').read_bytes()==(old/'graph-before.bin').read_bytes()
+        preserved.append(dict(name='graph-before.bin',sha256=digest(stage/'graph-before.bin')))
     assert data['page_ownership']['current176'] == 176
     assert not data['postdraw_wake_reachable']
     assert not data['postdraw_on_symbol_present']

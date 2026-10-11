@@ -1,27 +1,27 @@
 {
   "schema": "m4rch.native-full-power-v24-root-ready.v1",
-  "ready": false,
+  "ready": true,
   "meaning": "Offline candidate selected for one future fresh-boot trial; no hardware success claimed",
-  "candidate": "/home/alice/Desktop/m4rch/out/gfx-native-full-power-trial-v24/candidate-v9",
+  "candidate": "/home/alice/Desktop/m4rch/out/gfx-native-full-power-trial-v24/candidate-v11",
   "owner": {
-    "path": "/home/alice/Desktop/m4rch/out/gfx-native-full-power-trial-v24/prepared-owner-v9/asc-graph-init.ko",
-    "bytes": 8098448,
-    "sha256": "78c8d0f91580e8f58fff4797f067a6e45009ae381fcea86a76bf37316ac573a0"
+    "path": "/home/alice/Desktop/m4rch/out/gfx-native-full-power-trial-v24/prepared-owner-v11/asc-graph-init.ko",
+    "bytes": 8098576,
+    "sha256": "bf6a8968c9b3312326a058aed8f4b330e0343e346d34525892128b874dd7b96b"
   },
-  "candidate_receipt_sha256": "63ec3e191205585b1a2a76bea26e0eca2bca2c4e39e07d37537720dceae0108c",
-  "candidate_preparation_sha256": "a4530b9fc995fa82000d480ed17a4db4c73a64b86ace376857108022d8990880",
+  "candidate_receipt_sha256": "bdb6b6ee543d7df1bda57ff8658d787c74ebf8ecc2deda614db7dd4328f435cd",
+  "candidate_preparation_sha256": "0575a2723ada26c1ce6c5c5c3070070b23fba2a2d31c661c934842de9479fa4a",
   "source_closure": {
-    "path": "/home/alice/Desktop/m4rch/out/gfx-native-full-power-trial-v24/source-closure-v9-final.json",
-    "bytes": 4421,
-    "sha256": "834fc926f280e3bcca9af766b66415a1be6d6d8e75415f4064cae01c8885be53"
+    "path": "/home/alice/Desktop/m4rch/out/gfx-native-full-power-trial-v24/source-closure-v11-final.json",
+    "bytes": 32957,
+    "sha256": "27298fd7acf1f7262a64276eb8fd225216a906dd6c75078db53d4fcd81c614fd"
   },
-  "final_declared_pins_checked": 121,
+  "final_declared_pins_checked": 157,
   "module_build_pins_checked": 99,
-  "launcher_cases": 104,
+  "launcher_cases": 105,
   "off_qualifier_cases": 12,
   "off_readback_flows": 4,
   "current_consumed_boot": "af201416-45d8-47ab-937d-7177942b2248",
-  "manual_reboot_required": false,
+  "manual_reboot_required": true,
   "hardware_actions": [],
   "hardware_requirements": [
     "Fresh kernel/module/DT admission",
@@ -33,7 +33,8 @@
   "assumptions": [
     "Linux standard physical counter origin equivalence to Apple custom offset epoch remains experimental",
     "one16KiB timestamp page covers first-job accesses; complete64MiB aperture not mapped",
-    "triangle payloads unchanged; GPU execution and rendering await fresh trial"
+    "triangle payloads unchanged; GPU execution and rendering await fresh trial",
+    "Apple native physical ranges/extent; firmware read-only flags experimentally selected"
   ],
   "gpu_execution_verified": false,
   "triangle_rendered": false,
@@ -44,20 +45,20 @@
     "-n",
     "python3",
     "/home/alice/Desktop/m4rch/experiments/t6040-gpu/gfx-native-full-power-trial-v24/preflight-fresh.py",
-    "/home/alice/Desktop/m4rch/out/gfx-native-full-power-trial-v24/candidate-v9",
-    "/home/alice/Desktop/m4rch/out/gfx-native-full-power-trial-v24/fresh-preflight-NEXTBOOT-v9.json"
+    "/home/alice/Desktop/m4rch/out/gfx-native-full-power-trial-v24/candidate-v11",
+    "/home/alice/Desktop/m4rch/out/gfx-native-full-power-trial-v24/fresh-preflight-NEXTBOOT-v11.json"
   ],
   "trial_command": [
     "sudo",
     "-n",
     "python3",
     "/home/alice/Desktop/m4rch/experiments/t6040-gpu/gfx-native-full-power-trial-v24/run-cold-render.py",
-    "/home/alice/Desktop/m4rch/out/gfx-native-full-power-trial-v24/candidate-v9",
+    "/home/alice/Desktop/m4rch/out/gfx-native-full-power-trial-v24/candidate-v11",
     "--graph",
     "--run"
   ],
-  "trial_output_template": "/home/alice/Desktop/m4rch/out/gfx-native-full-power-trial-v24/candidate-v9/asc-graph-init/boot-<fresh-boot-id>/target-after.png",
-  "status": "v9 consumed: identity guard passed; unexpected firmware message before control publication; offline diagnosis in progress",
+  "trial_output_template": "/home/alice/Desktop/m4rch/out/gfx-native-full-power-trial-v24/candidate-v11/asc-graph-init/boot-<fresh-boot-id>/target-after.png",
+  "status": "v11 slot10+14 correction selected; one fresh-boot triangle/OFF trial",
   "consumed_attempt": {
     "path": "/home/alice/Desktop/m4rch/out/gfx-native-full-power-trial-v24/candidate/asc-graph-init/boot-ea0dd0a7-6a94-45ed-b0ca-7c85fa993df6/attempt.json",
     "bytes": 51763,
@@ -65,5 +66,7 @@
   },
   "cold_identity_cases": 531,
   "old174_vs176_failure_reproduced": true,
-  "repair": "Guard count derives from actual owned array; no draw/power payload changes"
+  "repair": "Guard count derives from actual owned array; no draw/power payload changes",
+  "slot10_and14_corrected": true,
+  "offline_null_fault_reproduced": true
 }

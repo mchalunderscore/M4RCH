@@ -34,7 +34,7 @@ def qualify_runtime_active(delta,cycle=False):
   for record in values:qualify_runtime_active_row(record,record['phase'],True)
   require(only('m4rch gfx-postdraw-native-cycle: phase=intent ')<locations[0]<only('m4rch gfx-postdraw-native-cycle: phase=admission-ready ')<only('m4rch gfx-native-idle-policy: phase=intent ')<locations[1]<only('m4rch gfx-native-idle-policy: phase=baseline ') and only('m4rch gfx-postdraw-native-cycle: phase=cpu-stop-return ')<locations[2]<locations[3]<only('m4rch gfx-postdraw-native-cycle: phase=off-intent '),'Runtime cycle predicate chronology differs')
  else:
-  require(len(values)==6 and all(r.get('phase')=='cold-guard' for r in values),'Runtime cold guard count differs')
+  require(len(values)==6 and all(r.get('phase')=='cold-guard' for r in values),'Incomplete successful pipeline: expected six runtime admission stages')
   for i,record in enumerate(values):qualify_runtime_active_row(record,'cold-guard',i>=4)
   control_intent=only('m4rch gfx-cold-render: phase=control-intent ');control_ready=only('m4rch gfx-cold-render: phase=control-ready ')
   fender_intent=only('m4rch gfx-native-fender-enable: phase=intent ');fender_op=only('m4rch gfx-native-fender-enable-op: ');fender_done=only('m4rch gfx-native-fender-enable: phase=complete ')
@@ -402,6 +402,16 @@ def qualify_pipeline(delta):
  require(positions==sorted(positions),'Cold AP/start/root pipeline order differs')
  trace=qualify_trace_preserved(delta)
  return dict(qualified=True,native_runtime_active=runtime_active,gravity_preASC=preasc,native_Fender_enable=fender,primary_rows=primary,control_rows=controls,draw_rows=draws,state_rows=states,samples=completed,trace_preserved=trace,fresh_application_control=True,one_draw_published=True,gpu_execution_verified=False,rendering_verified=False,nominal_post_submit_deadline_ms=15000,actual_last_sample_ms=elapsed[-1])
+def terminal_diagnostic(delta):
+ primary=rows(delta,'gfx-cold-render');states=rows(delta,'gfx-cold-render-state')
+ controls=rows(delta,'gfx-cold-render-control');draws=rows(delta,'gfx-cold-render-draw')
+ terminal=[r for r in primary if r.get('phase')=='retained-final']
+ state=[r for r in states if r.get('phase')=='retained-final']
+ return dict(phases=[r.get('phase') for r in primary],terminal=terminal,
+  terminal_state=state,identity_capture_observed=any(r.get('identities_captured')==1 for r in states),
+  control_producer_attempted=any(r.get('producer_attempted')==1 for r in controls),
+  draw_publication_observed=any(r.get('work_submitted')==1 for r in draws),
+  success_proved=False,scope='Diagnostic log observations only; complete pipeline qualification remains separate')
 def replays(delta):
  return any(marker in delta for marker in ('recovery-send: endpoint=33 packet=0x86000000000000','prepared_triangle_published=1','gfx-native-ap-repeat-cycle:','gfx-native-ap-repeat-third:'))
 def qualify_publication(delta):
@@ -513,7 +523,7 @@ def analyze(capture,candidate,output):
   n=sum(a!=b for a,b in zip(old,new))
   if n:changed.append(dict(backing_page=i,owned_page=112+i,changed_bytes=n))
  diagnostics=diagnostic_observations(delta)
- result=dict(schema='m4rch.gfx-native-full-power-trial-analysis.v24',boot_id=report['boot_id'],owner_sha256=report['owner_sha256'],candidate_receipt_sha256=report['candidate_receipt_sha256'],source_attempt_sha256=sha(attempt_bytes),log_association=association,pipeline=pipeline,publication=publication,trace_preserved=trace_restore,native_full_power_initialization={name:rows(delta,name) for name in ('full-power-map','full-power-clock','full-power-init')},root_channels=root,firmware_accepted_draw=firmware_accepted,whole_image=image,changed_backing_pages=changed,retained_RAM=retained,receive_journal=dict(header=decoded['header'],authoritative_records_sha256=decoded['authoritative_records_sha256']),raw_post_submit_observations=diagnostics.pop('raw_post_submit_observations'),diagnostic_provenance=diagnostics,
+ result=dict(schema='m4rch.gfx-native-full-power-trial-analysis.v24',boot_id=report['boot_id'],owner_sha256=report['owner_sha256'],candidate_receipt_sha256=report['candidate_receipt_sha256'],source_attempt_sha256=sha(attempt_bytes),log_association=association,terminal_diagnostic=terminal_diagnostic(delta),pipeline=pipeline,publication=publication,trace_preserved=trace_restore,native_full_power_initialization={name:rows(delta,name) for name in ('full-power-map','full-power-clock','full-power-init')},root_channels=root,firmware_accepted_draw=firmware_accepted,whole_image=image,changed_backing_pages=changed,retained_RAM=retained,receive_journal=dict(header=decoded['header'],authoritative_records_sha256=decoded['authoritative_records_sha256']),raw_post_submit_observations=diagnostics.pop('raw_post_submit_observations'),diagnostic_provenance=diagnostics,
   hardware_activity_decoded=False,stage_completion_verified=False,gpu_execution_verified=False,rendering_verified=False,dma_retirement_verified=False,
   qualification='Only this operation delta and exact full retained dumps are analyzed. Firmware cursor movement is acceptance; raw registers/ring changes/events remain unclassified until job/stage association is decoded. Full image comparison is conditional on the source-derived provisional layout. All resources and PM remain retained.')
  # Detect input replacement while computing the result.

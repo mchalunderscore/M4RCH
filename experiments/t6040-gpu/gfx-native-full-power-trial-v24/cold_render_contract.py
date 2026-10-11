@@ -4,7 +4,7 @@ from pathlib import Path
 HERE=Path(__file__).resolve().parent
 sys.path[:0]=[str(HERE.parent),str(HERE.parent/'gfx-native-ap-repeat-cycle')]
 from gfx_native_ap_repeat_cycle_contract import REFUSED_BOOTS,qualify_adt as qualify_base_adt,qualify_linux_dt
-REFUSED_BOOTS=(*REFUSED_BOOTS,'ea0dd0a7-6a94-45ed-b0ca-7c85fa993df6','14343c22-f598-4eae-974a-b0edf7009530','1241f6b5-f2c5-4678-9078-dce0ed367d60','eff8eafa-d845-429e-b98c-9a5f053bcc46','d83451f8-42c7-4466-9983-f1b3fbea5963','5e129c21-c840-4540-b4f7-3a3b3ef2cf56','e7288eeb-bc71-46e3-a0c5-831b77bebb1d','2529a76a-a0ac-4de7-95f8-71b42181042b','f4a7b737-ed3d-4851-8fcd-cac56eb233d7','09a48fe3-925a-46d9-b99b-b9aecc71e6f3')
+REFUSED_BOOTS=(*REFUSED_BOOTS,'af201416-45d8-47ab-937d-7177942b2248','ea0dd0a7-6a94-45ed-b0ca-7c85fa993df6','14343c22-f598-4eae-974a-b0edf7009530','1241f6b5-f2c5-4678-9078-dce0ed367d60','eff8eafa-d845-429e-b98c-9a5f053bcc46','d83451f8-42c7-4466-9983-f1b3fbea5963','5e129c21-c840-4540-b4f7-3a3b3ef2cf56','e7288eeb-bc71-46e3-a0c5-831b77bebb1d','2529a76a-a0ac-4de7-95f8-71b42181042b','f4a7b737-ed3d-4851-8fcd-cac56eb233d7','09a48fe3-925a-46d9-b99b-b9aecc71e6f3')
 FAMILY_KEY='gfx_native_full_power_trial_v24_scope'
 CONTRACT={'version':24,'compile_macro':'GFX_NATIVE_FULL_POWER_TRIAL_V24','automatic_cold_pipeline':True,
  'initial_recovery_cycles':0,'minimum_completed_idle_recovery_cycles':0,'application_restarts':0,
@@ -134,7 +134,7 @@ CONTRACT.update(native_runtime_active_after_Fender=True,native_runtime_active_re
 CONTRACT.update(maximum_native_Fender_disable_calls=1,native_Fender_disable_before_OFF=True,native_Fender_disable_offset=0xd06030,native_Fender_disable_policy='fresh-preserve-set-bit2',native_Fender_disable_after_CPU_stop_and_coordinate_alias_before_OFF_seal=True,native_Fender_disable_transfer_hypothesis=True,native_Fender_disable_MMIO_writes=1,native_Fender_disable_PM_writes=0,native_Fender_disable_dynamic_fresh_snapshot_phase='fender-off-before')
 
 
-CONTRACT.update(native_descriptor_changed_byte_count=19,native_descriptor_flag_slots=[3,22,27,39,41],canonical_native_absent_slot27=True,unused_donor_slot27_PTE_retained=True,graph_fixture_sha256='d66603449c3a07b79388c96cb3dc192e4d37ad85e879742b0ac3e7aa2be774e8',native_descriptor_mappings_changed=False,native_descriptor_backing_changed=False)
+CONTRACT.update(native_descriptor_changed_byte_count=19,native_descriptor_flag_slots=[3,22,27,39,41],canonical_native_absent_slot27=True,unused_donor_slot27_PTE_retained=True,graph_fixture_sha256='b7e9ece36aee56e5d87716eec5348fbc02742f08e6bb1c5f979f285c9406c353',native_descriptor_mappings_changed=False,native_descriptor_backing_changed=False)
 CONTRACT.update(maximum_control_notifications=2,maximum_startup_control_notifications=1,
  maximum_postdraw_idle_policy_commands=1,native_idle_policy_opcode=10,native_idle_policy_bool=1,
  native_idle_policy_record_bytes=64,native_idle_policy_record_index=33,
@@ -175,6 +175,15 @@ def validate_descriptor_data(source):
  require(meta['native_descriptor_correction']['unused_donor_PTE_retained']==dict(physical='0x288d0c000',gpu_va='0xfffffc2000f0c000',writable=False,descriptor_references_leaf=False),'Unused donor PTE policy differs')
  header=(source/'graph-contract.h').read_bytes();namespace=__import__('runpy').run_path(str(HERE.parent/'gfx-native-descriptor-fender-cycle'/'prepare-descriptor-owner.py'),run_name='descriptor_array_check');compiled=namespace['array_parts'](header)[1];require(compiled==raw,'Compiled graph array differs from uploaded arena')
  hardware=next(o for o in meta['objects'] if o['name']=='hardware');require(hardware['input_sha256']==sha(raw[hardware['arena_offset']:hardware['arena_offset']+hardware['input_bytes']]),'Corrected hardware metadata differs')
+ require(struct.unpack_from('<QQIIQI',raw,hardware['arena_offset']+0x640+10*0x28)==(0x5003c0000,0xfffffc2001b00000,0x4000,0x4000,0,0),'Slot10 descriptor differs')
+ require([x for x in meta['mmio_leaves'] if x['physical']==0x5003c0000]==[dict(physical=0x5003c0000,gpu_va=0xfffffc2001b00000,readonly=True)],'Slot10 read-only leaf differs')
+ require(meta['mapped_pages']==175,'Telemetry mapped count differs')
+ require(struct.unpack_from('<QQIIQI',raw,hardware['arena_offset']+0x640+14*0x28)==(0x500658000,0xfffffc2001b20000,0x10000,0x10000,0,0),'Slot14 descriptor differs')
+ require([x for x in meta['mmio_leaves'] if 0x500658000<=x['physical']<0x500668000]==[dict(physical=0x500658000+i*0x4000,gpu_va=0xfffffc2001b20000+i*0x4000,readonly=True) for i in range(4)],'Slot14 read-only leaves differ')
  return True
 
 CONTRACT.update(postdraw_management_rejoin_only=False,postdraw_OFF_terminal=True,strict_management_rejoin_ON_unchanged=False,fresh_performance_map_before_ASC_START=True,performance_map_words=16,full_power_writer_before_root_publication=True,clock_policy='architectural-counter-origin-scaled-to-24MHz',timestamp_first_page_bytes=16384,timestamp_aperture_extent_experimental=True,normal_T6040_boot_qualified=False)
+
+CONTRACT.update(telemetry_read_slot10=True,telemetry_read_slot10_physical=0x5003c0000,telemetry_read_slot10_va=0xfffffc2001b00000,telemetry_read_slot10_bytes=16384,telemetry_read_slot10_readonly_experimental=True)
+
+CONTRACT.update(telemetry_fallback_slot14=True,telemetry_fallback_slot14_physical=0x500658000,telemetry_fallback_slot14_va=0xfffffc2001b20000,telemetry_fallback_slot14_bytes=65536,telemetry_fallback_slot14_readonly_experimental=True)

@@ -1,0 +1,234 @@
+{
+  "schema": "m4rch.v24-slot10-saved-crash-and-replay.v1",
+  "boot_id": "af201416-45d8-47ab-937d-7177942b2248",
+  "hardware_actions": [],
+  "input_pins": [
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-full-power-trial-v24/candidate-v9/asc-graph-init/boot-af201416-45d8-47ab-937d-7177942b2248/data-before.bin",
+      "bytes": 1277952,
+      "sha256": "3a5b8cc02d184f78c42df9bd0cb33c6645ee49b5e3e871c0d14b4535e87efd17"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-full-power-trial-v24/candidate-v9/asc-graph-init/boot-af201416-45d8-47ab-937d-7177942b2248/data-retained.bin",
+      "bytes": 1277952,
+      "sha256": "749d6c2113c341be14387daa1d5623339a0f8485edb61e6d89fed2754621bfb3"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-full-power-trial-v24/candidate-v9/asc-graph-init/boot-af201416-45d8-47ab-937d-7177942b2248/text.bin",
+      "bytes": 393216,
+      "sha256": "6ad169daafee239b86ea42e5c367a1d090989c280609938d7486c7bc0f1d231a"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-full-power-trial-v24/candidate-v9/asc-graph-init/boot-af201416-45d8-47ab-937d-7177942b2248/objects-after.bin",
+      "bytes": 1130496,
+      "sha256": "1b5a4cdff531bca7462bf4f1eabdebf84474ad61de98bdb82f3b2495d71597d5"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-full-power-trial-v24/candidate-v9/asc-graph-init/boot-af201416-45d8-47ab-937d-7177942b2248/retained-ram-capture.json",
+      "bytes": 4760,
+      "sha256": "c4d81a7c22828fabfed0922c8523843787e97b550b328b17603fa0c9734ca094"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-full-power-trial-v24/prepared-owner-v11/graph-before.bin",
+      "bytes": 1130496,
+      "sha256": "b7e9ece36aee56e5d87716eec5348fbc02742f08e6bb1c5f979f285c9406c353"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-full-power-trial-v24/prepared-owner-v9/native-power-rust.o",
+      "bytes": 45944,
+      "sha256": "baeac3ebc6386edc326be4f7cc6c3f561ca05ad23ff2af455b74fda8082e220b"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-full-power-trial-v24/prepared-owner-v9/rust-panic-shims.S",
+      "bytes": 743,
+      "sha256": "b1cc2b98f4af0ca5adbdbfbf07237dec294826b8fd48be6aa9d5f804a73c5031"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/gfx-native-full-power-trial-v24/decode-slot10-crash.py",
+      "bytes": 7214,
+      "sha256": "6b6a102589414aa568d32cf8c2c0d68d69421f58161be6d5cd15bef223cd1798"
+    }
+  ],
+  "crash": {
+    "version": 771,
+    "bytes": 2576,
+    "flags": "0x804",
+    "footer_valid": true,
+    "newly_written": true,
+    "sections": [
+      {
+        "fourcc": "Cver",
+        "offset": "0x20",
+        "bytes": 96,
+        "payload_sha256": "edb8441eab6b8362169f06226004598584a0017c4181225381fe48dbe35de4ae",
+        "text": "RTKit: RTKit-3255.160.4.release - Client: not set"
+      },
+      {
+        "fourcc": "Ctim",
+        "offset": "0x80",
+        "bytes": 32,
+        "payload_sha256": "92d2f1ad5e06bcbbd24a3882231666518c31dbdab3f6dc12a6f71e5927f49ecf"
+      },
+      {
+        "fourcc": "Crg8",
+        "offset": "0xa0",
+        "bytes": 864,
+        "payload_sha256": "6854861c0273183574a5cd764ef1b11d8e2ed440459482395e78624c49d8856c",
+        "registers": {
+          "x0": "0xfffffc00000828a0",
+          "x1": "0x2b40",
+          "x2": "0xfffffc000017fce0",
+          "x3": "0x152",
+          "x4": "0x5620ff",
+          "x5": "0x3e8",
+          "x6": "0xfffffc000005b16f",
+          "x7": "0x0",
+          "x8": "0x0",
+          "x9": "0xfffffc00000879c0",
+          "x10": "0x11",
+          "x11": "0xe",
+          "x12": "0xc",
+          "x13": "0xf",
+          "x14": "0x4ba494ae",
+          "x15": "0xfffffc0000146be0",
+          "x16": "0x63f7fc00000879b8",
+          "x17": "0x8016fc0000146d60",
+          "x18": "0x0",
+          "x19": "0xfffffc000017fd30",
+          "x20": "0x2b40",
+          "x21": "0xfffffc000008286c",
+          "x22": "0x2b4",
+          "x23": "0xfffffc0000190000",
+          "x24": "0xfffffc2000135b6c",
+          "x25": "0xfffffc0000190000",
+          "x26": "0xfffffc0000195000",
+          "x27": "0xfffffc000018f8b0",
+          "x28": "0x14ba49466",
+          "x29": "0xfffffc000017fd10",
+          "x30": "0xfffffc000004cd2c",
+          "sp": "0xfffffc000017fcc0",
+          "pc": "0xfffffc0000025698",
+          "psr": "0x80000004",
+          "far": "0x2b40",
+          "esr": "0x96000004"
+        }
+      },
+      {
+        "fourcc": "Ccst",
+        "offset": "0x400",
+        "bytes": 64,
+        "payload_sha256": "3ca06bb144c522c13fbccc97f80c6648a405d9db76c5f0559ad0b5ed17b397e3",
+        "stack": [
+          "0xfffffc0000025698",
+          "0xfffffc000001fcc4",
+          "0xfffffc0000039d2c",
+          "0xfffffc0000038f9c"
+        ]
+      },
+      {
+        "fourcc": "CasC",
+        "offset": "0x440",
+        "bytes": 80,
+        "payload_sha256": "f5a5fd42d16a20302798ef6ed309979b43003d2320d9f0e8ea9831a92759fb4b"
+      },
+      {
+        "fourcc": "Cmbx",
+        "offset": "0x490",
+        "bytes": 416,
+        "payload_sha256": "8903ff8e84f0a166fbf89b2601bf43d7ba2f00627fcedf02afdaeaa3c56527e6"
+      },
+      {
+        "fourcc": "Crtk",
+        "offset": "0x630",
+        "bytes": 704,
+        "payload_sha256": "5d1ce4ef64f18135d2d46e5239e9485e6fc88a793c64b0132a2534265d75180d"
+      },
+      {
+        "fourcc": "Ccdp",
+        "offset": "0x8f0",
+        "bytes": 128,
+        "payload_sha256": "8aa6ae7f2cafa777cc77a8c4a49a103dad2bfec7097d5dbc49f857022bf05d04"
+      },
+      {
+        "fourcc": "Cpct",
+        "offset": "0x970",
+        "bytes": 80,
+        "payload_sha256": "f4f0659f6363ee4c1fd229a79c108255db200e22eb24a9aec1b5f1f6fb127e2f"
+      },
+      {
+        "fourcc": "Csta",
+        "offset": "0x9c0",
+        "bytes": 48,
+        "payload_sha256": "463a649dad42e1141487ee84938eb6723377d8abcb374304a2e4579ed001e56c"
+      },
+      {
+        "fourcc": "CLHE",
+        "offset": "0x9f0",
+        "bytes": 32
+      }
+    ]
+  },
+  "endpoint": {
+    "endpoint": 1,
+    "type": 1,
+    "event_bytes": 4096,
+    "original_offer_bytes": 32768,
+    "meaning": "Crash notification after prior buffer negotiation; saved buffer has architectural fault"
+  },
+  "fault": {
+    "pc": "0xfffffc0000025698",
+    "far": "0x2b40",
+    "esr": "0x96000004",
+    "read": true,
+    "translation_fault_level": 0,
+    "base_register_x8": "0x0",
+    "selector_x1": "0x2b40",
+    "cached_virtual": "0x0",
+    "slot": 10,
+    "descriptor_gpu_va": "0xfffffc20001087d0"
+  },
+  "callback": {
+    "begin": "0x25690",
+    "end": "0x256c8",
+    "sha256": "f8b1f963fa247fe891c1c4f91c505ef7539ee47d16a2a8a13be0c6fccfdfc35c",
+    "reads": [
+      "0x2b40",
+      "0x2b44",
+      "0x2b48",
+      "0x2b4c"
+    ],
+    "replays": [
+      {
+        "mapped": false,
+        "unmapped_reads": [
+          {
+            "address": "0x2b40",
+            "bytes": 4
+          }
+        ],
+        "error": "Invalid memory read (UC_ERR_READ_UNMAPPED)",
+        "result_matches_four_u32": false
+      },
+      {
+        "mapped": true,
+        "unmapped_reads": [],
+        "error": null,
+        "result_matches_four_u32": true
+      }
+    ]
+  },
+  "patched_writer": {
+    "compile_returncode": 0,
+    "run_returncode": 0,
+    "descriptor_preserved": true,
+    "slot14_descriptor_preserved": true,
+    "object_sha256": "baeac3ebc6386edc326be4f7cc6c3f561ca05ad23ff2af455b74fda8082e220b"
+  },
+  "limits": [
+    "Saved RAM non-atomic; IOP cache freshness unproved.",
+    "Ordinary-RAM callback replay verifies address arithmetic, not hardware bank values/side effects.",
+    "Read-only leaf and descriptor flags are explicit Linux mapping policy.",
+    "No rendering, successful initialization, physical OFF or restart demonstrated."
+  ],
+  "scope": "Saved v24-v9 crash identifies missing slot10 read-space. Slot10 and conditional slot14 mapping descriptors survive actual compiled native C/Rust power writer; no live bank values or initialization success established."
+}

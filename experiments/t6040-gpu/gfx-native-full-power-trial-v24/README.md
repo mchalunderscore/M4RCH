@@ -6,21 +6,22 @@ fresh performance-map snapshot and architectural clock provider, and owned
 backing for the native HW timestamp pointer. It does not repeat the failed
 postdraw wake sequence.
 
-Current boot 14343c22-f598-4eae-974a-b0edf7009530 is consumed. Do not load,
+Current boot af201416-45d8-47ab-937d-7177942b2248 is consumed. Do not load,
 unload, sample GPU registers/RAM, replay, wake, or free its retained owners.
 A user reboot is requested only after root selects a concrete READY bundle.
 
-Root selected the candidate **READY for one future fresh-boot trial**. See
-`docs/evidence/2026-10-11-native-full-power-v24-ready.json` and
-`out/gfx-native-full-power-trial-v24/READY.json` for the exact candidate and commands.
-A manual reboot is now required before any GPU operation.
+The v8 trial refused before control due to a174/176 host owner count mismatch.
+The v9 correction passed that guard, then firmware faulted at PC25698, FAR2b40
+through missing telemetry read slot10 before publishing control or draw. Neither
+trial rendered or attempted OFF. All176 owners and PM remain retained.
 
-The frozen V8 module built with zero warnings/errors. Its actual C/Rust ABI
-matches the native fixtures. Root checked 98 build pins, six preserved triangle
-inputs and 34 final qualification/closure pins. Launcher admission passed 103
-cases; OFF capture passed 12 cases and four intercepted flows, including loss
-of capture integrity after writing. The exact 39,884-byte initialized CPU-owned
-snapshot is captured before root publication. No GPU trial has run yet.
+The v10 correction adds Apple's exact slot10 physical region and16KiB extent.
+Actual saved-firmware replay reproduces the null read then succeeds with ordinary
+RAM mapping; the exact qualified power writer preserves the new descriptor.
+The v11 module also adds the native slot14 conditional fallback mapping. Both
+descriptors survive the qualified power writer. Root selected candidate-v11
+READY for one fresh-boot trial; a manual reboot is now required. See READY.json and durable live/replay evidence for current
+status; older build/READY receipts are historical.
 
 ## Experimental hypotheses
 
