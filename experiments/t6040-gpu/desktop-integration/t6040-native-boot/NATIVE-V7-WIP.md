@@ -1,3 +1,29 @@
+# Current joined v8 checkpoint — complete power integrated and compiled
+
+This section supersedes the v7/historical handoffs below. Complete Rust power,
+hardware power fields, Region C and AON outputs match actual native ARM routines
+for identity16 and grouped11 test maps. Raw ADT CPU voltage initialization and
+mapped copies execute original instructions. The raw millisecond provider is
+ACC+edac, distinct from AIC clocks at edb0; two GPU clusters enable native tags.
+Disabled primary voltage terminates the table, now fixed in the Rust writer.
+
+Distinct out/gpu-gravity-normal-boot-v8 compiles/links its actual module with
+75 unchanged input files, zero errors/42 warnings. It integrates the one future
+cold performance-map snapshot, explicit 20W/raw24MHz policy, owned QoS/AON/
+support aliases and native hardware timestamp+28. POWER_COMPLETE=true for
+this qualified experimental writer. BUNDLE_COMPLETE remains false; no loading
+or installation occurred. This is not READY; do not ask for a reboot yet.
+
+Remaining concrete work: native TA/3D Work/dependency producers (the normal
+runtime still uses donor render records), firmware loader reservations/UAT
+root, and bounded combined live launch/capture. Boot14343 remains consumed;
+no GPU access or failed wake replay. User manually reboots only once READY.
+
+Evidence docs/evidence/2026-10-11-gravity-native-t6040-joined-v8-progress.json
+and docs/evidence/2026-10-11-gravity-native-t6040-complete-power-v8.json.
+
+## Prior v7 checkpoint (superseded)
+
 # Current joined v7 checkpoint — compiled, not a triangle candidate
 
 This section supersedes the historical handoff below. Root generated

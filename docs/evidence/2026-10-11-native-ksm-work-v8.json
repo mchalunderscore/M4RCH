@@ -1,0 +1,54 @@
+{
+  "schema": "m4rch.native-t6040-ksm-work.v8",
+  "inputs": [
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/qualify_ksm_work_v8.py",
+      "bytes": 4265,
+      "sha256": "449a574465aadd3236bbcce2a5c21f517680c438d28bef921c25bbb429479889"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/g16_t6040_ksm_work_v8.rs",
+      "bytes": 4559,
+      "sha256": "f5d91349832b041b7b7ca2443bf7caaaa223def4b7eda19bc33815c812bc8b6c"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/private_work_prefix.py",
+      "bytes": 1193,
+      "sha256": "b3648a7a236322968698cdef9d45cda9422a7ced8fa9f4d3d013dcc35e7e150f"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/private_work_body.py",
+      "bytes": 1599,
+      "sha256": "c9ec4ac850242aa27094f1fbb90ebf399f56f91c77b5148cd88f97a7aab377e5"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/private_nop_body.py",
+      "bytes": 1734,
+      "sha256": "a98d9a57da43808019c25934e141af41933f5cb1da2dba7b9931934a07a272ae"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/private_nop_header.py",
+      "bytes": 702,
+      "sha256": "740d95dd1c5c35afc5a3a7923f8ddc6b22e292a7fd4e8ba40006ed5f16d83455"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-08-private-work-prefix.json",
+      "bytes": 940,
+      "sha256": "79ef25040a91ebb2fbb87dc43506d9b5a1d99f50fb943b86f9a9152d6d48298c"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-08-private-work-body.json",
+      "bytes": 1450,
+      "sha256": "dff0e3df3d56e93e5fe02059fe6695f36e632980a1e7223d209fdeca42add1ec"
+    }
+  ],
+  "cases": 96,
+  "whole_record_bytes": 512,
+  "refusal_cases": 96,
+  "compiler_result": 0,
+  "run_result": 0,
+  "composition": "Prior actualnative instruction qualifications retained; newcompiledRust comparedto same independentnumericmodels",
+  "hardware_actions": [],
+  "native_ta_fragment_generator_integrated": false,
+  "triangle_trial_ready": false
+}

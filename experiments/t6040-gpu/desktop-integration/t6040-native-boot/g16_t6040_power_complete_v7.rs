@@ -14,9 +14,10 @@ pub(crate) const LOGICAL_BYTES: usize = 0x6578;
 pub(crate) const HARDWARE_LOGICAL_BYTES: usize = 0x2718;
 pub(crate) const REGION_C_LOGICAL_BYTES: usize = 0xe58;
 pub(crate) const AONPTD_LOGICAL_BYTES: usize = 0xe4;
-// This draft is not yet compared against the full native output. Do not use
-// successful native RAM control flow alone to open a production startup gate.
-pub(crate) const POWER_COMPLETE: bool = false;
+// Whole power/HW/Region C/AON outputs match native RAM execution for identity
+// and grouped maps with original ADT and explicit experimental Linux policy.
+// This qualifies this writer; full bundle/startup and hardware remain separate.
+pub(crate) const POWER_COMPLETE: bool = true;
 pub(crate) const APPLE_FUSE_MAXIMUM_COMPLETE: bool = false;
 pub(crate) const PERIOD_CLOCKS_PER_MS: u32 = 24000;
 pub(crate) const HARDWARE_PERIOD_OFFSET: usize = 0xed8;
@@ -156,13 +157,13 @@ impl PowerData {
             cs, afr, maps_bound:false })
     }
     /// Native mapped rows retain duplicates. Zero secondary indices skip only
-    /// secondary copies; disabled primary entries skip that entire wire pair.
+    /// secondary copies; disabled primary voltage terminates the mapped table.
     pub(crate) fn with_perf_state_maps(&self, maps: &PerfStateMaps) -> Option<Self> {
         let mut out=*self; out.primary_rows=[0;16]; out.secondary_rows=[0;16];
         let mut p=1; let mut s=1;
         for wire in 1..16 { let pi=maps.primary[wire] as usize; let si=maps.secondary[wire] as usize;
             if pi>=16 || si>=16 { return None; }
-            if self.raw_core[pi][0]==0 { continue; }
+            if self.raw_core[pi][0]==0 { break; }
             if pi!=0 { out.primary_rows[p]=pi as u8; p+=1; }
             if si!=0 { out.secondary_rows[s]=si as u8; s+=1; }
         }
