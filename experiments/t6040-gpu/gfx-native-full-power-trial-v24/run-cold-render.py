@@ -55,6 +55,17 @@ def initialized_graph(seed,snapshot):
     require(cursor==len(snapshot),'Power overlay consumption differs')
     return bytes(image)
 
+def qualified_mmio_leaf(leaf):
+    pa,va=leaf['physical'],leaf['gpu_va']
+    readonly=leaf['readonly']
+    native_readonly={(0x5003c0000,0xfffffc2001b00000)}|{
+        (0x500658000+i*0x4000,0xfffffc2001b20000+i*0x4000) for i in range(4)}
+    if (pa,va) in native_readonly:return readonly is True
+    platform=(pa,va) in ((0x502414000,0xfffffc2001a00000),(0x5003d0000,0xfffffc2001b10000),(0x5003d8000,0xfffffc2001b18000))
+    afr=0x28b000000<=pa<0x28b640000 and (pa-0x28b000000)%0x200000<0x40000 and va==0xfffffc2001c00000+(pa-0x28b000000)//0x200000*0x40000+(pa-0x28b000000)%0x200000
+    sgx=0x288000000<=pa and pa+0x4000<=0x28b758000 and va==0xfffffc2000200000+pa-0x288000000
+    return (platform and not leaf['readonly']) or (afr and (leaf['readonly'] or (pa-0x28b000000)%0x10000==0)) or (sgx and (leaf['readonly'] or pa in (0x288000000,0x288004000,0x288008000,0x28800c000,0x288010000,0x288014000,0x288018000,0x28801c000,0x288020000,0x288d04000,0x288d10000,0x288d40000,0x288d44000,0x288d4c000,0x288d60000,0x288e00000,0x288e1c000,0x288e40000,0x289004000)))
+
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('workspace', type=Path)
@@ -150,10 +161,7 @@ def main():
         require(regs==[(0x88000000,0x3758000),(0x88d00000,0x16c000)],'SGX MMIO apertures differ')
         for leaf in layout.get('mmio_leaves',[]):
             pa,va=leaf['physical'],leaf['gpu_va']
-            platform=(pa,va) in ((0x502414000,0xfffffc2001a00000),(0x5003d0000,0xfffffc2001b10000),(0x5003d8000,0xfffffc2001b18000))
-            afr=0x28b000000<=pa<0x28b640000 and (pa-0x28b000000)%0x200000<0x40000 and va==0xfffffc2001c00000+(pa-0x28b000000)//0x200000*0x40000+(pa-0x28b000000)%0x200000
-            sgx=0x288000000<=pa and pa+0x4000<=0x28b758000 and va==0xfffffc2000200000+pa-0x288000000
-            require((platform and not leaf['readonly']) or (afr and (leaf['readonly'] or (pa-0x28b000000)%0x10000==0)) or (sgx and (leaf['readonly'] or pa in (0x288000000,0x288004000,0x288008000,0x28800c000,0x288010000,0x288014000,0x288018000,0x28801c000,0x288020000,0x288d04000,0x288d10000,0x288d40000,0x288d44000,0x288d4c000,0x288d60000,0x288e00000,0x288e1c000,0x288e40000,0x289004000))),'Unqualified MMIO leaf range')
+            require(qualified_mmio_leaf(leaf),'Unqualified MMIO leaf range')
     tables = capture(work/'sample-pagetables/gpu-data-sample.ko', '/sys/kernel/m4rch_gpu_data_sample/data', out/'pagetables.bin', 'gpu_data_sample')
     base = 0x105fff78000
     def translate(va):

@@ -14,6 +14,12 @@ def main():
   except (ValueError,KeyError,TypeError,OSError):passed=False
   assert passed==ok,name;cases.append(dict(case=name,passed=True))
  r=c.validate_candidate(a.candidate);check('actual-candidate-pins',lambda:c.validate_candidate(a.candidate))
+ leaves=json.loads((a.candidate/'asc-graph-init/graph-receipt.json').read_text())['mmio_leaves']
+ for leaf in leaves:check('actual-MMIO-'+hex(leaf['physical']),lambda l=leaf:runner.qualified_mmio_leaf(l))
+ for leaf in leaves:
+  if leaf['physical']==0x5003c0000 or 0x500658000<=leaf['physical']<0x500668000:
+   bad=dict(leaf,readonly=False);check('telemetry-refuses-write-'+hex(leaf['physical']),lambda l=bad:runner.qualified_mmio_leaf(l),False)
+   bad=dict(leaf,gpu_va=leaf['gpu_va']+0x1000);check('telemetry-refuses-alias-'+hex(leaf['physical']),lambda l=bad:runner.qualified_mmio_leaf(l),False)
  check('owner-parameters',lambda:runner.owner_parameters(r,graph=True)==['run_gate=2','observe_ms=5000','resident_session=1'])
  for key,value in [('joined_owned_pages',174),('graph_release_on_shutdown',True),('graph_submit_work',True)]:
   bad=copy.deepcopy(r);bad[key]=value;check('receipt-refuses-'+key,lambda b=bad:c.validate_receipt(b),False)

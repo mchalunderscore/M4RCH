@@ -1,0 +1,70 @@
+{
+  "schema": "m4rch.v24-v13-live-result.v1",
+  "boot_id": "29800a86-c89b-4072-b121-c40e264982dc",
+  "candidate": "/home/alice/Desktop/m4rch/out/gfx-native-full-power-trial-v24/candidate-v13",
+  "pipeline_qualified": true,
+  "publication_qualified": true,
+  "firmware_accepted_draw": true,
+  "changed_pixels": 0,
+  "stage_completion_verified": false,
+  "rendering_verified": false,
+  "cycle_stage": "off-unknown-retained",
+  "shutdown_observations": {
+    "policy_command_processing_verified": true,
+    "firmware_GPU_off_observed": false,
+    "native202_request_published": true,
+    "management_ACK_observed": false,
+    "native_NMI_attempted": true,
+    "fresh_ASC_idle_observed": true,
+    "CPU_stop_observed": true,
+    "Fender_disable_observed": true,
+    "strict_physical_OFF_observed": false,
+    "paired_PM_accounting_observed": true
+  },
+  "physical_status_word": "0x0f000b00",
+  "strict_off_residual": "0x800",
+  "domain_on": false,
+  "owners_retained": 176,
+  "pm_put_attempted": true,
+  "pm_put_result": 0,
+  "physical_OFF_verified": false,
+  "restart_verified": false,
+  "pins": [
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-full-power-trial-v24/candidate-v13/asc-graph-init/boot-29800a86-c89b-4072-b121-c40e264982dc/attempt.json",
+      "bytes": 79038,
+      "sha256": "8e8a51a5d6bf41a47312df7b844ff73c58c17c81ab5a1aac4209a1c04d120f9e"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-full-power-trial-v24/candidate-v13/asc-graph-init/boot-29800a86-c89b-4072-b121-c40e264982dc/analysis/result.json",
+      "bytes": 63719,
+      "sha256": "c51c1dbdb1cc4783ac44f622bf8953c7e6feeab8e101fad209492988ed1f4e45"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-full-power-trial-v24/candidate-v13/asc-graph-init/boot-29800a86-c89b-4072-b121-c40e264982dc/cycle-attempt.json",
+      "bytes": 110023,
+      "sha256": "47d6c4bdb468b12c903bf42f0b072e4e744eeab002b2821a45472730f7ee4309"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-full-power-trial-v24/candidate-v13/asc-graph-init/boot-29800a86-c89b-4072-b121-c40e264982dc/retained-ram-capture.json",
+      "bytes": 4760,
+      "sha256": "6c4c4807aeacf80cbe4b8e3b498a134bfe31b262275b228ec2bc00cba59620ea"
+    }
+  ],
+  "next_action": "Resolve known native scheduler/event/completion and complete teardown/boot gaps in one integrated Gravity implementation before next hardware trial",
+  "pre_GPU_refusals": [
+    {
+      "candidate": "candidate-v11",
+      "cause": "Python platform admission omitted five read-only leaves",
+      "GPU_started": false
+    },
+    {
+      "candidate": "candidate-v12-host",
+      "cause": "C root mapping admission omitted same read-only leaves",
+      "published": false,
+      "GPU_started": false,
+      "owned_allocations_released": true
+    }
+  ],
+  "host_admission_repair": "candidate-v13; actual module shadow passed and unloaded before cold start,221Pythonadmissioncases include every realleaf"
+}

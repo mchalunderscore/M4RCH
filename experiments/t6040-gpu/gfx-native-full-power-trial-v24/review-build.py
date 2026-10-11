@@ -60,7 +60,13 @@ def review(receipt, output):
         assert graph['mapped_pages']==(175 if (stage/'slot14-patch.json').exists() else 171)
         assert ' { 0x5003c0000ULL, 0xfffffc2001b00000ULL, 0 },' in (stage/'graph-contract.h').read_text()
         allowed={'graph-contract.h','graph-receipt.json','graph-before.bin'}
-        assert set(patch['changed_source_files'])==allowed
+        if (stage/'telemetry-admission-patch.json').exists():
+            admission=json.loads((stage/'telemetry-admission-patch.json').read_text())
+            for item in [admission['script'],admission['before'],admission['after']]:
+                path=Path(item['path']);assert path.stat().st_size==item['bytes'] and digest(path)==item['sha256']
+            assert admission['changed_files']==['graph-map.h']
+            allowed.add('graph-map.h')
+        assert set(patch['changed_source_files'])=={'graph-contract.h','graph-receipt.json','graph-before.bin'}
         for name in data['source_changes_from_v9']:
             assert name in allowed
         preserved.append(dict(name='graph-before.bin',sha256=digest(stage/'graph-before.bin'),only_change='Exact slot10 and optional slot14 descriptors; read-only leaves added'))

@@ -4,7 +4,7 @@ from pathlib import Path
 HERE=Path(__file__).resolve().parent
 sys.path[:0]=[str(HERE.parent),str(HERE.parent/'gfx-native-ap-repeat-cycle')]
 from gfx_native_ap_repeat_cycle_contract import REFUSED_BOOTS,qualify_adt as qualify_base_adt,qualify_linux_dt
-REFUSED_BOOTS=(*REFUSED_BOOTS,'af201416-45d8-47ab-937d-7177942b2248','ea0dd0a7-6a94-45ed-b0ca-7c85fa993df6','14343c22-f598-4eae-974a-b0edf7009530','1241f6b5-f2c5-4678-9078-dce0ed367d60','eff8eafa-d845-429e-b98c-9a5f053bcc46','d83451f8-42c7-4466-9983-f1b3fbea5963','5e129c21-c840-4540-b4f7-3a3b3ef2cf56','e7288eeb-bc71-46e3-a0c5-831b77bebb1d','2529a76a-a0ac-4de7-95f8-71b42181042b','f4a7b737-ed3d-4851-8fcd-cac56eb233d7','09a48fe3-925a-46d9-b99b-b9aecc71e6f3')
+REFUSED_BOOTS=(*REFUSED_BOOTS,'29800a86-c89b-4072-b121-c40e264982dc','af201416-45d8-47ab-937d-7177942b2248','ea0dd0a7-6a94-45ed-b0ca-7c85fa993df6','14343c22-f598-4eae-974a-b0edf7009530','1241f6b5-f2c5-4678-9078-dce0ed367d60','eff8eafa-d845-429e-b98c-9a5f053bcc46','d83451f8-42c7-4466-9983-f1b3fbea5963','5e129c21-c840-4540-b4f7-3a3b3ef2cf56','e7288eeb-bc71-46e3-a0c5-831b77bebb1d','2529a76a-a0ac-4de7-95f8-71b42181042b','f4a7b737-ed3d-4851-8fcd-cac56eb233d7','09a48fe3-925a-46d9-b99b-b9aecc71e6f3')
 FAMILY_KEY='gfx_native_full_power_trial_v24_scope'
 CONTRACT={'version':24,'compile_macro':'GFX_NATIVE_FULL_POWER_TRIAL_V24','automatic_cold_pipeline':True,
  'initial_recovery_cycles':0,'minimum_completed_idle_recovery_cycles':0,'application_restarts':0,

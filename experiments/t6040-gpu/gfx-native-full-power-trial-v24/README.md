@@ -6,22 +6,21 @@ fresh performance-map snapshot and architectural clock provider, and owned
 backing for the native HW timestamp pointer. It does not repeat the failed
 postdraw wake sequence.
 
-Current boot af201416-45d8-47ab-937d-7177942b2248 is consumed. Do not load,
-unload, sample GPU registers/RAM, replay, wake, or free its retained owners.
-A user reboot is requested only after root selects a concrete READY bundle.
+Current boot29800a86-c89b-4072-b121-c40e264982dc is consumed. The v13
+trial completed its15second submission/observation pipeline; firmware accepted
+both work queues but no pixels changed. Idle-policy command was processed, then
+bounded shutdown used NMI after no202ACK. CPU stopped, Fender disabled,
+coordinateOFF/PMput completed; physical status0f000b00/domainOFF still had BUSY11.
+All176backing owners remain retained. No rebootless restart or rendering claim.
 
-The v8 trial refused before control due to a174/176 host owner count mismatch.
-The v9 correction passed that guard, then firmware faulted at PC25698, FAR2b40
-through missing telemetry read slot10 before publishing control or draw. Neither
-trial rendered or attempted OFF. All176 owners and PM remain retained.
+Earlier v11Python and v12C admission omitted the new read-only telemetry leaves.
+Both refused before GPU start; the C shadow released unpublished allocations.
+These were repaired on the same boot in v13 before the actual cold trial.
 
-The v10 correction adds Apple's exact slot10 physical region and16KiB extent.
-Actual saved-firmware replay reproduces the null read then succeeds with ordinary
-RAM mapping; the exact qualified power writer preserves the new descriptor.
-The v11 module also adds the native slot14 conditional fallback mapping. Both
-descriptors survive the qualified power writer. Root selected candidate-v11
-READY for one fresh-boot trial; a manual reboot is now required. See READY.json and durable live/replay evidence for current
-status; older build/READY receipts are historical.
+READY is false. Per user direction, next work integrates known native scheduler,
+event/completion and teardown/boot gaps into the Gravity caller, using the Apple
+driver to resolve assumptions before another whole hardware trial. No new
+individual hardware test or manual reboot is requested while that work runs.
 
 ## Experimental hypotheses
 
