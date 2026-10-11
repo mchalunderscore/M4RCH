@@ -1,0 +1,26 @@
+{
+  "schema": "m4rch.native-rce-v9-root-checkpoint.v1",
+  "producer_evidence": {
+    "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-11-native-rce-semantic-v9.json",
+    "sha256": "7ffd857624b73cf185c066a5cd78d5662aff97f6a5437bc08bb019d2eb20b473"
+  },
+  "root_declared_pins_checked": 6,
+  "native_producer_cases": 96,
+  "typed_ram_adapter_cases": 96,
+  "comparison_bytes": {
+    "command": 12288,
+    "descriptor": 6144,
+    "context": 256,
+    "scene": 256
+  },
+  "private_generated_source_tracked": false,
+  "runtime_enabled": false,
+  "hardware_actions": [],
+  "pending": [
+    "RenderParameters to native descriptor producer adapter",
+    "native startup/end SKU microsequence and dependency/BM caller integration",
+    "actual joined normal runtime module build",
+    "live firmware and GPU validation"
+  ],
+  "policy": "Generic descriptors and resource addresses; no fixed triangle geometry/donor offset shifts. Readyv24 unaffected."
+}

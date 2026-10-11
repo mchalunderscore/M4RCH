@@ -1,0 +1,55 @@
+{
+  "schema": "native-rce-semantic-v9-implementation-v1",
+  "pins": [
+    {
+      "path": "experiments/t6040-gpu/desktop-integration/t6040-native-boot/generate_native_rce_semantic_v9.py",
+      "bytes": 7949,
+      "sha256": "efd00f82f284f4b8540a61c8be3a5912d083369155dbc07f9dfa47b24d04cfa5"
+    },
+    {
+      "path": "experiments/t6040-gpu/desktop-integration/t6040-native-boot/g16_t6040_rce_ram_v9.rs",
+      "bytes": 5035,
+      "sha256": "670a47ecff6a007ecc90c7d8dbb2a630aad2cca82f1a903b3d13bdf523a3c7fc"
+    },
+    {
+      "path": "experiments/t6040-gpu/desktop-integration/t6040-native-boot/qualify_native_rce_v9.py",
+      "bytes": 5902,
+      "sha256": "39e8d976405ed836883630a09195960db4026d091f7235867a92af3ed2d8b8fe"
+    },
+    {
+      "path": "out/private-apple/native-rce-semantic-v9.rs",
+      "bytes": 544482,
+      "sha256": "2ffb050a96b3ab7f975951c044bd54f97186232701d543d3ebe9646254ebb8e3"
+    },
+    {
+      "path": "out/gpu-gravity-native-rce-semantic-v9-qualification/qualification.json",
+      "bytes": 17231,
+      "sha256": "7d1c9a5a44593252fcaddb3b2f48fc657b37d4bddbbbd0f8b2152de5cdfd88fe"
+    },
+    {
+      "path": "out/gpu-gravity-native-rce-typed-v9-qualification/qualification.json",
+      "bytes": 17261,
+      "sha256": "4113847b98e30fc879b8166063cf56e225852d3da4f3dd33bb9d47eea1f2c7f4"
+    }
+  ],
+  "source_binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "implementation": "Portable Rust semantic integer translation with explicit bounded RAM providers and command/resource aliases. No original opcodes executed by Rust. Locally translated producer source remains private ignored output.",
+  "qualified_cases": 96,
+  "comparison_bytes": {
+    "command": 12288,
+    "descriptor": 6144,
+    "context": 256,
+    "scene": 256
+  },
+  "remaining": [
+    "RenderParameters to native descriptor producer adapter",
+    "native startup/end SKU microsequence and dependency/BM caller integration",
+    "actual joined normal runtime module build",
+    "live firmware and GPU validation"
+  ],
+  "policy": {
+    "optional_apple_register_overrides": "Linux installs no CPU override array; native override providers explicitly empty.",
+    "bounds": "GPU cluster count 1..2, controller mode 0..1, descriptor/fragment policy bits 0..1; unknown RAM reads fail, output must be discarded on error.",
+    "runtime_enabled": false
+  }
+}
