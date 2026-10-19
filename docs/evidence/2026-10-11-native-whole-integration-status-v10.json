@@ -1,9 +1,9 @@
 {
   "schema": "m4rch.native-whole-integration-status.v10",
-  "status": "whole_integrated_triangle_trial_ready_for_fresh_boot",
+  "status": "metadata_binding_corrected_host_reset_under_investigation",
   "user_direction": "Close known source gaps from Apple driver, integrate whole path, then test complete candidate",
   "hardware_actions": [],
-  "trial_ready": true,
+  "trial_ready": false,
   "source_base": "out/gpu-gravity-normal-native-completion-v10-v3",
   "kernel": "out/gpu-gravity-native-integrated-kernel-v10/linux",
   "kernel_Image_attempt_2_returncode": 0,
@@ -42,7 +42,8 @@
     "Fresh per-boot loader reservations and existing genpd provider binding"
   ],
   "integration_remaining": [
-    "Fresh integrated boot and combined hardware proof"
+    "Unexpected host reset cause is unproved",
+    "Combined hardware proof using corrected V16 bridge and loader-region V2 driver"
   ],
   "unproved_hardware_properties": [
     "GPU execution and changed triangle pixels",
@@ -51,7 +52,7 @@
     "cold DATA restoration recovery hypothesis",
     "repeatable restart"
   ],
-  "retention_policy": "Consumed current boot remains untouched and retained; fresh integrated boot required before combined launcher",
+  "retention_policy": "No GPU submission on e738/e99/ad2 boots so far; first attempt failed before OF attachment, second rejected mismatched UUID. Do not rerun old V15 launcher.",
   "kernel_artifacts": [
     {
       "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-native-integrated-kernel-v10/linux/arch/arm64/boot/Image",
@@ -83,34 +84,42 @@
       "make",
       "-C",
       "/home/alice/Desktop/m4rch/out/gpu-gravity-native-integrated-kernel-v10/linux",
-      "M=/home/alice/Desktop/m4rch/out/gpu-gravity-native-integrated-v16/build-owner",
+      "M=/home/alice/Desktop/m4rch/out/gpu-gravity-native-loader-v16-v2/build-owner",
       "LLVM=1",
       "W=1",
       "modules"
     ],
     "returncode": 0,
     "log": {
-      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-native-integrated-v16/integrated-module-build.log",
-      "bytes": 35815,
-      "sha256": "f2cd9b1e27ecdc13106812a402496701adca37fb4856d8cfbdee38726bc2f173"
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-native-loader-v16-v2/whole-module-build.log",
+      "bytes": 35813,
+      "sha256": "5be8871f8978a6c52d87034953019b13cb2fb65af3e128f1289d8580a85f8f07"
     },
     "source_receipt": {
-      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-native-integrated-v16/integrated-source-receipt.json",
-      "bytes": 53151,
-      "sha256": "21af5db1c5e268fc8fad60d4143d1008dacf1508e05379c67c3caf30b9463b46"
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-native-loader-v16-v2/integrated-source-receipt.json",
+      "bytes": 50110,
+      "sha256": "9aa022da0e61a0ce3b2b42bf5b918f17a1f65236936453b9a479d672dc614b00"
     },
     "hardware_actions": [],
     "module_loaded": false,
     "trial_ready": false,
-    "changed_sources": [],
+    "changed_sources": [
+      "g16_loader_region_v16.rs",
+      "g16.rs",
+      "g16_runtime.rs",
+      "g16_vm.rs",
+      "mmu.rs",
+      "gpu.rs",
+      "asahi_m4.rs"
+    ],
     "module": {
-      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-native-integrated-v16/build-owner/asahi_m4.ko",
-      "bytes": 983664,
-      "sha256": "dc071cfb1301116b5ffdacf15eda0618eab63966638a43de56219b8c9e27104b"
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-native-loader-v16-v2/build-owner/asahi_m4.ko",
+      "bytes": 988440,
+      "sha256": "3ae461f21f491c42386c1c2fa67dde8d76dc3614ad74e046cfeda038fa8891ab"
     },
     "whole_module_built": true
   },
-  "source_stage": "out/gpu-gravity-native-integrated-v16",
+  "source_stage": "out/gpu-gravity-native-loader-v16-v2",
   "whole_module_warnings": {
     "count": 121,
     "kinds": "dead-code and unreachable-public-item warnings under W=1",
@@ -196,5 +205,9 @@
     "packaged_python_compiles": true,
     "hardware_actions": [],
     "component_hardware_trials": 0
-  }
+  },
+  "fresh_corrected_launcher": "out/gpu-native-combined-triangle-fresh-v16",
+  "fresh_corrected_manifest_sha256": "9a0367614be3e3beeb0362c465dfe3ecce97d7ae5a14e4c5ceb212f38a694fbb",
+  "latest_failure_evidence": "docs/evidence/2026-10-11-native-integrated-v16-metadata-failure.json",
+  "host_reset_evidence": "docs/evidence/2026-10-11-native-integrated-unexpected-host-reset-v16.json"
 }

@@ -1,27 +1,28 @@
 diff --git a/arch/arm/Kconfig b/arch/arm/Kconfig
-index 514bf200..cc53990a 100644
 --- a/arch/arm/Kconfig
 +++ b/arch/arm/Kconfig
-@@ -1050,34 +1050,34 @@ config ARCH_APPLE
+@@ -1050,34 +1050,34 @@
  	bool "Apple SoCs"
  	select ARM64
  	select CLK
 -	select CMD_PCI
 -	select CMD_USB
-+	select CMD_PCI if !APPLE_NOIO
-+	select CMD_USB if !APPLE_NOIO
- 	select DM
+-	select DM
 -	select DM_GPIO
 -	select DM_KEYBOARD
 -	select DM_MAILBOX
 -	select DM_RESET
+-	select DM_SERIAL
+-	select DM_SPI
+-	select DM_USB
++	select CMD_PCI if !APPLE_NOIO
++	select CMD_USB if !APPLE_NOIO
++	select DM
 +	select DM_GPIO if !APPLE_NOIO
 +	select DM_KEYBOARD if !APPLE_NOIO
 +	select DM_MAILBOX if !APPLE_NOIO
 +	select DM_RESET if !APPLE_NOIO
- 	select DM_SERIAL
--	select DM_SPI
--	select DM_USB
++	select DM_SERIAL
 +	select DM_SPI if !APPLE_NOIO
 +	select DM_USB if !APPLE_NOIO
  	select VIDEO
@@ -58,12 +59,11 @@ index 514bf200..cc53990a 100644
  	imply CMD_GPT
  	imply BOOTSTD_FULL
 diff --git a/arch/arm/mach-apple/Kconfig b/arch/arm/mach-apple/Kconfig
-index fdc8c321..9b61b78d 100644
 --- a/arch/arm/mach-apple/Kconfig
 +++ b/arch/arm/mach-apple/Kconfig
-@@ -1,5 +1,13 @@
+@@ -1,4 +1,12 @@
  if ARCH_APPLE
- 
++
 +config APPLE_NOIO
 +	bool "Build the Apple target without MMIO-backed devices"
 +	select BLK
@@ -71,15 +71,13 @@ index fdc8c321..9b61b78d 100644
 +	  Build only the architecture core, prior-stage device tree, RAM, and
 +	  simple framebuffer path. This is intended for first-light bring-up on
 +	  a new Apple SoC before its MMIO windows and device drivers are safe.
-+
+ 
  config TEXT_BASE
  	default 0x00000000
- 
 diff --git a/arch/arm/mach-apple/Makefile b/arch/arm/mach-apple/Makefile
-index d79a3a69..b2664000 100644
 --- a/arch/arm/mach-apple/Makefile
 +++ b/arch/arm/mach-apple/Makefile
-@@ -5,3 +5,5 @@ obj-y += lowlevel_init.o
+@@ -5,3 +5,5 @@
  obj-y += rtkit.o
  obj-$(CONFIG_APPLE_MTP_KEYB) += rtkit_helper.o
  obj-$(CONFIG_NVME_APPLE) += sart.o
@@ -87,10 +85,9 @@ index d79a3a69..b2664000 100644
 +obj-y += archsd.o
 diff --git a/arch/arm/mach-apple/archsd.c b/arch/arm/mach-apple/archsd.c
 new file mode 100644
-index 00000000..c701c8dd
 --- /dev/null
 +++ b/arch/arm/mach-apple/archsd.c
-@@ -0,0 +1,116 @@
+@@ -0,0 +1,113 @@
 +// SPDX-License-Identifier: GPL-2.0+
 +/* Fixed J614s UEFI firmware bridge. The SD's EFI application owns OS boot.
 + * Start from a copy of m1n1's live DT: never discard its memory, CPU release
@@ -139,15 +136,13 @@ index 00000000..c701c8dd
 +	size_t image_size, overlay_size, recorded_size;
 +	char command[96];
 +
-+	puts("ARCHM4 UEFI bridge: framebuffer console ready\n");
 +	if (!image || !dt || !overlay ||
 +	    fdt_node_check_compatible(gd->fdt_blob, 0, "apple,j614s")) {
-+		puts("ARCHM4: missing boot buffers or unexpected board\n");
++		puts("Boot: missing boot buffers or unexpected board\n");
 +		return CMD_RET_FAILURE;
 +	}
-+	puts("M4RCH UEFI bridge: probing internal Apple NVMe (no SD fallback)\n");
 +	if (nvme_scan_namespace()) {
-+		puts("M4RCH: NVMe scan failed\n");
++		puts("Boot: NVMe scan failed\n");
 +		return CMD_RET_FAILURE;
 +	}
 +	/* Choose an EFI partition by its unique GPT UUID, never by slot alone. */
@@ -164,14 +159,14 @@ index 00000000..c701c8dd
 +			if (strcasecmp(part.type_guid, "c12a7328-f81f-11d2-ba4b-00a0c93ec93b") ||
 +			    (u64)part.start * desc->blksz != 362525229056ULL ||
 +			    (u64)part.size * desc->blksz != 1073741824ULL || found++) {
-+				puts("M4RCH: ambiguous or unexpected internal ESP\n");
++				puts("Boot: ambiguous or unexpected internal ESP\n");
 +				return CMD_RET_FAILURE;
 +			}
 +			snprintf(esp_device, sizeof(esp_device), "%d:%d", disk, slot);
 +		}
 +	}
 +	if (found != 1) {
-+		puts("M4RCH: internal ESP not found\n");
++		puts("Boot: internal ESP not found\n");
 +		return CMD_RET_FAILURE;
 +	}
 +	if (read_esp(OVERLAY_PATH, overlay, DT_LIMIT, &overlay_size) ||
@@ -180,14 +175,14 @@ index 00000000..c701c8dd
 +	    fdt_open_into(gd->fdt_blob, dt, DT_LIMIT) ||
 +	    fdt_overlay_apply(dt, overlay) ||
 +	    fdt_node_check_compatible(dt, 0, "apple,j614s")) {
-+		puts("ARCHM4: missing or invalid /dtbs/board.dtbo\n");
++		puts("Boot: missing or invalid /dtbs/board.dtbo\n");
 +		return CMD_RET_FAILURE;
 +	}
 +	/* The overlay modifies only this handoff copy, not the control DT used
 +	 * by active firmware drivers. GRUB must inherit it, not load a raw DTB. */
 +	if (read_esp(EFI_PATH, image, EFI_LIMIT, &image_size) ||
 +	    efi_check_pe(image, image_size, NULL) != EFI_SUCCESS) {
-+		puts("ARCHM4: missing or invalid /EFI/BOOT/BOOTAA64.EFI\n");
++		puts("Boot: missing or invalid /EFI/BOOT/BOOTAA64.EFI\n");
 +		return CMD_RET_FAILURE;
 +	}
 +	/* fs_read alone does not record an EFI device path. This must be set
@@ -196,25 +191,24 @@ index 00000000..c701c8dd
 +	efi_set_bootdev("nvme", esp_device, EFI_PATH, image, image_size);
 +	efi_get_image_parameters(&recorded_image, &recorded_size);
 +	if (recorded_image != image || recorded_size != image_size) {
-+		puts("ARCHM4: could not establish the NVMe EFI device path\n");
++		puts("Boot: could not establish the NVMe EFI device path\n");
 +		return CMD_RET_FAILURE;
 +	}
 +	if (env_set("bootargs", NULL))
 +		return CMD_RET_FAILURE;
-+	printf("ARCHM4 UEFI bridge: starting %s (%zu bytes)\n", EFI_PATH, image_size);
 +	snprintf(command, sizeof(command), "bootefi %lx %lx", (ulong)image, (ulong)dt);
 +	return run_command(command, 0) ? CMD_RET_FAILURE : CMD_RET_SUCCESS;
 +}
 +
 +U_BOOT_CMD(archnvme, 1, 0, do_archnvme, "boot the internal NVMe's ARM64 EFI application", "");
 diff --git a/arch/arm/mach-apple/board.c b/arch/arm/mach-apple/board.c
-index 44a5ef25..49b1b846 100644
 --- a/arch/arm/mach-apple/board.c
 +++ b/arch/arm/mach-apple/board.c
-@@ -1115,6 +1115,139 @@ static struct mm_region t6032_mem_map[] = {
+@@ -1114,6 +1114,99 @@
+ 		0,
  	}
  };
- 
++
 +/* Map only the J614s resources used by the internal NVMe bridge. */
 +static struct mm_region sd_map[32];
 +static int sd_slots;
@@ -229,42 +223,6 @@ index 44a5ef25..49b1b846 100644
 +        .attrs = PTE_BLOCK_MEMTYPE(MT_DEVICE_NGNRNE) |
 +                 PTE_BLOCK_NON_SHARE | PTE_BLOCK_PXN | PTE_BLOCK_UXN,
 +    };
-+}
-+/* Visible before the normal console: each completed step adds one green
-+ * block at the top-left of the m1n1-supplied framebuffer. No device MMIO,
-+ * allocation, UART or disk access is needed. */
-+static void nvme_early_mark(unsigned stage)
-+{
-+    ofnode fb = ofnode_path("/chosen/framebuffer");
-+    fdt_size_t size;
-+    fdt_addr_t addr;
-+    u32 width, height, stride;
-+    if (!ofnode_valid(fb) || stage < 1 || stage > 8 ||
-+        ofnode_read_u32(fb, "width", &width) ||
-+        ofnode_read_u32(fb, "height", &height) ||
-+        ofnode_read_u32(fb, "stride", &stride) ||
-+        height < 48 || width < 416 || width > 16384 ||
-+        stride < width * 4 || stride > 131072)
-+        return;
-+    const char *format = ofnode_read_string(fb, "format");
-+    if (!format)
-+        return;
-+    u32 green;
-+    if (!strcmp(format, "x8r8g8b8"))
-+        green = 0x0030ff60;
-+    else if (!strcmp(format, "x2r10g10b10"))
-+        green = 0x000ffc00;
-+    else
-+        return;
-+    addr = ofnode_get_addr_size(fb, "reg", &size);
-+    if (addr == FDT_ADDR_T_NONE || size < (u64)stride * 48)
-+        return;
-+    for (unsigned y = 8; y < 40; y++) {
-+        volatile u32 *row = (volatile u32 *)(ulong)(addr + (u64)y * stride);
-+        for (unsigned x = 16 + (stage - 1) * 48; x < 48 + (stage - 1) * 48; x++)
-+            row[x] = green;
-+    }
-+    asm volatile("dsb sy" ::: "memory");
 +}
 +static void nvme_map_power(ofnode node, int depth)
 +{
@@ -321,7 +279,6 @@ index 44a5ef25..49b1b846 100644
 +                     cpu_to_fdt32(0x60000) };
 +    if (!ofnode_valid(node) || ofnode_write_prop(node, "reg", reg, sizeof(reg), true))
 +        panic("Cannot widen NVMe control DT\n");
-+    nvme_early_mark(2);
 +    nvme_map_expected(node, 0x44dcc0000ULL, 0x60000);
 +    addr = ofnode_get_addr_size_index(node, 2, &size);
 +    if (addr != 0x40dcc0000ULL || size != 0x60000)
@@ -337,21 +294,17 @@ index 44a5ef25..49b1b846 100644
 +    if (ofnode_read_u32(node, "apple,sart", &phandle))
 +        panic("Missing NVMe SART\n");
 +    nvme_map_expected(ofnode_get_by_phandle(phandle), 0x40dc50000ULL, 0xc000);
-+    nvme_early_mark(3);
 +    nvme_map_power(node, 0);
-+    nvme_early_mark(4);
 +    node = ofnode_by_compatible(ofnode_null(), "apple,wdt");
 +    nvme_map_expected(node, 0x50836c000ULL, SZ_16K);
-+    nvme_early_mark(5);
 +    sd_map[sd_slots++].attrs = PTE_BLOCK_MEMTYPE(MT_NORMAL) | PTE_BLOCK_INNER_SHARE;
 +    sd_map[sd_slots++].attrs = PTE_BLOCK_MEMTYPE(MT_NORMAL_NC) |
 +        PTE_BLOCK_INNER_SHARE | PTE_BLOCK_PXN | PTE_BLOCK_UXN;
 +}
-+
+ 
  struct mm_region *mem_map;
  
- int board_init(void)
-@@ -1172,6 +1305,10 @@ void build_mem_map(void)
+@@ -1172,6 +1265,10 @@
  		mem_map = t6030_mem_map;
  	else if (of_machine_is_compatible("apple,t6032"))
  		mem_map = t6032_mem_map;
@@ -362,22 +315,15 @@ index 44a5ef25..49b1b846 100644
  	else
  		panic("Unsupported SoC\n");
  
-@@ -1212,10 +1349,13 @@ void build_mem_map(void)
- 
+@@ -1213,7 +1310,6 @@
  void enable_caches(void)
  {
-+	nvme_early_mark(1);
  	build_mem_map();
 -
-+	nvme_early_mark(6);
  	icache_enable();
-+	nvme_early_mark(7);
  	dcache_enable();
-+	nvme_early_mark(8);
  }
- 
- u64 get_page_table_size(void)
-@@ -1225,6 +1365,7 @@ u64 get_page_table_size(void)
+@@ -1225,6 +1321,7 @@
  
  static char *gravity_esp_devpart(void)
  {
@@ -385,7 +331,7 @@ index 44a5ef25..49b1b846 100644
  	struct disk_partition info;
  	struct blk_desc *nvme_blk;
  	const char *uuid = NULL;
-@@ -1281,11 +1422,18 @@ static char *gravity_esp_devpart(void)
+@@ -1281,11 +1378,18 @@
  	}
  
  	return devpart;
@@ -404,7 +350,7 @@ index 44a5ef25..49b1b846 100644
  }
  
  char *env_fat_get_dev_part(void)
-@@ -1302,27 +1450,16 @@ int board_late_init(void)
+@@ -1302,27 +1406,16 @@
  	u32 status = 0;
  	phys_addr_t addr;
  
@@ -436,7 +382,6 @@ index 44a5ef25..49b1b846 100644
  		log_warning("late_init: Failed to set run time variables\n");
 diff --git a/configs/apple_sdboot_defconfig b/configs/apple_sdboot_defconfig
 new file mode 100644
-index 00000000..bdf8d205
 --- /dev/null
 +++ b/configs/apple_sdboot_defconfig
 @@ -0,0 +1,98 @@
@@ -539,10 +484,9 @@ index 00000000..bdf8d205
 +
 +CONFIG_PARTITION_TYPE_GUID=y
 diff --git a/drivers/nvme/nvme.c b/drivers/nvme/nvme.c
-index a9179f8b..ba3bfe1f 100644
 --- a/drivers/nvme/nvme.c
 +++ b/drivers/nvme/nvme.c
-@@ -848,7 +848,8 @@ static ulong nvme_blk_read(struct udevice *udev, lbaint_t blknr,
+@@ -848,7 +848,8 @@
  static ulong nvme_blk_write(struct udevice *udev, lbaint_t blknr,
  			    lbaint_t blkcnt, const void *buffer)
  {
@@ -553,10 +497,9 @@ index a9179f8b..ba3bfe1f 100644
  
  static const struct blk_ops nvme_blk_ops = {
 diff --git a/drivers/nvme/nvme_apple.c b/drivers/nvme/nvme_apple.c
-index 35f76af2..df20d984 100644
 --- a/drivers/nvme/nvme_apple.c
 +++ b/drivers/nvme/nvme_apple.c
-@@ -71,6 +71,7 @@ struct apple_nvme_priv {
+@@ -71,6 +71,7 @@
  	struct nvme_dev ndev;
  	const struct apple_nvme_hw *hw;
  	void *base;		/* NVMe registers */
@@ -564,7 +507,7 @@ index 35f76af2..df20d984 100644
  	void *asc;		/* ASC registers */
  	struct reset_ctl_bulk resets; /* ASC reset */
  	struct mbox_chan chan;
-@@ -105,13 +106,13 @@ static int apple_nvme_setup_queue(struct nvme_queue *nvmeq)
+@@ -105,13 +106,13 @@
  		priv->q_db[nvmeq->qid] =
  			((void __iomem *)dev->bar) + ANS_ASQ_DB;
  		nvme_writeq((ulong)priv->tcbs[nvmeq->qid],
@@ -580,7 +523,7 @@ index 35f76af2..df20d984 100644
  		break;
  	}
  
-@@ -139,12 +140,13 @@ static void apple_nvme_submit_cmd(struct nvme_queue *nvmeq,
+@@ -139,12 +140,13 @@
  {
  	struct apple_nvme_priv *priv =
  		container_of(nvmeq->dev, struct apple_nvme_priv, ndev);
@@ -596,7 +539,7 @@ index 35f76af2..df20d984 100644
  	}
  
  	tcb = ((void *)priv->tcbs[nvmeq->qid]) + tail * ANS_NVMMU_TCB_PITCH;
-@@ -172,8 +174,8 @@ static void apple_nvme_complete_cmd(struct nvme_queue *nvmeq,
+@@ -172,8 +174,8 @@
  
  	tcb = ((void *)priv->tcbs[nvmeq->qid]) + tail * ANS_NVMMU_TCB_PITCH;
  	memset(tcb, 0, sizeof(*tcb));
@@ -607,7 +550,7 @@ index 35f76af2..df20d984 100644
  
  	if (++tail == nvmeq->q_depth)
  		tail = 0;
-@@ -233,6 +235,13 @@ static int apple_nvme_probe(struct udevice *dev)
+@@ -233,6 +235,13 @@
  	if (!priv->base)
  		return -EINVAL;
  
@@ -621,7 +564,7 @@ index 35f76af2..df20d984 100644
  	addr = dev_read_addr_index(dev, 1);
  	if (addr == FDT_ADDR_T_NONE)
  		return -EINVAL;
-@@ -285,7 +294,7 @@ static int apple_nvme_probe(struct udevice *dev)
+@@ -285,7 +294,7 @@
  	strcpy(priv->ndev.vendor, "Apple");
  
  	writel((ANS_NVMMU_TCB_SIZE / ANS_NVMMU_TCB_PITCH) - 1,
@@ -630,7 +573,7 @@ index 35f76af2..df20d984 100644
  	writel(0, priv->base + ANS_MODESEL);
  
  	priv->ndev.bar = priv->base;
-@@ -310,14 +319,18 @@ static int apple_nvme_remove(struct udevice *dev)
+@@ -310,13 +319,17 @@
  	sart_free(priv->sart);
  	priv->sart = NULL;
  
@@ -647,17 +590,15 @@ index 35f76af2..df20d984 100644
  
  	return 0;
  }
- 
-+static_assert(offsetof(struct apple_nvme_priv, ndev) == 0);
 +
++static_assert(offsetof(struct apple_nvme_priv, ndev) == 0);
+ 
  static int apple_nvme_poll(struct nvme_dev *dev)
  {
- 	struct apple_nvme_priv *priv =
 diff --git a/drivers/power/domain/apple-pmgr.c b/drivers/power/domain/apple-pmgr.c
-index 3f74b5a2..1830a025 100644
 --- a/drivers/power/domain/apple-pmgr.c
 +++ b/drivers/power/domain/apple-pmgr.c
-@@ -122,6 +122,7 @@ static int apple_pmgr_of_xlate(struct power_domain *power_domain,
+@@ -122,6 +122,7 @@
  static const struct udevice_id apple_pmgr_ids[] = {
  	{ .compatible = "apple,t8103-pmgr-pwrstate" },
  	{ .compatible = "apple,pmgr-pwrstate" },
@@ -666,10 +607,9 @@ index 3f74b5a2..1830a025 100644
  };
  
 diff --git a/lib/efi_loader/efi_boottime.c b/lib/efi_loader/efi_boottime.c
-index de57823b..c06cfe73 100644
 --- a/lib/efi_loader/efi_boottime.c
 +++ b/lib/efi_loader/efi_boottime.c
-@@ -2246,6 +2246,7 @@ static efi_status_t EFIAPI efi_exit_boot_services(efi_handle_t image_handle,
+@@ -2246,6 +2246,7 @@
  			eth_halt();
  		board_quiesce_devices();
  		dm_remove_devices_active();
@@ -678,10 +618,9 @@ index de57823b..c06cfe73 100644
  
  	/* Patch out unsupported runtime function */
 diff --git a/lib/efi_loader/efi_disk.c b/lib/efi_loader/efi_disk.c
-index 4a3ace3a..08c394d6 100644
 --- a/lib/efi_loader/efi_disk.c
 +++ b/lib/efi_loader/efi_disk.c
-@@ -548,6 +548,8 @@ static efi_status_t efi_disk_add_dev(
+@@ -548,6 +548,8 @@
  	/* Fill in EFI IO Media info (for read/write callbacks) */
  	diskobj->media.removable_media = desc->removable;
  	diskobj->media.media_present = 1;

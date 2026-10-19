@@ -6,6 +6,7 @@ bridge (which supplies the existing GFX provider's phandle). Never pass saved
 trial inputs. This script itself reads no hardware or implicit live files.
 """
 import argparse,importlib.util,json,struct,subprocess,uuid
+import libfdt
 from pathlib import Path
 from native_adt_bridge_v7 import node_properties,raw_inputs,pin
 KIT=Path(__file__).resolve().parent
@@ -72,7 +73,13 @@ def make(adt,of,output,boot_id):
  text+='}; }; }; };\n'
  dts=output/'native-current.dts';dts.write_text(text);dtbo=output/'native-current.dtbo'
  subprocess.run(['dtc','-@','-I','dts','-O','dtb','-o',str(dtbo),str(dts)],check=True,stderr=(output/'dtc.log').open('w'))
- receipt={'schema':'m4rch.current-loader-overlay.v15','boot_id':boot_id,'inputs':[pin(adt),pin(of)],'output':pin(dtbo),'provider_handle':handle,'loader_regions':{k:{'physical':hex(b),'bytes':n} for k,(b,n) in regions.items()},'outside_current_OF_memory_banks':True,'hardware_actions':[],'overlay_applied':False,'capture_freshness':'Caller must capture ADT and expanded OF in the stated boot; hashes alone do not prove freshness.'}
+ # No exported labels are consumed by later overlays. Local fixups remain
+ # essential for this overlay's mailbox and reservation references.
+ fdt=libfdt.Fdt(dtbo.read_bytes());symbols=fdt.path_offset('/__symbols__',quiet=(libfdt.NOTFOUND,))
+ if symbols>=0:fdt.del_node(symbols)
+ assert fdt.path_offset('/__local_fixups__')>=0
+ fdt.pack();dtbo.write_bytes(bytes(fdt.as_bytearray()))
+ receipt={'schema':'m4rch.current-loader-overlay.v15','boot_id':boot_id,'inputs':[pin(adt),pin(of)],'output':pin(dtbo),'provider_handle':handle,'loader_regions':{k:{'physical':hex(b),'bytes':n} for k,(b,n) in regions.items()},'outside_current_OF_memory_banks':True,'hardware_actions':[],'overlay_applied':False,'exported_symbols_removed':True,'local_fixups_retained':True,'capture_freshness':'Caller must capture ADT and expanded OF in the stated boot; hashes alone do not prove freshness.'}
  (output/'overlay-receipt.json').write_text(json.dumps(receipt,indent=2)+'\n')
 if __name__=='__main__':
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('--adt',type=Path,required=True);p.add_argument('--of',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--boot-id',required=True);a=p.parse_args();make(a.adt,a.of,a.output,a.boot_id)

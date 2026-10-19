@@ -21,7 +21,7 @@ def profile_inputs(project):
 
 
 def prepare_tree(project, name, spec, work):
-    tree = boot.checkout("gravity-" + name, spec, work / name)
+    tree = boot.checkout("gravity-" + name, spec, work / (name + "-" + spec["revision"][:12]))
     run(["git", "-C", tree, "reset", "--hard", spec["revision"]])
     # Only remove generated files enumerated by this reviewed patch.
     for relative in spec["added_files"]:
@@ -65,7 +65,7 @@ def build(project, out, config, lock, kernel_dir):
     uboot = prepare_tree(project, "uboot", profile["sources"]["uboot"], work)
     run(["git", "-C", m1n1, "submodule", "update", "--init", "--depth=1"])
     env = dict(os.environ, CARGO_HOME="/cache/cargo", SOURCE_DATE_EPOCH=str(lock["source_date_epoch"]),
-               M1N1_VERSION_TAG=boot.M1N1_LABEL)
+               M1N1_VERSION_TAG="v1.6.0")
     if not shutil.which("magick"):
         bindir = work / "bin"; bindir.mkdir(exist_ok=True)
         (bindir / "magick").write_text('#!/bin/sh\nexec convert "$@"\n')
@@ -89,7 +89,7 @@ def build(project, out, config, lock, kernel_dir):
     shutil.copyfile(project / "profiles/gravity-loader.json", target / "profile.json")
     write_json(manifest, {"schema": 1, "kind": "j614s-gravity-stage2", "stage2_path": "boot.bin",
                          "boot_protocol": "m1n1-chainload", "inputs": inputs, "hardware_tested": False,
-                         "build_labels": {"m1n1": boot.M1N1_LABEL, "u-boot": loader.uboot_label(uboot / "Makefile")},
+                         "build_labels": {"m1n1": "v1.6.0", "u-boot": loader.uboot_label(uboot / "Makefile")},
                          "files": manifest_files(target, ["boot.bin", "HANDOVER.md", "collect.sh", "profile.json", *["loader/" + n for n in
                                   ("m1n1.bin", "u-boot-nodtb.bin", ".config", "baseline.dtb")]])})
     print("Built Gravity stage 2:", target / "boot.bin")

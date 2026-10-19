@@ -1,8 +1,7 @@
 diff --git a/src/dapf.c b/src/dapf.c
-index f5c2b05..738d7ca 100644
 --- a/src/dapf.c
 +++ b/src/dapf.c
-@@ -199,6 +199,13 @@ int dapf_init_all(void)
+@@ -199,6 +199,13 @@
              entry++;
              continue;
          }
@@ -17,10 +16,9 @@ index f5c2b05..738d7ca 100644
              ret = -1;
          }
 diff --git a/src/fb.c b/src/fb.c
-index 873a214..2c5d9a9 100644
 --- a/src/fb.c
 +++ b/src/fb.c
-@@ -503,7 +503,8 @@ void fb_shutdown(bool restore_logo)
+@@ -508,7 +508,8 @@
          return;
  
      console.active = false;
@@ -31,7 +29,6 @@ index 873a214..2c5d9a9 100644
          fb_restore_logo();
          free(orig_logo.ptr);
 diff --git a/src/kboot.c b/src/kboot.c
-index c5ed848..2413059 100644
 --- a/src/kboot.c
 +++ b/src/kboot.c
 @@ -1,4 +1,6 @@
@@ -41,7 +38,7 @@ index c5ed848..2413059 100644
  
  #include <stdint.h>
  
-@@ -376,7 +378,7 @@ static int dt_set_memory(void)
+@@ -376,7 +378,7 @@
  
      // iBoot makes this CTRR range writable only from the boot CPU. Keep Linux from assigning its
      // pages to secondary CPUs.
@@ -50,7 +47,7 @@ index c5ed848..2413059 100644
          u64 ctrr_start = ALIGN_DOWN(mrs(SYS_IMP_APL_CTRR_LOWER_EL1), get_page_size());
          u64 ctrr_end = ALIGN_UP(mrs(SYS_IMP_APL_CTRR_UPPER_EL1) + SZ_4K, get_page_size());
  
-@@ -2875,6 +2877,44 @@ int kboot_prepare_dt(void *fdt)
+@@ -2875,6 +2877,43 @@
      return 0;
  }
  
@@ -88,14 +85,13 @@ index c5ed848..2413059 100644
 +        return -1;
 +    }
 +    mdelay(100);
-+    printf("SDBOOT: J614s SD supply enabled; initializing PCIe once\n");
 +    return 0;
 +}
 +
  int kboot_boot(void *kernel)
  {
      mcc_enable_cache();
-@@ -2882,11 +2922,30 @@ int kboot_boot(void *kernel)
+@@ -2882,10 +2921,28 @@
      clk_init();
  
      usb_init();
@@ -105,7 +101,7 @@ index c5ed848..2413059 100644
      /* HACK: DAPF init raises an SError on T8132. */
      if (chip_id != T8132)
          dapf_init_all();
- 
++
 +    /* This hook is present only in the optional ANS-aware loader. */
 +    if (!nvme_prepare_handoff()) {
 +        printf("SDBOOT: ANS shutdown failed; refusing UEFI handoff\n");
@@ -121,16 +117,13 @@ index c5ed848..2413059 100644
 +        printf("SDBOOT: cannot publish ANS handoff marker\n");
 +        return -1;
 +    }
-+    printf("SDBOOT: ANS handoff v2 complete\n");
-+
+ 
      printf("Setting SMP mode to WFE...\n");
      smp_set_wfe_mode(true);
-     printf("Preparing to boot kernel at %p with fdt at %p\n", kernel, dt);
 diff --git a/src/main.c b/src/main.c
-index 40f6e47..a4fd007 100644
 --- a/src/main.c
 +++ b/src/main.c
-@@ -83,7 +83,17 @@ void run_actions(void)
+@@ -83,7 +83,17 @@
          printf("Boot policy: sip0 = %ld\n", lp_sip0);
      }
  
@@ -148,7 +141,7 @@ index 40f6e47..a4fd007 100644
          printf("Bringing up USB for early debug...\n");
  
          usb_init();
-@@ -117,6 +127,14 @@ void run_actions(void)
+@@ -117,6 +127,14 @@
  #endif
  #endif
  
@@ -163,26 +156,7 @@ index 40f6e47..a4fd007 100644
      printf("Checking for payloads...\n");
  
      if (payload_run() == 0) {
-@@ -193,12 +211,17 @@ void m1n1_main(void)
- 
-     printf("Preparing to run next stage at %p...\n", next_stage.entry);
- 
-+    printf("M4RCH next stage: confirm ANS stopped\n");
-     nvme_shutdown();
-+    printf("M4RCH next stage: exception cleanup\n");
-     exception_shutdown();
- #ifndef BRINGUP
-+    printf("M4RCH next stage: USB iodev cleanup\n");
-     usb_iodev_shutdown();
-+    printf("M4RCH next stage: display cleanup\n");
-     display_shutdown(DCP_SLEEP_IF_EXTERNAL);
- #ifdef USE_FB
-+    printf("M4RCH next stage: framebuffer release; MMU teardown and branch next\n");
-     fb_shutdown(next_stage.restore_logo);
- #endif
-     mmu_shutdown();
 diff --git a/src/nvme.c b/src/nvme.c
-index 65cc7d7..bb7c097 100644
 --- a/src/nvme.c
 +++ b/src/nvme.c
 @@ -7,6 +7,7 @@
@@ -193,7 +167,7 @@ index 65cc7d7..bb7c097 100644
  #include "string.h"
  #include "utils.h"
  
-@@ -128,6 +129,8 @@ static enum {
+@@ -128,6 +129,8 @@
  } nvme_type;
  
  static bool nvme_initialized = false;
@@ -202,7 +176,7 @@ index 65cc7d7..bb7c097 100644
  static u8 nvme_die;
  
  static asc_dev_t *nvme_asc = NULL;
-@@ -207,13 +210,30 @@ static bool nvme_ctrl_enable(void)
+@@ -207,13 +210,24 @@
  static bool nvme_ctrl_shutdown(void)
  {
      u64 timeout = timeout_calculate(NVME_SHUTDOWN_TIMEOUT);
@@ -215,32 +189,26 @@ index 65cc7d7..bb7c097 100644
 -    return FIELD_GET(NVME_CSTS_SHST, read32(nvme_base + NVME_CSTS)) == NVME_CSTS_SHST_DONE;
 +    u32 status, control;
 +
-+    printf("M4RCH ANS SHN: reading initial controller registers\n");
 +    control = read32(nvme_base + NVME_CC);
 +    status = read32(nvme_base + NVME_CSTS);
-+    printf("M4RCH ANS SHN: before CC=%08x CSTS=%08x\n", control, status);
-+    printf("M4RCH ANS SHN: requesting normal shutdown\n");
 +    mask32(nvme_base + NVME_CC, NVME_CC_SHN,
 +           FIELD_PREP(NVME_CC_SHN, NVME_CC_SHN_NORMAL));
-+    printf("M4RCH ANS SHN: request written; reading CSTS\n");
 +    status = read32(nvme_base + NVME_CSTS);
-+    printf("M4RCH ANS SHN: first CSTS=%08x\n", status);
 +    while (FIELD_GET(NVME_CSTS_SHST, status) != NVME_CSTS_SHST_DONE &&
 +           !timeout_expired(timeout)) {
 +        struct rtkit_message message;
 +        if (rtkit_recv_one(nvme_rtkit, &message) < 0) {
-+            printf("M4RCH ANS SHN: firmware receive failed; refusing handoff\n");
++            printf("ANS: firmware receive failed; refusing handoff\n");
 +            return false;
 +        }
 +        udelay(100);
 +        status = read32(nvme_base + NVME_CSTS);
 +    }
-+    printf("M4RCH ANS SHN: final CSTS=%08x\n", status);
 +    return FIELD_GET(NVME_CSTS_SHST, status) == NVME_CSTS_SHST_DONE;
  }
  
  static bool nvme_exec_command(struct nvme_queue *q, struct nvme_command *cmd, u64 *result)
-@@ -303,11 +323,23 @@ static bool nvme_exec_command(struct nvme_queue *q, struct nvme_command *cmd, u6
+@@ -303,9 +317,21 @@
  
  bool nvme_init(void)
  {
@@ -253,32 +221,30 @@ index 65cc7d7..bb7c097 100644
      if (nvme_initialized) {
          printf("nvme: already initialized\n");
          return true;
-     }
- 
++    }
++
 +    /* This optional handoff has only been reviewed for the J614s board. */
 +    if (chip_id != T6040 || board_id != 4) {
 +        printf("nvme: experimental handoff requires J614s/T6040 board 4\n");
 +        return false;
-+    }
-+
-     int adt_path[8];
-     int node = adt_path_offset_trace(adt, "/arm-io/ans", adt_path);
-     if (node < 0) {
-@@ -315,6 +347,13 @@ bool nvme_init(void)
-         return NULL;
      }
  
+     int adt_path[8];
+@@ -313,6 +339,13 @@
+     if (node < 0) {
+         printf("nvme: Error getting NVMe node /arm-io/ans\n");
+         return NULL;
++    }
++
 +    u32 reg_len = 0;
 +    if (!adt_getprop(adt, node, "reg", &reg_len) || reg_len != 10 * 16 ||
 +        !adt_get_property(adt, node, "nvme-secure-bar")) {
 +        printf("nvme: unexpected J614s ANS register layout\n");
 +        return false;
-+    }
-+
+     }
+ 
      if (adt_get_property(adt, node, "nvme-secure-bar"))
-         // M4+ generations have the nvme-secure-bar property and 10+ regs.
-         // They use reg[3] for NVMMU registers and reg[9] for NVMe registers,
-@@ -337,6 +376,11 @@ bool nvme_init(void)
+@@ -337,6 +370,11 @@
          nvme_base = nvmmu_base;
      }
  
@@ -290,7 +256,7 @@ index 65cc7d7..bb7c097 100644
      u32 cg;
      if (ADT_GETPROP(adt, node, "clock-gates", &cg) < 0) {
          printf("nvme: clock-gates not set\n");
-@@ -370,12 +414,15 @@ bool nvme_init(void)
+@@ -370,12 +408,15 @@
      if (!nvme_rtkit)
          goto out_sart;
  
@@ -308,7 +274,7 @@ index 65cc7d7..bb7c097 100644
      }
  
      /* setup controller and NVMMU for linear submission queue */
-@@ -389,14 +436,14 @@ bool nvme_init(void)
+@@ -389,14 +430,14 @@
      /* setup admin queue */
      if (!nvme_ctrl_disable()) {
          printf("nvme: timeout while waiting for CSTS.RDY to clear\n");
@@ -325,7 +291,7 @@ index 65cc7d7..bb7c097 100644
      }
  
      /* setup IO queue */
-@@ -410,7 +457,7 @@ bool nvme_init(void)
+@@ -410,7 +451,7 @@
      cmd.cdw11 = NVME_QUEUE_CONTIGUOUS;
      if (!nvme_exec_command(&adminq, &cmd, NULL)) {
          printf("nvme: create cq command failed\n");
@@ -334,26 +300,27 @@ index 65cc7d7..bb7c097 100644
      }
  
      memset(&cmd, 0, sizeof(cmd));
-@@ -422,7 +469,15 @@ bool nvme_init(void)
+@@ -422,7 +463,7 @@
      cmd.cdw11 |= 1 << 16; // cq id for this sq
      if (!nvme_exec_command(&adminq, &cmd, NULL)) {
          printf("nvme: create sq command failed\n");
 -        goto out_delete_cq;
 +        goto out_unsafe;
-+    }
-+
+     }
+ 
+     if (nvme_type == NVME_T8132) {
+@@ -433,27 +474,25 @@
+         write64_lo_hi(nvme_base + NVME_IOQ_CMDS, (u64)ioq.cmds);
+     }
+ 
 +    if (nvme_type == NVME_T8132) {
 +        // Extra write required to set up the IO queues on M4+.
 +        // Otherwise, the ANS crashes and the crashlog says
 +        // `I/O SQ  : 0x000000000` / `I/O CQ  : 0x000000000`.
 +        write64_lo_hi(nvme_base + NVME_IOQ_CQES, (u64)ioq.cqes);
 +        write64_lo_hi(nvme_base + NVME_IOQ_CMDS, (u64)ioq.cmds);
-     }
- 
-     if (nvme_type == NVME_T8132) {
-@@ -434,26 +489,16 @@ bool nvme_init(void)
-     }
- 
++    }
++
      nvme_initialized = true;
 +    nvme_handoff_failed = false;
      printf("nvme: initialized at 0x%lx\n", nvme_base);
@@ -385,23 +352,23 @@ index 65cc7d7..bb7c097 100644
  out_sart:
      sart_free(nvme_sart);
  out_asc:
-@@ -510,51 +555,92 @@ fail:
+@@ -510,51 +549,85 @@
      pmgr_reset(nvme_die, "ANS2");
  }
  
 -void nvme_shutdown(void)
-+/* Only mark the handoff after every observable shutdown step completed. */
-+static bool nvme_shutdown_checked(void)
- {
+-{
 -    if (!nvme_initialized) {
 -        // nvme_ensure_shutdown();
 -        return;
 -    }
 -
++/* Only mark the handoff after every observable shutdown step completed. */
++static bool nvme_shutdown_checked(void)
++{
      struct nvme_command cmd;
  
      memset(&cmd, 0, sizeof(cmd));
-+    printf("M4RCH ANS handoff: delete I/O SQ\n");
      cmd.opcode = NVME_ADMIN_CMD_DELETE_SQ;
 -    cmd.cdw10 = 1; // sq id
 -    if (!nvme_exec_command(&adminq, &cmd, NULL))
@@ -412,7 +379,6 @@ index 65cc7d7..bb7c097 100644
 +    }
  
      memset(&cmd, 0, sizeof(cmd));
-+    printf("M4RCH ANS handoff: delete I/O CQ\n");
      cmd.opcode = NVME_ADMIN_CMD_DELETE_CQ;
 -    cmd.cdw10 = 1; // cq id
 -    if (!nvme_exec_command(&adminq, &cmd, NULL))
@@ -423,13 +389,11 @@ index 65cc7d7..bb7c097 100644
 -    if (!nvme_ctrl_shutdown())
 +        return false;
 +    }
-+    printf("M4RCH ANS handoff: controller shutdown\n");
 +    if (!nvme_ctrl_shutdown()) {
          printf("nvme: timeout while waiting for controller shutdown\n");
 -    if (!nvme_ctrl_disable())
 +        return false;
 +    }
-+    printf("M4RCH ANS handoff: controller disable\n");
 +    if (!nvme_ctrl_disable()) {
          printf("nvme: timeout while waiting for CSTS.RDY to clear\n");
 -
@@ -439,20 +403,17 @@ index 65cc7d7..bb7c097 100644
 -    pmgr_reset(nvme_die, "ANS2");
 +        return false;
 +    }
-+    printf("M4RCH ANS handoff: RTKit sleep\n");
 +    if (!rtkit_sleep_checked(nvme_rtkit)) {
 +        printf("nvme: ANS did not enter the stopped state\n");
 +        return false;
 +    }
 +    /* ANS and ANS2 are alternative PMGR names, so one lookup may fail. */
-+    printf("M4RCH ANS handoff: ANS power-domain reset\n");
 +    int ans_reset = pmgr_reset(nvme_die, "ANS");
 +    int ans2_reset = pmgr_reset(nvme_die, "ANS2");
 +    if (ans_reset && ans2_reset) {
 +        printf("nvme: cannot reset either ANS power domain\n");
 +        return false;
 +    }
-+    printf("M4RCH ANS handoff: release stopped firmware buffers\n");
      rtkit_free(nvme_rtkit);
      sart_free(nvme_sart);
      asc_free(nvme_asc);
@@ -470,7 +431,7 @@ index 65cc7d7..bb7c097 100644
 +        return false;
 +    if (nvme_handoff_done && !nvme_initialized)
 +        return true;
-+    printf("arch-m4 NVMe handoff v2: initializing ANS before UEFI\n");
++    printf("NVMe handoff v2: initializing ANS before UEFI\n");
 +    if (!nvme_init())
 +        return false;
 +    nvme_handoff_failed = true;
@@ -486,7 +447,7 @@ index 65cc7d7..bb7c097 100644
 +    /* Also preserve the legacy experimental-nvme profile's main() handoff.
 +     * The UEFI hook already completed this; never initialize ANS twice. */
 +    if (!nvme_prepare_handoff())
-+        panic("arch-m4 NVMe handoff failed; refusing next-stage handoff\n");
++        panic("NVMe handoff failed; refusing next-stage handoff\n");
  }
  
  bool nvme_flush(u32 nsid)
@@ -498,7 +459,7 @@ index 65cc7d7..bb7c097 100644
          return false;
  
      memset(&cmd, 0, sizeof(cmd));
-@@ -569,7 +655,7 @@ bool nvme_read(u32 nsid, u64 lba, void *buffer)
+@@ -569,7 +642,7 @@
      struct nvme_command cmd;
      u64 buffer_addr = (u64)buffer;
  
@@ -508,7 +469,6 @@ index 65cc7d7..bb7c097 100644
  
      /* no need for 16K alignment here since the NVME page size is 4k */
 diff --git a/src/nvme.h b/src/nvme.h
-index b99501b..6fe7b09 100644
 --- a/src/nvme.h
 +++ b/src/nvme.h
 @@ -7,6 +7,7 @@
@@ -520,10 +480,9 @@ index b99501b..6fe7b09 100644
  bool nvme_flush(u32 nsid);
  bool nvme_read(u32 nsid, u64 lba, void *buffer);
 diff --git a/src/rtkit.c b/src/rtkit.c
-index aca64d6..f2e930a 100644
 --- a/src/rtkit.c
 +++ b/src/rtkit.c
-@@ -368,7 +368,7 @@ bool rtkit_can_recv(rtkit_dev_t *rtk)
+@@ -368,7 +368,7 @@
      return asc_can_recv(rtk->asc);
  }
  
@@ -532,7 +491,7 @@ index aca64d6..f2e930a 100644
  {
      struct asc_message asc_msg;
      bool ok = true;
-@@ -376,7 +376,8 @@ int rtkit_recv(rtkit_dev_t *rtk, struct rtkit_message *msg)
+@@ -376,7 +376,8 @@
      if (rtk->crashed)
          return -1;
  
@@ -542,7 +501,7 @@ index aca64d6..f2e930a 100644
          if (asc_msg.msg1 >= 0x100) {
              rtkit_printf("WARNING: received message for invalid endpoint %x >= 0x100\n",
                           asc_msg.msg1);
-@@ -476,6 +477,16 @@ int rtkit_recv(rtkit_dev_t *rtk, struct rtkit_message *msg)
+@@ -476,6 +477,16 @@
      return 0;
  }
  
@@ -559,7 +518,7 @@ index aca64d6..f2e930a 100644
  bool rtkit_start_ep(rtkit_dev_t *rtk, u8 ep)
  {
      struct asc_message msg;
-@@ -723,3 +734,13 @@ bool rtkit_sleep(rtkit_dev_t *rtk)
+@@ -723,3 +734,13 @@
      asc_cpu_stop(rtk->asc);
      return 0;
  }
@@ -574,10 +533,9 @@ index aca64d6..f2e930a 100644
 +    return !asc_cpu_running(rtk->asc);
 +}
 diff --git a/src/rtkit.h b/src/rtkit.h
-index 9b561fa..099ed41 100644
 --- a/src/rtkit.h
 +++ b/src/rtkit.h
-@@ -26,6 +26,7 @@ rtkit_dev_t *rtkit_init(const char *name, asc_dev_t *asc, dart_dev_t *dart,
+@@ -26,6 +26,7 @@
                          iova_domain_t *dart_iovad, sart_dev_t *sart, bool sram);
  bool rtkit_quiesce(rtkit_dev_t *rtk);
  bool rtkit_sleep(rtkit_dev_t *rtk);
@@ -585,7 +543,7 @@ index 9b561fa..099ed41 100644
  void rtkit_free(rtkit_dev_t *rtk);
  
  bool rtkit_start_ep(rtkit_dev_t *rtk, u8 ep);
-@@ -34,6 +35,7 @@ bool rtkit_boot(rtkit_dev_t *rtk);
+@@ -34,6 +35,7 @@
  bool rtkit_can_recv(rtkit_dev_t *rtk);
  
  int rtkit_recv(rtkit_dev_t *rtk, struct rtkit_message *msg);

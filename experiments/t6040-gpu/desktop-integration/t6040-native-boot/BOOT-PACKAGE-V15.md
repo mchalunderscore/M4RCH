@@ -76,3 +76,31 @@ gfx provider lacks a phandle. The bootloader metadata patch returns early when
 the GPU node is absent; an ordinary phandle-property overlay also leaves the
 live device_node lookup field unchanged. These are implementation gaps this
 bridge addresses; copying a saved DTB with old reservation addresses is invalid.
+
+The first fresh-boot launcher on e738b9b8-79fa-4650-a348-088de4c5b7f8 stopped
+in the overlay PRE_APPLY notifier with -22 for reserved-memory. Its saved trial
+contains exactly the five metadata stages, no driver load and zero submissions.
+The kernel calls PRE_APPLY before build_changeset or changeset application, so
+this particular error applied no GPU/reservation/mailbox nodes. The guard had
+compared full_name with an absolute path; this kernel stores the node basename
+there. The new bridge v16 uses of_node_name_eq plus parent==of_root. The fresh
+generator removes exported __symbols__, preserving __local_fixups__ required
+by its own phandle references. No subsequent overlay consumes exported labels.
+
+The v16 launcher accepts `--resume-metadata` only in a bundle containing the
+hash-pinned original trial, final dmesg/module capture and apply error log. It
+requires that exact same UUID and command/failure history, zero submissions,
+no old native GPU/mailbox/reservation nodes and no Asahi module. The retained
+v15 bridge and ADT capture must still be present. A separate exclusive child
+claim prevents another continuation. It loads the separately named v16 bridge,
+recaptures current ADT/expanded OF, regenerates the overlay, and only then
+proceeds with the final reviewed driver and single render. It does not remove
+the old metadata module or reuse the old generated overlay.
+
+Runtime libfdt import and libc/libdrm loading are checked in the same Python
+interpreter before the claim or any module operation. Applying the overlay
+uses one unbuffered os.write, verifies the full byte count, and closes the fd
+without a buffered flush retry. The previous pathlib write's initial EINVAL
+was followed by a close-time retry reporting EBUSY; that is not a second GPU
+trial. Final continuation packaging must include the driver's dynamic loader
+span validation fix; the earlier v16 driver remains an unsuitable placeholder.

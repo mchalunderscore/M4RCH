@@ -1,0 +1,24 @@
+{
+  "schema": "m4rch.native-integrated-unexpected-host-reset.v16",
+  "current_boot": "ad2fc3bd-ff77-4491-a638-560d49232927",
+  "previous_boots": [
+    "e738b9b8-79fa-4650-a348-088de4c5b7f8",
+    "e99f387a-04b4-419e-9b3b-5457cddeec28"
+  ],
+  "approximate_reset_local_times": [
+    "2026-10-11 13:12 BST",
+    "2026-10-11 13:19 BST"
+  ],
+  "explicit_agent_reboot_command": false,
+  "GPU_driver_loaded_in_second_boot": false,
+  "triangle_submissions": 0,
+  "last_launcher_result": "Rejected boot UUID before module actions or exclusive claim",
+  "saved_panic_record": false,
+  "PMU_boot_errors": 1,
+  "PMU_panics": 0,
+  "systemd_runtime_watchdog_usec": 0,
+  "systemd_reboot_watchdog_usec": 0,
+  "cause": "Unknown; abrupt reset with no clean shutdown or recorded panic in retained logs",
+  "evidence_directory": "/home/alice/Desktop/m4rch/out/gpu-native-unexpected-reset-v16",
+  "next_action": "Corrected combined trial bundle exists; no GPU operation issued during reset investigation"
+}

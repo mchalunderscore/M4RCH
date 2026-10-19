@@ -46,15 +46,13 @@ static int do_archnvme(struct cmd_tbl *cmdtp, int flag, int argc, char *const ar
 	size_t image_size, overlay_size, recorded_size;
 	char command[96];
 
-	puts("ARCHM4 UEFI bridge: framebuffer console ready\n");
 	if (!image || !dt || !overlay ||
 	    fdt_node_check_compatible(gd->fdt_blob, 0, "apple,j614s")) {
-		puts("ARCHM4: missing boot buffers or unexpected board\n");
+		puts("Boot: missing boot buffers or unexpected board\n");
 		return CMD_RET_FAILURE;
 	}
-	puts("M4RCH UEFI bridge: probing internal Apple NVMe (no SD fallback)\n");
 	if (nvme_scan_namespace()) {
-		puts("M4RCH: NVMe scan failed\n");
+		puts("Boot: NVMe scan failed\n");
 		return CMD_RET_FAILURE;
 	}
 	/* Choose an EFI partition by its unique GPT UUID, never by slot alone. */
@@ -71,14 +69,14 @@ static int do_archnvme(struct cmd_tbl *cmdtp, int flag, int argc, char *const ar
 			if (strcasecmp(part.type_guid, "c12a7328-f81f-11d2-ba4b-00a0c93ec93b") ||
 			    (u64)part.start * desc->blksz != 362525229056ULL ||
 			    (u64)part.size * desc->blksz != 1073741824ULL || found++) {
-				puts("M4RCH: ambiguous or unexpected internal ESP\n");
+				puts("Boot: ambiguous or unexpected internal ESP\n");
 				return CMD_RET_FAILURE;
 			}
 			snprintf(esp_device, sizeof(esp_device), "%d:%d", disk, slot);
 		}
 	}
 	if (found != 1) {
-		puts("M4RCH: internal ESP not found\n");
+		puts("Boot: internal ESP not found\n");
 		return CMD_RET_FAILURE;
 	}
 	if (read_esp(OVERLAY_PATH, overlay, DT_LIMIT, &overlay_size) ||
@@ -87,14 +85,14 @@ static int do_archnvme(struct cmd_tbl *cmdtp, int flag, int argc, char *const ar
 	    fdt_open_into(gd->fdt_blob, dt, DT_LIMIT) ||
 	    fdt_overlay_apply(dt, overlay) ||
 	    fdt_node_check_compatible(dt, 0, "apple,j614s")) {
-		puts("ARCHM4: missing or invalid /dtbs/board.dtbo\n");
+		puts("Boot: missing or invalid /dtbs/board.dtbo\n");
 		return CMD_RET_FAILURE;
 	}
 	/* The overlay modifies only this handoff copy, not the control DT used
 	 * by active firmware drivers. GRUB must inherit it, not load a raw DTB. */
 	if (read_esp(EFI_PATH, image, EFI_LIMIT, &image_size) ||
 	    efi_check_pe(image, image_size, NULL) != EFI_SUCCESS) {
-		puts("ARCHM4: missing or invalid /EFI/BOOT/BOOTAA64.EFI\n");
+		puts("Boot: missing or invalid /EFI/BOOT/BOOTAA64.EFI\n");
 		return CMD_RET_FAILURE;
 	}
 	/* fs_read alone does not record an EFI device path. This must be set
@@ -103,12 +101,11 @@ static int do_archnvme(struct cmd_tbl *cmdtp, int flag, int argc, char *const ar
 	efi_set_bootdev("nvme", esp_device, EFI_PATH, image, image_size);
 	efi_get_image_parameters(&recorded_image, &recorded_size);
 	if (recorded_image != image || recorded_size != image_size) {
-		puts("ARCHM4: could not establish the NVMe EFI device path\n");
+		puts("Boot: could not establish the NVMe EFI device path\n");
 		return CMD_RET_FAILURE;
 	}
 	if (env_set("bootargs", NULL))
 		return CMD_RET_FAILURE;
-	printf("ARCHM4 UEFI bridge: starting %s (%zu bytes)\n", EFI_PATH, image_size);
 	snprintf(command, sizeof(command), "bootefi %lx %lx", (ulong)image, (ulong)dt);
 	return run_command(command, 0) ? CMD_RET_FAILURE : CMD_RET_SUCCESS;
 }

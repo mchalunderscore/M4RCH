@@ -54,43 +54,7 @@ def prepare(tree, recipe):
     text = board.read_text()
     start = text.index('static void sd_build_map(void)')
     end = text.index('\nstruct mm_region *mem_map;', start)
-    text = text[:start] + r'''/* Visible before the normal console: each completed step adds one green
- * block at the top-left of the m1n1-supplied framebuffer. No device MMIO,
- * allocation, UART or disk access is needed. */
-static void nvme_early_mark(unsigned stage)
-{
-    ofnode fb = ofnode_path("/chosen/framebuffer");
-    fdt_size_t size;
-    fdt_addr_t addr;
-    u32 width, height, stride;
-    if (!ofnode_valid(fb) || stage < 1 || stage > 8 ||
-        ofnode_read_u32(fb, "width", &width) ||
-        ofnode_read_u32(fb, "height", &height) ||
-        ofnode_read_u32(fb, "stride", &stride) ||
-        height < 48 || width < 416 || width > 16384 ||
-        stride < width * 4 || stride > 131072)
-        return;
-    const char *format = ofnode_read_string(fb, "format");
-    if (!format)
-        return;
-    u32 green;
-    if (!strcmp(format, "x8r8g8b8"))
-        green = 0x0030ff60;
-    else if (!strcmp(format, "x2r10g10b10"))
-        green = 0x000ffc00;
-    else
-        return;
-    addr = ofnode_get_addr_size(fb, "reg", &size);
-    if (addr == FDT_ADDR_T_NONE || size < (u64)stride * 48)
-        return;
-    for (unsigned y = 8; y < 40; y++) {
-        volatile u32 *row = (volatile u32 *)(ulong)(addr + (u64)y * stride);
-        for (unsigned x = 16 + (stage - 1) * 48; x < 48 + (stage - 1) * 48; x++)
-            row[x] = green;
-    }
-    asm volatile("dsb sy" ::: "memory");
-}
-static void nvme_map_power(ofnode node, int depth)
+    text = text[:start] + r'''static void nvme_map_power(ofnode node, int depth)
 {
     struct ofnode_phandle_args spec;
     ofnode parent;
@@ -145,7 +109,6 @@ static void sd_build_map(void)
                      cpu_to_fdt32(0x60000) };
     if (!ofnode_valid(node) || ofnode_write_prop(node, "reg", reg, sizeof(reg), true))
         panic("Cannot widen NVMe control DT\n");
-    nvme_early_mark(2);
     nvme_map_expected(node, 0x44dcc0000ULL, 0x60000);
     addr = ofnode_get_addr_size_index(node, 2, &size);
     if (addr != 0x40dcc0000ULL || size != 0x60000)
@@ -161,12 +124,9 @@ static void sd_build_map(void)
     if (ofnode_read_u32(node, "apple,sart", &phandle))
         panic("Missing NVMe SART\n");
     nvme_map_expected(ofnode_get_by_phandle(phandle), 0x40dc50000ULL, 0xc000);
-    nvme_early_mark(3);
     nvme_map_power(node, 0);
-    nvme_early_mark(4);
     node = ofnode_by_compatible(ofnode_null(), "apple,wdt");
     nvme_map_expected(node, 0x50836c000ULL, SZ_16K);
-    nvme_early_mark(5);
     sd_map[sd_slots++].attrs = PTE_BLOCK_MEMTYPE(MT_NORMAL) | PTE_BLOCK_INNER_SHARE;
     sd_map[sd_slots++].attrs = PTE_BLOCK_MEMTYPE(MT_NORMAL_NC) |
         PTE_BLOCK_INNER_SHARE | PTE_BLOCK_PXN | PTE_BLOCK_UXN;
@@ -175,11 +135,6 @@ static void sd_build_map(void)
     for index, address in enumerate(PMGR_WINDOWS):
         text = text.replace("M4RCH_PMGR" + str(index), hex(address) + "ULL")
     text = text.replace('#if CONFIG_IS_ENABLED(NVME)\n\tenv_set("storage_interface", blk_get_uclass_name(UCLASS_NVME));\n\tenv_set("fw_dev_part", asahi_esp_devpart());\n#endif', '/* Probe ANS only from archnvme, after boot buffers and console exist. */')
-    old_caches = "void enable_caches(void)\n{\n\tbuild_mem_map();\n\n\ticache_enable();\n\tdcache_enable();\n}"
-    new_caches = "void enable_caches(void)\n{\n\tnvme_early_mark(1);\n\tbuild_mem_map();\n\tnvme_early_mark(6);\n\ticache_enable();\n\tnvme_early_mark(7);\n\tdcache_enable();\n\tnvme_early_mark(8);\n}"
-    if text.count(old_caches) != 1:
-        raise ValueError("Pinned U-Boot cache startup changed")
-    text = text.replace(old_caches, new_caches)
     board.write_text(text)
     # The SD handoff checker references the disabled PCI driver. The NVMe
     # driver's OS_PREPARE callback instead performs its own controller shutdown.

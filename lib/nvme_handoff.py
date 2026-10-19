@@ -121,7 +121,7 @@ def prepare_uefi(m1n1):
 
 def check_binary(path, *, uefi=False):
     data = Path(path).read_bytes()
-    if MARKER not in data or b"unexpected J614s ANS address translation" not in data:
+    if not any(marker in data for marker in (MARKER, MARKER.removeprefix(b"arch-m4 "))) or b"unexpected J614s ANS address translation" not in data:
         raise ValueError("NVMe test prefix is missing its guarded ANS handoff")
     if uefi and DT_MARKER.encode() not in data:
         raise ValueError("NVMe UEFI prefix is missing its live handoff marker")

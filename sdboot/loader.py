@@ -85,7 +85,7 @@ def uboot_label(makefile):
             raise ValueError(f"Pinned U-Boot Makefile has no unambiguous {name}")
         if matches[0]:
             values.append(matches[0])
-    return "u-boot-m4rch-" + ".".join(values)
+    return ".".join(values)
 
 
 def pack(prefix, dtb, uboot):
