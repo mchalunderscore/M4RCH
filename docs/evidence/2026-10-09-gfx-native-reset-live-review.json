@@ -1,0 +1,862 @@
+{
+  "schema": "m4rch.gfx-native-reset-live-independent-review.v1",
+  "date": "2026-10-09",
+  "boot_id": "a1f61d61-b0ec-4475-948b-e3de2741e60b",
+  "hardware_access_by_reviewer": false,
+  "kernel_release": "7.1.13-m4rch-gpu-native-reset",
+  "kernel_notes_sha256": "85c56f7a3d7409747dd67fe1dcbf8839562aafab16a9124f9304689a14de437d",
+  "candidate_owner_sha256": "51aeeab15ff4a369ce11717e24d7ba6507c176981eedfa3da61747b47959e432",
+  "candidate_receipt_sha256": "96d5dda793adf700017b5e28b33b2ee6e2964ab058a08ec4bcdcdf68fbe7909e",
+  "driver_return": 0,
+  "native_result": {
+    "command_attempts": 31,
+    "base": 251658495,
+    "base_from_auto_held": 1,
+    "original_auto": 268435456,
+    "release_command_verified": 1,
+    "sequence_completed": 1,
+    "disable_delay_us": 1,
+    "pulse_delay_us": 1,
+    "read_attempts": 63
+  },
+  "native_commands": [
+    {
+      "field": "inhibit",
+      "attempted": 1,
+      "forced": 1,
+      "desired_full_word": 251658495,
+      "write_error": 0
+    },
+    {
+      "field": "disable",
+      "attempted": 1,
+      "forced": 1,
+      "desired_full_word": 251659519,
+      "write_error": 0
+    },
+    {
+      "field": "combined-assert",
+      "attempted": 1,
+      "forced": 1,
+      "desired_full_word": 2399143167,
+      "write_error": 0
+    },
+    {
+      "field": "release",
+      "attempted": 1,
+      "forced": 1,
+      "desired_full_word": 251658495,
+      "write_error": 0
+    },
+    {
+      "field": "restore",
+      "attempted": 1,
+      "forced": 1,
+      "desired_full_word": 520093951,
+      "write_error": 0
+    },
+    {
+      "field": "cleanup-inhibit",
+      "attempted": 0,
+      "forced": 1,
+      "desired_full_word": 0,
+      "write_error": 0
+    },
+    {
+      "field": "cleanup-release",
+      "attempted": 0,
+      "forced": 1,
+      "desired_full_word": 0,
+      "write_error": 0
+    },
+    {
+      "field": "cleanup-restore",
+      "attempted": 0,
+      "forced": 1,
+      "desired_full_word": 0,
+      "write_error": 0
+    }
+  ],
+  "native_reads": [
+    {
+      "field": "before",
+      "attempted": 1,
+      "count": 1,
+      "poll_delay_us": 0,
+      "read_error": 0
+    },
+    {
+      "field": "auto-held",
+      "attempted": 1,
+      "count": 1,
+      "poll_delay_us": 0,
+      "read_error": 0
+    },
+    {
+      "field": "disabled",
+      "attempted": 1,
+      "count": 1,
+      "poll_delay_us": 0,
+      "read_error": 0
+    },
+    {
+      "field": "asserted",
+      "attempted": 1,
+      "count": 1,
+      "poll_delay_us": 0,
+      "read_error": 0
+    },
+    {
+      "field": "released",
+      "attempted": 1,
+      "count": 1,
+      "poll_delay_us": 0,
+      "read_error": 0
+    },
+    {
+      "field": "final",
+      "attempted": 1,
+      "count": 1,
+      "poll_delay_us": 0,
+      "read_error": 0
+    },
+    {
+      "field": "cleanup-release",
+      "attempted": 0,
+      "count": 0,
+      "poll_delay_us": 0,
+      "read_error": 0
+    },
+    {
+      "field": "cleanup-final",
+      "attempted": 0,
+      "count": 0,
+      "poll_delay_us": 0,
+      "read_error": 0
+    }
+  ],
+  "common_result": {
+    "result": 0,
+    "valid": 111,
+    "domain_on": 1,
+    "reset_users_present": 0,
+    "auto_policy_restored": 1,
+    "operation_error": 0,
+    "cleanup_error": 0,
+    "coverage_verified": 0,
+    "retirement_verified": 0
+  },
+  "common_fields": [
+    {
+      "field": "before",
+      "valid": 1,
+      "value": 520094719
+    },
+    {
+      "field": "auto_held",
+      "valid": 1,
+      "value": 251659263
+    },
+    {
+      "field": "disabled",
+      "valid": 1,
+      "value": 251659263
+    },
+    {
+      "field": "asserted",
+      "valid": 1,
+      "value": 2399142911
+    },
+    {
+      "field": "deasserted",
+      "valid": 0
+    },
+    {
+      "field": "released",
+      "valid": 1,
+      "value": 251659263
+    },
+    {
+      "field": "final",
+      "valid": 1,
+      "value": 520094719
+    },
+    {
+      "field": "cleanup_final",
+      "valid": 0
+    }
+  ],
+  "command_sequence_and_release_checks_completed": true,
+  "reset_bit31_observed_set_then_clear": true,
+  "device_disable_bit10_observed_set": false,
+  "physical_reset_coverage_verified": false,
+  "whole_gpu_access_cessation_verified": false,
+  "joined_dma_retirement_verified": false,
+  "gpu_execution_verified": false,
+  "rendering_verified": false,
+  "snapshot_capture_atomic": false,
+  "snapshots": [
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b",
+      "typed_command": "initial-owner",
+      "complete": true,
+      "owned_pages": 174,
+      "recovery_counter": 1,
+      "recovery_phase": 2,
+      "host_stop_request_shared": 1,
+      "request_state": 0,
+      "request_flag": 1,
+      "control_cursors": [
+        32,
+        32,
+        32
+      ],
+      "nonzero_work_cursor_words": 0,
+      "active_ta_entries": 0,
+      "power_652c_objects": 1217,
+      "power_652c_owned": 1215,
+      "owned_changed_pages_from_previous": [],
+      "last_asc": null,
+      "receive_journal_sha256": "7ec015563171ee08be091fa62474a4af3c59c8543da6c1cf8364612f4cdae828"
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T162851.507140Z-gfx-snapshot-f933da1d",
+      "typed_command": "gfx-snapshot",
+      "complete": true,
+      "owned_pages": 174,
+      "recovery_counter": 1,
+      "recovery_phase": 2,
+      "host_stop_request_shared": 1,
+      "request_state": 0,
+      "request_flag": 1,
+      "control_cursors": [
+        32,
+        32,
+        32
+      ],
+      "nonzero_work_cursor_words": 0,
+      "active_ta_entries": 0,
+      "power_652c_objects": 5537,
+      "power_652c_owned": 5538,
+      "owned_changed_pages_from_previous": [
+        6,
+        14,
+        15,
+        53,
+        54
+      ],
+      "last_asc": {
+        "kernel_time_seconds": 2758.742357,
+        "phase": "gfx-snapshot",
+        "control40": 984065,
+        "control44": 16,
+        "status48": 78
+      },
+      "receive_journal_sha256": "7ec015563171ee08be091fa62474a4af3c59c8543da6c1cf8364612f4cdae828"
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T162912.886666Z-gfx-reset-a726f035",
+      "typed_command": "gfx-reset",
+      "complete": true,
+      "owned_pages": 174,
+      "recovery_counter": 1,
+      "recovery_phase": 2,
+      "host_stop_request_shared": 1,
+      "request_state": 0,
+      "request_flag": 1,
+      "control_cursors": [
+        32,
+        32,
+        32
+      ],
+      "nonzero_work_cursor_words": 0,
+      "active_ta_entries": 0,
+      "power_652c_objects": 8102,
+      "power_652c_owned": 8103,
+      "owned_changed_pages_from_previous": [
+        6,
+        14,
+        15
+      ],
+      "last_asc": {
+        "kernel_time_seconds": 2780.118928,
+        "phase": "gfx-reset-after",
+        "control40": 984065,
+        "control44": 16,
+        "status48": 78
+      },
+      "receive_journal_sha256": "7ec015563171ee08be091fa62474a4af3c59c8543da6c1cf8364612f4cdae828"
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T163022.000318Z-gfx-snapshot-cde490c1",
+      "typed_command": "gfx-snapshot",
+      "complete": true,
+      "owned_pages": 174,
+      "recovery_counter": 1,
+      "recovery_phase": 2,
+      "host_stop_request_shared": 1,
+      "request_state": 0,
+      "request_flag": 1,
+      "control_cursors": [
+        32,
+        32,
+        32
+      ],
+      "nonzero_work_cursor_words": 0,
+      "active_ta_entries": 0,
+      "power_652c_objects": 16396,
+      "power_652c_owned": 16397,
+      "owned_changed_pages_from_previous": [
+        6,
+        14,
+        15
+      ],
+      "last_asc": {
+        "kernel_time_seconds": 2849.235114,
+        "phase": "gfx-snapshot",
+        "control40": 984065,
+        "control44": 16,
+        "status48": 78
+      },
+      "receive_journal_sha256": "7ec015563171ee08be091fa62474a4af3c59c8543da6c1cf8364612f4cdae828"
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T163030.797757Z-sample-ee55b44d",
+      "typed_command": "sample",
+      "complete": true,
+      "owned_pages": 174,
+      "recovery_counter": 1,
+      "recovery_phase": 2,
+      "host_stop_request_shared": 1,
+      "request_state": 0,
+      "request_flag": 1,
+      "control_cursors": [
+        32,
+        32,
+        32
+      ],
+      "nonzero_work_cursor_words": 0,
+      "active_ta_entries": 0,
+      "power_652c_objects": 17495,
+      "power_652c_owned": 17496,
+      "owned_changed_pages_from_previous": [
+        6,
+        14,
+        15
+      ],
+      "last_asc": {
+        "kernel_time_seconds": 2858.391048,
+        "phase": "sample",
+        "control40": 984065,
+        "control44": 16,
+        "status48": 78
+      },
+      "receive_journal_sha256": "7ec015563171ee08be091fa62474a4af3c59c8543da6c1cf8364612f4cdae828"
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T163046.893749Z-stop-2d6d4b18",
+      "typed_command": "stop",
+      "complete": true,
+      "owned_pages": 174,
+      "recovery_counter": 1,
+      "recovery_phase": 2,
+      "host_stop_request_shared": 1,
+      "request_state": 0,
+      "request_flag": 1,
+      "control_cursors": [
+        32,
+        32,
+        32
+      ],
+      "nonzero_work_cursor_words": 0,
+      "active_ta_entries": 0,
+      "power_652c_objects": 19384,
+      "power_652c_owned": 19385,
+      "owned_changed_pages_from_previous": [
+        6,
+        14,
+        15
+      ],
+      "last_asc": {
+        "kernel_time_seconds": 2874.133378,
+        "phase": "gfx-host-stop",
+        "control40": 984065,
+        "control44": 0,
+        "status48": 78
+      },
+      "receive_journal_sha256": "7ec015563171ee08be091fa62474a4af3c59c8543da6c1cf8364612f4cdae828"
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T163226.625094Z-sample-bd16e247",
+      "typed_command": "sample",
+      "complete": true,
+      "owned_pages": 174,
+      "recovery_counter": 1,
+      "recovery_phase": 2,
+      "host_stop_request_shared": 1,
+      "request_state": 0,
+      "request_flag": 1,
+      "control_cursors": [
+        32,
+        32,
+        32
+      ],
+      "nonzero_work_cursor_words": 0,
+      "active_ta_entries": 0,
+      "power_652c_objects": 31351,
+      "power_652c_owned": 31352,
+      "owned_changed_pages_from_previous": [
+        6,
+        14,
+        15
+      ],
+      "last_asc": {
+        "kernel_time_seconds": 2973.859924,
+        "phase": "sample",
+        "control40": 984065,
+        "control44": 0,
+        "status48": 78
+      },
+      "receive_journal_sha256": "7ec015563171ee08be091fa62474a4af3c59c8543da6c1cf8364612f4cdae828"
+    }
+  ],
+  "post_stop_interval": {
+    "start_kernel_time_seconds": 2874.133378,
+    "end_kernel_time_seconds": 2973.859924,
+    "interval_seconds": 99.726546,
+    "power_counter_objects": [
+      19384,
+      31351
+    ],
+    "power_counter_owned": [
+      19385,
+      31352
+    ],
+    "changed_owned_pages": [
+      6,
+      14,
+      15
+    ],
+    "changed_owned_bytes": 59,
+    "observed_shared_activity_continued": true,
+    "dma_retirement_verified": false
+  },
+  "final_state": {
+    "boot_id": "a1f61d61-b0ec-4475-948b-e3de2741e60b",
+    "candidate_module_sha256": "51aeeab15ff4a369ce11717e24d7ba6507c176981eedfa3da61747b47959e432",
+    "resident_session_active": true,
+    "submit_attempted": false,
+    "operation_failed": true,
+    "in_flight": null,
+    "gfx_reset_attempted": true,
+    "host_stop_requested": true
+  },
+  "final_asc": {
+    "kernel_time_seconds": 2973.859924,
+    "phase": "sample",
+    "control40": 984065,
+    "control44": 0,
+    "status48": 78
+  },
+  "native_v6_idle_predicate_passes": true,
+  "host_receive_journal_frozen": true,
+  "host_journal_used": 50412,
+  "host_journal_status": 0,
+  "host_journal_doorbells": 0,
+  "host_start_cleared_once": true,
+  "reset_attempt_consumed": true,
+  "backing_pages_retained": 174,
+  "restart_or_backing_release_permitted": false,
+  "permitted_remaining_commands": [
+    "sample",
+    "gfx-snapshot",
+    "idempotent packet-free stop"
+  ],
+  "artifacts": [
+    {
+      "path": "docs/evidence/2026-10-09-gfx-native-reset-outcome-decision.json",
+      "sha256": "807db281ad16fe5021d447bc2a97c13c5e73ad1b2f2d813f38f3c35d38348eee",
+      "bytes": 6065
+    },
+    {
+      "path": "docs/evidence/2026-10-09-gfx-native-reset-outcome-decision.md",
+      "sha256": "35f0c121af4c6adc5342e0c1343399ec76e93e942b0dd97126881a19ace5d7ce",
+      "bytes": 7476
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-reset-capability/api-qualification.json",
+      "sha256": "35524874fce0ae31c8d6376d9a4b7880d367a3024cdbc189b77b6025a1f942ad",
+      "bytes": 6239
+    },
+    {
+      "path": "out/gfx-native-reset-live/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/boot-preflight.json",
+      "sha256": "979d08948c81f506583f3831e67c8cfb623d642e2bb4227f3f7ae4e7f30689e5",
+      "bytes": 1449
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/asc-graph-init.ko",
+      "sha256": "51aeeab15ff4a369ce11717e24d7ba6507c176981eedfa3da61747b47959e432",
+      "bytes": 7944896
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/attempt.json",
+      "sha256": "2642d9b36d267004e5c3c3faabcbb17e7f56e675a73a8805cc8e08f0c24ea5ca",
+      "bytes": 34117
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/boot.adt",
+      "sha256": "72f30734bb926e681fb1c759d03ad5230b2e21546f76aa7cf0a4fe190ccca0b2",
+      "bytes": 606208
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/data-before.bin",
+      "sha256": "3a5b8cc02d184f78c42df9bd0cb33c6645ee49b5e3e871c0d14b4535e87efd17",
+      "bytes": 1277952
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/dmesg-after.log",
+      "sha256": "0711bfc82c5d76b3f7ae872cad44949893999f42126890e753a0dd81c0ff5438",
+      "bytes": 131846
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/dmesg-before.log",
+      "sha256": "4b7d2bb3f8bfd3c3ec27581a82a9462e65afc5d5a7f6bc44ff27b578b45f7fa0",
+      "bytes": 72194
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/interrupts-after.txt",
+      "sha256": "c01715275dc22426c7d2282ae927223e35c76b9cf18476c87cc2eb2d3852b3a7",
+      "bytes": 6470
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/interrupts-before.txt",
+      "sha256": "202caa1fb0f7dc77ffdbf21db1704a05bc7b38f9e694a3739de8885883776717",
+      "bytes": 6470
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/notifications-after.bin",
+      "sha256": "7ec015563171ee08be091fa62474a4af3c59c8543da6c1cf8364612f4cdae828",
+      "bytes": 5242944
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/notifications-after.json",
+      "sha256": "0f879ff7858edd2e854cf224de2fcf2cff18ef2eadfa9399182ddd3b92b0a211",
+      "bytes": 15108902
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/objects-after.bin",
+      "sha256": "1c0e262033a195357ab93b4420df9323ba02958b1e3bcae8ab693f5edee23f29",
+      "bytes": 1130496
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/objects-before.bin",
+      "sha256": "287f2c53bc6ef7ed226c4a2995b9d9904e7623acae9713af105be6b04fc690a9",
+      "bytes": 1130496
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/owned-after.bin",
+      "sha256": "c63b6a1040284d1a220ece21ffcc848df19b76d29e6a43be9392cc0fa8e244e1",
+      "bytes": 2850816
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/pagetables.bin",
+      "sha256": "8a39d2abd3999ab73c34db2476849cddf303ce389b35826850f9a700589b4a90",
+      "bytes": 262144
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T162851.507140Z-gfx-snapshot-f933da1d/attempt.json",
+      "sha256": "49fea9e299a5f0218238e33704f05a8871835e5849dde2ff320a9ba0d8167873",
+      "bytes": 25215
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T162851.507140Z-gfx-snapshot-f933da1d/dmesg-after.log",
+      "sha256": "b307540d6b11a83370602a82731790d8cc294d41b9e0d2fe4124568763ca9f03",
+      "bytes": 131872
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T162851.507140Z-gfx-snapshot-f933da1d/dmesg-before.log",
+      "sha256": "0711bfc82c5d76b3f7ae872cad44949893999f42126890e753a0dd81c0ff5438",
+      "bytes": 131846
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T162851.507140Z-gfx-snapshot-f933da1d/notifications-after.bin",
+      "sha256": "7ec015563171ee08be091fa62474a4af3c59c8543da6c1cf8364612f4cdae828",
+      "bytes": 5242944
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T162851.507140Z-gfx-snapshot-f933da1d/notifications-after.json",
+      "sha256": "0f879ff7858edd2e854cf224de2fcf2cff18ef2eadfa9399182ddd3b92b0a211",
+      "bytes": 15108902
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T162851.507140Z-gfx-snapshot-f933da1d/objects-after.bin",
+      "sha256": "05158edf8c361081bb986b7bb4c28480f4492393913f90934e682d15098a83cf",
+      "bytes": 1130496
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T162851.507140Z-gfx-snapshot-f933da1d/objects-before.bin",
+      "sha256": "287f2c53bc6ef7ed226c4a2995b9d9904e7623acae9713af105be6b04fc690a9",
+      "bytes": 1130496
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T162851.507140Z-gfx-snapshot-f933da1d/owned-after.bin",
+      "sha256": "027712ed60073dd813572f2217eb4cb68540f23f35c5e70331c29f8213e7d5ea",
+      "bytes": 2850816
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T162851.507140Z-gfx-snapshot-f933da1d/text.bin",
+      "sha256": "3f696b48bbf9607f5f860dcd36eb312f27918bc4ca668add3ff4febbf86178b6",
+      "bytes": 393216
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T162912.886666Z-gfx-reset-a726f035/attempt.json",
+      "sha256": "ce67ff994601344334eecbe3b9d9e79e48109f25a4b2f800b04db560e41aa82d",
+      "bytes": 25208
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T162912.886666Z-gfx-reset-a726f035/dmesg-after.log",
+      "sha256": "3158a15b1742f35a62a07adf16f38c2615dab30f3a87e35e0587926e1cf41cdb",
+      "bytes": 131700
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T162912.886666Z-gfx-reset-a726f035/dmesg-before.log",
+      "sha256": "b307540d6b11a83370602a82731790d8cc294d41b9e0d2fe4124568763ca9f03",
+      "bytes": 131872
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T162912.886666Z-gfx-reset-a726f035/notifications-after.bin",
+      "sha256": "7ec015563171ee08be091fa62474a4af3c59c8543da6c1cf8364612f4cdae828",
+      "bytes": 5242944
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T162912.886666Z-gfx-reset-a726f035/notifications-after.json",
+      "sha256": "0f879ff7858edd2e854cf224de2fcf2cff18ef2eadfa9399182ddd3b92b0a211",
+      "bytes": 15108902
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T162912.886666Z-gfx-reset-a726f035/objects-after.bin",
+      "sha256": "6e54245d23d10b6855e1932742a7d8dfbaff5a870216dd107d3743054b447311",
+      "bytes": 1130496
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T162912.886666Z-gfx-reset-a726f035/objects-before.bin",
+      "sha256": "287f2c53bc6ef7ed226c4a2995b9d9904e7623acae9713af105be6b04fc690a9",
+      "bytes": 1130496
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T162912.886666Z-gfx-reset-a726f035/owned-after.bin",
+      "sha256": "c98c57867b9c725590386d3b153af81c0906ae5d905f925ef62b60fbf959988c",
+      "bytes": 2850816
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T162912.886666Z-gfx-reset-a726f035/text.bin",
+      "sha256": "3f696b48bbf9607f5f860dcd36eb312f27918bc4ca668add3ff4febbf86178b6",
+      "bytes": 393216
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T163022.000318Z-gfx-snapshot-cde490c1/attempt.json",
+      "sha256": "185552a3769ff37d2b80981aea24e8c4e94fa9b872f397073e876d6e248e27ec",
+      "bytes": 25213
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T163022.000318Z-gfx-snapshot-cde490c1/dmesg-after.log",
+      "sha256": "dfa466a556b5b68c2b078eb6ee7a356e0c6cec29228b8b8549ad06c243947282",
+      "bytes": 131733
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T163022.000318Z-gfx-snapshot-cde490c1/dmesg-before.log",
+      "sha256": "3158a15b1742f35a62a07adf16f38c2615dab30f3a87e35e0587926e1cf41cdb",
+      "bytes": 131700
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T163022.000318Z-gfx-snapshot-cde490c1/notifications-after.bin",
+      "sha256": "7ec015563171ee08be091fa62474a4af3c59c8543da6c1cf8364612f4cdae828",
+      "bytes": 5242944
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T163022.000318Z-gfx-snapshot-cde490c1/notifications-after.json",
+      "sha256": "0f879ff7858edd2e854cf224de2fcf2cff18ef2eadfa9399182ddd3b92b0a211",
+      "bytes": 15108902
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T163022.000318Z-gfx-snapshot-cde490c1/objects-after.bin",
+      "sha256": "81f4870810af8a06a2da5ac51a7346f14b4ddba31758abf8c9826b901e51b00c",
+      "bytes": 1130496
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T163022.000318Z-gfx-snapshot-cde490c1/objects-before.bin",
+      "sha256": "287f2c53bc6ef7ed226c4a2995b9d9904e7623acae9713af105be6b04fc690a9",
+      "bytes": 1130496
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T163022.000318Z-gfx-snapshot-cde490c1/owned-after.bin",
+      "sha256": "1781c716567fb1d60b35eb8b530208bc29ad63a143c26ca8f6245fd64cbee410",
+      "bytes": 2850816
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T163022.000318Z-gfx-snapshot-cde490c1/text.bin",
+      "sha256": "3f696b48bbf9607f5f860dcd36eb312f27918bc4ca668add3ff4febbf86178b6",
+      "bytes": 393216
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T163030.797757Z-sample-ee55b44d/attempt.json",
+      "sha256": "d293294d8f8f228045821807c300fbc19f915d4fe16f0e82ceb5dc9a5104731b",
+      "bytes": 25201
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T163030.797757Z-sample-ee55b44d/dmesg-after.log",
+      "sha256": "c7b84219a6b319b72f446448fc6ae6b7013c99b208e049d1cbfde7952485591a",
+      "bytes": 131650
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T163030.797757Z-sample-ee55b44d/dmesg-before.log",
+      "sha256": "58d87fc97d9e2955cf3a3f90d7d8243497cff3b16acddc9a2b7ea5eb3e83eb12",
+      "bytes": 131701
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T163030.797757Z-sample-ee55b44d/notifications-after.bin",
+      "sha256": "7ec015563171ee08be091fa62474a4af3c59c8543da6c1cf8364612f4cdae828",
+      "bytes": 5242944
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T163030.797757Z-sample-ee55b44d/notifications-after.json",
+      "sha256": "0f879ff7858edd2e854cf224de2fcf2cff18ef2eadfa9399182ddd3b92b0a211",
+      "bytes": 15108902
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T163030.797757Z-sample-ee55b44d/objects-after.bin",
+      "sha256": "ecaa86d66f27252300cfe8e9363d6332c7fef41f61e764a98ee646e8b5722127",
+      "bytes": 1130496
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T163030.797757Z-sample-ee55b44d/objects-before.bin",
+      "sha256": "287f2c53bc6ef7ed226c4a2995b9d9904e7623acae9713af105be6b04fc690a9",
+      "bytes": 1130496
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T163030.797757Z-sample-ee55b44d/owned-after.bin",
+      "sha256": "798a5f888497560aa24da1363274547d40f7ee4d318f4bfda38437e99d1e9e44",
+      "bytes": 2850816
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T163030.797757Z-sample-ee55b44d/text.bin",
+      "sha256": "3f696b48bbf9607f5f860dcd36eb312f27918bc4ca668add3ff4febbf86178b6",
+      "bytes": 393216
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T163046.893749Z-stop-2d6d4b18/attempt.json",
+      "sha256": "124c8bee6be4ab072c00be877d9fe37b3f1d148b68f003b703a9ee3c41dcfe23",
+      "bytes": 25196
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T163046.893749Z-stop-2d6d4b18/dmesg-after.log",
+      "sha256": "6b3483351c3134ecc35a8f83114d9681e98e054c1315a0e292065f8084a56886",
+      "bytes": 131631
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T163046.893749Z-stop-2d6d4b18/dmesg-before.log",
+      "sha256": "c7b84219a6b319b72f446448fc6ae6b7013c99b208e049d1cbfde7952485591a",
+      "bytes": 131650
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T163046.893749Z-stop-2d6d4b18/notifications-after.bin",
+      "sha256": "7ec015563171ee08be091fa62474a4af3c59c8543da6c1cf8364612f4cdae828",
+      "bytes": 5242944
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T163046.893749Z-stop-2d6d4b18/notifications-after.json",
+      "sha256": "0f879ff7858edd2e854cf224de2fcf2cff18ef2eadfa9399182ddd3b92b0a211",
+      "bytes": 15108902
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T163046.893749Z-stop-2d6d4b18/objects-after.bin",
+      "sha256": "bf6ce41245bda62b79d3793788173d42af49e0a57fcf13fa91e61d7eaf4aab51",
+      "bytes": 1130496
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T163046.893749Z-stop-2d6d4b18/objects-before.bin",
+      "sha256": "287f2c53bc6ef7ed226c4a2995b9d9904e7623acae9713af105be6b04fc690a9",
+      "bytes": 1130496
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T163046.893749Z-stop-2d6d4b18/owned-after.bin",
+      "sha256": "5439daf8bc4ffe43cd3b032209c28c29cf732902047ec1872d318e0df6bb32a3",
+      "bytes": 2850816
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T163046.893749Z-stop-2d6d4b18/text.bin",
+      "sha256": "3f696b48bbf9607f5f860dcd36eb312f27918bc4ca668add3ff4febbf86178b6",
+      "bytes": 393216
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T163226.625094Z-sample-bd16e247/attempt.json",
+      "sha256": "8c0cd3769da5c452eb556efbb1b9fbb281f8ef9479124c87ae53391ee12b59bb",
+      "bytes": 25200
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T163226.625094Z-sample-bd16e247/dmesg-after.log",
+      "sha256": "c32e3d08a6c27ed638b2ccd89db773870410609cbc85d9ef06b80495153aa969",
+      "bytes": 131690
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T163226.625094Z-sample-bd16e247/dmesg-before.log",
+      "sha256": "6b3483351c3134ecc35a8f83114d9681e98e054c1315a0e292065f8084a56886",
+      "bytes": 131631
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T163226.625094Z-sample-bd16e247/notifications-after.bin",
+      "sha256": "7ec015563171ee08be091fa62474a4af3c59c8543da6c1cf8364612f4cdae828",
+      "bytes": 5242944
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T163226.625094Z-sample-bd16e247/notifications-after.json",
+      "sha256": "0f879ff7858edd2e854cf224de2fcf2cff18ef2eadfa9399182ddd3b92b0a211",
+      "bytes": 15108902
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T163226.625094Z-sample-bd16e247/objects-after.bin",
+      "sha256": "db08ad7955753ae4a36772d122cab71e6f6273e882785b416e41b855054b0775",
+      "bytes": 1130496
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T163226.625094Z-sample-bd16e247/objects-before.bin",
+      "sha256": "287f2c53bc6ef7ed226c4a2995b9d9904e7623acae9713af105be6b04fc690a9",
+      "bytes": 1130496
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T163226.625094Z-sample-bd16e247/owned-after.bin",
+      "sha256": "bae5e9013561debebf7456a1cb74bdfad58c7dd0d6a2cba335604ecdf54c2145",
+      "bytes": 2850816
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/20261009T163226.625094Z-sample-bd16e247/text.bin",
+      "sha256": "3f696b48bbf9607f5f860dcd36eb312f27918bc4ca668add3ff4febbf86178b6",
+      "bytes": 393216
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/resident-operations/state.json",
+      "sha256": "10dae66a3a41c7eefe2234fa3bb44a5d276cfbdf6a22af086179f3c47e15f6f4",
+      "bytes": 328
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/text.bin",
+      "sha256": "3f696b48bbf9607f5f860dcd36eb312f27918bc4ca668add3ff4febbf86178b6",
+      "bytes": 393216
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/validation.json",
+      "sha256": "cd9d4cfba93372aa2cfbbbb2f711a91b6ec3a887cf3c725e3a1d8246e7faeeeb",
+      "bytes": 24413
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/recovery-contract.h",
+      "sha256": "9bce940061421a78fde0e509fdeba59a8c66c3d5ab32c4faf59dd613c14d4b23",
+      "bytes": 1177
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-root-envelope/build-receipt.json",
+      "sha256": "96d5dda793adf700017b5e28b33b2ee6e2964ab058a08ec4bcdcdf68fbe7909e",
+      "bytes": 22328
+    }
+  ]
+}

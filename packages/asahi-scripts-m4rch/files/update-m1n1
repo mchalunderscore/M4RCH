@@ -1,0 +1,3 @@
+# This installation's enrolled first stage loads boot.bin at the ESP root.
+TARGET=/boot/boot.bin
+DTBS=/usr/lib/asahi-boot/apple-j614s.dtb

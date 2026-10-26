@@ -1,0 +1,11 @@
+{
+  "schema": "m4rch.native-event-timeline-check.v9",
+  "cases": 5190,
+  "result": "5190 native converter/timeline cases passed",
+  "hardware_actions": [],
+  "scope": "Actual Rust converter and joined identity compared against independently closed-form one-entry/ordinal policy at sign/rollover boundaries; no event callback or hardware completion proof.",
+  "files": {
+    "g16_t6040_ksm_work_v8.rs": "f5d91349832b041b7b7ca2443bf7caaaa223def4b7eda19bc33815c812bc8b6c",
+    "g16_t6040_event_timeline_v9.rs": "86d642b4f9161f262e5cb52fdd7b54eb0875fb47c463f19490aa677d781b3750"
+  }
+}

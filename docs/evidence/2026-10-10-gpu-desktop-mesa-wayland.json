@@ -1,0 +1,486 @@
+{
+  "schema": "m4rch.gpu-desktop-mesa-wayland-summary.v1",
+  "date": "2026-10-10",
+  "status": "linked-preparation-only",
+  "scope": "Private selected Gravity Mesa Asahi Gallium/EGL/GBM full Wayland build/install and static ELF closure; no runtime driver or harness execution",
+  "workspace": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1",
+  "receipt": {
+    "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/receipt.json",
+    "sha256": "78bd994b50e2673210c919a004799584040f586dea22cd156652c7dbfed3f177",
+    "bytes": 48404
+  },
+  "commands": {
+    "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/commands.json",
+    "sha256": "8c86d1c997fd0071a0ed0be37639f1db22ccc483b474f72461f419822e2175a5",
+    "bytes": 25252
+  },
+  "freeze": {
+    "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/freeze.json",
+    "sha256": "cb552e8020e61a540e81ef277f137b0756d065a93c370960971732732169c2c2",
+    "bytes": 9301
+  },
+  "source_manifest": {
+    "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/source-manifest.json",
+    "sha256": "0fd7fcdbd4bb13837f3c86209645dc09aa3573929aae6bbabb7b8ae4a25ad6c5",
+    "bytes": 2332864
+  },
+  "source_tree_sha256": "4f98b55822c209b27fa3b6cf44278ef865aa1b03d602cdc9f8902ab99db55145",
+  "source_overlay_only": [
+    "src/asahi/lib/agx_device.c",
+    "src/asahi/lib/agx_g16_model.h"
+  ],
+  "selected_metadata": {
+    "src/asahi/lib/agx_device.c": {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-integration-v2/source/mesa/src/asahi/lib/agx_device.c",
+      "sha256": "9b2770871187f4739ef045a5b28525f0385c5d6c91ae71aa540d5d850a0da34d",
+      "bytes": 35758
+    },
+    "src/asahi/lib/agx_g16_model.h": {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-integration-v2/source/mesa/src/asahi/lib/agx_g16_model.h",
+      "sha256": "03f0440d8642e2c26a8b19d6b3a7163de489a138346a5c29a112041160c99a3f",
+      "bytes": 2269
+    }
+  },
+  "configuration": {
+    "gallium-drivers": [
+      "asahi"
+    ],
+    "vulkan-drivers": [],
+    "platforms": [
+      "wayland"
+    ],
+    "egl": "enabled",
+    "gbm": "enabled",
+    "glvnd": "auto",
+    "llvm": "enabled",
+    "glx": "disabled",
+    "wrap_mode": "nofallback"
+  },
+  "protocols_archive": {
+    "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/wayland-protocols-1.41.tar.xz",
+    "sha256": "2786b6b1b79965e313f2c289c12075b9ed700d41844810c51afda10ee329576b",
+    "bytes": 120224,
+    "official_url": "https://gitlab.freedesktop.org/wayland/wayland-protocols/-/releases/1.41/downloads/wayland-protocols-1.41.tar.xz",
+    "selected_wrap": {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/source/subprojects/wayland-protocols.wrap",
+      "sha256": "1d419dca6b0f45d35c9413676768e8ac88ebdc918fa28943d693635e352d0da9",
+      "bytes": 349
+    }
+  },
+  "protocols_source_manifest": {
+    "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/protocols-source-manifest.json",
+    "sha256": "e732d7416d231e50397ad4a3f447582eda60e3709612788761eaf53402c9f6d3",
+    "bytes": 21590
+  },
+  "protocols_source_tree_sha256": "84948e96e6dd40a4c466fe8cd25e3ef3a1c4081f19a94dcc425c52f466d1c8d7",
+  "wayland_dependency_evidence": [
+    {
+      "name": "wayland-protocols",
+      "type": "pkgconfig",
+      "version": "1.41",
+      "compile_args": [],
+      "link_args": [],
+      "include_directories": [],
+      "sources": [],
+      "extra_files": [],
+      "dependencies": [],
+      "depends": [],
+      "meson_variables": [
+        "dep_wl_protocols"
+      ]
+    },
+    {
+      "name": "wayland-client",
+      "type": "pkgconfig",
+      "version": "1.26.0",
+      "compile_args": [],
+      "link_args": [
+        "/usr/lib/libwayland-client.so",
+        "-lm"
+      ],
+      "include_directories": [],
+      "sources": [],
+      "extra_files": [],
+      "dependencies": [],
+      "depends": [],
+      "meson_variables": [
+        "dep_wayland_client"
+      ]
+    },
+    {
+      "name": "wayland-server",
+      "type": "pkgconfig",
+      "version": "1.26.0",
+      "compile_args": [],
+      "link_args": [
+        "/usr/lib/libwayland-server.so",
+        "-lm"
+      ],
+      "include_directories": [],
+      "sources": [],
+      "extra_files": [],
+      "dependencies": [],
+      "depends": [],
+      "meson_variables": [
+        "dep_wayland_server"
+      ]
+    },
+    {
+      "name": "wayland-egl-backend",
+      "type": "pkgconfig",
+      "version": "3",
+      "compile_args": [],
+      "link_args": [],
+      "include_directories": [],
+      "sources": [],
+      "extra_files": [],
+      "dependencies": [],
+      "depends": [],
+      "meson_variables": [
+        "dep_wayland_egl",
+        "dep_wayland_egl_headers"
+      ]
+    },
+    {
+      "name": "wayland-scanner",
+      "type": "pkgconfig",
+      "version": "1.26.0",
+      "compile_args": [],
+      "link_args": [],
+      "include_directories": [],
+      "sources": [],
+      "extra_files": [],
+      "dependencies": [],
+      "depends": [],
+      "meson_variables": []
+    }
+  ],
+  "config_pins": [
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/build/meson-private/cmd_line.txt",
+      "sha256": "ca0517efeb7ecb37e351be8543d2b3bb23fd68ef3b09cb14d9c7f4ce0f0126df",
+      "bytes": 301
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/build/meson-info/intro-buildoptions.json",
+      "sha256": "ed97a1947ba4f7b02fc0deb0a9252baa8dfdebc9bf3d12bab762ca6ab6833794",
+      "bytes": 44966
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/build/meson-info/intro-dependencies.json",
+      "sha256": "58f3bb3b433be62c6858eac5ebd955c86cf02f4386fafdfabfc5946ebc1c356e",
+      "bytes": 7533
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/build/meson-info/intro-targets.json",
+      "sha256": "6e233b85fa637767aa6571ba13cbb1096eb6b1066096546ff74db33eb5b53d62",
+      "bytes": 749531
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/build/build.ninja",
+      "sha256": "1142ca1b0268d63c155c529e0c467627de4ee96a53f543f053107d044bef102e",
+      "bytes": 5057119
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/build/compile_commands.json",
+      "sha256": "9dea18de32394eb15e91488e2fa6e50619cd71ef2a593796ce3e1e5bd81e3ada",
+      "bytes": 4455425
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/prefix/share/glvnd/egl_vendor.d/50_mesa.json",
+      "sha256": "cd3881df4227c13ca7f9cfe6c78820f21d5f7a00a41b299214f6f827e63be369",
+      "bytes": 105
+    }
+  ],
+  "protocols_config_pins": [
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/protocols-build/meson-private/cmd_line.txt",
+      "sha256": "77f1bfcc6687eb91098fc79dba8218901698a3e5bb213b817a2ea77e90e3df07",
+      "bytes": 159
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/protocols-build/meson-info/intro-buildoptions.json",
+      "sha256": "0ac14ed28ae9bab116a9dee86ec7c1ed2d82d6892f0a5162ee69537747bfde9c",
+      "bytes": 9813
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/protocols-build/build.ninja",
+      "sha256": "7eac8f14821564bf5b75f315796cbff07837f705199799005f7fee757d7d20c6",
+      "bytes": 35012
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/protocols-prefix/share/pkgconfig/wayland-protocols.pc",
+      "sha256": "ad0b1d66dc27873f10c0dc546970825b159fc29949fd2968d8637740e3a92b77",
+      "bytes": 245
+    }
+  ],
+  "build_logs": [
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/logs/protocols-configure.log",
+      "sha256": "59626f16830e613b7df12d5dd31b6d67859496b6503bfa1ee73eee5f1a8bdd9e",
+      "bytes": 1135
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/logs/protocols-compile.log",
+      "sha256": "97666ccbdab8d336892525d00f42b11b276118bbbbe4bd2e3e4fc59154a5aa5f",
+      "bytes": 5179
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/logs/protocols-install-private.log",
+      "sha256": "ea7d5f7e8ac878a3bab47f316fd586d04ef21a3464ae49034d1b62145e47af65",
+      "bytes": 23380
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/logs/configure.log",
+      "sha256": "fea155311a4a5579cfd1242b8cff8f494a57cd24e0439179a25de996394301ee",
+      "bytes": 15779
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/logs/compile.log",
+      "sha256": "46ce66035a3af54fb45a17d72f9b7cc4c78c1171396fd4e32631cf8135b19390",
+      "bytes": 19563
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/logs/compile-resumed-v1.log",
+      "sha256": "24be8ed021cee8287ff44f1cb4e60d7c08baf9bcbe8950ddf521ef6b3df78d25",
+      "bytes": 77254
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/logs/install-private.log",
+      "sha256": "e96ca735eae655062b455bf25293ef0ac07fec5b1e20ab17f8f715b161b5e4e5",
+      "bytes": 2991
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/logs/harness-link.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  ],
+  "interruption": {
+    "reason": "user reboot; original compile process terminated",
+    "observed_after_boot_id": "e7288eeb-bc71-46e3-a0c5-831b77bebb1d",
+    "original_terminal_exit_observed": false,
+    "original_process_record": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/interrupted-before-resume-v1/process.json",
+    "original_commands": {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/interrupted-before-resume-v1/commands.json",
+      "sha256": "dc0b68413fe3d9ee4510b822ca28d7a05853c8ee414fb0e3ff90d29ec9e683df",
+      "bytes": 6706
+    },
+    "original_compile_log": {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/interrupted-before-resume-v1/logs/compile.log",
+      "sha256": "46ce66035a3af54fb45a17d72f9b7cc4c78c1171396fd4e32631cf8135b19390",
+      "bytes": 19563
+    }
+  },
+  "resumed_ninja_steps": 905,
+  "original_completed_ninja_steps": 241,
+  "original_ninja_terminal_exit_observed": false,
+  "provenance_note": "Original builder receipt existed only in process memory. Saved manifests, commands and logs reconstruct these fields; original invocation and initial environment are not claimed.",
+  "compiler_warnings": [
+    {
+      "log": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/logs/compile-resumed-v1.log",
+      "line": "../source/src/gallium/drivers/asahi/agx_state.c:6348:23: warning: unused variable \u2018screen\u2019 [-Wunused-variable]"
+    },
+    {
+      "log": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/logs/compile-resumed-v1.log",
+      "line": "../source/src/gallium/drivers/asahi/agx_state.c:7165:23: warning: unused variable \u2018dev\u2019 [-Wunused-variable]"
+    }
+  ],
+  "private_prefix_artifacts": [
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/prefix/lib/gbm/dri_gbm.so",
+      "sha256": "9c5690b34a72714c18e1e578d5715724b480cc6e15fa753cbb835d5967249536",
+      "bytes": 1013312,
+      "elf_evidence": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/logs/elf-0.log",
+      "dynamic_entries": [
+        "0x0000000000000001 (NEEDED)             Shared library: [libgallium-26.3.0-devel.so]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libdrm.so.2]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libexpat.so.1]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libm.so.6]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]",
+        "0x0000000000000001 (NEEDED)             Shared library: [ld-linux-aarch64.so.1]",
+        "0x000000000000000e (SONAME)             Library soname: [dri_gbm.so]"
+      ]
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/prefix/lib/libEGL_mesa.so.0.0.0",
+      "sha256": "f8414e6a4fa14247553495d6a5bb51cb01ee120a56f73678596af714a9908cbe",
+      "bytes": 4440000,
+      "elf_evidence": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/logs/elf-1.log",
+      "dynamic_entries": [
+        "0x0000000000000001 (NEEDED)             Shared library: [libgallium-26.3.0-devel.so]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libgbm.so.1]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libexpat.so.1]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libdrm.so.2]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libwayland-client.so.0]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libm.so.6]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]",
+        "0x0000000000000001 (NEEDED)             Shared library: [ld-linux-aarch64.so.1]",
+        "0x000000000000000e (SONAME)             Library soname: [libEGL_mesa.so.0]"
+      ]
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/prefix/lib/libasahi_noop_drm_shim.so",
+      "sha256": "239c2d74903aa07d46fa9473993117ea7ca109289ad970d2466e3771fe363a56",
+      "bytes": 594952,
+      "elf_evidence": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/logs/elf-2.log",
+      "dynamic_entries": [
+        "0x0000000000000001 (NEEDED)             Shared library: [libdrm.so.2]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libpython3.14.so.1.0]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]",
+        "0x0000000000000001 (NEEDED)             Shared library: [ld-linux-aarch64.so.1]",
+        "0x000000000000000e (SONAME)             Library soname: [libasahi_noop_drm_shim.so]"
+      ]
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/prefix/lib/libgallium-26.3.0-devel.so",
+      "sha256": "c2dfb302f67e9177004e0c7e90d89ea3a567a6f4115afb517be16cb2d124076e",
+      "bytes": 110508392,
+      "elf_evidence": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/logs/elf-3.log",
+      "dynamic_entries": [
+        "0x0000000000000001 (NEEDED)             Shared library: [libdrm.so.2]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libLLVM.so.23.1]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libexpat.so.1]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libz.so.1]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libzstd.so.1]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libSPIRV-Tools.so]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libsensors.so.5]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libstdc++.so.6]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libm.so.6]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libgcc_s.so.1]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]",
+        "0x0000000000000001 (NEEDED)             Shared library: [ld-linux-aarch64.so.1]",
+        "0x000000000000000e (SONAME)             Library soname: [libgallium-26.3.0-devel.so]"
+      ]
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/prefix/lib/libgbm.so.1.0.0",
+      "sha256": "a712ddc88e8b922be10c9284c8d3773058bb8bc80f3bc67d42afb3e0c08f9548",
+      "bytes": 705624,
+      "elf_evidence": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/logs/elf-4.log",
+      "dynamic_entries": [
+        "0x0000000000000001 (NEEDED)             Shared library: [libdrm.so.2]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libexpat.so.1]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libm.so.6]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]",
+        "0x0000000000000001 (NEEDED)             Shared library: [ld-linux-aarch64.so.1]",
+        "0x000000000000000e (SONAME)             Library soname: [libgbm.so.1]"
+      ]
+    }
+  ],
+  "wayland_generated_artifacts": [
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/build/src/egl/libEGL_mesa.so.0.0.0.p/drivers_dri2_platform_wayland.c.o",
+      "sha256": "4e5cc43a9b9a3868f52fdd2e3050c7a42e673ff8013e111ff2f80e2faf8ae518",
+      "bytes": 649104
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/build/src/egl/libEGL_mesa.so.0.0.0.p/meson-generated_.._.._loader_linux-dmabuf-unstable-v1-protocol.c.o",
+      "sha256": "5ea38afccff008503d3251b23271fe0b4e97a5f0a9c1d869b5a610ab8ef37471",
+      "bytes": 11616
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/build/src/loader/libloader_wayland_helper.a.p/loader_wayland_helper.c.o",
+      "sha256": "13304e78ebc9b551a75ead8ba78373b7bf903971ba72d5d6f9f4bebd18844d6a",
+      "bytes": 41504
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/build/src/loader/linux-dmabuf-unstable-v1-client-protocol.h",
+      "sha256": "4221ad39c4520e8dd194dab07e50996b9c2aecca3ec385bd3e1ede4a42265d15",
+      "bytes": 43445
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/build/src/loader/linux-dmabuf-unstable-v1-protocol.c",
+      "sha256": "b5f3c72cb60e095ec472efb14c2a486d9652976ebf3a260c214d328a4a4d3ead",
+      "bytes": 4397
+    }
+  ],
+  "actual_egl_wayland_needed": [
+    "libwayland-client.so.0"
+  ],
+  "wayland_server_link_note": "Meson resolves the server dependency and includes it in the EGL link recipe; the linker uses --as-needed and does not retain a server DT_NEEDED entry. EGL retains the client library.",
+  "harness": {
+    "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/headless-smoke",
+    "sha256": "ba7535f6fb69d63c3130ad8e0032ffc83311deb2c89fac71a81faf3487dd0286",
+    "bytes": 74832,
+    "elf_evidence": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/logs/harness-final-elf.log",
+    "executed": false,
+    "needed": [
+      "libgbm.so.1",
+      "libEGL.so.1",
+      "libGLESv2.so.2",
+      "libdrm.so.2",
+      "libm.so.6",
+      "libc.so.6",
+      "ld-linux-aarch64.so.1"
+    ]
+  },
+  "elf_dependency_closure": {
+    "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/elf-dependency-closure.json",
+    "sha256": "e94d905d309aebd440ce256bf8e59dc44b4f6a560ad10b19c217ccbf5facd6fe",
+    "bytes": 45350,
+    "nodes": 29,
+    "edges": 105,
+    "unresolved": 0,
+    "actual_loaded_identity_proven": false
+  },
+  "loader_recipe": {
+    "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/future-loader.env",
+    "sha256": "e85ae45f59d32e191718eed08184e83e11a22c4ace66a6a5c9b9cea407fa1fb6",
+    "bytes": 632,
+    "executed": false,
+    "environment": {
+      "__EGL_VENDOR_LIBRARY_FILENAMES": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/prefix/share/glvnd/egl_vendor.d/50_mesa.json",
+      "GBM_BACKENDS_PATH": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/prefix/lib/gbm",
+      "LD_LIBRARY_PATH": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/prefix/lib"
+    },
+    "LIBGL_DRIVERS_PATH": {
+      "applicable": false,
+      "reason": "Selected Mesa links libgallium-26.3.0-devel.so directly; no per-driver DRI directory is installed"
+    },
+    "gpu_startup_and_execution_gates_open": false
+  },
+  "baseline_preserved": {
+    "mesa-full": true,
+    "mesa-build": true,
+    "mesa-prefix": true
+  },
+  "selected_metadata_preserved": true,
+  "staged_source_unchanged_by_build": true,
+  "prior_linked_preserved": true,
+  "protocols_source_preserved": true,
+  "finalizer_assertion_correction": {
+    "directory": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/finalizer-before-correction-v1",
+    "note": {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-wayland-v1/finalizer-before-correction-v1/failure-note.json",
+      "sha256": "7c2ca5ce25eca83303d508fca2a653572be01f51d830fd996c4a2c7d989bfc77",
+      "bytes": 381
+    },
+    "initial_exit": 1,
+    "repeated_readelf_commands": 0,
+    "mesa_rebuilds_for_correction": 0
+  },
+  "helpers": [
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/build_mesa_wayland.py",
+      "sha256": "b03119348c102e36b8e4883ebd99ad1c429cf7f38629d10528864fac50cca43b",
+      "bytes": 13924
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/resume_mesa_wayland.py",
+      "sha256": "02ee086347040e70ee423ca871b1bb9fea58abb94ea523ff5ea1d4763a35826c",
+      "bytes": 11508
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/finalize_mesa_wayland.py",
+      "sha256": "774cf61956b6f1b1560e6996c54f3593262ac28738d9559f056d3718146a7a1d",
+      "bytes": 12100
+    }
+  ],
+  "hardware_accessed": false,
+  "harness_executed": false,
+  "system_installed": false,
+  "actual_loaded_identity_proven": false,
+  "t6040_normal_startup_enabled": false,
+  "mesa_g16s_execution_enabled": false
+}

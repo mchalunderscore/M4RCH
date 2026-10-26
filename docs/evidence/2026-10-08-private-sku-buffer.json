@@ -1,0 +1,150 @@
+{
+  "binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "counts": {
+    "begin": 1024,
+    "finish": 1024,
+    "all_unavailable": 32,
+    "3d_caller_native_finish": 512
+  },
+  "examples": [
+    {
+      "capacity": 1,
+      "previous": 0,
+      "skipped": 0,
+      "selected": 0,
+      "stride": 64,
+      "payload_bytes": 0,
+      "reported_bytes": 64,
+      "size_pointer": false
+    },
+    {
+      "capacity": 2,
+      "previous": 1,
+      "skipped": 1,
+      "selected": 1,
+      "stride": 128,
+      "payload_bytes": 1,
+      "reported_bytes": 64,
+      "size_pointer": true
+    },
+    {
+      "capacity": 3,
+      "previous": 2,
+      "skipped": 2,
+      "selected": 2,
+      "stride": 256,
+      "payload_bytes": 4,
+      "reported_bytes": 64,
+      "size_pointer": true
+    },
+    {
+      "capacity": 4,
+      "previous": 1,
+      "skipped": 3,
+      "selected": 1,
+      "stride": 512,
+      "payload_bytes": 59,
+      "reported_bytes": 64,
+      "size_pointer": false
+    },
+    {
+      "capacity": 5,
+      "previous": 3,
+      "skipped": 4,
+      "selected": 3,
+      "stride": 64,
+      "payload_bytes": 60,
+      "reported_bytes": 64,
+      "size_pointer": true
+    },
+    {
+      "capacity": 6,
+      "previous": 5,
+      "skipped": 5,
+      "selected": 5,
+      "stride": 128,
+      "payload_bytes": 61,
+      "reported_bytes": 128,
+      "size_pointer": true
+    },
+    {
+      "capacity": 7,
+      "previous": 0,
+      "skipped": 6,
+      "selected": 0,
+      "stride": 256,
+      "payload_bytes": 63,
+      "reported_bytes": 128,
+      "size_pointer": false
+    },
+    {
+      "capacity": 8,
+      "previous": 1,
+      "skipped": 7,
+      "selected": 1,
+      "stride": 512,
+      "payload_bytes": 64,
+      "reported_bytes": 128,
+      "size_pointer": true
+    },
+    {
+      "capacity": 9,
+      "previous": 2,
+      "skipped": 8,
+      "selected": 2,
+      "stride": 64,
+      "payload_bytes": 65,
+      "reported_bytes": 128,
+      "size_pointer": true
+    },
+    {
+      "capacity": 10,
+      "previous": 3,
+      "skipped": 9,
+      "selected": 3,
+      "stride": 128,
+      "payload_bytes": 127,
+      "reported_bytes": 192,
+      "size_pointer": false
+    },
+    {
+      "capacity": 11,
+      "previous": 4,
+      "skipped": 10,
+      "selected": 4,
+      "stride": 256,
+      "payload_bytes": 128,
+      "reported_bytes": 192,
+      "size_pointer": true
+    },
+    {
+      "capacity": 12,
+      "previous": 5,
+      "skipped": 11,
+      "selected": 5,
+      "stride": 512,
+      "payload_bytes": 0,
+      "reported_bytes": 64,
+      "size_pointer": true
+    }
+  ],
+  "visited_instruction_count": 173,
+  "ranges": [
+    {
+      "start": "0xfffffe00089d5980",
+      "end": "0xfffffe00089d5990",
+      "sha256": "1bc556dc4794cbdb6dae6e3d68e2ca0117c44d9c285fee9d0ab7747d984f4122"
+    },
+    {
+      "start": "0xfffffe0008a16958",
+      "end": "0xfffffe0008a16ba4",
+      "sha256": "9367b5ee4d0f324d50ac1d54f46b8276a1e8893ac1d72c39646cac272f86a091"
+    },
+    {
+      "start": "0xfffffe0008a16ba4",
+      "end": "0xfffffe0008a16cdc",
+      "sha256": "a6b4318818c5caff57b8e7e49da84bbf0d83877c52073b02128773598693227a"
+    }
+  ],
+  "qualification": "Actual native begin/finish in RAM, PAC bypassed. Low unsigned pointers, capacities1..32, safe backing extent; trace/log bit3 clear. External availability/event association and resource/firmware mapping callbacks synthetic, no actual retirement or cache semantics. Full encoder/backing/output bytes compared. All-unavailable assertion intercepted before external failure. Synthetic arbitrary stream bytes are not valid microsequence. No live firmware execution."
+}

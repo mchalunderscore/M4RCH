@@ -1,0 +1,74 @@
+{
+  "private_binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "counts": {
+    "init_success": 877,
+    "base_init_failure": 147,
+    "scrub_events": 1024,
+    "event_init_calls": 18197,
+    "event_scrub_calls": 21201
+  },
+  "examples": [
+    {
+      "override_f528": 0,
+      "fallback_718": 0,
+      "selected_records": 0,
+      "array_bytes": 0,
+      "extra_storage_flag": false,
+      "base_success": false
+    },
+    {
+      "override_f528": 1,
+      "fallback_718": 1,
+      "selected_records": 1,
+      "array_bytes": 88,
+      "extra_storage_flag": true,
+      "base_success": true
+    },
+    {
+      "override_f528": 2,
+      "fallback_718": 4,
+      "selected_records": 2,
+      "array_bytes": 176,
+      "extra_storage_flag": true,
+      "base_success": true
+    },
+    {
+      "override_f528": 16,
+      "fallback_718": 16,
+      "selected_records": 16,
+      "array_bytes": 1408,
+      "extra_storage_flag": false,
+      "base_success": true
+    },
+    {
+      "override_f528": 31,
+      "fallback_718": 32,
+      "selected_records": 31,
+      "array_bytes": 2728,
+      "extra_storage_flag": true,
+      "base_success": true
+    },
+    {
+      "override_f528": 64,
+      "fallback_718": 0,
+      "selected_records": 64,
+      "array_bytes": 5632,
+      "extra_storage_flag": true,
+      "base_success": true
+    }
+  ],
+  "native_ranges": [
+    {
+      "start": "0xfffffe0008a0b3e0",
+      "end": "0xfffffe0008a0b514",
+      "sha256": "6aebb103bb06df66222bd6c1b5cf41d6ad91cb7d2bb141a53485235542546a16"
+    },
+    {
+      "start": "0xfffffe0008a0b300",
+      "end": "0xfffffe0008a0b3e0",
+      "sha256": "9c79bdbb1986df29a07c1d524b0a243ce95ed1282bddf23b1ee7a9453b309cdd"
+    }
+  ],
+  "visited_instructions": 132,
+  "qualification": "Full native init and scrub functions with whole object/record byte comparison. Base initialization, shared retain, record allocation, event initialize/scrub and resource slot1a8 are argument-checked supplied opaque services. Services do not write record bytes: this is deliberately not proof of event contents/zero initialization. Positive allocator return supplied; actual allocation failure behavior not tested. Accelerator overrides/configuration are fixtures, not live topology reads. PAC auth/return bypassed; no hardware."
+}

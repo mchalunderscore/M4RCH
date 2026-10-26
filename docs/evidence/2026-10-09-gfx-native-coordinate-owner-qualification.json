@@ -1,0 +1,19 @@
+{
+  "schema": "m4rch.gfx.native-coordinate.owner-ram-test.v1",
+  "adapter_sha256": "a9dc2ef9184464f50cb4fddc8d1710daac06d9b594054aaf569d467e2a7dda1a",
+  "transform_sha256": "0b42465eb479441d380f38241c92d81239e39f0a37a977d10417e96ca1ce15c3",
+  "core_sha256": "417179e014653c2b97e55888346cbda70c79a4166fe2a1ca191d741f7201ad01",
+  "baseline_source_pins": {
+    "asc-graph-init.c": "664127ec86429b479ded378f4cdcd7501c1895ec3cebf1679bc116c225363620",
+    "gfx-reset-scope.h": "9ac963d90d9b54f209fb47f934ced4387e51f44cdd4a45626a6c4b9f9f05a05f",
+    "recovery-cycle.h": "e465ccbc1365e2a745a9a6f7c6eaf91d64a785f62925dc2ad4243048fd5e9500"
+  },
+  "actual_adapter_ram_result": "adapter_cases=40",
+  "exported_OF_iterator_reference_balance_checked": true,
+  "ASan_UBSan": true,
+  "LeakSanitizer": "disabled: sandbox ptrace restriction",
+  "guarded_transform_order_checked": true,
+  "hardware_actions": [],
+  "candidate_build_actions": [],
+  "attempted_candidate_unchanged": true
+}

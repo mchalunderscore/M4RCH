@@ -1,0 +1,161 @@
+{
+  "schema": "m4rch-recovery-trace-off-native-contract-review-v1",
+  "hardware_access": false,
+  "inputs": {
+    "capture": "out/recovery-progress/candidate/asc-graph-init/boot-1730bf24-0823-4be9-a338-7e136762d076",
+    "data_sha256": "ff6e62d4e648370615d7ddb85d2459fe231b46dfddc42849b9f2853f7ab46462",
+    "data_freshness": "One read-only reserved firmware DATA snapshot after the traced phase2 failure. CPU cache invalidated; firmware private-cache writeback freshness unproven. No GPU command, root publication, main module unload or backing retirement.",
+    "text_identity": {
+      "raw_sha256": "215dc0f5361dffa91766c327a2fb3e7440fec2922e218543fcadff7ef95c27cc",
+      "normalized_sha256": "190cef1946a23dfbde180592629631c3b28d0509a17eb76108b7c9a52accd9ac",
+      "observed_variable_payloads": [
+        {
+          "offset": "0x59841",
+          "tag_bytes": "GKTS",
+          "payload_hex": "7e0b1f16038e004c"
+        },
+        {
+          "offset": "0x59924",
+          "tag_bytes": "ECAP",
+          "payload_hex": "223f656ed4ab337d"
+        }
+      ],
+      "qualification": "Exact match outside two tagged eight-byte boot metadata payloads; tags and lengths are also checked. No instruction bytes excluded."
+    },
+    "native_path": "/boot/GPUC003/private-apple/com.apple.AGXG16X",
+    "native_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+    "graph_receipt_sha256": "135852d0b064f9c4605d8bc4170dfaef8e2da5f6f2a1d06264d3db57de9a46f9",
+    "source_sha256": "7e60090ced75ce1781272315de97f267b038ba9b4610f4fd8499d81332943630",
+    "c_replay_sha256": "2a770878a65991a842e670e1b06ed007b7a0c3af698c0324320833f83eff49ea",
+    "test_sha256": "d192b4720211e39b4cfd21a203edb53400c892a60fd7ebf16fac753d246c86a2"
+  },
+  "native_ranges": [
+    {
+      "start": "0x89b5ac0",
+      "end_exclusive": "0x89b5afc",
+      "sha256": "619c6818401790065438696d4671ef551fde84d938004fb5c7ec02e565173860"
+    },
+    {
+      "start": "0x89b5d50",
+      "end_exclusive": "0x89b5d9c",
+      "sha256": "f075d1b3f3f92223fba07abe62b8bab6d99055c37d314f970f91d488267d9e70"
+    },
+    {
+      "start": "0x89c914c",
+      "end_exclusive": "0x89c9238",
+      "sha256": "c3c8c605779a472b653e71a29e4722af2777756cad3cfd6aaf115a69e0e1cf4b"
+    },
+    {
+      "start": "0x7ea8900",
+      "end_exclusive": "0x7ea8908",
+      "sha256": "1fa3ea3f85826eec1df41482191f6d2f579e13127d99c32cc855ade4f31adc0c"
+    }
+  ],
+  "firmware_ranges": [
+    {
+      "start": "0x30a8",
+      "end_exclusive": "0x3390",
+      "sha256": "14e5ee0ec7377170f97814d1cfda4ca1322163a38d486e2174f7116ca7a40467"
+    },
+    {
+      "start": "0x4b1c",
+      "end_exclusive": "0x4b4c",
+      "sha256": "c05f6930b14b48170c4af5f3e063a9f51b958ff3110c8ad5fd593176993f3c05"
+    },
+    {
+      "start": "0x52cc",
+      "end_exclusive": "0x52d0",
+      "sha256": "9ee7f1efd5fbbf4b35a219070c8529271bb62a47caccbfaf730bdb961488f792"
+    }
+  ],
+  "callback": {
+    "type": 1,
+    "clear_enabled": "host+0x944 u8 at0x89b5ae8",
+    "clear_active_mask": "host+0x94c u32 at0x89b5aec",
+    "clear_shared_mask": "u32 through host+0x888 at0x89b5af4",
+    "followup": "0x89b5af8 branches0x89b5d50, then authenticated tailcall vtable+0x288 at0x89b5d98",
+    "filter_948_preserved": true
+  },
+  "force_copy": {
+    "opcode_decimal": 22,
+    "opcode_hex": "0x16",
+    "producer": "0x89c9170",
+    "vtable_symbol": "0xfffffe0007ea8668",
+    "vtable_method_address_point": "0xfffffe0007ea8678",
+    "slot": "0x288",
+    "slot_address": "0xfffffe0007ea8900",
+    "encoded_target": "0x801103fd019c514c",
+    "decoded_target": "0xfffffe00089c914c",
+    "dispatcher_entry": "0x4b1c",
+    "set_enable": "0x4b24 writes18eec8=1",
+    "call": "0x4b44 ->0x30a8",
+    "copy": "0x30bc reads status_a u32 through18e3f0;0x30c8 stores18eecc includingzero",
+    "clear_enable": "0x3388 clears18eec8, preserves18eecc"
+  },
+  "ram_proof": {
+    "native_store_cases": [
+      {
+        "initial_mask": 0,
+        "instructions": 4,
+        "only_expected_driver_and_status_words_changed": true,
+        "filter_948_preserved": true
+      },
+      {
+        "initial_mask": 3,
+        "instructions": 4,
+        "only_expected_driver_and_status_words_changed": true,
+        "filter_948_preserved": true
+      },
+      {
+        "initial_mask": 4294967295,
+        "instructions": 4,
+        "only_expected_driver_and_status_words_changed": true,
+        "filter_948_preserved": true
+      }
+    ],
+    "entire_firmware_handler_cases": [
+      {
+        "source_mask": 3,
+        "destination_mask": 3,
+        "one_shot_enable_after": 0,
+        "instructions": 186,
+        "expected_sites_reached": true
+      },
+      {
+        "source_mask": 0,
+        "destination_mask": 0,
+        "one_shot_enable_after": 0,
+        "instructions": 186,
+        "expected_sites_reached": true
+      }
+    ],
+    "full_data_differential_only_trace_mask": true,
+    "enable_zero_case_preserves_old_destination": true
+  },
+  "c_review": {
+    "replay_evidence": "docs/evidence/2026-10-09-recovery-trace-off-c-replay.json",
+    "cases": 88,
+    "source_functions": [
+      "recovery_trace_off",
+      "recovery_cycles",
+      "recovery_command_store"
+    ],
+    "source_extracted": true,
+    "sanitizers": [
+      "address",
+      "undefined"
+    ],
+    "leak_sanitizer": "Disabled because ptrace execution environment does not support LeakSanitizer; no dynamic allocations in C replay",
+    "guards": [
+      "four accepted cycles counted only after fresh forced control consumed and clean phase/request/idle final state",
+      "pre-mutation recovery_messages rejects dirty transport",
+      "phase0/request0/flag0, idle, currentmask3",
+      "all three control cursors equal; control>=initial32+accepted_total and<128",
+      "exactly one host trace-mask write0, exactly one fresh staged opcode22(decimal) consumed",
+      "failed copy or changed final state never records disabled; typed operation seals",
+      "submit requires trace_disabled; failed notify retains submitted quarantine; no reuse; sample/stop allowed after seal"
+    ],
+    "findings": "Initial freshness lower bound and prewrite transport guard gaps reported and corrected by root before final replay. No remaining correctness issue found within tested host contract."
+  },
+  "qualification": "Private full bytes/disassembly not published. RAM verifies matched stores, full forced-copy path and host safety guards only. Consumed control with hostmask0 supports native mirror ordering; it is not a live private-cache-readback, complete scheduler, triangle completion, journal retirement or GPU backing retirement proof. Existing queued records remain owned and drained normally; zero mask disables gated normal diagnostic production, not all unconditional firmware records."
+}

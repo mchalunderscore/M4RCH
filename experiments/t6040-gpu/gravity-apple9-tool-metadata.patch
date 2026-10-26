@@ -1,0 +1,91 @@
+--- a/src/asahi/compiler/test/apple9-tiny-tool.c
++++ b/src/asahi/compiler/test/apple9-tiny-tool.c
+@@ -151,6 +151,23 @@
+    return b.shader;
+ }
+ 
++/* Authored minimal EOT candidate, following the pinned Gallium tile-store path. */
++static nir_shader *
++tile_store_shader(void)
++{
++   nir_builder b = nir_builder_init_simple_shader(
++      MESA_SHADER_FRAGMENT, &agx_nir_options, "m4rch_tile_store_candidate");
++   b.shader->info.num_images = 1;
++   nir_def *group = nir_load_workgroup_id(&b);
++   nir_def *xy = nir_vec2(&b, nir_imul_imm(&b, nir_channel(&b, group, 0), 32),
++                             nir_imul_imm(&b, nir_channel(&b, group, 1), 32));
++   nir_image_store_block_agx(&b, nir_imm_int(&b, 0), nir_imm_int(&b, 0),
++                            nir_pad_vec4(&b, xy),
++                            .format = PIPE_FORMAT_R8G8B8A8_UNORM,
++                            .image_dim = GLSL_SAMPLER_DIM_2D);
++   return b.shader;
++}
++
+ static bool
+ parse_u8(const char *text, unsigned *value)
+ {
+@@ -191,8 +208,9 @@
+    bool vertex =
+       perspective || small || (argc == 3 && !strcmp(argv[2], "vertex"));
+    bool constant = argc == 3 && !strcmp(argv[2], "fragment-constant");
++   bool tile_store = argc == 3 && !strcmp(argv[2], "tile-store");
+    bool fragment =
+-      alternate || constant || (argc == 3 && !strcmp(argv[2], "fragment"));
++      tile_store || alternate || constant || (argc == 3 && !strcmp(argv[2], "fragment"));
+    if (vertex || fragment) {
+    } else if (argc == 3 && strcmp(argv[2], "gid") == 0) {
+       program = TOOL_PROGRAM_GLOBAL_ID;
+@@ -219,7 +237,7 @@
+    }
+ 
+    nir_shader *nir =
+-      vertex || fragment
++      tile_store ? tile_store_shader() : vertex || fragment
+          ? render_shader(fragment, constant, perspective, small, alternate)
+          : store_shader(program, first, second);
+    struct agx_shader_part compiled = {0};
+@@ -260,6 +278,44 @@
+       fprintf(stderr, "%sarg%u=b%u", i ? "," : "", i,
+               profile.resource_binding[i]);
+    fprintf(stderr, ")\n");
++
++   char meta_path[4096];
++   if (snprintf(meta_path, sizeof(meta_path), "%s.json", argv[1]) >= sizeof(meta_path))
++      return EXIT_FAILURE;
++   FILE *meta = fopen(meta_path, "w");
++   if (!meta) { perror(meta_path); return EXIT_FAILURE; }
++   fprintf(meta, "{\n");
++#define FIELD(name) fprintf(meta, "  \"" #name "\": %llu,\n", (unsigned long long)compiled.info.name)
++   FIELD(binary_size); FIELD(nr_gprs); FIELD(nr_preamble_gprs); FIELD(scratch_size);
++   FIELD(apple9_preamble_offset); FIELD(apple9_preamble_size);
++   FIELD(apple9_publication_count); FIELD(apple9_ubo_mask);
++   FIELD(apple9_resource_count); FIELD(apple9_resource_ssbo_mask);
++   FIELD(apple9_resource_write_mask); FIELD(apple9_reads_tile);
++   FIELD(apple9_texture_mask); FIELD(apple9_sampler_mask); FIELD(apple9_image_mask);
++   FIELD(apple9_uses_texel_fetch); FIELD(apple9_clip_distance_count);
++   FIELD(apple9_reads_z); FIELD(apple9_writes_point_size);
++   FIELD(apple9_uses_discard); FIELD(writes_layer_viewport);
++#undef FIELD
++   fprintf(meta, "  \"varying_components\": %u,\n", compiled.info.apple9_varyings.count);
++   fprintf(meta, "  \"resource_bindings\": [");
++   for (unsigned i = 0; i < compiled.info.apple9_resource_count; i++)
++      fprintf(meta, "%s%u", i ? "," : "", compiled.info.apple9_resource_binding[i]);
++   fprintf(meta, "],\n  \"varying_mask\": [");
++   for (unsigned i = 0; i < 64; i++)
++      fprintf(meta, "%s%u", i ? "," : "", compiled.info.apple9_varyings.mask[i]);
++   fprintf(meta, "],\n  \"varying_group\": [");
++   for (unsigned i = 0; i < 64; i++)
++      fprintf(meta, "%s%u", i ? "," : "", compiled.info.apple9_varyings.group[i]);
++   fprintf(meta, "],\n  \"linear_mask\": [%llu,%llu],\n  \"flat_mask\": [%llu,%llu],\n",
++           (unsigned long long)compiled.info.apple9_linear_mask.lo,
++           (unsigned long long)compiled.info.apple9_linear_mask.hi,
++           (unsigned long long)compiled.info.apple9_flat_mask.lo,
++           (unsigned long long)compiled.info.apple9_flat_mask.hi);
++   fprintf(meta, "  \"qualification\": \"Compiler metadata only; no GPU execution proved\"\n}\n");
++   bool meta_ok = !ferror(meta);
++   if (fclose(meta) != 0) meta_ok = false;
++   if (!meta_ok) return EXIT_FAILURE;
++
+    free(compiled.binary);
+    ralloc_free(nir);
+    return EXIT_SUCCESS;

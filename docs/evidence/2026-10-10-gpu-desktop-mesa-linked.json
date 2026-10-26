@@ -1,0 +1,316 @@
+{
+  "schema": "m4rch.gpu-desktop-mesa-linked-summary.v1",
+  "date": "2026-10-10",
+  "status": "linked-preparation-only",
+  "scope": "Full selected Gravity Mesa Asahi Gallium/EGL/GBM compilation and linking in a private workspace; no driver or render harness execution",
+  "workspace": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-linked-v1",
+  "receipt": {
+    "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-linked-v1/receipt.json",
+    "sha256": "21bd8d2178ebf98c069bb9888ca8d9b3903e0611cc1e1272c304a9b217517aea",
+    "bytes": 39108
+  },
+  "source_manifest": {
+    "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-linked-v1/source-manifest.json",
+    "sha256": "6749915ce07ba64bf3eafb1e23f0d7c2e9dd314954327815867ee06350c39973",
+    "bytes": 2332863
+  },
+  "source_tree_sha256": "4f98b55822c209b27fa3b6cf44278ef865aa1b03d602cdc9f8902ab99db55145",
+  "source_overlay_only": [
+    "src/asahi/lib/agx_device.c",
+    "src/asahi/lib/agx_g16_model.h"
+  ],
+  "selected_metadata": {
+    "src/asahi/lib/agx_device.c": {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-integration-v2/source/mesa/src/asahi/lib/agx_device.c",
+      "sha256": "9b2770871187f4739ef045a5b28525f0385c5d6c91ae71aa540d5d850a0da34d",
+      "bytes": 35758
+    },
+    "src/asahi/lib/agx_g16_model.h": {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-integration-v2/source/mesa/src/asahi/lib/agx_g16_model.h",
+      "sha256": "03f0440d8642e2c26a8b19d6b3a7163de489a138346a5c29a112041160c99a3f",
+      "bytes": 2269
+    }
+  },
+  "config_pins": [
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-linked-v1/build/meson-private/cmd_line.txt",
+      "sha256": "dc660b4b3b2785863b1e2249218f10f5c5e770d34bc605fa94fbe41e45b34d3a",
+      "bytes": 295
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-linked-v1/build/meson-info/intro-buildoptions.json",
+      "sha256": "1bc650305f0f4374d717f880d8f0eb42b5b590914149594eb6dc899217a7a7d6",
+      "bytes": 44840
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-linked-v1/build/meson-info/intro-dependencies.json",
+      "sha256": "17cd43c911ee65ba48f0c5bc2fd4d66151986cffec76e7c42334cd627e9c00d6",
+      "bytes": 5883
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-linked-v1/build/meson-info/intro-targets.json",
+      "sha256": "2165f3c06bf9825c7c5241fef02dabd40f77d8cf54b1727f433c572885b922e7",
+      "bytes": 714142
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-linked-v1/build/build.ninja",
+      "sha256": "7cb5a1bcb33f44050508e1c5cbef8d0756f392283607ae844bb414cb5f98c01b",
+      "bytes": 4909802
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-linked-v1/build/compile_commands.json",
+      "sha256": "a90ae5290df44cb056aed80e2f7d6db88eaf9b8df40cc7ea0fde7c5dd990102f",
+      "bytes": 4317631
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-linked-v1/prefix/share/glvnd/egl_vendor.d/50_mesa.json",
+      "sha256": "cd3881df4227c13ca7f9cfe6c78820f21d5f7a00a41b299214f6f827e63be369",
+      "bytes": 105
+    }
+  ],
+  "configuration": {
+    "gallium_drivers": [
+      "asahi"
+    ],
+    "vulkan_drivers": [],
+    "platforms": [
+      "surfaceless",
+      "drm"
+    ],
+    "egl": true,
+    "gbm": true,
+    "glvnd": true,
+    "llvm": "23.1.1",
+    "glx": false,
+    "wrap_mode": "nofallback",
+    "prefix": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-linked-v1/prefix"
+  },
+  "commands": {
+    "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-linked-v1/commands.json",
+    "sha256": "42dedd5cdb61e0bddaed7e8f2dbc854820af4fbadd0647a13c87f300381e6fad",
+    "bytes": 23476
+  },
+  "build_logs": [
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-linked-v1/logs/configure.log",
+      "sha256": "8f765723bb2f3981cc50398fa0e286802c0f582717e39054cfe92d010c7b0996",
+      "bytes": 15024
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-linked-v1/logs/compile.log",
+      "sha256": "bed5880c90a85ea1e3145cd08d76982e4479ad16c93241e2a891d333dc4d06a2",
+      "bytes": 96887
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-linked-v1/logs/install-private.log",
+      "sha256": "19d2efb983061faccf173d4f3765fe80e0bb1590e68c9866d31bb0587a182a72",
+      "bytes": 2962
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-linked-v1/logs/harness-link.log",
+      "sha256": "7ba8674816b2206dca876dff009bd431b15b3259f29234c7918a659398ddcdf6",
+      "bytes": 352
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-linked-v1/logs/harness-link-corrected.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    }
+  ],
+  "compiler_warnings": [
+    "../source/src/gallium/drivers/asahi/agx_state.c:6348:23: warning: unused variable \u2018screen\u2019 [-Wunused-variable]",
+    "../source/src/gallium/drivers/asahi/agx_state.c:7165:23: warning: unused variable \u2018dev\u2019 [-Wunused-variable]"
+  ],
+  "private_prefix_artifacts": [
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-linked-v1/prefix/lib/gbm/dri_gbm.so",
+      "sha256": "2af04fb5a599239efdba79169cbbd92311bd838b69d42c0e86c824b8e7ce345d",
+      "bytes": 1013312,
+      "elf_evidence": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-linked-v1/logs/elf-0.log",
+      "dynamic_entries": [
+        "0x0000000000000001 (NEEDED)             Shared library: [libgallium-26.3.0-devel.so]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libdrm.so.2]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libexpat.so.1]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libm.so.6]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]",
+        "0x0000000000000001 (NEEDED)             Shared library: [ld-linux-aarch64.so.1]",
+        "0x000000000000000e (SONAME)             Library soname: [dri_gbm.so]"
+      ]
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-linked-v1/prefix/lib/libEGL_mesa.so.0.0.0",
+      "sha256": "51f01b953f586e0909b9b7101ca1c9db615f5f4b9fe62fb3a6584355f0e62c52",
+      "bytes": 4144760,
+      "elf_evidence": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-linked-v1/logs/elf-1.log",
+      "dynamic_entries": [
+        "0x0000000000000001 (NEEDED)             Shared library: [libgallium-26.3.0-devel.so]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libgbm.so.1]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libexpat.so.1]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libdrm.so.2]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libm.so.6]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]",
+        "0x0000000000000001 (NEEDED)             Shared library: [ld-linux-aarch64.so.1]",
+        "0x000000000000000e (SONAME)             Library soname: [libEGL_mesa.so.0]"
+      ]
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-linked-v1/prefix/lib/libasahi_noop_drm_shim.so",
+      "sha256": "535e6930bb88bd9a3b1c18a5854c9e91ff8578fc2798a05dd82018602c66ac6d",
+      "bytes": 594952,
+      "elf_evidence": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-linked-v1/logs/elf-2.log",
+      "dynamic_entries": [
+        "0x0000000000000001 (NEEDED)             Shared library: [libdrm.so.2]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libpython3.14.so.1.0]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]",
+        "0x0000000000000001 (NEEDED)             Shared library: [ld-linux-aarch64.so.1]",
+        "0x000000000000000e (SONAME)             Library soname: [libasahi_noop_drm_shim.so]"
+      ]
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-linked-v1/prefix/lib/libgallium-26.3.0-devel.so",
+      "sha256": "936fa85cd76f052f73829c5c9fb0cab0b5f811810ce81d3e5d211f09304e761a",
+      "bytes": 110508392,
+      "elf_evidence": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-linked-v1/logs/elf-3.log",
+      "dynamic_entries": [
+        "0x0000000000000001 (NEEDED)             Shared library: [libdrm.so.2]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libLLVM.so.23.1]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libexpat.so.1]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libz.so.1]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libzstd.so.1]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libSPIRV-Tools.so]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libsensors.so.5]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libstdc++.so.6]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libm.so.6]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libgcc_s.so.1]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]",
+        "0x0000000000000001 (NEEDED)             Shared library: [ld-linux-aarch64.so.1]",
+        "0x000000000000000e (SONAME)             Library soname: [libgallium-26.3.0-devel.so]"
+      ]
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-linked-v1/prefix/lib/libgbm.so.1.0.0",
+      "sha256": "27515fd5ce6c85e461a17560b7043192eba2a0ad2b02e2db42d073cb29e9fa7f",
+      "bytes": 705624,
+      "elf_evidence": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-linked-v1/logs/elf-4.log",
+      "dynamic_entries": [
+        "0x0000000000000001 (NEEDED)             Shared library: [libdrm.so.2]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libexpat.so.1]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libm.so.6]",
+        "0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]",
+        "0x0000000000000001 (NEEDED)             Shared library: [ld-linux-aarch64.so.1]",
+        "0x000000000000000e (SONAME)             Library soname: [libgbm.so.1]"
+      ]
+    }
+  ],
+  "installed_symlinks": [
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-linked-v1/prefix/lib/libEGL_mesa.so",
+      "target": "libEGL_mesa.so.0",
+      "resolved_path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-linked-v1/prefix/lib/libEGL_mesa.so.0.0.0",
+      "sha256": "51f01b953f586e0909b9b7101ca1c9db615f5f4b9fe62fb3a6584355f0e62c52",
+      "bytes": 4144760
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-linked-v1/prefix/lib/libEGL_mesa.so.0",
+      "target": "libEGL_mesa.so.0.0.0",
+      "resolved_path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-linked-v1/prefix/lib/libEGL_mesa.so.0.0.0",
+      "sha256": "51f01b953f586e0909b9b7101ca1c9db615f5f4b9fe62fb3a6584355f0e62c52",
+      "bytes": 4144760
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-linked-v1/prefix/lib/libgbm.so",
+      "target": "libgbm.so.1",
+      "resolved_path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-linked-v1/prefix/lib/libgbm.so.1.0.0",
+      "sha256": "27515fd5ce6c85e461a17560b7043192eba2a0ad2b02e2db42d073cb29e9fa7f",
+      "bytes": 705624
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-linked-v1/prefix/lib/libgbm.so.1",
+      "target": "libgbm.so.1.0.0",
+      "resolved_path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-linked-v1/prefix/lib/libgbm.so.1.0.0",
+      "sha256": "27515fd5ce6c85e461a17560b7043192eba2a0ad2b02e2db42d073cb29e9fa7f",
+      "bytes": 705624
+    }
+  ],
+  "harness": {
+    "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-linked-v1/headless-smoke",
+    "sha256": "a3dc532fa89cd54ebe66abb83b993c9429b3d7f63c1aae42ee95fbfdde0812f4",
+    "bytes": 74832,
+    "elf_evidence": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-linked-v1/logs/harness-elf.log",
+    "executed": false,
+    "needed": [
+      "libgbm.so.1",
+      "libEGL.so.1",
+      "libGLESv2.so.2",
+      "libdrm.so.2",
+      "libm.so.6",
+      "libc.so.6",
+      "ld-linux-aarch64.so.1"
+    ]
+  },
+  "elf_dependency_closure": {
+    "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-linked-v1/elf-dependency-closure.json",
+    "sha256": "b5e6f95696be00efe9ec5201949e53beeb1cc671aa848ee5993cccb17384f60e",
+    "bytes": 43609,
+    "nodes": 28,
+    "edges": 101,
+    "unresolved": 0,
+    "actual_loaded_identity_proven": false
+  },
+  "loader_recipe": {
+    "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-linked-v1/future-loader.env",
+    "sha256": "c4f9c415c493e89eb25d1d3075e5f7786864b6ea932c59dd26c7ba8537b8a206",
+    "bytes": 629,
+    "executed": false,
+    "environment": {
+      "__EGL_VENDOR_LIBRARY_FILENAMES": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-linked-v1/prefix/share/glvnd/egl_vendor.d/50_mesa.json",
+      "GBM_BACKENDS_PATH": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-linked-v1/prefix/lib/gbm",
+      "LD_LIBRARY_PATH": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-linked-v1/prefix/lib"
+    },
+    "LIBGL_DRIVERS_PATH": {
+      "applicable": false,
+      "reason": "Selected Mesa links libgallium-26.3.0-devel.so directly; no per-driver DRI directory is installed"
+    },
+    "gpu_startup_and_execution_gates_open": false
+  },
+  "initial_helper_preserved": {
+    "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-linked-v1/build-helper-original.py",
+    "sha256": "8b710fbc58780cfb3434b65d0039f12be0c2ef19a383bf5a37fcb88c8170b1c3",
+    "bytes": 8736
+  },
+  "initial_failure_preserved": {
+    "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-linked-v1/failure.json",
+    "sha256": "dcc5be4a4e0596228e91f3b462be6b756514c98bc4de1d1ad464330f611d85c0",
+    "bytes": 16890
+  },
+  "helper_include_fix": {
+    "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/build_mesa_linked.py",
+    "sha256": "364adc00e0e9c0bdf5a514104f1559398178f23f7c0648d4d52213a69dff48d3",
+    "change": "Add exact selected src/asahi/lib header search path for smoke criteria"
+  },
+  "baseline_preserved": {
+    "mesa-full": true,
+    "mesa-build": true,
+    "mesa-prefix": true
+  },
+  "selected_metadata_preserved": true,
+  "staged_source_unchanged_by_build": true,
+  "platform_limit": "Wayland protocols are not installed; uses prior GBM/surfaceless platform set",
+  "t6040_normal_startup_enabled": false,
+  "mesa_g16s_execution_enabled": false,
+  "driver_loaded": false,
+  "harness_executed": false,
+  "system_install": false,
+  "hardware_accessed": false,
+  "pretrial_gate": false,
+  "provenance_correction": {
+    "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-linked-v1/provenance-correction-v1.json",
+    "sha256": "acf88589d6e2b11185666e4dd7a27c08ed4870030bb204a60459d190fddfea20",
+    "bytes": 4028
+  },
+  "erroneous_provenance_snapshot_manifest": {
+    "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-mesa-linked-v1/provenance-before-correction-v1/manifest.json",
+    "sha256": "ac6a41d060b8b3c22ff2d217cacdb73457cbc5e674de67c2fe9a9b5ddb751357",
+    "bytes": 2642
+  }
+}

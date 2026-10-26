@@ -1,0 +1,165 @@
+{
+  "schema": "m4rch.gfx-native-reset-outcome-decision.v2",
+  "date": "2026-10-09",
+  "analysis_only": true,
+  "hardware_actions": [],
+  "source_changes": false,
+  "native_trial_run": false,
+  "result_recorded": false,
+  "kernel_release": "7.1.13-m4rch-gpu-native-reset",
+  "api": "apple_pmgr_t6040_gfx_native_probe",
+  "sources": [
+    {
+      "path": "experiments/t6040-gpu/gfx-native-reset-capability/api-qualification.json",
+      "sha256": "35524874fce0ae31c8d6376d9a4b7880d367a3024cdbc189b77b6025a1f942ad",
+      "bytes": 6239
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-reset-capability/pmgr-pwrstate.c",
+      "sha256": "04910407755d029a2acd131f873359bd14983ace946a469725612883835abb61",
+      "bytes": 31951
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-reset-capability/pmgr-gfx-reset.h",
+      "sha256": "4fbdca1e18ed9c3ee030bad9a94f35c2f70b213d038dfb0555350f35809df9a0",
+      "bytes": 5053
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-reset-capability/gfx-native-reset-observation.patch",
+      "sha256": "5df46ea05dbf84d0245a6a74b97f309ca07c1b1d54d3848497ee7cf430bd5264",
+      "bytes": 14085
+    },
+    {
+      "path": "docs/evidence/2026-10-09-gfx-native-reset-api-review.md",
+      "sha256": "0984a53b932c85e27e10445ea48a2e2426c770f84cb5445e2d9f61ebcbb71c91",
+      "bytes": 4819
+    },
+    {
+      "path": "docs/evidence/2026-10-09-gfx-native-reset-api-review.json",
+      "sha256": "d0e559a4f19e9494bcc7b8bd15ec4e78bcb603983c3f4348de5329f7a3439dab",
+      "bytes": 3226
+    },
+    {
+      "path": "docs/evidence/2026-10-09-gfx-reset-native-disable-semantics.md",
+      "sha256": "fbbc4813a905176cd0a381c927c22a6f73d79bf3cabbbcaa5e296b467580e4e3",
+      "bytes": 8253
+    },
+    {
+      "path": "docs/evidence/2026-10-09-rtbuddy-matched-provider.md",
+      "sha256": "2ac2bf7ebbb276ca363290af2de4f966f093fe98e74e14b60f8ed3e080f23f4d",
+      "bytes": 13759
+    },
+    {
+      "path": "docs/evidence/2026-10-09-rtbuddy-reset-review.md",
+      "sha256": "9c36c98270b211b46a31b100aa7a516deda4e180cbec4e810d67e7ddb2c5134f",
+      "bytes": 6983
+    },
+    {
+      "path": "experiments/t6040-gpu/asc-graph-init/gfx-reset-scope.h",
+      "sha256": "0da5611ee7601f21a102886a7f0d79c7259fd11d471a456bed23d830b3638147",
+      "bytes": 9679
+    },
+    {
+      "path": "docs/evidence/2026-10-09-gfx-native-reset-outcome-decision.md",
+      "sha256": "35f0c121af4c6adc5342e0c1343399ec76e93e942b0dd97126881a19ace5d7ce",
+      "bytes": 7476
+    }
+  ],
+  "command_slots": [
+    "INHIBIT",
+    "DISABLE",
+    "ASSERT",
+    "RELEASE",
+    "RESTORE",
+    "CLEANUP_INHIBIT",
+    "CLEANUP_RELEASE",
+    "CLEANUP_RESTORE"
+  ],
+  "read_slots": [
+    "BEFORE",
+    "AUTO_HELD",
+    "DISABLED",
+    "ASSERTED",
+    "RELEASED",
+    "FINAL",
+    "CLEANUP_RELEASE",
+    "CLEANUP_FINAL"
+  ],
+  "normal_primary_completion": {
+    "return": 0,
+    "common_operation_error": 0,
+    "common_cleanup_error": 0,
+    "sequence_completed": 1,
+    "release_command_verified": 1,
+    "common_auto_policy_restored": 1,
+    "common_valid": "0x6f",
+    "command_attempts": "0x1f",
+    "read_attempts": "0x3f",
+    "base_from_auto_held": 1,
+    "attempted_primary_write_errors_all_zero": true,
+    "full_command_image_consistent": true,
+    "disable_delay_us": 1,
+    "pulse_delay_us": 1,
+    "assertion_bit_latch_required": false,
+    "physical_acknowledgement": false
+  },
+  "classification": [
+    {
+      "condition": "owner attempted0 refusal/seal",
+      "conclusion": "native API not entered; gate consumed"
+    },
+    {
+      "condition": "complete API receipt command_attempts0 and error",
+      "conclusion": "no native write call reached; record exact provider/reference/read/power refusal"
+    },
+    {
+      "condition": "any write attempt and primary/cleanup error",
+      "conclusion": "possible committed partial write; last successful read does not erase error"
+    },
+    {
+      "condition": "cleanup release write error/check failure or release_command_verified0",
+      "conclusion": "release command boundary unverified; no cleanup restore after uncertain release"
+    },
+    {
+      "condition": "primary error with recovered cleanup command/policy checks",
+      "conclusion": "primary remains failed; no reset-scope success"
+    },
+    {
+      "condition": "complete consistent normal primary receipt",
+      "conclusion": "defined command delivery/checks only; compare activity evidence"
+    },
+    {
+      "condition": "interrupted/missing/inconsistent receipt",
+      "conclusion": "uncertain consumed attempt; no retry"
+    }
+  ],
+  "interpretation_limits": [
+    "command attempts are set before bus call; errored write can commit",
+    "all desired values are full-word forced writes",
+    "common valid means successful sample and can retain timed-out poll data",
+    "shared common cleanup_final may retain earlier sample after final-stage read error; inspect both per-stage receipts",
+    "release_command_verified is command+raw-condition verification, not a physical line release proof",
+    "host receive journal is frozen by owner seal, not proof of firmware cessation",
+    "continued qualified firmware-owned shared writes demonstrate access; stability does not establish cessation",
+    "native V6 idle/START-clear observations do not establish DMA retirement",
+    "DATA/entry/mapping/mailbox lifecycle remains separate from command delivery"
+  ],
+  "ASC_idle_predicate": "(STATUS48 & 3) != 0",
+  "ASC_START_clear_predicate": "(CONTROL44 & 0x10) == 0",
+  "ASC_DMA_retirement_inference_allowed": false,
+  "firmware_shared_write_changes_mean": "positive evidence of continued access",
+  "firmware_shared_write_stability_means": "no observed progress only",
+  "all_branches_consume_gate": true,
+  "owner_seal_permanent": true,
+  "post_result_operations": [
+    "sample",
+    "gfx-snapshot",
+    "packet-free stop"
+  ],
+  "retry_allowed": false,
+  "warm_START_INIT_allowed": false,
+  "backing_release_allowed": false,
+  "backing_reuse_allowed": false,
+  "restart_allowed": false,
+  "retained_pages": 174
+}

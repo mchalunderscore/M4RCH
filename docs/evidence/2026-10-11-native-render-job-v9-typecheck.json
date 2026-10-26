@@ -1,0 +1,72 @@
+{
+  "schema": "m4rch.native-render-job-v9.typecheck.v1",
+  "compile_returncode": 0,
+  "compiler_flags": [
+    "--edition=2021",
+    "--crate-type",
+    "lib",
+    "-Dwarnings"
+  ],
+  "pins": [
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/g16_t6040_render_job_v9.rs",
+      "sha256": "d0f684b37fc148d0845cf934197f93b06ca23d57cb889f818836bf67c424de32",
+      "bytes": 4553
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/g16_t6040_rce_ram_v9.rs",
+      "sha256": "9adb24715a9799ee846e490120f058b1525e52f06f51895e1c5b29df3f9ae54b",
+      "bytes": 5168
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/g16_t6040_render_envelope_v9.rs",
+      "sha256": "36e49d3dc94be91691641ef3ffce17183b3db5a3015fd7daccf134d34cf69686",
+      "bytes": 8260
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/g16_t6040_ta_sku_v9.rs",
+      "sha256": "c3abb5f5e56990c4881afc7f097027b285d25ebaf56221a10922fea7ff0b5f51",
+      "bytes": 4458
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/g16_t6040_fragment_sku_v9.rs",
+      "sha256": "98e066040816501b4ceb884caca9e4bd442e422e65de54ba416e8d0d9586eb8b",
+      "bytes": 6191
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/g16_t6040_ksm_work_v8.rs",
+      "sha256": "f5d91349832b041b7b7ca2443bf7caaaa223def4b7eda19bc33815c812bc8b6c",
+      "bytes": 4559
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/g16_t6040_work_layout_v9.rs",
+      "sha256": "36f5bfba093f93b320d1629ae267ff05fba0e4e781f055a12c5217d062bcc3d5",
+      "bytes": 2017
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/private-apple/native-rce-semantic-v9.rs",
+      "sha256": "2ffb050a96b3ab7f975951c044bd54f97186232701d543d3ebe9646254ebb8e3",
+      "bytes": 544482
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-native-render-job-v9-typecheck/host.rs",
+      "sha256": "a397238e9f48f4f7f1d72baa5a63e39cc355dad21064691af211ab6845d6ebe5",
+      "bytes": 1195
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-native-render-job-v9-typecheck/render-job.rlib",
+      "sha256": "aabd67a80caeaf51483cde8f5cb12c1505011bf66c9a79ab9184f63152c929fc",
+      "bytes": 164424
+    }
+  ],
+  "hardware_actions": [],
+  "runtime_enabled": false,
+  "scope": "Actual connected borrowed native producer -> construction envelope -> primary SKU -> dynamic register metadata -> scheduler builder compiles. Composed execution qualification pending; no real kernel caller or hardware publication claimed.",
+  "remaining": [
+    "Composed parameter/job execution qualification",
+    "Native PM allocation/sourcewire join",
+    "Actual Gravity runtime caller and publication join",
+    "Actual joined kernel module build",
+    "Fresh hardware draw, strict OFF and rebootless reuse"
+  ]
+}

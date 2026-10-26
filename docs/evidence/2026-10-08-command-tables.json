@@ -1,0 +1,26 @@
+{
+  "boot_id": "8d5519d3-c1db-41a7-bb94-7c68e7ac0d10",
+  "kernel": "7.1.13-m4rch-gpu-contract",
+  "sha256": {
+    "source": "9f55564a2087c3c74ab17bc6c89e14768809b4b036877987dc2c8acd3cfbb4b2",
+    "module": "d4138886636d16c8b43b98b325274c205c923f32311f25f88950bd5ba81007c0",
+    "job_data": "1fa91af4b0a59073ea2ecf0c3fdfc94ca79496a228dcdc01f913c9e32d041cfa",
+    "linux_pgtable": "a25a13fbcb41119ce77ed1f87e0002b8d92d4324ccd91a8005f3ba2d1b5ae230"
+  },
+  "jobs": 64,
+  "data_pages": 35,
+  "table_pages": 6,
+  "bytes": 573440,
+  "invalid_checks": 17,
+  "published": false,
+  "module_unloaded": true,
+  "leaf_flags": {
+    "device_candidate": "0x00e0000000000c0b",
+    "firmware_candidate": "0x00c000000000044b"
+  },
+  "limits": [
+    "No root/context publication or hardware translation",
+    "Resource API option translation and actual pool encoder dispatch unknown",
+    "No GPU cache visibility, job acceptance, completion or pixels proved"
+  ]
+}

@@ -1,0 +1,123 @@
+diff --git a/src/asahi/lib/agx_device.c b/src/asahi/lib/agx_device.c
+--- a/src/asahi/lib/agx_device.c
++++ b/src/asahi/lib/agx_device.c
+@@ -557,7 +557,37 @@
+       assert(0);
+       return false;
+    }
+-   assert(params_size >= sizeof(dev->params));
++   if ((size_t)params_size < sizeof(dev->params)) {
++      fprintf(stderr, "Incomplete Asahi device parameters\n");
++      return false;
++   }
++
++   /* Refuse incomplete G16 identity or an unported firmware layout before
++    * allocating the VM, mutexes and address heaps. A recognized G16S is not
++    * automatically qualified for the donor G16G render path. */
++   enum agx_g16_model g16_model = AGX_G16_UNKNOWN;
++   if (dev->params.gpu_generation == 16) {
++      uint64_t masks[DRM_ASAHI_MAX_CLUSTERS];
++      for (unsigned i = 0; i < DRM_ASAHI_MAX_CLUSTERS; ++i)
++         masks[i] = dev->params.core_masks[i];
++      struct agx_g16_device_info info;
++      if (!agx_g16_decode_device(dev->params.chip_id,
++                                 dev->params.gpu_variant,
++                                 dev->params.num_dies,
++                                 dev->params.num_clusters_total,
++                                 dev->params.num_cores_per_cluster,
++                                 masks, DRM_ASAHI_MAX_CLUSTERS, &info)) {
++         fprintf(stderr, "Invalid G16 chip/topology/mask binding\n");
++         return false;
++      }
++      g16_model = info.model;
++      if (!agx_g16_layout_qualified(g16_model)) {
++         fprintf(stderr, "G16S discovered (%u enabled cores): "
++                         "firmware/packet layouts are not qualified\n",
++                 info.enabled_cores);
++         return false;
++      }
++   }
+ 
+    assert(dev->params.gpu_generation >= 13);
+    const char *variant = " Unknown";
+@@ -759,16 +789,7 @@
+                                                      : AGX_CHIP_G14G;
+       break;
+    case 16:
+-      if (dev->params.gpu_variant == 'S') {
+-         if (agx_g16_select(dev->params.gpu_variant,
+-                            dev->params.num_clusters_total,
+-                            dev->params.num_clusters_total * dev->params.num_cores_per_cluster) != AGX_G16_S)
+-            return false;
+-         dev->chip = AGX_CHIP_G16S;
+-         fprintf(stderr, "G16S discovered: firmware/packet layouts are not qualified\n");
+-         return false;
+-      }
+-      assert(dev->params.gpu_variant == 'G');
++      assert(g16_model == AGX_G16_G);
+       dev->chip = AGX_CHIP_G16G;
+       break;
+    case 17:
+diff --git a/src/asahi/lib/agx_g16_model.h b/src/asahi/lib/agx_g16_model.h
+--- a/src/asahi/lib/agx_g16_model.h
++++ b/src/asahi/lib/agx_g16_model.h
+@@ -4,6 +4,11 @@
+ #include <stdbool.h>
+ #include <stdint.h>
+ enum agx_g16_model { AGX_G16_UNKNOWN, AGX_G16_G, AGX_G16_S };
++struct agx_g16_device_info {
++   enum agx_g16_model model;
++   unsigned chip, variant, dies, clusters, slots_per_cluster, enabled_cores;
++   uint64_t core_masks[2];
++};
+ /* Metadata selection only; packet/layout qualification remains separate. */
+ static inline enum agx_g16_model
+ agx_g16_select(unsigned variant, unsigned clusters, unsigned slots)
+@@ -12,6 +17,47 @@
+    if (variant == 'S' && clusters == 2 && slots == 20) return AGX_G16_S;
+    return AGX_G16_UNKNOWN;
+ }
++/* Decode the kernel's complete identity before creating a VM. Logical slots
++ * are not the popcount of enabled cores. Do not fill absent masks from a
++ * captured board or accept nonzero masks outside the advertised topology. */
++static inline bool
++agx_g16_decode_device(unsigned chip, unsigned variant, unsigned dies,
++                      unsigned clusters, unsigned slots_per_cluster,
++                      const uint64_t *masks, unsigned mask_count,
++                      struct agx_g16_device_info *out)
++{
++   if (!masks || !out || dies != 1 || slots_per_cluster != 10 ||
++       mask_count < clusters)
++      return false;
++
++   enum agx_g16_model model = AGX_G16_UNKNOWN;
++   if (chip == 0x8132 && variant == 'G' && clusters == 1)
++      model = AGX_G16_G;
++   else if (chip == 0x6040 && variant == 'S' && clusters == 2)
++      model = AGX_G16_S;
++   else
++      return false;
++
++   struct agx_g16_device_info info = {
++      .model = model, .chip = chip, .variant = variant, .dies = dies,
++      .clusters = clusters, .slots_per_cluster = slots_per_cluster,
++   };
++   for (unsigned i = 0; i < mask_count; ++i) {
++      if (i >= clusters) {
++         if (masks[i])
++            return false;
++         continue;
++      }
++      if (!masks[i] || (masks[i] & ~UINT64_C(0x3ff)))
++         return false;
++      info.core_masks[i] = masks[i];
++      for (uint64_t bits = masks[i]; bits; bits &= bits - 1)
++         ++info.enabled_cores;
++   }
++   *out = info;
++   return true;
++}
++
+ static inline bool agx_g16_layout_qualified(enum agx_g16_model model)
+ {
+    return model == AGX_G16_G;

@@ -1,0 +1,31 @@
+{
+  "binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "counts": {
+    "cases": 1024,
+    "notification_present": 512,
+    "notification_absent": 512
+  },
+  "ranges": [
+    {
+      "start": "0xfffffe000895b388",
+      "end": "0xfffffe000895b9d8",
+      "sha256": "c78190882d551d1fed446f2b435e6c38070c9d531ef2b5ac860305bce943e83e"
+    },
+    {
+      "start": "0xfffffe0008987000",
+      "end": "0xfffffe0008987018",
+      "sha256": "5df2566b15ecfaea91462e35594b69d59313c885139d489a7cc231baa7a6c028"
+    },
+    {
+      "start": "0xfffffe000895d5c0",
+      "end": "0xfffffe000895d5d8",
+      "sha256": "672ab6c3306795260541daf7ce4bb52eccde9993575a08dee62047d9209d2f80"
+    },
+    {
+      "start": "0xfffffe00089d5cf0",
+      "end": "0xfffffe00089d5cfc",
+      "sha256": "7b417026f8f5505fad07490958843cdd95716bf46cd6062b63a4d307afdfe879"
+    }
+  ],
+  "qualification": "Continuous ordinary3D preproducer construction executes actual submitted-kick, PM-operation and scratch-payload callbacks. Full2300 command/source/channel/owner/counters compared with independent models. Three translations and conditional notification/mapping services are explicit fixtures; authentication skipped. Caller preamble, register producer/postproducer, real mappings/cache/queue/completion and valid drawing remain unqualified. No live GPU command."
+}

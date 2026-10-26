@@ -1,0 +1,196 @@
+{
+  "boot_id": "8fc6f0d0-c9bf-4475-89ed-8118352ea6bf",
+  "trial_fixture_sha256": "15539c5715760da6c6c31219a7b6e361d396d70c477a4eaac257104cd712b947",
+  "trial_module_sha256": "693608a9c254e3af0e3cfe781d265c79faba6bbd9c395e312f1ba1c4e568483d",
+  "load_returncode": 0,
+  "root_published": true,
+  "command": {
+    "opcode": "0x16",
+    "records": 32,
+    "record_bytes": 64
+  },
+  "control_cursors_before": [
+    0,
+    0,
+    32
+  ],
+  "control_cursors_after": [
+    32,
+    32,
+    32
+  ],
+  "all_control_records_consumed": true,
+  "control_records_unchanged": true,
+  "crashlog_header_present": false,
+  "observation_log": [
+    "[   94.968140] m4rch graph-init: observation messages=0; capture crashlog before reboot"
+  ],
+  "live_frames": 29,
+  "unique_frame_hashes": [
+    "963e971fdeed0bc1b1030ddf26947e724c3b55b5bd09ad196370f5639c3e62fb"
+  ],
+  "observer_errors": [],
+  "changed_objects": [
+    {
+      "name": "main",
+      "changed_bytes": 5,
+      "first_changed_offsets": [
+        "0x32c",
+        "0x344",
+        "0x345",
+        "0x346",
+        "0x347"
+      ]
+    },
+    {
+      "name": "main_header",
+      "changed_bytes": 1,
+      "first_changed_offsets": [
+        "0x0"
+      ]
+    },
+    {
+      "name": "power",
+      "changed_bytes": 5,
+      "first_changed_offsets": [
+        "0x38",
+        "0x78",
+        "0x922",
+        "0x923",
+        "0x652c"
+      ]
+    },
+    {
+      "name": "status_a",
+      "changed_bytes": 2,
+      "first_changed_offsets": [
+        "0x10",
+        "0x14"
+      ]
+    },
+    {
+      "name": "status_b",
+      "changed_bytes": 2,
+      "first_changed_offsets": [
+        "0xc734",
+        "0xc744"
+      ]
+    },
+    {
+      "name": "channel_12_cursor",
+      "changed_bytes": 2,
+      "first_changed_offsets": [
+        "0x0",
+        "0x8"
+      ]
+    }
+  ],
+  "refresh_private_state": {
+    "0x18eec8": 0,
+    "0x146908": 1,
+    "0x146914": 1
+  },
+  "reboot_required": false,
+  "qualification": "Native consumption of the operand-free initial refresh fixture only. No crash header/fatal notification during this bounded capture is not proof of full initialization, receive channels, job execution, interrupts, GPU acceleration or safe retirement.",
+  "receive13_buffers": [
+    {
+      "name": "receive13_state_a",
+      "bytes": 48,
+      "changed_bytes": 0,
+      "sha256": "17b0761f87b081d5cf10757ccc89f12be355c70e2e29df288b65b30710dcbcd1",
+      "first_word": 0,
+      "word_at_20": 0
+    },
+    {
+      "name": "receive13_aux",
+      "bytes": 18432,
+      "changed_bytes": 0,
+      "sha256": "f7b586904e3678145aa47e4232587c913139cef0102d6d8e9276fc80c35cbad3",
+      "first_word": 0,
+      "word_at_20": 0
+    },
+    {
+      "name": "receive13_state_b",
+      "bytes": 432,
+      "changed_bytes": 0,
+      "sha256": "1fe2373734955e60c172999142934b52e69ba7ab9039b3c18ea54082ba32afcd",
+      "first_word": 0,
+      "word_at_20": 0
+    },
+    {
+      "name": "receive13_ring",
+      "bytes": 165888,
+      "changed_bytes": 0,
+      "sha256": "89d111e13da934fd2c233e48ca07bcae7c41da0d26b6423c0c47d40dca38bede",
+      "first_word": 0,
+      "word_at_20": 0
+    }
+  ],
+  "receive13_qualification": "Raw owned-buffer changes/words only; no cursor role, event decoding or receive readiness inferred.",
+  "receive14_buffers": [
+    {
+      "name": "receive14_state_a",
+      "bytes": 48,
+      "changed_bytes": 0,
+      "sha256": "17b0761f87b081d5cf10757ccc89f12be355c70e2e29df288b65b30710dcbcd1",
+      "first_word": 0,
+      "word_at_20": 0
+    },
+    {
+      "name": "receive14_aux",
+      "bytes": 36864,
+      "changed_bytes": 0,
+      "sha256": "1c0273095382988333e2f2b5ae487cea460737ed9be65cbad9c5de537f95bf75",
+      "first_word": 0,
+      "word_at_20": 0
+    },
+    {
+      "name": "receive14_state_b",
+      "bytes": 48,
+      "changed_bytes": 0,
+      "sha256": "17b0761f87b081d5cf10757ccc89f12be355c70e2e29df288b65b30710dcbcd1",
+      "first_word": 0,
+      "word_at_20": 0
+    },
+    {
+      "name": "receive14_ring",
+      "bytes": 18432,
+      "changed_bytes": 0,
+      "sha256": "f7b586904e3678145aa47e4232587c913139cef0102d6d8e9276fc80c35cbad3",
+      "first_word": 0,
+      "word_at_20": 0
+    }
+  ],
+  "receive14_qualification": "Raw owned-buffer changes/words only; no cursor role, event decoding or receive readiness inferred.",
+  "shutdown_log": [
+    "[   64.967609] m4rch ASC crashlog: power response message=0xb0000000000020 metadata=0x10560000000000",
+    "[   94.968159] m4rch graph-init: shutdown requested=1 root_sent=1; published backing remains pinned",
+    "[   94.970189] m4rch ASC crashlog: power response message=0xb0000000000010 metadata=0x10670000000000",
+    "[   94.972153] m4rch ASC crashlog: power response message=0x70000000000001 metadata=0x10780000000000",
+    "[   94.972165] m4rch ASC crashlog: AP_QUIESCED_ACK=1 IOP_SLEEP_ACK=1",
+    "[   94.972173] m4rch ASC crashlog: final control=0x0 status=0x6e stop_readback=1"
+  ],
+  "retirement": {
+    "graph_retirement_verified": true,
+    "unloaded": true,
+    "module_refcount_after": 0,
+    "post_unload_verified": true,
+    "owned_page_count": 71,
+    "owned_page_references": [],
+    "reserved_l2_zero": true,
+    "loader_root_preserved": true,
+    "loader_text_data_path_qualified": true,
+    "module_absent": true,
+    "consumer_absent": true,
+    "mmio_claims_released": true,
+    "runtime_suspend_results": [
+      0
+    ]
+  },
+  "user_peripheral_confirmation": "Everything normal after cold shutdown/unload",
+  "usb_pd_bound_after": [
+    "0-0a",
+    "2-0c",
+    "0-0c"
+  ]
+}

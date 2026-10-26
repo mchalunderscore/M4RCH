@@ -125,7 +125,8 @@ class PackageTests(unittest.TestCase):
     def test_custom_recipes_replace_previous_package_names(self):
         for name, old in (("linux-m4rch", "linux-t6040"), ("config-m4rch", "arch-m4-config"),
                           ("grub-m4rch", "grub"), ("paru-m4rch", "paru")):
-            recipe = (PROJECT / "packages" / name / "PKGBUILD").read_text()
+            base = PROJECT / "packages" / ("legacy" if name in ("linux-m4rch", "config-m4rch") else ".")
+            recipe = (base / name / "PKGBUILD").read_text()
             self.assertIn("pkgname=" + name + "\n", recipe)
             for field in ("provides", "conflicts", "replaces"):
                 import re

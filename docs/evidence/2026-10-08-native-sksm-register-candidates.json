@@ -1,0 +1,256 @@
+{
+  "private_binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "counts": {
+    "pairs": 16,
+    "native_register_lists": 80,
+    "scheduler_links": 80,
+    "checked_ta_firmware_values": 64,
+    "rejected_inputs": 25,
+    "ta_construction_pairs": 16,
+    "construction_3d_pairs": 16
+  },
+  "examples": [
+    {
+      "case": 0,
+      "bindings": {
+        "ta_command_gpu": "0x100000000",
+        "3d_command_gpu": "0x100010000",
+        "parameter_gpu": "0x100020000"
+      },
+      "gpu_bit47": false,
+      "routes": {
+        "ta": {
+          "table": "0xfffffe0007eae018",
+          "slot": "0x238",
+          "wrapper": "0xfffffe00089e7aec",
+          "producer": "0xfffffe00089dd2c4",
+          "wrapper_sha256": "d19d307929ea2bb72e7f1ec256fcfe214c676b32bd2fcae8a6b7752ae3aacad3"
+        },
+        "3d": {
+          "table": "0xfffffe0007eaa8e0",
+          "slot": "0x228",
+          "wrapper": "0xfffffe00089d5ce4",
+          "producer": "0xfffffe00089df73c",
+          "wrapper_sha256": "d4f46f30ec12a649c22d01aab5b1854a33a2d147047b8aa36ec0bdce07a62b13"
+        }
+      },
+      "lists": {
+        "ta": [
+          {
+            "address": "0x100000060",
+            "backing_count": 83,
+            "exported_count": 81
+          }
+        ],
+        "3d": [
+          {
+            "address": "0x1000100a0",
+            "backing_count": 91,
+            "exported_count": 87
+          },
+          {
+            "address": "0x1000107c0",
+            "backing_count": 16,
+            "exported_count": 16
+          },
+          {
+            "address": "0x100010ee0",
+            "backing_count": 23,
+            "exported_count": 23
+          },
+          {
+            "address": "0x100011600",
+            "backing_count": 10,
+            "exported_count": 10
+          }
+        ]
+      },
+      "hashes": {
+        "ta": "0607a1a5494dcb32d8a18cfadbdb03980e6c53a2a1eeb5569d1f149231b4cc76",
+        "3d": "fa06c3ed54688a568bdd0676889888e43f33f47ecec544e8ccde7a78ba65ee45"
+      }
+    },
+    {
+      "case": 1,
+      "bindings": {
+        "ta_command_gpu": "0x100100000",
+        "3d_command_gpu": "0x100110000",
+        "parameter_gpu": "0x100120000"
+      },
+      "gpu_bit47": false,
+      "routes": {
+        "ta": {
+          "table": "0xfffffe0007eae018",
+          "slot": "0x238",
+          "wrapper": "0xfffffe00089e7aec",
+          "producer": "0xfffffe00089dd2c4",
+          "wrapper_sha256": "d19d307929ea2bb72e7f1ec256fcfe214c676b32bd2fcae8a6b7752ae3aacad3"
+        },
+        "3d": {
+          "table": "0xfffffe0007eaa8e0",
+          "slot": "0x228",
+          "wrapper": "0xfffffe00089d5ce4",
+          "producer": "0xfffffe00089df73c",
+          "wrapper_sha256": "d4f46f30ec12a649c22d01aab5b1854a33a2d147047b8aa36ec0bdce07a62b13"
+        }
+      },
+      "lists": {
+        "ta": [
+          {
+            "address": "0x100100060",
+            "backing_count": 84,
+            "exported_count": 82
+          }
+        ],
+        "3d": [
+          {
+            "address": "0x1001100a0",
+            "backing_count": 92,
+            "exported_count": 88
+          },
+          {
+            "address": "0x1001107c0",
+            "backing_count": 16,
+            "exported_count": 16
+          },
+          {
+            "address": "0x100110ee0",
+            "backing_count": 23,
+            "exported_count": 23
+          },
+          {
+            "address": "0x100111600",
+            "backing_count": 10,
+            "exported_count": 10
+          }
+        ]
+      },
+      "hashes": {
+        "ta": "3e3e9a5adee8dac1b26eac2dd4ea3c59493421f03fddc699484ea37787f41824",
+        "3d": "816067676b423bf43e2deb139f3f1678d69f2c5722b5b694e89355a0a75b32a6"
+      }
+    },
+    {
+      "case": 2,
+      "bindings": {
+        "ta_command_gpu": "0x100200000",
+        "3d_command_gpu": "0x100210000",
+        "parameter_gpu": "0x100220000"
+      },
+      "gpu_bit47": true,
+      "routes": {
+        "ta": {
+          "table": "0xfffffe0007eae018",
+          "slot": "0x238",
+          "wrapper": "0xfffffe00089e7aec",
+          "producer": "0xfffffe00089dd2c4",
+          "wrapper_sha256": "d19d307929ea2bb72e7f1ec256fcfe214c676b32bd2fcae8a6b7752ae3aacad3"
+        },
+        "3d": {
+          "table": "0xfffffe0007eaa8e0",
+          "slot": "0x228",
+          "wrapper": "0xfffffe00089d5ce4",
+          "producer": "0xfffffe00089df73c",
+          "wrapper_sha256": "d4f46f30ec12a649c22d01aab5b1854a33a2d147047b8aa36ec0bdce07a62b13"
+        }
+      },
+      "lists": {
+        "ta": [
+          {
+            "address": "0x100200060",
+            "backing_count": 83,
+            "exported_count": 81
+          }
+        ],
+        "3d": [
+          {
+            "address": "0x1002100a0",
+            "backing_count": 91,
+            "exported_count": 87
+          },
+          {
+            "address": "0x1002107c0",
+            "backing_count": 16,
+            "exported_count": 16
+          },
+          {
+            "address": "0x100210ee0",
+            "backing_count": 23,
+            "exported_count": 23
+          },
+          {
+            "address": "0x100211600",
+            "backing_count": 10,
+            "exported_count": 10
+          }
+        ]
+      },
+      "hashes": {
+        "ta": "9e7eed7940e120c4888402b604118d2c18311fbfd68eb81d557e4157211f0594",
+        "3d": "d0c200b023cc2f6082674566e70b5b72b37a64ff50f0624e46013086bd39bf4f"
+      }
+    },
+    {
+      "case": 3,
+      "bindings": {
+        "ta_command_gpu": "0x100300000",
+        "3d_command_gpu": "0x100310000",
+        "parameter_gpu": "0x100320000"
+      },
+      "gpu_bit47": true,
+      "routes": {
+        "ta": {
+          "table": "0xfffffe0007eae018",
+          "slot": "0x238",
+          "wrapper": "0xfffffe00089e7aec",
+          "producer": "0xfffffe00089dd2c4",
+          "wrapper_sha256": "d19d307929ea2bb72e7f1ec256fcfe214c676b32bd2fcae8a6b7752ae3aacad3"
+        },
+        "3d": {
+          "table": "0xfffffe0007eaa8e0",
+          "slot": "0x228",
+          "wrapper": "0xfffffe00089d5ce4",
+          "producer": "0xfffffe00089df73c",
+          "wrapper_sha256": "d4f46f30ec12a649c22d01aab5b1854a33a2d147047b8aa36ec0bdce07a62b13"
+        }
+      },
+      "lists": {
+        "ta": [
+          {
+            "address": "0x100300060",
+            "backing_count": 84,
+            "exported_count": 82
+          }
+        ],
+        "3d": [
+          {
+            "address": "0x1003100a0",
+            "backing_count": 92,
+            "exported_count": 88
+          },
+          {
+            "address": "0x1003107c0",
+            "backing_count": 16,
+            "exported_count": 16
+          },
+          {
+            "address": "0x100310ee0",
+            "backing_count": 23,
+            "exported_count": 23
+          },
+          {
+            "address": "0x100311600",
+            "backing_count": 10,
+            "exported_count": 10
+          }
+        ]
+      },
+      "hashes": {
+        "ta": "9c813e0761e64fdf1b04a2309225bde4ffbbcf785d75dab401adf15d51c49fe7",
+        "3d": "fc8b55d5e64b61622160ba70f7246e6917d44e4bdfb2c81ff01a61148dad9360"
+      }
+    }
+  ],
+  "tool_sha256": "6da4e51032868722a91aa5361579ccf9591d00d7d6cb1a4e92d2cd746497eb6b",
+  "qualification": "16 synthetic pairs through native SKSM wrappers;64 expected TA FW-register values,80 list/scheduler links. Partial TA commands check serial/translations/epoch/caller inputs, completion offset wrap, all16 mode/context combinations and counts0..15 aperture records with descriptor pointer/count. Native register backing/metadata preserved. Sixteen partial ordinary3D candidates check native list preservation, header/frame/body/resource inputs and counter-derived payload. Twenty-five malformed inputs fail before export. Backing contract checks page-rounded bytes/capacity and distinct command-pool mapping flags. All16 bind three mapping aliases through a checked ordinary3D pool slot. Native3D scheduler derives dependencies, flags, auxiliary fallback and payload pointer from explicit descriptor/provider identities. Ordinary3D event/control and aperture records0..15 derive timestamps and scheduler aperture metadata; native whole-window audits provide separate numeric qualification. Context/scene zero fixtures; remaining command storage, recipe semantics, live mappings/cache/queues/completion and valid drawing unqualified. No hardware touched."
+}

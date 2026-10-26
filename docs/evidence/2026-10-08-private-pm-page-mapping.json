@@ -1,0 +1,16 @@
+{
+  "private_binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "range": [
+    "0xfffffe00089fe44c",
+    "0xfffffe00089fea3c"
+  ],
+  "range_sha256": "3d20db462d2d152866a4fb82ccf35d5cb856888ac6f09f3c1d5a79ac005862d0",
+  "counts": {
+    "fresh": 256,
+    "reused": 256,
+    "release": 512,
+    "empty_release": 512,
+    "retained_resources": 1018
+  },
+  "qualification": "Actual concrete page mapping fresh and reused success paths and actual release, whole PM/TA/mapping/array comparisons. Counts0..8; fresh capacity rounded to64; discard present/absent. Allocation, inherited initializer, retain/release, length and mapping prepare are argument/order checked external services. Fresh fixture initializer preserves randomized mapping98 and the actual method adds lengths to it; production inherited initialization must supply valid initial fields. Pending resource append, mode2 replacement and failures not qualified. No live ownership or GPU command."
+}

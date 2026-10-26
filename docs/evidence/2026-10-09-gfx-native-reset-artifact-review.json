@@ -1,0 +1,147 @@
+{
+  "schema": "m4rch.gfx-native-reset-artifact-independent-review.v1",
+  "hardware_access": false,
+  "current_owner_untouched": true,
+  "source_or_artifact_blocker": false,
+  "kernel_release": "7.1.13-m4rch-gpu-native-reset",
+  "kernel_manifest_sha256": "133370f18dc105e7fe310c4945073ad49b64b480e4ca828ced63289a7e34e0d2",
+  "install_artifact_receipt_sha256": "1fba6d2d38b76b163673cf276eed0426b9b13679231e6649d691abde6676f197",
+  "built_and_staged_modules": 192,
+  "module_root_regular_files": 208,
+  "embedded_module_bodies_verified": 5,
+  "owner_helper_modules": 8,
+  "compiled_native_owner_api_verified": true,
+  "owner_artifact_pins": 10,
+  "owner_source_pins": 15,
+  "install_artifact_pins": 52,
+  "archive_parser_executes_init": false,
+  "member_counts_exclude_trailers": true,
+  "early_members": 4,
+  "main_members": 294,
+  "body_changes": 8,
+  "root_geometry_and_usb_preload_preserved": true,
+  "grub_prefix_preserved": true,
+  "artifact_default_preserved": 4,
+  "new_entry_index": 5,
+  "boot_tested": false,
+  "reset_coverage_verified": false,
+  "retirement_verified": false,
+  "restart_reuse_unload_authorized": false,
+  "artifacts": [
+    {
+      "path": "docs/evidence/2026-10-09-gfx-native-reset-artifact-review.md",
+      "bytes": 5159,
+      "sha256": "7905c16c04ad3b31492017e3e0e4f348f59a45fddd3da2f7cd5c48c6a19d05e0"
+    },
+    {
+      "path": "out/gfx-native-reset-kernel/kernel-qualification.json",
+      "bytes": 124518,
+      "sha256": "133370f18dc105e7fe310c4945073ad49b64b480e4ca828ced63289a7e34e0d2"
+    },
+    {
+      "path": "out/gfx-native-reset-kernel/independent-source-review.json",
+      "bytes": 10401,
+      "sha256": "c05c727215d3b2a0398ab595a161ebb93a624a66bf9fa0978dd78e6cd1ca66b0"
+    },
+    {
+      "path": "out/gfx-native-reset-kernel/independent-kernel-closure.json",
+      "bytes": 50463,
+      "sha256": "b52ce856f20b851044e1d7626cd9872d0923177fd0794c4831b6f9e7b63bd048"
+    },
+    {
+      "path": "out/gfx-native-reset-kernel/modules-manifest.json",
+      "bytes": 58956,
+      "sha256": "87d5e599678cdd6d930b99b42c52eebfb5e0b009a66c69908db427b1edd7c6c5"
+    },
+    {
+      "path": "out/gfx-native-reset-kernel/build-receipt.json",
+      "bytes": 588,
+      "sha256": "054d3e94bc49274da3b962fcadc0791ef06818a0cf13590b19d271e27d1b066d"
+    },
+    {
+      "path": "out/gfx-native-reset-kernel/source-difference.json",
+      "bytes": 1309,
+      "sha256": "c66adcc58d8cbb06ca6b348afd57099327dde1184bdaab89c673669c2d92c9cf"
+    },
+    {
+      "path": "out/gfx-native-reset-kernel/original-preservation-after.json",
+      "bytes": 3729,
+      "sha256": "403f3d41e369556be0c224a2a8c43a05036c5b1a91a83878692cbf8f201ded24"
+    },
+    {
+      "path": "out/gfx-native-reset-install/artifact-receipt.json",
+      "bytes": 54426,
+      "sha256": "1fba6d2d38b76b163673cf276eed0426b9b13679231e6649d691abde6676f197"
+    },
+    {
+      "path": "out/gfx-native-reset-install/independent-final-closure.json",
+      "bytes": 5084,
+      "sha256": "0183463f4d301c0a104b9dcffd609d8aad08e72256457a4ec57403cb158dd83a"
+    },
+    {
+      "path": "out/gfx-native-reset-install/initramfs-inspection.json",
+      "bytes": 10479,
+      "sha256": "e577a1103c7b8b29d0b02a8d1d6f5d86e4e174d94044b5d7dbefde250cffe5a8"
+    },
+    {
+      "path": "out/gfx-native-reset-install/module-root-qualification.json",
+      "bytes": 30888,
+      "sha256": "eb287bd46444925ff31766ba1c2c65b535000c33837e9937dc7c22013d811f97"
+    },
+    {
+      "path": "out/gfx-native-reset-install/module-files.json",
+      "bytes": 35120,
+      "sha256": "c274ec9d19f876de37e9b255e1772c07b530f906ee012c8c690e9be8dc255c50"
+    },
+    {
+      "path": "out/gfx-native-reset-install/initramfs.img",
+      "bytes": 14688347,
+      "sha256": "b0831ca98d38f6419fa1bcfa22248d514c34af5cd9646d92c43753b33e2919a5"
+    },
+    {
+      "path": "out/gfx-native-reset-install/grub-before.cfg",
+      "bytes": 1753,
+      "sha256": "5cc925334d3b9d783251dc6ae4c6950597e9415cef46d5102fbc0940bedce07a"
+    },
+    {
+      "path": "out/gfx-native-reset-install/grub-additive.cfg",
+      "bytes": 2116,
+      "sha256": "6226d9d7a62630608366a501b7dee92461101a4f8cf57523919a68fa1870e176"
+    },
+    {
+      "path": "out/gfx-native-reset-install/additive-entry.cfg",
+      "bytes": 363,
+      "sha256": "ca1479d70e5adb409f81b8ddca69aca4ec78e2473b26f09b887abb0503374425"
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-root-envelope/build-receipt.json",
+      "bytes": 22328,
+      "sha256": "96d5dda793adf700017b5e28b33b2ee6e2964ab058a08ec4bcdcdf68fbe7909e"
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/asc-graph-init/asc-graph-init.ko",
+      "bytes": 7944896,
+      "sha256": "51aeeab15ff4a369ce11717e24d7ba6507c176981eedfa3da61747b47959e432"
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/gfx-reset-preparation.json",
+      "bytes": 5035,
+      "sha256": "00eef76dc847947a7ff3c315c930f4d2e619e0181ca26e3b4126b97256019e65"
+    },
+    {
+      "path": "out/gfx-native-reset-owner/candidate/kernel.notes.bin",
+      "bytes": 84,
+      "sha256": "85c56f7a3d7409747dd67fe1dcbf8839562aafab16a9124f9304689a14de437d"
+    },
+    {
+      "path": "docs/evidence/2026-10-09-gfx-native-reset-api-review.json",
+      "bytes": 3226,
+      "sha256": "d0e559a4f19e9494bcc7b8bd15ec4e78bcb603983c3f4348de5329f7a3439dab"
+    },
+    {
+      "path": "docs/evidence/2026-10-09-gfx-native-reset-owner-integration-review.json",
+      "bytes": 3702,
+      "sha256": "4b0457f050dab074fba4c61a84efe0d280f0d9ce5f90e6885a370b4cbd7b7f56"
+    }
+  ]
+}

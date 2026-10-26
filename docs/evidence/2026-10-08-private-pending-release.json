@@ -1,0 +1,24 @@
+{
+  "binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "counts": {
+    "zero_release": 256,
+    "valid_release": 1280,
+    "old_zero_diagnostic": 256,
+    "underflow_characterization": 256,
+    "roundtrips": 128,
+    "native_publication_atomics": 2112
+  },
+  "slices": [
+    {
+      "start": "0xfffffe000895e1ac",
+      "end": "0xfffffe000895e1f8",
+      "sha256": "e4371d517d3ebebdb297de70a064ce07a89ae2ec0067d625b603ca98920ac3d2"
+    },
+    {
+      "start": "0xfffffe00089db5c0",
+      "end": "0xfffffe00089db5c8",
+      "sha256": "78d25f46ea8beea99db5b4174a36bb4a63efa3fd1073730ba1c9d744c2fd06d3"
+    }
+  ],
+  "qualification": "Native queue selection/status invalidation and LDADDAL decrement, full synthetic object preservation; zero old-count diagnostic entry only. Roundtrips execute isolated native publish atomic plus release slice, not full submit/complete. No firmware notification routing, concurrency, DMA, fences or live job retirement proved."
+}

@@ -1,0 +1,23 @@
+{
+  "schema": "m4rch-recovery-trace-off-c-replay-v1",
+  "hardware_access": false,
+  "source": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/asc-graph-init/recovery-cycle.h",
+  "source_sha256": "7e60090ced75ce1781272315de97f267b038ba9b4610f4fd8499d81332943630",
+  "contract": "/home/alice/Desktop/m4rch/out/recovery-dispatch/prepared/recovery-contract.h",
+  "contract_sha256": "9bce940061421a78fde0e509fdeba59a8c66c3d5ab32c4faf59dd613c14d4b23",
+  "test_sha256": "d192b4720211e39b4cfd21a203edb53400c892a60fd7ebf16fac753d246c86a2",
+  "functions": [
+    "recovery_cycles",
+    "recovery_trace_off",
+    "recovery_command_store"
+  ],
+  "output": [
+    "PASS trace-off preconditions, fresh lower/upper cursor bounds, last staged control128 and exact mask0/one-control mutation",
+    "PASS forced-copy failure and changed phase/request/idle/mask do not report trace disabled",
+    "PASS typed trace-off sealing, submit gate, sample/stop after failure, immutable draw publication and failure quarantine",
+    "PASS actual cycle-counter placement: accepted post-state plus fresh control consumption only",
+    "RAM C replay cases: 88"
+  ],
+  "replacement": "Only ARM cache-clean inline assembly replaced by no-op recorder; operation C extracted intact.",
+  "qualification": "Actual host helper/cycle/typed-handler logic with bounded RAM and stubbed transport. No GPU execution, scheduler, cache-coherence, notification-budget or backing-retirement proof."
+}

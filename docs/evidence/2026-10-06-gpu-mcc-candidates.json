@@ -1,0 +1,73 @@
+{
+  "source": "Current boot ADT, read-only capture",
+  "mcc_compatible": "mcc,t6041",
+  "raw_mcc_reg_pairs": [
+    {
+      "address": "0x302820000",
+      "size": "0x4000"
+    },
+    {
+      "address": "0x3004d0000",
+      "size": "0x149c"
+    },
+    {
+      "address": "0x6d500000",
+      "size": "0x8000"
+    },
+    {
+      "address": "0x6e500000",
+      "size": "0x8000"
+    },
+    {
+      "address": "0x6f500000",
+      "size": "0x8000"
+    },
+    {
+      "address": "0x70500000",
+      "size": "0x8000"
+    },
+    {
+      "address": "0x71500000",
+      "size": "0x8000"
+    },
+    {
+      "address": "0x72500000",
+      "size": "0x8000"
+    },
+    {
+      "address": "0x73500000",
+      "size": "0x8000"
+    },
+    {
+      "address": "0x74500000",
+      "size": "0x8000"
+    },
+    {
+      "address": "0x3003c0000",
+      "size": "0x4000"
+    },
+    {
+      "address": "0x3003d0000",
+      "size": "0x4000"
+    },
+    {
+      "address": "0x20000000",
+      "size": "0x2000000"
+    },
+    {
+      "address": "0x22000000",
+      "size": "0x2000000"
+    },
+    {
+      "address": "0x24000000",
+      "size": "0x2000000"
+    },
+    {
+      "address": "0x26000000",
+      "size": "0x2000000"
+    }
+  ],
+  "active_mcc_mask": "0xf",
+  "qualification": "Raw bus windows, not a qualified firmware MCC register mapping. Do not substitute into firmware builder without role and bus translation validation.",
+  "required_reference": "T6040 G16S initialized register-map/MCC slots, per-cluster masks and ladders, IRQ/mailbox roles and firmware version/payload identity."
+}

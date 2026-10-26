@@ -1,0 +1,45 @@
+{
+  "schema": "m4rch.native-scheduler-owner-qualification.v9",
+  "scenarios": 256,
+  "entry_transitions": 740,
+  "retirement_roundtrips": 256,
+  "duplicate_retirement_refusals": 256,
+  "wrong_owner_refusals": 256,
+  "underflow_refusals": 256,
+  "quarantined_write_refusals": 256,
+  "pins": [
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/g16_t6040_scheduler_owner_v9.rs",
+      "bytes": 4003,
+      "sha256": "f3bb92e94d86e8ddea9e1d8493f62709bea486155f48d2df85503c1b10c58f46"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/qualify_scheduler_owner_v9.py",
+      "bytes": 4666,
+      "sha256": "53ad8b83cb371d1fca451fed391892bf584c80e1c3bf56601ffbbea75bca9d9b"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/private_nop_header.py",
+      "bytes": 702,
+      "sha256": "740d95dd1c5c35afc5a3a7923f8ddc6b22e292a7fd4e8ba40006ed5f16d83455"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/private_scheduler_publish.py",
+      "bytes": 1013,
+      "sha256": "0aa4d721b65726b2ae030bdf67943e149bf1e1cc12efe29690bb05a0cfd7eb6d"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-08-private-scheduler-publish.json",
+      "bytes": 1352,
+      "sha256": "c93693af380a7a9adafb35830ec610d2b64c3e5c2032ea3cdb036675ab4a1425"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-08-private-pending-release.json",
+      "bytes": 996,
+      "sha256": "28ca9e5563d116cf7dd84dbfaf7ed345d21f564cffbf268681f1935c47255736"
+    }
+  ],
+  "hardware_actions": [],
+  "runtime_enabled": false,
+  "scope": "Compiled retained state/credit transitions with source-qualified independent timestamp/publish arithmetic, varying capacities and wrap slots. Reuses native accounting/retirement evidence; no fresh full-native caller oracle, DMA, concurrency or completion consumer proof."
+}

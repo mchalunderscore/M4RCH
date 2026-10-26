@@ -1,0 +1,1038 @@
+{
+  "schema": "m4rch.gfx-native-ap-repeat-cycle-independent-final-candidate-review.v1",
+  "review_passed": true,
+  "compiled_candidate_blockers": [],
+  "hardware_actions": [],
+  "live_reads": [],
+  "module_loads": [],
+  "build_actions": [],
+  "test_reruns": [],
+  "source_changes": [],
+  "candidate": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate",
+  "owner_sha256": "03dcc550f84121d0bfa539cae921f77a99af49168188287df8de2aa803df75e5",
+  "receipt_sha256": "f9c7fe03bbf0caf3e2d72acb722dc78288e0e2bd3d8ef1f5c987114fb14263e5",
+  "preparation_sha256": "176c3f2e4ea7c1ef8c4e0b20e5320803d4d5dae5a8a87c8ff44769467609d40f",
+  "selected_source_receipt_sha256": "bf52cabe10ab41df883c22907a9a66d4ff338cebc93b3d82d66ea5e27004ffa1",
+  "source_review_sha256": "db703f5abc383b37debbb0364b40b0f9d14d204ded00d5efc3e4264c9cfe6105",
+  "ELF": {
+    "class_": "ELF64",
+    "endian": "little",
+    "type": "ET_REL",
+    "machine": "AArch64",
+    "GNU_build_id": "7f24156fc1ff05032f9f5440227de37b6a500d0e",
+    "GNU_build_id_note_hex": "040000001400000003000000474e55007f24156fc1ff05032f9f5440227de37b6a500d0e",
+    "vermagic": "7.1.13-m4rch-gpu-native-reset SMP preempt mod_unload aarch64",
+    "parameters": [
+      "parmtype=observe_ms:uint",
+      "parmtype=release_on_shutdown:bool",
+      "parmtype=request_shutdown:bool",
+      "parmtype=resident_session:bool",
+      "parmtype=run_gate:uint",
+      "parmtype=warm_restart:bool"
+    ],
+    "imports": [
+      "                 U __free_pages",
+      "                 U __ioremap_prot",
+      "                 U __module_get",
+      "                 U __msecs_to_jiffies",
+      "                 U __pm_runtime_disable",
+      "                 U __pm_runtime_resume",
+      "                 U __pm_runtime_set_status",
+      "                 U __pm_runtime_suspend",
+      "                 U __release_region",
+      "                 U __request_region",
+      "                 U __stack_chk_fail",
+      "                 U _printk",
+      "                 U alloc_pages_noprof",
+      "                 U alt_cb_patch_nops",
+      "                 U apple_pmgr_t6040_gfx_snapshot",
+      "                 U arm64_use_ng_mappings",
+      "                 U bcmp",
+      "                 U cancel_delayed_work",
+      "                 U delayed_work_timer_fn",
+      "                 U iomem_resource",
+      "                 U iounmap",
+      "                 U jiffies",
+      "                 U kernel_kobj",
+      "                 U kobject_create_and_add",
+      "                 U kobject_put",
+      "                 U ktime_get",
+      "                 U memcpy",
+      "                 U memremap",
+      "                 U memset",
+      "                 U memstart_addr",
+      "                 U memunmap",
+      "                 U mutex_lock",
+      "                 U mutex_unlock",
+      "                 U of_address_to_resource",
+      "                 U of_device_is_available",
+      "                 U of_find_all_nodes",
+      "                 U of_find_node_opts_by_path",
+      "                 U of_genpd_add_device",
+      "                 U of_machine_compatible_match",
+      "                 U of_node_put",
+      "                 U of_property_read_string",
+      "                 U of_property_read_variable_u32_array",
+      "                 U param_ops_bool",
+      "                 U param_ops_uint",
+      "                 U platform_device_register_full",
+      "                 U platform_device_unregister",
+      "                 U pm_genpd_remove_device",
+      "                 U pm_runtime_enable",
+      "                 U queue_delayed_work_on",
+      "                 U region_intersects",
+      "                 U strcmp",
+      "                 U sysfs_create_bin_file",
+      "                 U sysfs_create_file_ns",
+      "                 U sysfs_remove_bin_file",
+      "                 U sysfs_streq",
+      "                 U system_percpu_wq",
+      "                 U usleep_range_state"
+    ],
+    "imports_unchanged_from_v11": true,
+    "exact_compiled_command_macro": "GFX_NATIVE_AP_REPEAT_CYCLE_TRIAL",
+    "compiled_E2_and_E3_command_strings": true,
+    "no_E4_command_string": true
+  },
+  "provenance": {
+    "final_artifact_pins_verified": 10,
+    "final_graph_source_pins_verified": 20,
+    "final_preparation_inputs_verified": 20,
+    "analysis_input_pins_verified": 2,
+    "all_selected_v5_source_bytes_equal_candidate": true,
+    "unchanged_baseline_artifacts": [
+      "adt-current/m4rch_gpu_adt.ko",
+      "sample-pagetables/gpu-data-sample.ko",
+      "root-text-sample/gpu-data-sample.ko",
+      "root-data-sample/gpu-data-sample.ko",
+      "arena-l2-sample/gpu-data-sample.ko",
+      "asc-root-envelope/asc-root-envelope.ko",
+      "asc-arena-preflight/asc-arena-preflight.ko",
+      "kernel-qualification.json",
+      "kernel.notes.bin"
+    ],
+    "graph_fixture_unchanged": true,
+    "graph_pages": 69,
+    "owned_pages_retained": 174,
+    "build_command_returncode": 0,
+    "LLVM": 1,
+    "W": 1,
+    "clean_selected_build_log": true,
+    "kernel_configuration_symvers_release_pins_unchanged": true,
+    "initial_missing_build_path_failure_preserved": true,
+    "root_validation_pin_verified": true
+  },
+  "final_contract": {
+    "family": "gfx_native_ap_repeat_cycle_scope",
+    "version": 12,
+    "maximum_epochs": 3,
+    "retained_epoch_ids": [
+      2,
+      3
+    ],
+    "commands": [
+      "sample",
+      "gfx-snapshot",
+      "gfx-powergate",
+      "gfx-native-ap-repeat-cycle",
+      "gfx-native-ap-repeat-third"
+    ],
+    "maximum_total_powergate_requests": 3,
+    "maximum_total_pm_puts": 3,
+    "maximum_per_retained_epoch_intents": 1,
+    "maximum_per_retained_epoch_pm_gets": 1,
+    "maximum_per_retained_epoch_pm_puts": 1,
+    "maximum_per_retained_epoch_requests": 1,
+    "application_rollcall_reply_bitmap": 0,
+    "application_rejoin_admitted": false,
+    "root_or_context_republication": false,
+    "triangle_publications": 0,
+    "refused_boots": [
+      "94cb4163-fc21-43ec-9489-07c54e549885",
+      "d841b8bf-bf1f-4499-9508-caf275909695",
+      "16868560-efd7-4c98-b58d-45cb88280d46",
+      "5bf0a178-e6d8-4def-8088-74ad7ea87727",
+      "96264748-b049-403f-9240-975716f71d0c",
+      "54e21e8f-b6f8-42cc-a5e5-e3f42831b870",
+      "df540c1c-5ec4-44f5-894c-37be6c2f3527",
+      "911ae710-78af-4702-8dfc-f4145decbd38"
+    ]
+  },
+  "saved_qualification": {
+    "C_path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/owner-qualification-v8.json",
+    "C_sha256": "68f5f2de51794d7c93cd6c4b077a4e023605b9266266db8b114290769ff99776",
+    "C_cases": 172,
+    "C_input_pins_verified": 43,
+    "C_maximum_new_log_row_bytes": 510,
+    "host_path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/wrapper-qualification-v2.json",
+    "host_sha256": "924d870f26bb69388c75ae581de50430ddac056d43aad9cb3a5603933fb0b385",
+    "host_cases": 378,
+    "host_input_pins_verified": 25,
+    "actual_cold_or_preflight_main_flows": 23,
+    "actual_resident_main_flows": 131,
+    "actual_emitted_E1_E2_E3_fixtures": [
+      {
+        "epoch": 1,
+        "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/owner-qualification-v8.epoch1.log",
+        "sha256": "9704df03d3aec0877f93191657706571401eddfec9cb4ac8da529a753d9d0951",
+        "bytes": 12772
+      },
+      {
+        "epoch": 2,
+        "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/owner-qualification-v8.epoch2.log",
+        "sha256": "f082d25426ae06c748c66092074e3f1ee0df266d281aef5b71a2c4cea28cb2a2",
+        "bytes": 37071
+      },
+      {
+        "epoch": 3,
+        "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/owner-qualification-v8.epoch3.log",
+        "sha256": "6e744f4ce6969a7040b58b09c03676e4154a06325de394e459391fc8265f924b",
+        "bytes": 37084
+      }
+    ],
+    "actual_C_log_parser_replay_recorded_by_saved_qualification": true,
+    "reviewer_parser_or_test_reruns": false,
+    "qualification_composition": {
+      "new_c_cases": 172,
+      "new_wrapper_cases": 378,
+      "frozen_v11_c_cases": 122,
+      "frozen_v11_wrapper_cases": 137,
+      "original_cases_repeated_by_finalizer": false
+    }
+  },
+  "current_boot_negative_preflight": {
+    "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/current-911a-preflight-refusal.log",
+    "sha256": "ff927a9787e73c5bce32ae72a2b7b8fa92d3d240a736983b20e07f8927a0d5c1",
+    "recorded_by": "root",
+    "reviewer_repeated": false,
+    "qualification": "Saved root refusal only; no reviewer live state inspection or control attempt."
+  },
+  "input_pins": [
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-10-gfx-native-ap-repeat-cycle-independent-source-review.json",
+      "bytes": 38213,
+      "sha256": "db703f5abc383b37debbb0364b40b0f9d14d204ded00d5efc3e4264c9cfe6105"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-10-gfx-native-ap-repeat-cycle-independent-source-review.md",
+      "bytes": 2001,
+      "sha256": "43144acee0ea191c4ae29a1408b5b1fd642dedb2ee2d0bd4cbe19911cb711899"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/prepared-owner-v5/native-ap-repeat-cycle-owner-source-receipt.json",
+      "bytes": 19790,
+      "sha256": "bf52cabe10ab41df883c22907a9a66d4ff338cebc93b3d82d66ea5e27004ffa1"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/owner-qualification-v8.json",
+      "bytes": 36616,
+      "sha256": "68f5f2de51794d7c93cd6c4b077a4e023605b9266266db8b114290769ff99776"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/wrapper-qualification-v2.json",
+      "bytes": 91899,
+      "sha256": "924d870f26bb69388c75ae581de50430ddac056d43aad9cb3a5603933fb0b385"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/gfx-native-ap-retained-cycle/test-native-ap-retained-cycle-owner.py",
+      "bytes": 23191,
+      "sha256": "30a202db12b322b058f284e165046c0c8ff93ac569e6bf0f922944b170c672e5"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/owner-qualification-v2.json",
+      "bytes": 32941,
+      "sha256": "aa875ccdecb07b2944dee2066a53d955b613582929e6e232581dd4b4b096d334"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/gfx-native-ap-repeat-cycle/test-native-ap-repeat-cycle-owner.py",
+      "bytes": 34557,
+      "sha256": "2a659f1e2539a3502064d4217adef6024ff9ad888ec6f0efd17e36a8806e4a7a"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/owner-qualification-v8.actual-owner.c",
+      "bytes": 66633,
+      "sha256": "d2792f638c42d4e454ace1f530f197c4d5879e7ea6a3e538180af25c95217541"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/owner-qualification-v8.tester.py",
+      "bytes": 34557,
+      "sha256": "2a659f1e2539a3502064d4217adef6024ff9ad888ec6f0efd17e36a8806e4a7a"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/owner-qualification-v8.success.log",
+      "bytes": 86927,
+      "sha256": "ad75b3c937755b299ccbc05ec8d7fe78ff607d094d073e1149cac0b15bbd7ede"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/owner-qualification-v8.epoch1.log",
+      "bytes": 12772,
+      "sha256": "9704df03d3aec0877f93191657706571401eddfec9cb4ac8da529a753d9d0951"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/owner-qualification-v8.epoch2.log",
+      "bytes": 37071,
+      "sha256": "f082d25426ae06c748c66092074e3f1ee0df266d281aef5b71a2c4cea28cb2a2"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/owner-qualification-v8.epoch3.log",
+      "bytes": 37084,
+      "sha256": "6e744f4ce6969a7040b58b09c03676e4154a06325de394e459391fc8265f924b"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/prepared-owner-v5/Makefile",
+      "bytes": 372,
+      "sha256": "b0cc97d2d15449ad46b85f87c97c9dd7fccfce77e8951371533e016fbac3eb3a"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/prepared-owner-v5/asc-graph-init.c",
+      "bytes": 25283,
+      "sha256": "5a11bc292aea507f570c5b118c8f665eae7ebd850e9c4a72c175b8f644ec5be3"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/prepared-owner-v5/backing.bin",
+      "bytes": 917504,
+      "sha256": "35112ef3c261673bda227a3867a0d2b9dd58ac89f35f7bba9c8c05f1dee118d3"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/prepared-owner-v5/boot-contract.h",
+      "bytes": 72,
+      "sha256": "5194505b49f3b40acdc80f29bf1e8c5c5f11374f483ed6a22df2c22ea904e082"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/prepared-owner-v5/command-pool-map.h",
+      "bytes": 8357,
+      "sha256": "1e4696787075de13a56f4946018221803a5a01a3c5a653bbbdbd48f319e74b6b"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/prepared-owner-v5/coordinate-owner-source-receipt.json",
+      "bytes": 6959,
+      "sha256": "3b911506a115c7d9218419b5c0c2691e75d41b94dfdf8e1462d0a577b975a263"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/prepared-owner-v5/execution-owner-source-receipt.json",
+      "bytes": 7242,
+      "sha256": "9c3af71b46eb0ebe956d4164125a57dcf280f64bbd1effca25d94abacdd2ca1d"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/prepared-owner-v5/gfx-coordinate-core.h",
+      "bytes": 8066,
+      "sha256": "b7a7376ab2a7e1b054e0338ce37efe035b85acaa6ba5072ed7231b6dcb245a95"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/prepared-owner-v5/gfx-coordinate-owner.h",
+      "bytes": 10444,
+      "sha256": "8703c7e342bad2e033b9a1e5b6bab8b55261bf44258abe6b6e84151f9e9241a5"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/prepared-owner-v5/gfx-reset-scope.h",
+      "bytes": 11615,
+      "sha256": "4a55eeaef2087838760f8533f0aef5b329dcb266f433981926bd931d61f63d1c"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/prepared-owner-v5/gfx-reset-startup.h",
+      "bytes": 684,
+      "sha256": "f33ff5251683d7bc2aaca7f6e559d6b95696b2f1524ff68a6ab8e82fab18aecd"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/prepared-owner-v5/graph-before.bin",
+      "bytes": 1130496,
+      "sha256": "287f2c53bc6ef7ed226c4a2995b9d9904e7623acae9713af105be6b04fc690a9"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/prepared-owner-v5/graph-contract.h",
+      "bytes": 24313,
+      "sha256": "f8c5a1536aa88ef7a1eb09b9a862cece4a2e822dd2eda54a449e6b3c11b20410"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/prepared-owner-v5/graph-map.h",
+      "bytes": 9974,
+      "sha256": "704836d10b86e3d2bcb20b457853a700a2153aae505b0aae473aea4daee7f13e"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/prepared-owner-v5/graph-receipt.json",
+      "bytes": 131999,
+      "sha256": "92771b8036464c8dc9bdadd1dd4e1458a6c5a9f95f87fbdac34696bd2b3af219"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/prepared-owner-v5/job-data.h",
+      "bytes": 13182,
+      "sha256": "c18ede083b691fbd3044237aaf30eb1e34c775e9391d3c6f1bea8e61561e0913"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/prepared-owner-v5/joined-context-init.h",
+      "bytes": 1849,
+      "sha256": "1851e697907d50a3f47d153879f47f1b6b07065f5d58055fa6269bc436bc15b2"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/prepared-owner-v5/native-status-owner-source-receipt.json",
+      "bytes": 7172,
+      "sha256": "5566c838e18f82335b4c8daded1d7e6a48d3b1729f9d7cc97bb4fb1b762b827b"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/prepared-owner-v5/preparation.json",
+      "bytes": 84712,
+      "sha256": "c22c59c0735c84554f954f581f94978894a9c78e87b6ec06f8f7ba8c763580db"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/prepared-owner-v5/receive-service.h",
+      "bytes": 3787,
+      "sha256": "bab356c9a2467fbb46760345102a7fb8369a9efe8db31efd058b1fd918b11043"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/prepared-owner-v5/recovery-contract.h",
+      "bytes": 1177,
+      "sha256": "9bce940061421a78fde0e509fdeba59a8c66c3d5ab32c4faf59dd613c14d4b23"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/prepared-owner-v5/recovery-cycle.h",
+      "bytes": 11472,
+      "sha256": "2fc59a9140a61bcc03b696cfebff5c541b7ea843a987db0fdf0837331a04975c"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/prepared-owner-v5/render-backing-map.h",
+      "bytes": 2541,
+      "sha256": "ade8cedde4da68f2f463ed8604f47ab6b56cdf1c8ff3984d592e00f4a065978b"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/prepared-owner-v5/render-data.h",
+      "bytes": 268144,
+      "sha256": "3bdbf04b9a3219c8e818beb464b5f55626e8a9b3d184680e3fd05a6361c47cbd"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/prepared-owner-v5/gfx-native-powergate-drain.h",
+      "bytes": 19472,
+      "sha256": "c78190846287b9f37ec0f45b2e9a09fff39df82b7a60f027ac4427157d35ce3e"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/prepared-owner-v5/powergate-drain-owner-source-receipt.json",
+      "bytes": 10723,
+      "sha256": "e55cf8f6bf8a5b8d979a567412cada0b1df38b5d7750183a34e448a38d9c39c1"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/prepared-owner-v5/retained-power-cycle-owner-source-receipt.json",
+      "bytes": 12787,
+      "sha256": "4f8288982b3d2e926cce11ebe800744ea92f668008e77600929d691319e3ec9a"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/prepared-owner-v5/native-retained-cycle-owner-source-receipt.json",
+      "bytes": 14202,
+      "sha256": "59ca87b903980cac6dc9c5ea4fa44d4a346f1f9737a083eff7c50d1b6b0a7b44"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/prepared-owner-v5/native-idle-cycle-owner-source-receipt.json",
+      "bytes": 14766,
+      "sha256": "313135beb0a845b461f07398a56072937c8e89f3771f161a30b6c1f13aaa7d5d"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/prepared-owner-v5/native-running-cycle-owner-source-receipt.json",
+      "bytes": 15985,
+      "sha256": "d5ed3909257d659816e2c23cebe43f72308aa0677efa3660b5e76758b56ee36d"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/prepared-owner-v5/native-ap-retained-cycle-owner-source-receipt.json",
+      "bytes": 17106,
+      "sha256": "f8cc352fce19be8a959fdd6c4a386360cbea746934d5cfa09defa09222faf9d1"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/prepared-owner-v5/gfx-native-ap-repeat-cycle.h",
+      "bytes": 72484,
+      "sha256": "bb139a3199f7835f6e198c26aead5ed1a908b840151228d691ad7910d36762a1"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/prepared-owner-v5/gfx-ap-repeat-cycle-coordinate.h",
+      "bytes": 6743,
+      "sha256": "90666252c4ce5e82a2463242e0931448dff32e70c1f21d31073c778287467433"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/gfx-native-ap-repeat-cycle/test-native-ap-repeat-runners.py",
+      "bytes": 25232,
+      "sha256": "82f0dc5cd7186258d85451477c4db6c63d1c5fe71f5f9fcd22affc02ab12bad0"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/gfx-native-ap-repeat-cycle/ap_repeat_cycle_wrapper.py",
+      "bytes": 1259,
+      "sha256": "a526540b0e83968042738908c880ba1a026831139bd9ff602d0d94e9cf088732"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/gfx-native-ap-repeat-cycle/gfx_native_ap_repeat_cycle_contract.py",
+      "bytes": 15148,
+      "sha256": "3d93c3b2230238dc33d72a63fb0a6699d74cda4a7673e35f1c4ed00d99049dff"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/gfx-native-ap-repeat-cycle/run-root-powergate.py",
+      "bytes": 859,
+      "sha256": "8bc63d9176897c40220bbf935128c162677b28645b35aba1179aa59435faa8a9"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/gfx-native-ap-repeat-cycle/run-powergate.py",
+      "bytes": 14460,
+      "sha256": "f4c20ab10035f6807be4344bf5c35cce07359288c449ba0c430599d740a703ab"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/gfx-native-ap-repeat-cycle/preflight-fresh.py",
+      "bytes": 749,
+      "sha256": "8f522005729550491a005a061b0ccb40c7ea51caeb66192ee1c431f81c2dfb04"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/gfx-native-ap-repeat-cycle/finalize-powergate.py",
+      "bytes": 16601,
+      "sha256": "8f5ae953662644b6fa0fb640ff747edb5a9709c0ef0cd742bed78c09c608a511"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-coordinate-native-status/candidate/asc-root-envelope/build-receipt.json",
+      "bytes": 25706,
+      "sha256": "2f45d761f1ba9a4b95bdb1a848c06aae9a47740cf4536ce39dc45dddd19ae29c"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/gfx-native-powergate/test-powergate-runners.py",
+      "bytes": 35279,
+      "sha256": "d500624756533c9ffe73a5045773766ba93dbcd3409f8921a69540477bb47711"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/gfx-native-coordinate-trial/test-coordinate-runners.py",
+      "bytes": 35443,
+      "sha256": "7a9f31d8aebc953f6ab8b24b797bb8b73fec61c3e60b607e3a17a642b525a0c3"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-reset-owner/candidate/asc-graph-init/boot-a1f61d61-b0ec-4475-948b-e3de2741e60b/boot.adt",
+      "bytes": 606208,
+      "sha256": "72f30734bb926e681fb1c759d03ad5230b2e21546f76aa7cf0a4fe190ccca0b2"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-coordinate-live/boot-493814fd-b859-42b5-b257-c0ac4960e8a1/linux-dt-current.json",
+      "bytes": 76430,
+      "sha256": "e2adc89815e82eba3b67b3d0b466d1c1d4a47ba94f7acbe18773403952de5759"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/wrapper-qualification-v1.json",
+      "bytes": 68057,
+      "sha256": "44a869162bbe382302b5f7dc78a77c084a9e90d4da1ff98051a072cf376c1686"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/resident-operations/20261010T101220.043342Z-gfx-powergate-3e63fc08/attempt.json",
+      "bytes": 35149,
+      "sha256": "8943b5545e3ee4a21774a357a05f4e264788e1ff4ae18ee89445c45eac491b1b"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/resident-operations/20261010T101220.043342Z-gfx-powergate-3e63fc08/dmesg-before.log",
+      "bytes": 131682,
+      "sha256": "e54dc514e7abc9246e0d37ead496dc3d12f2e8bb29cfa308723336e1a8ffc11a"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/resident-operations/20261010T101220.043342Z-gfx-powergate-3e63fc08/dmesg-after.log",
+      "bytes": 131422,
+      "sha256": "86ea0be5d318ccd62be8471db3412c2ed17a2b5fd8f38ab1b3490efe8f89f76e"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/resident-operations/20261010T101220.043342Z-gfx-powergate-3e63fc08/objects-after.bin",
+      "bytes": 1130496,
+      "sha256": "3ddfb4faf658490272b34cf69dc4abb8e7a85e7efde560c7d5751df1a0b4dbd5"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/resident-operations/20261010T101220.043342Z-gfx-powergate-3e63fc08/owned-after.bin",
+      "bytes": 2850816,
+      "sha256": "a1fb5e1c5bc16a2c4b5cb02fce84aded714d83b4dc5d4a1f64c17561a0054aa8"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/resident-operations/20261010T101220.043342Z-gfx-powergate-3e63fc08/notifications-after.bin",
+      "bytes": 5242944,
+      "sha256": "3d7167ba730cf7a533db61654dc6e13cc7a754deac2fb20d6ce05cab765200e8"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/resident-operations/20261010T101220.043342Z-gfx-powergate-3e63fc08/notifications-after.json",
+      "bytes": 15338140,
+      "sha256": "ac7e2b37513567d404b38482cb938d02c96de19568764eec330c2aa3691849d2"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/prepared-owner-v2/Makefile",
+      "bytes": 374,
+      "sha256": "82afb20c46a935fca42978504f2b3c8cf790ea8c2cefeff421f6320685ec86a6"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/prepared-owner-v2/asc-graph-init.c",
+      "bytes": 25206,
+      "sha256": "bc290b6aea00d43592ee1f98ba86e8c41240df4b714cbc1b2d2d32794adf32d1"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/prepared-owner-v2/backing.bin",
+      "bytes": 917504,
+      "sha256": "35112ef3c261673bda227a3867a0d2b9dd58ac89f35f7bba9c8c05f1dee118d3"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/prepared-owner-v2/boot-contract.h",
+      "bytes": 72,
+      "sha256": "5194505b49f3b40acdc80f29bf1e8c5c5f11374f483ed6a22df2c22ea904e082"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/prepared-owner-v2/command-pool-map.h",
+      "bytes": 8357,
+      "sha256": "1e4696787075de13a56f4946018221803a5a01a3c5a653bbbdbd48f319e74b6b"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/prepared-owner-v2/coordinate-owner-source-receipt.json",
+      "bytes": 6959,
+      "sha256": "3b911506a115c7d9218419b5c0c2691e75d41b94dfdf8e1462d0a577b975a263"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/prepared-owner-v2/execution-owner-source-receipt.json",
+      "bytes": 7242,
+      "sha256": "9c3af71b46eb0ebe956d4164125a57dcf280f64bbd1effca25d94abacdd2ca1d"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/prepared-owner-v2/gfx-coordinate-core.h",
+      "bytes": 8066,
+      "sha256": "b7a7376ab2a7e1b054e0338ce37efe035b85acaa6ba5072ed7231b6dcb245a95"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/prepared-owner-v2/gfx-coordinate-owner.h",
+      "bytes": 10259,
+      "sha256": "9798b26320e2b0f9b270da9b598f21e909cf037e58070154a6818ac6156601b4"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/prepared-owner-v2/gfx-reset-scope.h",
+      "bytes": 11319,
+      "sha256": "78cff00b01dfafa8f37c24cfc694b0da2b3233bbdc781777fd7be3f24abe893f"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/prepared-owner-v2/gfx-reset-startup.h",
+      "bytes": 684,
+      "sha256": "f33ff5251683d7bc2aaca7f6e559d6b95696b2f1524ff68a6ab8e82fab18aecd"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/prepared-owner-v2/graph-before.bin",
+      "bytes": 1130496,
+      "sha256": "287f2c53bc6ef7ed226c4a2995b9d9904e7623acae9713af105be6b04fc690a9"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/prepared-owner-v2/graph-contract.h",
+      "bytes": 24313,
+      "sha256": "f8c5a1536aa88ef7a1eb09b9a862cece4a2e822dd2eda54a449e6b3c11b20410"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/prepared-owner-v2/graph-map.h",
+      "bytes": 9974,
+      "sha256": "704836d10b86e3d2bcb20b457853a700a2153aae505b0aae473aea4daee7f13e"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/prepared-owner-v2/graph-receipt.json",
+      "bytes": 131999,
+      "sha256": "92771b8036464c8dc9bdadd1dd4e1458a6c5a9f95f87fbdac34696bd2b3af219"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/prepared-owner-v2/job-data.h",
+      "bytes": 13182,
+      "sha256": "c18ede083b691fbd3044237aaf30eb1e34c775e9391d3c6f1bea8e61561e0913"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/prepared-owner-v2/joined-context-init.h",
+      "bytes": 1849,
+      "sha256": "1851e697907d50a3f47d153879f47f1b6b07065f5d58055fa6269bc436bc15b2"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/prepared-owner-v2/native-status-owner-source-receipt.json",
+      "bytes": 7172,
+      "sha256": "5566c838e18f82335b4c8daded1d7e6a48d3b1729f9d7cc97bb4fb1b762b827b"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/prepared-owner-v2/preparation.json",
+      "bytes": 84712,
+      "sha256": "c22c59c0735c84554f954f581f94978894a9c78e87b6ec06f8f7ba8c763580db"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/prepared-owner-v2/receive-service.h",
+      "bytes": 3787,
+      "sha256": "bab356c9a2467fbb46760345102a7fb8369a9efe8db31efd058b1fd918b11043"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/prepared-owner-v2/recovery-contract.h",
+      "bytes": 1177,
+      "sha256": "9bce940061421a78fde0e509fdeba59a8c66c3d5ab32c4faf59dd613c14d4b23"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/prepared-owner-v2/recovery-cycle.h",
+      "bytes": 11332,
+      "sha256": "e357f18422a1851f36175091ae68f8b0171c99854c1eb839f4415968a6579ca4"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/prepared-owner-v2/render-backing-map.h",
+      "bytes": 2541,
+      "sha256": "ade8cedde4da68f2f463ed8604f47ab6b56cdf1c8ff3984d592e00f4a065978b"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/prepared-owner-v2/render-data.h",
+      "bytes": 268144,
+      "sha256": "3bdbf04b9a3219c8e818beb464b5f55626e8a9b3d184680e3fd05a6361c47cbd"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/prepared-owner-v2/gfx-native-powergate-drain.h",
+      "bytes": 19348,
+      "sha256": "f3f4429f6b372157cedcbcce1d29ef61ddaf8654fab2afabf035da8322152787"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/prepared-owner-v2/powergate-drain-owner-source-receipt.json",
+      "bytes": 10723,
+      "sha256": "e55cf8f6bf8a5b8d979a567412cada0b1df38b5d7750183a34e448a38d9c39c1"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/prepared-owner-v2/gfx-retained-power-cycle-coordinate.h",
+      "bytes": 3427,
+      "sha256": "d11e7a243b629dc834f5f986668bad1bd0e9eefb205d51a5c839f7d35fe90c23"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/prepared-owner-v2/retained-power-cycle-owner-source-receipt.json",
+      "bytes": 12787,
+      "sha256": "4f8288982b3d2e926cce11ebe800744ea92f668008e77600929d691319e3ec9a"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/prepared-owner-v2/native-retained-cycle-owner-source-receipt.json",
+      "bytes": 14202,
+      "sha256": "59ca87b903980cac6dc9c5ea4fa44d4a346f1f9737a083eff7c50d1b6b0a7b44"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/prepared-owner-v2/native-idle-cycle-owner-source-receipt.json",
+      "bytes": 14766,
+      "sha256": "313135beb0a845b461f07398a56072937c8e89f3771f161a30b6c1f13aaa7d5d"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/prepared-owner-v2/native-running-cycle-owner-source-receipt.json",
+      "bytes": 15985,
+      "sha256": "d5ed3909257d659816e2c23cebe43f72308aa0677efa3660b5e76758b56ee36d"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/prepared-owner-v2/gfx-native-ap-retained-cycle.h",
+      "bytes": 35716,
+      "sha256": "7bf2d260bdf38f8766b04a8e6811ca0354e1ead22d3452be5e38324cd5dff3f2"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/prepared-owner-v2/native-ap-retained-cycle-owner-source-receipt.json",
+      "bytes": 17106,
+      "sha256": "f8cc352fce19be8a959fdd6c4a386360cbea746934d5cfa09defa09222faf9d1"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/gfx-native-ap-repeat-cycle/prepare-native-ap-repeat-cycle-owner.py",
+      "bytes": 10575,
+      "sha256": "acbffaa8048bbc7384fc983d1d0d7e6a709b24b3a17a21bdf1f5de349eb2365b"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-10-gfx-native-ap-retained-cycle-repeatability-plan.json",
+      "bytes": 37151,
+      "sha256": "a421ff9b9d92d21dc34cf49ae924b312d0fc62fb1f2759a28a6da30f6d039901"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-10-gfx-native-ap-retained-cycle-live-native-boundary.json",
+      "bytes": 45863,
+      "sha256": "13f0e18aa8903c6ebbd6ea2fdd92c1b540265b79954dc5b128b814ea0370e024"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-10-gfx-native-ap-retained-cycle-live-outcome.json",
+      "bytes": 38646,
+      "sha256": "c113b50b63b187b995a3a4226ba796c0cd7c2bbde586aba03a11d6a71c9b3f9b"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/asc-graph-init/asc-graph-init.ko",
+      "bytes": 8087320,
+      "sha256": "03dcc550f84121d0bfa539cae921f77a99af49168188287df8de2aa803df75e5"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/asc-root-envelope/build-receipt.json",
+      "bytes": 33022,
+      "sha256": "f9c7fe03bbf0caf3e2d72acb722dc78288e0e2bd3d8ef1f5c987114fb14263e5"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/native-ap-repeat-cycle-preparation.json",
+      "bytes": 10267,
+      "sha256": "176c3f2e4ea7c1ef8c4e0b20e5320803d4d5dae5a8a87c8ff44769467609d40f"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/asc-graph-init/native-ap-repeat-cycle-owner-source-receipt.json",
+      "bytes": 19790,
+      "sha256": "bf52cabe10ab41df883c22907a9a66d4ff338cebc93b3d82d66ea5e27004ffa1"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/candidate/asc-root-envelope/build-receipt.json",
+      "bytes": 31662,
+      "sha256": "a8a24d16dc8ea0f6836b7a03697c55a4a60954de01bc663c756a49574bb4efb9"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/candidate/native-ap-retained-cycle-preparation.json",
+      "bytes": 9379,
+      "sha256": "89cb8e11c4ffeaa3865410d5a8550659bf340f986d6b626a354b1aeb83d67b9b"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/owner-build.log",
+      "bytes": 534,
+      "sha256": "d2ded478d1ceca38ae017cc5eaae823bc7dd442a429128cf27abc4275908656c"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/gfx-native-ap-repeat-cycle/gfx-native-ap-repeat-cycle.h",
+      "bytes": 72484,
+      "sha256": "bb139a3199f7835f6e198c26aead5ed1a908b840151228d691ad7910d36762a1"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/gfx-native-ap-repeat-cycle/gfx-ap-repeat-cycle-coordinate.h",
+      "bytes": 6743,
+      "sha256": "90666252c4ce5e82a2463242e0931448dff32e70c1f21d31073c778287467433"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/asc-graph-init/preparation.json",
+      "bytes": 84712,
+      "sha256": "c22c59c0735c84554f954f581f94978894a9c78e87b6ec06f8f7ba8c763580db"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/analysis-inputs/target-receipt.json",
+      "bytes": 6776,
+      "sha256": "c6008f792f60569d9ff186168c397a90b221586bd6f30cb6190647232441befa"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/adt-current/m4rch_gpu_adt.ko",
+      "bytes": 8784,
+      "sha256": "def441398eb34e1c4e23e5ccfa1676ae8e9980dd7d1611f8d34e4b53a404f9de"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/sample-pagetables/gpu-data-sample.ko",
+      "bytes": 7896,
+      "sha256": "d986ed773dd4a1b1e8ad1ee946d0f810743d5a209ced937bc458eeea913b4567"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/root-text-sample/gpu-data-sample.ko",
+      "bytes": 7896,
+      "sha256": "34343f515a083d36def91159f27adf83e493c6a787ea4691b782919eb40c6f0a"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/root-data-sample/gpu-data-sample.ko",
+      "bytes": 7936,
+      "sha256": "4c3bb5783f4d8164b817ee80ccb95f0e3cc8daf74d4041a03e9b03e0a708c25d"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/arena-l2-sample/gpu-data-sample.ko",
+      "bytes": 7896,
+      "sha256": "1c7f20511d02006fdea087775733856da64dc867ed6a5d5b784685a3bcb3765a"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/asc-root-envelope/asc-root-envelope.ko",
+      "bytes": 27304,
+      "sha256": "5f03da53d65581ab743ab445725279970684e80d8833bb3d1c72cea521614779"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/asc-arena-preflight/asc-arena-preflight.ko",
+      "bytes": 26408,
+      "sha256": "f03278368ac5a6487c7f8f043e94c72d4697b28e8965037443aef5e21f2ff220"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/kernel-qualification.json",
+      "bytes": 124518,
+      "sha256": "133370f18dc105e7fe310c4945073ad49b64b480e4ca828ced63289a7e34e0d2"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/kernel.notes.bin",
+      "bytes": 84,
+      "sha256": "85c56f7a3d7409747dd67fe1dcbf8839562aafab16a9124f9304689a14de437d"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/asc-graph-init/joined-context-init.h",
+      "bytes": 1849,
+      "sha256": "1851e697907d50a3f47d153879f47f1b6b07065f5d58055fa6269bc436bc15b2"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/asc-graph-init/graph-contract.h",
+      "bytes": 24313,
+      "sha256": "f8c5a1536aa88ef7a1eb09b9a862cece4a2e822dd2eda54a449e6b3c11b20410"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/asc-graph-init/render-data.h",
+      "bytes": 268144,
+      "sha256": "3bdbf04b9a3219c8e818beb464b5f55626e8a9b3d184680e3fd05a6361c47cbd"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/asc-graph-init/gfx-reset-scope.h",
+      "bytes": 11615,
+      "sha256": "4a55eeaef2087838760f8533f0aef5b329dcb266f433981926bd931d61f63d1c"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/asc-graph-init/recovery-contract.h",
+      "bytes": 1177,
+      "sha256": "9bce940061421a78fde0e509fdeba59a8c66c3d5ab32c4faf59dd613c14d4b23"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/asc-graph-init/receive-service.h",
+      "bytes": 3787,
+      "sha256": "bab356c9a2467fbb46760345102a7fb8369a9efe8db31efd058b1fd918b11043"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/asc-graph-init/job-data.h",
+      "bytes": 13182,
+      "sha256": "c18ede083b691fbd3044237aaf30eb1e34c775e9391d3c6f1bea8e61561e0913"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/asc-graph-init/gfx-reset-startup.h",
+      "bytes": 684,
+      "sha256": "f33ff5251683d7bc2aaca7f6e559d6b95696b2f1524ff68a6ab8e82fab18aecd"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/asc-graph-init/render-backing-map.h",
+      "bytes": 2541,
+      "sha256": "ade8cedde4da68f2f463ed8604f47ab6b56cdf1c8ff3984d592e00f4a065978b"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/asc-graph-init/command-pool-map.h",
+      "bytes": 8357,
+      "sha256": "1e4696787075de13a56f4946018221803a5a01a3c5a653bbbdbd48f319e74b6b"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/asc-graph-init/recovery-cycle.h",
+      "bytes": 11472,
+      "sha256": "2fc59a9140a61bcc03b696cfebff5c541b7ea843a987db0fdf0837331a04975c"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/asc-graph-init/graph-map.h",
+      "bytes": 9974,
+      "sha256": "704836d10b86e3d2bcb20b457853a700a2153aae505b0aae473aea4daee7f13e"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/asc-graph-init/boot-contract.h",
+      "bytes": 72,
+      "sha256": "5194505b49f3b40acdc80f29bf1e8c5c5f11374f483ed6a22df2c22ea904e082"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/asc-graph-init/asc-graph-init.c",
+      "bytes": 25283,
+      "sha256": "5a11bc292aea507f570c5b118c8f665eae7ebd850e9c4a72c175b8f644ec5be3"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/asc-graph-init/Makefile",
+      "bytes": 372,
+      "sha256": "b0cc97d2d15449ad46b85f87c97c9dd7fccfce77e8951371533e016fbac3eb3a"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/asc-graph-init/gfx-coordinate-core.h",
+      "bytes": 8066,
+      "sha256": "b7a7376ab2a7e1b054e0338ce37efe035b85acaa6ba5072ed7231b6dcb245a95"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/asc-graph-init/gfx-coordinate-owner.h",
+      "bytes": 10444,
+      "sha256": "8703c7e342bad2e033b9a1e5b6bab8b55261bf44258abe6b6e84151f9e9241a5"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/asc-graph-init/gfx-native-powergate-drain.h",
+      "bytes": 19472,
+      "sha256": "c78190846287b9f37ec0f45b2e9a09fff39df82b7a60f027ac4427157d35ce3e"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/asc-graph-init/gfx-native-ap-repeat-cycle.h",
+      "bytes": 72484,
+      "sha256": "bb139a3199f7835f6e198c26aead5ed1a908b840151228d691ad7910d36762a1"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/asc-graph-init/gfx-ap-repeat-cycle-coordinate.h",
+      "bytes": 6743,
+      "sha256": "90666252c4ce5e82a2463242e0931448dff32e70c1f21d31073c778287467433"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/asc-graph-init/backing.bin",
+      "bytes": 917504,
+      "sha256": "35112ef3c261673bda227a3867a0d2b9dd58ac89f35f7bba9c8c05f1dee118d3"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/asc-graph-init/coordinate-owner-source-receipt.json",
+      "bytes": 6959,
+      "sha256": "3b911506a115c7d9218419b5c0c2691e75d41b94dfdf8e1462d0a577b975a263"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/asc-graph-init/execution-owner-source-receipt.json",
+      "bytes": 7242,
+      "sha256": "9c3af71b46eb0ebe956d4164125a57dcf280f64bbd1effca25d94abacdd2ca1d"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/asc-graph-init/graph-before.bin",
+      "bytes": 1130496,
+      "sha256": "287f2c53bc6ef7ed226c4a2995b9d9904e7623acae9713af105be6b04fc690a9"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/asc-graph-init/graph-receipt.json",
+      "bytes": 131999,
+      "sha256": "92771b8036464c8dc9bdadd1dd4e1458a6c5a9f95f87fbdac34696bd2b3af219"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/asc-graph-init/native-status-owner-source-receipt.json",
+      "bytes": 7172,
+      "sha256": "5566c838e18f82335b4c8daded1d7e6a48d3b1729f9d7cc97bb4fb1b762b827b"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/asc-graph-init/powergate-drain-owner-source-receipt.json",
+      "bytes": 10723,
+      "sha256": "e55cf8f6bf8a5b8d979a567412cada0b1df38b5d7750183a34e448a38d9c39c1"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/asc-graph-init/retained-power-cycle-owner-source-receipt.json",
+      "bytes": 12787,
+      "sha256": "4f8288982b3d2e926cce11ebe800744ea92f668008e77600929d691319e3ec9a"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/asc-graph-init/native-retained-cycle-owner-source-receipt.json",
+      "bytes": 14202,
+      "sha256": "59ca87b903980cac6dc9c5ea4fa44d4a346f1f9737a083eff7c50d1b6b0a7b44"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/asc-graph-init/native-idle-cycle-owner-source-receipt.json",
+      "bytes": 14766,
+      "sha256": "313135beb0a845b461f07398a56072937c8e89f3771f161a30b6c1f13aaa7d5d"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/asc-graph-init/native-running-cycle-owner-source-receipt.json",
+      "bytes": 15985,
+      "sha256": "d5ed3909257d659816e2c23cebe43f72308aa0677efa3660b5e76758b56ee36d"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/asc-graph-init/native-ap-retained-cycle-owner-source-receipt.json",
+      "bytes": 17106,
+      "sha256": "f8cc352fce19be8a959fdd6c4a386360cbea746934d5cfa09defa09222faf9d1"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/candidate/asc-graph-init/.asc-graph-init.o.cmd",
+      "bytes": 88044,
+      "sha256": "676d4472a028abda4b6548381d6dac2eb94f80d11cd77b3c4008323b58cb1bcc"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/owner-build-command.json",
+      "bytes": 1301,
+      "sha256": "75d40bb90ddb78c3a41c23607ac21f15d37f6b3128a4a6e1eb44752695581900"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-reset-kernel/linux/Module.symvers",
+      "bytes": 1086123,
+      "sha256": "f6590f8f76c5fa0c48694e479024f0dc3a55c6b2eca1ae5239af8e67768f8fef"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-reset-kernel/linux/.config",
+      "bytes": 233002,
+      "sha256": "68d7b15ac25e1b8bd0230e92b94c29efdcba5421fd95848beee93c031f99641f"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-reset-kernel/linux/include/config/kernel.release",
+      "bytes": 30,
+      "sha256": "72182b196763b5fa6d302e77f67fd4aeb1eb15bde0413e2a43434907815ee9d2"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/owner-build-initial-path-refusal.log",
+      "bytes": 199,
+      "sha256": "e5a7b328e1b1c8676a798f689350fb77b839ced662c05330bb1812816fbde174"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/current-911a-preflight-refusal.log",
+      "bytes": 746,
+      "sha256": "ff927a9787e73c5bce32ae72a2b7b8fa92d3d240a736983b20e07f8927a0d5c1"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/root-prepared-validation.json",
+      "bytes": 12657,
+      "sha256": "826d5de2d38130cbef59710ee8729d1a023ce5451d26939906c09bd25bbb8eaf"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-10-gfx-native-ap-repeat-cycle-c-handoff.json",
+      "bytes": 7466,
+      "sha256": "2533aa8bb1b562bd69534d129a5c1a66abf8408af1398fd7e146cd458180053d"
+    }
+  ],
+  "qualification": "Bounded offline compiled artifact and saved provenance review passed. No hardware candidate load or live repeatability evidence is established. The sealed current v11 boot remains refused. A distinct v12 owner on one fresh boot may attempt E1 then separately owned E2 and E3 management cycles; no E4. Application rejoin, native application mask3/callback equivalence, initial class86 readiness, GPU work, pixels, writer retirement and safe unload remain unproved."
+}

@@ -1,0 +1,425 @@
+{
+  "schema": "m4rch.native-factory-leakage-offline-comparison.v10",
+  "hardware_actions": [],
+  "cases": [
+    {
+      "words": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_bits": {
+        "cluster_bits": [
+          1069547520,
+          1069547520
+        ],
+        "core_bits": [
+          1077936128,
+          1077936128
+        ],
+        "afr_bits": 1065353216,
+        "auxiliary_bits": 1069547520
+      },
+      "python_agrees": true
+    },
+    {
+      "words": [
+        4294967295,
+        4294967295,
+        4294967295,
+        4294967295,
+        4294967295
+      ],
+      "native_bits": {
+        "cluster_bits": [
+          1186988032,
+          1186988032
+        ],
+        "core_bits": [
+          1161822208,
+          1161822208
+        ],
+        "afr_bits": 1174405120,
+        "auxiliary_bits": 1170210816
+      },
+      "python_agrees": true
+    },
+    {
+      "words": [
+        3623442284,
+        3233874184,
+        1073930942,
+        2591480962,
+        769040915
+      ],
+      "native_bits": {
+        "cluster_bits": [
+          1182999808,
+          1183832320
+        ],
+        "core_bits": [
+          1155031040,
+          1155031040
+        ],
+        "afr_bits": 1124139008,
+        "auxiliary_bits": 1165176832
+      },
+      "python_agrees": true
+    },
+    {
+      "words": [
+        2922750355,
+        1316395673,
+        2506315093,
+        1934123981,
+        3694135076
+      ],
+      "native_bits": {
+        "cluster_bits": [
+          1170831360,
+          1177192448
+        ],
+        "core_bits": [
+          1150828544,
+          1150828544
+        ],
+        "afr_bits": 1171943424,
+        "auxiliary_bits": 1126989824
+      },
+      "python_agrees": true
+    },
+    {
+      "words": [
+        2539247754,
+        1238484447,
+        1761741958,
+        2224538350,
+        3880159215
+      ],
+      "native_bits": {
+        "cluster_bits": [
+          1183109632,
+          1183587328
+        ],
+        "core_bits": [
+          1156038656,
+          1156038656
+        ],
+        "afr_bits": 1158557696,
+        "auxiliary_bits": 1162602496
+      },
+      "python_agrees": true
+    },
+    {
+      "words": [
+        3822787236,
+        1636615947,
+        1983511883,
+        152951469,
+        1467152720
+      ],
+      "native_bits": {
+        "cluster_bits": [
+          1168106496,
+          1161373696
+        ],
+        "core_bits": [
+          1150066688,
+          1150066688
+        ],
+        "afr_bits": 1154252800,
+        "auxiliary_bits": 1169885184
+      },
+      "python_agrees": true
+    },
+    {
+      "words": [
+        2788986745,
+        352395274,
+        2237184082,
+        553325596,
+        1871585651
+      ],
+      "native_bits": {
+        "cluster_bits": [
+          1161410560,
+          1167439872
+        ],
+        "core_bits": [
+          1137246208,
+          1137246208
+        ],
+        "afr_bits": 1125187584,
+        "auxiliary_bits": 1145634816
+      },
+      "python_agrees": true
+    },
+    {
+      "words": [
+        3986678080,
+        3461361117,
+        3905543633,
+        1080021163,
+        64265602
+      ],
+      "native_bits": {
+        "cluster_bits": [
+          1183965952,
+          1176731648
+        ],
+        "core_bits": [
+          1161539584,
+          1161539584
+        ],
+        "afr_bits": 1157722112,
+        "auxiliary_bits": 1164728320
+      },
+      "python_agrees": true
+    },
+    {
+      "words": [
+        2154482103,
+        716707692,
+        2143431758,
+        928683878,
+        2965550069
+      ],
+      "native_bits": {
+        "cluster_bits": [
+          1180510208,
+          1134592000
+        ],
+        "core_bits": [
+          1156579328,
+          1156579328
+        ],
+        "afr_bits": 1172332544,
+        "auxiliary_bits": 1166475264
+      },
+      "python_agrees": true
+    },
+    {
+      "words": [
+        3162403418,
+        1877921562,
+        2881419264,
+        25235811,
+        2648361879
+      ],
+      "native_bits": {
+        "cluster_bits": [
+          1185647104,
+          1185609472
+        ],
+        "core_bits": [
+          1160790016,
+          1160790016
+        ],
+        "afr_bits": 1169899520,
+        "auxiliary_bits": 1167636480
+      },
+      "python_agrees": true
+    },
+    {
+      "words": [
+        1439481756,
+        1339048802,
+        3002852862,
+        638985062,
+        2862246688
+      ],
+      "native_bits": {
+        "cluster_bits": [
+          1178524160,
+          1182977536
+        ],
+        "core_bits": [
+          1157730304,
+          1157730304
+        ],
+        "afr_bits": 1157767168,
+        "auxiliary_bits": 1159776256
+      },
+      "python_agrees": true
+    },
+    {
+      "words": [
+        166130463,
+        4099630556,
+        2754597999,
+        211629134,
+        3229097519
+      ],
+      "native_bits": {
+        "cluster_bits": [
+          1185722368,
+          1173202944
+        ],
+        "core_bits": [
+          1157488640,
+          1157488640
+        ],
+        "afr_bits": 1163603968,
+        "auxiliary_bits": 1144332288
+      },
+      "python_agrees": true
+    },
+    {
+      "words": [
+        1891209688,
+        1767695687,
+        999684638,
+        4078451200,
+        2820013964
+      ],
+      "native_bits": {
+        "cluster_bits": [
+          1163278336,
+          1179170816
+        ],
+        "core_bits": [
+          1127481344,
+          1127481344
+        ],
+        "afr_bits": 1164390400,
+        "auxiliary_bits": 1170189312
+      },
+      "python_agrees": true
+    },
+    {
+      "words": [
+        1181389910,
+        1234786094,
+        514618650,
+        2548182991,
+        1872756620
+      ],
+      "native_bits": {
+        "cluster_bits": [
+          1165238272,
+          1167722496
+        ],
+        "core_bits": [
+          1159057408,
+          1159057408
+        ],
+        "afr_bits": 1162526720,
+        "auxiliary_bits": 1170189312
+      },
+      "python_agrees": true
+    },
+    {
+      "words": [
+        52780493,
+        4229238190,
+        88283996,
+        3744319844,
+        155632165
+      ],
+      "native_bits": {
+        "cluster_bits": [
+          1183626496,
+          1159137280
+        ],
+        "core_bits": [
+          1099956224,
+          1099956224
+        ],
+        "afr_bits": 1160278016,
+        "auxiliary_bits": 1167172608
+      },
+      "python_agrees": true
+    },
+    {
+      "words": [
+        1972587821,
+        1728851022,
+        582367409,
+        365655656,
+        51377395
+      ],
+      "native_bits": {
+        "cluster_bits": [
+          1181190656,
+          1182889216
+        ],
+        "core_bits": [
+          1121058816,
+          1121058816
+        ],
+        "afr_bits": 1153622016,
+        "auxiliary_bits": 1169670144
+      },
+      "python_agrees": true
+    },
+    {
+      "words": [
+        4007521659,
+        2073314206,
+        3563817731,
+        739902108,
+        1595779578
+      ],
+      "native_bits": {
+        "cluster_bits": [
+          1185167872,
+          1177708544
+        ],
+        "core_bits": [
+          1142931456,
+          1142931456
+        ],
+        "afr_bits": 1159864320,
+        "auxiliary_bits": 1165950976
+      },
+      "python_agrees": true
+    },
+    {
+      "words": [
+        3469775132,
+        2780497050,
+        1254597010,
+        3229231757,
+        3914045803
+      ],
+      "native_bits": {
+        "cluster_bits": [
+          1162700800,
+          1177668608
+        ],
+        "core_bits": [
+          1148731392,
+          1148731392
+        ],
+        "afr_bits": 1173100544,
+        "auxiliary_bits": 1164322816
+      },
+      "python_agrees": true
+    }
+  ],
+  "rust_and_python_match_native": true,
+  "native_span": [
+    "89e9974..89e9af0",
+    "89e9af0..89e9cb0"
+  ],
+  "input_policy": "synthetic arithmetic coverage; no actual hardware fuse values",
+  "source_pins": [
+    {
+      "path": "/boot/GPUC003/private-apple/com.apple.AGXG16X",
+      "bytes": 1566304,
+      "sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/qualify_factory_leakage_v10.py",
+      "bytes": 3845,
+      "sha256": "ce78294d8de692fd0e7070d29303197e8fa89b84fb553206afc527858a15c511"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/g16_t6040_factory_leakage_v10.rs",
+      "bytes": 2064,
+      "sha256": "e5055143faea5b067948527364b1199b59243cb5a33472df12131b52d1c70d1f"
+    }
+  ]
+}

@@ -1,0 +1,1355 @@
+{
+  "schema": "m4rch-recovery-progress-policy-live-v1",
+  "hardware_access": false,
+  "capture": "out/recovery-progress/candidate/asc-graph-init/boot-1730bf24-0823-4be9-a338-7e136762d076",
+  "boot_id": "1730bf24-0823-4be9-a338-7e136762d076",
+  "prior_capture": "out/gpc-rx-recovery/candidate/asc-graph-init/boot-bba7a8f2-e6d3-49b8-88ed-bc5be2d17c0a",
+  "prior_boot_id": "bba7a8f2-e6d3-49b8-88ed-bc5be2d17c0a",
+  "candidate_module_sha256": "37c5fb6313a52d94a8e932bfce8a34ba2d5b825194905ec4f4fb32ece4ecef39",
+  "firmware_normalized_sha256": "190cef1946a23dfbde180592629631c3b28d0509a17eb76108b7c9a52accd9ac",
+  "input_sha256": {
+    "attempt.json": "03f9c00791c4947382f60b641eaf8109a25137120e838b30806ed02d3ecea2aa",
+    "objects-before.bin": "5b8e184cf501747f0b985418f37d8dc999f4c936a42fbc1cc840de91fa8aba09",
+    "objects-after.bin": "6a3a9794abe70ad9e0e46543f7a109e37af50072616d06fc4c49fafd9dd5f14e",
+    "dmesg-before.log": "5944b123582e038bc8a8474a20a00607e87f86ce0ac2b2cb3900592ba9bea664",
+    "dmesg-after.log": "21cc46e512c0afc791a1c19fd1c8e9dc191e519de8037cfbffe2caf2a1718ed6",
+    "data-diagnostic.bin": "ff6e62d4e648370615d7ddb85d2459fe231b46dfddc42849b9f2853f7ab46462",
+    "data-diagnostic-receipt.json": "aaaf288e33f8e587b542c77643139c85bfe31b40a918f88eea0022adf0826356"
+  },
+  "layout_sha256": "135852d0b064f9c4605d8bc4170dfaef8e2da5f6f2a1d06264d3db57de9a46f9",
+  "native_policy_proof": {
+    "path": "docs/evidence/2026-10-09-periodic-power-policy.json",
+    "sha256": "ac0505775c7975bf4cdacfd7b95c30d4a7be847cb226c9670e5901a7418aae43",
+    "all_instruction_ranges_match_new_text": true
+  },
+  "field_comparison": {
+    "prior": {
+      "region_c": {
+        "0x30": {
+          "before": 0,
+          "after": 0
+        },
+        "0x9b8": {
+          "before": 0,
+          "after": 0
+        },
+        "0x9bc": {
+          "before": 0,
+          "after": 0
+        }
+      },
+      "status_a": {
+        "0x0": {
+          "before": 0,
+          "after": 0
+        }
+      },
+      "power": {
+        "0x4": {
+          "before": 200000,
+          "after": 200000
+        },
+        "0x8": {
+          "before": 200000,
+          "after": 200000
+        },
+        "0x38": {
+          "before": 0,
+          "after": 0
+        },
+        "0x78": {
+          "before": 0,
+          "after": 0
+        },
+        "0x63c8": {
+          "before": 0,
+          "after": 1
+        },
+        "0x652c": {
+          "before": 0,
+          "after": 1209
+        }
+      }
+    },
+    "current": {
+      "region_c": {
+        "0x30": {
+          "before": 0,
+          "after": 0
+        },
+        "0x9b8": {
+          "before": 2,
+          "after": 2
+        },
+        "0x9bc": {
+          "before": 40,
+          "after": 40
+        }
+      },
+      "status_a": {
+        "0x0": {
+          "before": 1,
+          "after": 1
+        }
+      },
+      "power": {
+        "0x4": {
+          "before": 200000,
+          "after": 200000
+        },
+        "0x8": {
+          "before": 200000,
+          "after": 200000
+        },
+        "0x38": {
+          "before": 0,
+          "after": 0
+        },
+        "0x78": {
+          "before": 0,
+          "after": 0
+        },
+        "0x63c8": {
+          "before": 0,
+          "after": 1
+        },
+        "0x652c": {
+          "before": 0,
+          "after": 1208
+        }
+      }
+    }
+  },
+  "recovery_comparison": {
+    "prior": {
+      "owned_state": {
+        "counter": 1,
+        "phase": 2,
+        "host_stop": 1,
+        "request_state": 0,
+        "request_flag": 1,
+        "control": [
+          32,
+          32,
+          32
+        ],
+        "pstate": 0,
+        "power78": 0,
+        "down_active": 1,
+        "up_count": 1209,
+        "work_roots": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "phase_trace": [
+        {
+          "cycle": 0,
+          "phase": "baseline",
+          "counter": 0,
+          "state": 0,
+          "host_stop": 0,
+          "request_state": 0,
+          "request_flag": 0,
+          "control": [
+            32,
+            32,
+            32
+          ]
+        },
+        {
+          "cycle": 1,
+          "phase": "pre",
+          "counter": 1,
+          "state": 1,
+          "host_stop": 1,
+          "request_state": 2,
+          "request_flag": 1,
+          "control": [
+            32,
+            32,
+            32
+          ]
+        },
+        {
+          "cycle": 1,
+          "phase": "final",
+          "counter": 1,
+          "state": 2,
+          "host_stop": 1,
+          "request_state": 0,
+          "request_flag": 1,
+          "control": [
+            32,
+            32,
+            32
+          ]
+        }
+      ],
+      "cycle_results": [
+        {
+          "completed": 0,
+          "requested": 2
+        }
+      ]
+    },
+    "current": {
+      "owned_state": {
+        "counter": 1,
+        "phase": 2,
+        "host_stop": 1,
+        "request_state": 0,
+        "request_flag": 1,
+        "control": [
+          32,
+          32,
+          32
+        ],
+        "pstate": 0,
+        "power78": 0,
+        "down_active": 1,
+        "up_count": 1208,
+        "work_roots": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "phase_trace": [
+        {
+          "cycle": 0,
+          "phase": "baseline",
+          "counter": 0,
+          "state": 0,
+          "host_stop": 0,
+          "request_state": 0,
+          "request_flag": 0,
+          "control": [
+            32,
+            32,
+            32
+          ]
+        },
+        {
+          "cycle": 1,
+          "phase": "pre",
+          "counter": 1,
+          "state": 1,
+          "host_stop": 1,
+          "request_state": 2,
+          "request_flag": 1,
+          "control": [
+            32,
+            32,
+            32
+          ]
+        },
+        {
+          "cycle": 1,
+          "phase": "final",
+          "counter": 1,
+          "state": 2,
+          "host_stop": 1,
+          "request_state": 0,
+          "request_flag": 1,
+          "control": [
+            32,
+            32,
+            32
+          ]
+        }
+      ],
+      "cycle_results": [
+        {
+          "completed": 0,
+          "requested": 2
+        }
+      ]
+    }
+  },
+  "startup_rate_comparison": {
+    "prior": {
+      "first_phase": "before-pre-ack",
+      "last_phase": "recovery-return",
+      "first_time": 300.19294,
+      "last_time": 305.193071,
+      "first_count": 600,
+      "last_count": 1201,
+      "delta": 601,
+      "elapsed_seconds": 5.0001309999999535,
+      "completions_per_second": 120.19685084250905,
+      "samples": [
+        {
+          "phase": "before-pre-ack",
+          "seconds": 300.19294,
+          "recovery_phase": 1,
+          "pstate": 1,
+          "power78": 1,
+          "down_active": 1,
+          "up_count": 600
+        },
+        {
+          "phase": "waiting-post",
+          "seconds": 300.291435,
+          "recovery_phase": 2,
+          "pstate": 0,
+          "power78": 0,
+          "down_active": 1,
+          "up_count": 612
+        },
+        {
+          "phase": "waiting-post",
+          "seconds": 301.292936,
+          "recovery_phase": 2,
+          "pstate": 0,
+          "power78": 0,
+          "down_active": 1,
+          "up_count": 733
+        },
+        {
+          "phase": "waiting-post",
+          "seconds": 302.291432,
+          "recovery_phase": 2,
+          "pstate": 0,
+          "power78": 0,
+          "down_active": 1,
+          "up_count": 852
+        },
+        {
+          "phase": "waiting-post",
+          "seconds": 303.29338,
+          "recovery_phase": 2,
+          "pstate": 0,
+          "power78": 0,
+          "down_active": 1,
+          "up_count": 973
+        },
+        {
+          "phase": "waiting-post",
+          "seconds": 304.291439,
+          "recovery_phase": 2,
+          "pstate": 0,
+          "power78": 0,
+          "down_active": 1,
+          "up_count": 1092
+        },
+        {
+          "phase": "recovery-return",
+          "seconds": 305.193071,
+          "recovery_phase": 2,
+          "pstate": 0,
+          "power78": 0,
+          "down_active": 1,
+          "up_count": 1201
+        }
+      ]
+    },
+    "current": {
+      "first_phase": "before-pre-ack",
+      "last_phase": "recovery-return",
+      "first_time": 131.890078,
+      "last_time": 136.889482,
+      "first_count": 600,
+      "last_count": 1201,
+      "delta": 601,
+      "elapsed_seconds": 4.999403999999998,
+      "completions_per_second": 120.21432954808218,
+      "samples": [
+        {
+          "phase": "before-pre-ack",
+          "seconds": 131.890078,
+          "recovery_phase": 1,
+          "pstate": 1,
+          "power78": 1,
+          "down_active": 1,
+          "up_count": 600
+        },
+        {
+          "phase": "waiting-post",
+          "seconds": 131.988073,
+          "recovery_phase": 2,
+          "pstate": 1,
+          "power78": 1,
+          "down_active": 1,
+          "up_count": 613
+        },
+        {
+          "phase": "waiting-post",
+          "seconds": 132.988404,
+          "recovery_phase": 2,
+          "pstate": 0,
+          "power78": 0,
+          "down_active": 1,
+          "up_count": 733
+        },
+        {
+          "phase": "waiting-post",
+          "seconds": 133.988684,
+          "recovery_phase": 2,
+          "pstate": 0,
+          "power78": 0,
+          "down_active": 1,
+          "up_count": 853
+        },
+        {
+          "phase": "waiting-post",
+          "seconds": 134.988954,
+          "recovery_phase": 2,
+          "pstate": 0,
+          "power78": 0,
+          "down_active": 1,
+          "up_count": 973
+        },
+        {
+          "phase": "waiting-post",
+          "seconds": 135.989234,
+          "recovery_phase": 2,
+          "pstate": 0,
+          "power78": 0,
+          "down_active": 1,
+          "up_count": 1093
+        },
+        {
+          "phase": "recovery-return",
+          "seconds": 136.889482,
+          "recovery_phase": 2,
+          "pstate": 0,
+          "power78": 0,
+          "down_active": 1,
+          "up_count": 1201
+        }
+      ]
+    },
+    "rate_difference_per_second": 0.017478705573125808,
+    "prior_post_window": {
+      "first_phase": "waiting-post",
+      "last_phase": "recovery-return",
+      "first_time": 300.291435,
+      "last_time": 305.193071,
+      "first_count": 612,
+      "last_count": 1201,
+      "delta": 589,
+      "elapsed_seconds": 4.901635999999996,
+      "completions_per_second": 120.16396158343876,
+      "samples": [
+        {
+          "phase": "waiting-post",
+          "seconds": 300.291435,
+          "recovery_phase": 2,
+          "pstate": 0,
+          "power78": 0,
+          "down_active": 1,
+          "up_count": 612
+        },
+        {
+          "phase": "waiting-post",
+          "seconds": 301.292936,
+          "recovery_phase": 2,
+          "pstate": 0,
+          "power78": 0,
+          "down_active": 1,
+          "up_count": 733
+        },
+        {
+          "phase": "waiting-post",
+          "seconds": 302.291432,
+          "recovery_phase": 2,
+          "pstate": 0,
+          "power78": 0,
+          "down_active": 1,
+          "up_count": 852
+        },
+        {
+          "phase": "waiting-post",
+          "seconds": 303.29338,
+          "recovery_phase": 2,
+          "pstate": 0,
+          "power78": 0,
+          "down_active": 1,
+          "up_count": 973
+        },
+        {
+          "phase": "waiting-post",
+          "seconds": 304.291439,
+          "recovery_phase": 2,
+          "pstate": 0,
+          "power78": 0,
+          "down_active": 1,
+          "up_count": 1092
+        },
+        {
+          "phase": "recovery-return",
+          "seconds": 305.193071,
+          "recovery_phase": 2,
+          "pstate": 0,
+          "power78": 0,
+          "down_active": 1,
+          "up_count": 1201
+        }
+      ]
+    },
+    "current_post_window": {
+      "first_phase": "waiting-post",
+      "last_phase": "recovery-return",
+      "first_time": 131.988073,
+      "last_time": 136.889482,
+      "first_count": 613,
+      "last_count": 1201,
+      "delta": 588,
+      "elapsed_seconds": 4.901408999999973,
+      "completions_per_second": 119.96550379697007,
+      "samples": [
+        {
+          "phase": "waiting-post",
+          "seconds": 131.988073,
+          "recovery_phase": 2,
+          "pstate": 1,
+          "power78": 1,
+          "down_active": 1,
+          "up_count": 613
+        },
+        {
+          "phase": "waiting-post",
+          "seconds": 132.988404,
+          "recovery_phase": 2,
+          "pstate": 0,
+          "power78": 0,
+          "down_active": 1,
+          "up_count": 733
+        },
+        {
+          "phase": "waiting-post",
+          "seconds": 133.988684,
+          "recovery_phase": 2,
+          "pstate": 0,
+          "power78": 0,
+          "down_active": 1,
+          "up_count": 853
+        },
+        {
+          "phase": "waiting-post",
+          "seconds": 134.988954,
+          "recovery_phase": 2,
+          "pstate": 0,
+          "power78": 0,
+          "down_active": 1,
+          "up_count": 973
+        },
+        {
+          "phase": "waiting-post",
+          "seconds": 135.989234,
+          "recovery_phase": 2,
+          "pstate": 0,
+          "power78": 0,
+          "down_active": 1,
+          "up_count": 1093
+        },
+        {
+          "phase": "recovery-return",
+          "seconds": 136.889482,
+          "recovery_phase": 2,
+          "pstate": 0,
+          "power78": 0,
+          "down_active": 1,
+          "up_count": 1201
+        }
+      ]
+    },
+    "meaning": "power+652c counts startup/init completions on both GPC paths, not completed recovery cycles"
+  },
+  "receive_comparison": {
+    "prior": {
+      "magic": 1481787213,
+      "version": 1,
+      "entry_bytes": 80,
+      "capacity": 65536,
+      "used": 8399,
+      "status_flags": 0,
+      "doorbells": 0,
+      "types": {
+        "17": 1200,
+        "25": 2400,
+        "28": 2400,
+        "27": 1199,
+        "18": 1200
+      },
+      "ring_ids": [
+        11
+      ],
+      "ring_wraps": 32,
+      "raw_sha256": "5dbbce8cda44b8879c01548dab08303f9ced8f3c7abb704edd6b2f2b2900e1bc",
+      "authoritative_records_sha256": "a9f8928e23b98bbe44d87b74ad9e250c8c12acb729b575802c697e80a11849b3",
+      "qualification": "8399 records across32wraps, allRX14stats and nativevalid; this workload verifies live consumer advancement and journal retention. Noevent/completionrecord orjobretirement."
+    },
+    "current": {
+      "header": {
+        "magic": 1481787213,
+        "version": 1,
+        "entry_bytes": 80,
+        "capacity": 65536,
+        "used": 17994,
+        "status_flags": 0,
+        "doorbells": 0
+      },
+      "ring_counts": {
+        "10": 9595,
+        "11": 8399
+      },
+      "trace_records": 9595,
+      "trace_role_counts": {
+        "0": 9594,
+        "4": 1
+      },
+      "authoritative_records_sha256": "24b92bffbf1349d9b6132608ec4cad56df6665101925d183636f871fb2cf3e6e"
+    }
+  },
+  "consumer_evidence": {
+    "initial_controls_consumed": 32,
+    "owned_native_idle_defaults_preserved": true,
+    "trace_bit0_preserved": true,
+    "new_type5_trace_visible": true,
+    "direct_runtime_DATA_snapshot_available": true,
+    "interpretation": "Control22 dispatch4b1c calls30a8 and clears its one-shot enable. Saved DATA now directly confirms trace mask18eecc bit0=1 and GPU/Fender mirrored2/40 at18ef78/18ef7c. Region_c+9c0 mirrors separately to18ef80=0. Cache qualification and late-snapshot chronology remain.",
+    "runtime_trace_mask_bit0": true,
+    "runtime_native_idle_defaults_verified": true
+  },
+  "conclusions": [
+    "Native region_c GPU/Fender idle defaults2/40ms were published unchanged, and32 initial force snapshots were consumed. Runtime power policy region_c+30 remains0.",
+    "The2/40ms correction did not resolve the observed recovery failure: counter1, phase2, host_stop1, request_state0, request_flag1 and0/2 completed match the prior boot.",
+    "Startup counter600\u21921201 over approximately5s is essentially unchanged at120/s in both boots; final owned counters differ by one(1208 versus1209). No causal attribution to an idle timeout or specific startup caller is established.",
+    "Tracing is now visibly active with9595 type5 records and8399 stats, journal status0. Trace roles are recorded numerically; marker interpretation and chronology belong to the separate progress audit.",
+    "The first phase2 power sample retains state1/1 here versus0/0 previously; later samples and final owned state are0/0 in both. Sequential sampling does not locate a firmware PC or prove physical startup/teardown.",
+    "Saved lateDATA directly confirms native2/40 mirrors18ef78/18ef7c andtracebit0. Periodic role0event46 reports reason-word13f018 acquire/release transitions;599 complete8/2/16/16/8/2 sequences identify a supported main-task path, not the earlierd2b4 caller. Late146908/146914=1/1 cannot attribute that earlier caller."
+  ],
+  "qualification": "Offline comparison of two separately rebooted captures with the same matched instruction contract. The new candidate combines idle-default correction, trace activation and a pre-ack journal drain boundary, so differences cannot isolate one cause. No hardware action, candidate edit, phase3 completion, repeatable teardown, triangle submission/rendering, retirement or firmware cache freshness is established by this evidence.",
+  "runtime_DATA_snapshot": {
+    "receipt": {
+      "boot_id": "1730bf24-0823-4be9-a338-7e136762d076",
+      "module_sha256": "fe9bc45978fc58dfc5584456c3bfa6f4c0c0fb66f9fc4ba806e69d8c86b90e2f",
+      "data_sha256": "ff6e62d4e648370615d7ddb85d2459fe231b46dfddc42849b9f2853f7ab46462",
+      "bytes": 1277952,
+      "base": "0x60000",
+      "monotonic_start": 364.451257046,
+      "monotonic_end": 364.462756331,
+      "qualification": "One read-only reserved firmware DATA snapshot after the traced phase2 failure. CPU cache invalidated; firmware private-cache writeback freshness unproven. No GPU command, root publication, main module unload or backing retirement."
+    },
+    "words": {
+      "0x13f018": 0,
+      "0x146908": 1,
+      "0x146914": 1,
+      "0x18e620": 1342177280,
+      "0x18e688": 2,
+      "0x18e858": 16777216,
+      "0x18eec8": 0,
+      "0x18eecc": 1,
+      "0x18eef8": 0,
+      "0x18ef78": 2,
+      "0x18ef7c": 40,
+      "0x18ef80": 0,
+      "0x18fc78": 1
+    },
+    "mirror_destinations": {
+      "region_c+0x9b8": "0x18ef78",
+      "region_c+0x9bc": "0x18ef7c",
+      "region_c+0x9c0": "0x18ef80"
+    },
+    "qualification": "Snapshot after the trial, at uptime364.451. CPU cache invalidated; firmware private-cache writeback freshness unproven. Late guard values do not identify the earlier startup caller."
+  },
+  "policy_proof_erratum": {
+    "original_pinned_proof": {
+      "path": "docs/evidence/2026-10-09-periodic-power-policy.json",
+      "sha256": "ac0505775c7975bf4cdacfd7b95c30d4a7be847cb226c9670e5901a7418aae43",
+      "preserved": true
+    },
+    "corrected_proof": {
+      "path": "docs/evidence/2026-10-09-periodic-power-policy-corrected.json",
+      "sha256": "0c87b23c668fd1b11b6ebc9d3880db142ea743f94427b8652d0afb0844f1f4de"
+    },
+    "audit_script": {
+      "path": "experiments/t6040-gpu/audit-periodic-power-policy.py",
+      "sha256": "fbc4a20244255aee7a0c9c0755c85df1d20736462398608a33cc7a3e97295d53"
+    },
+    "correction": "Historical prose mislabeled the Fender mirror destination18ef80. Actual31cc/31d0 destination is18eecc+b0=18ef7c. Original RAM checks already used contiguous2/40 at18ef78/18ef7c; only the prose label and omitted explicit7c snapshot field were wrong.18ef80 is region_c+9c0 early wake. Candidate region_c+9bc=40 and executed graphs/receipts are unchanged.",
+    "ram_checks": "15 fallback guards,8 counter cases,7 producer gates,6 native idle cases,1 mirror and2 complete control22 paths passed again with pinned native driverSHA."
+  },
+  "periodic_role0_event46": {
+    "journal_sha256": "3d05838d59b3d3318cbdb0cb7e51a03402fe7f6c07612e54478ec872accfb007",
+    "authoritative_records_sha256": "24b92bffbf1349d9b6132608ec4cad56df6665101925d183636f871fb2cf3e6e",
+    "role": 0,
+    "event": "0x46",
+    "function_type": 0,
+    "count": 8394,
+    "payload_meaning": [
+      "acquire(1)/release(0)",
+      "reason mask",
+      "resulting reason word13f018",
+      "zero"
+    ],
+    "reason_word_address": "0x13f018",
+    "main_event_word_address": "0x18e620",
+    "mutex_address": "0x18e3b0",
+    "main_task_entry": "0x3796c",
+    "mask_tuple_counts": [
+      {
+        "args": [
+          0,
+          2,
+          0,
+          0
+        ],
+        "count": 1199
+      },
+      {
+        "args": [
+          0,
+          4,
+          2,
+          0
+        ],
+        "count": 600
+      },
+      {
+        "args": [
+          0,
+          8,
+          2,
+          0
+        ],
+        "count": 599
+      },
+      {
+        "args": [
+          0,
+          16,
+          4,
+          0
+        ],
+        "count": 600
+      },
+      {
+        "args": [
+          0,
+          16,
+          6,
+          0
+        ],
+        "count": 600
+      },
+      {
+        "args": [
+          0,
+          16,
+          10,
+          0
+        ],
+        "count": 599
+      },
+      {
+        "args": [
+          1,
+          2,
+          6,
+          0
+        ],
+        "count": 600
+      },
+      {
+        "args": [
+          1,
+          2,
+          10,
+          0
+        ],
+        "count": 599
+      },
+      {
+        "args": [
+          1,
+          4,
+          4,
+          0
+        ],
+        "count": 600
+      },
+      {
+        "args": [
+          1,
+          8,
+          8,
+          0
+        ],
+        "count": 599
+      },
+      {
+        "args": [
+          1,
+          16,
+          20,
+          0
+        ],
+        "count": 600
+      },
+      {
+        "args": [
+          1,
+          16,
+          22,
+          0
+        ],
+        "count": 600
+      },
+      {
+        "args": [
+          1,
+          16,
+          26,
+          0
+        ],
+        "count": 599
+      }
+    ],
+    "six_tuple_pattern": [
+      [
+        1,
+        8,
+        8,
+        0
+      ],
+      [
+        1,
+        2,
+        10,
+        0
+      ],
+      [
+        1,
+        16,
+        26,
+        0
+      ],
+      [
+        0,
+        16,
+        10,
+        0
+      ],
+      [
+        0,
+        8,
+        2,
+        0
+      ],
+      [
+        0,
+        2,
+        0,
+        0
+      ]
+    ],
+    "complete_six_tuple_sequences": 599,
+    "first_complete_sequence": [
+      {
+        "sequence": 1,
+        "timestamp": 3600395772,
+        "args": [
+          1,
+          8,
+          8,
+          0
+        ]
+      },
+      {
+        "sequence": 2,
+        "timestamp": 3600396847,
+        "args": [
+          1,
+          2,
+          10,
+          0
+        ]
+      },
+      {
+        "sequence": 3,
+        "timestamp": 3600396975,
+        "args": [
+          1,
+          16,
+          26,
+          0
+        ]
+      },
+      {
+        "sequence": 4,
+        "timestamp": 3600397225,
+        "args": [
+          0,
+          16,
+          10,
+          0
+        ]
+      },
+      {
+        "sequence": 5,
+        "timestamp": 3600397507,
+        "args": [
+          0,
+          8,
+          2,
+          0
+        ]
+      },
+      {
+        "sequence": 13,
+        "timestamp": 3600798171,
+        "args": [
+          0,
+          2,
+          0,
+          0
+        ]
+      }
+    ],
+    "last_complete_sequence": [
+      {
+        "sequence": 7775,
+        "timestamp": 3720200961,
+        "args": [
+          1,
+          8,
+          8,
+          0
+        ]
+      },
+      {
+        "sequence": 7776,
+        "timestamp": 3720201638,
+        "args": [
+          1,
+          2,
+          10,
+          0
+        ]
+      },
+      {
+        "sequence": 7777,
+        "timestamp": 3720201712,
+        "args": [
+          1,
+          16,
+          26,
+          0
+        ]
+      },
+      {
+        "sequence": 7778,
+        "timestamp": 3720201806,
+        "args": [
+          0,
+          16,
+          10,
+          0
+        ]
+      },
+      {
+        "sequence": 7779,
+        "timestamp": 3720201956,
+        "args": [
+          0,
+          8,
+          2,
+          0
+        ]
+      },
+      {
+        "sequence": 7787,
+        "timestamp": 3720398353,
+        "args": [
+          0,
+          2,
+          0,
+          0
+        ]
+      }
+    ],
+    "periodic_timestamp_spacing": [
+      {
+        "mask": 8,
+        "count": 599,
+        "first": {
+          "sequence": 1,
+          "timestamp": 3600395772,
+          "args": [
+            1,
+            8,
+            8,
+            0
+          ]
+        },
+        "last": {
+          "sequence": 7775,
+          "timestamp": 3720200961,
+          "args": [
+            1,
+            8,
+            8,
+            0
+          ]
+        },
+        "timestamp_delta_ticks": {
+          "min": 196498,
+          "median": 199986.5,
+          "max": 404944
+        }
+      },
+      {
+        "mask": 4,
+        "count": 600,
+        "first": {
+          "sequence": 7792,
+          "timestamp": 3720461923,
+          "args": [
+            1,
+            4,
+            4,
+            0
+          ]
+        },
+        "last": {
+          "sequence": 17978,
+          "timestamp": 3840203461,
+          "args": [
+            1,
+            4,
+            4,
+            0
+          ]
+        },
+        "timestamp_delta_ticks": {
+          "min": 127167,
+          "median": 200005,
+          "max": 212788
+        }
+      },
+      {
+        "mask": 2,
+        "count": 1199,
+        "first": {
+          "sequence": 2,
+          "timestamp": 3600396847,
+          "args": [
+            1,
+            2,
+            10,
+            0
+          ]
+        },
+        "last": {
+          "sequence": 17983,
+          "timestamp": 3840204773,
+          "args": [
+            1,
+            2,
+            6,
+            0
+          ]
+        },
+        "timestamp_delta_ticks": {
+          "min": 127384,
+          "median": 199991.0,
+          "max": 404590
+        }
+      }
+    ],
+    "static_path": {
+      "mask8_acquire": "Main3796c;37cd4 OR13f018 with8,37d08 emits(1,8,word,0)",
+      "nested_mask2": "37d74 ->bc7c(0);c288..c294 ->15e60(0,0,0);15ea4 ->16340;16378 OR2,163b0 trace;163c4 ->1a994(0,0,1)",
+      "nested_mask16": "1abd4 OR16,1ac0c trace;1b1d8 clears16,1b230 trace",
+      "mask8_release": "37eb4 sets x24=8;38020 clears that mask and38074 traces(0,x24,word,0)",
+      "mask2_release": "15e60 w1!=0 path162cc..162d4 clears2 and1633c traces(0,2,word,0);records alone do not identify which of multiple15e60 callers supplied each release",
+      "hardware_gate": "When13f018 changes from zero/nonzero, helper32104 updates MMIO211c8 bit0. These service calls were not emulated."
+    },
+    "firmware_ranges": [
+      {
+        "start": "0x37990",
+        "end_exclusive": "0x379ac",
+        "sha256": "200bbf27c64880645ba02d24f8d90984d5b2de56d16472a89859cfe5234fac0f"
+      },
+      {
+        "start": "0x37c9c",
+        "end_exclusive": "0x37d0c",
+        "sha256": "fc9444c21d9d18b4b17c91e97fb11f768c1e8d0e8890f97b0ef60ecc8fe56079"
+      },
+      {
+        "start": "0x37d70",
+        "end_exclusive": "0x37d78",
+        "sha256": "b5dcb6266c18d6d520401366bfbbe48b214f0ee335c3d0af6eead8c3f6bb1333"
+      },
+      {
+        "start": "0xc288",
+        "end_exclusive": "0xc298",
+        "sha256": "ab4b30f2e5e6aa92c0687696cb128b50449d737c95545aaa09a19adcf4ce1e9a"
+      },
+      {
+        "start": "0x15e78",
+        "end_exclusive": "0x15ea8",
+        "sha256": "20db883ad68d3eef1672ae458fd6399797680d69c37a42d4a44547b8f5698a7e"
+      },
+      {
+        "start": "0x16340",
+        "end_exclusive": "0x163c8",
+        "sha256": "e9461b545ee7cde5911e744e4cf6b2550dc79a5bc55014d9e6f40e64fb0c490a"
+      },
+      {
+        "start": "0x1ab94",
+        "end_exclusive": "0x1ac10",
+        "sha256": "70a6c47940e751fdb617093d825d0cf3a4e01137dca79f28d1e4a3231c5502ff"
+      },
+      {
+        "start": "0x1b1bc",
+        "end_exclusive": "0x1b234",
+        "sha256": "5bf41da91ce812ecf589a2144f65c07d8579f54bf0315d2e583444037ea93a5f"
+      },
+      {
+        "start": "0x37eb4",
+        "end_exclusive": "0x37ebc",
+        "sha256": "cfdbfd13263cb9f1d684eea8d36af4f090b6ae82d8bf3a416f748b902ae9e406"
+      },
+      {
+        "start": "0x3800c",
+        "end_exclusive": "0x38078",
+        "sha256": "e41363e920c382ddd0df5a971972978e7203a839886b14e926da58e5782779ed"
+      },
+      {
+        "start": "0x162c8",
+        "end_exclusive": "0x16340",
+        "sha256": "808efda3486fb4e4f615db6c103e9e994992644cd3dbd4690694d81ef54f7327"
+      },
+      {
+        "start": "0x11dfc",
+        "end_exclusive": "0x11ec8",
+        "sha256": "5904d6d37840517b3bdb5ef4c6888de3080abf79a45ffa5a756c53ed07da2822"
+      }
+    ],
+    "RAM_slice_checks": [
+      {
+        "store_slice": [
+          "0x37cd0",
+          "0x37cdc"
+        ],
+        "payload_slice": [
+          "0x37cec",
+          "0x37d08"
+        ],
+        "args": [
+          1,
+          8,
+          8,
+          0
+        ],
+        "whole_DATA_matches_expected_single_word_change": true
+      },
+      {
+        "store_slice": [
+          "0x16374",
+          "0x16380"
+        ],
+        "payload_slice": [
+          "0x16398",
+          "0x163b0"
+        ],
+        "args": [
+          1,
+          2,
+          10,
+          0
+        ],
+        "whole_DATA_matches_expected_single_word_change": true
+      },
+      {
+        "store_slice": [
+          "0x1abd0",
+          "0x1abdc"
+        ],
+        "payload_slice": [
+          "0x1abf4",
+          "0x1ac0c"
+        ],
+        "args": [
+          1,
+          16,
+          26,
+          0
+        ],
+        "whole_DATA_matches_expected_single_word_change": true
+      },
+      {
+        "store_slice": [
+          "0x1b1d4",
+          "0x1b1e0"
+        ],
+        "payload_slice": [
+          "0x1b218",
+          "0x1b230"
+        ],
+        "args": [
+          0,
+          16,
+          10,
+          0
+        ],
+        "whole_DATA_matches_expected_single_word_change": true
+      },
+      {
+        "store_slice": [
+          "0x38014",
+          "0x38028"
+        ],
+        "payload_slice": [
+          "0x38058",
+          "0x38074"
+        ],
+        "args": [
+          0,
+          8,
+          2,
+          0
+        ],
+        "whole_DATA_matches_expected_single_word_change": true
+      },
+      {
+        "store_slice": [
+          "0x162cc",
+          "0x162d8"
+        ],
+        "payload_slice": [
+          "0x16310",
+          "0x16328"
+        ],
+        "args": [
+          0,
+          2,
+          0,
+          0
+        ],
+        "whole_DATA_matches_expected_single_word_change": true
+      }
+    ],
+    "d2b4_periodic_caller_identified": false,
+    "qualification": "Role0 event46 records validate the displayed reason-word values and are consistent with the pinned inline main-task call chain. They contain no PC, call stack, token or recovery phase. Some16 emitters and15e60 release callers are shared, so the full dynamic path is not uniquely proven. Whole DATA slice checks execute real saved instructions, excluding MMIO/mutex/trace delivery/fullcaller services. Tuple-spacing is in raw firmware timestamp ticks; no new clock-to-wall-time conversion or causal attribution to120/s startupcounter is claimed."
+  }
+}

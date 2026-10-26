@@ -1,0 +1,527 @@
+{
+  "binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "counts": {
+    "encoded": 96,
+    "guard": 2976,
+    "legacy_encoded": 1027
+  },
+  "function": {
+    "start": "0xfffffe0008a32588",
+    "end": "0xfffffe0008a32694",
+    "sha256": "7f39abc33a39447c894106d407cdc24d86373fc14a4881ba32875c7511ed0ad5"
+  },
+  "bindings": [
+    {
+      "vtable": "0xfffffe0007eba590",
+      "slot": "0x190",
+      "target": "0xfffffe0008a32588"
+    },
+    {
+      "vtable": "0xfffffe0007eace28",
+      "slot": "0x270",
+      "target": "0xfffffe00089dcad8"
+    }
+  ],
+  "lookup": [
+    0,
+    0,
+    0,
+    0,
+    4,
+    1,
+    0,
+    0,
+    5,
+    0,
+    2,
+    0,
+    6,
+    7,
+    0,
+    3
+  ],
+  "lookup_sha256": "c324a8d42714cfba44c05ebfd264eae292e09e371863e4ebc48931e8b8336236",
+  "examples": [
+    {
+      "aperture": 0,
+      "flags": "0x0",
+      "pte_flags": "0x80000000000c03"
+    },
+    {
+      "aperture": 0,
+      "flags": "0x1",
+      "pte_flags": "0x80000000000c43"
+    },
+    {
+      "aperture": 0,
+      "flags": "0x2",
+      "pte_flags": "0xa0000000000c43"
+    },
+    {
+      "aperture": 0,
+      "flags": "0x3",
+      "pte_flags": "0xc0000000000c43"
+    },
+    {
+      "aperture": 0,
+      "flags": "0x4",
+      "pte_flags": "0x80000000000c07"
+    },
+    {
+      "aperture": 0,
+      "flags": "0x5",
+      "pte_flags": "0x80000000000c47"
+    },
+    {
+      "aperture": 0,
+      "flags": "0x6",
+      "pte_flags": "0xa0000000000c47"
+    },
+    {
+      "aperture": 0,
+      "flags": "0x7",
+      "pte_flags": "0xc0000000000c47"
+    },
+    {
+      "aperture": 0,
+      "flags": "0x8",
+      "pte_flags": "0x80000000000c0b"
+    },
+    {
+      "aperture": 0,
+      "flags": "0x9",
+      "pte_flags": "0x80000000000c4b"
+    },
+    {
+      "aperture": 0,
+      "flags": "0xa",
+      "pte_flags": "0xa0000000000c4b"
+    },
+    {
+      "aperture": 0,
+      "flags": "0xb",
+      "pte_flags": "0xc0000000000c4b"
+    },
+    {
+      "aperture": 0,
+      "flags": "0x100",
+      "pte_flags": "0x80000000000c03"
+    },
+    {
+      "aperture": 0,
+      "flags": "0x101",
+      "pte_flags": "0xa0000000000c03"
+    },
+    {
+      "aperture": 0,
+      "flags": "0x102",
+      "pte_flags": "0x80000000000c03"
+    },
+    {
+      "aperture": 0,
+      "flags": "0x103",
+      "pte_flags": "0xe0000000000c43"
+    },
+    {
+      "aperture": 0,
+      "flags": "0x104",
+      "pte_flags": "0x80000000000c07"
+    },
+    {
+      "aperture": 0,
+      "flags": "0x105",
+      "pte_flags": "0xa0000000000c07"
+    },
+    {
+      "aperture": 0,
+      "flags": "0x106",
+      "pte_flags": "0x80000000000c07"
+    },
+    {
+      "aperture": 0,
+      "flags": "0x107",
+      "pte_flags": "0xe0000000000c47"
+    },
+    {
+      "aperture": 0,
+      "flags": "0x108",
+      "pte_flags": "0x80000000000c0b"
+    },
+    {
+      "aperture": 0,
+      "flags": "0x109",
+      "pte_flags": "0xa0000000000c0b"
+    },
+    {
+      "aperture": 0,
+      "flags": "0x10a",
+      "pte_flags": "0x80000000000c0b"
+    },
+    {
+      "aperture": 0,
+      "flags": "0x10b",
+      "pte_flags": "0xe0000000000c4b"
+    },
+    {
+      "aperture": 0,
+      "flags": "0x200",
+      "pte_flags": "0x80000000000c03"
+    },
+    {
+      "aperture": 0,
+      "flags": "0x201",
+      "pte_flags": "0x80000000000c03"
+    },
+    {
+      "aperture": 0,
+      "flags": "0x202",
+      "pte_flags": "0xc0000000000c03"
+    },
+    {
+      "aperture": 0,
+      "flags": "0x203",
+      "pte_flags": "0x80000000000c03"
+    },
+    {
+      "aperture": 0,
+      "flags": "0x204",
+      "pte_flags": "0x80000000000c07"
+    },
+    {
+      "aperture": 0,
+      "flags": "0x205",
+      "pte_flags": "0x80000000000c07"
+    },
+    {
+      "aperture": 0,
+      "flags": "0x206",
+      "pte_flags": "0xc0000000000c07"
+    },
+    {
+      "aperture": 0,
+      "flags": "0x207",
+      "pte_flags": "0x80000000000c07"
+    },
+    {
+      "aperture": 0,
+      "flags": "0x208",
+      "pte_flags": "0x80000000000c0b"
+    },
+    {
+      "aperture": 0,
+      "flags": "0x209",
+      "pte_flags": "0x80000000000c0b"
+    },
+    {
+      "aperture": 0,
+      "flags": "0x20a",
+      "pte_flags": "0xc0000000000c0b"
+    },
+    {
+      "aperture": 0,
+      "flags": "0x20b",
+      "pte_flags": "0x80000000000c0b"
+    },
+    {
+      "aperture": 0,
+      "flags": "0x300",
+      "pte_flags": "0x80000000000c03"
+    },
+    {
+      "aperture": 0,
+      "flags": "0x301",
+      "pte_flags": "0x80000000000c03"
+    },
+    {
+      "aperture": 0,
+      "flags": "0x302",
+      "pte_flags": "0x80000000000c03"
+    },
+    {
+      "aperture": 0,
+      "flags": "0x303",
+      "pte_flags": "0xe0000000000c03"
+    },
+    {
+      "aperture": 0,
+      "flags": "0x304",
+      "pte_flags": "0x80000000000c07"
+    },
+    {
+      "aperture": 0,
+      "flags": "0x305",
+      "pte_flags": "0x80000000000c07"
+    },
+    {
+      "aperture": 0,
+      "flags": "0x306",
+      "pte_flags": "0x80000000000c07"
+    },
+    {
+      "aperture": 0,
+      "flags": "0x307",
+      "pte_flags": "0xe0000000000c07"
+    },
+    {
+      "aperture": 0,
+      "flags": "0x308",
+      "pte_flags": "0x80000000000c0b"
+    },
+    {
+      "aperture": 0,
+      "flags": "0x309",
+      "pte_flags": "0x80000000000c0b"
+    },
+    {
+      "aperture": 0,
+      "flags": "0x30a",
+      "pte_flags": "0x80000000000c0b"
+    },
+    {
+      "aperture": 0,
+      "flags": "0x30b",
+      "pte_flags": "0xe0000000000c0b"
+    },
+    {
+      "aperture": 1,
+      "flags": "0x0",
+      "pte_flags": "0x80000000000403"
+    },
+    {
+      "aperture": 1,
+      "flags": "0x1",
+      "pte_flags": "0x80000000000443"
+    },
+    {
+      "aperture": 1,
+      "flags": "0x2",
+      "pte_flags": "0xa0000000000443"
+    },
+    {
+      "aperture": 1,
+      "flags": "0x3",
+      "pte_flags": "0xc0000000000443"
+    },
+    {
+      "aperture": 1,
+      "flags": "0x4",
+      "pte_flags": "0x80000000000407"
+    },
+    {
+      "aperture": 1,
+      "flags": "0x5",
+      "pte_flags": "0x80000000000447"
+    },
+    {
+      "aperture": 1,
+      "flags": "0x6",
+      "pte_flags": "0xa0000000000447"
+    },
+    {
+      "aperture": 1,
+      "flags": "0x7",
+      "pte_flags": "0xc0000000000447"
+    },
+    {
+      "aperture": 1,
+      "flags": "0x8",
+      "pte_flags": "0x8000000000040b"
+    },
+    {
+      "aperture": 1,
+      "flags": "0x9",
+      "pte_flags": "0x8000000000044b"
+    },
+    {
+      "aperture": 1,
+      "flags": "0xa",
+      "pte_flags": "0xa000000000044b"
+    },
+    {
+      "aperture": 1,
+      "flags": "0xb",
+      "pte_flags": "0xc000000000044b"
+    },
+    {
+      "aperture": 1,
+      "flags": "0x100",
+      "pte_flags": "0x80000000000403"
+    },
+    {
+      "aperture": 1,
+      "flags": "0x101",
+      "pte_flags": "0xa0000000000403"
+    },
+    {
+      "aperture": 1,
+      "flags": "0x102",
+      "pte_flags": "0x80000000000403"
+    },
+    {
+      "aperture": 1,
+      "flags": "0x103",
+      "pte_flags": "0xe0000000000443"
+    },
+    {
+      "aperture": 1,
+      "flags": "0x104",
+      "pte_flags": "0x80000000000407"
+    },
+    {
+      "aperture": 1,
+      "flags": "0x105",
+      "pte_flags": "0xa0000000000407"
+    },
+    {
+      "aperture": 1,
+      "flags": "0x106",
+      "pte_flags": "0x80000000000407"
+    },
+    {
+      "aperture": 1,
+      "flags": "0x107",
+      "pte_flags": "0xe0000000000447"
+    },
+    {
+      "aperture": 1,
+      "flags": "0x108",
+      "pte_flags": "0x8000000000040b"
+    },
+    {
+      "aperture": 1,
+      "flags": "0x109",
+      "pte_flags": "0xa000000000040b"
+    },
+    {
+      "aperture": 1,
+      "flags": "0x10a",
+      "pte_flags": "0x8000000000040b"
+    },
+    {
+      "aperture": 1,
+      "flags": "0x10b",
+      "pte_flags": "0xe000000000044b"
+    },
+    {
+      "aperture": 1,
+      "flags": "0x200",
+      "pte_flags": "0x80000000000403"
+    },
+    {
+      "aperture": 1,
+      "flags": "0x201",
+      "pte_flags": "0x80000000000403"
+    },
+    {
+      "aperture": 1,
+      "flags": "0x202",
+      "pte_flags": "0xc0000000000403"
+    },
+    {
+      "aperture": 1,
+      "flags": "0x203",
+      "pte_flags": "0x80000000000403"
+    },
+    {
+      "aperture": 1,
+      "flags": "0x204",
+      "pte_flags": "0x80000000000407"
+    },
+    {
+      "aperture": 1,
+      "flags": "0x205",
+      "pte_flags": "0x80000000000407"
+    },
+    {
+      "aperture": 1,
+      "flags": "0x206",
+      "pte_flags": "0xc0000000000407"
+    },
+    {
+      "aperture": 1,
+      "flags": "0x207",
+      "pte_flags": "0x80000000000407"
+    },
+    {
+      "aperture": 1,
+      "flags": "0x208",
+      "pte_flags": "0x8000000000040b"
+    },
+    {
+      "aperture": 1,
+      "flags": "0x209",
+      "pte_flags": "0x8000000000040b"
+    },
+    {
+      "aperture": 1,
+      "flags": "0x20a",
+      "pte_flags": "0xc000000000040b"
+    },
+    {
+      "aperture": 1,
+      "flags": "0x20b",
+      "pte_flags": "0x8000000000040b"
+    },
+    {
+      "aperture": 1,
+      "flags": "0x300",
+      "pte_flags": "0x80000000000403"
+    },
+    {
+      "aperture": 1,
+      "flags": "0x301",
+      "pte_flags": "0x80000000000403"
+    },
+    {
+      "aperture": 1,
+      "flags": "0x302",
+      "pte_flags": "0x80000000000403"
+    },
+    {
+      "aperture": 1,
+      "flags": "0x303",
+      "pte_flags": "0xe0000000000403"
+    },
+    {
+      "aperture": 1,
+      "flags": "0x304",
+      "pte_flags": "0x80000000000407"
+    },
+    {
+      "aperture": 1,
+      "flags": "0x305",
+      "pte_flags": "0x80000000000407"
+    },
+    {
+      "aperture": 1,
+      "flags": "0x306",
+      "pte_flags": "0x80000000000407"
+    },
+    {
+      "aperture": 1,
+      "flags": "0x307",
+      "pte_flags": "0xe0000000000407"
+    },
+    {
+      "aperture": 1,
+      "flags": "0x308",
+      "pte_flags": "0x8000000000040b"
+    },
+    {
+      "aperture": 1,
+      "flags": "0x309",
+      "pte_flags": "0x8000000000040b"
+    },
+    {
+      "aperture": 1,
+      "flags": "0x30a",
+      "pte_flags": "0x8000000000040b"
+    },
+    {
+      "aperture": 1,
+      "flags": "0x30b",
+      "pte_flags": "0xe000000000040b"
+    }
+  ],
+  "qualification": "Complete native generic AGXUnifiedAddressTranslator PTE encoder in emulated RAM, all0..1023 flag words and apertures0/1/2. Separately1027 actualLegacyG16 encoder calls and numeric vtable dispatch targets verified; the two encoders take different arguments. Native panic guards stopped before diagnostic. Lookup constant copied as numeric data, arithmetic independently modeled. This does not qualify translation from64-bit resource mapping API options to encoder inputs or actual mapping dispatch/cache behavior."
+}

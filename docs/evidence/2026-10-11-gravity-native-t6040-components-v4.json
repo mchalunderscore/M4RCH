@@ -1,0 +1,136 @@
+{
+  "schema": "m4rch.gravity-native-t6040-components.production-integration.v4",
+  "date": "2026-10-11",
+  "actual_producers": [
+    "Platform::native_region_c_component",
+    "Platform::region_c native component and full-object rejection",
+    "Existing native Platform::hwdata/FirmwareSpace and RootPointers publication retained"
+  ],
+  "validation": {
+    "pure_actual_rust_qualification_complete": true,
+    "actual_platform_region_c_methods_exercised": true,
+    "region_c_component_allocation_bytes_compared": 16384,
+    "native_region_c_logical_bytes": 3672,
+    "whole_hardware_component_bytes_compared": 9600,
+    "native_descriptors": 22,
+    "unique_mapped_pages": 126,
+    "writable_pages": 38,
+    "cluster_voltage_steps": 22,
+    "actual_root_serializer_bytes_compared": 200,
+    "test_adapter_scope": "Actual Platform methods use a standalone property/allocation adapter; root pointer test values are caller-supplied. Production pointer/mapping policy is not thereby qualified.",
+    "full_module_compiled_and_linked": true,
+    "make_returncode": 0,
+    "immutable_input_changes": [],
+    "immutable_source_files": 68
+  },
+  "linked_module": {
+    "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v4/build-owner/asahi_m4.ko",
+    "bytes": 403464,
+    "sha256": "c35b885dd647910ec64c34d4c83b65281ee3a13b35d4ca54d56899c54df7f73b"
+  },
+  "native_region_c_bindings": {
+    "logical_bytes": 3672,
+    "backing_bytes": 16384,
+    "child_offset": 0,
+    "initial_backing_zeroed": true,
+    "native_root_pointer_offset": "0x20",
+    "initial_u32_literal_fields": 23,
+    "initial_u8_literal_fields": 1,
+    "idle_defaults": {
+      "gpu": {
+        "offset": "0x9b8",
+        "value": 2
+      },
+      "fender": {
+        "offset": "0x9bc",
+        "value": 40
+      }
+    },
+    "property_policy": "Absent native properties select2/40; present opaque properties decode one validated four-byte LE word; setter override state is a separate owner.",
+    "native_raw_mapping_flags": "0x10800000005",
+    "native_to_linux_mapping_translation_qualified": false
+  },
+  "of_input_bridge": {
+    "installed": false,
+    "gpu": "gpu-idle-off-delay-ms -> apple,sgx-gpu-idle-off-delay-ms, raw LE bytes",
+    "fender": "gpu-fender-idle-off-delay-ms -> apple,sgx-gpu-fender-idle-off-delay-ms, raw LE bytes"
+  },
+  "pins": [
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/g16_t6040_region_c_v4.rs",
+      "bytes": 3208,
+      "sha256": "c184ac1d4334969e18c75d043091824e205214676f55c5852db32bddb2d7f5e7"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/stage_v4.py",
+      "bytes": 5468,
+      "sha256": "8924c9d0b77cdbc190d0cd1d075cf1fe7ceeded5834e421097f7328be6d32756"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/qualify_v4.py",
+      "bytes": 22974,
+      "sha256": "8af8de2dc50ed100ee4071a6144a725cca09bbacdeef69448b685d774ab7809b"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/build_module_v4.py",
+      "bytes": 5102,
+      "sha256": "d85b386d1f7bda1bd8bbb62a24813e9a13f3b7becc6d74bf136aa8bde22238bf"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/README-v4.md",
+      "bytes": 2175,
+      "sha256": "b8c645d14bf5893df2cc0a4fae2bf4735888c8f0cc304a2ff6065e22fa0d024d"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v4-source-evidence/native-region-c.json",
+      "bytes": 14426,
+      "sha256": "5edda30225b8a173ca73456aa49bb886318b466aeeca67fd7c9a8a807914dad8"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v4/stage-receipt.json",
+      "bytes": 18442,
+      "sha256": "aa776473971a27b5277ef613f108a4a9c74e260acbe410ee4037289c51646cc2"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v4/qualification-v1/qualification.json",
+      "bytes": 8504,
+      "sha256": "24c106533feaa83808ae8a7105b92beafec3b431edc0ea7f3b2328158b6df9f9"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v4/module-make-result.json",
+      "bytes": 593,
+      "sha256": "ff15cb314c3fb50f9b40c0a21fcac6301c34d587a34ab0e20a8e49b78d9bd52e"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v4/module-build-closure.json",
+      "bytes": 807,
+      "sha256": "8dd1d8349fb0c5a1ff144f126214bb524aed5d3c159918bf1337e3dc559a9610"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v4/offline-handoff.json",
+      "bytes": 4106,
+      "sha256": "910c6e7224707d556c68756a410ec8fce8fb2efff13b2e4d049a987c8aac32bf"
+    }
+  ],
+  "region_c_complete": false,
+  "normal_startup_enabled": false,
+  "complete_native_boot_bundle": false,
+  "module_loaded": false,
+  "kernel_rebuilt": false,
+  "hardware_actions": [],
+  "limitations": [
+    "Region C allocation and bounded initial fields are native bindings. Full Region C still rejects ENOTSUPP; native power/controller/callback fields and Linux mapping-policy translation remain unqualified.",
+    "Optional raw idle-property OF bridge is specified but not installed into a device tree.",
+    "Slot27 absence and descriptor flags for slots3/22/27/39/41 are native producer bindings. Other descriptor flags and Linux PTE permissions are explicit experimental selections from earlier consumers; MCC/MTR and the counter's second page remain read-only until native policy is bound.",
+    "Partial native hardware-data fields only; full bundle, root/channel/work-cursor/power providers still unimplemented and reject T6040.",
+    "No GPU memory publication, reset, queue execution or pixels."
+  ],
+  "remaining_region_c_inputs": [
+    "native power interface and nonconstant policy/timing/cluster fields",
+    "complete initial producer call graph and later callback writes",
+    "Region C e51 and other unqualified tail/input fields",
+    "native mapping flag translation to Linux UAT permission bits",
+    "live original-ADT property export bridge when a property is present"
+  ],
+  "private_binary_or_instruction_bytes_exported": false
+}

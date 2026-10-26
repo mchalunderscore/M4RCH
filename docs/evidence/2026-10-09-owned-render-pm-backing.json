@@ -1,0 +1,384 @@
+{
+  "boot_id": "8d5519d3-c1db-41a7-bb94-7c68e7ac0d10",
+  "kernel": "7.1.13-m4rch-gpu-contract",
+  "owned_pages": 158,
+  "owned_physical_pages_unique": true,
+  "render_pages": [
+    {
+      "index": 0,
+      "va": "0x10000000000",
+      "physical": "0x100bc088000",
+      "root_index": 16
+    },
+    {
+      "index": 1,
+      "va": "0x10000004000",
+      "physical": "0x100bc084000",
+      "root_index": 16
+    },
+    {
+      "index": 2,
+      "va": "0x10000008000",
+      "physical": "0x100bc080000",
+      "root_index": 16
+    },
+    {
+      "index": 3,
+      "va": "0x1000000c000",
+      "physical": "0x100bc07c000",
+      "root_index": 16
+    },
+    {
+      "index": 4,
+      "va": "0x10000010000",
+      "physical": "0x100bc078000",
+      "root_index": 16
+    },
+    {
+      "index": 5,
+      "va": "0x10000014000",
+      "physical": "0x100bc074000",
+      "root_index": 16
+    },
+    {
+      "index": 6,
+      "va": "0x10000018000",
+      "physical": "0x100bc070000",
+      "root_index": 16
+    },
+    {
+      "index": 7,
+      "va": "0x1000001c000",
+      "physical": "0x100bc06c000",
+      "root_index": 16
+    },
+    {
+      "index": 8,
+      "va": "0x10000020000",
+      "physical": "0x100bc068000",
+      "root_index": 16
+    },
+    {
+      "index": 9,
+      "va": "0x10000024000",
+      "physical": "0x100bc064000",
+      "root_index": 16
+    },
+    {
+      "index": 10,
+      "va": "0x10000028000",
+      "physical": "0x100bc060000",
+      "root_index": 16
+    },
+    {
+      "index": 11,
+      "va": "0x1000002c000",
+      "physical": "0x100bc05c000",
+      "root_index": 16
+    },
+    {
+      "index": 12,
+      "va": "0x10000030000",
+      "physical": "0x100bc058000",
+      "root_index": 16
+    },
+    {
+      "index": 13,
+      "va": "0x10000034000",
+      "physical": "0x100bc054000",
+      "root_index": 16
+    },
+    {
+      "index": 14,
+      "va": "0x10000038000",
+      "physical": "0x100bc050000",
+      "root_index": 16
+    },
+    {
+      "index": 15,
+      "va": "0x1000003c000",
+      "physical": "0x100bc04c000",
+      "root_index": 16
+    },
+    {
+      "index": 16,
+      "va": "0x10000040000",
+      "physical": "0x100bc048000",
+      "root_index": 16
+    },
+    {
+      "index": 17,
+      "va": "0x10000044000",
+      "physical": "0x100bc044000",
+      "root_index": 16
+    },
+    {
+      "index": 18,
+      "va": "0x10000048000",
+      "physical": "0x100bc040000",
+      "root_index": 16
+    },
+    {
+      "index": 19,
+      "va": "0x1000004c000",
+      "physical": "0x100bc03c000",
+      "root_index": 16
+    },
+    {
+      "index": 20,
+      "va": "0x2000010000",
+      "physical": "0x100bc038000",
+      "root_index": 2
+    },
+    {
+      "index": 21,
+      "va": "0x1000000000",
+      "physical": "0x100bc034000",
+      "root_index": 1
+    },
+    {
+      "index": 22,
+      "va": "0x1000040000",
+      "physical": "0x100bc030000",
+      "root_index": 1
+    },
+    {
+      "index": 23,
+      "va": "0x1000044000",
+      "physical": "0x100bc02c000",
+      "root_index": 1
+    },
+    {
+      "index": 24,
+      "va": "0x1000048000",
+      "physical": "0x100bc028000",
+      "root_index": 1
+    },
+    {
+      "index": 25,
+      "va": "0x100004c000",
+      "physical": "0x100bc024000",
+      "root_index": 1
+    },
+    {
+      "index": 26,
+      "va": "0x1000050000",
+      "physical": "0x100bc020000",
+      "root_index": 1
+    },
+    {
+      "index": 27,
+      "va": "0x1000054000",
+      "physical": "0x100bc01c000",
+      "root_index": 1
+    },
+    {
+      "index": 28,
+      "va": "0x1000058000",
+      "physical": "0x100bc018000",
+      "root_index": 1
+    },
+    {
+      "index": 29,
+      "va": "0x100005c000",
+      "physical": "0x100bc014000",
+      "root_index": 1
+    },
+    {
+      "index": 30,
+      "va": "0x1000060000",
+      "physical": "0x100bc010000",
+      "root_index": 1
+    },
+    {
+      "index": 31,
+      "va": "0x1000080000",
+      "physical": "0x100bc00c000",
+      "root_index": 1
+    },
+    {
+      "index": 32,
+      "va": "0x1000084000",
+      "physical": "0x100bc008000",
+      "root_index": 1
+    },
+    {
+      "index": 33,
+      "va": "0x1000088000",
+      "physical": "0x100bc004000",
+      "root_index": 1
+    },
+    {
+      "index": 34,
+      "va": "0x100008c000",
+      "physical": "0x100bc000000",
+      "root_index": 1
+    },
+    {
+      "index": 35,
+      "va": "0x1000090000",
+      "physical": "0x1000e038000",
+      "root_index": 1
+    },
+    {
+      "index": 36,
+      "va": "0x1000094000",
+      "physical": "0x10195224000",
+      "root_index": 1
+    },
+    {
+      "index": 37,
+      "va": "0x1000098000",
+      "physical": "0x10195e40000",
+      "root_index": 1
+    },
+    {
+      "index": 38,
+      "va": "0x100009c000",
+      "physical": "0x1003cd0c000",
+      "root_index": 1
+    },
+    {
+      "index": 39,
+      "va": "0x10000a0000",
+      "physical": "0x10096c8c000",
+      "root_index": 1
+    }
+  ],
+  "preparation": {
+    "shader_base": "0x10000000000",
+    "target_va": "0x2000010000",
+    "state_va": "0x1000000000",
+    "pages": 40,
+    "storage": [
+      {
+        "name": "native-ring-storage",
+        "va": "0x1000040000",
+        "logical_bytes": 131072,
+        "pages": 8,
+        "initialization": "zero allocation-only placeholder; native contents unqualified"
+      },
+      {
+        "name": "native-gtp-storage",
+        "va": "0x1000060000",
+        "logical_bytes": 13824,
+        "pages": 1,
+        "initialization": "zero allocation-only placeholder; native contents unqualified"
+      }
+    ],
+    "storage_profile_sha256": "e5ebabc13710ede72bfad991e5be3fa5412c74e291e042616051970137851612",
+    "extra_table_pages": 6,
+    "bytes": 655360,
+    "data_sha256": "e61dee949f59acaffd850a321c7e56f58ed60d4ce63205c891b748720042b830",
+    "header_sha256": "c00b3050e8078baaf4d57440fb2e175d31a1439b0410a74f29a2d0757bafda6e",
+    "target_receipt_sha256": "c6008f792f60569d9ff186168c397a90b221586bd6f30cb6190647232441befa",
+    "draw_receipt_sha256": "f450deb7fdb4ddabb3a6a5a8272f8bf4e2bba0875f4a183d65e42296d9f044e9",
+    "objects": [
+      {
+        "name": "usc",
+        "va": "0x10000000000",
+        "bytes": 327680,
+        "sha256": "0e81899ff189e071293afd62007ee99543115fd10d30a7343163098ff75e34bb"
+      },
+      {
+        "name": "target",
+        "va": "0x2000010000",
+        "bytes": 16384,
+        "sha256": "add4fa3e6dbfb8723b21cfe7debadbed5d5f2ca1ab88c666470daed16afbe21a"
+      },
+      {
+        "name": "draw-state",
+        "va": "0x1000000000",
+        "bytes": 16384,
+        "sha256": "49fe66ee5f53bd3a07365e9caf22e841b6dc85434ac4d017fdd8860a0ba74ede"
+      }
+    ],
+    "submission_ready": false,
+    "qualification": "Authored render backing plus native-derived ring/GTP allocation and parameter-block/page-list candidate. Native-written page prefix regenerated for candidate mapping; untouched random fixture bytes excluded. Parameter block initially zero allocation backing. State/scene/config/event/cache initialization, FW aliases, actual GPU lookup and complete work remain unproved. No publication.",
+    "pm_profile_sha256": "4109442a42d0596e0082ff3a0dc9d8eab572b90c08ce04ce4164ef49bb69a33b",
+    "candidate_vas": [
+      "0x10000000000",
+      "0x10000004000",
+      "0x10000008000",
+      "0x1000000c000",
+      "0x10000010000",
+      "0x10000014000",
+      "0x10000018000",
+      "0x1000001c000",
+      "0x10000020000",
+      "0x10000024000",
+      "0x10000028000",
+      "0x1000002c000",
+      "0x10000030000",
+      "0x10000034000",
+      "0x10000038000",
+      "0x1000003c000",
+      "0x10000040000",
+      "0x10000044000",
+      "0x10000048000",
+      "0x1000004c000",
+      "0x2000010000",
+      "0x1000000000",
+      "0x1000040000",
+      "0x1000044000",
+      "0x1000048000",
+      "0x100004c000",
+      "0x1000050000",
+      "0x1000054000",
+      "0x1000058000",
+      "0x100005c000",
+      "0x1000060000",
+      "0x1000080000",
+      "0x1000084000",
+      "0x1000088000",
+      "0x100008c000",
+      "0x1000090000",
+      "0x1000094000",
+      "0x1000098000",
+      "0x100009c000",
+      "0x10000a0000"
+    ],
+    "pm_backing": {
+      "parameter_block_va": "0x1000080000",
+      "parameter_block_bytes": 131072,
+      "page_list_va": "0x10000a0000",
+      "page_list_logical_bytes": 32,
+      "native_written_bytes": 16,
+      "frame_indices": [
+        2097168,
+        2097169,
+        2097170,
+        2097171
+      ],
+      "unwritten_page_list_bytes": "zero placeholder; unused-entry policy unqualified"
+    }
+  },
+  "publication": false,
+  "module_absent": true,
+  "qualification": "Linux-owned backing and CPU shadow-table walks for authored render data plus native-derived ring/GTP sizing fixtures. PM page-list prefix regenerated for candidate mapping; remaining allocation contents placeholders; native required contents, event/PM initialization and true topology unresolved. No GPU lookup, shader execution, job, completion or pixels.",
+  "build_hashes": {
+    "asc-graph-init.ko": "310eab9a9b01bfa68c2a57f510a5154efe37a9155a87d7e99afc976d677f1b76",
+    "render-backing-map.h": "c77206ac3401a6962c9db0f482f798f09114e6da36f3fc876d70a5d68715a4d6",
+    "job-data.h": "f25100cabcc6d6af49489bcbee5adc0b609e437e093a9baa8ccac0c3fb463c43",
+    "graph-map.h": "5fa2a6da431066f58251cc7fc3026129921de7f48eb4e894bcdbad310e3cb40b",
+    "graph-contract.h": "d38b4b70dcec25c3ce9d80367c18db7fdbb519cfcb27aaa8d86783cbdb3b779e",
+    "command-pool-map.h": "227312cb2ce09b77193a357ec960af6453b64bf2f71938cdda43d501a8a452f6",
+    "boot-contract.h": "5194505b49f3b40acdc80f29bf1e8c5c5f11374f483ed6a22df2c22ea904e082",
+    "asc-graph-init.c": "ce560056ab2c263876632033253f34a65c81d787577a0b4516d3b0919561d847",
+    "Makefile": "53a8d913a23b93c9aee15a2ca572d9d7da68e25d8b873daaa675d8b0a24dfdd8",
+    "render-data.h": "c00b3050e8078baaf4d57440fb2e175d31a1439b0410a74f29a2d0757bafda6e"
+  },
+  "native_initialized_retention_counts": {
+    "chains": 256,
+    "fresh_page_mappings": 256,
+    "descriptor_resources": 2304,
+    "page_entries": 1024,
+    "initializer_mode_one": 256,
+    "caller_bindings": 256,
+    "usage_event_service_calls": 512,
+    "uma_validations": 256,
+    "uma_usage_updates": 256,
+    "uma_descriptor_event_updates": 244,
+    "initialized_parameter_loads": 256
+  }
+}

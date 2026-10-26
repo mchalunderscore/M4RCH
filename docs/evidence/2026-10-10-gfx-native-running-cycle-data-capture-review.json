@@ -1,0 +1,157 @@
+{
+  "schema": "m4rch.gfx-native-running-cycle.saved-data-capture-review.v1",
+  "offline_only": true,
+  "hardware_actions": [],
+  "passed": true,
+  "boot_id": "df540c1c-5ec4-44f5-894c-37be6c2f3527",
+  "capture_sha256": "f802354348632c34e8f7bf422d0edb860059142c5018177cd56775c7b826da6d",
+  "capture_and_all13_inputs_verified": true,
+  "actual_capture_pins_including_receipt": 14,
+  "data_sha256": "7204e27e9cc9fd5f5a145378b050a062f5f33dc20ed651e7d3d2090ba30caded",
+  "data_bytes": 1277952,
+  "closed_output_set_exact": true,
+  "provenance": {
+    "selected_loader_sha256": "d13477425f45a89951948b9f31c993d78b33c2840a467b56151ed55015c5cd7b",
+    "selected_sampler_sha256": "4c3bb5783f4d8164b817ee80ccb95f0e3cc8daf74d4041a03e9b03e0a708c25d",
+    "same_frozen_owner": "c0dd4c7f939e328b83ede890216df099b1935a9af3b8e0bd3a7593213995a037",
+    "same_receipt_preparation_ADT_resource_contract": true,
+    "one_existing_sampler_load_recorded": true,
+    "normal_sampler_only_unload_result": 0,
+    "durable_exclusive_intent_before_load_by_selected_source": true,
+    "durable_closed_DATA_state_outputs_and_capture_by_selected_source": true,
+    "owner_note_ref1_checks_completed_by_guarded_loader": true,
+    "sampler_absence_checks_completed_by_guarded_loader": true,
+    "reviewer_independently_read_live_owner_or_sampler": false
+  },
+  "host_retention": {
+    "state_before_after_and_current_saved_state_byte_identical": true,
+    "state_sha256": "e2f280528a3420d05a7e9a7a718e104eb95c0058097b664e615a2b212633ea6c",
+    "both_management_intents_consumed": true,
+    "sealed_failed_uncertain_no_inflight_no_submit": true,
+    "no_GPU_owner_loaded_unloaded_or_controlled": true,
+    "private_sampler_exit_releases_only_sample_kobject_sysfs": true,
+    "joined174_backing_remains_owned_by_unchanged_owner_model": true,
+    "new_GPU_backing_retirement_or_release_proved": false
+  },
+  "bounded_content_observation": {
+    "target_address": "0x10001de4000",
+    "offset": "0xa0000",
+    "target4KiB_all_zero_in_preboot_sample": true,
+    "header_first32_hex": "45484c4303030000100900002008000000000000000000000000000000000000",
+    "header_first4_ascii": "EHLC",
+    "little_endian_u32_first8": [
+      "0x434c4845",
+      "0x303",
+      "0x910",
+      "0x820",
+      "0x0",
+      "0x0",
+      "0x0",
+      "0x0"
+    ],
+    "recorded_length_word": "0x910",
+    "recorded_length_fits_observed4KiB_extent": true,
+    "all_DATA_changed_bytes_from_preboot": 70107,
+    "DATA_changed16KiB_pages_from_preboot": 21,
+    "interpretation": "Header bytes and bounds are independently verified; structured exception sections and native crash semantics are decoded in sibling reports."
+  },
+  "limitations": [
+    "Loader success is established by the closed capture/source path and unchanged saved state; reviewer performs no live verification.",
+    "CPU cache invalidation does not establish firmware private-cache writeback freshness; initial physical copy is non-atomic.",
+    "Firmware could change reserved bytes during copying. Sysfs returns a private frozen copy made during init.",
+    "This capture adds no B20 reply, second202, checked CPU stop, paired OFF, PMput or fresh physical OFF proof.",
+    "Sampler-only private cleanup is distinct from GPU resource retirement; retained state remains sealed."
+  ],
+  "inputs": [
+    {
+      "path": "out/gfx-native-running-cycle/post-event-fw-data-df540/capture.json",
+      "bytes": 3717,
+      "sha256": "f802354348632c34e8f7bf422d0edb860059142c5018177cd56775c7b826da6d"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/root-data-sample/gpu-data-sample.ko",
+      "bytes": 7936,
+      "sha256": "4c3bb5783f4d8164b817ee80ccb95f0e3cc8daf74d4041a03e9b03e0a708c25d"
+    },
+    {
+      "path": "experiments/t6040-gpu/data-sample/gpu-data-sample.c",
+      "bytes": 3164,
+      "sha256": "98d1a73078f58277554662d8ed448d505d45a49da17f075163279215c06d93e9"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-root-envelope/build-receipt.json",
+      "bytes": 31449,
+      "sha256": "32b2ff0c647eae38a4f74486dc4f85793fdbfe478d60ab96555eb290d4564c65"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/native-running-cycle-preparation.json",
+      "bytes": 8634,
+      "sha256": "a2237389fa172c4f319c482df7ab9b58bbd551339ce690c8789ab2ae90a83303"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/boot.adt",
+      "bytes": 606208,
+      "sha256": "050bd113d5f18e13c64d78d070753793e22c1551a32b40d0c167b4815bc69d0a"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/attempt.json",
+      "bytes": 45839,
+      "sha256": "ed4d8fcc7664cd519abd425d981367fa932d4e7d6cc409451e7d9c8e596f1873"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/data-before.bin",
+      "bytes": 1277952,
+      "sha256": "3a5b8cc02d184f78c42df9bd0cb33c6645ee49b5e3e871c0d14b4535e87efd17"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/post-event-fw-data-df540/state-before.json",
+      "bytes": 6387,
+      "sha256": "e2f280528a3420d05a7e9a7a718e104eb95c0058097b664e615a2b212633ea6c"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/post-event-fw-data-df540/state-after.json",
+      "bytes": 6387,
+      "sha256": "e2f280528a3420d05a7e9a7a718e104eb95c0058097b664e615a2b212633ea6c"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/fresh-preflight.json",
+      "bytes": 2349,
+      "sha256": "8d957bf236bb65fe4304d71b55b6626d07f935772a0b96e59ba8114127129999"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/post-event-fw-data-df540/intent.json",
+      "bytes": 1629,
+      "sha256": "e6f6ca8ff6411cfe4b5d5af3506efc6ee399951586c61ceb9b04e5ce1d6422b9"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/post-event-fw-data-df540/data-after.bin",
+      "bytes": 1277952,
+      "sha256": "7204e27e9cc9fd5f5a145378b050a062f5f33dc20ed651e7d3d2090ba30caded"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/capture-fw-data-df540.py",
+      "bytes": 7339,
+      "sha256": "d13477425f45a89951948b9f31c993d78b33c2840a467b56151ed55015c5cd7b"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/state.json",
+      "bytes": 6387,
+      "sha256": "e2f280528a3420d05a7e9a7a718e104eb95c0058097b664e615a2b212633ea6c"
+    },
+    {
+      "path": "docs/evidence/2026-10-10-gfx-native-running-cycle-data-loader-independent-review.json",
+      "bytes": 17500,
+      "sha256": "8308d21cb4321468388945373c0632cc3bee9bbe4e82ce59cf23be3f6c691ad8"
+    },
+    {
+      "path": "docs/evidence/2026-10-10-gfx-native-running-cycle-data-sampler-static-review.json",
+      "bytes": 8007,
+      "sha256": "cca83d7d90394846b376a11ab7d04381f73cd011fde25b2a2405fcd49215e502"
+    },
+    {
+      "path": "docs/evidence/2026-10-10-gfx-native-running-cycle-live-terminal-review.json",
+      "bytes": 240556,
+      "sha256": "b37de85e26887dac1c3d45abb1ad2c45b42bf16fb951c7867620d2c33d0831c7"
+    }
+  ]
+}

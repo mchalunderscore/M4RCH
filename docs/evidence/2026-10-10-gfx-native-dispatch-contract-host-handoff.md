@@ -1,0 +1,7 @@
+The v15 host source is ready for parent finalization.35 essential cases and14 intercepted main flows passed, joined to the selected actual C fixture and immutable source receipt. The frozen v14 host51 and prior v13 qualifications compose without unchanged reruns. The selected report is out/gfx-native-dispatch-contract/host-qualification-v2.json.
+
+The parser binds the sole shared trace-mask0→3 restore after ready33 and before own sample0, with trace3 retained through draw/seal. The recipe check permits exactly the four selected native config getter bytes. No scheduler request/ACK intervention or inferred rendering success is admitted.
+
+The launcher saves full owner/output/journal/PNG and logs before interpreting their association, then independently captures fixed DATA and page tables. Loaded sampler GNU/ref0 and owner GNU/ref1/boot/kernel guard each capture/unload. Intent is durable before load/unload. Sampler custody or owner mismatch leaves the temporary sampler resident and stops the batch; failed reads preserve diagnostics without retry. Ambiguous logs still retain the complete raw captures. The analyzer carries the separately pinned RAM outcome, which proves neither IOP cache writeback nor currentPC.
+
+No hardware or frozen old source was changed by this agent. Parent owns finalization and the fresh-boot guide. The companionJSON pins current host source, passing qualification, C source/fixture joins, four-byte recipe and owner/PT build custody.

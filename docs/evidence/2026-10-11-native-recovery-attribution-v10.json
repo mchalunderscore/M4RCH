@@ -1,0 +1,44 @@
+{
+  "schema": "m4rch.native-recovery-attribution.v10",
+  "binding": "experiments/t6040-gpu/desktop-integration/t6040-native-boot/wire_native_recovery_attribution_v10.py",
+  "requires_binding_order": "After wire_native_application_generation_v10; teardown owns POST3 hook",
+  "native_sources": [
+    {
+      "method": "AGXArmFirmware::processFirmwareTACommandsRecovery",
+      "address": "0xfffffe00089c9d9c",
+      "scan_range": [
+        "0xfffffe00089c9e10",
+        "0xfffffe00089c9e58"
+      ],
+      "count": 256,
+      "stride": 8,
+      "qualification": "flags &9 ==9; exact stamp-index and value retain descriptor; performs TA resource work, not generic job cancellation"
+    },
+    {
+      "method": "AGXArmFirmware::processFirmwareInitiatedRecovery",
+      "address": "0xfffffe00089c9fb4",
+      "scan_range": [
+        "0xfffffe00089ca03c",
+        "0xfffffe00089ca074"
+      ],
+      "qualification": "valid bit0; stamp index flags bits4..10; value second u32; bit1/bit2 select recovery error metadata/callback details",
+      "error_branch_range": [
+        "0xfffffe00089ca0a0",
+        "0xfffffe00089ca12c"
+      ]
+    }
+  ],
+  "host_semantics": [
+    "Read support status_b+40b8 256x8 only with recovery-generation match and POST3",
+    "Retain every valid record, including unmatched identities",
+    "Correlate exact event index and stamp value to submitted native Flight stages",
+    "Return one EIO completion per attributed Flight to DRM issued/job error path",
+    "Keep Flight/VM/Work/notifier/scheduler/PM credits owned, including after application replacement"
+  ],
+  "does_not_claim": [
+    "Physical-page or scheduler-credit retirement",
+    "Successful firmware stamps",
+    "Apple TA backing restoration for unsupported optional resource ownership"
+  ],
+  "hardware_actions": []
+}

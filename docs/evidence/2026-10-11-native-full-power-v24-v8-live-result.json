@@ -1,0 +1,46 @@
+{
+  "schema": "m4rch.native-full-power-v24-v8-live-result.v1",
+  "boot_id": "ea0dd0a7-6a94-45ed-b0ca-7c85fa993df6",
+  "candidate_module_sha256": "ca7b96c72cf6c77e791e973505671bc1becab1108363f697d5de2d84007388be",
+  "admission_passed": true,
+  "power_initialization_completed": true,
+  "root_published": true,
+  "draw_submitted": false,
+  "changed_pixels": 0,
+  "gpu_execution_verified": false,
+  "OFF_attempted": false,
+  "retirement_verified": false,
+  "pages_retained": 176,
+  "PM_retained": true,
+  "owner_unloaded": false,
+  "host_failure": "cold-identity: GFX_COLD_PAGES174 while ARRAY_SIZE(owned)176",
+  "old_mismatch_reproduced_offline": true,
+  "next_action": "Build and qualify corrected source-derived owner count before selecting a fresh-boot trial",
+  "pins": [
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-full-power-trial-v24/candidate/asc-graph-init/boot-ea0dd0a7-6a94-45ed-b0ca-7c85fa993df6/attempt.json",
+      "bytes": 51763,
+      "sha256": "ce501cb718dc7832b63c4289b94f6d8f6c035744303b79b3c162156b56e013ac"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-full-power-trial-v24/candidate/asc-graph-init/boot-ea0dd0a7-6a94-45ed-b0ca-7c85fa993df6/analysis/result.json",
+      "bytes": 12492,
+      "sha256": "19ea4180b932887a030ebd1ec19c01c7027eeef68ea620f3e41e3f9eafb53636"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-full-power-trial-v24/candidate/asc-graph-init/boot-ea0dd0a7-6a94-45ed-b0ca-7c85fa993df6/cycle-attempt.json",
+      "bytes": 696,
+      "sha256": "d20e4c359812f35e417b23c866ffa323bfbe1a21260908878ec6c1bc03c80405"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-full-power-trial-v24/candidate/asc-graph-init/boot-ea0dd0a7-6a94-45ed-b0ca-7c85fa993df6/operation-delta.log",
+      "bytes": 95258,
+      "sha256": "a07c3f4628756554e70296d4a5c59c2be2b281b448927b186e7ae5732cadbab8"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-full-power-trial-v24/cold-identity-v9.json",
+      "bytes": 1201,
+      "sha256": "43f8efcbaa78d6a1669a58243cd622c0bf0da9c7368f78c5c932810587635839"
+    }
+  ]
+}

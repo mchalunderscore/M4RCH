@@ -1,0 +1,617 @@
+{
+  "schema": "m4rch.native-t6040-shared-v7.source.v1",
+  "macho": {
+    "path": "/boot/GPUC003/private-apple/com.apple.AGXG16X",
+    "bytes": 1566304,
+    "sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e"
+  },
+  "source_spans": [
+    {
+      "name": "support_27_children",
+      "start": "0x89ab988",
+      "end": "0x89abbd8",
+      "bytes": 592,
+      "sha256": "734dc4ddae02954c1eb56707661b09006ee0f688cd10fed58cf4e41cc2adbc36"
+    },
+    {
+      "name": "support_range8_allocation",
+      "start": "0x89abbb8",
+      "end": "0x89abc24",
+      "bytes": 108,
+      "sha256": "124225cf7748b34ed8366e06be6ebfadb79a848121990a6d8b210baa7ea51c0b"
+    },
+    {
+      "name": "native_alignment_loop",
+      "start": "0x89a7c70",
+      "end": "0x89a7cf4",
+      "bytes": 132,
+      "sha256": "48fc3de0a0c6b01a68db87ad686c777201dff134256bbbf9af52c4e06ccda001"
+    },
+    {
+      "name": "channel_pointer_producer",
+      "start": "0x89a9650",
+      "end": "0x89a9f5c",
+      "bytes": 2316,
+      "sha256": "7d9cc3f7fff8f5e25ecfaf0eb4a5541b9b576d9cd019d859e136e2233a77e69f"
+    },
+    {
+      "name": "DM_pointer_getters",
+      "start": "0x89b59bc",
+      "end": "0x89b5a08",
+      "bytes": 76,
+      "sha256": "d3b8a7c17a56d60b75c0c880a54252251b09d48674a64f398407d0e553a61667"
+    },
+    {
+      "name": "control_pointer_getters",
+      "start": "0x89b5870",
+      "end": "0x89b58bc",
+      "bytes": 76,
+      "sha256": "d3b8a7c17a56d60b75c0c880a54252251b09d48674a64f398407d0e553a61667"
+    },
+    {
+      "name": "shared_zero_and_header_initialization",
+      "start": "0x89a9b74",
+      "end": "0x89a9fac",
+      "bytes": 1080,
+      "sha256": "c1fecf0d5a80bd3a46bd67ca09c35593302a873bc8a95be87ea2899ec8de18e2"
+    },
+    {
+      "name": "native_shared_pointers",
+      "start": "0x89be47c",
+      "end": "0x89be7c8",
+      "bytes": 844,
+      "sha256": "473c95e34f5ae9bff87ce1dd1895d9a331596d553bc4c4eaf2921c54bc4d6b62"
+    },
+    {
+      "name": "root_native_bindings",
+      "start": "0x89cd914",
+      "end": "0x89cdc4c",
+      "bytes": 824,
+      "sha256": "53378a553ddf4d747a7066e1880861fa29e832082835d81051098d3b1b168177"
+    },
+    {
+      "name": "prepareFirmwareForBoot",
+      "start": "0x89ca4c8",
+      "end": "0x89ca56c",
+      "bytes": 164,
+      "sha256": "36818d22cf9af327f996520364552073f0200da121cad2567ac65f0ef1732809"
+    },
+    {
+      "name": "selected_G16X_a88_noop",
+      "start": "0x89ea1c4",
+      "end": "0x89ea1cc",
+      "bytes": 8,
+      "sha256": "d33fdb74881bcff46b1cf4fc3e20479b1882e0e683789e80e6d650554066a1aa"
+    },
+    {
+      "name": "native_init_record_setters",
+      "start": "0x89d1694",
+      "end": "0x89d181c",
+      "bytes": 392,
+      "sha256": "14f673ada6dac60e130258e302f6a314c09b01137c5df4579361bcd9f163b33d"
+    },
+    {
+      "name": "rx_validator_initialization",
+      "start": "0x89ad000",
+      "end": "0x89ad168",
+      "bytes": 360,
+      "sha256": "1a6cdcf8c68a06b972477f1c5e09864940799ead66e43900b9752278498b3f31"
+    },
+    {
+      "name": "native_status_initialization",
+      "start": "0x89aa0f8",
+      "end": "0x89aa14c",
+      "bytes": 84,
+      "sha256": "c768da7b0054c3f75bb9ed255258d970c3507e8aeef8f6bebcfce1cb894bb4d2"
+    },
+    {
+      "name": "AONPTD_allocation_descriptor",
+      "start": "0x89abca8",
+      "end": "0x89abd2c",
+      "bytes": 132,
+      "sha256": "ec54018ac5c28372f25c5210bc67e9b300367cd9d6fea76bd07518ecbe271ffd"
+    }
+  ],
+  "support_children": [
+    {
+      "index": 0,
+      "cpu_owner": "0x430",
+      "mapping_owner": "0x438",
+      "bytes": 48,
+      "offset": 0
+    },
+    {
+      "index": 1,
+      "cpu_owner": "0x408",
+      "mapping_owner": "0x410",
+      "bytes": 48,
+      "offset": 64
+    },
+    {
+      "index": 2,
+      "cpu_owner": "0x3e0",
+      "mapping_owner": "0x3e8",
+      "bytes": 48,
+      "offset": 128
+    },
+    {
+      "index": 3,
+      "cpu_owner": "0x3b8",
+      "mapping_owner": "0x3c0",
+      "bytes": 48,
+      "offset": 192
+    },
+    {
+      "index": 4,
+      "cpu_owner": "0x4d0",
+      "mapping_owner": "0x4d8",
+      "bytes": 48,
+      "offset": 256
+    },
+    {
+      "index": 5,
+      "cpu_owner": "0x4a8",
+      "mapping_owner": "0x4b0",
+      "bytes": 48,
+      "offset": 320
+    },
+    {
+      "index": 6,
+      "cpu_owner": "0x480",
+      "mapping_owner": "0x488",
+      "bytes": 48,
+      "offset": 384
+    },
+    {
+      "index": 7,
+      "cpu_owner": "0x458",
+      "mapping_owner": "0x460",
+      "bytes": 48,
+      "offset": 448
+    },
+    {
+      "index": 8,
+      "cpu_owner": "0x570",
+      "mapping_owner": "0x578",
+      "bytes": 48,
+      "offset": 512
+    },
+    {
+      "index": 9,
+      "cpu_owner": "0x548",
+      "mapping_owner": "0x550",
+      "bytes": 48,
+      "offset": 576
+    },
+    {
+      "index": 10,
+      "cpu_owner": "0x520",
+      "mapping_owner": "0x528",
+      "bytes": 48,
+      "offset": 640
+    },
+    {
+      "index": 11,
+      "cpu_owner": "0x4f8",
+      "mapping_owner": "0x500",
+      "bytes": 48,
+      "offset": 704
+    },
+    {
+      "index": 12,
+      "cpu_owner": "0x8a0",
+      "mapping_owner": "0x8a8",
+      "bytes": 48,
+      "offset": 768
+    },
+    {
+      "index": 13,
+      "cpu_owner": "0x960",
+      "mapping_owner": "0x970",
+      "bytes": 58432,
+      "offset": 832
+    },
+    {
+      "index": 14,
+      "cpu_owner": "0x968",
+      "mapping_owner": "0x978",
+      "bytes": 1704,
+      "offset": 59264
+    },
+    {
+      "index": 15,
+      "cpu_owner": "0x888",
+      "mapping_owner": "0x890",
+      "bytes": 32,
+      "offset": 60992
+    },
+    {
+      "index": 16,
+      "cpu_owner": "0x8c0",
+      "mapping_owner": "0x900",
+      "bytes": 48,
+      "offset": 61056
+    },
+    {
+      "index": 17,
+      "cpu_owner": "0x8c8",
+      "mapping_owner": "0x908",
+      "bytes": 432,
+      "offset": 61120
+    },
+    {
+      "index": 18,
+      "cpu_owner": "0x8d0",
+      "mapping_owner": "0x910",
+      "bytes": 48,
+      "offset": 61568
+    },
+    {
+      "index": 19,
+      "cpu_owner": "0x8d8",
+      "mapping_owner": "0x918",
+      "bytes": 48,
+      "offset": 61632
+    },
+    {
+      "index": 20,
+      "cpu_owner": "0x8e0",
+      "mapping_owner": "0x920",
+      "bytes": 18432,
+      "offset": 61696
+    },
+    {
+      "index": 21,
+      "cpu_owner": "0x8e8",
+      "mapping_owner": "0x928",
+      "bytes": 165888,
+      "offset": 80128
+    },
+    {
+      "index": 22,
+      "cpu_owner": "0x870",
+      "mapping_owner": "0x880",
+      "bytes": 497664,
+      "offset": 246016
+    },
+    {
+      "index": 23,
+      "cpu_owner": "0x8f0",
+      "mapping_owner": "0x930",
+      "bytes": 36864,
+      "offset": 743680
+    },
+    {
+      "index": 24,
+      "cpu_owner": "0x8f8",
+      "mapping_owner": "0x938",
+      "bytes": 18432,
+      "offset": 780544
+    },
+    {
+      "index": 25,
+      "cpu_owner": "0x390",
+      "mapping_owner": "0x398",
+      "bytes": 96,
+      "offset": 798976
+    },
+    {
+      "index": 26,
+      "cpu_owner": "0x3a0",
+      "mapping_owner": "0x3a8",
+      "bytes": 8,
+      "offset": 799104
+    }
+  ],
+  "support_logical_bytes": 799112,
+  "support_backing_bytes": 802816,
+  "support_range": 8,
+  "alignment": 64,
+  "page_shift_fixture": 14,
+  "allocator_provider_executed": false,
+  "source_execution": {
+    "support_descriptor_and_alignment": true,
+    "selected_a88_leaf": true,
+    "native_main_channels_shared_pointers": true,
+    "native_RX_validators": true,
+    "prepareFirmwareForBoot_complete_with_owned_resource_fixture": true,
+    "root_UAT_payload_copy": true,
+    "support_descriptor_before_sha256": "8ccfd526ce3ac6331f36adf5d4b8557eb24c2a82680cae00c661c35aa2c25416",
+    "support_descriptor_after_sha256": "42fef24649c3282867fc8aa06273037c96febb884d6b101063453bc1d1b45126"
+  },
+  "selected_init_register_callback": {
+    "class": "AGXAcceleratorG16X",
+    "vtable_address_point": "0x7eae398",
+    "slot": "0xa88",
+    "entry": "0x7eaee20",
+    "entry_sha256": "b3a74bac31a18cd70b097127762e4652dd52a29f4a5e05fa844761a82ab87383",
+    "target": "0x89ea1c4",
+    "supplied_bool": 1,
+    "native_noop": true,
+    "region_a_cursor_owner": "0x1710",
+    "record_stride": 24,
+    "terminator_zero_bytes": 20,
+    "terminator_padding_preserved": 4
+  },
+  "cursor_storage": {
+    "kind": "allocated RAM",
+    "range": 8,
+    "work_state_child_bytes": 48,
+    "read": 0,
+    "prefetch": 16,
+    "write": 32,
+    "SGX_MMIO_alias_required": false
+  },
+  "native_main_fixture": {
+    "bundle_base": 1342177280,
+    "support_base": 1358954496,
+    "initial_status": 7,
+    "channels": [
+      [
+        1358954688,
+        1358954704,
+        1358954720,
+        1342245120
+      ],
+      [
+        1358954944,
+        1358954960,
+        1358954976,
+        1342269696
+      ],
+      [
+        1358955200,
+        1358955216,
+        1358955232,
+        1342294272
+      ],
+      [
+        1358954624,
+        1358954640,
+        1358954656,
+        1342238976
+      ],
+      [
+        1358954880,
+        1358954896,
+        1358954912,
+        1342263552
+      ],
+      [
+        1358955136,
+        1358955152,
+        1358955168,
+        1342288128
+      ],
+      [
+        1358954560,
+        1358954576,
+        1358954592,
+        1342232832
+      ],
+      [
+        1358954816,
+        1358954832,
+        1358954848,
+        1342257408
+      ],
+      [
+        1358955072,
+        1358955088,
+        1358955104,
+        1342281984
+      ],
+      [
+        1358954496,
+        1358954512,
+        1358954528,
+        1342226688
+      ],
+      [
+        1358954752,
+        1358954768,
+        1358954784,
+        1342251264
+      ],
+      [
+        1358955008,
+        1358955024,
+        1358955040,
+        1342275840
+      ],
+      [
+        1358955264,
+        1358955280,
+        1358955296,
+        1342301632
+      ],
+      [
+        1359015552,
+        1359016192,
+        1359015616,
+        1359034624
+      ],
+      [
+        1359016064,
+        1359698176,
+        1359016128,
+        1359735040
+      ],
+      [
+        1359200512,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "main_sha256": "c52ba77334917007ed9563620d0503428811d6d55428951f92c352db86b4b496",
+    "main_hex": "000000500000000040c000500000000040c00050000000000000000000000000c000005100000000d000005100000000e0000051000000000009015000000000c001005100000000d001005100000000e0010051000000000069015000000000c002005100000000d002005100000000e00200510000000000c901500000000080000051000000009000005100000000a00000510000000000f100500000000080010051000000009001005100000000a001005100000000005101500000000080020051000000009002005100000000a00200510000000000b101500000000040000051000000005000005100000000600000510000000000d90050000000004001005100000000500100510000000060010051000000000039015000000000400200510000000050020051000000006002005100000000009901500000000000000051000000001000005100000000200000510000000000c100500000000000010051000000001001005100000000200100510000000000210150000000000002005100000000100200510000000020020051000000000081015000000000000300510000000010030051000000002003005100000000c0e501500000000080ee00510000000000f1005100000000c0ee005100000000003901510000000080f000510000000000590b5100000000c0f000510000000000e90b510000000000c103510000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000402700500000000080330050000000000044005000000000c0b700500000000040b800500000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000040520050000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "services": {
+      "GPU_VA_translation_identity": 70,
+      "bzero": 4,
+      "PAC_bypassed": 182,
+      "native_getters": 39
+    },
+    "RX_validators": [
+      {
+        "host_owner": "0x5f0",
+        "state": 1359015616,
+        "ring": 1359034624,
+        "kind": 4,
+        "capacity": 256,
+        "record_bytes": 72,
+        "cursor_read_offset": 0,
+        "cursor_write_offset": 32
+      },
+      {
+        "host_owner": "0x620",
+        "state": 1359015664,
+        "ring": 1359053056,
+        "kind": 4,
+        "capacity": 256,
+        "record_bytes": 72,
+        "cursor_read_offset": 0,
+        "cursor_write_offset": 32
+      },
+      {
+        "host_owner": "0x650",
+        "state": 1359015712,
+        "ring": 1359071488,
+        "kind": 4,
+        "capacity": 256,
+        "record_bytes": 72,
+        "cursor_read_offset": 0,
+        "cursor_write_offset": 32
+      },
+      {
+        "host_owner": "0x680",
+        "state": 1359015760,
+        "ring": 1359089920,
+        "kind": 4,
+        "capacity": 256,
+        "record_bytes": 72,
+        "cursor_read_offset": 0,
+        "cursor_write_offset": 32
+      },
+      {
+        "host_owner": "0x6b0",
+        "state": 1359015808,
+        "ring": 1359108352,
+        "kind": 4,
+        "capacity": 256,
+        "record_bytes": 72,
+        "cursor_read_offset": 0,
+        "cursor_write_offset": 32
+      },
+      {
+        "host_owner": "0x6e0",
+        "state": 1359015856,
+        "ring": 1359126784,
+        "kind": 4,
+        "capacity": 256,
+        "record_bytes": 72,
+        "cursor_read_offset": 0,
+        "cursor_write_offset": 32
+      },
+      {
+        "host_owner": "0x710",
+        "state": 1359015904,
+        "ring": 1359145216,
+        "kind": 4,
+        "capacity": 256,
+        "record_bytes": 72,
+        "cursor_read_offset": 0,
+        "cursor_write_offset": 32
+      },
+      {
+        "host_owner": "0x740",
+        "state": 1359015952,
+        "ring": 1359163648,
+        "kind": 4,
+        "capacity": 256,
+        "record_bytes": 72,
+        "cursor_read_offset": 0,
+        "cursor_write_offset": 32
+      },
+      {
+        "host_owner": "0x770",
+        "state": 1359016000,
+        "ring": 1359182080,
+        "kind": 4,
+        "capacity": 256,
+        "record_bytes": 72,
+        "cursor_read_offset": 0,
+        "cursor_write_offset": 32
+      },
+      {
+        "host_owner": "0x7a0",
+        "state": 1359016064,
+        "ring": 1359698176,
+        "kind": 32,
+        "capacity": 512,
+        "record_bytes": 72,
+        "cursor_read_offset": 0,
+        "cursor_write_offset": 32
+      },
+      {
+        "host_owner": "0x7d0",
+        "state": 1359016128,
+        "ring": 1359735040,
+        "kind": 1610547200,
+        "capacity": 256,
+        "record_bytes": 72,
+        "cursor_read_offset": 0,
+        "cursor_write_offset": 32
+      },
+      {
+        "host_owner": "0x800",
+        "state": 1359015552,
+        "ring": 1359016192,
+        "kind": 536936403,
+        "capacity": 256,
+        "record_bytes": 72,
+        "cursor_read_offset": 0,
+        "cursor_write_offset": 32
+      }
+    ],
+    "native_allocation_translation_provider_executed": false,
+    "pointer_authentication_executed": false,
+    "support_sha256": "9608dd274e3885f70230f9d669dad7affc325cdc4657f995a07f252a776984ad",
+    "status_a_hex": "0700000001000000000000000000000000000000000000000000000000000000",
+    "status_b_prefix_hex": "00000000000000000000000000000000",
+    "status_b_last_word_hex": "01000000",
+    "extra_0_status_hex": "0000000000000000"
+  },
+  "region_a_fixture": {
+    "backing_bytes": 16384,
+    "before_byte": 165,
+    "cursor_after": 24,
+    "sha256": "ac4a9a882fdc4110460c71d39526afeb38e5d1e5786b1305debe2fbcd441d1b5",
+    "resource_CPU_address_provider_executed": false
+  },
+  "root_fixture": {
+    "UAT_payload_hex": "00254a6f94b9de03284d7297bce1062b50759abfe4092e53789dc2e70c31567ba0c5ea0f34597ea3c8ed12375c81a6cbf0153a5f84a9cef3183d6287acd1f61b40658aafd4f91e43688db2d7fc21466b90b5daff24496e93b8dd02274c7196bbe0052a4f7499bee3",
+    "copied_root_28_98_hex": "000000000100000000254a6f94b9de03284d7297bce1062b50759abfe4092e53789dc2e70c31567ba0c5ea0f34597ea3c8ed12375c81a6cbf0153a5f84a9cef3183d6287acd1f61b40658aafd4f91e43688db2d7fc21466b90b5daff24496e93b8dd02274c7196bbe0052a4f7499bee3",
+    "translator_UAT_payload_constructor_executed": false
+  },
+  "AONPTD_allocation": {
+    "CPU_owner": "0xc38",
+    "GPU_mapping_owner": "0xc30",
+    "range": 9,
+    "logical_bytes": 228,
+    "backing_bytes": 16384,
+    "offset": 0,
+    "native_descriptor_and_alignment_executed": true,
+    "provider_executed": false,
+    "ARM_power_pointer_offset": "0x6318"
+  },
+  "hardware_actions": [],
+  "private_binary_or_instruction_bytes_exported": false,
+  "normal_startup_qualified": false
+}

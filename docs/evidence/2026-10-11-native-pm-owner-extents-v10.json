@@ -1,0 +1,116 @@
+{
+  "schema": "m4rch.native-pm-owner-extents.v10",
+  "hardware_actions": [],
+  "source_pins": [
+    {
+      "path": "/boot/GPUC003/private-apple/com.apple.AGXG16X",
+      "sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/private-apple/com.apple.iokit.IOGPUFamily.fileset-macho",
+      "sha256": "4fd8fd76c166696856e6b2c7450714272aacd5af821f28894a46e7e533c8fbed"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/private-apple/kernelcache.decoded",
+      "sha256": "6158e1c0d591240808e26ff1da050b2fa0ed3eb17c1779d2ddde3171b959536f"
+    }
+  ],
+  "source_spans": [
+    {
+      "owner": "agx",
+      "start": "0xfffffe00089fc794",
+      "end": "0xfffffe00089fc7b0",
+      "sha256": "866edc4bacd8f7aa055db4fcae08b5c0e5ab4f0d7c58f02a6d9db760fe8fb2c8"
+    },
+    {
+      "owner": "agx",
+      "start": "0xfffffe00089e8188",
+      "end": "0xfffffe00089e8204",
+      "sha256": "0d36539f709b9da18f2a18afaa29517589df4d9c17ca6bdfc74ea7c82a2b28c7"
+    },
+    {
+      "owner": "agx",
+      "start": "0xfffffe00089fd440",
+      "end": "0xfffffe00089fd474",
+      "sha256": "7d505a9d89107beb28cbf360f2b2997d361209b89bedcd43714cf295ebbcb848"
+    },
+    {
+      "owner": "agx",
+      "start": "0xfffffe00089fb83c",
+      "end": "0xfffffe00089fb848",
+      "sha256": "66b82de211477af913b54753861d2e93143c14da76981e1248d80de1b50c03b3"
+    },
+    {
+      "owner": "agx",
+      "start": "0xfffffe00089fb8dc",
+      "end": "0xfffffe00089fb8e8",
+      "sha256": "c52f7f0e806b2bd58438984807cf4c68eafd30f7cfb84a9b6a33136c59afd749"
+    },
+    {
+      "owner": "agx",
+      "start": "0xfffffe00089e9f04",
+      "end": "0xfffffe00089e9f38",
+      "sha256": "c2b8cd4a0808041d09816ea792cd21eccaa960e586cb97fb2632ef243844d53f"
+    },
+    {
+      "owner": "agx",
+      "start": "0xfffffe00089ff4e0",
+      "end": "0xfffffe00089ff544",
+      "sha256": "3dccbdfad19352ed4cd717cb619f4138d9d598c4296000e5ae56b62229ec19f1"
+    },
+    {
+      "owner": "iogpu",
+      "start": "0xfffffe000a7d7bc0",
+      "end": "0xfffffe000a7d7c08",
+      "sha256": "5fb28d285ee026223fea2edaef8cc2cbb95b1b52b7d69cbca64956ea669bba9f"
+    },
+    {
+      "owner": "iogpu",
+      "start": "0xfffffe000a7d7dd4",
+      "end": "0xfffffe000a7d7de0",
+      "sha256": "66dce15e0c5e56e7e124b7671a42fc782b0bd982a5295c09d231d0ae47337e0b"
+    },
+    {
+      "owner": "iogpu",
+      "start": "0xfffffe000a7d7e38",
+      "end": "0xfffffe000a7d7e7c",
+      "sha256": "fd9ced95f3ca3e105bad809d8ad1353b8c62c4d1141f43ce401398bd7019ba93"
+    },
+    {
+      "owner": "iogpu",
+      "start": "0xfffffe000a7d7f44",
+      "end": "0xfffffe000a7d7f54",
+      "sha256": "61ae894bd276cd5888ada4668a18a2a89ea45d24fa2a74ed47fbab4984ef1670"
+    },
+    {
+      "owner": "kernel",
+      "start": "0xfffffe000beb2ca0",
+      "end": "0xfffffe000beb2d00",
+      "sha256": "29e76fef0121eb99f18cfeb6fc9dedcdf50c2f3b5c13e655f96037165cdb14b2"
+    }
+  ],
+  "resource_extent": {
+    "request": "AGX newKernelResource x2=PM148*DevicePMConfig[0]*4 bytes at89fd440..470",
+    "resource_constructor": "8a0d524 forwards requested length through x3 toIOGPU newResourcea7d7bc0",
+    "rounding": "newResourceWithOptions computes (requested+page_size-1)&-page_size at a7d7dd4..ddc/a7d7e3c; stores sp10 at a7d7e74",
+    "assignment": "IOGPU resource78 receives rounded length fromsp10 at a7d7f44..50",
+    "hardware_copy": "AGX reset89fb83c..844 resource78low32 toHWstate30",
+    "linux_binding": "plan.roles[6].mapped_bytes is correct; logical_bytes is incorrect for this field"
+  },
+  "PM1d4": {
+    "value": 0,
+    "scope": "fresh native object",
+    "constructor": "G16X vtablebc0\u219289e9f04\u2192AGXParameterManagementVirtual metaclass; alloc89ff4f8 invokes kernel OSObject_typed_operator_new atbeb2ca0",
+    "allocation_flags": "small allocation flag4; large allocation0x41004. Both retain zero allocation flag4",
+    "initialization": "ordinary PMinit89fc624 copiesDevicePMConfig to1d8 and does not write1d4; no ordinary PM setter found",
+    "consumer": "reset89fb8dc..e4 copiesPM1d4 toHWstate10",
+    "limitation": "Scalar semantic name remains unassigned; zero is fresh allocation provenance, not a proved persistent/reset identity"
+  },
+  "capacity": {
+    "native": "PMinit89fc794..ac calls accelerator virtual1028\u2192halGetDefaultParameterBufferSizeMax89e8188, then shifts result17; no +1 sentinel added",
+    "native_provider": "rounds independent global/device memory budgets to multiples of129*0x20000, then selectsmaximum",
+    "linux_policy": "capacity=max_blocks+1 remains explicit Linux retained allocation choice. It is not claimed to duplicate native global memory budgeting; CFGmaximum/maxPB count remainsmax_blocks.",
+    "triangle_scope": "First render growth disabled, populated initial blocks11 below both configured max and retained capacity"
+  },
+  "qualification": "Static source owner chain only; no component execution, kernel build or hardware probe performed by this audit."
+}

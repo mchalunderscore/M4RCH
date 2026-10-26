@@ -1,0 +1,49 @@
+{
+  "schema": "m4rch.native-t6040-render-envelope.v9",
+  "inputs": [
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/qualify_render_envelope_v9.py",
+      "bytes": 5060,
+      "sha256": "929d761221a6f72be0883dd5d42540a6ddbe473972318cc236ac61bb5aadcab6"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/g16_t6040_render_envelope_v9.rs",
+      "bytes": 8260,
+      "sha256": "36e49d3dc94be91691641ef3ffce17183b3db5a3015fd7daccf134d34cf69686"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/private_ta_command.py",
+      "bytes": 4636,
+      "sha256": "b2a03d62dcf7c2fbb5ee2928f67a4fb96d0d47ab1da1a59381beb017488e723e"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/private_3d_command.py",
+      "bytes": 5799,
+      "sha256": "585cb60da632e6c95cabeb4207af4a46a348748ce21372bbb0fa6589c5f2a5cd"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-08-private-ta-command.json",
+      "bytes": 2654,
+      "sha256": "a4ef4ca7c57eb22ca482d2a4b543af23070dec1a45bf029b4bd32a320087abba"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-08-private-3d-command.json",
+      "bytes": 5535,
+      "sha256": "01798e72b177bb370e8dc9ec9751efe08309fb871e164b64d2d2ddb05f5dad82"
+    }
+  ],
+  "ta_cases": 48,
+  "fragment_cases": 48,
+  "descriptor_output_compared": true,
+  "fragment_refusals_before_write": 48,
+  "compile_result": 0,
+  "run_result": 0,
+  "scope": "Native construction envelope only, with suppliednativeRCEbytes; source-qualifiedmodelscomposed, notrerun",
+  "remaining": [
+    "NativeTA/3DRCE generatorsmusttranslate actual runtimeRenderParameters into descriptorfields",
+    "Bind actual submissioncontext/stackfieldroles to realtimeline/completion/notifierowners",
+    "Use nativeWork200/DMmicrosequence anddependency48/BM18 inruntimepublication"
+  ],
+  "hardware_actions": [],
+  "triangle_trial_ready": false
+}

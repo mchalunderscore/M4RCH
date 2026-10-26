@@ -1,0 +1,101 @@
+{
+  "schema": "m4rch.gfx-native-fender-runtime-cycle-prepared.v1",
+  "ready": true,
+  "version": 19,
+  "candidate": "/home/alice/Desktop/m4rch/out/gfx-native-fender-runtime-cycle/candidate",
+  "fresh_boot": "f4a7b737-ed3d-4851-8fcd-cac56eb233d7",
+  "owner_sha256": "c5e09c87c57347cbe926c4b38821b45f27fc14ce9f417cef309b3e5f568512f2",
+  "owner_GNU_note_hex": "040000001400000003000000474e5500ee9a7ec99fc972f4271d243dc2e76d8a84d54de3",
+  "candidate_receipt_sha256": "273550dc88e0c3782117e8f3334abf42f2c02fbf42e95c2fffdf411170b7343c",
+  "preparation_sha256": "653938b894199d4ddd283e11f4717d413981757912ca967f6a1aeed4eb326252",
+  "source_receipt_sha256": "180beeda3cd323f9ae15d03dbec8dfd07daefe72aa2a3a35ceb13861cc2ef289",
+  "new_C_cases": 829,
+  "new_host_cases": 36,
+  "new_actual_main_flows": 1,
+  "new_early_refusal_flows": 4,
+  "qualification_composition": {
+    "new_C_runtime_cases": 829,
+    "new_host_cases": 36,
+    "new_actual_main_flows": 1,
+    "new_early_refusal_flows": 4,
+    "frozen_v18_Fender_C_cases": 45,
+    "frozen_v18_host_cases": 21,
+    "frozen_v18_actual_main_flows": 1,
+    "frozen_v17_C_cases": 64,
+    "frozen_v17_preasc_C_cases": 39,
+    "frozen_v17_host_cases": 41,
+    "frozen_v17_actual_main_flows": 10,
+    "unchanged_cases_repeated": false
+  },
+  "clean_external_module_build": true,
+  "kernel_rebuilt": false,
+  "kernel_GRUB_unchanged": true,
+  "module_loaded": false,
+  "hardware_controls": [],
+  "manual_reboot_required": false,
+  "hypothesis": "The observed post-Fender ACTUAL4/TARGETf/AUTO1 state is legitimate clock gating and must be admitted during retained runtime. Permit known ACTUAL0/4/f after verified Fender while preserving ownership, application, strict OFF and fresh ON/rejoin checks.",
+  "runtime_writes": 0,
+  "strict_OFF_unchanged": true,
+  "strict_fresh_ON_rejoin_unchanged": true,
+  "application_predicates_unchanged": true,
+  "failed_application_operand_diagnostics": true,
+  "unchanged_trial": "Cold pairedON/Gravity preASC/AP20/application32/33/root/control33; exact native Fender freshold&~6; one TA/3D draw/trace3/15s; full raw capture before once-only native202/NMI and strict physical OFF/accounting, optional management-only rejoin.",
+  "limits": [
+    "No forced clock or PMGR/ACK/coverage writes.",
+    "Native direct4090/4098 kicks are not replayed; FW-mediated enable transfer remains experimental.",
+    "Management rejoin is not application recovery, rendering restart or DMA retirement.",
+    "Normal Gravity G16S full bootbundle and desktop remain incomplete."
+  ],
+  "input_pins": [
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-fender-runtime-cycle/candidate/cold-render-preparation.json",
+      "bytes": 80148,
+      "sha256": "653938b894199d4ddd283e11f4717d413981757912ca967f6a1aeed4eb326252"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-fender-runtime-cycle/candidate/asc-root-envelope/build-receipt.json",
+      "bytes": 27014,
+      "sha256": "273550dc88e0c3782117e8f3334abf42f2c02fbf42e95c2fffdf411170b7343c"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-fender-runtime-cycle/candidate/asc-graph-init/native-fender-runtime-cycle-owner-source-receipt.json",
+      "bytes": 17905,
+      "sha256": "180beeda3cd323f9ae15d03dbec8dfd07daefe72aa2a3a35ceb13861cc2ef289"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-fender-runtime-cycle/host-qualification-v2.json",
+      "bytes": 31388,
+      "sha256": "e5eb47becf1ea91c01502b38a2a504698afd64d4bad1bece4ecae0b3e78944b5"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-fender-runtime-cycle/runtime-qualification-v1.json",
+      "bytes": 4099,
+      "sha256": "e12421602d0b41e42120e5235527fd1686c1ccf4047d6167037e3f0595a2d2a8"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-fender-runtime-cycle/owner-build-command.json",
+      "bytes": 1470,
+      "sha256": "63d1af7cbe96159223985e5d7765cfa54273cfd8bc74a482af91d7a99d884650"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-fender-runtime-cycle/owner-build.log",
+      "bytes": 544,
+      "sha256": "9184df23a46280050b1edfb357aeb9cae086bc8ea2fc46ea10773952ab7bbed4"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-fender-runtime-cycle/build-owner.py",
+      "bytes": 2219,
+      "sha256": "225fd982d194a245815e9dbff59eb19da655e38a590467be0534a313b02aa7a4"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-11-gfx-native-fender-draw-cycle-2529-live.json",
+      "bytes": 10279,
+      "sha256": "f1f04f37730df02fcae66ffa30b9575e65f63fbc32af7e466839732453e28de9"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-11-gfx-native-fender-runtime-state.json",
+      "bytes": 6082,
+      "sha256": "64f815c17eb1e398c447988b91d693ca14e94c1fe360a12fcef101017f88efc2"
+    }
+  ]
+}

@@ -1,0 +1,174 @@
+{
+  "schema": "m4rch.gravity-native-t6040-components.production-integration.v5",
+  "date": "2026-10-11",
+  "actual_producers": [
+    "Platform::native_bundle_component",
+    "Platform::bundle native component and full-object rejection",
+    "RootPointers::bootstrap_for_platform and actual Bootstrap root publication",
+    "bundle_backing_bytes and actual Bootstrap FirmwareSpace allocation",
+    "Existing bounded native hardware and Region C producers retained"
+  ],
+  "validation": {
+    "pure_actual_rust_qualification_complete": true,
+    "actual_platform_bundle_methods_exercised": true,
+    "native_child_count": 23,
+    "native_bundle_backing_bytes_compared": 147456,
+    "native_main_bytes_compared": 1216,
+    "zero_brn_header_alias_exercised": true,
+    "unknown_main_fields_and_backing_padding_preserved": true,
+    "alignment_overflow_short_buffer_rejection_exercised": true,
+    "actual_native_and_donor_root_main_selection_exercised": true,
+    "actual_firmware_allocation_size_selection_exercised": true,
+    "whole_hardware_component_bytes_compared": 9600,
+    "native_descriptors": 22,
+    "unique_mapped_pages": 126,
+    "writable_pages": 38,
+    "cluster_voltage_steps": 22,
+    "actual_root_serializer_bytes_compared": 200,
+    "region_c_component_allocation_bytes_compared": 16384,
+    "full_module_compiled_and_linked": true,
+    "make_returncode": 0,
+    "immutable_source_files": 69,
+    "immutable_input_changes": [],
+    "test_adapter_scope": "Actual Platform methods use standalone input/allocation adapters. Donor power/hardware stubs panic if entered by the native path; all compared expected child/Main/bundle bytes derive from numeric evidence. Other root pointer owners and Linux permission translation are not qualified by these tests."
+  },
+  "linked_module": {
+    "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v5/build-owner/asahi_m4.ko",
+    "bytes": 404384,
+    "sha256": "39e5586184f20806b33aeb313f42aa566232a814855313616e35cadd9fbacf72"
+  },
+  "native_bundle_bindings": {
+    "child_count": 23,
+    "child_alignment_bytes": 64,
+    "logical_bytes": 140736,
+    "backing_bytes": 147456,
+    "profile_page_shift_fixture": 14,
+    "imported_native_page_shift_value_separately_recovered": false,
+    "hardware": {
+      "offset": 0,
+      "logical_bytes": 10008,
+      "bounded_component_bytes": 9584
+    },
+    "power": {
+      "offset": 21056,
+      "logical_bytes": 25976,
+      "contents_complete": false
+    },
+    "main": {
+      "offset": 123136,
+      "logical_bytes": 1216,
+      "root_offset": "0x18",
+      "child_mapping_owner": "0x878",
+      "native_pointer_stores": 9,
+      "native_literal_zero_stores": 2
+    },
+    "zero_brn_child": {
+      "index": 7,
+      "logical_bytes": 0,
+      "header_alias_child": 8,
+      "alias_offset": "0xc040",
+      "separate_page_allocated": false
+    },
+    "initial_backing_zeroed": true,
+    "unqualified_component_bytes_preserved": true,
+    "native_raw_mapping_flags": "0x20900000007",
+    "native_to_linux_mapping_translation_qualified": false,
+    "production_permission_change": false
+  },
+  "timestamp_header_binding": {
+    "existing_donor_inline_store": "bundle+0x28",
+    "selected_for_native": false,
+    "native_header_child": 8,
+    "native_header_offset": "0xc040",
+    "native_header_logical_bytes": 136,
+    "native_timestamp_producer_qualified": false,
+    "reason": "Native child0 is hardware, so the donor inline timestamp store would overwrite native hardware bytes."
+  },
+  "pins": [
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/g16_t6040_bundle_v5.rs",
+      "bytes": 6062,
+      "sha256": "4e26359b4659d0a886c902b64234527826876a506f8826825ad1e13467a23688"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/prepare_bundle_evidence.py",
+      "bytes": 14856,
+      "sha256": "6f0314352ce97be1d5f43d0a0e155bfa65f6099a6d994667fd02227eaf412181"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/stage_v5.py",
+      "bytes": 8067,
+      "sha256": "daf0372b30f811fbf1d682efb8f701242df3d447fa1991ba7524a74860a7f8b1"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/qualify_v5.py",
+      "bytes": 31870,
+      "sha256": "ca6c5f33876e3fbf4668640b6f2a301eec2e139b102b50feac61fd740d92f2af"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/build_module_v5.py",
+      "bytes": 5126,
+      "sha256": "0ef7e8bd3717c2067d62d7697134a4699592d4baa051d91ea4afbfbcc096674f"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/README-v5.md",
+      "bytes": 3012,
+      "sha256": "63522f97b83eee059b4e33f36a1530b0de99c46664ab4498162b0277025ec7b8"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v5-source-evidence/native-bundle.json",
+      "bytes": 13209,
+      "sha256": "14f6f91b6a9827819a61303e6fcb163942477e95bc48d323f7f212805ef9a7fe"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v5/stage-receipt.json",
+      "bytes": 19030,
+      "sha256": "76cfa0a5bbf63e2112c94e685268ba3a63328890217aad35726c87d97a696e2e"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v5/qualification-v1/qualification.json",
+      "bytes": 10309,
+      "sha256": "53cd21ea2d1cb0557e7d2eefc6d33c5eab9b78174d282458f6c7f52c51b8ba24"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v5/module-make-result.json",
+      "bytes": 593,
+      "sha256": "ed89d54699b479e6edab60f42e47f98da188a212f3b135d555207e529f4f4e05"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v5/module-build-closure.json",
+      "bytes": 807,
+      "sha256": "7dbe238fc9f24fbd4ca75a233cd305e353445c690425a6f26057ecf96b825f9c"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v5/offline-handoff.json",
+      "bytes": 2688,
+      "sha256": "f0ac3d94949f6362d83e07e6b62744c9e4b983ab18f2acd2b73930b2030d3bc6"
+    }
+  ],
+  "bundle_complete": false,
+  "region_c_complete": false,
+  "normal_startup_enabled": false,
+  "module_loaded": false,
+  "kernel_rebuilt": false,
+  "hardware_actions": [],
+  "remaining_full_bundle_inputs": [
+    "full native hardware contents: current 0x2570 component vs 0x2718 logical extent",
+    "full power object contents through native logical extent0x6578",
+    "complete 17 channel records and fresh work/cursor/ring owners",
+    "MainConfig external pointer200, extra240 and other input fields",
+    "nested shared/header child contents and external callbacks",
+    "complete native Root/Region A/status/Region C fields",
+    "FW address translation callback and native mapping flag translation",
+    "cache publication and mapping lifetime"
+  ],
+  "limitations": [
+    "Native shared allocation and bounded Main pointer/literal fields are source-backed. Full bundle still rejects ENOTSUPP; complete hardware, power/channel/callback fields, native timestamp header production and Linux mapping-policy translation remain unqualified.",
+    "Region C allocation and bounded initial fields are native bindings. Full Region C still rejects ENOTSUPP; native power/controller/callback fields and Linux mapping-policy translation remain unqualified.",
+    "Optional raw idle-property OF bridge is specified but not installed into a device tree.",
+    "Slot27 absence and descriptor flags for slots3/22/27/39/41 are native producer bindings. Other descriptor flags and Linux PTE permissions are explicit experimental selections from earlier consumers; MCC/MTR and the counter's second page remain read-only until native policy is bound.",
+    "Partial native hardware-data fields only; full bundle, root/channel/work-cursor/power providers still unimplemented and reject T6040.",
+    "No GPU memory publication, reset, queue execution or pixels."
+  ],
+  "private_binary_or_instruction_bytes_exported": false
+}

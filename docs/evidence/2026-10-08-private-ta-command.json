@@ -1,0 +1,65 @@
+{
+  "binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "counts": {
+    "header": 1024,
+    "translations": 1024,
+    "metadata": 1024,
+    "tail": 1024,
+    "notification_and_mapping": 1024,
+    "normal_control_tail": 962,
+    "actual_submitted_kick_callback": 1024,
+    "contiguous_preproducer_construction": 1024,
+    "mode3_trampoline_tail": 62
+  },
+  "visited_instruction_count": 248,
+  "ranges": [
+    {
+      "start": "0xfffffe0008a1f394",
+      "end": "0xfffffe0008a1f3f0",
+      "sha256": "384cce5adc361bab452b537cd4c4d271f6167991827e29a1ee85463db69688a2"
+    },
+    {
+      "start": "0xfffffe0008a1f3f0",
+      "end": "0xfffffe0008a1f4d8",
+      "sha256": "e9254b8cbc17aa4fe4bec4bd0e8d5e1986d18ca1c2efd45938995c4bf7a3d3aa"
+    },
+    {
+      "start": "0xfffffe0008a1f514",
+      "end": "0xfffffe0008a1f5d4",
+      "sha256": "ab38593e49e998693ae7773973e7ddcdab79dbf459d065679ea9f06501c5c4f6"
+    },
+    {
+      "start": "0xfffffe0008a1f6f4",
+      "end": "0xfffffe0008a1f76c",
+      "sha256": "5e334fb0481d739402368f89e124d4e6219fe81bbc3f0c566c112885c6801054"
+    },
+    {
+      "start": "0xfffffe0008a1f5d0",
+      "end": "0xfffffe0008a1f76c",
+      "sha256": "eed45c65f4a998fb0f7338e787494e09ab8f758344add44252d7f3cc72e35f6e"
+    },
+    {
+      "start": "0xfffffe0008a1f4d8",
+      "end": "0xfffffe0008a1f514",
+      "sha256": "63fda2e5f30e9faef3a86a07bb671f3c75aca630e5650a6695fdb16495cbbc27"
+    },
+    {
+      "start": "0xfffffe0008a1f394",
+      "end": "0xfffffe0008a1f76c",
+      "sha256": "63eb0a1bbddbf87e334550947543c072312c979f2394db5623ef95fc56c6d9bd"
+    }
+  ],
+  "mode3_trampoline": {
+    "start": "0xfffffe0008a1fff4",
+    "end": "0xfffffe0008a1fffc",
+    "sha256": "40d3b491f1492aa99b37bc14612727b0c590187671b4e5d20bfac7e2e2e9e228"
+  },
+  "submitted_kick_method": {
+    "start": "0xfffffe0008987000",
+    "end": "0xfffffe0008987018",
+    "table": "0xfffffe0007eb7560",
+    "slot": "0x1a8",
+    "sha256": "5df2566b15ecfaea91462e35594b69d59313c885139d489a7cc231baa7a6c028"
+  },
+  "qualification": "Contiguous TA SKSM preproducer construction and slices compared over whole 9c0 backing. Actual inherited submitted-kick callback with u32 wrap; serial wrap/owner checked. Translations, notification virtual150 and mapping virtual158 are explicit service fixtures with checked identities/args. Notification output is a fixture descriptor13e8 mutation. Includes actual mode3 value1 trampoline. Authentication skipped. Actual mapping/notification semantics, caller preamble, producer/postproducer sequence, full submit and valid drawing inputs unqualified. No live GPU submission/retirement proved."
+}

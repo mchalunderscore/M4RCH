@@ -1,0 +1,42 @@
+{
+  "schema": "m4rch.gfx-reset-startup-admission-correction.v1",
+  "hardware_actions": [],
+  "candidate_v1_modified": false,
+  "actual_C_feature_on_cases": 80,
+  "actual_C_feature_on_accepted": 2,
+  "actual_C_feature_on_refused_before_allocation": 78,
+  "actual_C_feature_off_prefix_cases": 80,
+  "actual_feature_compile_guard_cases": 16,
+  "source_replacement": "None in actual helper, invocation or feature guard; subsequent allocation uses a recorder",
+  "inputs": [
+    {
+      "path": "experiments/t6040-gpu/asc-graph-init/asc-graph-init.c",
+      "sha256": "fbf44de2310e301d111e3b17dbe0eb213c6004fe9c7d3668d70a96b717d5f5dc"
+    },
+    {
+      "path": "experiments/t6040-gpu/asc-graph-init/gfx-reset-startup.h",
+      "sha256": "f33ff5251683d7bc2aaca7f6e559d6b95696b2f1524ff68a6ab8e82fab18aecd"
+    },
+    {
+      "path": "experiments/t6040-gpu/asc-graph-init/test-gfx-reset-startup.c",
+      "sha256": "a6480ed650a03bda66f54b308efe99238c0342d0afc1dea1974108a98c2411cb"
+    },
+    {
+      "path": "experiments/t6040-gpu/test-gfx-reset-startup.py",
+      "sha256": "be4de99bf9f42875076f88db9d677cf3ef61a9ca002bc065aefe6705a749f159"
+    },
+    {
+      "path": "out/gfx-reset-scope/startup-admission-v2-validation.json",
+      "sha256": "16f833b2726fa42c4ab628563eb3b4c2c36997b33ad83f2c414bc69a3bb1a192"
+    },
+    {
+      "path": "docs/evidence/2026-10-09-gfx-reset-startup-admission.md",
+      "sha256": "29f42279cf0a3edcf7559692167a7c5c09e1900cdf077963fe261993d9870772"
+    }
+  ],
+  "limitations": [
+    "feature-off replay covers new prefix only, not all later startup checks",
+    "kernel compilation and live startup deferred to root-owned distinct candidate-v2",
+    "no kernel concurrency, GPU execution, hardware reset scope or retirement proof"
+  ]
+}

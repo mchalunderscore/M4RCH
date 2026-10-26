@@ -1,0 +1,26 @@
+pkgname=muvm-m4rch
+pkgver=0.7.0
+pkgrel=2
+pkgdesc='Run programs from the host system in a microVM'
+arch=('aarch64')
+url='https://github.com/AsahiLinux/muvm'
+license=('MIT')
+depends=('glibc' 'gcc-libs' 'libkrun' 'libkrunfw' 'passt' 'systemd-libs' 'libxkbcommon')
+makedepends=('rust' 'cargo' 'clang' 'pkgconf')
+provides=('muvm')
+conflicts=('muvm')
+options=('!lto' '!debug')
+source=('muvm-source.tar.gz')
+build() {
+  cd "$srcdir/muvm"
+  cargo build --release --locked -j3
+}
+package() {
+  cd "$srcdir/muvm"
+  install -Dm755 target/release/muvm "$pkgdir/usr/bin/muvm"
+  install -Dm755 target/release/muvm-guest "$pkgdir/usr/bin/muvm-guest"
+  install -Dm644 share/wireplumber/wireplumber.conf.d/50-muvm-access.conf \
+    "$pkgdir/usr/share/wireplumber/wireplumber.conf.d/50-muvm-access.conf"
+  install -Dm644 share/wireplumber/scripts/client/access-muvm.lua \
+    "$pkgdir/usr/share/wireplumber/scripts/client/access-muvm.lua"
+}

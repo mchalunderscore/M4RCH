@@ -1,0 +1,168 @@
+{
+  "schema": "m4rch.retained-transport-reentry-boundary.v1",
+  "date": "2026-10-09",
+  "review_kind": "offline integration of existing saved evidence and source",
+  "hardware_actions": [],
+  "privileged_actions": [],
+  "candidate_mutations": [],
+  "source_kit_mutations": [],
+  "implementation_prepared": false,
+  "first_fresh_coordinate_idle_hardware_result_pending": true,
+  "candidate_loaded": false,
+  "positive_retirement_scope": {
+    "owned_pages": 71,
+    "fixture": "operand-free control fixture",
+    "ordinary_unload_verified": true,
+    "joined_context_covered": false
+  },
+  "retained_joined_scope": {
+    "owned_pages": 174,
+    "same_context_second_boot_verified": false,
+    "dma_retirement_verified": false,
+    "render_execution_verified": false
+  },
+  "code_refs": {
+    "gravity_shared_buffer_free": "out/gpu-gravity-contract/linux/drivers/soc/apple/rtkit.c:773-805",
+    "gravity_passive_boot_wait": "out/gpu-gravity-contract/linux/drivers/soc/apple/rtkit.c:961-1007",
+    "gravity_init_220_wake": "out/gpu-gravity-contract/linux/drivers/soc/apple/rtkit.c:1087-1108",
+    "gravity_autonomous_start": "out/gpu-gravity-contract/linux/drivers/gpu/drm/asahi/g16.rs:338-348",
+    "gravity_retained_drop": "out/gpu-gravity-contract/linux/drivers/gpu/drm/asahi/g16.rs:225-239",
+    "future_sleepable_typed_command_boundary": "out/gfx-native-coordinate/candidate/asc-graph-init/recovery-cycle.h:238-255",
+    "physical_off_witness": "out/gfx-native-coordinate/candidate/asc-graph-init/gfx-reset-scope.h:237-255",
+    "original_cold_admission": "out/gfx-native-coordinate/candidate/asc-graph-init/asc-graph-init.c:347-351",
+    "new_allocation_not_reentry": "out/gfx-native-coordinate/candidate/asc-graph-init/graph-map.h:96-117",
+    "joined_context_empty_table_not_reentry": "out/gfx-native-coordinate/candidate/asc-graph-init/joined-context-init.h:17-24",
+    "retained_context_release_refusal": "out/gfx-native-coordinate/candidate/asc-graph-init/graph-map.h:77-94"
+  },
+  "native_limit": {
+    "memory_preserving_options_0_start_already_qualified_in_saved_code": true,
+    "packet_free_stop_establishes_native_pwrgate_202_handshake": false,
+    "preloaded_mapping_copy_or_reset_vector_qualified": false,
+    "paired_coordinate_off_implies_firmware_reentry_ready": false
+  },
+  "deferred_minimal_probe": {
+    "precondition": "Successful first paired ON/OFF, sole PM put, usage0/suspended, strict provider OFF, all original consumer/context/page/mapping identities retained",
+    "operation_order": [
+      "one same-consumer PM get",
+      "fresh ACTIVE observation",
+      "separate second paired-ON coordinator epoch",
+      "fresh original cold ASC/FIFO admission",
+      "at most one START",
+      "bounded fresh autonomous HELLO12/map into new host-only journal",
+      "retain"
+    ],
+    "asc_admission": {
+      "start_clear": true,
+      "status": "0x6a",
+      "rx_fifo_empty": true,
+      "native_off_on_guarantees_status_6a": false,
+      "data_freshness_proved": false
+    },
+    "prohibited": [
+      "INIT0x220",
+      "root_prepare",
+      "joined_context_attach",
+      "application root publication",
+      "queue or counter reset",
+      "context or mapping retirement",
+      "free",
+      "unload",
+      "retry"
+    ],
+    "transport_hello_map_would_prove": "bounded autonomous transport negotiation on retained backing only",
+    "missing_application_rejoin_condition": "Qualified firmware semantics for reuse of the already published retained context and application state"
+  },
+  "input_file_pins": [
+    {
+      "path": "docs/evidence/2026-10-08-graph-retirement-native-result.json",
+      "sha256": "e6536b728fc601989bf3af3806d5ef1b0c8afd69b798f3debf1e89fcec785ba6",
+      "bytes": 5530
+    },
+    {
+      "path": "docs/evidence/2026-10-08-warm-restart-native-result.json",
+      "sha256": "aef0663b3cf50a3e9594c8efc8eabc4017df337101a0f272c750a9cfcc09fbef",
+      "bytes": 2455
+    },
+    {
+      "path": "docs/evidence/2026-10-09-joined-firmware-context-init.md",
+      "sha256": "4ddb8086489c6a4c3aae6ad19640acf04d72549869101e1ee15f98d105b11313",
+      "bytes": 2031
+    },
+    {
+      "path": "docs/evidence/2026-10-09-rtbuddy-reset-review.md",
+      "sha256": "9c36c98270b211b46a31b100aa7a516deda4e180cbec4e810d67e7ddb2c5134f",
+      "bytes": 6983
+    },
+    {
+      "path": "docs/evidence/2026-10-09-rtbuddy-reset-review.json",
+      "sha256": "c43a596e018b705d33652437e87a6673433019d169b56adefb15307cd713fb87",
+      "bytes": 37336
+    },
+    {
+      "path": "docs/evidence/2026-10-09-rtbuddy-matched-provider.md",
+      "sha256": "2ac2bf7ebbb276ca363290af2de4f966f093fe98e74e14b60f8ed3e080f23f4d",
+      "bytes": 13759
+    },
+    {
+      "path": "docs/evidence/2026-10-09-gfx-native-coordinate-preparation.json",
+      "sha256": "e8c81a1c99d331ba74bc802cadd9074ed4d4ecbab35ca803606b21c284dde4c5",
+      "bytes": 7904
+    },
+    {
+      "path": "out/gfx-native-coordinate/candidate/asc-graph-init/asc-graph-init.c",
+      "sha256": "5e6156de5894c93b97b7ae43f2e6cf00df698e0e14c3c380e62c4432b049a29b",
+      "bytes": 24793
+    },
+    {
+      "path": "out/gfx-native-coordinate/candidate/asc-graph-init/recovery-cycle.h",
+      "sha256": "e465ccbc1365e2a745a9a6f7c6eaf91d64a785f62925dc2ad4243048fd5e9500",
+      "bytes": 14512
+    },
+    {
+      "path": "out/gfx-native-coordinate/candidate/asc-graph-init/gfx-reset-scope.h",
+      "sha256": "4ad396fa170b694f7b7e00e37d7f88bbcd07b55ba44d767ee825a4cff8de7fff",
+      "bytes": 11301
+    },
+    {
+      "path": "out/gfx-native-coordinate/candidate/asc-graph-init/gfx-coordinate-owner.h",
+      "sha256": "a9dc2ef9184464f50cb4fddc8d1710daac06d9b594054aaf569d467e2a7dda1a",
+      "bytes": 9971
+    },
+    {
+      "path": "out/gfx-native-coordinate/candidate/asc-graph-init/gfx-coordinate-core.h",
+      "sha256": "417179e014653c2b97e55888346cbda70c79a4166fe2a1ca191d741f7201ad01",
+      "bytes": 7824
+    },
+    {
+      "path": "out/gfx-native-coordinate/candidate/asc-graph-init/graph-map.h",
+      "sha256": "704836d10b86e3d2bcb20b457853a700a2153aae505b0aae473aea4daee7f13e",
+      "bytes": 9974
+    },
+    {
+      "path": "out/gfx-native-coordinate/candidate/asc-graph-init/joined-context-init.h",
+      "sha256": "1851e697907d50a3f47d153879f47f1b6b07065f5d58055fa6269bc436bc15b2",
+      "bytes": 1849
+    },
+    {
+      "path": "out/gpu-gravity-contract/linux/drivers/soc/apple/rtkit.c",
+      "sha256": "4a3c96085d9157eab786cf5c40df9f96a9c64895d6e70f618eb7cd36cd11bba4",
+      "bytes": 30653
+    },
+    {
+      "path": "out/gpu-gravity-contract/linux/drivers/gpu/drm/asahi/g16.rs",
+      "sha256": "605f15066d3abb5e65da9fe9505e21d4e9e3725a342a7a8cd9fd61e3e1923677",
+      "bytes": 36625
+    },
+    {
+      "path": "out/gfx-native-coordinate/candidate/asc-graph-init/asc-graph-init.ko",
+      "sha256": "a7b3f21acfa50fcc35dba6d46f86d575e166d562c4dd0c575e5d58fd7d26b7f0",
+      "bytes": 7955016
+    },
+    {
+      "path": "out/gfx-native-coordinate/candidate/asc-root-envelope/build-receipt.json",
+      "sha256": "0afe3eed85958b124be56e7ed4c0f76595bf8271c016c44d47c4903ebe5a669c",
+      "bytes": 24291
+    }
+  ],
+  "markdown_sha256": "9157784a65909b621689d7adc81371006b0d864e5bfee34c2c86f34e78a40390"
+}

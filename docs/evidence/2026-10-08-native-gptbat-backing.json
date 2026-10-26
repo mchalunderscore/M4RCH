@@ -1,0 +1,28 @@
+{
+  "binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "counts": {
+    "allocation_cases": 512,
+    "allocation_failure": 103,
+    "new_zeroed": 256,
+    "inherited_preserved": 256
+  },
+  "ranges": {
+    "generic_allocation": {
+      "start": "0xfffffe0008a12cf4",
+      "end": "0xfffffe0008a12d14",
+      "sha256": "f027b1d658805048731a992207b4e96a4b03d3d29fe9e53672437c76e6476327"
+    },
+    "zero_and_bind": {
+      "start": "0xfffffe0008a12db4",
+      "end": "0xfffffe0008a12e70",
+      "sha256": "073e7bea22e1db3f79cbc971807a5b926bd8cabbe1917a1c13be6eb4bc5450ef"
+    }
+  },
+  "findings": [
+    "Generic allocation service arguments (3,page_bytes,page_bytes); service identity/semantics not executed",
+    "New path zeros page_bytes before binding; inherited path preserves every byte",
+    "secureMonitor10 descriptor,18 mapping object,20 CPU pointer bound in both paths",
+    "12/14 page shifts exercised; current G16 profile14; size16KiB holds1024 16-byte pairs by arithmetic, audited context ID domain remains0..127"
+  ],
+  "qualification": "Actual native bounded slices and whole randomized memory images. Allocation service supplied at checked callsite, descriptor/mapping/CPU address correspondence supplied, protected existing-resource allocation and mapping services not executed. Zeroing audit is independent of allocation outcome; it does not continue a failed allocation. No live GPU allocation, context, firmware or register publication."
+}

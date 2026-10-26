@@ -1,0 +1,80 @@
+{
+  "schema": 1,
+  "release": "7.1.3-m4rch-gpu-id",
+  "linux_revision": "e9d2237cd064e6d086d938cd9c85e0c963cf7291",
+  "wallace_revision": "55f116dd0e0f28d1412c6be728a101f7d861c473",
+  "inputs": {
+    "release": "7.1.3-m4rch-gpu-id",
+    "source_sha256": "9d3c382adc1649d248365a5b2cc06ce9e2a2230fb90bf80eebd2cecba4b8b182",
+    "config_sha256": "ecfcf1ec1500ca30ef6d39a439d79b616806e29c18c10acc5c5af5a4f0bfd820",
+    "preserved_driver_hashes": {
+      "drivers/usb/dwc3/dwc3-apple.c": "52a5463188e0142515f98249a71da62f45553385e6552ae67dce96e81be1384d",
+      "drivers/phy/apple/t6040-usb2.c": "7bd4b229ee2d89a34a94dd0664c93945560fa59b1e40601b2ddf4f457aeecfe3",
+      "drivers/usb/typec/tipd/core.c": "ffcff0dafca9589c46d2549228c9e8911ef5528f8e00930322511d9dfb9a8d88",
+      "drivers/gpu/drm/drm_format_helper.c": "143f5fb5fdba1efe3cfc8d0c68150a839d9c2600f982f29b61a4e0f3f10bdced",
+      "drivers/cpufreq/apple-soc-cpufreq.c": "f1739dd6c7bb7a8dc71c40788ce23282a5470f3e69fc7aab752649b332a77499",
+      "arch/arm64/kernel/traps.c": "bf5c7b1c0bf4d950a558bfe2c11719e6190639fe25b386ef8d52b1b9c6549f2e",
+      "drivers/cpuidle/cpuidle-apple.c": "9a0bd7f4ef646593672693d73b5e279846171bea1c4f808fedd25f7bb919d88d"
+    },
+    "default_reads": false,
+    "gpu_dt_installed": false,
+    "build_succeeded": true,
+    "artifact_hashes": {
+      "arch/arm64/boot/Image": "8738a54d2b213f4a07ea38883a01bbf2db052e32755356fbdbd1f8e0bc0d7e82",
+      "drivers/gpu/drm/asahi/m4rch_gpu_identify.ko": "ab7aa443cd37c6a26056df6dc686d2cb8df2b6d88dbae093494d1494af1dc585"
+    }
+  },
+  "artifacts": {
+    "image": {
+      "bytes": 28209664,
+      "sha256": "8738a54d2b213f4a07ea38883a01bbf2db052e32755356fbdbd1f8e0bc0d7e82"
+    },
+    "vmlinux": {
+      "bytes": 37175696,
+      "sha256": "9a2391ae67039d9ab4a6f36e475ce82454cc44150e5ff9f3cd638fe5a972ecdf"
+    },
+    "module": {
+      "bytes": 18592,
+      "sha256": "ab7aa443cd37c6a26056df6dc686d2cb8df2b6d88dbae093494d1494af1dc585"
+    },
+    "package": {
+      "bytes": 21244764,
+      "sha256": "733c7f7edb423489a49b392a80607687804771f69d8bfd42874094d701d4b6c9"
+    },
+    "initramfs": {
+      "bytes": 10722912,
+      "sha256": "453283511f3b09d2144a01a63eab5089c9537e7a6948652cde54bc82b07420af"
+    },
+    "grub_config": {
+      "bytes": 1386,
+      "sha256": "0e13dbf1418c136fff7bb57c69fad594572886b9e3e38d31f1c5fd73e4a9b60f"
+    }
+  },
+  "leaf_module_final_warnings": 0,
+  "earlier_failures": [
+    "Parent subdirectory wiring missing, corrected before final module build",
+    "Rust module parameter bool unsupported; changed to u32 default0, opt-in1",
+    "Missing crate documentation, fixed"
+  ],
+  "baseline_framework_warnings": "Two unused-import Rust warnings and bindgen type warnings in first full build; logs retained",
+  "checks": [
+    "12 boot tests",
+    "6 ADT tests",
+    "2 compiled profile tests (including six Rust fixtures)",
+    "ARM64 Image header",
+    "Maintained experimental config with explicit Rust/leaf-only exceptions",
+    "Disabled resource candidate DT compiled",
+    "Extracted trial initramfs release and matching package identity",
+    "Normal kernel/initramfs backup SHA256 match",
+    "GRUB syntax and standalone loadenv module present"
+  ],
+  "installed": true,
+  "booted": false,
+  "gpu_mmio": false,
+  "firmware_startup": false,
+  "gpu_node_added_to_live_boot": false,
+  "next_boot": "One-shot m4rch-gpu-id, consumed before kernel start; permanent default remains normal entry0. Runtime GRUB consumption not yet exercised.",
+  "wfi_current": "Y",
+  "normal_package": "linux-m4rch 7.1.3-2",
+  "native_logs": "out/gpu-maintained (ignored local output)"
+}

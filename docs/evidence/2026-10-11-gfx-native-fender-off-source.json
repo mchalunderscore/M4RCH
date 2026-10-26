@@ -1,0 +1,105 @@
+{
+  "schema": "m4rch.gfx-native-fender-off.numeric-source-evidence.v1",
+  "offline_only": true,
+  "matched_driver": {
+    "path": "/boot/GPUC003/private-apple/com.apple.AGXG16X",
+    "sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+    "apple_build": "25G83",
+    "agx_version": "353.14"
+  },
+  "native_leaf": {
+    "function": "G16::AGXArmFenderChinook::disableDynamicFenderGating",
+    "start": "0x89d8268",
+    "end": "0x89d8358",
+    "span_sha256": "2d74b7b84b98ae117391ae7b62174e5eea52c0cc5d91c24b1b056e9a3cb1dce2",
+    "vtable_callback_slot": "0x58",
+    "logical_offset": "0xd06030",
+    "operation": "fresh old | 4",
+    "width_bits": 32,
+    "readback_after_write": true
+  },
+  "native_direction": {
+    "enclosing_function": "G16::AGXFenderCommon::setFenderPowerEnabled",
+    "start": "0x89d85dc",
+    "end": "0x89d8804",
+    "span_sha256": "20e414655110cce14f43aa853f21ee586b291a052b20c90a9970425cf16f7af6",
+    "off_call": "0x89d8758",
+    "order": "disable callback before conditional provider vote-disable calls",
+    "full_native_poweroff_reproduced": false
+  },
+  "experimental_transfer": {
+    "kit": "gfx-native-fender-off-cycle",
+    "version": 20,
+    "macro": "GFX_NATIVE_FENDER_OFF_CYCLE_TRIAL",
+    "call": "static int gfx_native_fender_disable(void)",
+    "placement": "after native idle/CPU stop, fresh before-off physical check and coordinate alias check; before off-intent/seal/paired OFF",
+    "map": "retained preASC d04000/16K at offset2030; identity must equal verified enable mapping",
+    "snapshot_phase": "fender-off-before",
+    "physical_predicate": "unchanged frozen v19 source-backed runtime predicate; TARGETf and clear RESET/BUSY/PSRESET/DEV_DISABLE; ACTUALf or AUTO plus named ACTUAL0/4",
+    "fresh_gpu_identity": "matches both retained preASC and verified enable GPU ID",
+    "one_shot": true,
+    "invalid_baseline_refused": true,
+    "readback_exact": true,
+    "unknown_after_attempted_failure": true,
+    "full_barrier": "added DSB SY after exact readback, experimental ordering",
+    "pmgr_writes": 0,
+    "scheduler_ack_writes": 0,
+    "new_mappings": 0,
+    "new_polls": 0,
+    "strict_off_mask_unchanged": "0x90001cff",
+    "backing_release": false,
+    "management_rejoin_replay": false,
+    "same_boot_retry": false
+  },
+  "actual_C_qualification": {
+    "report": {
+      "path": "out/gfx-native-fender-off-cycle/fender-off-qualification-v1.json",
+      "bytes": 44778,
+      "sha256": "473c469f18401dc820a756527b1297c36bf7a4ffb0d43f63ae9ed413123e8705"
+    },
+    "passed": true,
+    "case_count": 65,
+    "compiler_returncode": 0,
+    "helper_sha256": "5d9d00b6bcb5e3d85a429833befa6a4bfcddaced32a79925e66eae469b962c77",
+    "success_log_fixture": {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-fender-off-cycle/fender-off-qualification-v1.success.log",
+      "bytes": 833,
+      "sha256": "fa9088387501e130d8d65048ea8eeaf44efa3e09b8e3552a4d2910b19faa9b31"
+    },
+    "maximum_mmio_writes": 1,
+    "hardware_access": false,
+    "hardware_actions": [],
+    "kernel_build": false,
+    "caller_order_verified": false
+  },
+  "input_pins": [
+    {
+      "path": "docs/evidence/2026-10-10-gfx-native-fender-enable.json",
+      "bytes": 11298,
+      "sha256": "311c680f76e8418579970048fb144e7994d917ee30a47642b73a13cd2344f261"
+    },
+    {
+      "path": "docs/evidence/2026-10-11-gfx-native-fender-runtime-cycle-f4-live.json",
+      "bytes": 23116,
+      "sha256": "9bc462d2e103e5f455192213e24a47482ae880071042d32fd3e963a588854555"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-fender-off-cycle/gfx-native-fender-disable.h",
+      "bytes": 6180,
+      "sha256": "5d9d00b6bcb5e3d85a429833befa6a4bfcddaced32a79925e66eae469b962c77"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-fender-off-cycle/test-fender-disable.py",
+      "bytes": 13767,
+      "sha256": "ded92cf3a942f9ec8bb19ebfc8d3090df179daa822e611191b32e347260b5dc2"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-fender-runtime-cycle/gfx-native-runtime-state.h",
+      "bytes": 3678,
+      "sha256": "4e25f120981774cef205020ea8d59683c42d549477ce174af427b7b3c61d8497"
+    }
+  ],
+  "limitations": "Native OFF leaf ordering is source-backed. Transferring it after this experimental CPU stop is a distinct hypothesis; no equivalence to the full native enclosure, GPU retirement, render or physical OFF is claimed. Real caller order, build and hardware outcome remain separate root evidence.",
+  "private_binary_or_instruction_bytes_exported": false,
+  "hardware_actions": []
+}

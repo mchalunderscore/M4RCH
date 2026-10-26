@@ -1,0 +1,75 @@
+--- a/src/kboot_gpu.c
++++ b/src/kboot_gpu.c
+@@ -630,6 +630,58 @@
+     return 0;
+ }
+ 
++/* Preserve independently decoded clusters without assigning firmware slots or
++ * importing T8132 power calibration. Experimental metadata, not an AGX ABI. */
++static int dt_set_gpu_t6040_clusters(void *dt, int sgx)
++{
++    u32 count, tables, core_len, sram_len;
++    if (ADT_GETPROP(adt, sgx, "perf-state-count", &count) < 0 ||
++        ADT_GETPROP(adt, sgx, "perf-state-table-count", &tables) < 0 ||
++        tables != 2 || count == 0 || count > MAX_PSTATES)
++        bail("ADT: GPU: unsupported T6040 cluster geometry\n");
++    const struct perf_state *core = adt_getprop(adt, sgx, "perf-states", &core_len);
++    const struct perf_state *sram = adt_getprop(adt, sgx, "perf-states-sram", &sram_len);
++    if (!core || !sram || core_len != tables * count * sizeof(*core) || sram_len != core_len)
++        bail("ADT: GPU: incomplete T6040 cluster tables\n");
++    fdt32_t steps[2 * MAX_PSTATES * 6], groups[2];
++    u32 used = 0;
++    for (u32 cluster = 0; cluster < tables; cluster++) {
++        const struct perf_state *c = core + cluster * count;
++        const struct perf_state *m = sram + cluster * count;
++        u32 n = 0;
++        for (u32 first = 0; first < count;) {
++            u32 last = first, low = first, high = first;
++            while (last + 1 < count && c[last + 1].volt == c[first].volt)
++                last++;
++            if (first && c[first].volt <= c[first - 1].volt)
++                bail("ADT: GPU: unordered T6040 cluster %u\n", cluster);
++            for (u32 row = first; row <= last; row++) {
++                if (c[row].freq != m[row].freq || m[row].volt != m[first].volt ||
++                    c[row].freq % 1000000)
++                    bail("ADT: GPU: inconsistent T6040 cluster %u row %u\n", cluster, row);
++                if (c[row].freq < c[low].freq) low = row;
++                if (c[row].freq > c[high].freq) high = row;
++            }
++            steps[used++] = cpu_to_fdt32(c[low].freq / 1000000);
++            steps[used++] = cpu_to_fdt32(c[high].freq / 1000000);
++            steps[used++] = cpu_to_fdt32(low);
++            steps[used++] = cpu_to_fdt32(high);
++            steps[used++] = cpu_to_fdt32(c[first].volt);
++            steps[used++] = cpu_to_fdt32(m[first].volt);
++            n++;
++            first = last + 1;
++        }
++        groups[cluster] = cpu_to_fdt32(n);
++    }
++    int gpu = fdt_path_offset(dt, "gpu");
++    if (gpu < 0) return -1;
++    if (fdt_setprop_u32(dt, gpu, "m4rch,cluster-metadata-version", 1) ||
++        fdt_setprop(dt, gpu, "m4rch,cluster-group-counts", groups, sizeof(groups)) ||
++        fdt_setprop(dt, gpu, "m4rch,cluster-steps", steps, used * sizeof(fdt32_t)))
++        return -1;
++    return 0;
++}
++
+ /* Metadata only: does not power SGX, read ID registers or start firmware. */
+ static int dt_set_gpu_t6040_metadata(void *dt)
+ {
+@@ -672,9 +724,10 @@
+         firmware_set_fdt(dt, gpu, "apple,firmware-abi", &os_firmware))
+         return -1;
+     /* Raw SGX properties preserve both tables. No T8132 calibration. */
+-    if (dt_set_gpu_t8132_adt(dt, gpu, sgx))
+-        return -1;
+-    if (fdt_setprop_string(dt, gpu, "status", "disabled"))
++    if (dt_set_gpu_t8132_adt(dt, gpu, sgx) || dt_set_gpu_t6040_clusters(dt, sgx))
++        return -1;
++    gpu = fdt_path_offset(dt, "gpu");
++    if (gpu < 0 || fdt_setprop_string(dt, gpu, "status", "disabled"))
+         return -1;
+ 
+     printf("FDT: GPU: T6040 metadata reserved; probe requires reviewed DT/power resources\n");

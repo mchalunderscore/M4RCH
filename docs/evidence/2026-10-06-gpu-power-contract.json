@@ -1,0 +1,83 @@
+{
+  "schema": 1,
+  "source": "Native boot ADT captured 2026-10-06",
+  "decoder_basis": "Gravity bootloader 950e6b7f268e71cf77889f27a760782bf898b651 proxyclient/m1n1/adt.py PMGRDevices (48 bytes), PMGRPSRegs (12 bytes), group/offset mode",
+  "devices": [
+    {
+      "id": 384,
+      "name": "GPX",
+      "flags": 9,
+      "no_ps": false,
+      "parents": [
+        0,
+        0
+      ],
+      "group": 2,
+      "offset": "0x0",
+      "pmgr_reg_index": 54,
+      "pmgr_bus_base": "0x88e80000",
+      "group_base_offset": "0x0"
+    },
+    {
+      "id": 385,
+      "name": "AFR",
+      "flags": 9,
+      "no_ps": false,
+      "parents": [
+        0,
+        0
+      ],
+      "group": 2,
+      "offset": "0x100",
+      "pmgr_reg_index": 54,
+      "pmgr_bus_base": "0x88e80000",
+      "group_base_offset": "0x0"
+    },
+    {
+      "id": 386,
+      "name": "GFX",
+      "flags": 2,
+      "no_ps": false,
+      "parents": [
+        385,
+        0
+      ],
+      "group": 2,
+      "offset": "0x110",
+      "pmgr_reg_index": 54,
+      "pmgr_bus_base": "0x88e80000",
+      "group_base_offset": "0x0"
+    },
+    {
+      "id": 400,
+      "name": "GFX-SGX",
+      "flags": 16,
+      "no_ps": true,
+      "parents": [
+        386,
+        0
+      ],
+      "group": 0,
+      "offset": "0x0"
+    },
+    {
+      "id": 402,
+      "name": "GFX-BUSY",
+      "flags": 16,
+      "no_ps": true,
+      "parents": [
+        0,
+        0
+      ],
+      "group": 0,
+      "offset": "0x0"
+    }
+  ],
+  "genpd_observed": {
+    "gfx": "off-0",
+    "afr": "on",
+    "gpx": "on"
+  },
+  "genpd_capture_sha256": "58e4dbc484ceb348efad13edc4644e74d72ba0992854b959dab94b2f18400a61",
+  "qualification": "No GPU MMIO performed. Existing ps_gfx is a parent-path candidate; no_ps devices must not be treated as direct power-state registers. Power/reset/clock sequencing and safe SGX ID access remain unqualified."
+}

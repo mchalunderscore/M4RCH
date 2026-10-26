@@ -1,0 +1,42 @@
+{
+  "boot_id": "8fc6f0d0-c9bf-4475-89ed-8118352ea6bf",
+  "attempts": [
+    {
+      "stage": "cycle-2",
+      "load_returncode": 1,
+      "root_published": false,
+      "module_present": false,
+      "reboot_required": false,
+      "stderr": "insmod: ERROR: could not insert module /home/alice/Desktop/m4rch/out/gpu-gravity-contract/asc-graph-init/asc-graph-init.ko: Device or resource busy\n",
+      "log": [
+        "[  252.027377] m4rch graph-init: 100 device leaves prepared; total mapped pages=169",
+        "[  252.027380] m4rch graph-init: shadow walk passed, root=0xfffffc2000100000 interface=0xc8aa322039604c0 host_allocations=1",
+        "[  252.027386] m4rch graph-init: owned backing released; published=0 detached=0",
+        "[  252.029944] m4rch graph-init: owned backing released; published=0 detached=0",
+        "[  252.047209] m4rch graph-init: owned backing released; published=0 detached=0",
+        "[  252.047232] m4rch graph-init: runtime suspend result=0"
+      ]
+    },
+    {
+      "stage": "warm-restart-1",
+      "load_returncode": 0,
+      "root_published": false,
+      "module_present": true,
+      "reboot_required": true,
+      "stderr": "",
+      "log": [
+        "[  485.567273] m4rch graph-init: 100 device leaves prepared; total mapped pages=169",
+        "[  485.567275] m4rch graph-init: shadow walk passed, root=0xfffffc2000100000 interface=0xc8aa322039604c0 host_allocations=1",
+        "[  485.567280] m4rch graph-init: owned backing released; published=0 detached=0",
+        "[  485.569645] m4rch graph-init: owned backing released; published=0 detached=0",
+        "[  485.582463] m4rch graph-init: entry control=0x0 status=0x6e warm_restart=1",
+        "[  485.582479] m4rch ASC crashlog: cold control=0x0 status=0x6e; starting bounded poll",
+        "[  489.581793] m4rch ASC crashlog: message_received=0 hello_replied=0 endpoint_map=0; requesting ASC core stop",
+        "[  489.581809] m4rch ASC crashlog: AP_QUIESCED_ACK=0 IOP_SLEEP_ACK=0",
+        "[  489.581818] m4rch ASC crashlog: final control=0x0 status=0x6e stop_readback=1",
+        "[  489.581821] m4rch ASC crashlog: retirement incomplete; resources pinned; reboot required"
+      ]
+    }
+  ],
+  "qualification": "Cycle2 refused before START with no retained module. Explicit6e warm START produced no HELLO/map in4seconds; core stopped6e, power/MMIO probe retained. No warm root publication or INIT request. Not a firmware reset/wake success."
+}

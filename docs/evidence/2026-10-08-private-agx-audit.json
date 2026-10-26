@@ -1,0 +1,71 @@
+{
+  "apple_build": "25G83",
+  "agx_version": "353.14",
+  "macho_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "provenance": "Private Apple binary analysis, not clean-room. Numeric ABI observations and audit locations only; no disassembly or copied algorithms in this report.",
+  "facts": [
+    {
+      "topic": "Shared object sizes",
+      "observation": "Initialization calls pass sizes0xc18,0x1048,0xe10 for CPU fields2c0,2c8,2d0; corroborates the uploaded spec, not a complete allocation/lifetime proof.",
+      "evidence_addresses": [
+        "0xfffffe00089a9b78",
+        "0xfffffe00089a9b84",
+        "0xfffffe00089a9b90"
+      ]
+    },
+    {
+      "topic": "Mapping-notification fields",
+      "observation": "Shared status through CPU field960 receives mapped-address results at48e0 and48e8. These remain zero in current structural fixture; future backing extent/ownership needs qualification before enabling notifications.",
+      "evidence_addresses": [
+        "0xfffffe00089d0eb4..0xfffffe00089d0f38"
+      ]
+    },
+    {
+      "topic": "Readiness distinction",
+      "observation": "isFirmwareInitialised uses CPU-object flag2a8, set after the host boot wait succeeds. This is host bookkeeping, not a firmware-visible readiness register or proof that a raw root publication completed.",
+      "evidence_addresses": [
+        "0xfffffe00089d18bc..0xfffffe00089d18c8",
+        "0xfffffe00089ca8e8..0xfffffe00089ca8ec"
+      ]
+    }
+  ],
+  "next_private_audits": [
+    {
+      "topic": "Shared allocation and cache policy",
+      "address": "0xfffffe00089a7c44",
+      "symbol": "AGXFirmware::allocateSharedData",
+      "goal": "Qualify mapping attributes and object grouping; distinguish CPU allocation flags from firmware flags."
+    },
+    {
+      "topic": "Complete initialization objects and receive channels",
+      "address": "0xfffffe00089be47c",
+      "symbol": "AGXArmFirmware::initFirmwareSharedData",
+      "goal": "Connect CPU fields and allocation backing to every main pointer/channel; no speculative nonzero pointer."
+    },
+    {
+      "topic": "Resource inventory and segmented mappings",
+      "address": "0xfffffe00089ce484",
+      "symbol": "AGXArmFirmware::allocFirmwareData",
+      "goal": "Resolve resource extents not present in13-row G16X table and per-resource mapping predicates."
+    },
+    {
+      "topic": "Power initialization",
+      "address": "0xfffffe00089cad50",
+      "symbol": "AGXArmFirmware::initPowerAndPerformanceData",
+      "goal": "Separate required ABI defaults from device calibration/runtime policy; preserve16-core topology and captured two-cluster tables."
+    },
+    {
+      "topic": "Boot completion and resource retirement",
+      "address": "0xfffffe00089ca7cc",
+      "symbol": "AGXArmFirmware::bootFirmware",
+      "goal": "Qualify observable completion conditions and underlying start/stop transport before claiming teardown safe."
+    },
+    {
+      "topic": "MMU prerequisites",
+      "address": "0xfffffe00089e67f8",
+      "symbol": "AGXSecureMonitorG16::setupMMUConfig",
+      "goal": "Compare appropriate hardware prerequisites with current boot mappings; no blind replay of macOS writes."
+    }
+  ],
+  "qualification": "Nine exact pinned instruction checks validate named sites, not whole call graphs. Symbols guide future audits; next_private_audits are uncompleted work, not validated requirements. No additional hardware activity."
+}

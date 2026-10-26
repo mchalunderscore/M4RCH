@@ -1,0 +1,562 @@
+{
+  "schema": "m4rch.gfx-native-running-cycle-ep1-crashlog-native-boundary.v1",
+  "offline_only": true,
+  "hardware_actions": [],
+  "source_changes": [],
+  "new_owner_prepared": false,
+  "next_echo_kit_proposed": false,
+  "boot_id": "df540c1c-5ec4-44f5-894c-37be6c2f3527",
+  "operation_directory": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071610.007352Z-gfx-native-running-cycle-0e13916e",
+  "container": {
+    "path": "out/private-apple/kernelcache.decoded",
+    "bytes": 119308288,
+    "previously_bound_sha256": "6158e1c0d591240808e26ff1da050b2fa0ed3eb17c1779d2ddde3171b959536f",
+    "whole_container_rehash_performed": false
+  },
+  "bounded_native_ranges": [
+    {
+      "label": "complete_crashlog_messageHandler",
+      "start": "0xfffffe000b1ec444",
+      "end_exclusive": "0xfffffe000b1ec930",
+      "file_offset": 69108804,
+      "bytes": 1260,
+      "sha256": "deee3db4d56d37a6fd5deab95899c11fbec6c294337e36d299979a45c3591b54"
+    },
+    {
+      "label": "complete_handleCrashlog",
+      "start": "0xfffffe000b1ecdbc",
+      "end_exclusive": "0xfffffe000b1ed31c",
+      "file_offset": 69111228,
+      "bytes": 1376,
+      "sha256": "a0c9e4b64a393e0d68ba434d4cd472f282fb5445f8452f5df2c3f9acb0b8d559"
+    },
+    {
+      "label": "complete_powerStateChangeGated",
+      "start": "0xfffffe000b1ecb78",
+      "end_exclusive": "0xfffffe000b1ecc80",
+      "file_offset": 69110648,
+      "bytes": 264,
+      "sha256": "415b9931c45feafe44bbf89c0d44b3f8fc03a0f2b2e3ec450ab445703933d45d"
+    },
+    {
+      "label": "complete_powerStatePreservesMemory",
+      "start": "0xfffffe000b1e8170",
+      "end_exclusive": "0xfffffe000b1e8180",
+      "file_offset": 69091696,
+      "bytes": 16,
+      "sha256": "d124f9dd2941b1a111732bcb8858543b96a94cacf0184a1503dae625d4299f87"
+    },
+    {
+      "label": "complete_crashlog_initWithOptions",
+      "start": "0xfffffe000b1ec1a8",
+      "end_exclusive": "0xfffffe000b1ec444",
+      "file_offset": 69108136,
+      "bytes": 668,
+      "sha256": "216a08014f8c4c6a29749f371184ee0e2f62871de1e8ff619fa6cd671c470b53"
+    },
+    {
+      "label": "complete_slaveMemoryFromIOPPhysGated",
+      "start": "0xfffffe000b1e5444",
+      "end_exclusive": "0xfffffe000b1e56b8",
+      "file_offset": 69080132,
+      "bytes": 628,
+      "sha256": "d770607a2d1333de48fb1a33a5445d1a4f492994acc5129dc86f3c627bcb6827"
+    },
+    {
+      "label": "complete_crashlog_decodeLog",
+      "start": "0xfffffe000b1f5a04",
+      "end_exclusive": "0xfffffe000b1f6334",
+      "file_offset": 69147140,
+      "bytes": 2352,
+      "sha256": "b001e5142a97349bda11a0df04d57f5a6339f061860755f77ac3dc7dabc08b47"
+    },
+    {
+      "label": "complete_multiCrashlogFindFirstCrash",
+      "start": "0xfffffe000b1f5720",
+      "end_exclusive": "0xfffffe000b1f5a04",
+      "file_offset": 69146400,
+      "bytes": 740,
+      "sha256": "c43809c881287527d4b17fa91d918b7fd665fe515482881079c2277c96ea189f"
+    }
+  ],
+  "actual_rows": [
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071610.007352Z-gfx-native-running-cycle-0e13916e/dmesg-before.log",
+      "line": 667,
+      "text": "[  143.301676] m4rch ASC crashlog: started system endpoint 1 only"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071610.007352Z-gfx-native-running-cycle-0e13916e/dmesg-before.log",
+      "line": 668,
+      "text": "[  143.303696] m4rch ASC crashlog: boot response message=0x10810001de4000 metadata=0x20350000000001"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071610.007352Z-gfx-native-running-cycle-0e13916e/dmesg-before.log",
+      "line": 669,
+      "text": "[  143.303705] m4rch ASC crashlog: offer address=0x10001de4000 bytes=0x8000"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071610.007352Z-gfx-native-running-cycle-0e13916e/dmesg-before.log",
+      "line": 670,
+      "text": "[  143.303716] m4rch ASC crashlog: reserved DATA offer echoed; no new DMA allocation"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071610.007352Z-gfx-native-running-cycle-0e13916e/dmesg-before.log",
+      "line": 671,
+      "text": "[  143.305733] m4rch ASC crashlog: boot response message=0x70000000000020 metadata=0x10450000000000"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071610.007352Z-gfx-native-running-cycle-0e13916e/dmesg-before.log",
+      "line": 672,
+      "text": "[  143.307749] m4rch ASC crashlog: power response message=0xb0000000000020 metadata=0x10560000000000"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071610.007352Z-gfx-native-running-cycle-0e13916e/dmesg-after.log",
+      "line": 407,
+      "text": "[  143.301676] m4rch ASC crashlog: started system endpoint 1 only"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071610.007352Z-gfx-native-running-cycle-0e13916e/dmesg-after.log",
+      "line": 408,
+      "text": "[  143.303696] m4rch ASC crashlog: boot response message=0x10810001de4000 metadata=0x20350000000001"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071610.007352Z-gfx-native-running-cycle-0e13916e/dmesg-after.log",
+      "line": 409,
+      "text": "[  143.303705] m4rch ASC crashlog: offer address=0x10001de4000 bytes=0x8000"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071610.007352Z-gfx-native-running-cycle-0e13916e/dmesg-after.log",
+      "line": 410,
+      "text": "[  143.303716] m4rch ASC crashlog: reserved DATA offer echoed; no new DMA allocation"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071610.007352Z-gfx-native-running-cycle-0e13916e/dmesg-after.log",
+      "line": 411,
+      "text": "[  143.305733] m4rch ASC crashlog: boot response message=0x70000000000020 metadata=0x10450000000000"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071610.007352Z-gfx-native-running-cycle-0e13916e/dmesg-after.log",
+      "line": 412,
+      "text": "[  143.307749] m4rch ASC crashlog: power response message=0xb0000000000020 metadata=0x10560000000000"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071610.007352Z-gfx-native-running-cycle-0e13916e/dmesg-after.log",
+      "line": 1073,
+      "text": "[  312.357139] m4rch gfx-native-running-cycle-rx: epoch=2 index=1 message=0x100000000c000c metadata=0x10010000000000"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071610.007352Z-gfx-native-running-cycle-0e13916e/dmesg-after.log",
+      "line": 1075,
+      "text": "[  312.358259] m4rch gfx-native-running-cycle-rx: epoch=2 index=2 message=0x80000000000003 metadata=0x10120000000000"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071610.007352Z-gfx-native-running-cycle-0e13916e/dmesg-after.log",
+      "line": 1077,
+      "text": "[  312.359388] m4rch gfx-native-running-cycle-rx: epoch=2 index=3 message=0x88000100000003 metadata=0x10230000000000"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071610.007352Z-gfx-native-running-cycle-0e13916e/dmesg-after.log",
+      "line": 1085,
+      "text": "[  312.360525] m4rch gfx-native-running-cycle-rx: epoch=2 index=4 message=0x70000000000020 metadata=0x10340000000000"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071610.007352Z-gfx-native-running-cycle-0e13916e/dmesg-after.log",
+      "line": 1086,
+      "text": "[  312.360533] m4rch gfx-native-running-cycle: phase=boot-running-observed result=0 refused_condition=none intent=1 first_off_fields_historical=1 powercycle_complete=0 application_rejoined=0 allocations_retained=174 restart_allowed=0 dma_retirement_verified=0"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071610.007352Z-gfx-native-running-cycle-0e13916e/dmesg-after.log",
+      "line": 1092,
+      "text": "[  312.360544] m4rch gfx-native-running-cycle: phase=host-on-intent result=0 refused_condition=none intent=1 first_off_fields_historical=1 powercycle_complete=0 application_rejoined=0 allocations_retained=174 restart_allowed=0 dma_retirement_verified=0"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071610.007352Z-gfx-native-running-cycle-0e13916e/dmesg-after.log",
+      "line": 1098,
+      "text": "[  312.361662] m4rch gfx-native-running-cycle-rx: epoch=2 index=5 message=0x10110001de4000 metadata=0x10450000000001"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071610.007352Z-gfx-native-running-cycle-0e13916e/dmesg-after.log",
+      "line": 1105,
+      "text": "[  312.361675] m4rch gfx-native-running-cycle: phase=retained-final result=-71 refused_condition=host-on-reply-unqualified intent=1 first_off_fields_historical=1 powercycle_complete=0 application_rejoined=0 allocations_retained=174 restart_allowed=0 dma_retirement_verified=0"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071610.007352Z-gfx-native-running-cycle-0e13916e/dmesg-after.log",
+      "line": 1110,
+      "text": "[  312.361680] m4rch gfx-native-running-cycle-on: phase=retained-final boot_running_observed=1 boot_running_message=0x70000000000020 boot_running_metadata=0x10340000000000 host_on_attempted=1 host_on_write_attempted=1 host_on_reply_observed=0 host_on_reply_message=0x0 host_on_reply_metadata=0x0 host_on_polls=2"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071757.694938Z-gfx-snapshot-c8aaf211/dmesg-after.log",
+      "line": 365,
+      "text": "[  143.301676] m4rch ASC crashlog: started system endpoint 1 only"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071757.694938Z-gfx-snapshot-c8aaf211/dmesg-after.log",
+      "line": 366,
+      "text": "[  143.303696] m4rch ASC crashlog: boot response message=0x10810001de4000 metadata=0x20350000000001"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071757.694938Z-gfx-snapshot-c8aaf211/dmesg-after.log",
+      "line": 367,
+      "text": "[  143.303705] m4rch ASC crashlog: offer address=0x10001de4000 bytes=0x8000"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071757.694938Z-gfx-snapshot-c8aaf211/dmesg-after.log",
+      "line": 368,
+      "text": "[  143.303716] m4rch ASC crashlog: reserved DATA offer echoed; no new DMA allocation"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071757.694938Z-gfx-snapshot-c8aaf211/dmesg-after.log",
+      "line": 369,
+      "text": "[  143.305733] m4rch ASC crashlog: boot response message=0x70000000000020 metadata=0x10450000000000"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071757.694938Z-gfx-snapshot-c8aaf211/dmesg-after.log",
+      "line": 370,
+      "text": "[  143.307749] m4rch ASC crashlog: power response message=0xb0000000000020 metadata=0x10560000000000"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071757.694938Z-gfx-snapshot-c8aaf211/dmesg-after.log",
+      "line": 1031,
+      "text": "[  312.357139] m4rch gfx-native-running-cycle-rx: epoch=2 index=1 message=0x100000000c000c metadata=0x10010000000000"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071757.694938Z-gfx-snapshot-c8aaf211/dmesg-after.log",
+      "line": 1033,
+      "text": "[  312.358259] m4rch gfx-native-running-cycle-rx: epoch=2 index=2 message=0x80000000000003 metadata=0x10120000000000"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071757.694938Z-gfx-snapshot-c8aaf211/dmesg-after.log",
+      "line": 1035,
+      "text": "[  312.359388] m4rch gfx-native-running-cycle-rx: epoch=2 index=3 message=0x88000100000003 metadata=0x10230000000000"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071757.694938Z-gfx-snapshot-c8aaf211/dmesg-after.log",
+      "line": 1043,
+      "text": "[  312.360525] m4rch gfx-native-running-cycle-rx: epoch=2 index=4 message=0x70000000000020 metadata=0x10340000000000"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071757.694938Z-gfx-snapshot-c8aaf211/dmesg-after.log",
+      "line": 1044,
+      "text": "[  312.360533] m4rch gfx-native-running-cycle: phase=boot-running-observed result=0 refused_condition=none intent=1 first_off_fields_historical=1 powercycle_complete=0 application_rejoined=0 allocations_retained=174 restart_allowed=0 dma_retirement_verified=0"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071757.694938Z-gfx-snapshot-c8aaf211/dmesg-after.log",
+      "line": 1050,
+      "text": "[  312.360544] m4rch gfx-native-running-cycle: phase=host-on-intent result=0 refused_condition=none intent=1 first_off_fields_historical=1 powercycle_complete=0 application_rejoined=0 allocations_retained=174 restart_allowed=0 dma_retirement_verified=0"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071757.694938Z-gfx-snapshot-c8aaf211/dmesg-after.log",
+      "line": 1056,
+      "text": "[  312.361662] m4rch gfx-native-running-cycle-rx: epoch=2 index=5 message=0x10110001de4000 metadata=0x10450000000001"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071757.694938Z-gfx-snapshot-c8aaf211/dmesg-after.log",
+      "line": 1063,
+      "text": "[  312.361675] m4rch gfx-native-running-cycle: phase=retained-final result=-71 refused_condition=host-on-reply-unqualified intent=1 first_off_fields_historical=1 powercycle_complete=0 application_rejoined=0 allocations_retained=174 restart_allowed=0 dma_retirement_verified=0"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071757.694938Z-gfx-snapshot-c8aaf211/dmesg-after.log",
+      "line": 1068,
+      "text": "[  312.361680] m4rch gfx-native-running-cycle-on: phase=retained-final boot_running_observed=1 boot_running_message=0x70000000000020 boot_running_metadata=0x10340000000000 host_on_attempted=1 host_on_write_attempted=1 host_on_reply_observed=0 host_on_reply_message=0x0 host_on_reply_metadata=0x0 host_on_polls=2"
+    }
+  ],
+  "descriptor_comparison": {
+    "cold": {
+      "fullword": "0x0010810001de4000",
+      "type": 1,
+      "mode54_55": 0,
+      "address": "0x10001de4000",
+      "bytes": 32768
+    },
+    "retained_event": {
+      "fullword": "0x0010110001de4000",
+      "type": 1,
+      "mode54_55": 0,
+      "address": "0x10001de4000",
+      "bytes": 4096
+    },
+    "same_address": true,
+    "size_changed": true,
+    "firmware_data_base": "0x10001d44000",
+    "firmware_data_bytes": 1277952,
+    "offset": "0xa0000",
+    "mathematically_4K_aligned_and_within_reserved_extent": true,
+    "current_resource_classification_reverified": false
+  },
+  "current_stage": {
+    "START_readback_confirmed": true,
+    "HELLO12_and_two_map_ACKs": true,
+    "exact_boot_running_observed": true,
+    "own_HOST_B20_intent_and_source_write_path": true,
+    "fifth_removed_frame_endpoint": 1,
+    "accepted_host_on_reply": false,
+    "second_202": false,
+    "second_ACK": false,
+    "second_CPU_stop": false,
+    "second_OFF": false,
+    "second_PMput": false,
+    "second_reference_retained": true,
+    "result": -71,
+    "refusal": "host-on-reply-unqualified",
+    "pending_B20_reply_proved": false,
+    "frame_causally_correlated_to_own_B20": false
+  },
+  "native_findings": {
+    "existing_buffer_discriminator": "Complete messageHandler reads local endpoint+a8. Nonnull takes the crash path, sets local124=2 and calls _handleCrashlog(false). It does not issue descriptor echo on that branch.",
+    "no_buffer_descriptor": "Only a8null and descriptor mode54..55=0 with nonzero44-bit address calls slaveMemoryFromIOPPhys(address,size), obtains existing IOP memory and constructs a size/address response. Zero address uses local allocation; mode1 uses a different host mapping/reply path. Neither alternative is admitted by current owner.",
+    "size": "Native bits44..51 supply units; bit52 set selects4KiB units here. Both actual words select4KiB, coldcount8=32KiB versus eventcount1=4KiB. Native reply reencodes rounded units/address from memory object, not unconditional raw echo.",
+    "handleCrashlog": "Complete handleCrashlog calls RTBuddy::onPanic, obtains buffer bytes/mapping, supplies them to CrashlogDecoder, invokes decoding and later panic/reporting machinery. Thus the existing-buffer branch is materially different from service negotiation.",
+    "preservation": "Complete crashlog power callback releases local+a8 only for an isAsleep transition where powerStatePreservesMemory(newstate) is false. Predicate returns state<3; state2 preserves the local buffer object. Native init starts with+a8null. Actual runtime+a8 is unobserved and is not inferred from the firmware-provided address.",
+    "header": "Native decoder validates a32-byte header with CLHE magic0x434c4845, payload-size bounds and version-byte constraints; CLGH0x434c4748 routes multi-crash parsing. Linux parser likewise requires CLHE header/declared size and bounded sections. A valid postevent capture could support crash diagnosis, but no such reserved buffer capture is currently saved."
+  },
+  "local_primary_source": {
+    "path": "out/gfx-native-reset-kernel/linux",
+    "HEAD": "3b85d81f656af14d0fc4bea3eef87fe040c424f9",
+    "selected_three_files_clean": true,
+    "scope": "Existing local maintained kernel source; not claimed to be byteexact current upstream.",
+    "ranges": [
+      {
+        "path": "out/gfx-native-reset-kernel/linux/drivers/soc/apple/rtkit.c",
+        "label": "descriptor negotiation and early reserved echo",
+        "first_line": 271,
+        "last_line": 345,
+        "bytes": 2170,
+        "sha256": "157bd5a353cf91c927a6cc0e4faccfb4390a95c59a5c77be58912b8c82befb35"
+      },
+      {
+        "path": "out/gfx-native-reset-kernel/linux/drivers/soc/apple/rtkit.c",
+        "label": "type1 retained crashlog semantics",
+        "first_line": 376,
+        "last_line": 415,
+        "bytes": 1195,
+        "sha256": "18b4440ee35e1602bfa5858d173e1c9eec241a07282e7fc80ba67e2544218ddb"
+      },
+      {
+        "path": "out/gfx-native-reset-kernel/linux/drivers/soc/apple/rtkit.c",
+        "label": "reinit clears buffers",
+        "first_line": 773,
+        "last_line": 807,
+        "bytes": 1127,
+        "sha256": "c544bb387815e15af4e675f50ef3bd6df57e96098eedf53575d550dd27294ea4"
+      },
+      {
+        "path": "out/gfx-native-reset-kernel/linux/drivers/soc/apple/rtkit-crashlog.c",
+        "label": "CLHE and32byte header",
+        "first_line": 10,
+        "last_line": 39,
+        "bytes": 1016,
+        "sha256": "75ae7b76910af27be58c5c490562e7d6a57bd2e508b4b1a71a3b4dde7d92069a"
+      },
+      {
+        "path": "out/gfx-native-reset-kernel/linux/drivers/soc/apple/rtkit-crashlog.c",
+        "label": "bounded header/section dump",
+        "first_line": 281,
+        "last_line": 360,
+        "bytes": 2264,
+        "sha256": "a763add89e053cbaec687e7468fbe3d9eeebe102e95e24120aedacf88e8ac461"
+      },
+      {
+        "path": "out/gfx-native-reset-kernel/linux/rust/kernel/soc/apple/rtkit.rs",
+        "label": "nonzeroIOVA maps existing; zeroIOVA allocates",
+        "first_line": 137,
+        "last_line": 159,
+        "bytes": 857,
+        "sha256": "2fcab3656a132f22d618ae676045e3a3588035a2eed209d0d7e5f3d098f89203"
+      }
+    ]
+  },
+  "captured_DRAM_review": {
+    "inputs": [
+      {
+        "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/data-before.bin",
+        "bytes": 1277952,
+        "sha256": "3a5b8cc02d184f78c42df9bd0cb33c6645ee49b5e3e871c0d14b4535e87efd17",
+        "CLHE_little_endian_offsets": [],
+        "CLGH_little_endian_offsets": []
+      },
+      {
+        "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071610.007352Z-gfx-native-running-cycle-0e13916e/objects-after.bin",
+        "bytes": 1130496,
+        "sha256": "384cb90b95c7f02ce0c7161d6ef6e60cb2cc14e45cd23a9a4679de0a3d78656f",
+        "CLHE_little_endian_offsets": [],
+        "CLGH_little_endian_offsets": []
+      },
+      {
+        "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071610.007352Z-gfx-native-running-cycle-0e13916e/owned-after.bin",
+        "bytes": 2850816,
+        "sha256": "5c8a247a936b973a09a298cdd38272c10899e12f99dc4b9fc9d4a9eb03fa41c0",
+        "CLHE_little_endian_offsets": [],
+        "CLGH_little_endian_offsets": []
+      },
+      {
+        "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071757.694938Z-gfx-snapshot-c8aaf211/objects-after.bin",
+        "bytes": 1130496,
+        "sha256": "384cb90b95c7f02ce0c7161d6ef6e60cb2cc14e45cd23a9a4679de0a3d78656f",
+        "CLHE_little_endian_offsets": [],
+        "CLGH_little_endian_offsets": []
+      },
+      {
+        "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071757.694938Z-gfx-snapshot-c8aaf211/owned-after.bin",
+        "bytes": 2850816,
+        "sha256": "5c8a247a936b973a09a298cdd38272c10899e12f99dc4b9fc9d4a9eb03fa41c0",
+        "CLHE_little_endian_offsets": [],
+        "CLGH_little_endian_offsets": []
+      }
+    ],
+    "preboot_reserved_buffer": {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/data-before.bin",
+      "offset": "0xa0000",
+      "first_word": "0x0",
+      "first_4K_sha256": "ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7",
+      "first_4K_all_zero": true,
+      "before_cold_boot_only": true,
+      "current_event_evidence": false
+    },
+    "objects_and_owned_snapshot_scope": "asc-graph-init.c graph_read and joined_read copy owned host graph pages. They do not copy reservedFW DATAat10001de4000.",
+    "current_reserved_buffer_available": false,
+    "absence_of_magic_in_host_snapshots_does_not_rule_out_firmware_crash": true
+  },
+  "final_capture": {
+    "objects": {
+      "bytes": 1130496,
+      "sha256": "384cb90b95c7f02ce0c7161d6ef6e60cb2cc14e45cd23a9a4679de0a3d78656f"
+    },
+    "owned": {
+      "bytes": 2850816,
+      "sha256": "5c8a247a936b973a09a298cdd38272c10899e12f99dc4b9fc9d4a9eb03fa41c0"
+    },
+    "notifications": {
+      "magic": 1481787213,
+      "version": 1,
+      "entry_bytes": 80,
+      "capacity": 65536,
+      "used": 51217,
+      "status_flags": 0,
+      "doorbells": 9,
+      "sha256": "a7cc36de0078dc9803e71d854000e1909490c07c4e8e91e448749a91362b99db",
+      "authoritative_records_sha256": "83d66267e54b94e2e6d1bed882aaa4592b1da236fdfabefa74a92ae9ca7931d2"
+    },
+    "dmesg": {
+      "sha256": "3e29ce359cacbba221973381932c313e3b9e408f4268c0679422bf7524d47e43"
+    }
+  },
+  "conclusion": "Actual type1 EP1 event is unresolved between buffer negotiation and crash notification. Native and local Linux retained-buffer semantics make crash notification a concrete possibility; size/address bounds alone cannot qualify a harmless echo. Diagnose postevent reserved buffer/header before proposing any echo kit. No pending HOST reply, successful HOST state, second shutdown or app rejoin is established.",
+  "next_offline_actions": [
+    "Preserve current frozen owner and5frame journal; no retry, echo, release or new module.",
+    "Review a separately authorized qualified postevent reservedFW DATAcapture if one becomes available, validating CLHE/CLGH and declared size/sections before interpreting crash content.",
+    "Keep HOSTB20 reply and shutdown low1/2 ACK predicates exact; retain all ownership on unknown."
+  ],
+  "input_pins": [
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071610.007352Z-gfx-native-running-cycle-0e13916e/attempt.json",
+      "bytes": 40883,
+      "sha256": "59f5416ea0a8fbdf06ed8b5e9efd070e2c3ee5b0a480e08f337230efb64e122c"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071610.007352Z-gfx-native-running-cycle-0e13916e/dmesg-before.log",
+      "bytes": 131468,
+      "sha256": "20f43e04d3b4488aa311920db0b6d392e481d52238937fb0c69583eaaf9740f9"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071610.007352Z-gfx-native-running-cycle-0e13916e/dmesg-after.log",
+      "bytes": 131284,
+      "sha256": "3e29ce359cacbba221973381932c313e3b9e408f4268c0679422bf7524d47e43"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071610.007352Z-gfx-native-running-cycle-0e13916e/objects-after.bin",
+      "bytes": 1130496,
+      "sha256": "384cb90b95c7f02ce0c7161d6ef6e60cb2cc14e45cd23a9a4679de0a3d78656f"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071610.007352Z-gfx-native-running-cycle-0e13916e/owned-after.bin",
+      "bytes": 2850816,
+      "sha256": "5c8a247a936b973a09a298cdd38272c10899e12f99dc4b9fc9d4a9eb03fa41c0"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071610.007352Z-gfx-native-running-cycle-0e13916e/notifications-after.bin",
+      "bytes": 5242944,
+      "sha256": "a7cc36de0078dc9803e71d854000e1909490c07c4e8e91e448749a91362b99db"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071757.694938Z-gfx-snapshot-c8aaf211/attempt.json",
+      "bytes": 40780,
+      "sha256": "3f753d6ad650ad9c85090fb325ae8173b7a57ca62ddfb63a9b8134e0d52d6051"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071757.694938Z-gfx-snapshot-c8aaf211/dmesg-after.log",
+      "bytes": 131421,
+      "sha256": "8357b95cbd1f77a582bb102ef1a2ddced0f39643b208d1678bdb0da4f5800399"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071757.694938Z-gfx-snapshot-c8aaf211/objects-after.bin",
+      "bytes": 1130496,
+      "sha256": "384cb90b95c7f02ce0c7161d6ef6e60cb2cc14e45cd23a9a4679de0a3d78656f"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/resident-operations/20261010T071757.694938Z-gfx-snapshot-c8aaf211/owned-after.bin",
+      "bytes": 2850816,
+      "sha256": "5c8a247a936b973a09a298cdd38272c10899e12f99dc4b9fc9d4a9eb03fa41c0"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/attempt.json",
+      "bytes": 45839,
+      "sha256": "ed4d8fcc7664cd519abd425d981367fa932d4e7d6cc409451e7d9c8e596f1873"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/data-before.bin",
+      "bytes": 1277952,
+      "sha256": "3a5b8cc02d184f78c42df9bd0cb33c6645ee49b5e3e871c0d14b4535e87efd17"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/candidate/asc-graph-init/boot-df540c1c-5ec4-44f5-894c-37be6c2f3527/boot.adt",
+      "bytes": 606208,
+      "sha256": "050bd113d5f18e13c64d78d070753793e22c1551a32b40d0c167b4815bc69d0a"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/prepared-owner-v2/asc-graph-init.c",
+      "bytes": 23293,
+      "sha256": "b6924899d235e874581b9a08b99432a588929089ba80b675b7e37ad07466bc2a"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/prepared-owner-v2/boot-contract.h",
+      "bytes": 72,
+      "sha256": "5194505b49f3b40acdc80f29bf1e8c5c5f11374f483ed6a22df2c22ea904e082"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/prepared-owner-v2/gfx-native-running-cycle.h",
+      "bytes": 34833,
+      "sha256": "aa44ebd534597879567b75989318f52db48e7bd33c99c27effa52df718f0f38a"
+    },
+    {
+      "path": "out/gfx-native-running-cycle/prepared-owner-v2/native-running-cycle-owner-source-receipt.json",
+      "bytes": 15985,
+      "sha256": "d5ed3909257d659816e2c23cebe43f72308aa0677efa3660b5e76758b56ee36d"
+    },
+    {
+      "path": "docs/evidence/2026-10-09-gfx-native-idle-cycle-running20-native-boundary.json",
+      "bytes": 21311,
+      "sha256": "c4d530a7480945e6d3dfb03969c18abea5fb71001d61354bc890a79caa0d0d64"
+    },
+    {
+      "path": "docs/evidence/2026-10-09-gfx-native-idle-cycle-boot-power20-protocol-review.json",
+      "bytes": 35385,
+      "sha256": "8c2599df10bff0f8802620d2164254dc56e3830a05724b03970429e9bf258a1f"
+    },
+    {
+      "path": "out/gfx-native-reset-kernel/linux/drivers/soc/apple/rtkit.c",
+      "bytes": 30653,
+      "sha256": "4a3c96085d9157eab786cf5c40df9f96a9c64895d6e70f618eb7cd36cd11bba4"
+    },
+    {
+      "path": "out/gfx-native-reset-kernel/linux/drivers/soc/apple/rtkit-crashlog.c",
+      "bytes": 9379,
+      "sha256": "aadba88c7edda9196f577d5821e6b2655318992ba07be7edb85c6ccdcf0cbd80"
+    },
+    {
+      "path": "out/gfx-native-reset-kernel/linux/rust/kernel/soc/apple/rtkit.rs",
+      "bytes": 10080,
+      "sha256": "76d0c42d1aed5ed050fc986a08f408578e555830479de456f103bb03623d43a8"
+    }
+  ]
+}

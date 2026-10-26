@@ -303,5 +303,28 @@
     "result_source_sha256": "ad7cb844aae58eaee7c63671ffeffd15bd5cf4e864e864b2e26597266a548477",
     "build_verified": false,
     "native_verified": false
+  },
+  "metadata_candidates": {
+    "linux": {
+      "patch": "patches/gravity-linux-t6040-metadata.patch",
+      "sha256": "4353edb0ade595278e665923561fa0c1ce6069ce3dcce74f679fbffabfe05620",
+      "base_revision": "3b85d81f656af14d0fc4bea3eef87fe040c424f9",
+      "offline_build_verified": true,
+      "native_gpu_execution_verified": false
+    },
+    "mesa": {
+      "patch": "patches/gravity-mesa-t6040-metadata.patch",
+      "sha256": "f3a497d76824e1514c02aa1cb4fd50c26edddad97b49b5e033e6dd9dced4573f",
+      "base_revision": "87ac51d411f0e58a9433567ec2666f457be89e1d",
+      "offline_build_verified": true,
+      "native_gpu_execution_verified": false
+    },
+    "bootloader": {
+      "patch": "patches/gravity-bootloader-t6040-metadata.patch",
+      "sha256": "db78fde40d34815a63bee2794bdbbd79399f8c5f86c51d1f88155f9f12191711",
+      "base_revision": "950e6b7f268e71cf77889f27a760782bf898b651",
+      "offline_build_verified": true,
+      "native_gpu_execution_verified": false
+    }
   }
 }

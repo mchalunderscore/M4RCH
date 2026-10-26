@@ -4,26 +4,28 @@
   "sources": {
     "m1n1": {
       "url": "https://github.com/GravityLinux/bootloader.git",
-      "revision": "a49e1e170f917038206cf9ed9ad66f9581808575",
+      "revision": "08f691e951e6c3284f9b3bc0fb058e3c4dc06f6f",
       "patch": "patches/gravity-m1n1-j614s.patch",
-      "patch_sha256": "9150005d31f8b2c2bd7d5243a3b7e5e1286d270c9cf57c7a243b08098029a0c0",
+      "patch_sha256": "58a398d44ad2d0eac026175b59b7e1acf06ab5bb8eef065c6724e3febeb49bd1",
       "added_files": [],
       "result_files": {
         "src/dapf.c": "ded508b896f159b2523bc85cb42269ce7dc18c2b8f1303961240515e7015b879",
-        "src/fb.c": "97c78ad4789a6315a121fa8ec7c546c900a1fad3446e87057820ec21bf887cee",
-        "src/kboot.c": "6d2f23f83b228bc585869d3b9520477d40ed764b8bd72b81d81d4896fa7113f9",
-        "src/main.c": "be09ae72f4b251a39f9e164c32e9f42a56896ec66a8258599e509751c54724f2",
-        "src/nvme.c": "0faf9201fdfaad7c016e0c9147ba4b45fcad533a0a2ec4a9a0f6207fd30705a5",
+        "src/fb.c": "bfa3b91be4dddd1ac4f30dd3d10faba2e52f3e139b50a3a9df56e870a0c85559",
+        "src/kboot.c": "82b91606b191f7e7bb9db94ece8b63a16c605bc357aa1f5afac30380c65effac",
+        "src/main.c": "7d9c92e0dbe3ab49037b44e68c6351e7009db85fbdd5dfa87bcd71eae7632e7e",
+        "src/nvme.c": "06da24183253aa98275c18165a5fb460022389f012332fe2004d2b683fc442cd",
         "src/nvme.h": "a9305124f68e222b335b90039d80d83b7f39ccbc704567392bbe2d65fbc12300",
         "src/rtkit.c": "d381efce27775b9b3317ccd8ff9858620b75371a9b9832e8d72576a8b9fae8a7",
-        "src/rtkit.h": "8da3642a3209165662a744ca43e0ceb2eda67abad5f72fa938e6976b164ae9f9"
+        "src/rtkit.h": "8da3642a3209165662a744ca43e0ceb2eda67abad5f72fa938e6976b164ae9f9",
+        "src/display.h": "78a7b5b2ecad4a2124d972cb2df45beaba8e54b7d3fbd47d8fae7d4c576e0ee4",
+        "rust/src/lib.rs": "92bc413011992cc30ccc2ea83ca37f78290b42587122919b2e0c26a25f7709bd"
       }
     },
     "uboot": {
       "url": "https://github.com/GravityLinux/u-boot.git",
       "revision": "a2f6913694ff26908c16948af3f8372429782263",
       "patch": "patches/gravity-uboot-j614s.patch",
-      "patch_sha256": "df8bc4e9781fe3083ff2a167e62f4c8f82cc56b34a023ad36d9dcbe2df16ff7a",
+      "patch_sha256": "748e6b2624761433e48e81a3572aa24aca86d8e5d1609d9ab5605dff6af7ad09",
       "added_files": [
         "arch/arm/mach-apple/archsd.c",
         "configs/apple_sdboot_defconfig"
@@ -32,8 +34,8 @@
         "arch/arm/Kconfig": "ed7ab023d4ed407f5fe9f30f25303a46daa4ab38333c555e81b4b1988c474946",
         "arch/arm/mach-apple/Kconfig": "cfac1692c12833875675c5f03f9df3677d541e7980c7ec3c4470ab802c0f1bde",
         "arch/arm/mach-apple/Makefile": "298c1c8afccdeb8353bc036649a4f95829aab9291fb8595c52ce1f12f4d2556f",
-        "arch/arm/mach-apple/archsd.c": "c9aaf929019fe5c864dd1783b3aeb056a84a8cb54e22af1c09e4cd31829dbca3",
-        "arch/arm/mach-apple/board.c": "0b0a503c25b7a9b62b6b82dcedbf3f701276860489bec47f92b2ef47485f18e5",
+        "arch/arm/mach-apple/archsd.c": "c2b7dc5374abbae95ecaf843fd82977614ff9cd1a094d6d3069b55d3a9408b15",
+        "arch/arm/mach-apple/board.c": "b37ea9f522abde8c6c2477f7d39875de67ad7f8d2701a36d2b904dd198afcd24",
         "configs/apple_sdboot_defconfig": "908d87b0213a5f2649ecadb18de8378b60578d7f6461c55033d566389745938f",
         "drivers/nvme/nvme.c": "897b79610b3e675dcaf2bd819eac9ef824685b866d3b9da2fca639390516f06e",
         "drivers/nvme/nvme_apple.c": "976d9b6f0e41ba3ccb2101399137e9e5af1654524ea59cb21ff030e9e3ce2889",

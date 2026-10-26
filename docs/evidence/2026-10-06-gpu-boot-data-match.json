@@ -1,0 +1,24 @@
+{
+  "method": "Compare read-only boot gfx-data snapshot to FTAB Mach-O __DATA file segment, byte-for-byte",
+  "images": [
+    {
+      "image": "a000",
+      "data_bytes": 1277952,
+      "differing_bytes": 424,
+      "matching_nonzero_bytes": 58171,
+      "snapshot_exact_match": false,
+      "identical_16KiB_pages": 74,
+      "total_pages": 78
+    },
+    {
+      "image": "b000",
+      "data_bytes": 1277952,
+      "differing_bytes": 0,
+      "matching_nonzero_bytes": 58592,
+      "snapshot_exact_match": true,
+      "identical_16KiB_pages": 78,
+      "total_pages": 78
+    }
+  ],
+  "qualification": "Evidence of loaded segment content, not shared initialization ABI qualification or permission to execute."
+}

@@ -1,0 +1,44 @@
+{
+  "schema": "m4rch-gpc-aux-recovery-candidate-v1",
+  "stage": "Executed on boot0140aa26; see 2026-10-09-gpc-aux-recovery-live.json. Superseded by telemetry mapping candidate.",
+  "candidate": "out/gpc-aux-recovery/candidate",
+  "prepared": "out/gpc-aux-recovery/prepared",
+  "module_sha256": "399e92e2b25fcafd3aa4ca7214bce65e41398310c8772f7c030311a7f6a5cf5e",
+  "build_receipt_sha256": "9ca44931138dfb28787c1a79064419f949dab7186908a2283175d6c5cda6375d",
+  "graph_sha256": "d24883291a3650a3716b5f14b20387cde1ee529ae680425fcbce01e1f0638ee5",
+  "graph_receipt_sha256": "e73c8300674159b7aa3061c7b66aee48c62f7d8efe77ffe0bbecbacce22cc67e",
+  "changed_graph_bytes_vs_gpc": 99,
+  "main_gpu_frequency_cap": 1,
+  "auxiliary_domains": [
+    {
+      "name": "CS",
+      "hardware_base": "0x1a48",
+      "maximum": 7,
+      "cap": 7
+    },
+    {
+      "name": "AFR",
+      "hardware_base": "0x1b90",
+      "maximum": 7,
+      "cap": 7
+    }
+  ],
+  "writable_page_added": "0x288d60000",
+  "owned_pages": 174,
+  "initial_controls": 32,
+  "staged_controls": 128,
+  "source_sha256": {
+    "joined-context-init.h": "1851e697907d50a3f47d153879f47f1b6b07065f5d58055fa6269bc436bc15b2",
+    "graph-contract.h": "80d5e7776c4a8fb32798df20180bfd3da5646bf03ed32a9009f7acee1d23d730",
+    "render-data.h": "3bdbf04b9a3219c8e818beb464b5f55626e8a9b3d184680e3fd05a6361c47cbd",
+    "recovery-contract.h": "2ffe44545a74631cbb86c33d26e52da4b8f49c3e587d5351955495d7e7ecee31",
+    "job-data.h": "c18ede083b691fbd3044237aaf30eb1e34c775e9391d3c6f1bea8e61561e0913",
+    "render-backing-map.h": "ade8cedde4da68f2f463ed8604f47ab6b56cdf1c8ff3984d592e00f4a065978b",
+    "command-pool-map.h": "1e4696787075de13a56f4946018221803a5a01a3c5a653bbbdbd48f319e74b6b",
+    "recovery-cycle.h": "6b5465b6e4c65932f031054a83fbe560166e6f1a37bcf4155453422f077a16f7",
+    "graph-map.h": "a3204874bd0d164ac5eba028de577a905dd2c860f7c9fccd5f618b27e2cb6027",
+    "boot-contract.h": "5194505b49f3b40acdc80f29bf1e8c5c5f11374f483ed6a22df2c22ea904e082",
+    "asc-graph-init.c": "140f8a968854a916cc4eab8d7bd708640a30c5573def1de6b33f67fae4c4cacd"
+  },
+  "qualification": "Native auxiliary tables, first-page timestamp mapping and expanded fixed diagnostic sampling; no new live outcome. All backing retained, no work before repeated recovery success."
+}

@@ -1,0 +1,19 @@
+{
+  "qualification": "Prepared and compiled only; no native run of expanded arena yet.",
+  "kernel_release": "7.1.13-m4rch-gpu-contract",
+  "arena_object_pages": 18,
+  "total_owned_pages": 20,
+  "unknown_extent_marker_pages": [
+    "extra_root_1"
+  ],
+  "module_sha256": "47349374cf2dacfbefd19ab43327de043907c0a9d451fa2a1cf5ff19734e589d",
+  "arena_source_sha256": {
+    "asc-arena-preflight.c": "6e824758ec4dc44bdeedb7c55f120b708d2c473cfc4a8635e7df27f8e5a65b98",
+    "arena-map.h": "5d74405224177b25e6b8263c9021fb670eaff2514570303ddc293666480521bc",
+    "arena-contract.h": "f6cdbb0086c83a36f4dbebd7eba1cba9a999fc99a5f23ab44cc03ea907bfd9fd"
+  },
+  "offline_tests_passed": 5,
+  "publishable": false,
+  "next_native_run": "Fresh cold boot, run-root-envelope.py --arena --run",
+  "prior_native_coverage": "13 object pages only; separate earlier evidence preserved."
+}

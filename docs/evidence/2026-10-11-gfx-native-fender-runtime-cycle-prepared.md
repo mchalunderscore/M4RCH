@@ -1,0 +1,7 @@
+V19 corrects the physical runtime admission that prevented v18 from submitting any draw. V18 verified native Fender d06030 6→0, then observed1400034f (clock-gated ACTUAL4, TARGETf, AUTO1). Gravity explicitly treats TARGETf/AUTO as active. This distinct trial uses that runtime policy only after successful native Fender enable, allowing known ACTUAL0/4/f and requiring AUTO for gated0/4. Reset/busy/disable, PM ownership, identities and application conditions remain checked. Failed application operands are now recorded.
+
+The owner built cleanly against the existing kernel. Actual C qualification passed829 cases; focused host qualification passed36 cases, one intercepted complete flow and four consumed-boot refusals. Frozen Fender45 and v18 host21/1 plus v17 C64/preASC39/host41/10 are composed without repeating their tests. The module, complete source projection and qualifications are pinned.
+
+The batch retains the same cold startup, one firmware-mediated TA/3D draw, trace3,15s observation and full immutable capture before the native shutdown cycle. Strict physical OFF and fresh ON/rejoin are unchanged. No clock forcing, PMGR state write, scheduler ACK/coverage write, direct native kick or teardown cleanup is added. All174 pages remain owned throughout. Management-only rejoin would not establish application recovery or rendering restart.
+
+Boot f4a7b737-ed3d-4851-8fcd-cac56eb233d7 is fresh and has no owner loaded. No additional reboot is needed before this selected trial. This is offline preparation; actual rendering and teardown remain to be tested.

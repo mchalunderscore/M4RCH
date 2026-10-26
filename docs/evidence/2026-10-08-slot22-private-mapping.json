@@ -1,0 +1,23 @@
+{
+  "source": "Private matching Apple AGXG16X353.14 binary; implementation-derived, not clean-room",
+  "apple_build": "25G83",
+  "macho_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "constructor": "AGXAcceleratorG16X::configureDevice",
+  "evidence_addresses": [
+    "0xfffffe00089ea984",
+    "0xfffffe00089ea988",
+    "0xfffffe00089ea98c"
+  ],
+  "evidence_file_offsets": [
+    "0xa8024",
+    "0xa8028",
+    "0xa802c"
+  ],
+  "resource_object_offset": "0x6458",
+  "resource_stride": "0x438",
+  "resource_slot": 22,
+  "relative_base": "0x1000000",
+  "inferred_physical": "0x289000000",
+  "qualification": "Constructor supports primary-aperture-relative base; generic primary physical getter provenance from previous audit. Native firmware cached pointer and STR independently support selected VA. Extent8000 remains donor hypothesis; no CPU HAL to firmware permission equivalence, IRQ/reset ownership or hardware write semantics established.",
+  "prior_checks": "Private SHA256SUMS,13 CPU PIO rows and exact platform checker all passed again; no code executed."
+}

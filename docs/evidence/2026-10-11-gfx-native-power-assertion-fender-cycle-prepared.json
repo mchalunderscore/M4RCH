@@ -1,0 +1,160 @@
+{
+  "schema": "m4rch.gfx-native-power-assertion-fender-cycle-prepared.v1",
+  "ready": true,
+  "selected_next_hardware_candidate": true,
+  "version": 23,
+  "selection_record_is_separate_from_frozen_preparation": true,
+  "candidate": "/home/alice/Desktop/m4rch/out/gfx-native-power-assertion-fender-cycle/candidate",
+  "consumed_boot": "09a48fe3-925a-46d9-b99b-b9aecc71e6f3",
+  "current_boot_at_selection": "09a48fe3-925a-46d9-b99b-b9aecc71e6f3",
+  "supersedes_selected_v22_without_loading_it": true,
+  "v22_protocol_omission": "Class1 opcode10 lacked native RegionC+e51 assertion increment.",
+  "native_publication_order": [
+    "record64",
+    "packed assertion u32 increment/cache publication",
+    "producer34",
+    "EP33class84"
+  ],
+  "initial_class0_assertion_delta": 0,
+  "owner_sha256": "82eb692f34412a4eb9b7c582ec687db6920d7b6fe605b0d92baddc3a7fa765f7",
+  "owner_GNU_note_hex": "040000001400000003000000474e550005e87ce79c9d41ecb27aa4323418f44951cc7738",
+  "candidate_receipt_sha256": "f11fa6c69af145c2a321daebe270dea32a7286141b2b2e8ce91030e64e2651d6",
+  "preparation_sha256": "d863b91151ec71450cceaf01497eec45fa5540ff8d9a8cec7f5d9ed83622dae7",
+  "source_receipt_sha256": "3e363160308b6dba6d62a33aa058bf7e1b13da18d51f0b668f2b1c9021a8f128",
+  "qualification_composition": {
+    "new_C_Fender_OFF_cases": 65,
+    "new_host_cases": 36,
+    "new_actual_main_flows": 3,
+    "new_early_refusal_flows": 2,
+    "frozen_v19_runtime_C_cases": 829,
+    "frozen_v19_host_cases": 36,
+    "frozen_v19_actual_main_flows": 1,
+    "frozen_v18_Fender_C_cases": 45,
+    "frozen_v18_host_cases": 21,
+    "frozen_v18_actual_main_flows": 1,
+    "frozen_v17_C_cases": 64,
+    "frozen_v17_preasc_C_cases": 39,
+    "frozen_v17_host_cases": 41,
+    "frozen_v17_actual_main_flows": 10,
+    "unchanged_cases_repeated": false,
+    "frozen_v20_Fender_OFF_C_cases": 65,
+    "frozen_v20_host_cases": 27,
+    "frozen_v20_actual_main_flows": 1,
+    "new_descriptor_data_cases": 19,
+    "frozen_v21_descriptor_data_cases": 19,
+    "frozen_v21_host_cases": 9,
+    "frozen_v21_actual_main_flows": 1,
+    "new_idle_policy_C_cases": 77,
+    "frozen_v22_C_cases": 77,
+    "frozen_v22_host_cases": 28,
+    "frozen_v22_actual_main_flows": 3,
+    "new_power_assertion_C_cases": 24
+  },
+  "new_qualifications": [
+    {
+      "report": {
+        "path": "/home/alice/Desktop/m4rch/out/gfx-native-power-assertion-fender-cycle/power-assertion-qualification-v1.json",
+        "bytes": 58233,
+        "sha256": "2f92cabc0c36573b5d7fe222c01d0f509ae1dba626d7129bfeb09593f13d097b"
+      },
+      "case_count": 24,
+      "actual_main_flow_count": null,
+      "early_refusal_flow_count": null
+    },
+    {
+      "report": {
+        "path": "/home/alice/Desktop/m4rch/out/gfx-native-power-assertion-fender-cycle/host-qualification-v1.json",
+        "bytes": 202288,
+        "sha256": "5bbdc2206ff2b780f99ee67d16efb268d5e6bb1a5127c0f1830a1204a5515e46"
+      },
+      "case_count": 36,
+      "actual_main_flow_count": 3,
+      "early_refusal_flow_count": 2
+    }
+  ],
+  "module_loaded": false,
+  "kernel_rebuilt": false,
+  "kernel_GRUB_unchanged": true,
+  "hardware_controls": [],
+  "manual_fresh_reboot_required": true,
+  "hypothesis": "Publish the native class1 assertion increment after the idle-policy record and before producer34/EP33; combine with exact nineteen-byte native descriptors, sealed draw capture and sole202 teardown. Test policy processing, firmware GPU OFF and strict physical OFF separately.",
+  "experimental_transfers": [
+    "bool1 caller choice",
+    "idle-policy command before202"
+  ],
+  "clean_timeout_policy": "Record unproved command processing or firmware GPU OFF, refresh transport admission and continue sole202/NMI teardown while ownership/access/transport remain valid.",
+  "limitations": [
+    "Native idle policy is not a direct OFF or cancellation command.",
+    "Command completion and firmware off-word zero do not prove GPU work retirement.",
+    "This retains the partial descriptor correction, not the complete native normal-boot bundle.",
+    "No application/work replay, second cycle, raw reset/PMGR write, unload or free.",
+    "Triangle rendering and rebootless rendering restart remain unproved."
+  ],
+  "input_pins": [
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-power-assertion-fender-cycle/candidate/cold-render-preparation.json",
+      "bytes": 139610,
+      "sha256": "d863b91151ec71450cceaf01497eec45fa5540ff8d9a8cec7f5d9ed83622dae7"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-power-assertion-fender-cycle/candidate/asc-root-envelope/build-receipt.json",
+      "bytes": 30863,
+      "sha256": "f11fa6c69af145c2a321daebe270dea32a7286141b2b2e8ce91030e64e2651d6"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-power-assertion-fender-cycle/owner-build-command.json",
+      "bytes": 1693,
+      "sha256": "ee20175f2316e967359ad6113301d58489087a7f7170aa95956414bc9edddc69"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-power-assertion-fender-cycle/owner-build.log",
+      "bytes": 560,
+      "sha256": "6c583594d2d5e7acd342ee2af64901ae050a764c1a31b4bdc712cd145b15f24b"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/build-native-power-assertion-fender-owner.py",
+      "bytes": 4419,
+      "sha256": "7869d6b4068a3d5cb9765200d3c0edb27b0cc51bdc66a1240feaf098556f0149"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-fender-off-cycle/live-state-09.json",
+      "bytes": 24988,
+      "sha256": "37aacbc0046a7905b259633aba2252bdc0929c581e8f0fd051d3db266d4cac23"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-11-gfx-native-gpu-idle-control-abi.json",
+      "bytes": 8461,
+      "sha256": "de39401219a145372264ed4bdf42bc7017f19ddc31c4384ba2de006217cde0b8"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-11-gfx-native-firmware-off-object.json",
+      "bytes": 11839,
+      "sha256": "e1664b1fedc2bbb315aca5e226244cf908eda589d611549dcbb5fa3bb1049fd0"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-11-gfx-native-power-assertion-publication.json",
+      "bytes": 12725,
+      "sha256": "06ae39b4a3bacbafb83cda84e50d159f3181819da77ffbef7d8dcf05bc7920d4"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-11-gravity-native-t6040-components-v6.json",
+      "bytes": 8614,
+      "sha256": "0a51ada28d05f7dc71cf3c6ac5879cf292a1d0a9ab90e5a9128fcb543637e941"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/select-native-power-assertion-fender-ready.py",
+      "bytes": 12454,
+      "sha256": "114bd6f1e69160ed90793c30aa9efa457a76e226581c9e8206bdf1f3917210bb"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-power-assertion-fender-cycle/power-assertion-qualification-v1.json",
+      "bytes": 58233,
+      "sha256": "2f92cabc0c36573b5d7fe222c01d0f509ae1dba626d7129bfeb09593f13d097b"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-power-assertion-fender-cycle/host-qualification-v1.json",
+      "bytes": 202288,
+      "sha256": "5bbdc2206ff2b780f99ee67d16efb268d5e6bb1a5127c0f1830a1204a5515e46"
+    }
+  ]
+}

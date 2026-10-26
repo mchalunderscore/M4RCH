@@ -1,0 +1,746 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-09",
+  "scope": "offline matched-container provider analysis; no hardware actions",
+  "retrieval_receipt": "docs/evidence/2026-10-09-matched-kernelcache-retrieval.json",
+  "container": {
+    "input_sha256": "7a9305932f2c7028ec294b55a5ab23844173328eb38639c722a4b54401dcb1eb",
+    "decoded_sha256": "6158e1c0d591240808e26ff1da050b2fa0ed3eb17c1779d2ddde3171b959536f",
+    "decoded_bytes": 119308288,
+    "filetype": 12,
+    "fileset_entries": 366,
+    "uuid": "41811D69-3027-674E-E0DB-2F6F64C70EEB"
+  },
+  "private_sources": [
+    {
+      "path": "out/private-apple/kernelcache.release.mac16j",
+      "bytes": 31852893,
+      "sha256": "7a9305932f2c7028ec294b55a5ab23844173328eb38639c722a4b54401dcb1eb"
+    },
+    {
+      "path": "out/private-apple/kernelcache.decoded",
+      "bytes": 119308288,
+      "sha256": "6158e1c0d591240808e26ff1da050b2fa0ed3eb17c1779d2ddde3171b959536f"
+    },
+    {
+      "path": "out/private-apple/decode-matched-kernelcache.py",
+      "bytes": 3852,
+      "sha256": "26e2df4b98fb8f17e0fbb79b6f72cd125529ec8eedda2a04dcc601f6990f973b"
+    },
+    {
+      "path": "out/private-apple/make-provider-proof.py",
+      "bytes": 8993,
+      "sha256": "f0b8032e87597ad106dd0ef6ca3001258b0093d10c20f87255bfed11c674f273"
+    },
+    {
+      "path": "out/private-apple/lzfse-local",
+      "bytes": 74096,
+      "sha256": "c3b73c0410167d1c62772da82c26bef150374c2e78a9dc81c0b5259d6f0a44d9"
+    },
+    {
+      "path": "out/private-apple/fileset-index.json",
+      "bytes": 46925,
+      "sha256": "2e6da5e27a485a5639afe1663a2a340594181e56dccd926eda34dd0847cfef31"
+    },
+    {
+      "path": "out/private-apple/kernel-symbols.json",
+      "bytes": 92043155,
+      "sha256": "eff79feadb6a570f2856baa5d8950c3e77101b22a37f3999c12d9879404163e2"
+    },
+    {
+      "path": "out/private-apple/provider-vtable-slots.json",
+      "bytes": 3816,
+      "sha256": "474c7df30d1f40019d9b3585118aafd56b537d1e57b2eb81e8d84d23dd5bc0cc"
+    },
+    {
+      "path": "out/private-apple/provider-plist-metadata.json",
+      "bytes": 4903,
+      "sha256": "9569e0e1a9a480547623e7aa555a9d3df0d9beea888f23dbcf438a220478df2c"
+    },
+    {
+      "path": "out/private-apple/agx-fullcache-continuity.json",
+      "bytes": 344,
+      "sha256": "071c8377389d8c45412bc8a1cb096dde7a2dd1b6ee0c0fc6d3af68ea72bec59b"
+    },
+    {
+      "path": "out/private-apple/provider-disassembly.txt",
+      "bytes": 132914,
+      "sha256": "d93905161553bb0cd9002535a5157abe704c02b4af4989285c00170a78e86471"
+    },
+    {
+      "path": "out/private-apple/rtbuddy-disassembly.txt",
+      "bytes": 3749663,
+      "sha256": "f3b2d761afeb65c0b23d75049442ee3e0d636bb758878b548a86334b43bea8a3"
+    },
+    {
+      "path": "out/private-apple/a7iop-disassembly.txt",
+      "bytes": 334118,
+      "sha256": "fdfd967d76a141588b463a28790f285da3c49907df0f0dc393a0581c9599fe91"
+    },
+    {
+      "path": "out/private-apple/ascv6-disassembly.txt",
+      "bytes": 100944,
+      "sha256": "068c708556266e97e75fe43c3f7b708297a877b706532fec2ed1c9d7c19312ab"
+    },
+    {
+      "path": "out/private-apple/kernelcache-retrieval.json",
+      "bytes": 1027,
+      "sha256": "040d3f1096e60e38189e13be5006033ca1a29aef5eae08ad08a0da1506ac85c5"
+    },
+    {
+      "path": "out/private-apple/kernelcache-root-header-verification.json",
+      "bytes": 1159,
+      "sha256": "cfb9f6dbeb8b21bd3d57bb068e28ce4808fb43ddcafd1d6f9882637960ed1d11"
+    }
+  ],
+  "selected_filesets": [
+    {
+      "name": "com.apple.AGXFirmwareKextG16XRTBuddy",
+      "vmaddr": "0xfffffe0007128000",
+      "offset": 1196032
+    },
+    {
+      "name": "com.apple.AGXFirmwareKextRTBuddy64",
+      "vmaddr": "0xfffffe0007128fb0",
+      "offset": 1200048
+    },
+    {
+      "name": "com.apple.AGXG16X",
+      "vmaddr": "0xfffffe000712cfb0",
+      "offset": 1216432
+    },
+    {
+      "name": "com.apple.driver.AppleA7IOP-ASCWrap-v6",
+      "vmaddr": "0xfffffe0007147230",
+      "offset": 1323568
+    },
+    {
+      "name": "com.apple.driver.AppleA7IOP",
+      "vmaddr": "0xfffffe00071486f0",
+      "offset": 1328880
+    },
+    {
+      "name": "com.apple.driver.IOSlaveProcessor",
+      "vmaddr": "0xfffffe0007aa1df0",
+      "offset": 11132400
+    },
+    {
+      "name": "com.apple.driver.RTBuddy",
+      "vmaddr": "0xfffffe0007bf3980",
+      "offset": 12515712
+    }
+  ],
+  "provider_personality": {
+    "CFBundleIdentifier": "com.apple.AGXFirmwareKextG16XRTBuddy",
+    "CFBundleVersion": "1",
+    "CFBundleName": "AGXFirmwareKextG16XRTBuddy",
+    "OSBundleLibraries": {
+      "com.apple.AGXFirmwareKextRTBuddy64": "1.0",
+      "com.apple.driver.RTBuddy": "1.0.0",
+      "com.apple.kpi.bsd": "8.0",
+      "com.apple.kpi.iokit": "8.0",
+      "com.apple.kpi.libkern": "8.0",
+      "com.apple.kpi.mach": "8.0"
+    },
+    "IOKitPersonalities": {
+      "Firmware": {
+        "CFBundleIdentifier": "com.apple.AGXFirmwareKextG16XRTBuddy",
+        "IOClass": "AGXFirmwareKextG16RTBuddy",
+        "IOMatchCategory": "AGXFirmwareKextG16RTBuddy",
+        "IOPersonalityPublisher": "com.apple.AGXFirmwareKextG16XRTBuddy",
+        "IOPropertyMatch": {
+          "role": "GFX"
+        },
+        "IOProviderClass": "RTBuddyService"
+      }
+    }
+  },
+  "continuity": [
+    {
+      "segment": "__TEXT_EXEC",
+      "bytes": 895948,
+      "same": true,
+      "full_range_sha256": "664199816405894110f051eb8a19088991b4ec6e6369b4245df378b3cb0def3a"
+    },
+    {
+      "segment": "__DATA_CONST",
+      "bytes": 127784,
+      "same": true,
+      "full_range_sha256": "fa78acc09b6c4140a09fb8fc830b9744779c511d5a642fe40d37f530e7ff39c5"
+    }
+  ],
+  "pointer_resolution": {
+    "observed_function_pointer_base": "0xfffffe0007004000",
+    "formula": "base + low32(encoded_pointer); calibrated only for these matched function-pointer tables",
+    "address_point_delta": 16,
+    "calibration": "G16 and ASCv6 destructor symbols and constructor-selected address points"
+  },
+  "agx_delegate_vtables": [
+    {
+      "vtable": "0xfffffe0007ea0150",
+      "address_point": "0xfffffe0007ea0160",
+      "slots": [
+        {
+          "slot": "0x0",
+          "encoded": "0x8011377101954640",
+          "target": "0xfffffe0008958640",
+          "symbols": [
+            "__ZN25AGXFirmwareKextG16RTBuddyD1Ev"
+          ]
+        },
+        {
+          "slot": "0x8",
+          "encoded": "0x801156b7019545fc",
+          "target": "0xfffffe00089585fc",
+          "symbols": [
+            "__ZN25AGXFirmwareKextG16RTBuddyD0Ev"
+          ]
+        },
+        {
+          "slot": "0x880",
+          "encoded": "0x8011f1d20195601c",
+          "target": "0xfffffe000895a01c",
+          "symbols": [
+            "__ZN22AGXFirmwareKextRTBuddy21setAccelAndFWPointersEP14AGXAcceleratorP14AGXArmFirmware"
+          ]
+        },
+        {
+          "slot": "0x888",
+          "encoded": "0x80117e5201955544",
+          "target": "0xfffffe0008959544",
+          "symbols": [
+            "__ZN22AGXFirmwareKextRTBuddy12bootFirmwareEP11IOMemoryMap"
+          ]
+        },
+        {
+          "slot": "0x898",
+          "encoded": "0x80112ee5019553e4",
+          "target": "0xfffffe00089593e4",
+          "symbols": [
+            "__ZN22AGXFirmwareKextRTBuddy21sendMessageToFirmwareEy"
+          ]
+        },
+        {
+          "slot": "0x8a8",
+          "encoded": "0x8011d2f3019551fc",
+          "target": "0xfffffe00089591fc",
+          "symbols": [
+            "__ZN22AGXFirmwareKextRTBuddy23sendAsyncNoteToFirmwareEyb"
+          ]
+        },
+        {
+          "slot": "0x8c0",
+          "encoded": "0x8011ee4801954f48",
+          "target": "0xfffffe0008958f48",
+          "symbols": [
+            "__ZN22AGXFirmwareKextRTBuddy18changePowerStateToEm"
+          ]
+        },
+        {
+          "slot": "0x8d0",
+          "encoded": "0x80117149019544a0",
+          "target": "0xfffffe00089584a0",
+          "symbols": [
+            "__ZN25AGXFirmwareKextG16RTBuddy21requestFirmwareBinaryEPPKhPmRK16AGXGPUCoreConfig16AGFIFirmwareRole"
+          ]
+        }
+      ]
+    },
+    {
+      "vtable": "0xfffffe0007ea0ba8",
+      "address_point": "0xfffffe0007ea0bb8",
+      "slots": [
+        {
+          "slot": "0x0",
+          "encoded": "0x80113771019564ec",
+          "target": "0xfffffe000895a4ec",
+          "symbols": [
+            "__ZN22AGXFirmwareKextRTBuddyD1Ev"
+          ]
+        },
+        {
+          "slot": "0x8",
+          "encoded": "0x801156b7019564a8",
+          "target": "0xfffffe000895a4a8",
+          "symbols": [
+            "__ZN22AGXFirmwareKextRTBuddyD0Ev"
+          ]
+        },
+        {
+          "slot": "0x880",
+          "encoded": "0x8011f1d20195601c",
+          "target": "0xfffffe000895a01c",
+          "symbols": [
+            "__ZN22AGXFirmwareKextRTBuddy21setAccelAndFWPointersEP14AGXAcceleratorP14AGXArmFirmware"
+          ]
+        },
+        {
+          "slot": "0x888",
+          "encoded": "0x80117e5201955544",
+          "target": "0xfffffe0008959544",
+          "symbols": [
+            "__ZN22AGXFirmwareKextRTBuddy12bootFirmwareEP11IOMemoryMap"
+          ]
+        },
+        {
+          "slot": "0x898",
+          "encoded": "0x80112ee5019553e4",
+          "target": "0xfffffe00089593e4",
+          "symbols": [
+            "__ZN22AGXFirmwareKextRTBuddy21sendMessageToFirmwareEy"
+          ]
+        },
+        {
+          "slot": "0x8a8",
+          "encoded": "0x8011d2f3019551fc",
+          "target": "0xfffffe00089591fc",
+          "symbols": [
+            "__ZN22AGXFirmwareKextRTBuddy23sendAsyncNoteToFirmwareEyb"
+          ]
+        },
+        {
+          "slot": "0x8c0",
+          "encoded": "0x8011ee4801954f48",
+          "target": "0xfffffe0008958f48",
+          "symbols": [
+            "__ZN22AGXFirmwareKextRTBuddy18changePowerStateToEm"
+          ]
+        },
+        {
+          "slot": "0x8d0",
+          "encoded": "0x8011714901954f04",
+          "target": "0xfffffe0008958f04",
+          "symbols": [
+            "__ZN22AGXFirmwareKextRTBuddy21requestFirmwareBinaryEPPKhPmRK16AGXGPUCoreConfig16AGFIFirmwareRole"
+          ]
+        }
+      ]
+    }
+  ],
+  "backend_vtables": [
+    {
+      "address_point": "0xfffffe0007ec5e88",
+      "slots": [
+        {
+          "slot": "0x0",
+          "encoded_pointer": "0x8011377101a3b644",
+          "target": "0xfffffe0008a3f644",
+          "symbol": "__ZN14AppleASCWrapV6D1Ev"
+        },
+        {
+          "slot": "0x8",
+          "encoded_pointer": "0x801156b701a3b64c",
+          "target": "0xfffffe0008a3f64c",
+          "symbol": "__ZN14AppleASCWrapV6D0Ev"
+        },
+        {
+          "slot": "0x8c0",
+          "encoded_pointer": "0x8011897d01a3c400",
+          "target": "0xfffffe0008a40400",
+          "symbol": "__ZN10AppleA7IOP7stopCPUEb"
+        },
+        {
+          "slot": "0x8c8",
+          "encoded_pointer": "0x8011cbe401a3f270",
+          "target": "0xfffffe0008a43270",
+          "symbol": "__ZN10AppleA7IOP7stopCPUEbb"
+        },
+        {
+          "slot": "0x8d0",
+          "encoded_pointer": "0x8011392e01a3fdbc",
+          "target": "0xfffffe0008a43dbc",
+          "symbol": "__ZN10AppleA7IOP23enableMailboxInterruptsEb"
+        },
+        {
+          "slot": "0x900",
+          "encoded_pointer": "0x801162b601a3ed34",
+          "target": "0xfffffe0008a42d34",
+          "symbol": "__ZN10AppleA7IOP11enablePowerEv"
+        },
+        {
+          "slot": "0x908",
+          "encoded_pointer": "0x801182b901a3f4c8",
+          "target": "0xfffffe0008a434c8",
+          "symbol": "__ZN10AppleA7IOP16disablePowerLateEv"
+        },
+        {
+          "slot": "0x978",
+          "encoded_pointer": "0x8011199401a3ee2c",
+          "target": "0xfffffe0008a42e2c",
+          "symbol": "__ZN10AppleA7IOP10enableSRAMEb"
+        },
+        {
+          "slot": "0x988",
+          "encoded_pointer": "0x8011a79e01a3ee84",
+          "target": "0xfffffe0008a42e84",
+          "symbol": "__ZN10AppleA7IOP16_enablePowerLateEv"
+        },
+        {
+          "slot": "0x9a8",
+          "encoded_pointer": "0x8011aaa701a3c550",
+          "target": "0xfffffe0008a40550",
+          "symbol": "__ZN10AppleA7IOP4_regEj"
+        },
+        {
+          "slot": "0x9c8",
+          "encoded_pointer": "0x80118cfe01a3ed88",
+          "target": "0xfffffe0008a42d88",
+          "symbol": "__ZN10AppleA7IOP12_enablePowerEbj"
+        },
+        {
+          "slot": "0x9d0",
+          "encoded_pointer": "0x8011aca701a3ef0c",
+          "target": "0xfffffe0008a42f0c",
+          "symbol": "__ZN10AppleA7IOP14_turnOffDomainEb"
+        },
+        {
+          "slot": "0xa18",
+          "encoded_pointer": "0x8011515901a3ba70",
+          "target": "0xfffffe0008a3fa70",
+          "symbol": "__ZN14AppleASCWrapV612_mapFirmwareEyP18IOMemoryDescriptorj"
+        },
+        {
+          "slot": "0xa20",
+          "encoded_pointer": "0x8011cd6701a3bad8",
+          "target": "0xfffffe0008a3fad8",
+          "symbol": "__ZN14AppleASCWrapV614_unmapFirmwareEv"
+        },
+        {
+          "slot": "0xa28",
+          "encoded_pointer": "0x8011f38801a3bcf4",
+          "target": "0xfffffe0008a3fcf4",
+          "symbol": "__ZN14AppleASCWrapV67_runCPUEb"
+        },
+        {
+          "slot": "0xa40",
+          "encoded_pointer": "0x8011d06701a3fbd0",
+          "target": "0xfffffe0008a43bd0",
+          "symbol": "__ZN10AppleA7IOP16_setMapperActiveEb"
+        },
+        {
+          "slot": "0xa58",
+          "encoded_pointer": "0x80116ccb01a3eeb8",
+          "target": "0xfffffe0008a42eb8",
+          "symbol": "__ZN10AppleA7IOP13_disablePowerEv"
+        },
+        {
+          "slot": "0xa60",
+          "encoded_pointer": "0x8041cea501a3bc54",
+          "target": "0xfffffe0008a3fc54",
+          "symbol": "__ZN14AppleASCWrapV67_isIdleEPj"
+        }
+      ]
+    },
+    {
+      "address_point": "0xfffffe00088a1490",
+      "slots": [
+        {
+          "slot": "0x0",
+          "encoded_pointer": "0x80113771041d80b0",
+          "target": "0xfffffe000b1dc0b0",
+          "symbol": "__ZN7RTBuddyD1Ev"
+        },
+        {
+          "slot": "0x8",
+          "encoded_pointer": "0x801156b7041d8138",
+          "target": "0xfffffe000b1dc138",
+          "symbol": "__ZN7RTBuddyD0Ev"
+        },
+        {
+          "slot": "0x818",
+          "encoded_pointer": "0x8011699e041da018",
+          "target": "0xfffffe000b1de018",
+          "symbol": "__ZN7RTBuddy13setPowerStateEmP9IOService"
+        },
+        {
+          "slot": "0x928",
+          "encoded_pointer": "0x8011ff42041d98c0",
+          "target": "0xfffffe000b1dd8c0",
+          "symbol": "__ZN7RTBuddy12loadFirmwareEP15RTBuddyFirmware"
+        },
+        {
+          "slot": "0x9d8",
+          "encoded_pointer": "0x8011514b041d94c0",
+          "target": "0xfffffe000b1dd4c0",
+          "symbol": "__ZN7RTBuddy22_handlePreloadFirmwareEv"
+        },
+        {
+          "slot": "0x9f8",
+          "encoded_pointer": "0x80418acb041e2b4c",
+          "target": "0xfffffe000b1e6b4c",
+          "symbol": "__ZNK7RTBuddy11isRouteOnlyEv"
+        }
+      ]
+    }
+  ],
+  "function_ranges": [
+    {
+      "name": "AGXFirmwareKextRTBuddy::changePowerStateTo",
+      "start": "0xfffffe0008958f48",
+      "end_exclusive": "0xfffffe0008959008",
+      "bytes": 192,
+      "file_offset": 26562376,
+      "sha256": "59c97f6de0c76c6522e46248ba85ef793d563ac266798574a7dec67b67c0bfa9"
+    },
+    {
+      "name": "RTBuddy::forcePowerOff",
+      "start": "0xfffffe000b1e1a84",
+      "end_exclusive": "0xfffffe000b1e1bf4",
+      "bytes": 368,
+      "file_offset": 69065348,
+      "sha256": "3c7db00a5d1725871a5f7afec73543ada987f3ab46319ba4dcd2053a1c3f53a6"
+    },
+    {
+      "name": "RTBuddy::_performPowerStateChangeGated",
+      "start": "0xfffffe000b1e00c8",
+      "end_exclusive": "0xfffffe000b1e08ac",
+      "bytes": 2020,
+      "file_offset": 69058760,
+      "sha256": "b0f0812f136a87574c3d645a517a364e32d8a6615e706c3a52044c53b903d3fd"
+    },
+    {
+      "name": "RTBuddy::reloadFirmware",
+      "start": "0xfffffe000b1e4808",
+      "end_exclusive": "0xfffffe000b1e48e0",
+      "bytes": 216,
+      "file_offset": 69077000,
+      "sha256": "09a1f951d7d75f1f72e8131b9b7cc5a33e7103565c69d8717124eaa21c1da228"
+    },
+    {
+      "name": "RTBuddy::_attemptFirmwareLoad",
+      "start": "0xfffffe000b1dcf30",
+      "end_exclusive": "0xfffffe000b1dd040",
+      "bytes": 272,
+      "file_offset": 69046064,
+      "sha256": "334f2540ade218fddfb6dd713277eef4ffe0529297043c0dbd2d88cb80dd753b"
+    },
+    {
+      "name": "RTBuddy::_initConfigEDT_preload_service_properties",
+      "start": "0xfffffe000b1e4298",
+      "end_exclusive": "0xfffffe000b1e4378",
+      "bytes": 224,
+      "file_offset": 69075608,
+      "sha256": "28849c0c72471c4f0fb4791cda5d2ef1518239c2a0a63aa010b99543bdc35f10"
+    },
+    {
+      "name": "RTBuddy::_handlePreloadFirmware",
+      "start": "0xfffffe000b1dd4c0",
+      "end_exclusive": "0xfffffe000b1dd548",
+      "bytes": 136,
+      "file_offset": 69047488,
+      "sha256": "16921ae50e367e89276bf7b8b8bab6cb7ccf7f42faa8b3d35038d87567c1ee9b"
+    },
+    {
+      "name": "RTBuddyFirmware::preloadedFirmware",
+      "start": "0xfffffe000b1ee974",
+      "end_exclusive": "0xfffffe000b1eea14",
+      "bytes": 160,
+      "file_offset": 69118324,
+      "sha256": "7917c69ccb865e23f2cc05365683481ef91c95718914f16f10959cc65b7338e1"
+    },
+    {
+      "name": "RTBuddyFirmware::initWithSegmentMap",
+      "start": "0xfffffe000b1eea14",
+      "end_exclusive": "0xfffffe000b1eea8c",
+      "bytes": 120,
+      "file_offset": 69118484,
+      "sha256": "36d20e2d4a4a5398b860ea8cbb74ea4b77cd47e2fae0b6ebc3747a5a9cd7c082"
+    },
+    {
+      "name": "RTBuddyFirmware::fixup",
+      "start": "0xfffffe000b1efad4",
+      "end_exclusive": "0xfffffe000b1efc6c",
+      "bytes": 408,
+      "file_offset": 69122772,
+      "sha256": "7232f2547b22b91668d82bae6d6329cf32ed432a58a58ab3a5dbbc4dd14c43f1"
+    },
+    {
+      "name": "AppleA7IOP::startCPUWithOptions",
+      "start": "0xfffffe0008a42f40",
+      "end_exclusive": "0xfffffe0008a43260",
+      "bytes": 800,
+      "file_offset": 27520832,
+      "sha256": "7a758f60ea99876e999d7843fa55fd2f7bcb988da402c440e5033598142100f7"
+    },
+    {
+      "name": "AppleA7IOP::stopCPU(bool,bool)",
+      "start": "0xfffffe0008a43270",
+      "end_exclusive": "0xfffffe0008a434c8",
+      "bytes": 600,
+      "file_offset": 27521648,
+      "sha256": "f718e6299544e2e22acc8a6899f8a60410c93fc2ab7d48964771d21542bb87a9"
+    },
+    {
+      "name": "AppleASCWrapV6::_mapFirmware",
+      "start": "0xfffffe0008a3fa70",
+      "end_exclusive": "0xfffffe0008a3fad8",
+      "bytes": 104,
+      "file_offset": 27507312,
+      "sha256": "fc0b80f63301bd8f4a68315f928e969d4de6b029fd4f99f43f93be5e7307e8d6"
+    },
+    {
+      "name": "AppleASCWrapV6::_unmapFirmware",
+      "start": "0xfffffe0008a3fad8",
+      "end_exclusive": "0xfffffe0008a3fb50",
+      "bytes": 120,
+      "file_offset": 27507416,
+      "sha256": "f67ef932a96a63254d0599ba9af7005d1d48877c967389c4afa7d240c6cf2021"
+    },
+    {
+      "name": "AppleASCWrapV6::_isIdle",
+      "start": "0xfffffe0008a3fc54",
+      "end_exclusive": "0xfffffe0008a3fcf4",
+      "bytes": 160,
+      "file_offset": 27507796,
+      "sha256": "4ff5abbdbfe25f8aa81495cf25db2047005c4fc8d3eb08c0967e82e05fa5d031"
+    },
+    {
+      "name": "AppleASCWrapV6::_runCPU",
+      "start": "0xfffffe0008a3fcf4",
+      "end_exclusive": "0xfffffe0008a3fda4",
+      "bytes": 176,
+      "file_offset": 27507956,
+      "sha256": "d875ef3271218b40d767f2428ffe91f340c0f34cbc05ee6867462437ca604278"
+    },
+    {
+      "name": "AppleA7IOP::_enablePower",
+      "start": "0xfffffe0008a42d88",
+      "end_exclusive": "0xfffffe0008a42e2c",
+      "bytes": 164,
+      "file_offset": 27520392,
+      "sha256": "5495aa938202b32ea0ab4de65561ab1bb25b25302408db853f415658c519739f"
+    },
+    {
+      "name": "AppleA7IOP::enableSRAM",
+      "start": "0xfffffe0008a42e2c",
+      "end_exclusive": "0xfffffe0008a42e84",
+      "bytes": 88,
+      "file_offset": 27520556,
+      "sha256": "a06f271df11a4ddf1729f5e3082b1b5e822ef83b0b937700d17151fc255f1044"
+    },
+    {
+      "name": "AppleA7IOP::_enablePowerLate",
+      "start": "0xfffffe0008a42e84",
+      "end_exclusive": "0xfffffe0008a42eb8",
+      "bytes": 52,
+      "file_offset": 27520644,
+      "sha256": "1a2590606dcc1f906d5d2ba3e1c662f45e507e2b202c63025706aaaf5bcff598"
+    },
+    {
+      "name": "AppleA7IOP::_disablePower",
+      "start": "0xfffffe0008a42eb8",
+      "end_exclusive": "0xfffffe0008a42f0c",
+      "bytes": 84,
+      "file_offset": 27520696,
+      "sha256": "f192ed12642d46eba48ecb583df4f79f996c7652e2d80d48483032642ffdb4d9"
+    },
+    {
+      "name": "AppleA7IOP::_turnOffDomain",
+      "start": "0xfffffe0008a42f0c",
+      "end_exclusive": "0xfffffe0008a42f40",
+      "bytes": 52,
+      "file_offset": 27520780,
+      "sha256": "220f23260057f9ffcb6354dd9b552aee874053550f330d2b6150b8d61ba15611"
+    },
+    {
+      "name": "AppleA7IOP::_dartMapiBootFirmware",
+      "start": "0xfffffe0008a43584",
+      "end_exclusive": "0xfffffe0008a439d8",
+      "bytes": 1108,
+      "file_offset": 27522436,
+      "sha256": "5e6eb2a956b01c8951274cc55807efad8505559f591677a46be708280d9d5ad1"
+    },
+    {
+      "name": "AppleA7IOP::_setMapperActive",
+      "start": "0xfffffe0008a43bd0",
+      "end_exclusive": "0xfffffe0008a43c2c",
+      "bytes": 92,
+      "file_offset": 27524048,
+      "sha256": "9887c617a0886ac525d0216b6ad7bfba754d7922a971e81ac54fa064ca82aac1"
+    }
+  ],
+  "native_management": {
+    "names_address": "0xfffffe0007bfe2a8",
+    "request_table_address": "0xfffffe0007bfe338",
+    "states": [
+      {
+        "ordinal": 0,
+        "name": "SLEEP",
+        "message": "0x0060000000000201"
+      },
+      {
+        "ordinal": 1,
+        "name": "ON",
+        "message": "0x0060000000000220"
+      },
+      {
+        "ordinal": 2,
+        "name": "PWRGATE",
+        "message": "0x0060000000000202"
+      },
+      {
+        "ordinal": 3,
+        "name": "OFF",
+        "message": "0x0060000000000000"
+      }
+    ],
+    "quiesced_wake": "0x0060000000000220",
+    "alternate_quiesced_wake": "0x00b0000000000020"
+  },
+  "native_restart_selection": {
+    "force_power_off_iop_status": 1,
+    "force_power_off_clears_fixup": true,
+    "on_from_status_1_or_2_options": "0 or 2 (running property2231 adds bit1)",
+    "on_from_status_3_options": "1 or 3 (quiesced resume; running property adds bit1; followed by wake management message)",
+    "options_bit0": "skip enablePowerLate, firmware map, and runCPU(true)",
+    "options_bit1": "skip V6 mapFirmware operation; running property2231",
+    "preloaded_config": "2230 from pre-loaded",
+    "no_firmware_service_config": "2232 from no-firmware-service or running/route-only",
+    "no_firmware_service_effect": "_attemptFirmwareLoad skips service matching and directly uses preloaded metadata when2230 is set; not a reloadFirmware rejection",
+    "preloaded_iBootLoaded_offset": "0xc0",
+    "preloaded_iBootLoaded_value": 1,
+    "fixup_copy_to_target_on_preloaded": false,
+    "reload_firmware_guard": "host byte0xd0, set by generic disable/bootarg/restore settings; separate from no-firmware-service"
+  },
+  "v6_control": {
+    "register_offset": "0x44",
+    "run_true": "fresh read; OR0x10; write",
+    "run_false": "fresh read; clear0x10; write; fresh read; clear0x20; write",
+    "idle_status_offset": "0x48",
+    "idle_predicate": "(status & 3) != 0; optional control0x40 bit0 prerequisite",
+    "cpu_stop_poll": "initial poll plus up to ten one-millisecond sleeps when flag0x132 is set",
+    "idle_failure": "generic constructor109=1; stop panics on false idle after polling; forcebool does not bypass",
+    "causality": "extra bit0x20 clear is an implementation omission, not proved operative in saved trials with control0 or0x10"
+  },
+  "iboot_mapping": {
+    "metadata_offset": "0x128",
+    "mapped_flag_offset": "0x130",
+    "record_bytes": 32,
+    "record_phys_offset": 0,
+    "record_iova_offset": 16,
+    "record_size_offset": 24,
+    "record_flags_offset": 28,
+    "skip_flag_bit": 1,
+    "mapper_required_property": "IODARTMapper",
+    "mapper_limit_platform_function": "retrieveVMLimits",
+    "observed_operations": "allocate/map existing physical records; no firmware DATA byte copy in reviewed mapping body"
+  },
+  "independent_applicability_review": "docs/evidence/2026-10-09-rtbuddy-reset-review.json",
+  "saved_gfx_sram_route": {
+    "host_control_offset": "0x2244",
+    "native_backup_flag": "RTBuddySegment+0x40 bit0, transformed from ADT record bit2",
+    "saved_TEXT_flags": 1,
+    "saved_DATA_flags": 0,
+    "backup_selected": false,
+    "sram_index_present": false,
+    "separate_conditional_route": "PWRGATE saves SRAM after stop; ON restores before fixup/start; forceOff skips save; not selected by saved GFX"
+  },
+  "experimental_trial_boundary": "Separately user-authorized GFX RESET31 scope trial may proceed through reviewed driver-owned API with resident backing retained; no whole-GPU retirement proof prerequisite for pulse, and no backing release without retirement proof. Concrete reviewed API/full new kernel/resident owner precede next requested reboot.",
+  "limitations": [
+    "No live qualification of CPU stop, warm restart, power collapse, PMGR reset, DART retirement, or full AGX DMA retirement. Native force-off still requires hardware idle; generic V6 may panic when status&3==0.",
+    "No full firmware DATA restoration follows from preloaded fixup; it deliberately skips copyToTarget.",
+    "No explicit PMGR RESET31 pulse or ASC reset-vector rewrite in reviewed forcePowerOff/stopCPU/startCPU/_runCPU/mapFirmware paths.",
+    "Native mapper and AppleARMIODevice platform calls are resolved as interfaces, not a complete DART/PMGR implementation proof.",
+    "Private sparse Mach-O views preserve fileset absolute offsets and shared LINKEDIT; their whole-file hashes do not equal independently extracted kexts."
+  ]
+}

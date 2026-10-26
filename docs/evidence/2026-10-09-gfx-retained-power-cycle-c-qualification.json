@@ -1,0 +1,728 @@
+{
+  "schema": "m4rch.gfx-retained-power-cycle-portable-c-qualification.v1",
+  "hardware_actions": [],
+  "source_preparation_actions": [
+    "New separately prepared owner; frozen source unchanged"
+  ],
+  "selected_source": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/prepared-owner-v6",
+  "selected_source_receipt_sha256": "4f8288982b3d2e926cce11ebe800744ea92f668008e77600929d691319e3ec9a",
+  "actual_C_case_count": 102,
+  "ASan_UBSan": true,
+  "actual_headers": true,
+  "actual_second_coordinate_core": true,
+  "actual_receive_worker": true,
+  "qualification_passed": true,
+  "frozen_first_drain_composed_case_count": 85,
+  "maximum_commands": [
+    "sample",
+    "gfx-snapshot",
+    "gfx-powergate",
+    "gfx-retained-cycle"
+  ],
+  "maximum_second_pm_gets": 1,
+  "maximum_second_starts": 1,
+  "maximum_second_management_requests": 1,
+  "maximum_second_pm_puts": 1,
+  "page_identities_retained": 174,
+  "context_and_root_retained": true,
+  "first_epoch_flags_never_rewritten": true,
+  "second_intent_directly_seals_actual_receive_worker": true,
+  "autonomous_map_shape": [
+    {
+      "base": 0,
+      "bitmap": 3,
+      "last": false
+    },
+    {
+      "base": 1,
+      "bitmap": 3,
+      "last": true
+    }
+  ],
+  "first_actual_physical_OFF_does_not_prove_reentry": true,
+  "second_management_roundtrip_is_experimental_hypothesis": true,
+  "application_rejoin_admitted": false,
+  "work_publication_admitted": false,
+  "DMA_retirement_verified": false,
+  "new_candidate_loaded": false,
+  "kernel_build_in_this_qualification": false,
+  "cases": [
+    {
+      "case": "success",
+      "returncode": 0,
+      "stdout": "PASS success ret=0 get=1 start=1 request=1 put=1 records=4"
+    },
+    {
+      "case": "ack-one",
+      "returncode": 0,
+      "stdout": "PASS ack-one ret=0 get=1 start=1 request=1 put=1 records=4"
+    },
+    {
+      "case": "fresh-rmw-mutated",
+      "returncode": 0,
+      "stdout": "PASS fresh-rmw-mutated ret=0 get=1 start=1 request=1 put=1 records=4"
+    },
+    {
+      "case": "diagnostic-before",
+      "returncode": 0,
+      "stdout": "PASS diagnostic-before ret=0 get=1 start=1 request=1 put=1 records=4"
+    },
+    {
+      "case": "startup-unknown",
+      "returncode": 0,
+      "stdout": "PASS startup-unknown ret=-1 get=0 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "first-intent",
+      "returncode": 0,
+      "stdout": "PASS first-intent ret=-1 get=0 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "first-request",
+      "returncode": 0,
+      "stdout": "PASS first-request ret=-1 get=0 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "first-ack",
+      "returncode": 0,
+      "stdout": "PASS first-ack ret=-1 get=0 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "first-cpu",
+      "returncode": 0,
+      "stdout": "PASS first-cpu ret=-1 get=0 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "first-clear10",
+      "returncode": 0,
+      "stdout": "PASS first-clear10 ret=-1 get=0 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "first-clear20",
+      "returncode": 0,
+      "stdout": "PASS first-clear20 ret=-1 get=0 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "first-off-delegated",
+      "returncode": 0,
+      "stdout": "PASS first-off-delegated ret=-1 get=0 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "first-off-gate",
+      "returncode": 0,
+      "stdout": "PASS first-off-gate ret=-1 get=0 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "first-pm-attempt",
+      "returncode": 0,
+      "stdout": "PASS first-pm-attempt ret=-1 get=0 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "first-pm-result",
+      "returncode": 0,
+      "stdout": "PASS first-pm-result ret=-1 get=0 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "first-provider",
+      "returncode": 0,
+      "stdout": "PASS first-provider ret=-1 get=0 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "first-snapshot",
+      "returncode": 0,
+      "stdout": "PASS first-snapshot ret=-1 get=0 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "first-accounting",
+      "returncode": 0,
+      "stdout": "PASS first-accounting ret=-1 get=0 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "first-host-stopped",
+      "returncode": 0,
+      "stdout": "PASS first-host-stopped ret=-1 get=0 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "first-sealed",
+      "returncode": 0,
+      "stdout": "PASS first-sealed ret=-1 get=0 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "first-recovery-failed",
+      "returncode": 0,
+      "stdout": "PASS first-recovery-failed ret=-1 get=0 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "first-coordinate",
+      "returncode": 0,
+      "stdout": "PASS first-coordinate ret=-1 get=0 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "first-work",
+      "returncode": 0,
+      "stdout": "PASS first-work ret=-1 get=0 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "identity-page",
+      "returncode": 0,
+      "stdout": "PASS identity-page ret=-16 get=0 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "identity-pa",
+      "returncode": 0,
+      "stdout": "PASS identity-pa ret=-16 get=0 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "identity-root",
+      "returncode": 0,
+      "stdout": "PASS identity-root ret=-16 get=0 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "identity-context",
+      "returncode": 0,
+      "stdout": "PASS identity-context ret=-16 get=0 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "first-usage",
+      "returncode": 0,
+      "stdout": "PASS first-usage ret=-16 get=0 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "first-runtime-error",
+      "returncode": 0,
+      "stdout": "PASS first-runtime-error ret=-16 get=0 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "first-active",
+      "returncode": 0,
+      "stdout": "PASS first-active ret=-16 get=0 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "first-held",
+      "returncode": 0,
+      "stdout": "PASS first-held ret=-16 get=0 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "fresh-off-busy",
+      "returncode": 0,
+      "stdout": "PASS fresh-off-busy ret=-16 get=0 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "fresh-off-domain-on",
+      "returncode": 0,
+      "stdout": "PASS fresh-off-domain-on ret=-16 get=0 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "fresh-off-error",
+      "returncode": 0,
+      "stdout": "PASS fresh-off-error ret=-5 get=0 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "pm-get-negative",
+      "returncode": 0,
+      "stdout": "PASS pm-get-negative ret=-5 get=1 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "pm-get-usage",
+      "returncode": 0,
+      "stdout": "PASS pm-get-usage ret=-16 get=1 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "pm-get-error",
+      "returncode": 0,
+      "stdout": "PASS pm-get-error ret=-16 get=1 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "pm-get-suspended",
+      "returncode": 0,
+      "stdout": "PASS pm-get-suspended ret=-16 get=1 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "after-get-pa",
+      "returncode": 0,
+      "stdout": "PASS after-get-pa ret=-16 get=1 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "after-get-root",
+      "returncode": 0,
+      "stdout": "PASS after-get-root ret=-16 get=1 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "active-domain-off",
+      "returncode": 0,
+      "stdout": "PASS active-domain-off ret=-16 get=1 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "active-busy",
+      "returncode": 0,
+      "stdout": "PASS active-busy ret=-16 get=1 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "active-snapshot-error",
+      "returncode": 0,
+      "stdout": "PASS active-snapshot-error ret=-5 get=1 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "cold-status6e",
+      "returncode": 0,
+      "stdout": "PASS cold-status6e ret=-16 get=1 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "cold-status6c",
+      "returncode": 0,
+      "stdout": "PASS cold-status6c ret=-16 get=1 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "cold-status48",
+      "returncode": 0,
+      "stdout": "PASS cold-status48 ret=-16 get=1 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "cold-start-set",
+      "returncode": 0,
+      "stdout": "PASS cold-start-set ret=-16 get=1 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "cold-rx-pending",
+      "returncode": 0,
+      "stdout": "PASS cold-rx-pending ret=-16 get=1 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "control-invalid",
+      "returncode": 0,
+      "stdout": "PASS control-invalid ret=-5 get=1 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "status-invalid",
+      "returncode": 0,
+      "stdout": "PASS status-invalid ret=-5 get=1 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "rx-invalid",
+      "returncode": 0,
+      "stdout": "PASS rx-invalid ret=-5 get=1 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "coord-on-alias",
+      "returncode": 0,
+      "stdout": "PASS coord-on-alias ret=-16 get=1 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "coord-on-write",
+      "returncode": 0,
+      "stdout": "PASS coord-on-write ret=-5 get=1 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "coord-on-vote",
+      "returncode": 0,
+      "stdout": "PASS coord-on-vote ret=-5 get=1 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "boundary-returned-start",
+      "returncode": 0,
+      "stdout": "PASS boundary-returned-start ret=-16 get=1 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "boundary-returned-status",
+      "returncode": 0,
+      "stdout": "PASS boundary-returned-status ret=-16 get=1 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "boundary-returned-rx",
+      "returncode": 0,
+      "stdout": "PASS boundary-returned-rx ret=-16 get=1 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "boundary-returned-tx",
+      "returncode": 0,
+      "stdout": "PASS boundary-returned-tx ret=-16 get=1 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "start-dropped",
+      "returncode": 0,
+      "stdout": "PASS start-dropped ret=-5 get=1 start=1 request=0 put=0 records=0"
+    },
+    {
+      "case": "start-invalid",
+      "returncode": 0,
+      "stdout": "PASS start-invalid ret=-16 get=1 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "start-reasserted-before-write",
+      "returncode": 0,
+      "stdout": "PASS start-reasserted-before-write ret=-16 get=1 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "no-hello",
+      "returncode": 0,
+      "stdout": "PASS no-hello ret=-110 get=1 start=1 request=0 put=0 records=0"
+    },
+    {
+      "case": "hello-version",
+      "returncode": 0,
+      "stdout": "PASS hello-version ret=-71 get=1 start=1 request=0 put=0 records=1"
+    },
+    {
+      "case": "hello-endpoint",
+      "returncode": 0,
+      "stdout": "PASS hello-endpoint ret=-71 get=1 start=1 request=0 put=0 records=1"
+    },
+    {
+      "case": "hello-invalid",
+      "returncode": 0,
+      "stdout": "PASS hello-invalid ret=-5 get=1 start=1 request=0 put=0 records=1"
+    },
+    {
+      "case": "map-before-hello",
+      "returncode": 0,
+      "stdout": "PASS map-before-hello ret=-71 get=1 start=1 request=0 put=0 records=2"
+    },
+    {
+      "case": "map-base-alias",
+      "returncode": 0,
+      "stdout": "PASS map-base-alias ret=-71 get=1 start=1 request=0 put=0 records=3"
+    },
+    {
+      "case": "map-order",
+      "returncode": 0,
+      "stdout": "PASS map-order ret=-71 get=1 start=1 request=0 put=0 records=3"
+    },
+    {
+      "case": "map-bitmap",
+      "returncode": 0,
+      "stdout": "PASS map-bitmap ret=-71 get=1 start=1 request=0 put=0 records=3"
+    },
+    {
+      "case": "map-type",
+      "returncode": 0,
+      "stdout": "PASS map-type ret=-71 get=1 start=1 request=0 put=0 records=3"
+    },
+    {
+      "case": "tx-full",
+      "returncode": 0,
+      "stdout": "PASS tx-full ret=-16 get=1 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "tx-invalid",
+      "returncode": 0,
+      "stdout": "PASS tx-invalid ret=-5 get=1 start=0 request=0 put=0 records=0"
+    },
+    {
+      "case": "late-hello",
+      "returncode": 0,
+      "stdout": "PASS late-hello ret=-110 get=1 start=1 request=0 put=0 records=1"
+    },
+    {
+      "case": "pre202-start-clear",
+      "returncode": 0,
+      "stdout": "PASS pre202-start-clear ret=-16 get=1 start=1 request=0 put=0 records=3"
+    },
+    {
+      "case": "pre202-status-invalid",
+      "returncode": 0,
+      "stdout": "PASS pre202-status-invalid ret=-5 get=1 start=1 request=0 put=0 records=3"
+    },
+    {
+      "case": "pre202-rx-pending",
+      "returncode": 0,
+      "stdout": "PASS pre202-rx-pending ret=-16 get=1 start=1 request=0 put=0 records=3"
+    },
+    {
+      "case": "pre202-tx-full",
+      "returncode": 0,
+      "stdout": "PASS pre202-tx-full ret=-16 get=1 start=1 request=0 put=0 records=3"
+    },
+    {
+      "case": "pre202-pm-error",
+      "returncode": 0,
+      "stdout": "PASS pre202-pm-error ret=-16 get=1 start=1 request=0 put=0 records=3"
+    },
+    {
+      "case": "journal-no-ack-slot",
+      "returncode": 0,
+      "stdout": "PASS journal-no-ack-slot ret=-75 get=1 start=1 request=0 put=0 records=16"
+    },
+    {
+      "case": "no-ack",
+      "returncode": 0,
+      "stdout": "PASS no-ack ret=-110 get=1 start=1 request=1 put=0 records=3"
+    },
+    {
+      "case": "clock-stalled",
+      "returncode": 0,
+      "stdout": "PASS clock-stalled ret=-110 get=1 start=1 request=0 put=0 records=0"
+    },
+    {
+      "case": "late-ack",
+      "returncode": 0,
+      "stdout": "PASS late-ack ret=-110 get=1 start=1 request=1 put=0 records=4"
+    },
+    {
+      "case": "ack-invalid",
+      "returncode": 0,
+      "stdout": "PASS ack-invalid ret=-5 get=1 start=1 request=1 put=0 records=4"
+    },
+    {
+      "case": "ack-wrong",
+      "returncode": 0,
+      "stdout": "PASS ack-wrong ret=-71 get=1 start=1 request=1 put=0 records=4"
+    },
+    {
+      "case": "ack-endpoint",
+      "returncode": 0,
+      "stdout": "PASS ack-endpoint ret=-71 get=1 start=1 request=1 put=0 records=4"
+    },
+    {
+      "case": "post-ack-rx-pending",
+      "returncode": 0,
+      "stdout": "PASS post-ack-rx-pending ret=-16 get=1 start=1 request=1 put=0 records=4"
+    },
+    {
+      "case": "idle-timeout",
+      "returncode": 0,
+      "stdout": "PASS idle-timeout ret=-110 get=1 start=1 request=1 put=0 records=4"
+    },
+    {
+      "case": "clear10-dropped",
+      "returncode": 0,
+      "stdout": "PASS clear10-dropped ret=-5 get=1 start=1 request=1 put=0 records=4"
+    },
+    {
+      "case": "start-reasserted",
+      "returncode": 0,
+      "stdout": "PASS start-reasserted ret=-5 get=1 start=1 request=1 put=0 records=4"
+    },
+    {
+      "case": "clear20-dropped",
+      "returncode": 0,
+      "stdout": "PASS clear20-dropped ret=-5 get=1 start=1 request=1 put=0 records=4"
+    },
+    {
+      "case": "post-stop-idle-lost",
+      "returncode": 0,
+      "stdout": "PASS post-stop-idle-lost ret=-5 get=1 start=1 request=1 put=0 records=4"
+    },
+    {
+      "case": "off-control-invalid",
+      "returncode": 0,
+      "stdout": "PASS off-control-invalid ret=-5 get=1 start=1 request=1 put=0 records=4"
+    },
+    {
+      "case": "off-status-invalid",
+      "returncode": 0,
+      "stdout": "PASS off-status-invalid ret=-5 get=1 start=1 request=1 put=0 records=4"
+    },
+    {
+      "case": "work-not-idle",
+      "returncode": 0,
+      "stdout": "PASS work-not-idle ret=-16 get=1 start=1 request=1 put=0 records=4"
+    },
+    {
+      "case": "coord-off-alias",
+      "returncode": 0,
+      "stdout": "PASS coord-off-alias ret=-16 get=1 start=1 request=1 put=0 records=4"
+    },
+    {
+      "case": "coord-off-write",
+      "returncode": 0,
+      "stdout": "PASS coord-off-write ret=-5 get=1 start=1 request=1 put=0 records=4"
+    },
+    {
+      "case": "coord-off-vote",
+      "returncode": 0,
+      "stdout": "PASS coord-off-vote ret=-5 get=1 start=1 request=1 put=0 records=4"
+    },
+    {
+      "case": "pm-put-error",
+      "returncode": 0,
+      "stdout": "PASS pm-put-error ret=-5 get=1 start=1 request=1 put=1 records=4"
+    },
+    {
+      "case": "pm-put-accounting",
+      "returncode": 0,
+      "stdout": "PASS pm-put-accounting ret=-5 get=1 start=1 request=1 put=1 records=4"
+    },
+    {
+      "case": "second-off-busy",
+      "returncode": 0,
+      "stdout": "PASS second-off-busy ret=-110 get=1 start=1 request=1 put=1 records=4"
+    },
+    {
+      "case": "second-off-domain-on",
+      "returncode": 0,
+      "stdout": "PASS second-off-domain-on ret=-110 get=1 start=1 request=1 put=1 records=4"
+    },
+    {
+      "case": "second-off-error",
+      "returncode": 0,
+      "stdout": "PASS second-off-error ret=-5 get=1 start=1 request=1 put=1 records=4"
+    }
+  ],
+  "pins": [
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/owner-qualification-final-v6.json",
+      "sha256": "0bcc3860d865fe22ba4adec88aff4f405196548246ebc22fe84e6917deccc305"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/prepared-owner-v6/retained-power-cycle-owner-source-receipt.json",
+      "sha256": "4f8288982b3d2e926cce11ebe800744ea92f668008e77600929d691319e3ec9a"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-09-gfx-native-powergate-drain-live-outcome.json",
+      "sha256": "0057bdb64970acef610abd0c2ecdcee482cbb7acfe9981c8ba5b937dbab1590e"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-09-gfx-native-powergate-drain-live-terminal-review.json",
+      "sha256": "7797f8e22fd227b5b634683565a31a5d5324a3146a2df80ad6eb8b181bc4ee4a"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-09-retained-transport-reentry-boundary.json",
+      "sha256": "f2ae2bf62e64dcf8b27a30f9ca15ff18140440531924421672e56e2dee581f37"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/independent-native-ranges.json",
+      "sha256": "e2d9231bc06349bd207c43787e6fa605f839000f2f3b6146e19d5b6da4ea4934"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-powergate-drain/owner-qualification-final-v2.json",
+      "sha256": "041aed9b5ef9fc08bc9344477b835c56359133dcbaf5e79eb1ea40ff19c48e5f"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/gfx-retained-power-cycle/gfx-retained-power-cycle.h",
+      "sha256": "3f2d7d7d64c88cc734dec4657fe36dec0a35c73150681ed7a652b681a0e67f81"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/gfx-retained-power-cycle/gfx-retained-power-cycle-coordinate.h",
+      "sha256": "d11e7a243b629dc834f5f986668bad1bd0e9eefb205d51a5c839f7d35fe90c23"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/gfx-retained-power-cycle/prepare-retained-cycle-owner.py",
+      "sha256": "4e2d6f680341462bf118b0fbb222dfce85e4bd592087d5526db0382278b928bd"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/gfx-retained-power-cycle/test-retained-cycle-owner.py",
+      "sha256": "de7d293c68f81b1eb106e50f20a2200dd653054262543f8fdbaecd199de3adf1"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/prepared-owner-v6/retained-power-cycle-owner-source-receipt.json",
+      "sha256": "4f8288982b3d2e926cce11ebe800744ea92f668008e77600929d691319e3ec9a"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/prepared-owner-v6/Makefile",
+      "sha256": "5748b6f140fc72271ea638bbfeef3cf5aaa2f125f4fce611a4fd1a8c7450ce5a"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/prepared-owner-v6/asc-graph-init.c",
+      "sha256": "9ac197adeda6cf5f8532afbd6e38018eed809516361420b6cb80d191377a32a2"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/prepared-owner-v6/backing.bin",
+      "sha256": "35112ef3c261673bda227a3867a0d2b9dd58ac89f35f7bba9c8c05f1dee118d3"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/prepared-owner-v6/boot-contract.h",
+      "sha256": "5194505b49f3b40acdc80f29bf1e8c5c5f11374f483ed6a22df2c22ea904e082"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/prepared-owner-v6/command-pool-map.h",
+      "sha256": "1e4696787075de13a56f4946018221803a5a01a3c5a653bbbdbd48f319e74b6b"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/prepared-owner-v6/coordinate-owner-source-receipt.json",
+      "sha256": "3b911506a115c7d9218419b5c0c2691e75d41b94dfdf8e1462d0a577b975a263"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/prepared-owner-v6/execution-owner-source-receipt.json",
+      "sha256": "9c3af71b46eb0ebe956d4164125a57dcf280f64bbd1effca25d94abacdd2ca1d"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/prepared-owner-v6/gfx-coordinate-core.h",
+      "sha256": "b7a7376ab2a7e1b054e0338ce37efe035b85acaa6ba5072ed7231b6dcb245a95"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/prepared-owner-v6/gfx-coordinate-owner.h",
+      "sha256": "9798b26320e2b0f9b270da9b598f21e909cf037e58070154a6818ac6156601b4"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/prepared-owner-v6/gfx-reset-scope.h",
+      "sha256": "78cff00b01dfafa8f37c24cfc694b0da2b3233bbdc781777fd7be3f24abe893f"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/prepared-owner-v6/gfx-reset-startup.h",
+      "sha256": "f33ff5251683d7bc2aaca7f6e559d6b95696b2f1524ff68a6ab8e82fab18aecd"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/prepared-owner-v6/graph-before.bin",
+      "sha256": "287f2c53bc6ef7ed226c4a2995b9d9904e7623acae9713af105be6b04fc690a9"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/prepared-owner-v6/graph-contract.h",
+      "sha256": "f8c5a1536aa88ef7a1eb09b9a862cece4a2e822dd2eda54a449e6b3c11b20410"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/prepared-owner-v6/graph-map.h",
+      "sha256": "704836d10b86e3d2bcb20b457853a700a2153aae505b0aae473aea4daee7f13e"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/prepared-owner-v6/graph-receipt.json",
+      "sha256": "92771b8036464c8dc9bdadd1dd4e1458a6c5a9f95f87fbdac34696bd2b3af219"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/prepared-owner-v6/job-data.h",
+      "sha256": "c18ede083b691fbd3044237aaf30eb1e34c775e9391d3c6f1bea8e61561e0913"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/prepared-owner-v6/joined-context-init.h",
+      "sha256": "1851e697907d50a3f47d153879f47f1b6b07065f5d58055fa6269bc436bc15b2"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/prepared-owner-v6/native-status-owner-source-receipt.json",
+      "sha256": "5566c838e18f82335b4c8daded1d7e6a48d3b1729f9d7cc97bb4fb1b762b827b"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/prepared-owner-v6/preparation.json",
+      "sha256": "c22c59c0735c84554f954f581f94978894a9c78e87b6ec06f8f7ba8c763580db"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/prepared-owner-v6/receive-service.h",
+      "sha256": "bab356c9a2467fbb46760345102a7fb8369a9efe8db31efd058b1fd918b11043"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/prepared-owner-v6/recovery-contract.h",
+      "sha256": "9bce940061421a78fde0e509fdeba59a8c66c3d5ab32c4faf59dd613c14d4b23"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/prepared-owner-v6/recovery-cycle.h",
+      "sha256": "121fe9b7f5ee283bea4e84231a2ca0a8fea0ed992743d1e405940c0a8e4c8e44"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/prepared-owner-v6/render-backing-map.h",
+      "sha256": "ade8cedde4da68f2f463ed8604f47ab6b56cdf1c8ff3984d592e00f4a065978b"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/prepared-owner-v6/render-data.h",
+      "sha256": "3bdbf04b9a3219c8e818beb464b5f55626e8a9b3d184680e3fd05a6361c47cbd"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/prepared-owner-v6/gfx-native-powergate-drain.h",
+      "sha256": "f3f4429f6b372157cedcbcce1d29ef61ddaf8654fab2afabf035da8322152787"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/prepared-owner-v6/powergate-drain-owner-source-receipt.json",
+      "sha256": "e55cf8f6bf8a5b8d979a567412cada0b1df38b5d7750183a34e448a38d9c39c1"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/prepared-owner-v6/gfx-retained-power-cycle.h",
+      "sha256": "3f2d7d7d64c88cc734dec4657fe36dec0a35c73150681ed7a652b681a0e67f81"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-retained-power-cycle/prepared-owner-v6/gfx-retained-power-cycle-coordinate.h",
+      "sha256": "d11e7a243b629dc834f5f986668bad1bd0e9eefb205d51a5c839f7d35fe90c23"
+    }
+  ],
+  "limitations": [
+    "PM runtime/provider/CPU/mailbox/retained DRAM and MMIO adapters use RAM callbacks.",
+    "The frozen first85C and paired coordinate qualifications compose separately.",
+    "These cases do not establish actual reentry, secondACK, physicalOFF, apprejoin, rendering or DMA retirement."
+  ]
+}

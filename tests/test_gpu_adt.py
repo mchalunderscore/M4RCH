@@ -13,6 +13,12 @@ class ADT(unittest.TestCase):
    with self.assertRaises(ValueError):adt.parse(data)
  def test_chosen_selection_excludes_unneeded_secrets(self):
   tree=adt.parse(node('',children=[node('chosen',{'firmware-version':b'mBoot-test\0','boot-nonce':b'private'})]));chosen=adt.selected(tree)['/chosen'];self.assertIn('firmware-version',chosen);self.assertNotIn('boot-nonce',chosen)
+ def test_duplicate_unrelated_siblings_preserved(self):
+  tree=adt.parse(node('',children=[node('arm-io',children=[node('cpu-debug-interface'),node('cpu-debug-interface')])]))
+  names=[n for n in tree if 'cpu-debug-interface' in n];self.assertEqual(len(names),2)
+ def test_duplicate_contract_nodes_rejected(self):
+  for name in ('sgx','chosen','arm-io'):
+   with self.assertRaises(ValueError):adt.parse(node('',children=[node(name),node(name)]))
  def test_ram_reader_has_read_only_attribute_and_system_ram_gate(self):
   s=(ROOT/'experiments/t6040-gpu/m4rch_gpu_adt.c').read_text();self.assertIn('.mode = 0400',s);self.assertNotIn('.write =',s);self.assertIn('IORESOURCE_SYSTEM_RAM',s);self.assertIn('"reserved-memory"',s);self.assertIn('strcmp(label, "adt")',s);self.assertNotIn('ioremap(',s)
 if __name__=='__main__':unittest.main()

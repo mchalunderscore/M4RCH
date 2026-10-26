@@ -1,0 +1,202 @@
+{
+  "adt_sha256": "40242e0bdf61e558847678121e52f56d4dfe830b44cd89e0c142705a76c4d6d5",
+  "gpu_windows": [
+    {
+      "raw_address": "0x88000000",
+      "size": "0x3758000",
+      "physical_address": "0x288000000"
+    },
+    {
+      "raw_address": "0x88d00000",
+      "size": "0x16c000",
+      "physical_address": "0x288d00000"
+    }
+  ],
+  "mcc_windows": [
+    {
+      "raw_address": "0x302820000",
+      "size": "0x4000",
+      "physical_address": "0x502820000"
+    },
+    {
+      "raw_address": "0x3004d0000",
+      "size": "0x149c",
+      "physical_address": "0x5004d0000"
+    },
+    {
+      "raw_address": "0x6d500000",
+      "size": "0x8000",
+      "physical_address": "0x26d500000"
+    },
+    {
+      "raw_address": "0x6e500000",
+      "size": "0x8000",
+      "physical_address": "0x26e500000"
+    },
+    {
+      "raw_address": "0x6f500000",
+      "size": "0x8000",
+      "physical_address": "0x26f500000"
+    },
+    {
+      "raw_address": "0x70500000",
+      "size": "0x8000",
+      "physical_address": "0x270500000"
+    },
+    {
+      "raw_address": "0x71500000",
+      "size": "0x8000",
+      "physical_address": "0x271500000"
+    },
+    {
+      "raw_address": "0x72500000",
+      "size": "0x8000",
+      "physical_address": "0x272500000"
+    },
+    {
+      "raw_address": "0x73500000",
+      "size": "0x8000",
+      "physical_address": "0x273500000"
+    },
+    {
+      "raw_address": "0x74500000",
+      "size": "0x8000",
+      "physical_address": "0x274500000"
+    },
+    {
+      "raw_address": "0x3003c0000",
+      "size": "0x4000",
+      "physical_address": "0x5003c0000"
+    },
+    {
+      "raw_address": "0x3003d0000",
+      "size": "0x4000",
+      "physical_address": "0x5003d0000"
+    },
+    {
+      "raw_address": "0x20000000",
+      "size": "0x2000000",
+      "physical_address": "0x220000000"
+    },
+    {
+      "raw_address": "0x22000000",
+      "size": "0x2000000",
+      "physical_address": "0x222000000"
+    },
+    {
+      "raw_address": "0x24000000",
+      "size": "0x2000000",
+      "physical_address": "0x224000000"
+    },
+    {
+      "raw_address": "0x26000000",
+      "size": "0x2000000",
+      "physical_address": "0x226000000"
+    }
+  ],
+  "active_mcc_mask": "0xf",
+  "donor_register_requirements": [
+    {
+      "slot": 17,
+      "offset": "0x0",
+      "bytes": "0x20000",
+      "fits_each_window": [
+        true,
+        true
+      ]
+    },
+    {
+      "slot": 26,
+      "offset": "0xd04000",
+      "bytes": "0x8000",
+      "fits_each_window": [
+        true,
+        false
+      ]
+    },
+    {
+      "slot": 27,
+      "offset": "0xd0d000",
+      "bytes": "0x1000",
+      "fits_each_window": [
+        true,
+        false
+      ]
+    },
+    {
+      "slot": 28,
+      "offset": "0xd58000",
+      "bytes": "0x8000",
+      "fits_each_window": [
+        true,
+        false
+      ]
+    },
+    {
+      "slot": 29,
+      "offset": "0xd10000",
+      "bytes": "0x4000",
+      "fits_each_window": [
+        true,
+        false
+      ]
+    },
+    {
+      "slot": 31,
+      "offset": "0xd40000",
+      "bytes": "0x4000",
+      "fits_each_window": [
+        true,
+        false
+      ]
+    },
+    {
+      "slot": 32,
+      "offset": "0xd60000",
+      "bytes": "0x8000",
+      "fits_each_window": [
+        true,
+        false
+      ]
+    },
+    {
+      "slot": 40,
+      "offset": "0xe1c000",
+      "bytes": "0x4000",
+      "fits_each_window": [
+        true,
+        false
+      ]
+    },
+    {
+      "slot": 22,
+      "offset": "0x1000000",
+      "bytes": "0x8000",
+      "fits_each_window": [
+        true,
+        false
+      ]
+    },
+    {
+      "slot": 39,
+      "offset": "0xe08000",
+      "bytes": "0x8000",
+      "fits_each_window": [
+        true,
+        false
+      ]
+    },
+    {
+      "slot": 41,
+      "offset": "0xe1f800",
+      "bytes": "0x4000",
+      "fits_each_window": [
+        true,
+        false
+      ]
+    }
+  ],
+  "qualification": "Address containment only. No firmware role, register safety, IRQ semantics or initialization ABI inferred. No reads/writes performed.",
+  "raw_second_sgx_window_rejections": 10,
+  "linux_resource_order_note": "Corrected interpretation: donor DT orders ASC then SGX, so the second Linux resource is the first raw SGX window. The raw second-window rejection count is NOT a donor startup failure."
+}

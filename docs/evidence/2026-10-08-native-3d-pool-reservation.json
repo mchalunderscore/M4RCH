@@ -1,0 +1,24 @@
+{
+  "binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "counts": {
+    "cases": 2048,
+    "found": 910,
+    "full": 980,
+    "absent": 158,
+    "caller_cases": 2048,
+    "zero_cpu": 43
+  },
+  "ranges": [
+    {
+      "start": "0xfffffe00089a6624",
+      "end": "0xfffffe00089a679c",
+      "sha256": "afcf356ccf114cd05209e44403f1764c043c9d286da5cf8147a69be1296ee585"
+    },
+    {
+      "start": "0xfffffe000895e788",
+      "end": "0xfffffe000895e7cc",
+      "sha256": "90125e8cd9be8de09efad6a258efc9e987eea1cf72276d1077dc95a6b7f79fa3"
+    }
+  ],
+  "qualification": "Actual ordinary3D descriptor reservation caller and complete native firmware request. Whole descriptor/firmware and occupancy compared; missing bitmap, zero capacity, full slots, cursor/u32 product/u64 address wrap tested. Lock/unlock and mapping158 services explicit checked callbacks. Both mapping objects reached through the same resource1320. Allocation/cache/context permissions, actual mappings, concurrency, GPU acceptance/completion unqualified."
+}

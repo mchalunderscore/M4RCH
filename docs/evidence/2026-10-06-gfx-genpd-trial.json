@@ -1,0 +1,15 @@
+{
+  "build_id": "aba3946879a614d3024d7c9c2d92c0af84a7a58f",
+  "module_load_returncode": 0,
+  "before": "off-0",
+  "during": "on",
+  "after": "off-0",
+  "module_unloaded": true,
+  "consumer_removed": true,
+  "gpu_mmio": false,
+  "reset_clock_firmware_calls": false,
+  "dmesg_delta": "[  633.107767] m4rch GFX test: existing genpd runtime resume succeeded; no SGX access\n[  633.109656] m4rch GFX test: runtime suspend result=0\n",
+  "owner_after_tests": "Desktop/input/USB/networking still normal",
+  "no_gpu_id_reads": true,
+  "no_firmware_startup": true
+}

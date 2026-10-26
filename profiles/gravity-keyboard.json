@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "base_profile": "profiles/gravity-loader.json",
+  "input_files": {
+    "patches/gravity-uboot-j614s-keyboard.patch": "e4887a5e5f395bd3a7d25beef62802193ff7b8ef385c9dd6f9dac149603bf45e",
+    "sdboot/t6040-boot-keyboard.dtso": "6e5fa577ebbdae3d37da73f6f1633cc2404f1aafbc2c4fb88c1fb3054afc35b4"
+  },
+  "result_files": {
+    "arch/arm/mach-apple/archsd.c": "dc3037252cc94152bf83820e02fdec49e906aa511bf12ffb76f7e408d3fb954b",
+    "arch/arm/mach-apple/board.c": "137a199782b363eff4ce399de7ba3ab46f29efe5b67d2817f8f35f861203c868",
+    "configs/apple_sdboot_defconfig": "6e256a56a9325d3aeee4a84bb9ac12ef09c50d7f962c157f32e7ce636e908a07",
+    "board/apple/mac/mac.env": "7aded364d5a684b0e9e663aaede89bfa010cadb92d508c7dedb5bf8990e32162"
+  }
+}

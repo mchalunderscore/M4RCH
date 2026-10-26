@@ -1,0 +1,27 @@
+{
+  "binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "counts": {
+    "cases": 1024,
+    "empty": 61,
+    "records": 8166,
+    "context_only": 31
+  },
+  "ranges": [
+    {
+      "start": "0xfffffe0008a1f7b4",
+      "end": "0xfffffe0008a1f860",
+      "sha256": "b191bbf8cb8129c2defc7e1ca95e5cd107b9cb224f7fa95dc45ec3471d99cc31"
+    },
+    {
+      "start": "0xfffffe000895f738",
+      "end": "0xfffffe000895f878",
+      "sha256": "4b2a895a9423c5c5e468c0868cd036c5060fba59540f600977eaf94979a3146d"
+    },
+    {
+      "start": "0xfffffe00089e8a9c",
+      "end": "0xfffffe00089e8ae0",
+      "sha256": "6f21f9a82ad6a3e46fce4cf45359db4d792ecbe4ce1f64f7f124edd5ea0f54e3"
+    }
+  ],
+  "qualification": "Native postproducer caller through actual mcache aperture helper and G16 HAL encoder, full command/descriptor compared and caller context unchanged. Counts0..16, trace disabled, high address/pointer wrap and random record fields. Authentication skipped. No queue publication, cache visibility, actual GPU mappings, valid draw, completion or live hardware proved."
+}

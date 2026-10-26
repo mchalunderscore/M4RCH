@@ -1,0 +1,1126 @@
+{
+  "schema": "m4rch-gfx-bit1-native-owner-review-v1",
+  "scope": "Saved-file review only by this agent. Parent performed separately pinned fixed reserved RAM DATA/PT load/read/unload; no GPU commands, GPU register reads or firmware RAM writes. eff8 remains consumed; frozen source unchanged.",
+  "boot_id": "eff8eafa-d845-429e-b98c-9a5f053bcc46",
+  "conclusion": "No explicit bit1 producer or paired bit1 release is bound. All 36 immediate calls to32104 preserve bit1 and only update bit0; native release also depends on reason ownership and queue reconciliation. Fresh PT binds the sampled physical RAM, but all-zero global RAM and absent main/SGX pointers do not establish coherent active IOP state or current PC. Do not infer an arbitrary request2\u21920 write from ACK2.",
+  "inputs": [
+    {
+      "path": "out/gfx-cold-render-pause-release/candidate/asc-graph-init/boot-eff8eafa-d845-429e-b98c-9a5f053bcc46/text.bin",
+      "bytes": 393216,
+      "sha256": "c7ef055672f826231812a42c877f28ed6b47d4174e5ac8d3eb54b0c26a722531"
+    },
+    {
+      "path": "out/private-apple/live-text.dis",
+      "bytes": 3783769,
+      "sha256": "d7f6605e8c944ca98b7921d7a9123723335c5bc9c04e5d9462f963f308e3a1f8"
+    },
+    {
+      "path": "/boot/GPUC003/private-apple/com.apple.AGXG16X",
+      "bytes": 1566304,
+      "sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e"
+    },
+    {
+      "path": "out/private-apple/agx-disassembly.txt",
+      "bytes": 11343250,
+      "sha256": "45921fcdb496c8d914848f63bffdf1d8bd583bf8bc9620606c09f3dcec7a0317"
+    },
+    {
+      "path": "out/private-apple/agx-symbols.txt",
+      "bytes": 568203,
+      "sha256": "34ea475de90e1d933770499296c5e55782df85f3ad31fb36fb54bbb1d9c529be"
+    },
+    {
+      "path": "out/gfx-cold-render-pause-release/candidate/asc-graph-init/boot-eff8eafa-d845-429e-b98c-9a5f053bcc46/data-before.bin",
+      "bytes": 1277952,
+      "sha256": "3a5b8cc02d184f78c42df9bd0cb33c6645ee49b5e3e871c0d14b4535e87efd17"
+    },
+    {
+      "path": "out/gfx-cold-render-pause-release/retained-data-eff8-v1/data-retained.bin",
+      "bytes": 1277952,
+      "sha256": "a62dcc19235b95b41e6d67b7655a557b017162b057dd6735b076b060cb3a5e44"
+    },
+    {
+      "path": "out/gfx-native-dispatch-contract/retained-pt-eff8-v1/readback/pagetables-retained.bin",
+      "bytes": 262144,
+      "sha256": "e136e6caac7fedb3e84d91303710b293b79579b396ac74e00256badfeb68546c"
+    },
+    {
+      "path": "out/gfx-cold-render-pause-release/candidate/asc-graph-init/graph-contract.h",
+      "bytes": 24313,
+      "sha256": "f8c5a1536aa88ef7a1eb09b9a862cece4a2e822dd2eda54a449e6b3c11b20410"
+    },
+    {
+      "path": "out/gfx-cold-render-pause-release/candidate/asc-graph-init/graph-receipt.json",
+      "bytes": 133011,
+      "sha256": "2104ff60f59b2429985186c86e3d13bf05de4364e649d2321370eabc4bd15375"
+    },
+    {
+      "path": "/home/alice/Downloads/M4-PRO-GPU-HARDWARE-ABI.md",
+      "bytes": 9527,
+      "sha256": "2818ced00eea77f662be9339ee6dae717bd1330e2a46bc927e53190edf6b98db"
+    },
+    {
+      "path": "docs/evidence/2026-10-10-gfx-pause-release-eff8-remaining-gate.json",
+      "bytes": 17250,
+      "sha256": "6f967d3f0f51b02ef59981af4aed7c15ed24ae823fb5712f8f3be9d300041f81"
+    },
+    {
+      "path": "docs/evidence/2026-10-10-gfx-variable-mask-dispatch-review.json",
+      "bytes": 31374,
+      "sha256": "21823e4f73a6b85c1eee3206ead58c2ffe094deeae9ae8ffb14290b6e3e534a8"
+    },
+    {
+      "path": "out/gfx-cold-render-pause-release/retained-data-eff8-v1/intent.json",
+      "bytes": 2090,
+      "sha256": "d4e7496aff307a91ecead2bbdc9909ad350c365e29b4b987c4b86f8251aed533"
+    },
+    {
+      "path": "out/gfx-cold-render-pause-release/retained-data-eff8-v1/result.json",
+      "bytes": 807,
+      "sha256": "5781b0625cf31d847e33371a29573893ee86319941a4d3a5120f0f4513ae43ad"
+    },
+    {
+      "path": "out/gfx-native-dispatch-contract/retained-pt-eff8-v1/readback/intent.json",
+      "bytes": 2111,
+      "sha256": "46815dffe6784510b10d53fe6fd76588afd66672607eeb7172214faf3213d331"
+    },
+    {
+      "path": "out/gfx-native-dispatch-contract/retained-pt-eff8-v1/readback/result.json",
+      "bytes": 818,
+      "sha256": "497a14f79eea42afd5d2024e1928297750314b1646ad40ab732c2ddaca7426ee"
+    }
+  ],
+  "helper": {
+    "request": "32138 writes fullx0 to211c8",
+    "ACK": "32178..32184 compares only211d0bit0 withx1",
+    "immediate_call_count": 36,
+    "acquire_count": 18,
+    "release_count": 18,
+    "callers": [
+      {
+        "call_PC": "0x5b5c",
+        "mode": "release",
+        "request_formula": "old_request & ~1",
+        "ACK_bit0_expected": 0,
+        "other_request_bits_preserved": true,
+        "range": {
+          "start": "0x5b50",
+          "end_exclusive": "0x5b60",
+          "bytes": 16,
+          "sha256": "3643da3ea4b8bd32d9955a37c66bbd59ad5813dd052fcd1e21d74ff7a956ea53",
+          "current_TEXT_disassembly_match": true,
+          "meaning": "caller request load, bit0 operand and expectation"
+        }
+      },
+      {
+        "call_PC": "0x5c10",
+        "mode": "acquire",
+        "request_formula": "old_request | 1",
+        "ACK_bit0_expected": 1,
+        "other_request_bits_preserved": true,
+        "range": {
+          "start": "0x5c04",
+          "end_exclusive": "0x5c14",
+          "bytes": 16,
+          "sha256": "3ce2c8339afbd4e52155d4fb8950e69b678fa95d285bfa808323e54edf8d8157",
+          "current_TEXT_disassembly_match": true,
+          "meaning": "caller request load, bit0 operand and expectation"
+        }
+      },
+      {
+        "call_PC": "0x648c",
+        "mode": "release",
+        "request_formula": "old_request & ~1",
+        "ACK_bit0_expected": 0,
+        "other_request_bits_preserved": true,
+        "range": {
+          "start": "0x6480",
+          "end_exclusive": "0x6490",
+          "bytes": 16,
+          "sha256": "f52ccdb90dfa1c5c9975119f76b8c967590822c84fe6b893469b6e98cd0b5119",
+          "current_TEXT_disassembly_match": true,
+          "meaning": "caller request load, bit0 operand and expectation"
+        }
+      },
+      {
+        "call_PC": "0x11e38",
+        "mode": "acquire",
+        "request_formula": "old_request | 1",
+        "ACK_bit0_expected": 1,
+        "other_request_bits_preserved": true,
+        "range": {
+          "start": "0x11e2c",
+          "end_exclusive": "0x11e3c",
+          "bytes": 16,
+          "sha256": "3d535c077ff56c9f26128d2d37d861f8beec339d5cb502584b773131e379510e",
+          "current_TEXT_disassembly_match": true,
+          "meaning": "caller request load, bit0 operand and expectation"
+        }
+      },
+      {
+        "call_PC": "0x11e74",
+        "mode": "release",
+        "request_formula": "old_request & ~1",
+        "ACK_bit0_expected": 0,
+        "other_request_bits_preserved": true,
+        "range": {
+          "start": "0x11e68",
+          "end_exclusive": "0x11e78",
+          "bytes": 16,
+          "sha256": "aa71b29e9ec4ead70c489a123c088b1610b791fac649b0dcedd07854c0f20099",
+          "current_TEXT_disassembly_match": true,
+          "meaning": "caller request load, bit0 operand and expectation"
+        }
+      },
+      {
+        "call_PC": "0x13aa8",
+        "mode": "acquire",
+        "request_formula": "old_request | 1",
+        "ACK_bit0_expected": 1,
+        "other_request_bits_preserved": true,
+        "range": {
+          "start": "0x13a9c",
+          "end_exclusive": "0x13aac",
+          "bytes": 16,
+          "sha256": "7cbce19148a3811493af321e5be2d39a01bb43b7691ad86d74cd0debc2dbc681",
+          "current_TEXT_disassembly_match": true,
+          "meaning": "caller request load, bit0 operand and expectation"
+        }
+      },
+      {
+        "call_PC": "0x13b94",
+        "mode": "release",
+        "request_formula": "old_request & ~1",
+        "ACK_bit0_expected": 0,
+        "other_request_bits_preserved": true,
+        "range": {
+          "start": "0x13b88",
+          "end_exclusive": "0x13b98",
+          "bytes": 16,
+          "sha256": "99dc71164d3a1f72f16f7c9a10fc2c17968baca8ada1b5b2cc1f14dbf13f728d",
+          "current_TEXT_disassembly_match": true,
+          "meaning": "caller request load, bit0 operand and expectation"
+        }
+      },
+      {
+        "call_PC": "0x162f4",
+        "mode": "release",
+        "request_formula": "old_request & ~1",
+        "ACK_bit0_expected": 0,
+        "other_request_bits_preserved": true,
+        "range": {
+          "start": "0x162e8",
+          "end_exclusive": "0x162f8",
+          "bytes": 16,
+          "sha256": "61cdfe49739bf000502846e0f539b1f1bdd89ae9c087e07faed7d514146a99e9",
+          "current_TEXT_disassembly_match": true,
+          "meaning": "caller request load, bit0 operand and expectation"
+        }
+      },
+      {
+        "call_PC": "0x16370",
+        "mode": "acquire",
+        "request_formula": "old_request | 1",
+        "ACK_bit0_expected": 1,
+        "other_request_bits_preserved": true,
+        "range": {
+          "start": "0x16364",
+          "end_exclusive": "0x16374",
+          "bytes": 16,
+          "sha256": "4fd0500531ebbe91c789007d77d6d538e998124ada6d6be762f00eb17f5fb857",
+          "current_TEXT_disassembly_match": true,
+          "meaning": "caller request load, bit0 operand and expectation"
+        }
+      },
+      {
+        "call_PC": "0x16a5c",
+        "mode": "acquire",
+        "request_formula": "old_request | 1",
+        "ACK_bit0_expected": 1,
+        "other_request_bits_preserved": true,
+        "range": {
+          "start": "0x16a50",
+          "end_exclusive": "0x16a60",
+          "bytes": 16,
+          "sha256": "6fb0db288303e59d631b99315a4fff87288a7f9dbc974a45c00d676ece73c9bc",
+          "current_TEXT_disassembly_match": true,
+          "meaning": "caller request load, bit0 operand and expectation"
+        }
+      },
+      {
+        "call_PC": "0x17718",
+        "mode": "release",
+        "request_formula": "old_request & ~1",
+        "ACK_bit0_expected": 0,
+        "other_request_bits_preserved": true,
+        "range": {
+          "start": "0x1770c",
+          "end_exclusive": "0x1771c",
+          "bytes": 16,
+          "sha256": "d4941e0bd48cd39e3f6927a942586cdba21270c7519cbad40a8729770c0b8d9d",
+          "current_TEXT_disassembly_match": true,
+          "meaning": "caller request load, bit0 operand and expectation"
+        }
+      },
+      {
+        "call_PC": "0x17914",
+        "mode": "acquire",
+        "request_formula": "old_request | 1",
+        "ACK_bit0_expected": 1,
+        "other_request_bits_preserved": true,
+        "range": {
+          "start": "0x17908",
+          "end_exclusive": "0x17918",
+          "bytes": 16,
+          "sha256": "84f7a71fe6441be9e864df005d9ec0bd660eb3975d5c584a87373943d9d20ce7",
+          "current_TEXT_disassembly_match": true,
+          "meaning": "caller request load, bit0 operand and expectation"
+        }
+      },
+      {
+        "call_PC": "0x19650",
+        "mode": "acquire",
+        "request_formula": "old_request | 1",
+        "ACK_bit0_expected": 1,
+        "other_request_bits_preserved": true,
+        "range": {
+          "start": "0x19644",
+          "end_exclusive": "0x19654",
+          "bytes": 16,
+          "sha256": "a02db7940ebfe017f3455d9356844c0a343c88363dc51f0daaf4ff96fa3861d8",
+          "current_TEXT_disassembly_match": true,
+          "meaning": "caller request load, bit0 operand and expectation"
+        }
+      },
+      {
+        "call_PC": "0x1970c",
+        "mode": "release",
+        "request_formula": "old_request & ~1",
+        "ACK_bit0_expected": 0,
+        "other_request_bits_preserved": true,
+        "range": {
+          "start": "0x19700",
+          "end_exclusive": "0x19710",
+          "bytes": 16,
+          "sha256": "ba7e0bba9fb1cfc6b45127ca38573a3ac87dcf1e7dea41acd9788aa954f4f59c",
+          "current_TEXT_disassembly_match": true,
+          "meaning": "caller request load, bit0 operand and expectation"
+        }
+      },
+      {
+        "call_PC": "0x1abcc",
+        "mode": "acquire",
+        "request_formula": "old_request | 1",
+        "ACK_bit0_expected": 1,
+        "other_request_bits_preserved": true,
+        "range": {
+          "start": "0x1abc0",
+          "end_exclusive": "0x1abd0",
+          "bytes": 16,
+          "sha256": "28cd3ec144490d541dff5e0d5ec3ca9386278ec21b08e8aed1df04ba53ef3b3e",
+          "current_TEXT_disassembly_match": true,
+          "meaning": "caller request load, bit0 operand and expectation"
+        }
+      },
+      {
+        "call_PC": "0x1b1fc",
+        "mode": "release",
+        "request_formula": "old_request & ~1",
+        "ACK_bit0_expected": 0,
+        "other_request_bits_preserved": true,
+        "range": {
+          "start": "0x1b1f0",
+          "end_exclusive": "0x1b200",
+          "bytes": 16,
+          "sha256": "a7470ba46f58d5240e27e12df113fcb2621470763e06eaa035c82e044d487feb",
+          "current_TEXT_disassembly_match": true,
+          "meaning": "caller request load, bit0 operand and expectation"
+        }
+      },
+      {
+        "call_PC": "0x1bd64",
+        "mode": "acquire",
+        "request_formula": "old_request | 1",
+        "ACK_bit0_expected": 1,
+        "other_request_bits_preserved": true,
+        "range": {
+          "start": "0x1bd58",
+          "end_exclusive": "0x1bd68",
+          "bytes": 16,
+          "sha256": "675121ba6b44345a5f7c38850c017c9b9a19f0625199b35e6275e810bea9a1b1",
+          "current_TEXT_disassembly_match": true,
+          "meaning": "caller request load, bit0 operand and expectation"
+        }
+      },
+      {
+        "call_PC": "0x1c180",
+        "mode": "release",
+        "request_formula": "old_request & ~1",
+        "ACK_bit0_expected": 0,
+        "other_request_bits_preserved": true,
+        "range": {
+          "start": "0x1c174",
+          "end_exclusive": "0x1c184",
+          "bytes": 16,
+          "sha256": "dc1d94d6b50c3bec6521cfa73cb2f97c1fe652739cd5fe29e61abd8a484407e9",
+          "current_TEXT_disassembly_match": true,
+          "meaning": "caller request load, bit0 operand and expectation"
+        }
+      },
+      {
+        "call_PC": "0x1e5d4",
+        "mode": "acquire",
+        "request_formula": "old_request | 1",
+        "ACK_bit0_expected": 1,
+        "other_request_bits_preserved": true,
+        "range": {
+          "start": "0x1e5c8",
+          "end_exclusive": "0x1e5d8",
+          "bytes": 16,
+          "sha256": "f83cc9e5e7b399149ee3a6ca96c60efeead611b3083f16bd955c2097f88aac59",
+          "current_TEXT_disassembly_match": true,
+          "meaning": "caller request load, bit0 operand and expectation"
+        }
+      },
+      {
+        "call_PC": "0x1e664",
+        "mode": "release",
+        "request_formula": "old_request & ~1",
+        "ACK_bit0_expected": 0,
+        "other_request_bits_preserved": true,
+        "range": {
+          "start": "0x1e658",
+          "end_exclusive": "0x1e668",
+          "bytes": 16,
+          "sha256": "d68b16d86503e4b2bb8ea998ba261a8e557cbf9503797b7a1c3fd4af1fed4a42",
+          "current_TEXT_disassembly_match": true,
+          "meaning": "caller request load, bit0 operand and expectation"
+        }
+      },
+      {
+        "call_PC": "0x1e780",
+        "mode": "acquire",
+        "request_formula": "old_request | 1",
+        "ACK_bit0_expected": 1,
+        "other_request_bits_preserved": true,
+        "range": {
+          "start": "0x1e774",
+          "end_exclusive": "0x1e784",
+          "bytes": 16,
+          "sha256": "11ad56ab8b10762412d67638a2e0552ba4579c358a602336859d7b44217e0d91",
+          "current_TEXT_disassembly_match": true,
+          "meaning": "caller request load, bit0 operand and expectation"
+        }
+      },
+      {
+        "call_PC": "0x1e7fc",
+        "mode": "release",
+        "request_formula": "old_request & ~1",
+        "ACK_bit0_expected": 0,
+        "other_request_bits_preserved": true,
+        "range": {
+          "start": "0x1e7f0",
+          "end_exclusive": "0x1e800",
+          "bytes": 16,
+          "sha256": "e09e80981c1291cd740badc3dc36c3946dd8d9d541f7df92f7157552449df859",
+          "current_TEXT_disassembly_match": true,
+          "meaning": "caller request load, bit0 operand and expectation"
+        }
+      },
+      {
+        "call_PC": "0x1e8f4",
+        "mode": "acquire",
+        "request_formula": "old_request | 1",
+        "ACK_bit0_expected": 1,
+        "other_request_bits_preserved": true,
+        "range": {
+          "start": "0x1e8e8",
+          "end_exclusive": "0x1e8f8",
+          "bytes": 16,
+          "sha256": "cf1f65abb46b70706f3f6e1922738ea7c3e541b6a430a15c8389265f3706b11f",
+          "current_TEXT_disassembly_match": true,
+          "meaning": "caller request load, bit0 operand and expectation"
+        }
+      },
+      {
+        "call_PC": "0x1e978",
+        "mode": "release",
+        "request_formula": "old_request & ~1",
+        "ACK_bit0_expected": 0,
+        "other_request_bits_preserved": true,
+        "range": {
+          "start": "0x1e96c",
+          "end_exclusive": "0x1e97c",
+          "bytes": 16,
+          "sha256": "419ea38519f1f9ab035feab6c6ca51043af71e030929f2a5551c007092839978",
+          "current_TEXT_disassembly_match": true,
+          "meaning": "caller request load, bit0 operand and expectation"
+        }
+      },
+      {
+        "call_PC": "0x28054",
+        "mode": "acquire",
+        "request_formula": "old_request | 1",
+        "ACK_bit0_expected": 1,
+        "other_request_bits_preserved": true,
+        "range": {
+          "start": "0x28048",
+          "end_exclusive": "0x28058",
+          "bytes": 16,
+          "sha256": "a4c7472265be1ba40e8de75ab6e39015e6f846f9a14b414e5ac1f053605f83c8",
+          "current_TEXT_disassembly_match": true,
+          "meaning": "caller request load, bit0 operand and expectation"
+        }
+      },
+      {
+        "call_PC": "0x280fc",
+        "mode": "release",
+        "request_formula": "old_request & ~1",
+        "ACK_bit0_expected": 0,
+        "other_request_bits_preserved": true,
+        "range": {
+          "start": "0x280f0",
+          "end_exclusive": "0x28100",
+          "bytes": 16,
+          "sha256": "bc0dabda7e49b1c097cb22c0c285ad8788ec2ae2135be1845b8be78b18faa587",
+          "current_TEXT_disassembly_match": true,
+          "meaning": "caller request load, bit0 operand and expectation"
+        }
+      },
+      {
+        "call_PC": "0x281a8",
+        "mode": "release",
+        "request_formula": "old_request & ~1",
+        "ACK_bit0_expected": 0,
+        "other_request_bits_preserved": true,
+        "range": {
+          "start": "0x2819c",
+          "end_exclusive": "0x281ac",
+          "bytes": 16,
+          "sha256": "527a224b6e25c61ff265d74cb913b3329912bc09328fb34b93c96b365e053484",
+          "current_TEXT_disassembly_match": true,
+          "meaning": "caller request load, bit0 operand and expectation"
+        }
+      },
+      {
+        "call_PC": "0x32a88",
+        "mode": "acquire",
+        "request_formula": "old_request | 1",
+        "ACK_bit0_expected": 1,
+        "other_request_bits_preserved": true,
+        "range": {
+          "start": "0x32a7c",
+          "end_exclusive": "0x32a8c",
+          "bytes": 16,
+          "sha256": "364ccb5a42624209a2608f5f7f08598674314692dd41c92ec23aeb991eb77532",
+          "current_TEXT_disassembly_match": true,
+          "meaning": "caller request load, bit0 operand and expectation"
+        }
+      },
+      {
+        "call_PC": "0x32b50",
+        "mode": "release",
+        "request_formula": "old_request & ~1",
+        "ACK_bit0_expected": 0,
+        "other_request_bits_preserved": true,
+        "range": {
+          "start": "0x32b44",
+          "end_exclusive": "0x32b54",
+          "bytes": 16,
+          "sha256": "293659c2269bced71343d0de1df97e285ccdebbacdaaf177afd487e80b3a4641",
+          "current_TEXT_disassembly_match": true,
+          "meaning": "caller request load, bit0 operand and expectation"
+        }
+      },
+      {
+        "call_PC": "0x35ee8",
+        "mode": "acquire",
+        "request_formula": "old_request | 1",
+        "ACK_bit0_expected": 1,
+        "other_request_bits_preserved": true,
+        "range": {
+          "start": "0x35edc",
+          "end_exclusive": "0x35eec",
+          "bytes": 16,
+          "sha256": "d81cba71d4bdc38d15b09ba2ad76d034cfa8740267778433777d1e91788dedb6",
+          "current_TEXT_disassembly_match": true,
+          "meaning": "caller request load, bit0 operand and expectation"
+        }
+      },
+      {
+        "call_PC": "0x3646c",
+        "mode": "acquire",
+        "request_formula": "old_request | 1",
+        "ACK_bit0_expected": 1,
+        "other_request_bits_preserved": true,
+        "range": {
+          "start": "0x36460",
+          "end_exclusive": "0x36470",
+          "bytes": 16,
+          "sha256": "5826a99d88aa7a6185e41d065289511c8ad1420e3dc21c443f9653ceae5fa74b",
+          "current_TEXT_disassembly_match": true,
+          "meaning": "caller request load, bit0 operand and expectation"
+        }
+      },
+      {
+        "call_PC": "0x36bc0",
+        "mode": "release",
+        "request_formula": "old_request & ~1",
+        "ACK_bit0_expected": 0,
+        "other_request_bits_preserved": true,
+        "range": {
+          "start": "0x36bb4",
+          "end_exclusive": "0x36bc4",
+          "bytes": 16,
+          "sha256": "231e7b775cff0a6f985230e49059249b3e42a23d8acb3583383cc93f4261ddf0",
+          "current_TEXT_disassembly_match": true,
+          "meaning": "caller request load, bit0 operand and expectation"
+        }
+      },
+      {
+        "call_PC": "0x37cc8",
+        "mode": "acquire",
+        "request_formula": "old_request | 1",
+        "ACK_bit0_expected": 1,
+        "other_request_bits_preserved": true,
+        "range": {
+          "start": "0x37cbc",
+          "end_exclusive": "0x37ccc",
+          "bytes": 16,
+          "sha256": "9210e03a9c749e7127dd70b458734f615663876104f7f099f48e300244b7aaa1",
+          "current_TEXT_disassembly_match": true,
+          "meaning": "caller request load, bit0 operand and expectation"
+        }
+      },
+      {
+        "call_PC": "0x38044",
+        "mode": "release",
+        "request_formula": "old_request & ~1",
+        "ACK_bit0_expected": 0,
+        "other_request_bits_preserved": true,
+        "range": {
+          "start": "0x38038",
+          "end_exclusive": "0x38048",
+          "bytes": 16,
+          "sha256": "0ae2c60ce2d22a68112b7d1f8e383844704bff268a7f3491eed6cd3ae2ce318b",
+          "current_TEXT_disassembly_match": true,
+          "meaning": "caller request load, bit0 operand and expectation"
+        }
+      },
+      {
+        "call_PC": "0x38134",
+        "mode": "acquire",
+        "request_formula": "old_request | 1",
+        "ACK_bit0_expected": 1,
+        "other_request_bits_preserved": true,
+        "range": {
+          "start": "0x38128",
+          "end_exclusive": "0x38138",
+          "bytes": 16,
+          "sha256": "db429f42e56ff1f8f01e7c0a44703c6802a30bcd2192e290533d4f7051feebcb",
+          "current_TEXT_disassembly_match": true,
+          "meaning": "caller request load, bit0 operand and expectation"
+        }
+      },
+      {
+        "call_PC": "0x381f4",
+        "mode": "release",
+        "request_formula": "old_request & ~1",
+        "ACK_bit0_expected": 0,
+        "other_request_bits_preserved": true,
+        "range": {
+          "start": "0x381e8",
+          "end_exclusive": "0x381f8",
+          "bytes": 16,
+          "sha256": "3f0863dfc38305d8b38e1a6123dd358715760776805888eb98de8966f7767eb1",
+          "current_TEXT_disassembly_match": true,
+          "meaning": "caller request load, bit0 operand and expectation"
+        }
+      }
+    ]
+  },
+  "fixed_request_stores": [
+    {
+      "PC": "0x16c20",
+      "formula": "old_request & ~4",
+      "meaning": "bit2 clear, not bit1"
+    },
+    {
+      "PC": "0x17974",
+      "formula": "old_request | 4",
+      "meaning": "bit2 set, not bit1"
+    },
+    {
+      "PC": "0x32138",
+      "formula": "x0",
+      "meaning": "full caller supplied request"
+    }
+  ],
+  "native_lifecycle": {
+    "mutex": "18e3b0 via450f4/44fb0",
+    "reason": "u32 13f018",
+    "reason2": "16340..163b4 acquires own2;162bc..16340 removes own2. Bit0 set only when prior reasons zero and cleared only when remaining reasons zero.",
+    "reason16": "1ab94..1ac10 acquires own16 whenw2 nonzero;1b1bc..1b230 removes own16 after reconciliation, clears bit0 only when remaining reasons zero.",
+    "mask_transition": "Nonzero new incoming masks relative to6c3c8/6c3d0 write210a8/210b0; wait coverage21058/21060; waitACK211d0bit1clear unlessmain+26c state2. Zero-new-mask path skips those requests/waits.",
+    "reconcile": "1ac10..1b1bc reads selected21008 queue config,21028 consumer and21020 producer; compares cached40-byte queue blocks; conditionally replays210d8/210e0 kicks; writes resume masks210c8/210d0 before reason16 release.",
+    "limitation": "No active postdraw caller or PC bound; preserved old bit1 in36scalarcallers supplies no bit1 recipe."
+  },
+  "computed_paths": {
+    "method": "Targeted exact-byte review plus private linear abstract address/value aid; aid is not CFG or interprocedural exhaustive proof.",
+    "firmware_descriptors": "21c18..21eb4 consumes status_b+4018 generic32-byte entries and status_b+4060/+4068 controller records; writes runtime-computed offsets. Current frozen graph counts are zero; runtime descriptor mutations/coherent object binding not closed.",
+    "frozen_graph_descriptor_fields": [
+      {
+        "status_b_offset": "0x4018",
+        "bytes": 4,
+        "value": "0x0",
+        "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+        "meaning": "generic register descriptor count"
+      },
+      {
+        "status_b_offset": "0x4060",
+        "bytes": 8,
+        "value": "0x0",
+        "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
+        "meaning": "per-controller descriptor pointer"
+      },
+      {
+        "status_b_offset": "0x4068",
+        "bytes": 4,
+        "value": "0x0",
+        "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+        "meaning": "per-controller descriptor count"
+      }
+    ],
+    "native_diagnostic_table": "kDirectRegRegionsG16C contains pair21038..211d0; AGXAcceleratorG16::printAGXInfo89d9120..91d0 consumes it withLDR xzr only. No request producer follows.",
+    "native_init_hook": "Both populateInitSequenceFirmware implementations (89632ec,89ea1c4) return immediately.",
+    "native_overrides": "AGXArmFirmware::addRegisterOverride89bf398..89bf408 queues up to16 entries of24bytes atpowerdata+800 withcount+980; getRegisterOverrides89bf1d4..89bf384 copies them. Generic virtual writeGFXReg32 and other computed paths are not exhaustively closed or bound to a current211c8 producer.",
+    "native_direct_table_pair_index": 240
+  },
+  "retained_RAM": {
+    "snapshot": "Late and non-atomic; no current PC.",
+    "changed_bytes_vs_before": 39127,
+    "nonzero_bytes_before": 58591,
+    "nonzero_bytes_after": 97384,
+    "loader_descriptor": "FWVA60000\u2192PA10001d44000 descriptor extentc000 alone was insufficient; fresh page table independently confirms linear translations beyond it.",
+    "translated_rows": [
+      {
+        "FWVA": "0xfffffc000006c018",
+        "PA": "0x10001d50018",
+        "capture_offset": "0xc018",
+        "bytes": 288,
+        "sha256": "fea36361ebaa3abd7a4db6ff06ed2efb0f1254b7ee75d19af4cc88952a171f51",
+        "nonzero_bytes": 18,
+        "meaning": "18 owner gate records",
+        "page_walk": [
+          {
+            "offset": "0x0",
+            "entry": "0x105fff7c403"
+          },
+          {
+            "offset": "0x4000",
+            "entry": "0x105fff80403"
+          },
+          {
+            "offset": "0x80d8",
+            "entry": "0x460010001d50443"
+          }
+        ]
+      },
+      {
+        "FWVA": "0xfffffc000006c130",
+        "PA": "0x10001d50130",
+        "capture_offset": "0xc130",
+        "bytes": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+        "nonzero_bytes": 0,
+        "meaning": "owner enabled masks",
+        "page_walk": [
+          {
+            "offset": "0x0",
+            "entry": "0x105fff7c403"
+          },
+          {
+            "offset": "0x4000",
+            "entry": "0x105fff80403"
+          },
+          {
+            "offset": "0x80d8",
+            "entry": "0x460010001d50443"
+          }
+        ]
+      },
+      {
+        "FWVA": "0xfffffc000006c178",
+        "PA": "0x10001d50178",
+        "capture_offset": "0xc178",
+        "bytes": 288,
+        "sha256": "2d5565fb483d8ea4525a7a9229677d1038ad34b6e22c8d5152e1d7f7b9817597",
+        "nonzero_bytes": 0,
+        "meaning": "18 owner pending mask pairs",
+        "page_walk": [
+          {
+            "offset": "0x0",
+            "entry": "0x105fff7c403"
+          },
+          {
+            "offset": "0x4000",
+            "entry": "0x105fff80403"
+          },
+          {
+            "offset": "0x80d8",
+            "entry": "0x460010001d50443"
+          }
+        ]
+      },
+      {
+        "FWVA": "0xfffffc000006c298",
+        "PA": "0x10001d50298",
+        "capture_offset": "0xc298",
+        "bytes": 288,
+        "sha256": "2d5565fb483d8ea4525a7a9229677d1038ad34b6e22c8d5152e1d7f7b9817597",
+        "nonzero_bytes": 0,
+        "meaning": "18 owner active mask pairs",
+        "page_walk": [
+          {
+            "offset": "0x0",
+            "entry": "0x105fff7c403"
+          },
+          {
+            "offset": "0x4000",
+            "entry": "0x105fff80403"
+          },
+          {
+            "offset": "0x80d8",
+            "entry": "0x460010001d50443"
+          }
+        ]
+      },
+      {
+        "FWVA": "0xfffffc000006c3b8",
+        "PA": "0x10001d503b8",
+        "capture_offset": "0xc3b8",
+        "bytes": 80,
+        "sha256": "5b6fb58e61fa475939767d68a446f97f1bff02c0e5935a3ea8bb51e6515783d8",
+        "nonzero_bytes": 0,
+        "meaning": "global request/cache/coverage/reconcile/deferred mask pairs",
+        "page_walk": [
+          {
+            "offset": "0x0",
+            "entry": "0x105fff7c403"
+          },
+          {
+            "offset": "0x4000",
+            "entry": "0x105fff80403"
+          },
+          {
+            "offset": "0x80d8",
+            "entry": "0x460010001d50443"
+          }
+        ]
+      },
+      {
+        "FWVA": "0xfffffc000006d808",
+        "PA": "0x10001d51808",
+        "capture_offset": "0xd808",
+        "bytes": 288,
+        "sha256": "2d5565fb483d8ea4525a7a9229677d1038ad34b6e22c8d5152e1d7f7b9817597",
+        "nonzero_bytes": 0,
+        "meaning": "18 owner restore mask pairs",
+        "page_walk": [
+          {
+            "offset": "0x0",
+            "entry": "0x105fff7c403"
+          },
+          {
+            "offset": "0x4000",
+            "entry": "0x105fff80403"
+          },
+          {
+            "offset": "0x80d8",
+            "entry": "0x460010001d50443"
+          }
+        ]
+      },
+      {
+        "FWVA": "0xfffffc000006d928",
+        "PA": "0x10001d51928",
+        "capture_offset": "0xd928",
+        "bytes": 16,
+        "sha256": "374708fff7719dd5979ec875d56cd2286f6d3cf7ec317a3b25632aab28ec37bb",
+        "nonzero_bytes": 0,
+        "meaning": "mask exclusions",
+        "page_walk": [
+          {
+            "offset": "0x0",
+            "entry": "0x105fff7c403"
+          },
+          {
+            "offset": "0x4000",
+            "entry": "0x105fff80403"
+          },
+          {
+            "offset": "0x80d8",
+            "entry": "0x460010001d50443"
+          }
+        ]
+      },
+      {
+        "FWVA": "0xfffffc000013f018",
+        "PA": "0x10001e23018",
+        "capture_offset": "0xdf018",
+        "bytes": 4,
+        "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+        "nonzero_bytes": 0,
+        "meaning": "pause reasonword",
+        "page_walk": [
+          {
+            "offset": "0x0",
+            "entry": "0x105fff7c403"
+          },
+          {
+            "offset": "0x4000",
+            "entry": "0x105fff80403"
+          },
+          {
+            "offset": "0x8278",
+            "entry": "0x460010001e20443"
+          }
+        ],
+        "RAM_value": "0x0"
+      },
+      {
+        "FWVA": "0xfffffc000018e340",
+        "PA": "0x10001e72340",
+        "capture_offset": "0x12e340",
+        "bytes": 4,
+        "sha256": "df3f619804a92fdb4057192dc43dd748ea778adc52bc498ce80524c014b81119",
+        "nonzero_bytes": 0,
+        "meaning": "main task state",
+        "page_walk": [
+          {
+            "offset": "0x0",
+            "entry": "0x105fff7c403"
+          },
+          {
+            "offset": "0x4000",
+            "entry": "0x105fff80403"
+          },
+          {
+            "offset": "0x8318",
+            "entry": "0x460010001e70443"
+          }
+        ],
+        "RAM_value": "0x0"
+      },
+      {
+        "FWVA": "0xfffffc000018e3b0",
+        "PA": "0x10001e723b0",
+        "capture_offset": "0x12e3b0",
+        "bytes": 32,
+        "sha256": "66687aadf862bd776c8fc18b8e9f8e20089714856ee233b3902a591d0d5f2925",
+        "nonzero_bytes": 0,
+        "meaning": "pause reason mutex bytes",
+        "page_walk": [
+          {
+            "offset": "0x0",
+            "entry": "0x105fff7c403"
+          },
+          {
+            "offset": "0x4000",
+            "entry": "0x105fff80403"
+          },
+          {
+            "offset": "0x8318",
+            "entry": "0x460010001e70443"
+          }
+        ]
+      },
+      {
+        "FWVA": "0xfffffc000018e4c0",
+        "PA": "0x10001e724c0",
+        "capture_offset": "0x12e4c0",
+        "bytes": 8,
+        "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
+        "nonzero_bytes": 0,
+        "meaning": "main object pointer",
+        "page_walk": [
+          {
+            "offset": "0x0",
+            "entry": "0x105fff7c403"
+          },
+          {
+            "offset": "0x4000",
+            "entry": "0x105fff80403"
+          },
+          {
+            "offset": "0x8318",
+            "entry": "0x460010001e70443"
+          }
+        ],
+        "RAM_value": "0x0"
+      },
+      {
+        "FWVA": "0xfffffc000018ee70",
+        "PA": "0x10001e72e70",
+        "capture_offset": "0x12ee70",
+        "bytes": 8,
+        "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
+        "nonzero_bytes": 0,
+        "meaning": "status_b pointer",
+        "page_walk": [
+          {
+            "offset": "0x0",
+            "entry": "0x105fff7c403"
+          },
+          {
+            "offset": "0x4000",
+            "entry": "0x105fff80403"
+          },
+          {
+            "offset": "0x8318",
+            "entry": "0x460010001e70443"
+          }
+        ],
+        "RAM_value": "0x0"
+      },
+      {
+        "FWVA": "0xfffffc000018f6d0",
+        "PA": "0x10001e736d0",
+        "capture_offset": "0x12f6d0",
+        "bytes": 8,
+        "sha256": "af5570f5a1810b7af78caf4bc70a660f0df51e42baf91d4de5b2328de0e83dfc",
+        "nonzero_bytes": 0,
+        "meaning": "SGX MMIO base pointer",
+        "page_walk": [
+          {
+            "offset": "0x0",
+            "entry": "0x105fff7c403"
+          },
+          {
+            "offset": "0x4000",
+            "entry": "0x105fff80403"
+          },
+          {
+            "offset": "0x8318",
+            "entry": "0x460010001e70443"
+          }
+        ],
+        "RAM_value": "0x0"
+      }
+    ],
+    "coherency": "Host dcivac supplies a fresh host RAM read, not a proven IOP private cache clean/writeback. Main and SGX pointers are zero despite the accepted active graph; reasons/masks zero therefore cannot identify runtime ownership, rule out an active mask wait or justify bypassing release lifecycle."
+  },
+  "next_candidate_ingredients": [
+    "Restore postdraw tracing after proven control33, capture role/event/argument provenance through queue-mask and reason transitions; do not add a guessed bit1 or bit0 clear.",
+    "Keep queue/command/backing identity pinned while testing a concrete native queue policy correction supplied by the separate dispatcher audit.",
+    "If native reason/mask traces cannot identify a live owner, obtain a source-qualified IOP-coherent DATA view/currentPC rather than interpreting absent RAM writes as zero runtime state."
+  ],
+  "firmware_ranges": [
+    {
+      "start": "0x32104",
+      "end_exclusive": "0x321b4",
+      "bytes": 176,
+      "sha256": "2e19469abd5b2c0db1b30f9891c8b088cc593cfca4287337167c87657cea81b8",
+      "current_TEXT_disassembly_match": true,
+      "meaning": "full request helper / ACKbit0 predicate"
+    },
+    {
+      "start": "0x162bc",
+      "end_exclusive": "0x163c8",
+      "bytes": 268,
+      "sha256": "bc65347cc414c3af8d5e6e1f3320119056eab64ad00963f512bd5a36333a2263",
+      "current_TEXT_disassembly_match": true,
+      "meaning": "native reason2 acquire/release and zero-mask call"
+    },
+    {
+      "start": "0x16c04",
+      "end_exclusive": "0x16c50",
+      "bytes": 76,
+      "sha256": "51b1b75a5c372fb51b643fcbe69a73bd5d4128f9b8a3c74b6fe15497713d5dcd",
+      "current_TEXT_disassembly_match": true,
+      "meaning": "explicit bit2 clear"
+    },
+    {
+      "start": "0x17958",
+      "end_exclusive": "0x179a0",
+      "bytes": 72,
+      "sha256": "06df97a7bfbb5bd08849ab8051bfd30e04392096f15b771ceeaf1a3e9e684e72",
+      "current_TEXT_disassembly_match": true,
+      "meaning": "explicit bit2 set"
+    },
+    {
+      "start": "0x1a994",
+      "end_exclusive": "0x1ac10",
+      "bytes": 636,
+      "sha256": "5fb6b9535114b4e04e5ce81400b009a5897b2c78d66a284b04b0ca31642c4e80",
+      "current_TEXT_disassembly_match": true,
+      "meaning": "mask request, ACKbit1 predicate, conditional reason16 acquire"
+    },
+    {
+      "start": "0x1ac10",
+      "end_exclusive": "0x1b234",
+      "bytes": 1572,
+      "sha256": "a87bed3ba841f6fdb9214bf951c3f099b586a690da317146b15ce01349cc27ef",
+      "current_TEXT_disassembly_match": true,
+      "meaning": "queue/cursor/mask reconciliation, conditional replay and reason16 release"
+    },
+    {
+      "start": "0x21c18",
+      "end_exclusive": "0x21eb4",
+      "bytes": 668,
+      "sha256": "3df9d791b4fc194d31a476b9ca08c8398b6463268c0ad4f614234ae3c669644d",
+      "current_TEXT_disassembly_match": true,
+      "meaning": "runtime register/controller descriptor write path"
+    }
+  ],
+  "native_ranges": [
+    {
+      "start": "0xfffffe000712efa0",
+      "end_exclusive": "0xfffffe000712efa8",
+      "file_offset": "0x1ff0",
+      "bytes": 8,
+      "sha256": "626bb0510fcd9f181288369d91db3f4e38aa905e096956f1b9dccb8007ff6adb",
+      "meaning": "diagnostic direct register range21038..211d0"
+    },
+    {
+      "start": "0xfffffe00089d9120",
+      "end_exclusive": "0xfffffe00089d91d4",
+      "file_offset": "0x967c0",
+      "bytes": 180,
+      "sha256": "00e6140236d997c62ae0e67ae9f30d4114e37c340b50be344acf5681aed06bbe",
+      "meaning": "direct region diagnostic reads"
+    },
+    {
+      "start": "0xfffffe00089632ec",
+      "end_exclusive": "0xfffffe00089632f4",
+      "file_offset": "0x2098c",
+      "bytes": 8,
+      "sha256": "d33fdb74881bcff46b1cf4fc3e20479b1882e0e683789e80e6d650554066a1aa",
+      "meaning": "base init-sequence hook returns"
+    },
+    {
+      "start": "0xfffffe00089ea1c4",
+      "end_exclusive": "0xfffffe00089ea1cc",
+      "file_offset": "0xa7864",
+      "bytes": 8,
+      "sha256": "d33fdb74881bcff46b1cf4fc3e20479b1882e0e683789e80e6d650554066a1aa",
+      "meaning": "G16X init-sequence hook returns"
+    },
+    {
+      "start": "0xfffffe00089bf1d4",
+      "end_exclusive": "0xfffffe00089bf384",
+      "file_offset": "0x7c874",
+      "bytes": 432,
+      "sha256": "bef5a38fca15869f99e2d3c08026e9436bf70a97d73d2d2c2268bc73c4b2f785",
+      "meaning": "get register override records"
+    },
+    {
+      "start": "0xfffffe00089bf398",
+      "end_exclusive": "0xfffffe00089bf40c",
+      "file_offset": "0x7ca38",
+      "bytes": 116,
+      "sha256": "caa6df87380e541776e3b2250bca80efe83a25776d5774e6c3b033f41184094e",
+      "meaning": "append register override"
+    }
+  ]
+}

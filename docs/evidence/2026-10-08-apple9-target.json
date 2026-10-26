@@ -1,0 +1,319 @@
+{
+  "mesa_commit": "87ac51d411f0e58a9433567ec2666f457be89e1d",
+  "comparisons": {
+    "legacy_pbe_full_bytes": 1024
+  },
+  "source_sha256": {
+    "src/asahi/genxml/cmdbuf.xml": "5ec8b2de0933f0be31857dcfc112815d7a0a9f0a6921145f546aa566e9ac7da3",
+    "src/gallium/drivers/asahi/agx_state.c": "13ae520cf2a063266247350c35c6914311e29093a91918432631bf745fee18e6",
+    "src/gallium/drivers/asahi/agx_blit.c": "371fb07affff7892687bf7a6aff3203ad3704e8ed52763816ed1fe1f95ccf02e"
+  },
+  "target": {
+    "address": "0x2000010000",
+    "width": 64,
+    "height": 64,
+    "stride_bytes": 256,
+    "bytes": 16384,
+    "format": "RGBA8 UNORM",
+    "sentinel": 165,
+    "pbe_hex": "020ae43fc00f00000010000002f0000000000000000000000000000000000000"
+  },
+  "background_candidate": {
+    "launch_byte_offset": "0x30c00",
+    "body_bytes": 44,
+    "float_rgba": [
+      0.5625,
+      0.625,
+      0.125,
+      1
+    ],
+    "qualification": "Constant fragment proposed for background dispatch; not firmware-qualified"
+  },
+  "tile_store": {
+    "body_bytes": 92,
+    "entry_offset": "0x600",
+    "launch_offset": "0x30800",
+    "launch_units64": "0xc20",
+    "roots_offset": "0x40c00",
+    "texture_table_offset": "0x43000",
+    "shader_metadata": {
+      "binary_size": 92,
+      "nr_gprs": 8,
+      "nr_preamble_gprs": 0,
+      "scratch_size": 0,
+      "apple9_preamble_offset": 0,
+      "apple9_preamble_size": 0,
+      "apple9_publication_count": 4,
+      "apple9_ubo_mask": 0,
+      "apple9_resource_count": 0,
+      "apple9_resource_ssbo_mask": 0,
+      "apple9_resource_write_mask": 0,
+      "apple9_reads_tile": 0,
+      "apple9_texture_mask": 0,
+      "apple9_sampler_mask": 0,
+      "apple9_image_mask": 1,
+      "apple9_uses_texel_fetch": 0,
+      "apple9_clip_distance_count": 0,
+      "apple9_reads_z": 0,
+      "apple9_writes_point_size": 0,
+      "apple9_uses_discard": 0,
+      "writes_layer_viewport": 0,
+      "varying_components": 0,
+      "resource_bindings": [],
+      "varying_mask": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "varying_group": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "linear_mask": [
+        0,
+        0
+      ],
+      "flat_mask": [
+        0,
+        0
+      ],
+      "qualification": "Compiler metadata only; no GPU execution proved"
+    }
+  },
+  "interior_reference_samples": [
+    {
+      "pixel_y_up": [
+        32,
+        32
+      ],
+      "linear_offset": 8320,
+      "float_rgba": [
+        0.054931640625000056,
+        0.3802083333333333,
+        0.2552083333333333,
+        1
+      ],
+      "rgba8_nearest": [
+        14,
+        97,
+        65,
+        255
+      ],
+      "tolerance_per_channel": 2
+    },
+    {
+      "pixel_y_up": [
+        24,
+        24
+      ],
+      "linear_offset": 6240,
+      "float_rgba": [
+        0.234619140625,
+        0.296875,
+        0.171875,
+        1
+      ],
+      "rgba8_nearest": [
+        60,
+        76,
+        44,
+        255
+      ],
+      "tolerance_per_channel": 2
+    },
+    {
+      "pixel_y_up": [
+        40,
+        24
+      ],
+      "linear_offset": 6304,
+      "float_rgba": [
+        0.022813585069444434,
+        0.6302083333333334,
+        0.171875,
+        1
+      ],
+      "rgba8_nearest": [
+        6,
+        161,
+        44,
+        255
+      ],
+      "tolerance_per_channel": 2
+    },
+    {
+      "pixel_y_up": [
+        32,
+        44
+      ],
+      "linear_offset": 11392,
+      "float_rgba": [
+        0.011962890625,
+        0.25520833333333337,
+        0.3802083333333333,
+        1
+      ],
+      "rgba8_nearest": [
+        3,
+        65,
+        97,
+        255
+      ],
+      "tolerance_per_channel": 2
+    }
+  ],
+  "files": {
+    "target-sentinel.bin": {
+      "bytes": 16384,
+      "sha256": "add4fa3e6dbfb8723b21cfe7debadbed5d5f2ca1ab88c666470daed16afbe21a"
+    },
+    "tile-store-launch.bin": {
+      "bytes": 256,
+      "sha256": "575bd1ca5760653dd33dd7b7d8674e810ca260a2d39ff3d03793aa4746e2277c"
+    },
+    "target-pbe.bin": {
+      "bytes": 32,
+      "sha256": "5560da4dca287bafa6302fc80c8f909e4020b502c7693ec780cc71b72fb54a47"
+    },
+    "usc-with-target-store.bin": {
+      "bytes": 327680,
+      "sha256": "7e4f4fe07766dd7fa8b3ed0369f0a3c925829146df611d6c69ac8b46630f8c4b"
+    },
+    "scissor.bin": {
+      "bytes": 16,
+      "sha256": "7d840fc7efbbb40663108fbf5e7fc001d41e31c607de019ebe80ba3775e54742"
+    },
+    "background-launch.bin": {
+      "bytes": 256,
+      "sha256": "491a05406286e3b85f582a13f14b9b66f2e4221f6088da9e4e06e4bb4e5a82d0"
+    },
+    "depth-bias.bin": {
+      "bytes": 12,
+      "sha256": "15ec7bf0b50732b49f8228e07d24365338f9e3ab994b00af08e5a3bffe55fd8b"
+    }
+  },
+  "qualification": "Offline synthetic-address candidate. Legacy header pack compared to generated Mesa C in 1024 cases. Apple9 image descriptor conversion mirrors pinned source, not independent hardware evidence. Compiled EOT tile-store helper linked to one image descriptor with branch/launch checks; no shader execution. Target and canary bytes are CPU files, not allocated/mapped GPU resources. Firmware TA/3D register integration, parameter/tile buffers, background dispatch qualification, scissor/depth-bias address integration, barriers, completion and cache invalidation still required. Actual target orientation and quantization need qualification. Do not submit as a complete job."
+}

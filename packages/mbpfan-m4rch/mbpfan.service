@@ -1,0 +1,15 @@
+[Unit]
+Description=MacBook fan temperature controller
+Wants=apple-silicon.service
+After=apple-silicon.service
+Conflicts=fancontrol.service
+
+[Service]
+Type=simple
+ExecStartPre=/usr/bin/modprobe macsmc_hwmon
+ExecStart=/usr/bin/mbpfan -f
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

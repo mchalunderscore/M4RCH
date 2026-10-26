@@ -1,0 +1,147 @@
+{
+  "schema": "m4rch.gfx-native-ap-repeat-cycle-c-handoff.v1",
+  "selected_source": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/prepared-owner-v5",
+  "source_receipt": {
+    "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/prepared-owner-v5/native-ap-repeat-cycle-owner-source-receipt.json",
+    "sha256": "bf52cabe10ab41df883c22907a9a66d4ff338cebc93b3d82d66ea5e27004ffa1",
+    "bytes": 19790
+  },
+  "qualification": {
+    "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/owner-qualification-v8.json",
+    "sha256": "68f5f2de51794d7c93cd6c4b077a4e023605b9266266db8b114290769ff99776",
+    "bytes": 36616
+  },
+  "source_family": "gfx_native_ap_repeat_cycle_scope",
+  "compile_macro": "GFX_NATIVE_AP_REPEAT_CYCLE_TRIAL",
+  "profile_version": 12,
+  "hardware_actions": [],
+  "module_build_actions": [],
+  "case_count": 172,
+  "ASan_UBSan": true,
+  "maximum_complete_checked_log_row_bytes": 510,
+  "selected_qualification_input_pins_verified": 43,
+  "changed_files": [
+    "Makefile",
+    "asc-graph-init.c",
+    "gfx-coordinate-owner.h",
+    "gfx-native-powergate-drain.h",
+    "gfx-reset-scope.h",
+    "recovery-cycle.h"
+  ],
+  "added_files": [
+    "gfx-native-ap-repeat-cycle.h",
+    "gfx-ap-repeat-cycle-coordinate.h"
+  ],
+  "removed_files": [
+    "gfx-native-ap-retained-cycle.h",
+    "gfx-retained-power-cycle-coordinate.h"
+  ],
+  "success_log_pins": [
+    {
+      "epoch": 1,
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/owner-qualification-v8.epoch1.log",
+      "sha256": "9704df03d3aec0877f93191657706571401eddfec9cb4ac8da529a753d9d0951",
+      "bytes": 12772
+    },
+    {
+      "epoch": 2,
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/owner-qualification-v8.epoch2.log",
+      "sha256": "f082d25426ae06c748c66092074e3f1ee0df266d281aef5b71a2c4cea28cb2a2",
+      "bytes": 37071
+    },
+    {
+      "epoch": 3,
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/owner-qualification-v8.epoch3.log",
+      "sha256": "6e744f4ce6969a7040b58b09c03676e4154a06325de394e459391fc8265f924b",
+      "bytes": 37084
+    }
+  ],
+  "full_success_fixture": {
+    "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/owner-qualification-v8.success.log",
+    "sha256": "ad75b3c937755b299ccbc05ec8d7fe78ff607d094d073e1149cac0b15bbd7ede"
+  },
+  "wire_contract": {
+    "second_command": "gfx-native-ap-repeat-cycle",
+    "third_command": "gfx-native-ap-repeat-third",
+    "state_row_order": "phase=... epoch=2/3 ...",
+    "third_fields": "third_*; primary second_epoch_preserved=1",
+    "rx_order": "epoch=2/3 index=... message=... metadata=...",
+    "tx_packet_field": "packet",
+    "paired_coordinate_prefix": "m4rch gfx-native-ap-repeat-coordinate:",
+    "strict_pmgr_epoch": true,
+    "third_strict_off_phase": "repeat-third-after-third-off",
+    "transport_operand_provenance": "guard_jiffies=... cached=1 operand_samples_atomic=0; epoch binds fixed instance; guard tick is last complete four-operand guard, control/status may have newer samples"
+  },
+  "qualified_behavior": [
+    "Actual owned cold AP request/reply and cold root gate; actual E1 native202, checked CPU stop, paired OFF, PMput, scope accounting and strict PMGR snapshot.",
+    "Actual E2 and E3 complete paths with separately owned state, journals, coordinator sessions and references; E3 checks original E1 identity without recapture.",
+    "E2 predecessor proof requires terminal_result0/refusalnone, own ACK journal and qualified branch/counters, checked stop, paired OFF/votes, put, physical OFF and accounting.",
+    "Byte copies of every static E2 state field/identity/journal/coordinator are unchanged by E3.",
+    "Duplicate E2/E3 preserves completed terminal history and seals global controls through a separate refusal record; no E4.",
+    "Unknown/fault outcomes permit only safe diagnostic dispatch; isolated global/E2/E3 worker seals exercised.",
+    "Post-put faults fire only after each own epoch put and assert own get/request/put counts.",
+    "Low1 and low2 own ACK success, failure edges, crossed/stale predecessor evidence, cached/nonatomic provenance and complete row bounds exercised."
+  ],
+  "composed_frozen_v11_qualification": {
+    "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-retained-cycle/owner-qualification-v2.json",
+    "sha256": "aa875ccdecb07b2944dee2066a53d955b613582929e6e232581dd4b4b096d334",
+    "case_count": 122,
+    "rerun": false
+  },
+  "direct_host_replay": {
+    "epochs": [
+      1,
+      2,
+      3
+    ],
+    "passed": true,
+    "host_contract_path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/gfx-native-ap-repeat-cycle/gfx_native_ap_repeat_cycle_contract.py",
+    "qualification": "Read-only direct replay passed; independent wrapper qualification owned by startup agent is separate."
+  },
+  "development_artifacts": "Prior source v1..v4 and Q/harness/log artifacts preserved and superseded; only v5/v8 selected. Earlier drafts were not hardware candidates. Selected Q pins include immutable tester snapshot; no further kit/source/test changes pending.",
+  "limitations": [
+    "RAM mocks qualify C ordering, isolation, seals and log parsing, not hardware behavior.",
+    "Original cold initialization and unmodified fixture/UAT contracts compose frozen qualification; no original kernel/module build or hardware action.",
+    "Fixed protocol polls do not bound runtime PM callback wallclock.",
+    "This is an offline C/source qualification; root must independently audit, build and verify selected module and host wrapper before any fresh-boot hardware trial.",
+    "No application start/root/UAT/context/work/free, cold latch reset, new retained B20 or app rollcall change is admitted.",
+    "No GPU pixels, application rejoin, DMA retirement or unload proof."
+  ],
+  "input_pins": [
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/prepared-owner-v5/native-ap-repeat-cycle-owner-source-receipt.json",
+      "sha256": "bf52cabe10ab41df883c22907a9a66d4ff338cebc93b3d82d66ea5e27004ffa1",
+      "bytes": 19790
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/owner-qualification-v8.json",
+      "sha256": "68f5f2de51794d7c93cd6c4b077a4e023605b9266266db8b114290769ff99776",
+      "bytes": 36616
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/owner-qualification-v8.success.log",
+      "sha256": "ad75b3c937755b299ccbc05ec8d7fe78ff607d094d073e1149cac0b15bbd7ede",
+      "bytes": 86927
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-10-gfx-native-ap-retained-cycle-repeatability-plan.json",
+      "sha256": "a421ff9b9d92d21dc34cf49ae924b312d0fc62fb1f2759a28a6da30f6d039901",
+      "bytes": 37151
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/owner-qualification-v8.epoch1.log",
+      "sha256": "9704df03d3aec0877f93191657706571401eddfec9cb4ac8da529a753d9d0951",
+      "bytes": 12772
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/owner-qualification-v8.epoch2.log",
+      "sha256": "f082d25426ae06c748c66092074e3f1ee0df266d281aef5b71a2c4cea28cb2a2",
+      "bytes": 37071
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-ap-repeat-cycle/owner-qualification-v8.epoch3.log",
+      "sha256": "6e744f4ce6969a7040b58b09c03676e4154a06325de394e459391fc8265f924b",
+      "bytes": 37084
+    }
+  ]
+}

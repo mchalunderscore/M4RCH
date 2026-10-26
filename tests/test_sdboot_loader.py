@@ -113,7 +113,7 @@ class LoaderConfiguration(unittest.TestCase):
                             loader.build_uboot(tree, 3, {})
                     expected = [["make", "apple_sdboot_defconfig"]]
                     if not require_serial:
-                        expected.append(["make", "UBOOTRELEASE=u-boot-m4rch-2025.10", "LOCALVERSION=", "-j3"])
+                        expected.append(["make", "UBOOTRELEASE=2025.10", "LOCALVERSION=", "-j3"])
                     self.assertEqual(commands, expected)
 
     def test_build_label_uses_the_source_version_without_git_suffixes(self):
@@ -124,7 +124,7 @@ class LoaderConfiguration(unittest.TestCase):
             sys.path.pop(0)
         with tempfile.TemporaryDirectory() as temporary:
             makefile = Path(temporary) / "Makefile"
-            for sublevel, label in (("", "u-boot-m4rch-2025.10"), ("1", "u-boot-m4rch-2025.10.1")):
+            for sublevel, label in (("", "2025.10"), ("1", "2025.10.1")):
                 makefile.write_text("VERSION = 2025\nPATCHLEVEL = 10\nSUBLEVEL = " + sublevel + "\nEXTRAVERSION = -dirty\n")
                 self.assertEqual(uboot_label(makefile), label)
             makefile.write_text("VERSION = 2025\nPATCHLEVEL = bad\nSUBLEVEL =\n")

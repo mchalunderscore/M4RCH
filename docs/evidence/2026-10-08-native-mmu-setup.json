@@ -1,0 +1,73 @@
+{
+  "binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "counts": {
+    "cases": 512,
+    "direct": 256,
+    "service": 256,
+    "already_enabled": 171,
+    "programmed": 341
+  },
+  "range": [
+    "0xfffffe00089e67f8",
+    "0xfffffe00089e6d28"
+  ],
+  "range_sha256": "bb70af35e9a23d68e231ddc6c04e67d155a531586a1a6b279db9372b14efd178",
+  "getter_range": [
+    "0xfffffe00089e6dc4",
+    "0xfffffe00089e6dd0"
+  ],
+  "getter_sha256": "eacee867bca8bd548e83141056717c7521637cf58fc5b0f7a6a52051439ece7b",
+  "base_register": "0xd0802c",
+  "physical_encoding": "(physical >> 14) & 0x0fffffff",
+  "writes_after_disabled": [
+    {
+      "offset": "0xd0802c",
+      "value": "physical_page_number"
+    },
+    {
+      "offset": "0xd08014",
+      "value": "0x80d8"
+    },
+    {
+      "offset": "0xd08018",
+      "value": "0x80d8"
+    },
+    {
+      "offset": "0xd0800c",
+      "value": "0x0"
+    },
+    {
+      "offset": "0xd08010",
+      "value": "0x0"
+    },
+    {
+      "offset": "0xd0801c",
+      "value": "0x0"
+    },
+    {
+      "offset": "0xd08020",
+      "value": "0x0"
+    },
+    {
+      "offset": "0xd08024",
+      "value": "0x0"
+    },
+    {
+      "offset": "0xd08028",
+      "value": "0x0"
+    },
+    {
+      "offset": "0xd08008",
+      "value": "0x1"
+    },
+    {
+      "offset": "0xd08004",
+      "value": "0x3ff"
+    },
+    {
+      "offset": "0xd08000",
+      "value": "0x1"
+    }
+  ],
+  "qualification": "512 full randomized RAM images and ordered service/direct RAM-register event streams. Actual G16 setup and descriptor getter executed; PAC bypassed. Physical-address service and register services supplied, direct branch uses RAM surrogate. Nonzero control skips all setup without checking current table base. Physical inputs include unaligned values below2^42, native extraction drops low14 bits. No hardware MMU write, translation, coherency, valid live allocation or rendering proved."
+}

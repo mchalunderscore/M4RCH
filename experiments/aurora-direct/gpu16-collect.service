@@ -1,0 +1,8 @@
+[Unit]
+Description=Collect Aurora 16-core GPU and desktop results
+After=local-fs.target aurora-direct.service
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh /run/aurora-direct/collect.sh
+TimeoutStartSec=120

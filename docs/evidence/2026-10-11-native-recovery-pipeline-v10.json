@@ -1,0 +1,230 @@
+{
+  "event_validator": {
+    "mask": 536936403,
+    "capacity": 256,
+    "record_bytes": 72,
+    "constant": 18446741874804972896,
+    "consumer_publish": 18446741874830701672,
+    "copy_before_dispatch": true,
+    "allocator_reply_kinds": [
+      6,
+      7
+    ]
+  },
+  "schema": "m4rch.native-recovery-pipeline.v10",
+  "hardware_actions": [],
+  "source_image_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "virtual_bindings": [
+    {
+      "slot": 776,
+      "entry": 18446741874819107200,
+      "raw": 9228336911701789288,
+      "target": 18446741874830772840
+    },
+    {
+      "slot": 424,
+      "entry": 18446741874819106848,
+      "raw": 9228305206253217132,
+      "target": 18446741874830779756
+    },
+    {
+      "slot": 1128,
+      "entry": 18446741874819107552,
+      "raw": 9228391496441129144,
+      "target": 18446741874830747832
+    },
+    {
+      "slot": 1152,
+      "entry": 18446741874819107576,
+      "raw": 9228162321281181672,
+      "target": 18446741874830747624
+    },
+    {
+      "slot": 1160,
+      "entry": 18446741874819107584,
+      "raw": 9228215355537352648,
+      "target": 18446741874830747592
+    },
+    {
+      "slot": 1136,
+      "entry": 18446741874819107560,
+      "raw": 9228298965665703976,
+      "target": 18446741874830747688
+    },
+    {
+      "slot": 520,
+      "entry": 18446741874819106944,
+      "raw": 9228179569869873076,
+      "target": 18446741874830778292
+    },
+    {
+      "slot": 528,
+      "entry": 18446741874819106952,
+      "raw": 9228178384458898844,
+      "target": 18446741874830777756
+    }
+  ],
+  "source_ranges": [
+    {
+      "start": 18446741874831063488,
+      "end": 18446741874831063608,
+      "bytes": 120,
+      "sha256": "08110dca50b533e3f50bb87683c6d7aa22ad38d823ea4754aaf3bc4a2e8f6f2a"
+    },
+    {
+      "start": 18446741874831069728,
+      "end": 18446741874831069856,
+      "bytes": 128,
+      "sha256": "3121c495386ceb0e5df50fc82b0c0caed0bcb38836d5f2cafb2200ce08e2d5e1"
+    },
+    {
+      "start": 18446741874830772840,
+      "end": 18446741874830773104,
+      "bytes": 264,
+      "sha256": "b5df75cc838e2e1a743678528929e8180a456fed41e16aeb66db3ccf19259500"
+    },
+    {
+      "start": 18446741874830701408,
+      "end": 18446741874830701692,
+      "bytes": 284,
+      "sha256": "ed7c9e70f491850a34fbfd57ab36e132f47e80620a29984b2205c2e30b388b76"
+    },
+    {
+      "start": 18446741874830659904,
+      "end": 18446741874830659944,
+      "bytes": 40,
+      "sha256": "c8de6868c36a6ac8840268756e6dcbeccec43376eb38a3fe3ccb285ed8586985"
+    },
+    {
+      "start": 18446741874830617300,
+      "end": 18446741874830617576,
+      "bytes": 276,
+      "sha256": "141f5b0731459e56d812cfd018f602d053db5d3e4081e48d376b27a9487f2964"
+    },
+    {
+      "start": 18446741874830360436,
+      "end": 18446741874830372064,
+      "bytes": 11628,
+      "sha256": "e1917b7d336ab4a36f951a700aa342fcb5bf243f73711143b84118d78fecb5a7"
+    },
+    {
+      "start": 18446741874830747512,
+      "end": 18446741874830747988,
+      "bytes": 476,
+      "sha256": "99c9e20cc9dcb6631d5f76b8c7916da109fd55456eaba4f1d508ef55bf66c15b"
+    },
+    {
+      "start": 18446741874830777756,
+      "end": 18446741874830779036,
+      "bytes": 1280,
+      "sha256": "acb7a9216e3c3b12c70fada881752bc22e387c18b523683934cf944ec88f0d16"
+    },
+    {
+      "start": 18446741874830808656,
+      "end": 18446741874830808664,
+      "bytes": 8,
+      "sha256": "d33fdb74881bcff46b1cf4fc3e20479b1882e0e683789e80e6d650554066a1aa"
+    }
+  ],
+  "shared_owner": {
+    "cpu_owner": 2400,
+    "gpu_owner": 2416,
+    "root_pointer_offset": 176,
+    "gravity_name": "status_b",
+    "bytes": 58432
+  },
+  "ingress85": {
+    "packet": 37436171902517248,
+    "ring_object_offset": 5824,
+    "consumer_offset": 0,
+    "producer_offset": 16,
+    "source_callers": [
+      {
+        "call": 18446741874831063604,
+        "method": "AGXSecureGart::unmapFromThisGart"
+      },
+      {
+        "call": 18446741874831069852,
+        "method": "AGXSecureGart::unmapWithAddress"
+      }
+    ],
+    "not_observed_before86_in_inspected_restart_caller": true
+  },
+  "recovery_records": {
+    "offset": 16568,
+    "count": 256,
+    "stride": 8,
+    "valid_bit": 0,
+    "stamp_index_shift": 4,
+    "stamp_index_bits": 7,
+    "stamp_value_offset": 4,
+    "ta_match_mask": 9
+  },
+  "recovery_protocol": {
+    "offset": 18688,
+    "pre_stopped": 1,
+    "host_resume_pre": 2,
+    "post_stopped": 3,
+    "host_resume_post": 0
+  },
+  "caller_steps": [
+    {
+      "call": 18446741874830360592,
+      "slot": 424,
+      "meaning": "stop_for_host_inspection86"
+    },
+    {
+      "call": 18446741874830370380,
+      "slot": 1128,
+      "meaning": "resume_pre_recovery"
+    },
+    {
+      "call": 18446741874830370448,
+      "slot": 1160,
+      "meaning": "wait_post_recovery_stopped"
+    },
+    {
+      "call": 18446741874830370552,
+      "slot": 528,
+      "meaning": "process_TA_recovery_records"
+    },
+    {
+      "call": 18446741874830370608,
+      "slot": 520,
+      "meaning": "process_firmware_recovery_records_when_enabled"
+    },
+    {
+      "call": 18446741874830371836,
+      "slot": 1136,
+      "meaning": "resume_post_recovery"
+    }
+  ],
+  "recovery_failure_branch": {
+    "instruction": 18446741874830360596,
+    "cleanup_target": 18446741874830372000,
+    "apple_caller_recovery_aborts": true,
+    "linux_retained_shutdown": "independent RTBuddy shutdown once; missing job recovery never admits fresh graph; crashed/nonrunningRTKit remains refused"
+  },
+  "caller_generation_increment": 18446741874830370100,
+  "firmware_reset_method_is_noop": true,
+  "conclusions": [
+    "86/getters alone are inspection, not the complete Apple recovery handshake",
+    "The inspected restartWorkQueue path resumes existing firmware/shared graph through 1->2->3->0; it is not evidence that fresh CPU boot alone retires fixed VAs",
+    "No explicit PMGR RESET31 call established in this function; indirect external vtable calls remain unresolved",
+    "Recovery record job/error/fence processing remains necessary before claiming cancellation or completion",
+    "TA flags9 restoration supports continuing existing Apple allocator backing; new Linux generation retains old backing and rejects same-generation reuse rather than pretending resource restoration",
+    "85 ingress barrier is called after notifyNewUnmapping; it is not an established mandatory pre86 step in inspected restartWorkQueue caller"
+  ],
+  "integrated_candidate": {
+    "kernel_rtkit_managed_api": true,
+    "retained_cookie_and_native_drop": true,
+    "owned_pm_adapter": true,
+    "cold_DATA_restore": "Linux hypothesis; not Apple source parity",
+    "pre_post_protocol_implemented": true
+  },
+  "unresolved": [
+    "External recovery callback objects and queue/job record identities",
+    "Whether separate device-reset provider is called by a deeper power/recovery path",
+    "Retirement witness sufficient for fresh fixed-VA graph"
+  ]
+}

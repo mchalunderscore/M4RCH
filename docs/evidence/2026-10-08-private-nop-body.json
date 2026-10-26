@@ -1,0 +1,33 @@
+{
+  "binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "cached_nop_body_cases": 512,
+  "uncached_nop_body_cases": 512,
+  "timestamp_conversion_cases": 1024,
+  "instruction_ranges": [
+    [
+      "0xfffffe00089dc0c8",
+      "0xfffffe00089dc1d4"
+    ],
+    [
+      "0xfffffe00089ee94c",
+      "0xfffffe00089ee9b8"
+    ]
+  ],
+  "slice_hashes": [
+    "fc2f4e7dd3a77be8d05f5f9d2feff0364bb7e8cec2e56efd481d372298d8ac68",
+    "a5cc75427ad55b030af0f85f58b155cb5f7acf5db3446301a7d13d28b9452eb6"
+  ],
+  "uncached_branch_range": [
+    "0xfffffe00089dc20c",
+    "0xfffffe00089dc224"
+  ],
+  "uncached_branch_sha256": "f125c0f5954562b0ec08a5452c3bce48c2692d7829967ba9a5f8acbde33ede4e",
+  "findings": [
+    "NOP payload words occupy +0x10/+0x18; caller supplies command type and channel-state GPU address",
+    "Dependency +0x28 uses low47 prior timestamp and queue ID OR at bit40; overlap retained as native arithmetic",
+    "Four 64-bit notification words at +0x128..+0x140",
+    "Descriptor low50 bits cleared at +0x150/+0x158/+0x160/+0x168",
+    "Conversion chooses event-machine +0x1458 for nonnegative signed timestamp, +0x1460 otherwise; index stride24"
+  ],
+  "qualification": "Native call-free slices in emulated RAM. Both cached and actual uncached branch/helper paths; earlier external backing initialization, atomic pending-count publication, DMA/coherency and live firmware acceptance excluded. Arbitrary input masks characterize implementation rather than valid protocol values."
+}

@@ -1,0 +1,1437 @@
+{
+  "schema": "m4rch.gfx-draw-fetch-contract-review.v1",
+  "review_passed": true,
+  "hardware_actions": false,
+  "candidate_mutations": false,
+  "prepared_distinct_recipe": "/home/alice/Desktop/m4rch/out/gfx-native-dispatch-contract/recipe-v1/graph",
+  "boot_id": "eff8eafa-d845-429e-b98c-9a5f053bcc46",
+  "scope": "Independent offline source/capture and native contract comparison; no GPU lookup, fetch, execution, completion or safe teardown claimed.",
+  "current_capture_inputs_verified": 30,
+  "actual_device_leaf_walks": 91,
+  "actual_firmware_alias_walks": 60,
+  "command_and_register_lists": [
+    {
+      "stage": "ta",
+      "phase": 0,
+      "packed": "0x2880042800115",
+      "device_address": "0x8500022a0",
+      "exported_count": 81,
+      "backing_count": 83,
+      "backing_bytes": 996,
+      "firmware_command": "0xfffffc2000802240",
+      "pool_slot": 1,
+      "walk": {
+        "va": "0x8500022a0",
+        "owned_page": 71,
+        "physical": "0x100a47bc000",
+        "root_index": 0,
+        "middle_table_owned_page": 109,
+        "leaf_table_owned_page": 110,
+        "leaf_pte": "0xe00100a47bcc0b",
+        "leaf_flags": "0xe0000000000c0b"
+      }
+    },
+    {
+      "stage": "3d",
+      "phase": 0,
+      "packed": "0x2b80042800005",
+      "device_address": "0x8500000a0",
+      "exported_count": 87,
+      "backing_count": 91,
+      "backing_bytes": 1092,
+      "firmware_command": "0xfffffc2000800000",
+      "pool_slot": 0,
+      "walk": {
+        "va": "0x8500000a0",
+        "owned_page": 71,
+        "physical": "0x100a47bc000",
+        "root_index": 0,
+        "middle_table_owned_page": 109,
+        "leaf_table_owned_page": 110,
+        "leaf_pte": "0xe00100a47bcc0b",
+        "leaf_flags": "0xe0000000000c0b"
+      }
+    },
+    {
+      "stage": "3d",
+      "phase": 1,
+      "packed": "0x80004280003e",
+      "device_address": "0x8500007c0",
+      "exported_count": 16,
+      "backing_count": 16,
+      "backing_bytes": 192,
+      "firmware_command": "0xfffffc2000800000",
+      "pool_slot": 0,
+      "walk": {
+        "va": "0x8500007c0",
+        "owned_page": 71,
+        "physical": "0x100a47bc000",
+        "root_index": 0,
+        "middle_table_owned_page": 109,
+        "leaf_table_owned_page": 110,
+        "leaf_pte": "0xe00100a47bcc0b",
+        "leaf_flags": "0xe0000000000c0b"
+      }
+    },
+    {
+      "stage": "3d",
+      "phase": 2,
+      "packed": "0xb80042800077",
+      "device_address": "0x850000ee0",
+      "exported_count": 23,
+      "backing_count": 23,
+      "backing_bytes": 276,
+      "firmware_command": "0xfffffc2000800000",
+      "pool_slot": 0,
+      "walk": {
+        "va": "0x850000ee0",
+        "owned_page": 71,
+        "physical": "0x100a47bc000",
+        "root_index": 0,
+        "middle_table_owned_page": 109,
+        "leaf_table_owned_page": 110,
+        "leaf_pte": "0xe00100a47bcc0b",
+        "leaf_flags": "0xe0000000000c0b"
+      }
+    },
+    {
+      "stage": "3d",
+      "phase": 3,
+      "packed": "0x5000428000b0",
+      "device_address": "0x850001600",
+      "exported_count": 10,
+      "backing_count": 10,
+      "backing_bytes": 120,
+      "firmware_command": "0xfffffc2000800000",
+      "pool_slot": 0,
+      "walk": {
+        "va": "0x850001600",
+        "owned_page": 71,
+        "physical": "0x100a47bc000",
+        "root_index": 0,
+        "middle_table_owned_page": 109,
+        "leaf_table_owned_page": 110,
+        "leaf_pte": "0xe00100a47bcc0b",
+        "leaf_flags": "0xe0000000000c0b"
+      }
+    }
+  ],
+  "context": [
+    {
+      "installed_context": 1,
+      "source_log_root": "0x10119424000",
+      "shadow_GPTBAT_TTBR0": "0x1010119424001",
+      "shadow_GPTBAT_TTBR1": "0x0",
+      "source_log_live_TTBR0": "0x1010119424001",
+      "qualification": "Host CPU table and shadow walks only; reserved GPTBAT is not part of owned-after snapshot and GPU hardware lookup is not observed."
+    }
+  ],
+  "device_page_table_walks": [
+    {
+      "va": "0x850000000",
+      "owned_page": 71,
+      "physical": "0x100a47bc000",
+      "root_index": 0,
+      "middle_table_owned_page": 109,
+      "leaf_table_owned_page": 110,
+      "leaf_pte": "0xe00100a47bcc0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x850004000",
+      "owned_page": 72,
+      "physical": "0x100a59d0000",
+      "root_index": 0,
+      "middle_table_owned_page": 109,
+      "leaf_table_owned_page": 110,
+      "leaf_pte": "0xe00100a59d0c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x850008000",
+      "owned_page": 73,
+      "physical": "0x100a5724000",
+      "root_index": 0,
+      "middle_table_owned_page": 109,
+      "leaf_table_owned_page": 110,
+      "leaf_pte": "0xe00100a5724c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x85000c000",
+      "owned_page": 74,
+      "physical": "0x10010958000",
+      "root_index": 0,
+      "middle_table_owned_page": 109,
+      "leaf_table_owned_page": 110,
+      "leaf_pte": "0xe0010010958c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x850010000",
+      "owned_page": 75,
+      "physical": "0x100a5b64000",
+      "root_index": 0,
+      "middle_table_owned_page": 109,
+      "leaf_table_owned_page": 110,
+      "leaf_pte": "0xe00100a5b64c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x850014000",
+      "owned_page": 76,
+      "physical": "0x100f82d4000",
+      "root_index": 0,
+      "middle_table_owned_page": 109,
+      "leaf_table_owned_page": 110,
+      "leaf_pte": "0xe00100f82d4c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x850018000",
+      "owned_page": 77,
+      "physical": "0x100106a8000",
+      "root_index": 0,
+      "middle_table_owned_page": 109,
+      "leaf_table_owned_page": 110,
+      "leaf_pte": "0xe00100106a8c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x85001c000",
+      "owned_page": 78,
+      "physical": "0x100a5c3c000",
+      "root_index": 0,
+      "middle_table_owned_page": 109,
+      "leaf_table_owned_page": 110,
+      "leaf_pte": "0xe00100a5c3cc0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x850020000",
+      "owned_page": 79,
+      "physical": "0x100a5c34000",
+      "root_index": 0,
+      "middle_table_owned_page": 109,
+      "leaf_table_owned_page": 110,
+      "leaf_pte": "0xe00100a5c34c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x850024000",
+      "owned_page": 80,
+      "physical": "0x100a58f0000",
+      "root_index": 0,
+      "middle_table_owned_page": 109,
+      "leaf_table_owned_page": 110,
+      "leaf_pte": "0xe00100a58f0c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x850028000",
+      "owned_page": 81,
+      "physical": "0x1002fdbc000",
+      "root_index": 0,
+      "middle_table_owned_page": 109,
+      "leaf_table_owned_page": 110,
+      "leaf_pte": "0xe001002fdbcc0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x85002c000",
+      "owned_page": 82,
+      "physical": "0x1004d250000",
+      "root_index": 0,
+      "middle_table_owned_page": 109,
+      "leaf_table_owned_page": 110,
+      "leaf_pte": "0xe001004d250c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x850030000",
+      "owned_page": 83,
+      "physical": "0x1004de30000",
+      "root_index": 0,
+      "middle_table_owned_page": 109,
+      "leaf_table_owned_page": 110,
+      "leaf_pte": "0xe001004de30c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x850034000",
+      "owned_page": 84,
+      "physical": "0x100a5de8000",
+      "root_index": 0,
+      "middle_table_owned_page": 109,
+      "leaf_table_owned_page": 110,
+      "leaf_pte": "0xe00100a5de8c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x850038000",
+      "owned_page": 85,
+      "physical": "0x10032dfc000",
+      "root_index": 0,
+      "middle_table_owned_page": 109,
+      "leaf_table_owned_page": 110,
+      "leaf_pte": "0xe0010032dfcc0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x85003c000",
+      "owned_page": 86,
+      "physical": "0x10016018000",
+      "root_index": 0,
+      "middle_table_owned_page": 109,
+      "leaf_table_owned_page": 110,
+      "leaf_pte": "0xe0010016018c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x850040000",
+      "owned_page": 87,
+      "physical": "0x100a5a68000",
+      "root_index": 0,
+      "middle_table_owned_page": 109,
+      "leaf_table_owned_page": 110,
+      "leaf_pte": "0xe00100a5a68c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x850044000",
+      "owned_page": 88,
+      "physical": "0x100a5a7c000",
+      "root_index": 0,
+      "middle_table_owned_page": 109,
+      "leaf_table_owned_page": 110,
+      "leaf_pte": "0xe00100a5a7cc0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x850048000",
+      "owned_page": 89,
+      "physical": "0x100dc284000",
+      "root_index": 0,
+      "middle_table_owned_page": 109,
+      "leaf_table_owned_page": 110,
+      "leaf_pte": "0xe00100dc284c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x85004c000",
+      "owned_page": 90,
+      "physical": "0x100a55dc000",
+      "root_index": 0,
+      "middle_table_owned_page": 109,
+      "leaf_table_owned_page": 110,
+      "leaf_pte": "0xe00100a55dcc0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x850050000",
+      "owned_page": 91,
+      "physical": "0x1004d22c000",
+      "root_index": 0,
+      "middle_table_owned_page": 109,
+      "leaf_table_owned_page": 110,
+      "leaf_pte": "0xe001004d22cc0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x850054000",
+      "owned_page": 92,
+      "physical": "0x1004d278000",
+      "root_index": 0,
+      "middle_table_owned_page": 109,
+      "leaf_table_owned_page": 110,
+      "leaf_pte": "0xe001004d278c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x850058000",
+      "owned_page": 93,
+      "physical": "0x100dc20c000",
+      "root_index": 0,
+      "middle_table_owned_page": 109,
+      "leaf_table_owned_page": 110,
+      "leaf_pte": "0xe00100dc20cc0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x85005c000",
+      "owned_page": 94,
+      "physical": "0x1002fa48000",
+      "root_index": 0,
+      "middle_table_owned_page": 109,
+      "leaf_table_owned_page": 110,
+      "leaf_pte": "0xe001002fa48c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x850060000",
+      "owned_page": 95,
+      "physical": "0x100a532c000",
+      "root_index": 0,
+      "middle_table_owned_page": 109,
+      "leaf_table_owned_page": 110,
+      "leaf_pte": "0xe00100a532cc0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x850064000",
+      "owned_page": 96,
+      "physical": "0x100a4f98000",
+      "root_index": 0,
+      "middle_table_owned_page": 109,
+      "leaf_table_owned_page": 110,
+      "leaf_pte": "0xe00100a4f98c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x850068000",
+      "owned_page": 97,
+      "physical": "0x100a5a70000",
+      "root_index": 0,
+      "middle_table_owned_page": 109,
+      "leaf_table_owned_page": 110,
+      "leaf_pte": "0xe00100a5a70c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x85006c000",
+      "owned_page": 98,
+      "physical": "0x100a5a58000",
+      "root_index": 0,
+      "middle_table_owned_page": 109,
+      "leaf_table_owned_page": 110,
+      "leaf_pte": "0xe00100a5a58c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x850070000",
+      "owned_page": 99,
+      "physical": "0x100a5f60000",
+      "root_index": 0,
+      "middle_table_owned_page": 109,
+      "leaf_table_owned_page": 110,
+      "leaf_pte": "0xe00100a5f60c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x850074000",
+      "owned_page": 100,
+      "physical": "0x100f8630000",
+      "root_index": 0,
+      "middle_table_owned_page": 109,
+      "leaf_table_owned_page": 110,
+      "leaf_pte": "0xe00100f8630c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x850078000",
+      "owned_page": 101,
+      "physical": "0x100f8de0000",
+      "root_index": 0,
+      "middle_table_owned_page": 109,
+      "leaf_table_owned_page": 110,
+      "leaf_pte": "0xe00100f8de0c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x85007c000",
+      "owned_page": 102,
+      "physical": "0x10119218000",
+      "root_index": 0,
+      "middle_table_owned_page": 109,
+      "leaf_table_owned_page": 110,
+      "leaf_pte": "0xe0010119218c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x850080000",
+      "owned_page": 103,
+      "physical": "0x101191a0000",
+      "root_index": 0,
+      "middle_table_owned_page": 109,
+      "leaf_table_owned_page": 110,
+      "leaf_pte": "0xe00101191a0c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x850084000",
+      "owned_page": 104,
+      "physical": "0x1011912c000",
+      "root_index": 0,
+      "middle_table_owned_page": 109,
+      "leaf_table_owned_page": 110,
+      "leaf_pte": "0xe001011912cc0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x850088000",
+      "owned_page": 105,
+      "physical": "0x101190b4000",
+      "root_index": 0,
+      "middle_table_owned_page": 109,
+      "leaf_table_owned_page": 110,
+      "leaf_pte": "0xe00101190b4c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x10000000000",
+      "owned_page": 112,
+      "physical": "0x101541c0000",
+      "root_index": 16,
+      "middle_table_owned_page": 168,
+      "leaf_table_owned_page": 169,
+      "leaf_pte": "0xe00101541c0c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x10000004000",
+      "owned_page": 113,
+      "physical": "0x1014bf1c000",
+      "root_index": 16,
+      "middle_table_owned_page": 168,
+      "leaf_table_owned_page": 169,
+      "leaf_pte": "0xe001014bf1cc0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x10000008000",
+      "owned_page": 114,
+      "physical": "0x1014be6c000",
+      "root_index": 16,
+      "middle_table_owned_page": 168,
+      "leaf_table_owned_page": 169,
+      "leaf_pte": "0xe001014be6cc0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x1000000c000",
+      "owned_page": 115,
+      "physical": "0x10155160000",
+      "root_index": 16,
+      "middle_table_owned_page": 168,
+      "leaf_table_owned_page": 169,
+      "leaf_pte": "0xe0010155160c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x10000010000",
+      "owned_page": 116,
+      "physical": "0x10155144000",
+      "root_index": 16,
+      "middle_table_owned_page": 168,
+      "leaf_table_owned_page": 169,
+      "leaf_pte": "0xe0010155144c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x10000014000",
+      "owned_page": 117,
+      "physical": "0x10154e60000",
+      "root_index": 16,
+      "middle_table_owned_page": 168,
+      "leaf_table_owned_page": 169,
+      "leaf_pte": "0xe0010154e60c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x10000018000",
+      "owned_page": 118,
+      "physical": "0x10154ca4000",
+      "root_index": 16,
+      "middle_table_owned_page": 168,
+      "leaf_table_owned_page": 169,
+      "leaf_pte": "0xe0010154ca4c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x1000001c000",
+      "owned_page": 119,
+      "physical": "0x10154c34000",
+      "root_index": 16,
+      "middle_table_owned_page": 168,
+      "leaf_table_owned_page": 169,
+      "leaf_pte": "0xe0010154c34c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x10000020000",
+      "owned_page": 120,
+      "physical": "0x10154bc4000",
+      "root_index": 16,
+      "middle_table_owned_page": 168,
+      "leaf_table_owned_page": 169,
+      "leaf_pte": "0xe0010154bc4c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x10000024000",
+      "owned_page": 121,
+      "physical": "0x10154b48000",
+      "root_index": 16,
+      "middle_table_owned_page": 168,
+      "leaf_table_owned_page": 169,
+      "leaf_pte": "0xe0010154b48c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x10000028000",
+      "owned_page": 122,
+      "physical": "0x10154ad4000",
+      "root_index": 16,
+      "middle_table_owned_page": 168,
+      "leaf_table_owned_page": 169,
+      "leaf_pte": "0xe0010154ad4c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x1000002c000",
+      "owned_page": 123,
+      "physical": "0x10154a68000",
+      "root_index": 16,
+      "middle_table_owned_page": 168,
+      "leaf_table_owned_page": 169,
+      "leaf_pte": "0xe0010154a68c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x10000030000",
+      "owned_page": 124,
+      "physical": "0x101549f8000",
+      "root_index": 16,
+      "middle_table_owned_page": 168,
+      "leaf_table_owned_page": 169,
+      "leaf_pte": "0xe00101549f8c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x10000034000",
+      "owned_page": 125,
+      "physical": "0x10154670000",
+      "root_index": 16,
+      "middle_table_owned_page": 168,
+      "leaf_table_owned_page": 169,
+      "leaf_pte": "0xe0010154670c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x10000038000",
+      "owned_page": 126,
+      "physical": "0x10154634000",
+      "root_index": 16,
+      "middle_table_owned_page": 168,
+      "leaf_table_owned_page": 169,
+      "leaf_pte": "0xe0010154634c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x1000003c000",
+      "owned_page": 127,
+      "physical": "0x1015460c000",
+      "root_index": 16,
+      "middle_table_owned_page": 168,
+      "leaf_table_owned_page": 169,
+      "leaf_pte": "0xe001015460cc0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x10000040000",
+      "owned_page": 128,
+      "physical": "0x10142880000",
+      "root_index": 16,
+      "middle_table_owned_page": 168,
+      "leaf_table_owned_page": 169,
+      "leaf_pte": "0xe0010142880c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x10000044000",
+      "owned_page": 129,
+      "physical": "0x10142858000",
+      "root_index": 16,
+      "middle_table_owned_page": 168,
+      "leaf_table_owned_page": 169,
+      "leaf_pte": "0xe0010142858c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x10000048000",
+      "owned_page": 130,
+      "physical": "0x1012b970000",
+      "root_index": 16,
+      "middle_table_owned_page": 168,
+      "leaf_table_owned_page": 169,
+      "leaf_pte": "0xe001012b970c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x1000004c000",
+      "owned_page": 131,
+      "physical": "0x1012b900000",
+      "root_index": 16,
+      "middle_table_owned_page": 168,
+      "leaf_table_owned_page": 169,
+      "leaf_pte": "0xe001012b900c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x2000010000",
+      "owned_page": 132,
+      "physical": "0x1012b8b0000",
+      "root_index": 2,
+      "middle_table_owned_page": 170,
+      "leaf_table_owned_page": 171,
+      "leaf_pte": "0xe001012b8b0c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x1000000000",
+      "owned_page": 133,
+      "physical": "0x1012b870000",
+      "root_index": 1,
+      "middle_table_owned_page": 172,
+      "leaf_table_owned_page": 173,
+      "leaf_pte": "0xe001012b870c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x1000040000",
+      "owned_page": 134,
+      "physical": "0x1001118c000",
+      "root_index": 1,
+      "middle_table_owned_page": 172,
+      "leaf_table_owned_page": 173,
+      "leaf_pte": "0xe001001118cc0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x1000044000",
+      "owned_page": 135,
+      "physical": "0x10011218000",
+      "root_index": 1,
+      "middle_table_owned_page": 172,
+      "leaf_table_owned_page": 173,
+      "leaf_pte": "0xe0010011218c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x1000048000",
+      "owned_page": 136,
+      "physical": "0x1001123c000",
+      "root_index": 1,
+      "middle_table_owned_page": 172,
+      "leaf_table_owned_page": 173,
+      "leaf_pte": "0xe001001123cc0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x100004c000",
+      "owned_page": 137,
+      "physical": "0x100112a0000",
+      "root_index": 1,
+      "middle_table_owned_page": 172,
+      "leaf_table_owned_page": 173,
+      "leaf_pte": "0xe00100112a0c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x1000050000",
+      "owned_page": 138,
+      "physical": "0x100112a8000",
+      "root_index": 1,
+      "middle_table_owned_page": 172,
+      "leaf_table_owned_page": 173,
+      "leaf_pte": "0xe00100112a8c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x1000054000",
+      "owned_page": 139,
+      "physical": "0x100a5f98000",
+      "root_index": 1,
+      "middle_table_owned_page": 172,
+      "leaf_table_owned_page": 173,
+      "leaf_pte": "0xe00100a5f98c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x1000058000",
+      "owned_page": 140,
+      "physical": "0x1012a5e4000",
+      "root_index": 1,
+      "middle_table_owned_page": 172,
+      "leaf_table_owned_page": 173,
+      "leaf_pte": "0xe001012a5e4c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x100005c000",
+      "owned_page": 141,
+      "physical": "0x101188b4000",
+      "root_index": 1,
+      "middle_table_owned_page": 172,
+      "leaf_table_owned_page": 173,
+      "leaf_pte": "0xe00101188b4c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x1000060000",
+      "owned_page": 142,
+      "physical": "0x1011c280000",
+      "root_index": 1,
+      "middle_table_owned_page": 172,
+      "leaf_table_owned_page": 173,
+      "leaf_pte": "0xe001011c280c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x1000080000",
+      "owned_page": 143,
+      "physical": "0x1011c2b0000",
+      "root_index": 1,
+      "middle_table_owned_page": 172,
+      "leaf_table_owned_page": 173,
+      "leaf_pte": "0xe001011c2b0c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x1000084000",
+      "owned_page": 144,
+      "physical": "0x1011d948000",
+      "root_index": 1,
+      "middle_table_owned_page": 172,
+      "leaf_table_owned_page": 173,
+      "leaf_pte": "0xe001011d948c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x1000088000",
+      "owned_page": 145,
+      "physical": "0x1012b3b0000",
+      "root_index": 1,
+      "middle_table_owned_page": 172,
+      "leaf_table_owned_page": 173,
+      "leaf_pte": "0xe001012b3b0c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x100008c000",
+      "owned_page": 146,
+      "physical": "0x1012b26c000",
+      "root_index": 1,
+      "middle_table_owned_page": 172,
+      "leaf_table_owned_page": 173,
+      "leaf_pte": "0xe001012b26cc0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x1000090000",
+      "owned_page": 147,
+      "physical": "0x1012a9c0000",
+      "root_index": 1,
+      "middle_table_owned_page": 172,
+      "leaf_table_owned_page": 173,
+      "leaf_pte": "0xe001012a9c0c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x1000094000",
+      "owned_page": 148,
+      "physical": "0x101187c4000",
+      "root_index": 1,
+      "middle_table_owned_page": 172,
+      "leaf_table_owned_page": 173,
+      "leaf_pte": "0xe00101187c4c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x1000098000",
+      "owned_page": 149,
+      "physical": "0x1012a7a4000",
+      "root_index": 1,
+      "middle_table_owned_page": 172,
+      "leaf_table_owned_page": 173,
+      "leaf_pte": "0xe001012a7a4c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x100009c000",
+      "owned_page": 150,
+      "physical": "0x1012a774000",
+      "root_index": 1,
+      "middle_table_owned_page": 172,
+      "leaf_table_owned_page": 173,
+      "leaf_pte": "0xe001012a774c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x10000a0000",
+      "owned_page": 151,
+      "physical": "0x10118360000",
+      "root_index": 1,
+      "middle_table_owned_page": 172,
+      "leaf_table_owned_page": 173,
+      "leaf_pte": "0xe0010118360c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x10000a8000",
+      "owned_page": 152,
+      "physical": "0x1010e8c4000",
+      "root_index": 1,
+      "middle_table_owned_page": 172,
+      "leaf_table_owned_page": 173,
+      "leaf_pte": "0xe001010e8c4c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x10000ac000",
+      "owned_page": 153,
+      "physical": "0x1010eef0000",
+      "root_index": 1,
+      "middle_table_owned_page": 172,
+      "leaf_table_owned_page": 173,
+      "leaf_pte": "0xe001010eef0c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x10000b0000",
+      "owned_page": 154,
+      "physical": "0x100a4d74000",
+      "root_index": 1,
+      "middle_table_owned_page": 172,
+      "leaf_table_owned_page": 173,
+      "leaf_pte": "0xe00100a4d74c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x10000b4000",
+      "owned_page": 155,
+      "physical": "0x1010ed84000",
+      "root_index": 1,
+      "middle_table_owned_page": 172,
+      "leaf_table_owned_page": 173,
+      "leaf_pte": "0xe001010ed84c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x10000b8000",
+      "owned_page": 156,
+      "physical": "0x1010e1dc000",
+      "root_index": 1,
+      "middle_table_owned_page": 172,
+      "leaf_table_owned_page": 173,
+      "leaf_pte": "0xe001010e1dcc0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x10000bc000",
+      "owned_page": 157,
+      "physical": "0x100dd560000",
+      "root_index": 1,
+      "middle_table_owned_page": 172,
+      "leaf_table_owned_page": 173,
+      "leaf_pte": "0xe00100dd560c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x10000c0000",
+      "owned_page": 158,
+      "physical": "0x1010e604000",
+      "root_index": 1,
+      "middle_table_owned_page": 172,
+      "leaf_table_owned_page": 173,
+      "leaf_pte": "0xe001010e604c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x10000c4000",
+      "owned_page": 159,
+      "physical": "0x1010e594000",
+      "root_index": 1,
+      "middle_table_owned_page": 172,
+      "leaf_table_owned_page": 173,
+      "leaf_pte": "0xe001010e594c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x10000c8000",
+      "owned_page": 160,
+      "physical": "0x1010e518000",
+      "root_index": 1,
+      "middle_table_owned_page": 172,
+      "leaf_table_owned_page": 173,
+      "leaf_pte": "0xe001010e518c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x10000cc000",
+      "owned_page": 161,
+      "physical": "0x1010e6f0000",
+      "root_index": 1,
+      "middle_table_owned_page": 172,
+      "leaf_table_owned_page": 173,
+      "leaf_pte": "0xe001010e6f0c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x10000d0000",
+      "owned_page": 162,
+      "physical": "0x1010e65c000",
+      "root_index": 1,
+      "middle_table_owned_page": 172,
+      "leaf_table_owned_page": 173,
+      "leaf_pte": "0xe001010e65cc0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x10000d4000",
+      "owned_page": 163,
+      "physical": "0x100a52d4000",
+      "root_index": 1,
+      "middle_table_owned_page": 172,
+      "leaf_table_owned_page": 173,
+      "leaf_pte": "0xe00100a52d4c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x10000d8000",
+      "owned_page": 164,
+      "physical": "0x100a5364000",
+      "root_index": 1,
+      "middle_table_owned_page": 172,
+      "leaf_table_owned_page": 173,
+      "leaf_pte": "0xe00100a5364c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x10000dc000",
+      "owned_page": 165,
+      "physical": "0x10010898000",
+      "root_index": 1,
+      "middle_table_owned_page": 172,
+      "leaf_table_owned_page": 173,
+      "leaf_pte": "0xe0010010898c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x10000e0000",
+      "owned_page": 166,
+      "physical": "0x100f82dc000",
+      "root_index": 1,
+      "middle_table_owned_page": 172,
+      "leaf_table_owned_page": 173,
+      "leaf_pte": "0xe00100f82dcc0b",
+      "leaf_flags": "0xe0000000000c0b"
+    },
+    {
+      "va": "0x10000e4000",
+      "owned_page": 167,
+      "physical": "0x100dcf50000",
+      "root_index": 1,
+      "middle_table_owned_page": 172,
+      "leaf_table_owned_page": 173,
+      "leaf_pte": "0xe00100dcf50c0b",
+      "leaf_flags": "0xe0000000000c0b"
+    }
+  ],
+  "current_config_native_getter_mismatches": [
+    {
+      "stage": "ta",
+      "channel_pid": 1,
+      "config_pid": 0,
+      "channel_subpriority": 1,
+      "config_subpriority": 0,
+      "actual_retained_config_QoS_PID_subpriority": [
+        0,
+        0,
+        0
+      ],
+      "config_backing_offset": "0xc1000"
+    },
+    {
+      "stage": "3d",
+      "channel_pid": 2,
+      "config_pid": 0,
+      "channel_subpriority": 1,
+      "config_subpriority": 0,
+      "actual_retained_config_QoS_PID_subpriority": [
+        0,
+        0,
+        0
+      ],
+      "config_backing_offset": "0xc9000"
+    }
+  ],
+  "concrete_patch": {
+    "schema": "m4rch.native-dispatch-recipe.v1",
+    "changes": [
+      {
+        "stage": "ta",
+        "queue_id": 0,
+        "field": "pid",
+        "channel_state_offset": "0x48",
+        "config_offset": "0x5a",
+        "backing_offset": "0xc105a",
+        "before": 0,
+        "after": 1,
+        "binding": "Current native channel getter operand; experimental supplied process/policy value"
+      },
+      {
+        "stage": "ta",
+        "queue_id": 0,
+        "field": "subpriority",
+        "channel_state_offset": "0x40",
+        "config_offset": "0x5e",
+        "backing_offset": "0xc105e",
+        "before": 0,
+        "after": 1,
+        "binding": "Current native channel getter operand; experimental supplied process/policy value"
+      },
+      {
+        "stage": "3d",
+        "queue_id": 1,
+        "field": "pid",
+        "channel_state_offset": "0x48",
+        "config_offset": "0x5a",
+        "backing_offset": "0xc905a",
+        "before": 0,
+        "after": 2,
+        "binding": "Current native channel getter operand; experimental supplied process/policy value"
+      },
+      {
+        "stage": "3d",
+        "queue_id": 1,
+        "field": "subpriority",
+        "channel_state_offset": "0x40",
+        "config_offset": "0x5e",
+        "backing_offset": "0xc905e",
+        "before": 0,
+        "after": 1,
+        "binding": "Current native channel getter operand; experimental supplied process/policy value"
+      }
+    ],
+    "changed_bytes": [
+      {
+        "offset": "0xc105a",
+        "before": 0,
+        "after": 1
+      },
+      {
+        "offset": "0xc105e",
+        "before": 0,
+        "after": 1
+      },
+      {
+        "offset": "0xc905a",
+        "before": 0,
+        "after": 2
+      },
+      {
+        "offset": "0xc905e",
+        "before": 0,
+        "after": 1
+      }
+    ],
+    "changed_byte_count": 4,
+    "native_ranges": {
+      "channel_pid_getter": {
+        "start": "0xfffffe000897de60",
+        "end_exclusive": "0xfffffe000897de70",
+        "sha256": "64f51086434e084a726fbc55bf8a8a690e9d541dc51172ade5bc70658ab3a791"
+      },
+      "channel_subpriority_getter": {
+        "start": "0xfffffe000897de70",
+        "end_exclusive": "0xfffffe000897de80",
+        "sha256": "1cc6a51def82587493fa4a17a007c9da8b48ca6d91bef2fe91a660d385b8e229"
+      },
+      "config_companions": {
+        "start": "0xfffffe000895be40",
+        "end_exclusive": "0xfffffe000895bf04",
+        "sha256": "e0e3ce077f6e47148aacb119e2a2c240c08537a07d77bd0e43c78a8090b498a1"
+      }
+    },
+    "source_candidate": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/candidate/asc-graph-init",
+    "native_binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+    "source_backing_sha256": "35112ef3c261673bda227a3867a0d2b9dd58ac89f35f7bba9c8c05f1dee118d3",
+    "hardware_actions": false,
+    "candidate_loaded": false,
+    "preserved": [
+      "all channel-state bytes",
+      "QoS ID+0x56",
+      "header selector1",
+      "queue masks and kicks",
+      "all KSM work/register/dependency records",
+      "job-data.h",
+      "graph-before.bin",
+      "device and firmware mappings",
+      "all shader/target/parameter/completion bytes"
+    ],
+    "qualification": "Matches native config getters to the existing same channel state. Does not allocate a native PID/QoS identity, reproduce reason/mutex lifecycle, or prove this discrepancy blocked execution."
+  },
+  "native_machine_ranges": [
+    {
+      "name": "channel_pid_getter",
+      "start": "0xfffffe000897de60",
+      "end_exclusive": "0xfffffe000897de70",
+      "sha256": "64f51086434e084a726fbc55bf8a8a690e9d541dc51172ade5bc70658ab3a791"
+    },
+    {
+      "name": "channel_subpriority_getter",
+      "start": "0xfffffe000897de70",
+      "end_exclusive": "0xfffffe000897de80",
+      "sha256": "1cc6a51def82587493fa4a17a007c9da8b48ca6d91bef2fe91a660d385b8e229"
+    },
+    {
+      "name": "config_companions",
+      "start": "0xfffffe000895be40",
+      "end_exclusive": "0xfffffe000895bf04",
+      "sha256": "e0e3ce077f6e47148aacb119e2a2c240c08537a07d77bd0e43c78a8090b498a1"
+    },
+    {
+      "name": "shared_init",
+      "start": "0xfffffe00089dc90c",
+      "end_exclusive": "0xfffffe00089dc9bc",
+      "sha256": "b58bcf1d36b0a5cb85400e418cf5af9e79d06337740f21a9aa4d4625d341ca70"
+    },
+    {
+      "name": "legacy_shared_init",
+      "start": "0xfffffe00089dce3c",
+      "end_exclusive": "0xfffffe00089dceec",
+      "sha256": "b58bcf1d36b0a5cb85400e418cf5af9e79d06337740f21a9aa4d4625d341ca70"
+    },
+    {
+      "name": "caller_copy",
+      "start": "0xfffffe00089f3c20",
+      "end_exclusive": "0xfffffe00089f3c68",
+      "sha256": "6225d65fd7855b138da6a781f7f68c2bb3a574b15c67e2e203857ec22ea709e3"
+    },
+    {
+      "name": "legacy_update",
+      "start": "0xfffffe00089f2328",
+      "end_exclusive": "0xfffffe00089f2514",
+      "sha256": "e799fe40d2b3cb133a7c49c1c0ab32236c9e087992e725dccbb85dd3c036d0fa"
+    },
+    {
+      "name": "context_registration",
+      "start": "0xfffffe00089dcb40",
+      "end_exclusive": "0xfffffe00089dcd58",
+      "sha256": "6f42300bbb8bf96f608233df29274af00838022e99216f663c1cc535ce1082f6"
+    },
+    {
+      "name": "legacy_g16_encoder",
+      "start": "0xfffffe00089dcad8",
+      "end_exclusive": "0xfffffe00089dcafc",
+      "sha256": "9cc4dcca05aac925be02f5984b7ec9de03d9dd7dce7bbb23c95ba26a169eddf2"
+    }
+  ],
+  "firmware_machine_ranges": [
+    {
+      "name": "config_owner_companion_reads",
+      "start": "0x19b80",
+      "end_exclusive": "0x19ba4",
+      "sha256": "7d8e41433fde7743a17eb43efcc01b56271a83bdfd44e43e6b269f121beb065d"
+    },
+    {
+      "name": "config_PID_saved",
+      "start": "0x19cb0",
+      "end_exclusive": "0x19cb8",
+      "sha256": "d662d3d0552d50842b168de32a940d385b0e8144a3cc49e2fa106af3e2295539"
+    }
+  ],
+  "stage_completion": {
+    "3d_completion_2140_215f_allzero": true,
+    "ta_completion_8a6_8c5_allzero": true,
+    "ta_mapping_945": "0xfffffc2000b14000",
+    "fragment_optional_mapping_21df": "0x0",
+    "microsequence_178_in_TA_and_3D_KSM_records": 0,
+    "qualification": "Selected SKSM direct register-list route; zero microsequence pointer alone is not a mismatch. Current zero stage metadata and disabled optional fragment mapping provide no registered host event/fence/retirement path."
+  },
+  "remaining_uncertainties": [
+    {
+      "priority": 1,
+      "gate": "Native reason/mutex and nonzero-mask caller ownership still unbound; register request2/ACK2 is not an execution state."
+    },
+    {
+      "priority": 2,
+      "gate": "Device memory attributes: current0xe0000000000c0b differs from executed legacy G16 encoder0xe0000000000c03 (input0) and0xa0000000000c03 (input1). Ordinary resource mapping API-to-encoder dispatch and cache policy remain unqualified; do not silently patch based solely on this difference."
+    },
+    {
+      "priority": 3,
+      "gate": "Queue header selector1 and installed UAT context1 are numerically consistent but no actual hardware page-table fetch or queue read/dependency-counter snapshot establishes their semantics."
+    },
+    {
+      "priority": 4,
+      "gate": "Bounded event/stamp/epoch ownership and stage completion-to-host fence mapping remain missing. Current raw completion pages correctly report no change."
+    }
+  ],
+  "next_candidate_input": {
+    "recipe": "/home/alice/Desktop/m4rch/out/gfx-native-dispatch-contract/recipe-v1/graph",
+    "minimal_proven_change": "Four PID/subpriority bytes match native getters of the same existing channel states. Batch with separately source-bound native dispatch lifecycle changes; do not call this an isolated proven fix.",
+    "additional_observation": "Preserve native dispatch trace during accepted draw and capture queue root/config/dependency/cursor ownership needed to distinguish fetch from reason ownership; do not repeat a bit0-only trial."
+  },
+  "upload_findings": "Same uploaded SHA; producer+0x50 and UUID+0x48 claims conflict with already checked native+0x40 producer and PID chain. Current producer corrected; PID/config mismatch still existed. 20-core J616s topology does not replace actual16-core J614s masks. No new reset/pause recipe.",
+  "GPU_execution_verified": false,
+  "rendering_verified": false,
+  "retirement_verified": false,
+  "inputs": [
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/candidate/asc-graph-init/preparation.json",
+      "bytes": 85513,
+      "sha256": "c706992c7216940a1425c3ce640246e2be2af139c7c7a37fc74ee6d61f279e36"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/candidate/asc-graph-init/backing.bin",
+      "bytes": 917504,
+      "sha256": "35112ef3c261673bda227a3867a0d2b9dd58ac89f35f7bba9c8c05f1dee118d3"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/candidate/asc-graph-init/job-data.h",
+      "bytes": 13182,
+      "sha256": "c18ede083b691fbd3044237aaf30eb1e34c775e9391d3c6f1bea8e61561e0913"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/candidate/asc-graph-init/render-data.h",
+      "bytes": 268144,
+      "sha256": "3bdbf04b9a3219c8e818beb464b5f55626e8a9b3d184680e3fd05a6361c47cbd"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/candidate/asc-graph-init/graph-before.bin",
+      "bytes": 1130496,
+      "sha256": "287f2c53bc6ef7ed226c4a2995b9d9904e7623acae9713af105be6b04fc690a9"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/candidate/asc-graph-init/graph-map.h",
+      "bytes": 9974,
+      "sha256": "704836d10b86e3d2bcb20b457853a700a2153aae505b0aae473aea4daee7f13e"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/candidate/asc-graph-init/command-pool-map.h",
+      "bytes": 8357,
+      "sha256": "1e4696787075de13a56f4946018221803a5a01a3c5a653bbbdbd48f319e74b6b"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/candidate/asc-graph-init/render-backing-map.h",
+      "bytes": 2541,
+      "sha256": "ade8cedde4da68f2f463ed8604f47ab6b56cdf1c8ff3984d592e00f4a065978b"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/candidate/asc-graph-init/joined-context-init.h",
+      "bytes": 1849,
+      "sha256": "1851e697907d50a3f47d153879f47f1b6b07065f5d58055fa6269bc436bc15b2"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/candidate/asc-graph-init/boot-eff8eafa-d845-429e-b98c-9a5f053bcc46/owned-after.bin",
+      "bytes": 2850816,
+      "sha256": "270e5808c061bb364631044cc9d88ea9b409216da0f138d167b2d20ceb88d86d"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/candidate/asc-graph-init/boot-eff8eafa-d845-429e-b98c-9a5f053bcc46/operation-delta.log",
+      "bytes": 120577,
+      "sha256": "65cef2a45923f197c0c92361610a9ca8f83a14ab61d089cf0edff50cbb9745c2"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/candidate/asc-graph-init/boot-eff8eafa-d845-429e-b98c-9a5f053bcc46/text.bin",
+      "bytes": 393216,
+      "sha256": "c7ef055672f826231812a42c877f28ed6b47d4174e5ac8d3eb54b0c26a722531"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/candidate/asc-graph-init/boot-eff8eafa-d845-429e-b98c-9a5f053bcc46/target-after.bin",
+      "bytes": 16384,
+      "sha256": "add4fa3e6dbfb8723b21cfe7debadbed5d5f2ca1ab88c666470daed16afbe21a"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render-pause-release/candidate/asc-graph-init/boot-eff8eafa-d845-429e-b98c-9a5f053bcc46/completion-after.bin",
+      "bytes": 16384,
+      "sha256": "4fe7b59af6de3b665b67788cc2f99892ab827efae3a467342b3bb4e3bc8e5bfe"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-dispatch-contract/recipe-v1/receipt.json",
+      "bytes": 10126,
+      "sha256": "2f66948af31aa7803f6298a97d8eba4412590b9e72e6876a64c3383886731ee8"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-dispatch-contract/recipe-v1/graph/backing.bin",
+      "bytes": 917504,
+      "sha256": "fbcac6bf4119d6a0bb4dde4aefaff2aca562c21467f12c22d131aabb322df117"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-dispatch-contract/recipe-v1/graph/render-data.h",
+      "bytes": 268200,
+      "sha256": "967b1e0215cdadb696f008554cc3439e284bd8ea560818ead148a312089ccc9d"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-dispatch-contract/recipe-v1/graph/preparation.json",
+      "bytes": 88879,
+      "sha256": "d3940f50aacbe1ef79537a3e553768f6ed573e87453e7f55ec401cd74cb4cdc0"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/gfx-native-dispatch-contract/prepare-dispatch-recipe.py",
+      "bytes": 9184,
+      "sha256": "9fd8a485a6581f90df7012adf187a3513e097bfd930e13c540af62cf1f15c768"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-dispatch-contract/review-draw-fetch.py",
+      "bytes": 10858,
+      "sha256": "aba1a65382a15f90bf1ba5714fb191e410feda77b01800560f952cdd2c87df66"
+    },
+    {
+      "path": "/home/alice/Downloads/M4-PRO-GPU-HARDWARE-ABI.md",
+      "bytes": 9527,
+      "sha256": "2818ced00eea77f662be9339ee6dae717bd1330e2a46bc927e53190edf6b98db"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-10-gfx-pause-release-eff8-live.json",
+      "bytes": 12540,
+      "sha256": "490b7b95375fdb1c8bd0d74d685a0076c64838a35f852151908f9440c962365a"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-10-gfx-pause-release-eff8-remaining-gate.json",
+      "bytes": 17250,
+      "sha256": "6f967d3f0f51b02ef59981af4aed7c15ed24ae823fb5712f8f3be9d300041f81"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-09-native-scheduler-state.json",
+      "bytes": 11512,
+      "sha256": "2f199727f13f3900de696bf209887dc3f08cd0980f26300c73ecf87d5b09c0da"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-08-native-g16-mapping.json",
+      "bytes": 3153,
+      "sha256": "4cffa9e0628783473ccdab76a0e4ad46e48833deed27a5d4c336620e26a95d9b"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-08-native-context-service.json",
+      "bytes": 4356,
+      "sha256": "45eb21c8d21d6c041a333e8981fc33dcdd6df1f40af690334d64cbb786e0ffe5"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-08-native-mmu-setup.json",
+      "bytes": 1932,
+      "sha256": "8ef2c5a6b7a9838977ea3e7bf4093e1829f9c9fe9ad2522345125baa5829f706"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-08-native-uat-flags.json",
+      "bytes": 10526,
+      "sha256": "a7b5896652d06fb46b59e5a4786c4b645a32526a6df787af1de6eb111ac317a0"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-09-completion-identity-contract.json",
+      "bytes": 11853,
+      "sha256": "5d1b41f9615cb552f9e3feef3b1d1a5a4c23fe33a3bef595680a8155227b875a"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-09-owned-hw-completions.json",
+      "bytes": 14817,
+      "sha256": "f49d940ff0423b4ae7d5f1636568c8f067061abbbef461f1f75dec69befd65c9"
+    },
+    {
+      "path": "/boot/GPUC003/private-apple/com.apple.AGXG16X",
+      "bytes": 1566304,
+      "sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e"
+    }
+  ]
+}

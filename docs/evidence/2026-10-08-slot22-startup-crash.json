@@ -1,0 +1,118 @@
+{
+  "boot_id": "c22c7dac-2c96-41b7-8796-cf1a92a5cb7b",
+  "data_before_sha256": "3a5b8cc02d184f78c42df9bd0cb33c6645ee49b5e3e871c0d14b4535e87efd17",
+  "data_after_sha256": "1cbfabe2c6371070b0f5111867423ececf7cc73e0485c00e6b9e427d58bbf242",
+  "crashlog_offset": "0xa0000",
+  "crashlog_bytes": 2560,
+  "version": 771,
+  "flags": 2052,
+  "footer_valid": true,
+  "sections": [
+    {
+      "offset": "0x20",
+      "fourcc": "Cver",
+      "bytes": 96,
+      "text": ""
+    },
+    {
+      "offset": "0x80",
+      "fourcc": "Ctim",
+      "bytes": 32
+    },
+    {
+      "offset": "0xa0",
+      "fourcc": "Crg8",
+      "bytes": 864,
+      "registers": {
+        "x0": "0x3",
+        "x1": "0xfffffc00001800e8",
+        "x2": "0x0",
+        "x3": "0x1",
+        "x4": "0x0",
+        "x5": "0x0",
+        "x6": "0x0",
+        "x7": "0x0",
+        "x8": "0x0",
+        "x9": "0x0",
+        "x10": "0xfffffc2001200000",
+        "x11": "0x4004",
+        "x12": "0x40a8",
+        "x13": "0xfffffc2000200000",
+        "x14": "0x0",
+        "x15": "0xfffffc2000136307",
+        "x16": "0xfffffc2000136303",
+        "x17": "0xfffffc20001362fb",
+        "x18": "0x0",
+        "x19": "0xfffffc0000082318",
+        "x20": "0x0",
+        "x21": "0x0",
+        "x22": "0x0",
+        "x23": "0x2",
+        "x24": "0xfffffc000018e000",
+        "x25": "0xfffffc2000136000",
+        "x26": "0xfffffc2000130000",
+        "x27": "0x0",
+        "x28": "0x1000000",
+        "x29": "0xfffffc0000180000",
+        "x30": "0x1aba180000024048"
+      },
+      "sp": "0xfffffc000017ffa0",
+      "pc": "0xfffffc0000024210",
+      "psr": "0x80000004",
+      "far": "0xfffffc2001204004",
+      "esr": "0x9600004f"
+    },
+    {
+      "offset": "0x400",
+      "fourcc": "Ccst",
+      "bytes": 48,
+      "task": 6,
+      "unknown": 536870912,
+      "addresses": [
+        "0xfffffc0000024210",
+        "0xfffffc000003a1d4",
+        "0xfffffc0000038f9c"
+      ]
+    },
+    {
+      "offset": "0x430",
+      "fourcc": "CasC",
+      "bytes": 80
+    },
+    {
+      "offset": "0x480",
+      "fourcc": "Cmbx",
+      "bytes": 416
+    },
+    {
+      "offset": "0x620",
+      "fourcc": "Crtk",
+      "bytes": 704
+    },
+    {
+      "offset": "0x8e0",
+      "fourcc": "Ccdp",
+      "bytes": 128
+    },
+    {
+      "offset": "0x960",
+      "fourcc": "Cpct",
+      "bytes": 80
+    },
+    {
+      "offset": "0x9b0",
+      "fourcc": "Csta",
+      "bytes": 48
+    },
+    {
+      "offset": "0x9e0",
+      "fourcc": "CLHE",
+      "bytes": 32,
+      "form": "exact repeated header"
+    }
+  ],
+  "expected_rejection": false,
+  "parser_callsite_present": false,
+  "crashlog_newly_written": true,
+  "qualification": "Structured crashlog decoding only; interpret registers/stack with matching instructions and independent object capture. No initialization or rendering success established."
+}

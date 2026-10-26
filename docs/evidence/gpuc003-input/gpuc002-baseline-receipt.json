@@ -1,0 +1,665 @@
+{
+  "publishable": false,
+  "device_access": true,
+  "base": "0xfffffc2000100000",
+  "arena_bytes": 344064,
+  "arena_sha256": "1e990228228e48a6ec8f6248312448d4ead9f5bd6cee6c5cf5c8325499fed86e",
+  "objects": [
+    {
+      "name": "root",
+      "arena_offset": 0,
+      "gpu_va": "0xfffffc2000100000",
+      "input_bytes": 200,
+      "reserved_bytes": 16384,
+      "input_sha256": "15adf086e21539e04f284d7c377a84edc09c9317e1f8762725fada11f4d83609",
+      "layout_evidence": "firmware-copy",
+      "complete_extent_qualified": false
+    },
+    {
+      "name": "main",
+      "arena_offset": 16384,
+      "gpu_va": "0xfffffc2000104000",
+      "input_bytes": 1280,
+      "reserved_bytes": 16384,
+      "input_sha256": "1339b819a3a1d9f150115a40c34843c61384fa0b56f7bc8fcd80b73d5f4886d9",
+      "layout_evidence": "candidate-envelope",
+      "complete_extent_qualified": false
+    },
+    {
+      "name": "hardware",
+      "arena_offset": 32768,
+      "gpu_va": "0xfffffc2000108000",
+      "input_bytes": 15796,
+      "reserved_bytes": 16384,
+      "input_sha256": "35cf14091ac0a72f44684985da1fbdab09c78384929b6d80c31d6251f151285d",
+      "layout_evidence": "donor-envelope-only",
+      "complete_extent_qualified": false
+    },
+    {
+      "name": "region_c",
+      "arena_offset": 49152,
+      "gpu_va": "0xfffffc200010c000",
+      "input_bytes": 3669,
+      "reserved_bytes": 16384,
+      "input_sha256": "be061d7baecb041bda4ae1960ae86e7dae7f3ecb830bd80f3763dd5ab9be6b91",
+      "layout_evidence": "firmware-access-minimum",
+      "complete_extent_qualified": false
+    },
+    {
+      "name": "extra_root",
+      "arena_offset": 65536,
+      "gpu_va": "0xfffffc2000110000",
+      "input_bytes": 1704,
+      "reserved_bytes": 16384,
+      "input_sha256": "8067ba796de642c20de5eca18148df44f679d03ed52977cba553f304c87f4bf4",
+      "layout_evidence": "document",
+      "complete_extent_qualified": false
+    },
+    {
+      "name": "main_header",
+      "arena_offset": 81920,
+      "gpu_va": "0xfffffc2000114000",
+      "input_bytes": 136,
+      "reserved_bytes": 16384,
+      "input_sha256": "b707241545a346265aab1ffb32ff64b55bf8f8dc1b56a46ef33ce3d15db11d33",
+      "layout_evidence": "document",
+      "complete_extent_qualified": false
+    },
+    {
+      "name": "shared_0",
+      "arena_offset": 98304,
+      "gpu_va": "0xfffffc2000118000",
+      "input_bytes": 3096,
+      "reserved_bytes": 16384,
+      "input_sha256": "9077a7b633be5045840169c6b10fbec400fe3dcb1ffe071fc12c7a5a915fa592",
+      "layout_evidence": "document",
+      "complete_extent_qualified": false
+    },
+    {
+      "name": "shared_1",
+      "arena_offset": 114688,
+      "gpu_va": "0xfffffc200011c000",
+      "input_bytes": 4168,
+      "reserved_bytes": 16384,
+      "input_sha256": "1fee3c05ad85c617a8fd4474066f4061931d21e816bc87f3f0252d009fa98409",
+      "layout_evidence": "document",
+      "complete_extent_qualified": false
+    },
+    {
+      "name": "shared_2",
+      "arena_offset": 131072,
+      "gpu_va": "0xfffffc2000120000",
+      "input_bytes": 3600,
+      "reserved_bytes": 16384,
+      "input_sha256": "967eedb2dc77a95e6270119ece23d9f47ca97c3b18ffa7d391d34e461b284f4c",
+      "layout_evidence": "document",
+      "complete_extent_qualified": false
+    },
+    {
+      "name": "shared_3",
+      "arena_offset": 147456,
+      "gpu_va": "0xfffffc2000124000",
+      "input_bytes": 104,
+      "reserved_bytes": 16384,
+      "input_sha256": "39f37f8d1931b3bdf767e7510dd69509fbf23af1f7654933d0a4d291cbdd4418",
+      "layout_evidence": "document",
+      "complete_extent_qualified": false
+    },
+    {
+      "name": "shared_4",
+      "arena_offset": 163840,
+      "gpu_va": "0xfffffc2000128000",
+      "input_bytes": 2048,
+      "reserved_bytes": 16384,
+      "input_sha256": "e5a00aa9991ac8a5ee3109844d84a55583bd20572ad3ffcd42792f3c36b183ad",
+      "layout_evidence": "document",
+      "complete_extent_qualified": false
+    },
+    {
+      "name": "hardware_counters",
+      "arena_offset": 180224,
+      "gpu_va": "0xfffffc200012c000",
+      "input_bytes": 3648,
+      "reserved_bytes": 16384,
+      "input_sha256": "301efe9642b0328c0b3b5cf0efc4b71ad0ea550e1433583f59c392fa9d7d3bbb",
+      "layout_evidence": "document-extent-firmware-pointer",
+      "complete_extent_qualified": false
+    },
+    {
+      "name": "power",
+      "arena_offset": 196608,
+      "gpu_va": "0xfffffc2000130000",
+      "input_bytes": 25956,
+      "reserved_bytes": 32768,
+      "input_sha256": "c3f3ad38f6f3639038362fc223c61ec825a943224d039850f5f9c83f7b1f4fe5",
+      "layout_evidence": "firmware-access-minimum",
+      "complete_extent_qualified": false
+    },
+    {
+      "name": "region_a",
+      "arena_offset": 229376,
+      "gpu_va": "0xfffffc2000138000",
+      "input_bytes": 20,
+      "reserved_bytes": 16384,
+      "input_sha256": "de47c9b27eb8d300dbb5f2c353e632c393262cf06340c4fa7f1b40c4cbd36f90",
+      "layout_evidence": "firmware-access-minimum",
+      "complete_extent_qualified": false
+    },
+    {
+      "name": "status_a",
+      "arena_offset": 245760,
+      "gpu_va": "0xfffffc200013c000",
+      "input_bytes": 32,
+      "reserved_bytes": 16384,
+      "input_sha256": "909f22c2b34103bf854580c5f2c4f64c2520aa57b492e422d1801a160b6c6e67",
+      "layout_evidence": "firmware-access-minimum",
+      "complete_extent_qualified": false
+    },
+    {
+      "name": "status_b",
+      "arena_offset": 262144,
+      "gpu_va": "0xfffffc2000140000",
+      "input_bytes": 58428,
+      "reserved_bytes": 65536,
+      "input_sha256": "15175df2a97762e92f337207abb15b089fa6b725f560616ceaed68c3f53fa2a1",
+      "layout_evidence": "firmware-access-minimum",
+      "complete_extent_qualified": false
+    },
+    {
+      "name": "extra_root_1",
+      "arena_offset": 327680,
+      "gpu_va": "0xfffffc2000150000",
+      "input_bytes": 256,
+      "reserved_bytes": 16384,
+      "input_sha256": "5341e6b2646979a70e57653007a1f310169421ec9bdd9f1a5648f75ade005af1",
+      "layout_evidence": "firmware-root-pointer-target-extent-unknown",
+      "complete_extent_qualified": false
+    }
+  ],
+  "pointers": [
+    {
+      "parent": "root",
+      "byte_offset": 8,
+      "target": "region_a",
+      "width": 8,
+      "encoded_gpu_va": "0xfffffc2000138000"
+    },
+    {
+      "parent": "root",
+      "byte_offset": 168,
+      "target": "status_a",
+      "width": 8,
+      "encoded_gpu_va": "0xfffffc200013c000"
+    },
+    {
+      "parent": "root",
+      "byte_offset": 176,
+      "target": "status_b",
+      "width": 8,
+      "encoded_gpu_va": "0xfffffc2000140000"
+    },
+    {
+      "parent": "root",
+      "byte_offset": 192,
+      "target": "extra_root_1",
+      "width": 8,
+      "encoded_gpu_va": "0xfffffc2000150000"
+    },
+    {
+      "parent": "root",
+      "byte_offset": 24,
+      "target": "main",
+      "width": 8,
+      "encoded_gpu_va": "0xfffffc2000104000"
+    },
+    {
+      "parent": "root",
+      "byte_offset": 32,
+      "target": "region_c",
+      "width": 8,
+      "encoded_gpu_va": "0xfffffc200010c000"
+    },
+    {
+      "parent": "root",
+      "byte_offset": 184,
+      "target": "extra_root",
+      "width": 8,
+      "encoded_gpu_va": "0xfffffc2000110000"
+    },
+    {
+      "parent": "main",
+      "byte_offset": 0,
+      "target": "hardware",
+      "width": 8,
+      "encoded_gpu_va": "0xfffffc2000108000"
+    },
+    {
+      "parent": "main",
+      "byte_offset": 16,
+      "target": "main_header",
+      "width": 8,
+      "encoded_gpu_va": "0xfffffc2000114000"
+    },
+    {
+      "parent": "main",
+      "byte_offset": 1137,
+      "target": "power",
+      "width": 8,
+      "encoded_gpu_va": "0xfffffc2000130000"
+    },
+    {
+      "parent": "hardware",
+      "byte_offset": 9912,
+      "target": "hardware_counters",
+      "width": 8,
+      "encoded_gpu_va": "0xfffffc200012c000"
+    },
+    {
+      "parent": "main",
+      "byte_offset": 596,
+      "target": "shared_0",
+      "width": 8,
+      "encoded_gpu_va": "0xfffffc2000118000"
+    },
+    {
+      "parent": "main",
+      "byte_offset": 604,
+      "target": "shared_1",
+      "width": 8,
+      "encoded_gpu_va": "0xfffffc200011c000"
+    },
+    {
+      "parent": "main",
+      "byte_offset": 612,
+      "target": "shared_2",
+      "width": 8,
+      "encoded_gpu_va": "0xfffffc2000120000"
+    },
+    {
+      "parent": "main",
+      "byte_offset": 620,
+      "target": "shared_3",
+      "width": 8,
+      "encoded_gpu_va": "0xfffffc2000124000"
+    },
+    {
+      "parent": "main",
+      "byte_offset": 628,
+      "target": "shared_4",
+      "width": 8,
+      "encoded_gpu_va": "0xfffffc2000128000"
+    }
+  ],
+  "topology": {
+    "chip": "T6040",
+    "board": "J614s",
+    "gpu_cores": 16,
+    "cluster_masks": [
+      "0x3db",
+      "0x3db"
+    ]
+  },
+  "unresolved": [
+    "Complete main layout, including extra field+240 and 17 channel records",
+    "Full hardware layout and T6040 register descriptors/two-cluster voltage inputs",
+    "Region C complete extent, initialization values and host/firmware ownership",
+    "Power object complete extent and initialization values",
+    "Complete region A/status extents and contents; root+c0 target extent unknown",
+    "Nested shared-object contents and transitive pointers",
+    "Actual arena GPU VA bounds/collisions, physical backing, PTE permissions",
+    "Cache publication, RTKit failure paths and mapping lifetime/teardown"
+  ],
+  "qualification": "Experimental structural graph; eight exact-read/static-source-backed device pages writable; sparse coherent SGX-relative VAs; other bank hypotheses read-only. No complete hardware construction, write permissions, queue execution or rendering established.",
+  "static_map_sha256": "4a3f7dc85c17311b9084340ecf2d4aae1531d16ddab94542124003c18ab6c969",
+  "core_mask_input": "0xf6fdb at hardware+0x2560; third word zero at+0x2568",
+  "mmio_descriptors": [
+    {
+      "slot": 17,
+      "physical": "0x288000000",
+      "gpu_va": "0xfffffc2000200000",
+      "size": "0x21400",
+      "readonly": true,
+      "mapped_pages": 9,
+      "role_qualification": "donor offset and aperture containment hypothesis",
+      "effective_writable_pages": []
+    },
+    {
+      "slot": 26,
+      "physical": "0x288d04000",
+      "gpu_va": "0xfffffc2000f04000",
+      "size": "0x8000",
+      "readonly": false,
+      "mapped_pages": 2,
+      "role_qualification": "matching25G83 static table and exact native reads; write semantics from captured firmware",
+      "effective_writable_pages": [
+        "0x288d04000"
+      ]
+    },
+    {
+      "slot": 27,
+      "physical": "0x288d0d000",
+      "gpu_va": "0xfffffc2000f0d000",
+      "size": "0x1000",
+      "readonly": true,
+      "mapped_pages": 1,
+      "role_qualification": "donor offset and aperture containment hypothesis",
+      "effective_writable_pages": []
+    },
+    {
+      "slot": 28,
+      "physical": "0x288d58000",
+      "gpu_va": "0xfffffc2000f58000",
+      "size": "0x8000",
+      "readonly": true,
+      "mapped_pages": 2,
+      "role_qualification": "donor offset and aperture containment hypothesis",
+      "effective_writable_pages": []
+    },
+    {
+      "slot": 29,
+      "physical": "0x288d10000",
+      "gpu_va": "0xfffffc2000f10000",
+      "size": "0x4000",
+      "readonly": false,
+      "mapped_pages": 1,
+      "role_qualification": "matching25G83 static table and exact native reads; write semantics from captured firmware",
+      "effective_writable_pages": [
+        "0x288d10000"
+      ]
+    },
+    {
+      "slot": 31,
+      "physical": "0x288d40000",
+      "gpu_va": "0xfffffc2000f40000",
+      "size": "0x4000",
+      "readonly": false,
+      "mapped_pages": 1,
+      "role_qualification": "matching25G83 static table and exact native reads; write semantics from captured firmware",
+      "effective_writable_pages": [
+        "0x288d40000"
+      ]
+    },
+    {
+      "slot": 32,
+      "physical": "0x288d60000",
+      "gpu_va": "0xfffffc2000f60000",
+      "size": "0x20000",
+      "readonly": true,
+      "mapped_pages": 8,
+      "role_qualification": "matching25G83 static table extent",
+      "effective_writable_pages": []
+    },
+    {
+      "slot": 40,
+      "physical": "0x288e1c000",
+      "gpu_va": "0xfffffc200101c000",
+      "size": "0x4000",
+      "readonly": true,
+      "mapped_pages": 1,
+      "role_qualification": "donor offset and aperture containment hypothesis",
+      "effective_writable_pages": [
+        "0x288e1c000"
+      ]
+    },
+    {
+      "slot": 22,
+      "physical": "0x289000000",
+      "gpu_va": "0xfffffc2001200000",
+      "size": "0x8000",
+      "readonly": true,
+      "mapped_pages": 2,
+      "role_qualification": "donor offset and aperture containment hypothesis",
+      "effective_writable_pages": []
+    },
+    {
+      "slot": 39,
+      "physical": "0x288e08000",
+      "gpu_va": "0xfffffc2001008000",
+      "size": "0x8000",
+      "readonly": true,
+      "mapped_pages": 2,
+      "role_qualification": "donor offset and aperture containment hypothesis",
+      "effective_writable_pages": []
+    },
+    {
+      "slot": 41,
+      "physical": "0x288e1f800",
+      "gpu_va": "0xfffffc200101f800",
+      "size": "0x4000",
+      "readonly": false,
+      "mapped_pages": 2,
+      "role_qualification": "matching25G83 static table and exact native reads; write semantics from captured firmware",
+      "effective_writable_pages": [
+        "0x288e1c000"
+      ]
+    },
+    {
+      "slot": 33,
+      "physical": "0x288d44000",
+      "gpu_va": "0xfffffc2000f44000",
+      "size": "0x4000",
+      "readonly": false,
+      "mapped_pages": 1,
+      "role_qualification": "matching25G83 static table and exact native reads; write semantics from captured firmware",
+      "effective_writable_pages": [
+        "0x288d44000"
+      ]
+    },
+    {
+      "slot": 35,
+      "physical": "0x288e00000",
+      "gpu_va": "0xfffffc2001000000",
+      "size": "0x4000",
+      "readonly": false,
+      "mapped_pages": 1,
+      "role_qualification": "matching25G83 static table and exact native reads; write semantics from captured firmware",
+      "effective_writable_pages": [
+        "0x288e00000"
+      ]
+    },
+    {
+      "slot": 34,
+      "physical": "0x288d4c000",
+      "gpu_va": "0xfffffc2000f4c000",
+      "size": "0x200",
+      "readonly": false,
+      "mapped_pages": 1,
+      "role_qualification": "matching25G83 static table and exact native reads; write semantics from captured firmware",
+      "effective_writable_pages": [
+        "0x288d4c000"
+      ]
+    },
+    {
+      "slot": 37,
+      "physical": "0x288e40000",
+      "gpu_va": "0xfffffc2001040000",
+      "size": "0x4000",
+      "readonly": false,
+      "mapped_pages": 1,
+      "role_qualification": "matching25G83 static table and exact native reads; write semantics from captured firmware",
+      "effective_writable_pages": [
+        "0x288e40000"
+      ]
+    }
+  ],
+  "mmio_leaves": [
+    {
+      "physical": 10871635968,
+      "gpu_va": 18446739813104091136,
+      "readonly": true
+    },
+    {
+      "physical": 10871652352,
+      "gpu_va": 18446739813104107520,
+      "readonly": true
+    },
+    {
+      "physical": 10871668736,
+      "gpu_va": 18446739813104123904,
+      "readonly": true
+    },
+    {
+      "physical": 10871685120,
+      "gpu_va": 18446739813104140288,
+      "readonly": true
+    },
+    {
+      "physical": 10871701504,
+      "gpu_va": 18446739813104156672,
+      "readonly": true
+    },
+    {
+      "physical": 10871717888,
+      "gpu_va": 18446739813104173056,
+      "readonly": true
+    },
+    {
+      "physical": 10871734272,
+      "gpu_va": 18446739813104189440,
+      "readonly": true
+    },
+    {
+      "physical": 10871750656,
+      "gpu_va": 18446739813104205824,
+      "readonly": true
+    },
+    {
+      "physical": 10871767040,
+      "gpu_va": 18446739813104222208,
+      "readonly": true
+    },
+    {
+      "physical": 10885283840,
+      "gpu_va": 18446739813117739008,
+      "readonly": false
+    },
+    {
+      "physical": 10885300224,
+      "gpu_va": 18446739813117755392,
+      "readonly": true
+    },
+    {
+      "physical": 10885316608,
+      "gpu_va": 18446739813117771776,
+      "readonly": true
+    },
+    {
+      "physical": 10885332992,
+      "gpu_va": 18446739813117788160,
+      "readonly": false
+    },
+    {
+      "physical": 10885529600,
+      "gpu_va": 18446739813117984768,
+      "readonly": false
+    },
+    {
+      "physical": 10885545984,
+      "gpu_va": 18446739813118001152,
+      "readonly": false
+    },
+    {
+      "physical": 10885578752,
+      "gpu_va": 18446739813118033920,
+      "readonly": false
+    },
+    {
+      "physical": 10885627904,
+      "gpu_va": 18446739813118083072,
+      "readonly": true
+    },
+    {
+      "physical": 10885644288,
+      "gpu_va": 18446739813118099456,
+      "readonly": true
+    },
+    {
+      "physical": 10885660672,
+      "gpu_va": 18446739813118115840,
+      "readonly": true
+    },
+    {
+      "physical": 10885677056,
+      "gpu_va": 18446739813118132224,
+      "readonly": true
+    },
+    {
+      "physical": 10885693440,
+      "gpu_va": 18446739813118148608,
+      "readonly": true
+    },
+    {
+      "physical": 10885709824,
+      "gpu_va": 18446739813118164992,
+      "readonly": true
+    },
+    {
+      "physical": 10885726208,
+      "gpu_va": 18446739813118181376,
+      "readonly": true
+    },
+    {
+      "physical": 10885742592,
+      "gpu_va": 18446739813118197760,
+      "readonly": true
+    },
+    {
+      "physical": 10885758976,
+      "gpu_va": 18446739813118214144,
+      "readonly": true
+    },
+    {
+      "physical": 10885775360,
+      "gpu_va": 18446739813118230528,
+      "readonly": true
+    },
+    {
+      "physical": 10886316032,
+      "gpu_va": 18446739813118771200,
+      "readonly": false
+    },
+    {
+      "physical": 10886348800,
+      "gpu_va": 18446739813118803968,
+      "readonly": true
+    },
+    {
+      "physical": 10886365184,
+      "gpu_va": 18446739813118820352,
+      "readonly": true
+    },
+    {
+      "physical": 10886430720,
+      "gpu_va": 18446739813118885888,
+      "readonly": false
+    },
+    {
+      "physical": 10886447104,
+      "gpu_va": 18446739813118902272,
+      "readonly": true
+    },
+    {
+      "physical": 10886578176,
+      "gpu_va": 18446739813119033344,
+      "readonly": false
+    },
+    {
+      "physical": 10888413184,
+      "gpu_va": 18446739813120868352,
+      "readonly": true
+    },
+    {
+      "physical": 10888429568,
+      "gpu_va": 18446739813120884736,
+      "readonly": true
+    }
+  ],
+  "mmio_virtual_base": "0xfffffc2000200000",
+  "mapped_pages": 55,
+  "voltage_adt_sha256": "e948f51fbc3e1aa8b75722aeb158b48bf869c0de0d746e5815be41988b9501a0",
+  "voltage_input_sha256": {
+    "perf-states": "38feca543ed40a6d76c7c8ea39ce5f6c3b2909755be4b1b8ba0f4affe3723926",
+    "perf-states-sram": "66de9a6e8e673d8d1f86aa3866168b84fcb63c3f2c134c8d900afc423a30e8a6"
+  },
+  "voltage_assignment": "Only qualified profile-A core/SRAM cluster columns populated; profile-B and frequency assignment unchanged"
+}

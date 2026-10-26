@@ -1,0 +1,23 @@
+pkgname=vesktop-m4rch
+pkgver=1.6.8
+pkgrel=1
+pkgdesc='Vesktop with Electron 45 and corrected libyuv SME code generation'
+arch=('aarch64')
+url='https://github.com/Vencord/Vesktop'
+license=('GPL-3.0-only' 'MIT')
+depends=('alsa-lib' 'at-spi2-core' 'cairo' 'dbus' 'expat' 'glib2' 'gtk3' 'libcups' 'libdrm' 'libx11' 'libxcb' 'libxcomposite' 'libxdamage' 'libxext' 'libxfixes' 'libxkbcommon' 'libxrandr' 'mesa' 'nspr' 'nss' 'pango')
+provides=("vesktop=$pkgver")
+conflicts=('vesktop')
+options=('!strip' '!debug')
+source=('electron45.zip' 'vesktop-app.tar.gz')
+noextract=('electron45.zip' 'vesktop-app.tar.gz')
+package() {
+  install -dm755 "$pkgdir/usr/lib/vesktop"
+  bsdtar -xf "$srcdir/electron45.zip" -C "$pkgdir/usr/lib/vesktop"
+  mv "$pkgdir/usr/lib/vesktop/"{electron,vesktop}
+  rm -f "$pkgdir/usr/lib/vesktop/resources/default_app.asar"
+  bsdtar -xf "$srcdir/vesktop-app.tar.gz" -C "$pkgdir"
+  chmod 4755 "$pkgdir/usr/lib/vesktop/chrome-sandbox"
+  install -Dm644 "$pkgdir/usr/lib/vesktop/LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE.electron"
+  install -Dm644 "$pkgdir/usr/lib/vesktop/LICENSES.chromium.html" "$pkgdir/usr/share/licenses/$pkgname/LICENSES.chromium.html"
+}

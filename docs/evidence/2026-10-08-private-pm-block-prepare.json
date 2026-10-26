@@ -1,0 +1,12 @@
+{
+  "private_binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "range": [
+    "0xfffffe00089fea44",
+    "0xfffffe00089feafc"
+  ],
+  "range_sha256": "3c7cf7cf6868bdf1e5090c59e222f5e4a489517a38e5d4a2c89d40c517916dff",
+  "counts": {
+    "successes": 1024
+  },
+  "qualification": "Whole native concrete prepareParameterBufferBlock1024 full PM/block/page-array comparisons. Block ID0..31, randomized64-bit mapping160 result; page index=(mapping>>15)&1ffffff writes u32 at PM90+ID*8, upper adjacent word preserved; block10 byte1. Block virtual140 preparation and GART virtual160 mapping remain explicit services with arguments/order checked. No live mapping address qualification, invalid index/PAC validation or GPU command."
+}

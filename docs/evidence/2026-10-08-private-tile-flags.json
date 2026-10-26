@@ -1,0 +1,2175 @@
+{
+  "private_binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "cases": 128,
+  "source_offsets": [
+    "0x7d8",
+    "0x7d9",
+    "0x7da",
+    "0x7db",
+    "0x7dc",
+    "0x7dd",
+    "0x7de"
+  ],
+  "fixtures": [
+    {
+      "mask": 0,
+      "enabled_payload_offsets": [],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 1,
+      "enabled_payload_offsets": [
+        "0x7d8"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 2,
+      "enabled_payload_offsets": [
+        "0x7d9"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 3,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7d9"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 4,
+      "enabled_payload_offsets": [
+        "0x7da"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 5,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7da"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 6,
+      "enabled_payload_offsets": [
+        "0x7d9",
+        "0x7da"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 7,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7d9",
+        "0x7da"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 8,
+      "enabled_payload_offsets": [
+        "0x7db"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 9,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7db"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 10,
+      "enabled_payload_offsets": [
+        "0x7d9",
+        "0x7db"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 11,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7d9",
+        "0x7db"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 12,
+      "enabled_payload_offsets": [
+        "0x7da",
+        "0x7db"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 13,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7da",
+        "0x7db"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 14,
+      "enabled_payload_offsets": [
+        "0x7d9",
+        "0x7da",
+        "0x7db"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 15,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7d9",
+        "0x7da",
+        "0x7db"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 16,
+      "enabled_payload_offsets": [
+        "0x7dc"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 17,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7dc"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 18,
+      "enabled_payload_offsets": [
+        "0x7d9",
+        "0x7dc"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 19,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7d9",
+        "0x7dc"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 20,
+      "enabled_payload_offsets": [
+        "0x7da",
+        "0x7dc"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 21,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7da",
+        "0x7dc"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 22,
+      "enabled_payload_offsets": [
+        "0x7d9",
+        "0x7da",
+        "0x7dc"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 23,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7d9",
+        "0x7da",
+        "0x7dc"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 24,
+      "enabled_payload_offsets": [
+        "0x7db",
+        "0x7dc"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 25,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7db",
+        "0x7dc"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 26,
+      "enabled_payload_offsets": [
+        "0x7d9",
+        "0x7db",
+        "0x7dc"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 27,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7d9",
+        "0x7db",
+        "0x7dc"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 28,
+      "enabled_payload_offsets": [
+        "0x7da",
+        "0x7db",
+        "0x7dc"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 29,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7da",
+        "0x7db",
+        "0x7dc"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 30,
+      "enabled_payload_offsets": [
+        "0x7d9",
+        "0x7da",
+        "0x7db",
+        "0x7dc"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 31,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7d9",
+        "0x7da",
+        "0x7db",
+        "0x7dc"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 32,
+      "enabled_payload_offsets": [
+        "0x7dd"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 33,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7dd"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 34,
+      "enabled_payload_offsets": [
+        "0x7d9",
+        "0x7dd"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 35,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7d9",
+        "0x7dd"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 36,
+      "enabled_payload_offsets": [
+        "0x7da",
+        "0x7dd"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 37,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7da",
+        "0x7dd"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 38,
+      "enabled_payload_offsets": [
+        "0x7d9",
+        "0x7da",
+        "0x7dd"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 39,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7d9",
+        "0x7da",
+        "0x7dd"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 40,
+      "enabled_payload_offsets": [
+        "0x7db",
+        "0x7dd"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 41,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7db",
+        "0x7dd"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 42,
+      "enabled_payload_offsets": [
+        "0x7d9",
+        "0x7db",
+        "0x7dd"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 43,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7d9",
+        "0x7db",
+        "0x7dd"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 44,
+      "enabled_payload_offsets": [
+        "0x7da",
+        "0x7db",
+        "0x7dd"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 45,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7da",
+        "0x7db",
+        "0x7dd"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 46,
+      "enabled_payload_offsets": [
+        "0x7d9",
+        "0x7da",
+        "0x7db",
+        "0x7dd"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 47,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7d9",
+        "0x7da",
+        "0x7db",
+        "0x7dd"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 48,
+      "enabled_payload_offsets": [
+        "0x7dc",
+        "0x7dd"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 49,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7dc",
+        "0x7dd"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 50,
+      "enabled_payload_offsets": [
+        "0x7d9",
+        "0x7dc",
+        "0x7dd"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 51,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7d9",
+        "0x7dc",
+        "0x7dd"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 52,
+      "enabled_payload_offsets": [
+        "0x7da",
+        "0x7dc",
+        "0x7dd"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 53,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7da",
+        "0x7dc",
+        "0x7dd"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 54,
+      "enabled_payload_offsets": [
+        "0x7d9",
+        "0x7da",
+        "0x7dc",
+        "0x7dd"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 55,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7d9",
+        "0x7da",
+        "0x7dc",
+        "0x7dd"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 56,
+      "enabled_payload_offsets": [
+        "0x7db",
+        "0x7dc",
+        "0x7dd"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 57,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7db",
+        "0x7dc",
+        "0x7dd"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 58,
+      "enabled_payload_offsets": [
+        "0x7d9",
+        "0x7db",
+        "0x7dc",
+        "0x7dd"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 59,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7d9",
+        "0x7db",
+        "0x7dc",
+        "0x7dd"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 60,
+      "enabled_payload_offsets": [
+        "0x7da",
+        "0x7db",
+        "0x7dc",
+        "0x7dd"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 61,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7da",
+        "0x7db",
+        "0x7dc",
+        "0x7dd"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 62,
+      "enabled_payload_offsets": [
+        "0x7d9",
+        "0x7da",
+        "0x7db",
+        "0x7dc",
+        "0x7dd"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 63,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7d9",
+        "0x7da",
+        "0x7db",
+        "0x7dc",
+        "0x7dd"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 64,
+      "enabled_payload_offsets": [
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 65,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 66,
+      "enabled_payload_offsets": [
+        "0x7d9",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 67,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7d9",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 68,
+      "enabled_payload_offsets": [
+        "0x7da",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 69,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7da",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 70,
+      "enabled_payload_offsets": [
+        "0x7d9",
+        "0x7da",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 71,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7d9",
+        "0x7da",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 72,
+      "enabled_payload_offsets": [
+        "0x7db",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 73,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7db",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 74,
+      "enabled_payload_offsets": [
+        "0x7d9",
+        "0x7db",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 75,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7d9",
+        "0x7db",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 76,
+      "enabled_payload_offsets": [
+        "0x7da",
+        "0x7db",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 77,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7da",
+        "0x7db",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 78,
+      "enabled_payload_offsets": [
+        "0x7d9",
+        "0x7da",
+        "0x7db",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 79,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7d9",
+        "0x7da",
+        "0x7db",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 80,
+      "enabled_payload_offsets": [
+        "0x7dc",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 81,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7dc",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 82,
+      "enabled_payload_offsets": [
+        "0x7d9",
+        "0x7dc",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 83,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7d9",
+        "0x7dc",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 84,
+      "enabled_payload_offsets": [
+        "0x7da",
+        "0x7dc",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 85,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7da",
+        "0x7dc",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 86,
+      "enabled_payload_offsets": [
+        "0x7d9",
+        "0x7da",
+        "0x7dc",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 87,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7d9",
+        "0x7da",
+        "0x7dc",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 88,
+      "enabled_payload_offsets": [
+        "0x7db",
+        "0x7dc",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 89,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7db",
+        "0x7dc",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 90,
+      "enabled_payload_offsets": [
+        "0x7d9",
+        "0x7db",
+        "0x7dc",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 91,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7d9",
+        "0x7db",
+        "0x7dc",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 92,
+      "enabled_payload_offsets": [
+        "0x7da",
+        "0x7db",
+        "0x7dc",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 93,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7da",
+        "0x7db",
+        "0x7dc",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 94,
+      "enabled_payload_offsets": [
+        "0x7d9",
+        "0x7da",
+        "0x7db",
+        "0x7dc",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 95,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7d9",
+        "0x7da",
+        "0x7db",
+        "0x7dc",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 96,
+      "enabled_payload_offsets": [
+        "0x7dd",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 97,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7dd",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 98,
+      "enabled_payload_offsets": [
+        "0x7d9",
+        "0x7dd",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 99,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7d9",
+        "0x7dd",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 100,
+      "enabled_payload_offsets": [
+        "0x7da",
+        "0x7dd",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 101,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7da",
+        "0x7dd",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 102,
+      "enabled_payload_offsets": [
+        "0x7d9",
+        "0x7da",
+        "0x7dd",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 103,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7d9",
+        "0x7da",
+        "0x7dd",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 104,
+      "enabled_payload_offsets": [
+        "0x7db",
+        "0x7dd",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 105,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7db",
+        "0x7dd",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 106,
+      "enabled_payload_offsets": [
+        "0x7d9",
+        "0x7db",
+        "0x7dd",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 107,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7d9",
+        "0x7db",
+        "0x7dd",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 108,
+      "enabled_payload_offsets": [
+        "0x7da",
+        "0x7db",
+        "0x7dd",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 109,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7da",
+        "0x7db",
+        "0x7dd",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 110,
+      "enabled_payload_offsets": [
+        "0x7d9",
+        "0x7da",
+        "0x7db",
+        "0x7dd",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 111,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7d9",
+        "0x7da",
+        "0x7db",
+        "0x7dd",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 112,
+      "enabled_payload_offsets": [
+        "0x7dc",
+        "0x7dd",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 113,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7dc",
+        "0x7dd",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 114,
+      "enabled_payload_offsets": [
+        "0x7d9",
+        "0x7dc",
+        "0x7dd",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 115,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7d9",
+        "0x7dc",
+        "0x7dd",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 116,
+      "enabled_payload_offsets": [
+        "0x7da",
+        "0x7dc",
+        "0x7dd",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 117,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7da",
+        "0x7dc",
+        "0x7dd",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 118,
+      "enabled_payload_offsets": [
+        "0x7d9",
+        "0x7da",
+        "0x7dc",
+        "0x7dd",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 119,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7d9",
+        "0x7da",
+        "0x7dc",
+        "0x7dd",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 120,
+      "enabled_payload_offsets": [
+        "0x7db",
+        "0x7dc",
+        "0x7dd",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 121,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7db",
+        "0x7dc",
+        "0x7dd",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 122,
+      "enabled_payload_offsets": [
+        "0x7d9",
+        "0x7db",
+        "0x7dc",
+        "0x7dd",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 123,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7d9",
+        "0x7db",
+        "0x7dc",
+        "0x7dd",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 124,
+      "enabled_payload_offsets": [
+        "0x7da",
+        "0x7db",
+        "0x7dc",
+        "0x7dd",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 125,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7da",
+        "0x7db",
+        "0x7dc",
+        "0x7dd",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 126,
+      "enabled_payload_offsets": [
+        "0x7d9",
+        "0x7da",
+        "0x7db",
+        "0x7dc",
+        "0x7dd",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    },
+    {
+      "mask": 127,
+      "enabled_payload_offsets": [
+        "0x7d8",
+        "0x7d9",
+        "0x7da",
+        "0x7db",
+        "0x7dc",
+        "0x7dd",
+        "0x7de"
+      ],
+      "tile_state": "0xa2000036011",
+      "phase_counts": [
+        91,
+        16,
+        23,
+        10
+      ],
+      "primary_has160b8": true
+    }
+  ],
+  "unique_tile_states": {
+    "0xa2000036011": 128
+  },
+  "single_toggles": [
+    {
+      "payload_byte_offset": "0x7d8",
+      "xor_from_clear": "0x0",
+      "clear_bits": "0x0",
+      "set_bits": "0x0"
+    },
+    {
+      "payload_byte_offset": "0x7d9",
+      "xor_from_clear": "0x0",
+      "clear_bits": "0x0",
+      "set_bits": "0x0"
+    },
+    {
+      "payload_byte_offset": "0x7da",
+      "xor_from_clear": "0x0",
+      "clear_bits": "0x0",
+      "set_bits": "0x0"
+    },
+    {
+      "payload_byte_offset": "0x7db",
+      "xor_from_clear": "0x0",
+      "clear_bits": "0x0",
+      "set_bits": "0x0"
+    },
+    {
+      "payload_byte_offset": "0x7dc",
+      "xor_from_clear": "0x0",
+      "clear_bits": "0x0",
+      "set_bits": "0x0"
+    },
+    {
+      "payload_byte_offset": "0x7dd",
+      "xor_from_clear": "0x0",
+      "clear_bits": "0x0",
+      "set_bits": "0x0"
+    },
+    {
+      "payload_byte_offset": "0x7de",
+      "xor_from_clear": "0x0",
+      "clear_bits": "0x0",
+      "set_bits": "0x0"
+    }
+  ],
+  "donor_low_default_matches": [],
+  "qualification": "Full native 3D generator consumes source flags through the independently qualified payload-copy model in emulator RAM. All128 combinations of seven boolean input bytes; other payload fields zero and provider objects synthetic. Flags labeled by input offset, not unproven semantic names. Counts include conditional/SPM backing entries, not exported phase0 count. No live hardware, descriptor validity or correct flags for a triangle established. Single-toggle differences are observations, not an exhaustive bitfield specification."
+}

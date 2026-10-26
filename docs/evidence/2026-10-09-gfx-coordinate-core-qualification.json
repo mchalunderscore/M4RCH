@@ -1,0 +1,79 @@
+{
+  "schema": "m4rch.gfx-coordinate-core-qualification.v1",
+  "hardware_access": false,
+  "privileged_access": false,
+  "source_changes": false,
+  "inputs": [
+    {
+      "path": "experiments/t6040-gpu/gfx-native-coordinate/gfx-coordinate-core.h",
+      "bytes": 7824,
+      "sha256": "417179e014653c2b97e55888346cbda70c79a4166fe2a1ca191d741f7201ad01"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-coordinate/test-coordinate-core.c",
+      "bytes": 14123,
+      "sha256": "c1af7d562dc38cdeafcb6eb4d8f401718b3786ea1f0d1e99d190de6d53da24c4"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-coordinate/qualify-coordinate-core.py",
+      "bytes": 4878,
+      "sha256": "5a3970da28206939edf20a6a93c198ec2b29b35de7cd6bbdde3a5e0d319c9927"
+    },
+    {
+      "path": "docs/evidence/2026-10-09-gfx-native-shutdown-coordination.json",
+      "bytes": 55858,
+      "sha256": "a9c0ca4b3cc6aa0ebe668ae5fb95e63643f4edd0b3d941b7907f5a60b148dffe"
+    },
+    {
+      "path": "docs/evidence/2026-10-09-gfx-native-shutdown-coordination.md",
+      "bytes": 7728,
+      "sha256": "4838694ae9e7b6ca9307b93ec839545b9bc20899198659def74930c835381398"
+    }
+  ],
+  "compiler": "/usr/bin/clang",
+  "compiler_version": "clang version 23.1.1",
+  "sanitizers": [
+    "address",
+    "undefined"
+  ],
+  "leak_detection": false,
+  "leak_detection_limit": "LeakSanitizer cannot run under this host's ptrace restrictions; ASan memory checks and UBSan remain enabled.",
+  "qualification_scope": "Actual C header, mocked RAM callbacks, deterministic ordered traces and meaningful failure paths.",
+  "limitations": [
+    "The core does not perform physical target15/0 transitions; surrounding owner ordering is not tested by this RAM harness.",
+    "read_ptd must return the raw second PTD word; status bit54 from the native decoded Entry is intentionally not accepted.",
+    "A single serialized owner must use the session and shared request/voter resources; whole-word RMW is not atomic against another writer.",
+    "The request refresh preserves a preflight mutation, but an external update after the final snapshot can still be overwritten and evade post-ACK readback.",
+    "STATUS0 and all-ones rejection, sample cap, paced polling and exact readbacks are intentionally stricter than native behavior.",
+    "Native busy polling differs from the future experimental sleep callback; no GPU DMA retirement, hardware teardown or rendering proof follows."
+  ],
+  "build": {
+    "flags": [
+      "-std=c11",
+      "-O1",
+      "-g",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-fno-omit-frame-pointer",
+      "-fsanitize=address,undefined"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "run": {
+    "returncode": 0,
+    "stdout": "{\"cases\":182,\"assertions\":247748,\"io_callbacks\":243950,\"hardware_access\":false,\"concurrent_snapshot_atomicity_proved\":false}\n",
+    "stderr": ""
+  },
+  "tests": {
+    "cases": 182,
+    "assertions": 247748,
+    "io_callbacks": 243950,
+    "hardware_access": false,
+    "concurrent_snapshot_atomicity_proved": false
+  },
+  "source_hashes_unchanged_during_run": true,
+  "passed": true
+}

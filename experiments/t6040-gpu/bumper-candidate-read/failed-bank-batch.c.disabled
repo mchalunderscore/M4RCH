@@ -1,0 +1,39 @@
+// SPDX-License-Identifier: GPL-2.0-only
+/* Bounded address hypothesis: secondary SGX begins at primary+0xd00000.
+ * No firmware start, register writes or broad aperture scan. GFX genpd must be held. */
+#include <linux/module.h>
+#include <linux/of.h>
+#include <linux/io.h>
+#include <linux/ioport.h>
+#define CANDIDATE_BASE 0x288d00000ULL
+static unsigned int run_gate;
+module_param(run_gate,uint,0400);
+static int __init candidate_init(void)
+{
+ void __iomem *map, *control;
+ unsigned int bank;
+ if (run_gate!=1 || !of_machine_is_compatible("apple,j614s") ||
+     !of_machine_is_compatible("apple,t6040")) return -ENODEV;
+ /* Sixteen aligned candidate banks, two reads each. Skip known GFenderCfg;
+  * its identity word is sampled separately as the access control. */
+ for (bank=0;bank<16;bank++) {
+  u64 pa=CANDIDATE_BASE+bank*0x4000;
+  if (bank==1) continue;
+  if (!request_mem_region(pa,0x1000,"m4rch-bumper-candidate-read")) return -EBUSY;
+  map=ioremap(pa,0x1000);
+  if (!map) {release_mem_region(pa,0x1000);return -ENOMEM;}
+  pr_info("m4rch Bumper bank: physical=%#llx low=%#x high=%#x; read-only address hypothesis\n",
+          pa,readl(map+0xa0),readl(map+0xa4));
+  iounmap(map);release_mem_region(pa,0x1000);
+ }
+ if (!request_mem_region(0x288d04000ULL,0x1000,"m4rch-gfender-control")) return -EBUSY;
+ control=ioremap(0x288d04000ULL,0x1000);
+ if (!control) {release_mem_region(0x288d04000ULL,0x1000);return -ENOMEM;}
+ pr_info("m4rch Bumper control: physical=0x288d04010 word=%#x; known GFender comparison\n",readl(control+0x10));
+ iounmap(control);release_mem_region(0x288d04000ULL,0x1000);
+ return 0;
+}
+static void __exit candidate_exit(void) {}
+module_init(candidate_init);module_exit(candidate_exit);
+MODULE_LICENSE("GPL");
+MODULE_DESCRIPTION("J614s bounded candidate mask reads without writes or firmware wake");

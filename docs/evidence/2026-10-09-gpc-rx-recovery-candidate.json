@@ -1,0 +1,124 @@
+{
+  "schema": "m4rch-gpc-rx-recovery-candidate-v1",
+  "stage": "Executed once on bootbba7a8f2; RXservicing passed, first recoveryphase2 stalled. Diagnostic session retained. Do not repeat unchanged candidate.",
+  "candidate": "out/gpc-rx-recovery/candidate",
+  "prepared": "out/gpc-rx-recovery/prepared",
+  "module_sha256": "f123d1dbe97705f1ad9bfe3b98aa1e4f33cea95ee7002de3a553ecbf98ce0650",
+  "build_receipt_sha256": "f677660091147aa0e926173a34c7630af4be75e6dc3a3381540ce98edabd8e07",
+  "graph_sha256": "de44a28ecca7f28eae47f511d67a20cd774be09c9c90fb8e6d7e2af0c58ad871",
+  "graph_receipt_sha256": "b9ef9f8855f7e281d6246164eb10421892457828ce1fdc4180f989eaf3b56800",
+  "source_sha256": {
+    "joined-context-init.h": "1851e697907d50a3f47d153879f47f1b6b07065f5d58055fa6269bc436bc15b2",
+    "graph-contract.h": "0b1be80330cd8cf42c33228ab809072bdc679a43e21dd510f2bfc68192a5e2ef",
+    "render-data.h": "3bdbf04b9a3219c8e818beb464b5f55626e8a9b3d184680e3fd05a6361c47cbd",
+    "recovery-contract.h": "bb9ea9a5b5701f75be597dfd14ae952c5efa561c005493f58c7bad1eee806236",
+    "receive-service.h": "bab356c9a2467fbb46760345102a7fb8369a9efe8db31efd058b1fd918b11043",
+    "job-data.h": "c18ede083b691fbd3044237aaf30eb1e34c775e9391d3c6f1bea8e61561e0913",
+    "render-backing-map.h": "ade8cedde4da68f2f463ed8604f47ab6b56cdf1c8ff3984d592e00f4a065978b",
+    "command-pool-map.h": "1e4696787075de13a56f4946018221803a5a01a3c5a653bbbdbd48f319e74b6b",
+    "recovery-cycle.h": "d8ea8908ac93968a3133da2d41a1f8149586ed955844ab683e4f967022df47fd",
+    "graph-map.h": "704836d10b86e3d2bcb20b457853a700a2153aae505b0aae473aea4daee7f13e",
+    "boot-contract.h": "5194505b49f3b40acdc80f29bf1e8c5c5f11374f483ed6a22df2c22ea904e082",
+    "asc-graph-init.c": "f09a97ae66c50cdd5add20a39f0c8eb9be7dff353368b6441c3ff30eb35fe49f"
+  },
+  "host_source_sha256": {
+    "prepare-recovery-trial.py": "587dc1cc4f400b68b6ec08178fd54b6c8c327a7a6d132d0bce3ccd7e8bdae4e6",
+    "prepare-joined-init-trial.py": "aaccae2728e630bc0f22e6a11b0dc6e3c49ac3a3480cbbf828ac8594f642f5e1",
+    "run-root-envelope.py": "dcd431038d7ffeb62686f57027609d375ccbc3a6bc5e082cbe87b60fea2185b7",
+    "run-resident-gpu.py": "69bac11ea1f8b6d752b83e29a938670211b9c2fed633b86b4c3201d2bbc511dd",
+    "decode-receive-journal.py": "b8da018bbe0eb73bdff485bb9f5e6f7048947371505c318f3a45db4a7c59f7dd",
+    "test-receive-service.py": "43d5c12d3c9411bbea2e6f57a82ed1b070480aafe335b2620ba4b4d89376ca2e",
+    "test_receive_journal.py": "bf6a10ecdb600847ef9a1cbf7e408dc76f1dd81acba5ab1fe1c0c54e196da6b4"
+  },
+  "receive_service": {
+    "rings": [
+      {
+        "state": 884736,
+        "ring": 901120,
+        "capacity": 256,
+        "type_mask": 536936403
+      },
+      {
+        "state": 933888,
+        "ring": 950272,
+        "capacity": 256,
+        "type_mask": 4
+      },
+      {
+        "state": 933936,
+        "ring": 968704,
+        "capacity": 256,
+        "type_mask": 4
+      },
+      {
+        "state": 933984,
+        "ring": 987136,
+        "capacity": 256,
+        "type_mask": 4
+      },
+      {
+        "state": 934032,
+        "ring": 1005568,
+        "capacity": 256,
+        "type_mask": 4
+      },
+      {
+        "state": 934080,
+        "ring": 1024000,
+        "capacity": 256,
+        "type_mask": 4
+      },
+      {
+        "state": 934128,
+        "ring": 1042432,
+        "capacity": 256,
+        "type_mask": 4
+      },
+      {
+        "state": 934176,
+        "ring": 1060864,
+        "capacity": 256,
+        "type_mask": 4
+      },
+      {
+        "state": 934224,
+        "ring": 1079296,
+        "capacity": 256,
+        "type_mask": 4
+      },
+      {
+        "state": 934272,
+        "ring": 1097728,
+        "capacity": 256,
+        "type_mask": 4
+      },
+      {
+        "state": 770048,
+        "ring": 786432,
+        "capacity": 512,
+        "type_mask": 32
+      },
+      {
+        "state": 835584,
+        "ring": 851968,
+        "capacity": 256,
+        "type_mask": 1610547200
+      }
+    ],
+    "record_bytes": 72,
+    "journal_capacity": 65536,
+    "journal_record_bytes": 80,
+    "journal_header_bytes": 64,
+    "doorbell_endpoint": 32,
+    "doorbell_message": "0x0042000000000000",
+    "qualification": "Copy validated records to retained CPU journal before advancing host consumer only; no mailbox echo. Event callbacks do not authorize job retirement."
+  },
+  "native_proof_sha256": "d9916e0514e1c048fc96cc7843143d7c73e7dc6d74c7740ffe729aa012dbc200",
+  "changed_graph_bytes_vs_telemetry": 0,
+  "owned_dma_pages": 174,
+  "journal_cpu_bytes": 5242944,
+  "worker_interval_ms": 10,
+  "qualification": "Observed RX workload qualified live consumer advancement and retained journal. First recovery did not complete. No teardown, recovery or rendering success. Do not repeat unchanged.",
+  "live_result": "docs/evidence/2026-10-09-gpc-rx-recovery-live.json",
+  "next_candidate": "docs/evidence/2026-10-09-recovery-progress-candidate.json"
+}

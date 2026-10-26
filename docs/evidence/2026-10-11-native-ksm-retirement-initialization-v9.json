@@ -1,0 +1,199 @@
+{
+  "schema": "m4rch.native-ksm-retirement-initialization.v9",
+  "offline_only": true,
+  "binary": {
+    "path": "/boot/GPUC003/private-apple/com.apple.AGXG16X",
+    "bytes": 1566304,
+    "sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e"
+  },
+  "evidence": [
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-08-private-pending-release.json",
+      "bytes": 996,
+      "sha256": "28ca9e5563d116cf7dd84dbfaf7ed345d21f564cffbf268681f1935c47255736"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-08-private-pending-release.md",
+      "bytes": 3841,
+      "sha256": "e84c086a4d6a4bd14b5d57c636fc57b6522f91fc4dc5065d0686159c47b8f691"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-08-private-sksm-release.json",
+      "bytes": 1183,
+      "sha256": "8064d7a993f064d049b592382248fda599d0e44ff00f77e99b520bf8801137ff"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-08-private-nop-body.json",
+      "bytes": 1517,
+      "sha256": "2828c2ce1b1731846adad9c642ea1e398f7745cbad45a89568efaeb99f1cb074"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-08-private-3d-scheduler-wrapper.json",
+      "bytes": 891,
+      "sha256": "b9aaa80c993bd252f6ee45fff87a9f6b5acf73354449f4ac806a83daad582a52"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-08-private-3d-scheduler-sequence.json",
+      "bytes": 795,
+      "sha256": "e989317938784ea84123e481d478a9331c30e9c62ea811eef89b36ea6d4a0bba"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-09-completion-identity-contract.json",
+      "bytes": 11853,
+      "sha256": "5d1b41f9615cb552f9e3feef3b1d1a5a4c23fe33a3bef595680a8155227b875a"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-09-completion-identity-contract.md",
+      "bytes": 10043,
+      "sha256": "dd3be066c706f7eaf2e2d4b896932a3f21bbd0f5d2001de9e94c36d477afe54f"
+    }
+  ],
+  "source_spans": [
+    {
+      "name": "create_queue_initial_arguments",
+      "start": "0x8972714",
+      "end_exclusive": "0x8972768",
+      "bytes": 84,
+      "sha256": "c11a293c9e3dd09f5b13d7bfe13856c14a00699a7841d8ffbd27d2e16ebf80f7"
+    },
+    {
+      "name": "init_capture_arguments",
+      "start": "0x89ee3bc",
+      "end_exclusive": "0x89ee3d8",
+      "bytes": 28,
+      "sha256": "d8776fcd86abc9f9ea59a1d9759f45e991f30d5aa4e2eb97c88a71d229e04749"
+    },
+    {
+      "name": "init_success_store_fields",
+      "start": "0x89ee6f4",
+      "end_exclusive": "0x89ee710",
+      "bytes": 28,
+      "sha256": "5f2c92845ecf3d5def44c5347c13ce328309c26e6fae6d35c53c72222ca85d47"
+    },
+    {
+      "name": "common_cached_prior_selection",
+      "start": "0x89db43c",
+      "end_exclusive": "0x89db44c",
+      "bytes": 16,
+      "sha256": "aee5c825c2bf4b4c5264b4b4c4f78005789a9696e4d03ffeb4c49da427c737e6"
+    },
+    {
+      "name": "common_uncached_prior",
+      "start": "0x89db608",
+      "end_exclusive": "0x89db620",
+      "bytes": 24,
+      "sha256": "694e10321304e7da7339516d566ffa6d08ba660085f71183c5a64b7d0e9f808d"
+    },
+    {
+      "name": "common_pending_cache_publication",
+      "start": "0x89db5c0",
+      "end_exclusive": "0x89db5dc",
+      "bytes": 28,
+      "sha256": "dea3a36271d6329aeb7fe581b5f385e700f07a98f5bd6706c9ffcb0d90b0966a"
+    },
+    {
+      "name": "3d_complete_pending_release",
+      "start": "0x895e1ac",
+      "end_exclusive": "0x895e1f8",
+      "bytes": 76,
+      "sha256": "e4371d517d3ebebdb297de70a064ce07a89ae2ec0067d625b603ca98920ac3d2"
+    },
+    {
+      "name": "TA_complete_pending_selection_release",
+      "start": "0x8a215cc",
+      "end_exclusive": "0x8a21610",
+      "bytes": 68,
+      "sha256": "7ae8f577c7fc9f920b829fb9dc3859a6be093e4bf98d4a3a005dc339a76a599b"
+    }
+  ],
+  "initialization": {
+    "caller": "AGXAccelerator::createKSMKickQueues89726b8..89727ec",
+    "loop": "128 scheduler objects assigned ID0..127 and installed accelerator+f938[id*8] on init success",
+    "arguments": {
+      "x2": "loop queue ID",
+      "x3": "u32 accelerator+ee40 capacity",
+      "x4": "u32 accelerator+ee3c stride",
+      "x5": "u32 accelerator+ee38 alignment",
+      "x6": "u64 accelerator+ee48 initial timestamp"
+    },
+    "callee": "AGXKSMKickQueue::init89ee398..89ee7a4",
+    "stores": {
+      "queue+c": "ID x2",
+      "queue+10": "capacity x3",
+      "queue+14": "stride x4",
+      "queue+48": "initial x6",
+      "queue+50": "same initial x6",
+      "queue+90": "same initial x6",
+      "queue+68": "accelerator x1"
+    },
+    "not_stored_in_init_body": [
+      "pending+44",
+      "cached-valid+98",
+      "cached-prior+a0"
+    ],
+    "numeric_origin": "Initial timestamp is device configuration field+ee48; no native constant1 established by this focused trace.",
+    "linux_policy": "Zero allocation/cached=false/pending0 can be explicit Linux creation policy. It is not an observed init-body store; do not set cached=true merely to bypass first event/epoch conversion.",
+    "queue_50_role": "Initializer proves equality with initial, but does not prove completed cursor semantics or a completion update. Do not invent a completed-counter consumer from its name."
+  },
+  "previous_dependency": {
+    "cached": "queue+98 bit0 set -> queue+a0",
+    "uncached": "native convertEventMachineTSToHWTS using descriptor event value/index, selected epoch through queue68->accelerator140, capacity10, initial90; subtract1 with unsigned wrap",
+    "after_success": "queue98 byte1 and queuea0=original submitted timestamp",
+    "required_runtime": "Retain original host event index/stamp/selected epoch and explicit initial/capacity for first entry. Previous=0 is only experimental policy until that binding is supplied."
+  },
+  "retirement": {
+    "native_slice": "AGX3DCommandDescriptor::complete895e1ac..895e1f8",
+    "scheduler_selection": "descriptor10 accelerator -> f938[descriptor964*8]",
+    "released_count": "descriptor2dc u32; includes padding NOPs+real entry",
+    "atomic": "if count!=0: scheduler44 := old-count modulo2^32 via LDADDAL; old==0 diagnostic after mutation",
+    "native_count_source": "extra NOP count added before real entry, then increment once; opcode14 takes low16 of same accumulated count",
+    "required_linux_invariants": [
+      "Same retained scheduler owner/ID selected for encoding, postkick and retirement; descriptor964 cannot silently name a different allocation.",
+      "Check0<=released<=pending and exactly-once flight generation before decrement.",
+      "Release entry count, not one job; track counts per stage and retain unknown/ambiguous outcomes.",
+      "Native arithmetic characterization underflows do not authorize matching unsafe host behavior."
+    ],
+    "saved_checks": {
+      "native_slice_cases": 2048,
+      "valid_release_cases": 1280,
+      "publication_release_roundtrips": 128
+    },
+    "tiling_static_linkage": {
+      "method": "AGXTACommandDescriptor::complete8a215a8",
+      "accelerator": "descriptor+10",
+      "scheduler_index": "u32 descriptor+e08 indexes accelerator+f938",
+      "entry_count": "u32 descriptor+e38",
+      "decrement": "8a21600..8a2160c adds negated count to scheduler+44 via LDADDAL; count0 skips, old0 branches diagnostic8a22014 after subtraction",
+      "qualification": "Narrow static instruction closure only; existing 3D2048-case audit is not claimed to exercise TA."
+    }
+  },
+  "current_runtime_gap": {
+    "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v9-clock/source/linux/drivers/gpu/drm/asahi/g16_runtime.rs",
+    "lines": [
+      724,
+      751,
+      754,
+      781,
+      784,
+      794
+    ],
+    "job_pending": "owner.pending-=1 counts flights; separate KSM entry owner.pending must decrement recorded count.",
+    "retirement_observation": "Current driver-stamp/notifier/pointer+transport cursor checks are donor completion path. They do not alone prove native KSM completion association.",
+    "proposed_owned_flight_fields": [
+      "scheduler_queue_id",
+      "initial/capacity and event stamp epoch generation",
+      "submitted_timeline",
+      "encoded_entry_count",
+      "retired_once flag",
+      "retained command/KSM slot/resources"
+    ],
+    "completion_boundary": "Saved source qualifies notification/event/mapping arithmetic but not external Apple event-machine callback chain. Linux must join native completion command class, queue/time/generation and retained flight before marking completed."
+  },
+  "limits": [
+    "Static initializer/caller linkage plus reused native release/cache arithmetic qualifications; no new emulator whole audit.",
+    "Do not equate KSM pending accounting, workqueue pending job count, SKSM transport pool occupancy, mapping prepare reference count or pointer-ring cursors.",
+    "No retirement, resource release, scheduler reuse or hardware completion verified.",
+    "TA e08/e38 selection/decrement statically inspected only; no new TA emulator audit or callback delivery proof."
+  ],
+  "hardware_actions": []
+}

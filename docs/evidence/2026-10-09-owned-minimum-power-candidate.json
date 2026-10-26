@@ -1,0 +1,127 @@
+{
+  "binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "adt_sha256": "9ba4031fa3e1ce376bda885db5f138aab6fc3bfe96f752b0cc8ba234ae309d3c",
+  "changes": [
+    {
+      "hardware_offset": "0xed0",
+      "before": 0,
+      "after": 24000
+    },
+    {
+      "hardware_offset": "0xee0",
+      "before": 0,
+      "after": 1
+    },
+    {
+      "hardware_offset": "0xee4",
+      "before": 0,
+      "after": 1
+    },
+    {
+      "hardware_offset": "0xee8",
+      "before": 0,
+      "after": 1
+    },
+    {
+      "hardware_offset": "0xf04",
+      "before": 0,
+      "after": 31
+    },
+    {
+      "hardware_offset": "0xfc4",
+      "before": 0,
+      "after": 1
+    },
+    {
+      "hardware_offset": "0xfcc",
+      "before": 0,
+      "after": 338
+    },
+    {
+      "hardware_offset": "0x2570",
+      "before": 0,
+      "after": 16
+    }
+  ],
+  "changed_bytes": 10,
+  "active_frequency_mhz": 338,
+  "max_state": 1,
+  "producer": {
+    "frequency": "89a8a84/89a8aa4/89a8ac4; Hz->MHz multiply431bde83 shift50",
+    "constants": "89cd150/89cd164/89cd16c/89cd5a4",
+    "enabled_core_count": "89cd7c8"
+  },
+  "consumers": {
+    "frequency_array": "matched firmware2f518",
+    "max_state": "c660/c678; zero bypasses state-selection path"
+  },
+  "hypothesis": "Zero state cap/frequencies may keep execution inactive despite working firmware controls. Enable only the first active ADT group; native constant fields fill known gaps. Complete power tuning and hardware behavior remain unqualified.",
+  "qualification": "Offline integrated experimental draw candidate, cap1 policy is not native whole-constructor proof; secondary profile disabled, no MMIO override, GPU execution/rendering unverified.",
+  "build_receipt": {
+    "kernel_release": "7.1.13-m4rch-gpu-contract",
+    "kernel_notes_sha256": "ab3d4a13f2cfe6403d9a75e9d03f55202f12c200894e24dd773a8c7ec6d8663a",
+    "module_sha256": "c8387b82fcd49b30e358494c5fa7bfbc954e2203859010a0f17bcf7d13840224",
+    "artifact_sha256": {
+      "sample-pagetables/gpu-data-sample.ko": "a68e498b4891dfb2f3fdc40c69dd8c739b7b1431dc989f86a95afbac7a82f4e5",
+      "root-text-sample/gpu-data-sample.ko": "94bc35c9aa33d18c1c35ae67e4a623670188967968e4f3cfd55364e673041d4c",
+      "root-data-sample/gpu-data-sample.ko": "fe9bc45978fc58dfc5584456c3bfa6f4c0c0fb66f9fc4ba806e69d8c86b90e2f",
+      "arena-l2-sample/gpu-data-sample.ko": "99fcd6977b626b5abc6bbe0135583dd697240ea365ff234f64ad0dec362a2b2b",
+      "adt-current/m4rch_gpu_adt.ko": "531a56de1149b55c219ae9ee45349c0b10482a608734a2045af8e05b5a0d03eb",
+      "asc-root-envelope/asc-root-envelope.ko": "c8387b82fcd49b30e358494c5fa7bfbc954e2203859010a0f17bcf7d13840224",
+      "asc-arena-preflight/asc-arena-preflight.ko": "ff6837f23951c4871976fc5e64e3b4a62cd52b364a3b42e4170890e286ddb8fe",
+      "asc-graph-init/asc-graph-init.ko": "0142d8e64535a75fcc7637416cadc5f51edba5fb0bbb6d05df120beeadd35fb4"
+    },
+    "source_sha256": {
+      "asc-root-envelope.c": "91a3f3a5789e94405ce468f888895109bc7dc3901c541e9be11b82edd229497b",
+      "root-map.h": "ef3ee3185a5478f12059b318b60f7c14741910c0730a52e0ab258f19d9a730c2",
+      "boot-contract.h": "5194505b49f3b40acdc80f29bf1e8c5c5f11374f483ed6a22df2c22ea904e082"
+    },
+    "arena_object_pages": 21,
+    "arena_unknown_extent_marker_pages": [
+      "extra_root_1"
+    ],
+    "arena_source_sha256": {
+      "asc-arena-preflight.c": "6e824758ec4dc44bdeedb7c55f120b708d2c473cfc4a8635e7df27f8e5a65b98",
+      "arena-map.h": "5d74405224177b25e6b8263c9021fb670eaff2514570303ddc293666480521bc",
+      "arena-contract.h": "68f275383de0616544469fcd6890cbda55407b2497a4bb92fbfee140bfa480d8"
+    },
+    "graph_object_pages": 69,
+    "graph_fixture_sha256": "3ac49db564e2dbef1d711294d98f6b43613228e49cbc12d68af7a36e61426b88",
+    "graph_source_sha256": {
+      "joined-context-init.h": "1851e697907d50a3f47d153879f47f1b6b07065f5d58055fa6269bc436bc15b2",
+      "graph-contract.h": "a5d00bcf78c4164b44208348c4ef6aecfdb4964ebee6d75d361ba8b07d747346",
+      "render-data.h": "e705b808102f1b2bb378c1d57a0f5a12ecfa33365d8cce9673bb93fd36502d43",
+      "job-data.h": "c18ede083b691fbd3044237aaf30eb1e34c775e9391d3c6f1bea8e61561e0913",
+      "render-backing-map.h": "ade8cedde4da68f2f463ed8604f47ab6b56cdf1c8ff3984d592e00f4a065978b",
+      "command-pool-map.h": "1e4696787075de13a56f4946018221803a5a01a3c5a653bbbdbd48f319e74b6b",
+      "graph-map.h": "5fa2a6da431066f58251cc7fc3026129921de7f48eb4e894bcdbad310e3cb40b",
+      "boot-contract.h": "5194505b49f3b40acdc80f29bf1e8c5c5f11374f483ed6a22df2c22ea904e082",
+      "asc-graph-init.c": "0c8af1b840906a2a5a53af4f082e57a7ded8d53312c1c851a327f9e3313ef828"
+    },
+    "graph_receipt_sha256": "0b06a4cc6b549e717037b152805b8ece59ca95a9e2c103443724b72648879281",
+    "graph_power_retirement_probe": true,
+    "graph_release_on_shutdown": false,
+    "hardware_trial_performed": false,
+    "default_gate": 0,
+    "preflight_gate": 1,
+    "cold_publication_gate": 2,
+    "joined_context_init": true,
+    "joined_owned_pages": 170,
+    "joined_notify_first_page": 106,
+    "joined_mapping_descriptors": 35,
+    "graph_submit_work": true
+  },
+  "hardware_trial_performed": false,
+  "user_smoke_report": "Everything normal after first-NOP diagnostic",
+  "previous_boot_id": "22eeabd2-a404-4c7e-958d-dffc56ad44d5",
+  "live_observation": "Read-only unbanked21048/50/58/60 and startup211c0; count owned target/completion byte changes at1s/5s/15s/before-stop before quiesce. Changes alone are not rendering proof.",
+  "checks": [
+    "W=1 LLVM matching-kernel build completed",
+    "All module and graph-source build hashes match",
+    "Exactly10 graph bytes changed",
+    "Render backing unchanged from native-entry-signal candidate",
+    "All graph object and arena hashes match",
+    "MHz conversion checked",
+    "Analyzer live-log parsing checked with mixed zero/nonzero records"
+  ]
+}

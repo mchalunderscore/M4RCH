@@ -1,0 +1,145 @@
+{
+  "schema": "m4rch-recovery-temperature-epoch-audit-v1",
+  "static_contract_verified": true,
+  "hardware_verified": false,
+  "private_binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "firmware_text_identity": {
+    "raw_sha256": "e281ecc8b55046898acb6c3af1c0bf1ecb6661a49334fae835f8c83554454321",
+    "normalized_sha256": "190cef1946a23dfbde180592629631c3b28d0509a17eb76108b7c9a52accd9ac",
+    "observed_variable_payloads": [
+      {
+        "offset": "0x59841",
+        "tag_bytes": "GKTS",
+        "payload_hex": "bb009f415c9e62e7"
+      },
+      {
+        "offset": "0x59924",
+        "tag_bytes": "ECAP",
+        "payload_hex": "ec86522adb3caf31"
+      }
+    ],
+    "qualification": "Exact match outside two tagged eight-byte boot metadata payloads; tags and lengths are also checked. No instruction bytes excluded."
+  },
+  "native_descriptor": {
+    "cpu_field": "0x3a0",
+    "mapped_va_field": "0x3a8",
+    "bytes": 8,
+    "suballocation_alignment": 64
+  },
+  "binding": {
+    "power_pointer_offset": "0x3b50",
+    "consumer_base_offset": "0x3118",
+    "consumer_pointer_offset": "0xa38",
+    "read_width": 4
+  },
+  "native_ranges": [
+    {
+      "name": "allocation_descriptor",
+      "start": "0xfffffe00089abb94",
+      "end": "0xfffffe00089abbb0",
+      "sha256": "e41d9cb611eee1fb97549b223f615d88bf0032ffc7708520b099856f7d9b8206"
+    },
+    {
+      "name": "generic_allocation_zero_and_bind",
+      "start": "0xfffffe00089a7df0",
+      "end": "0xfffffe00089a7eb4",
+      "sha256": "82e81f5c0a5fa1eb612148bd603fc809e3930639cfe4b1db7bf4eb31783b0211"
+    },
+    {
+      "name": "suballocation_alignment",
+      "start": "0xfffffe00089a7c84",
+      "end": "0xfffffe00089a7ca8",
+      "sha256": "5e84e09dbf127af64894c7e6a443c5502fd89ffd18dfdfec8585255c344b52f1"
+    },
+    {
+      "name": "initial_publication",
+      "start": "0xfffffe00089cc520",
+      "end": "0xfffffe00089cc560",
+      "sha256": "d1d298c8a80dc8a26f9004270ed27e99e11d5e7757a45ef8a85d4185997ecf0d"
+    },
+    {
+      "name": "init_publication",
+      "start": "0xfffffe00089d0f5c",
+      "end": "0xfffffe00089d0fa4",
+      "sha256": "418cd37a25ff9f6b25d2bf2ed5d6267786d0dbbac745fc38354fc7560176fdc5"
+    },
+    {
+      "name": "identity_converter",
+      "start": "0xfffffe00089c8ff8",
+      "end": "0xfffffe00089c9004",
+      "sha256": "01b7bdfd2d12e988e67f340ab77ee4d929576bf22b4dcc264197d3cdb183272a"
+    },
+    {
+      "name": "temperature_epoch_host_reader",
+      "start": "0xfffffe00089c33f4",
+      "end": "0xfffffe00089c340c",
+      "sha256": "a8b43c526feb1c598f6016d477c835e910c612ee1e03ac66021188ee32970a05"
+    },
+    {
+      "name": "temperature_epoch_host_increment",
+      "start": "0xfffffe00089c3494",
+      "end": "0xfffffe00089c34a4",
+      "sha256": "6e0546636988bc727b4f32b1b56886a4b8ded6a75793cdf0e50640192e65a265"
+    },
+    {
+      "name": "sensor_region_zero",
+      "start": "0xfffffe00089cc3b4",
+      "end": "0xfffffe00089cc3c8",
+      "sha256": "5b5ab6609252855ae47cb668dcb00d8e2369bdfb5a29318bce2ec7fe338d405b"
+    }
+  ],
+  "firmware_ranges": [
+    {
+      "start": "0xcbe8",
+      "end": "0xcbf4",
+      "sha256": "64dbb0aa5fa65c4979e29c23a8d31a49e3e79efab7a382db0224875769dadc25"
+    },
+    {
+      "start": "0x2fdf4",
+      "end": "0x302ec",
+      "sha256": "fb8ef4aabb6ef154734306be6c11733a555a0aa54de0536318f2cca6f29f3fec"
+    },
+    {
+      "start": "0x39234",
+      "end": "0x39264",
+      "sha256": "2b448b54d1de3e2d1fbeba6b91a741815489b7355d137cce7a6551e64d36a2fc"
+    }
+  ],
+  "counts": {
+    "native_binding_cases": 128,
+    "zero_sensor_consumer_cases": 128,
+    "null_fault_reproductions": 1
+  },
+  "required_initialization": {
+    "temperature_epoch": "8 zero bytes",
+    "power+3b58": "zero sensor mask fixture",
+    "power+3b60": "zero sensor count fixture"
+  },
+  "target_candidate": {
+    "owner": "status_b reservation tail, semantically separate temperature_epoch",
+    "offset": "0xf000",
+    "bytes": 8,
+    "alignment": 64,
+    "qualified_status_extent": "0xe440",
+    "reservation": "0x10000"
+  },
+  "qualification": "Native8-byte descriptor and converter/publication slice, actual firmware zero-sensor path, whole power-image comparisons across128 equal/changed epoch cases, exact null4-byte readat301a8 reproduced. Native generic allocator zero-and-bind path and64-byte packing reviewed/hash-pinned; external zero service b744da0 not executed here, allocator/mapping/cache services not executed. PAC instructions bypassed. No nonzero sensor table, hardware reset, MMIO, recovery completion, DMA retirement or rendering established.",
+  "observed_failure": {
+    "source": "out/recovery-idle/crash.json",
+    "source_sha256": "ec4bb20da0a911cc90fe494f984df1b558112e2fc021f1f4d49441407d3b63a5",
+    "boot_id": "e3501874-8c10-47f2-92e1-a8de666e7caf",
+    "pc": "0x301a8",
+    "far": 0,
+    "esr": "0x96000004",
+    "task6_stack": [
+      "0x301a8",
+      "0xcbf0",
+      "0x39260",
+      "0x38f9c"
+    ],
+    "consumer_base": "0xfffffc2000133118",
+    "power_base": "0xfffffc2000130000",
+    "phase": "After host acknowledged recovery phase1 with phase2",
+    "qualification": "Recorded prior live evidence, not re-read or replayed on hardware by this audit."
+  }
+}

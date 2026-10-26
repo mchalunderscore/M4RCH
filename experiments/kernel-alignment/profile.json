@@ -1,0 +1,13 @@
+{
+  "url": "https://github.com/GravityLinux/linux",
+  "revision": "3b85d81f656af14d0fc4bea3eef87fe040c424f9",
+  "release": "7.1.13-m4rch-gravity",
+  "patch_sha256": "5ccc679af53e201e13fe312aa498c1b01d914a0ab024d63fcd0d1120b683f5ae",
+  "config_sha256": "922de116055dac50b929a654e1b27d8b9392ed37311faabeca1da788ccba333d",
+  "gpu_work_paused": true,
+  "optional_apple_display_disabled": "Module lacks required exports on this configuration; framebuffer path remains maintained",
+  "usb_port_fixes": [
+    "Optional reset-control lookup only for T6040; PHY reset path retained",
+    "Type-C parent Makefile selects retained TYPEC_TPS6598X symbol"
+  ]
+}

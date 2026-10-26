@@ -1,0 +1,24 @@
+#!/bin/sh
+prefix=/opt/m4rch-aurora-direct1
+lib=$prefix/lib/aarch64-linux-gnu
+unset LIBGL_ALWAYS_SOFTWARE LIBGL_ALWAYS_INDIRECT GALLIUM_DRIVER MESA_LOADER_DRIVER_OVERRIDE KWIN_COMPOSE
+unset VK_LOADER_DRIVERS_SELECT VK_LOADER_DRIVERS_DISABLE
+unset QT_QUICK_BACKEND
+# Import an explicit false value over the user manager's legacy software default.
+export LIBGL_ALWAYS_SOFTWARE=0
+# Prefer Arch's normal ABI libraries, then supply absent SONAMEs such as LLVM19.
+export LD_LIBRARY_PATH="$lib:/usr/lib:/lib:$prefix/runtime-libs${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+export LIBGL_DRIVERS_PATH="$lib/dri"
+export GBM_BACKENDS_PATH="$lib/gbm"
+export __EGL_VENDOR_LIBRARY_FILENAMES="$prefix/share/glvnd/egl_vendor.d/50_mesa.json"
+export VK_DRIVER_FILES="$prefix/share/vulkan/icd.d/asahi_icd.aarch64.json"
+export VK_ICD_FILENAMES="$VK_DRIVER_FILES"
+# Aurora's G17 submission path is driven through Vulkan; Zink supplies OpenGL.
+export MESA_LOADER_DRIVER_OVERRIDE=zink
+export GALLIUM_DRIVER=zink
+export KWIN_COMPOSE=O2
+export QT_LOGGING_RULES="kwin_core.debug=true;kwin_wayland_drm.debug=true;kwin_scene_opengl.debug=true${QT_LOGGING_RULES:+;$QT_LOGGING_RULES}"
+if [ -c /dev/dri/renderD128 ]; then
+    export KWIN_RENDER_NODES=/dev/dri/renderD128
+fi
+exec "$@"

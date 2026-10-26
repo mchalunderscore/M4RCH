@@ -1,0 +1,75 @@
+{
+  "schema": "m4rch-gfx-reset-boot-installed-v1",
+  "source_checkpoint": "abed7482ccd936dd052b110adef2243cc67b0146",
+  "kernel_installed": true,
+  "kernel_booted": false,
+  "active_boot_id": "278a044e-6204-4893-83dd-0ef198566470",
+  "active_kernel": "7.1.13-m4rch-gpu-contract",
+  "installed_kernel": "7.1.13-m4rch-gpu-reset",
+  "menu_index": 4,
+  "old_live_owner_sealed": true,
+  "old_owner_refcount": 1,
+  "dma_pages_retained": 174,
+  "module_loaded_by_install": false,
+  "hardware_reset_performed": false,
+  "agent_reboot_performed": false,
+  "mount_changed": false,
+  "apfs_unmounted": true,
+  "repeated_failed_wake": false,
+  "artifacts": [
+    {
+      "path": "docs/evidence/2026-10-09-gfx-reset-boot-installed.md",
+      "sha256": "04207da37c271558e7383d1e65ba246f68f69c849989938151730995565e768b",
+      "bytes": 3854
+    },
+    {
+      "path": "out/gfx-reset-install/artifact-receipt.json",
+      "sha256": "7a906c7dceb97972c1e7316c1736e2a9e2aa5444c960923026ceef36c4c38178",
+      "bytes": 48108
+    },
+    {
+      "path": "out/gfx-reset-install/install-result.json",
+      "sha256": "44e98bb80c026aceeaea3ced22e4d943455c2ce17365f3a2b5e73e1d3c700c4e",
+      "bytes": 1204
+    },
+    {
+      "path": "out/gfx-reset-install/root-mount-policy.json",
+      "sha256": "e986ac52439a46d5fb2a263ec33cabc3687310da2053f6ff9a2b1aacf459539f",
+      "bytes": 871
+    },
+    {
+      "path": "out/gfx-reset-install/root-install.log",
+      "sha256": "937154e01cab123bdaa9e4d949e8c7c54d613a1427f8fe520b1c07265ad540d7",
+      "bytes": 79
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-reset-boot/install-additive.py",
+      "sha256": "e9fcd5778c4787553fc1d7b8da818a5c2e8acb30f925c52aa65c0dcb91aa2641",
+      "bytes": 11565
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-reset-boot/README.md",
+      "sha256": "7710c0d254cdb107afb7d9a9fa36d0648c00d79e26af05a3288257bcd0de38b9",
+      "bytes": 2037
+    },
+    {
+      "path": "docs/evidence/2026-10-09-gfx-reset-boot-artifact-review.json",
+      "sha256": "2750295d8d0e419cfa5d0ad7df1f83bb2e9e0e4fb2b9abd6d90312dcb53d4e22",
+      "bytes": 5889
+    },
+    {
+      "path": "docs/evidence/2026-10-09-gfx-reset-boot-install-plan.json",
+      "sha256": "93016c2a45c67cfe740a27ecb85e01e41c994dae2ff5017be7443cc0e2e94ade",
+      "bytes": 11254
+    },
+    {
+      "path": "out/gfx-reset-install/default-selection.json",
+      "sha256": "8dabfbec9a0b3a2f4e3224bb56f4cbbbe2cd335fc61c4c08d790ae60e4982431",
+      "bytes": 711
+    }
+  ],
+  "installation_default_preserved": 1,
+  "current_default": 4,
+  "user_requested_default_change": true,
+  "goal_pause_requested": true
+}

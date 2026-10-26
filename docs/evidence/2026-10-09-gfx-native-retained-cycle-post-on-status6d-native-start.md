@@ -1,0 +1,17 @@
+# Native idle state after the second paired ON
+
+Boot `96264748-b049-403f-9240-975716f71d0c` reached a new boundary. Its own first PWRGATE202, qualified ACK, checked CPU stop and paired OFF again achieved strict physical OFF `0x0f000300`. The first stop observed STATUS48=`0x6d` and cleared CTRL44 bits0x10/0x20 with checked readbacks. A fresh second PM get then returned0 with physical ACTIVE and held1/usage1/error0.
+
+Before the separate second paired ON, fresh operands were CTRL44=0, STATUS48=0x6c, RX114=0x20001 and TX110=0x20001. Paired ON completed: full REQ0x2000, three verified votes, and the native STATUS.payload0 ACK-wait bypass. That bypass is not an acknowledgment. Immediately afterward, the fresh operands were CTRL44=0, STATUS48=0x6d and the same clean FIFOs. The frozen known6a/6c gate refused EBUSY before START intent or write. There were no protocol frames, second202, second CPU stop, second OFF or second PM put. The second reference remains held. Captured objects, all174 owned pages and the original notification journal remained byte-identical to first OFF.
+
+This report reverified four bounded native ranges: the complete common start and V6 runCPU bodies, V6 isIdle, and the idle-control property setup. It also pinned the property string, current saved ADT and ten captured/source inputs. No raw private disassembly is published.
+
+V6 `_isIdle` (`8a3fc54..8a3fcf4`) reads STATUS48 and returns `(status & 3) != 0`. Its optional CTRL40.bit0 prerequisite is selected by `idle-ctrl-check`, which is absent in this boot's saved GFX ADT. Exact6d has low bits01 and satisfies this predicate. The helper does not decode the upper STATUS bits, so this finding supplies an idle predicate, not a complete hardware-state name or proof of firmware bootability.
+
+The matched common options0 start body (`8a42f40..8a43260`) has native host bookkeeping and provider/mapper/firmware/mailbox preconditions, but no STATUS48 equality or idle admission. V6 `_runCPU(true)` (`8a3fcf4..8a3fda4`), when its backend control flag is selected, freshly reads CTRL44 and writes the value OR0x10. It reads no STATUS48. RTBuddy host IOP status4/5/6 is separate from hardware STATUS48=0x6d; the observed register cannot substitute for HELLO or map qualification.
+
+A distinct future source can preserve pre-ON admission at exact6a/6c and allow exact6d only after qualified separate second ON with its independently owned PM reference. All fresh START-clear, RX-empty, TX-valid/available and original firstOFF/identity predicates remain required, including the post-intent four-operand refresh and immediate CTRL44 RMW. Unknown states6e/48/0 and six_d before second ON remain refused. At most one START would seek autonomous HELLO12/map and, if qualified, the already bounded management-only second202/OFF sequence. No INIT220, root/context reattachment, queue reset, DATA restore, application work or general restart follows.
+
+This is a new stage-specific experiment supported by the actual pairedON6c→6d observation and native start/idle predicates. It does not prove native mapper activation, retained hardware translation, application rejoin, second physical OFF or rendering. The current compiled owner remains consumed and unchanged; this report authorizes no current-owner retry.
+
+Exact range hashes, captured rows and input pins are in [the evidence JSON](2026-10-09-gfx-native-retained-cycle-post-on-status6d-native-start.json).

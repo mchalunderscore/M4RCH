@@ -1,0 +1,101 @@
+{
+  "macho_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "verified_instruction_words": 11,
+  "resources": [
+    {
+      "slot": 0,
+      "name": "GPCAICSWInt",
+      "physical": "0x502414000",
+      "extent": "0x4000"
+    },
+    {
+      "slot": 11,
+      "name": "PushTelemetryDashboardConfigSpace",
+      "physical": "0x5003d8000",
+      "extent": "0x4000"
+    }
+  ],
+  "scope": "Static mapping provenance; not hardware access qualification",
+  "apple_build": "25G83",
+  "agx_version": "353.14",
+  "provenance": "Apple binary analysis; not clean-room",
+  "kernel_uuid": "41811D69-3027-674E-E0DB-2F6F64C70EEB",
+  "constructor": "AGXAcceleratorG16X::configureDevice(IOService*) at 0xfffffe00089ea464",
+  "instruction_checks": [
+    {
+      "file_offset": "0xa7dd4",
+      "word": "0x52880008"
+    },
+    {
+      "file_offset": "0xa7de4",
+      "word": "0xd2880009"
+    },
+    {
+      "file_offset": "0xa7de8",
+      "word": "0xf2a04829"
+    },
+    {
+      "file_offset": "0xa7dec",
+      "word": "0xf2c000a9"
+    },
+    {
+      "file_offset": "0xa7e04",
+      "word": "0xb9098a68"
+    },
+    {
+      "file_offset": "0xa7e0c",
+      "word": "0xf903c669"
+    },
+    {
+      "file_offset": "0xa7ba4",
+      "word": "0xd2900019"
+    },
+    {
+      "file_offset": "0xa7ba8",
+      "word": "0xf2a007b9"
+    },
+    {
+      "file_offset": "0xa7bac",
+      "word": "0xf2c000b9"
+    },
+    {
+      "file_offset": "0xa7e50",
+      "word": "0xb937f268"
+    },
+    {
+      "file_offset": "0xa7e58",
+      "word": "0xf91afa79"
+    }
+  ],
+  "native_return_sha256": "b416e3df2dab8194376a97046e70117654dd3f5e8f0d8e0bcdf1a6dadd57f75b",
+  "native_boot_id": "d7988335-efa2-43bf-a984-0f0f1427ca86",
+  "aic": {
+    "controller_base": "0x502400000",
+    "slot0_base": "0x502414000",
+    "maximum_irqs": 4096,
+    "mask_clear_offset": "0x14600",
+    "firmware_write_offset": "0x634",
+    "firmware_value": "0x2000",
+    "decoded_irq": 429,
+    "meta_sw_interrupt_irq": 1063,
+    "qualification": "Layout verified against pinned AIC driver and native maximum-IRQ log; purpose and ownership of IRQ429 still need qualification"
+  },
+  "gravity_linux_commit": "3b85d81f656af14d0fc4bea3eef87fe040c424f9",
+  "adjacent_resources": [
+    {
+      "slot": 9,
+      "physical": "0x5003d0000",
+      "extent": "0x4000"
+    },
+    {
+      "slot": 10,
+      "physical": "0x5003c0000",
+      "extent": "0x4000"
+    }
+  ],
+  "limitations": [
+    "CPU HAL constructor maps correlated with matching firmware consumers; no complete firmware initialization",
+    "CPU HAL OR2 flags are not established firmware mapping flags",
+    "Platform MMIO ownership, reset prerequisites and broader effects require native verification"
+  ]
+}

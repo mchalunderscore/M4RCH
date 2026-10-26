@@ -1,0 +1,201 @@
+{
+  "scope": "Offline candidate batch plan; no extra pages enabled by this plan",
+  "rows": [
+    {
+      "slot": 26,
+      "physical_base": "0x288d04000",
+      "extent": "0x8000",
+      "locally_resolved_write_offsets": [
+        "0x2020",
+        "0x2040"
+      ],
+      "pages": [
+        "0x288d04000"
+      ],
+      "qualification": "Static map plus locally resolved firmware write consumer; evaluate access prerequisites before granting new pages"
+    },
+    {
+      "slot": 29,
+      "physical_base": "0x288d10000",
+      "extent": "0x4000",
+      "locally_resolved_write_offsets": [
+        "0x0",
+        "0x80"
+      ],
+      "pages": [
+        "0x288d10000"
+      ],
+      "qualification": "Static map plus locally resolved firmware write consumer; evaluate access prerequisites before granting new pages"
+    },
+    {
+      "slot": 31,
+      "physical_base": "0x288d40000",
+      "extent": "0x4000",
+      "locally_resolved_write_offsets": [
+        "0x0",
+        "0x4",
+        "0x8",
+        "0x1180",
+        "0x1184",
+        "0x1188",
+        "0x118c",
+        "0x1190",
+        "0x1194",
+        "0x1198",
+        "0x119c",
+        "0x11a0",
+        "0x11a4",
+        "0x11a8",
+        "0x11ac",
+        "0x11b0",
+        "0x11b4",
+        "0x11b8",
+        "0x11bc",
+        "0x11c0",
+        "0x11c4",
+        "0x11c8",
+        "0x11cc",
+        "0x11d0",
+        "0x11d4",
+        "0x11d8",
+        "0x11dc",
+        "0x11e0",
+        "0x11e4",
+        "0x11e8",
+        "0x11ec",
+        "0x11f0",
+        "0x11f4",
+        "0x11f8",
+        "0x11fc",
+        "0x1200",
+        "0x1204",
+        "0x1208",
+        "0x120c",
+        "0x1210",
+        "0x1214",
+        "0x1218",
+        "0x121c",
+        "0x1220",
+        "0x1224",
+        "0x1228",
+        "0x122c",
+        "0x1230",
+        "0x1234",
+        "0x1238",
+        "0x123c",
+        "0x1240",
+        "0x1244",
+        "0x1248",
+        "0x124c",
+        "0x1250",
+        "0x1254",
+        "0x1258",
+        "0x125c",
+        "0x1260",
+        "0x1264",
+        "0x1268",
+        "0x126c",
+        "0x1270",
+        "0x1274",
+        "0x1278",
+        "0x127c",
+        "0x1280",
+        "0x1284",
+        "0x1288",
+        "0x128c",
+        "0x1290",
+        "0x1294",
+        "0x1298",
+        "0x129c",
+        "0x12a0",
+        "0x12a4",
+        "0x12a8",
+        "0x12ac",
+        "0x12b0",
+        "0x12b4",
+        "0x12b8",
+        "0x12bc",
+        "0x12c0",
+        "0x12c4",
+        "0x12c8",
+        "0x12cc",
+        "0x12d0",
+        "0x12d4",
+        "0x12d8",
+        "0x12dc",
+        "0x12e0",
+        "0x12e4",
+        "0x12e8",
+        "0x12ec",
+        "0x12f0",
+        "0x12f4",
+        "0x12f8",
+        "0x12fc",
+        "0x1498"
+      ],
+      "pages": [
+        "0x288d40000"
+      ],
+      "qualification": "Native mandatory MCW read/write site"
+    },
+    {
+      "slot": 33,
+      "physical_base": "0x288d44000",
+      "extent": "0x4000",
+      "locally_resolved_write_offsets": [
+        "0x88",
+        "0xa0",
+        "0xa4",
+        "0xa8"
+      ],
+      "pages": [
+        "0x288d44000"
+      ],
+      "qualification": "Static map plus locally resolved firmware write consumer; evaluate access prerequisites before granting new pages"
+    },
+    {
+      "slot": 34,
+      "physical_base": "0x288d4c000",
+      "extent": "0x200",
+      "locally_resolved_write_offsets": [
+        "0x0",
+        "0x4"
+      ],
+      "pages": [
+        "0x288d4c000"
+      ],
+      "qualification": "Static map plus locally resolved firmware write consumer; evaluate access prerequisites before granting new pages"
+    },
+    {
+      "slot": 35,
+      "physical_base": "0x288e00000",
+      "extent": "0x4000",
+      "locally_resolved_write_offsets": [
+        "0x1010",
+        "0x1014",
+        "0x1700",
+        "0x1704",
+        "0x1708",
+        "0x1780"
+      ],
+      "pages": [
+        "0x288e00000"
+      ],
+      "qualification": "Static map plus locally resolved firmware write consumer; evaluate access prerequisites before granting new pages"
+    },
+    {
+      "slot": 37,
+      "physical_base": "0x288e40000",
+      "extent": "0x4000",
+      "locally_resolved_write_offsets": [
+        "0x1010",
+        "0x1014"
+      ],
+      "pages": [
+        "0x288e40000"
+      ],
+      "qualification": "Static map plus locally resolved firmware write consumer; evaluate access prerequisites before granting new pages"
+    }
+  ],
+  "limit": "Local instruction inventory is incomplete; memory access sizes beyond simple32-bit stores may need instruction review. Do not treat all13 HAL IDs as firmware mappings."
+}

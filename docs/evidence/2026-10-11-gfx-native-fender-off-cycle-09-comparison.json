@@ -1,0 +1,440 @@
+{
+  "schema": "m4rch.gfx-native-fender-off-09-draw-cycle-comparison.v1",
+  "offline_only": true,
+  "hardware_actions": [],
+  "boot_id": "09a48fe3-925a-46d9-b99b-b9aecc71e6f3",
+  "owner_sha256": "6c42da8eb4c18dcfd418680e18617a97b8e546e196e05646e5cb76d256a045d3",
+  "capture_token": "0ddb314e9f4422661ec4b75755a1295aea04a59bb7194e188b4f4da8ab551a08",
+  "trace": {
+    "trace_count": 1775,
+    "appends_at_or_after_draw_intent": 101,
+    "appends_at_or_after_draw_published": 70,
+    "boundary_valid": true,
+    "journal_status": {
+      "overflow": false,
+      "error": false,
+      "invalid_cursors": false,
+      "unknown_status_flags": 0
+    },
+    "last_unmatched_entry": {
+      "sequence": 1799,
+      "args": [
+        268435456,
+        268435456,
+        0,
+        0
+      ],
+      "append_interval": "post-draw",
+      "producing_call_pc": "0x37ad8"
+    },
+    "tail": [
+      {
+        "event_type": "0x12f",
+        "args": [
+          "0x10000000",
+          "0x10000000",
+          "0x0",
+          "0x0"
+        ]
+      },
+      {
+        "event_type": "0x46",
+        "args": [
+          "0x1",
+          "0x4",
+          "0x4",
+          "0x0"
+        ]
+      },
+      {
+        "event_type": "0x131",
+        "args": [
+          "0x2",
+          "0xffffffffffffffff",
+          "0xffffffffffffffff",
+          "0x0"
+        ]
+      },
+      {
+        "event_type": "0x44",
+        "args": [
+          "0xffffffffffffffff",
+          "0xffffffffffffffff",
+          "0x0",
+          "0x0"
+        ]
+      }
+    ],
+    "live_PC_proved": false
+  },
+  "prior_v19_trace": {
+    "trace_count": 1951,
+    "appends_at_or_after_draw_intent": 100,
+    "appends_at_or_after_draw_published": 70,
+    "boundary_valid": true,
+    "journal_status": {
+      "overflow": false,
+      "error": false,
+      "invalid_cursors": false,
+      "unknown_status_flags": 0
+    },
+    "last_unmatched_entry": {
+      "sequence": 1979,
+      "args": [
+        268435456,
+        268435456,
+        0,
+        0
+      ],
+      "append_interval": "post-draw",
+      "producing_call_pc": "0x37ad8"
+    },
+    "tail": [
+      {
+        "event_type": "0x12f",
+        "args": [
+          "0x10000000",
+          "0x10000000",
+          "0x0",
+          "0x0"
+        ]
+      },
+      {
+        "event_type": "0x46",
+        "args": [
+          "0x1",
+          "0x4",
+          "0x4",
+          "0x0"
+        ]
+      },
+      {
+        "event_type": "0x131",
+        "args": [
+          "0x2",
+          "0xffffffffffffffff",
+          "0xffffffffffffffff",
+          "0x0"
+        ]
+      },
+      {
+        "event_type": "0x44",
+        "args": [
+          "0xffffffffffffffff",
+          "0xffffffffffffffff",
+          "0x0",
+          "0x0"
+        ]
+      }
+    ],
+    "live_PC_proved": false
+  },
+  "same_terminal_trace_signature": true,
+  "raw_prior_v19_comparison": [
+    {
+      "name": "target-after.bin",
+      "bytes": 16384,
+      "same_as_v19": true,
+      "different_bytes": 0
+    },
+    {
+      "name": "completion-after.bin",
+      "bytes": 16384,
+      "same_as_v19": true,
+      "different_bytes": 0
+    },
+    {
+      "name": "queues-after.bin",
+      "bytes": 65536,
+      "same_as_v19": true,
+      "different_bytes": 0
+    },
+    {
+      "name": "hardware-completions-after.bin",
+      "bytes": 65536,
+      "same_as_v19": true,
+      "different_bytes": 0
+    }
+  ],
+  "changed_backing_pages": [
+    {
+      "backing_page": 48,
+      "owned_page": 160,
+      "changed_bytes": 12,
+      "changes": [
+        {
+          "offset": "0x1c",
+          "before": 0,
+          "after": 2
+        },
+        {
+          "offset": "0x100",
+          "before": 0,
+          "after": 2
+        },
+        {
+          "offset": "0x130",
+          "before": 0,
+          "after": 2
+        },
+        {
+          "offset": "0x200",
+          "before": 255,
+          "after": 0
+        },
+        {
+          "offset": "0x201",
+          "before": 255,
+          "after": 0
+        },
+        {
+          "offset": "0x202",
+          "before": 0,
+          "after": 4
+        },
+        {
+          "offset": "0x204",
+          "before": 0,
+          "after": 15
+        },
+        {
+          "offset": "0x206",
+          "before": 0,
+          "after": 200
+        },
+        {
+          "offset": "0x20a",
+          "before": 0,
+          "after": 192
+        },
+        {
+          "offset": "0x20b",
+          "before": 0,
+          "after": 93
+        },
+        {
+          "offset": "0x212",
+          "before": 0,
+          "after": 3
+        },
+        {
+          "offset": "0x233",
+          "before": 255,
+          "after": 0
+        }
+      ]
+    },
+    {
+      "backing_page": 50,
+      "owned_page": 162,
+      "changed_bytes": 3,
+      "changes": [
+        {
+          "offset": "0x1c",
+          "before": 0,
+          "after": 3
+        },
+        {
+          "offset": "0x100",
+          "before": 0,
+          "after": 3
+        },
+        {
+          "offset": "0x130",
+          "before": 0,
+          "after": 3
+        }
+      ]
+    },
+    {
+      "backing_page": 51,
+      "owned_page": 163,
+      "changed_bytes": 1,
+      "changes": [
+        {
+          "offset": "0x347",
+          "before": 64,
+          "after": 0
+        }
+      ]
+    }
+  ],
+  "target_changed_bytes": 0,
+  "stage_completion_verified": false,
+  "Fender_disable_operation": {
+    "offset": 13656112,
+    "gpu_id": 167973120,
+    "before": 0,
+    "requested": 4,
+    "after": 4,
+    "write_attempted": 1,
+    "verified": 1,
+    "policy": "preserve-set-four",
+    "operand_samples_atomic": 0
+  },
+  "physical_OFF_sample_count": 101,
+  "physical_OFF_unique_words": [
+    "0xf000b00"
+  ],
+  "physical_OFF_residuals": [
+    "0x800"
+  ],
+  "last_PM_state": {
+    "phase": "retained-final",
+    "held": 0,
+    "usage": 0,
+    "runtime_error": 0,
+    "active": 0,
+    "suspended": 1,
+    "identities_preserved": 1,
+    "device_access_allowed": 0,
+    "epoch": 1,
+    "operand_samples_atomic": 0
+  },
+  "saved_pause_details": [
+    {
+      "phase": "before-submit",
+      "sample_index": 0,
+      "elapsed_ms": 0,
+      "sample_jiffies": 4294915415,
+      "operand_samples_atomic": 0,
+      "pause_ack": 1
+    },
+    {
+      "phase": "post-submit",
+      "sample_index": 1,
+      "elapsed_ms": 0,
+      "sample_jiffies": 4294915417,
+      "operand_samples_atomic": 0,
+      "pause_ack": 1
+    },
+    {
+      "phase": "post-submit",
+      "sample_index": 2,
+      "elapsed_ms": 100,
+      "sample_jiffies": 4294915442,
+      "operand_samples_atomic": 0,
+      "pause_ack": 2
+    },
+    {
+      "phase": "post-submit",
+      "sample_index": 3,
+      "elapsed_ms": 1000,
+      "sample_jiffies": 4294915667,
+      "operand_samples_atomic": 0,
+      "pause_ack": 2
+    },
+    {
+      "phase": "post-submit",
+      "sample_index": 4,
+      "elapsed_ms": 5000,
+      "sample_jiffies": 4294916667,
+      "operand_samples_atomic": 0,
+      "pause_ack": 2
+    },
+    {
+      "phase": "post-submit",
+      "sample_index": 5,
+      "elapsed_ms": 15000,
+      "sample_jiffies": 4294919167,
+      "operand_samples_atomic": 0,
+      "pause_ack": 2
+    }
+  ],
+  "rendering_verified": false,
+  "rebootless_render_restart_verified": false,
+  "retirement_verified": false,
+  "interpretation": "The draw target, completion, queue and hardware completion captures and terminal trace signature match v19. The new verified native Fender OFF leaf leaves the same persistent OFF BUSY bit. The appended trace cannot establish a live PC or a specific active wait; those claims remain unproved.",
+  "input_pins": [
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-fender-off-cycle/live-analysis-09/trace.json",
+      "bytes": 2067610,
+      "sha256": "32f85a6df60dd45d148b963b318f2de43520c4d3cee039ba8e8dd6b80d6acec9"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-fender-runtime-cycle/live-analysis-f4/trace.json",
+      "bytes": 2249954,
+      "sha256": "38057b2fc1f463326eaf69cfeecfa3ad60afeed9f34e50b0b3f418865d500f73"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-fender-off-cycle/candidate/asc-graph-init/boot-09a48fe3-925a-46d9-b99b-b9aecc71e6f3/attempt.json",
+      "bytes": 67629,
+      "sha256": "b515b455139dfefc5ceb7fbf361c17b6e59ec01a651edc2ba690d6284139922a"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-fender-off-cycle/candidate/asc-graph-init/boot-09a48fe3-925a-46d9-b99b-b9aecc71e6f3/cycle-attempt.json",
+      "bytes": 52828,
+      "sha256": "42008685596faf5077854be7a56879dcb8e477c089d83bc3ebf20182c320fba7"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-fender-off-cycle/candidate/asc-graph-init/boot-09a48fe3-925a-46d9-b99b-b9aecc71e6f3/analysis/result.json",
+      "bytes": 59420,
+      "sha256": "a078932734579b7bac0cf6004b4e0ada4dbce872a09f135eb3d9a77495e0c47f"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-fender-off-cycle/candidate/asc-graph-init/boot-09a48fe3-925a-46d9-b99b-b9aecc71e6f3/cycle-operation-delta.log",
+      "bytes": 63038,
+      "sha256": "63e65546bf1293f4b717f23df71450cac5cf7703950f5fda85ad1a60c0daf6d0"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-fender-off-cycle/candidate/asc-graph-init/boot-09a48fe3-925a-46d9-b99b-b9aecc71e6f3/operation-delta.log",
+      "bytes": 121880,
+      "sha256": "dd1375dabfa97bcddb5d75a210211ad0564159fee8058f8ed055936407b5510f"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-fender-off-cycle/candidate/asc-graph-init/backing.bin",
+      "bytes": 917504,
+      "sha256": "fbcac6bf4119d6a0bb4dde4aefaff2aca562c21467f12c22d131aabb322df117"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-fender-off-cycle/candidate/asc-graph-init/boot-09a48fe3-925a-46d9-b99b-b9aecc71e6f3/owned-after.bin",
+      "bytes": 2850816,
+      "sha256": "d084671957f3e3d46563f19258b1b1865298ae194ae1d2d34dc3b952dd9916d4"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-fender-runtime-cycle/candidate/asc-graph-init/boot-f4a7b737-ed3d-4851-8fcd-cac56eb233d7/target-after.bin",
+      "bytes": 16384,
+      "sha256": "add4fa3e6dbfb8723b21cfe7debadbed5d5f2ca1ab88c666470daed16afbe21a"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-fender-off-cycle/candidate/asc-graph-init/boot-09a48fe3-925a-46d9-b99b-b9aecc71e6f3/target-after.bin",
+      "bytes": 16384,
+      "sha256": "add4fa3e6dbfb8723b21cfe7debadbed5d5f2ca1ab88c666470daed16afbe21a"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-fender-runtime-cycle/candidate/asc-graph-init/boot-f4a7b737-ed3d-4851-8fcd-cac56eb233d7/completion-after.bin",
+      "bytes": 16384,
+      "sha256": "4fe7b59af6de3b665b67788cc2f99892ab827efae3a467342b3bb4e3bc8e5bfe"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-fender-off-cycle/candidate/asc-graph-init/boot-09a48fe3-925a-46d9-b99b-b9aecc71e6f3/completion-after.bin",
+      "bytes": 16384,
+      "sha256": "4fe7b59af6de3b665b67788cc2f99892ab827efae3a467342b3bb4e3bc8e5bfe"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-fender-runtime-cycle/candidate/asc-graph-init/boot-f4a7b737-ed3d-4851-8fcd-cac56eb233d7/queues-after.bin",
+      "bytes": 65536,
+      "sha256": "95bbb6c692e095ce28822bf838809895de4a8081fabc11d976d16c3fb871f978"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-fender-off-cycle/candidate/asc-graph-init/boot-09a48fe3-925a-46d9-b99b-b9aecc71e6f3/queues-after.bin",
+      "bytes": 65536,
+      "sha256": "95bbb6c692e095ce28822bf838809895de4a8081fabc11d976d16c3fb871f978"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-fender-runtime-cycle/candidate/asc-graph-init/boot-f4a7b737-ed3d-4851-8fcd-cac56eb233d7/hardware-completions-after.bin",
+      "bytes": 65536,
+      "sha256": "de2f256064a0af797747c2b97505dc0b9f3df0de4f489eac731c23ae9ca9cc31"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-fender-off-cycle/candidate/asc-graph-init/boot-09a48fe3-925a-46d9-b99b-b9aecc71e6f3/hardware-completions-after.bin",
+      "bytes": 65536,
+      "sha256": "de2f256064a0af797747c2b97505dc0b9f3df0de4f489eac731c23ae9ca9cc31"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-fender-off-cycle/live-analysis-09/compare-draw-cycle.py",
+      "bytes": 4479,
+      "sha256": "5cff60c02e07d2d0d6ae1f5ee80bd55419de4b3ec137f5233a3b58f0c205974b"
+    }
+  ]
+}

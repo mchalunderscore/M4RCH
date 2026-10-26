@@ -1,0 +1,1036 @@
+{
+  "schema": "m4rch-matched-rtbuddy-reset-independent-review-v1",
+  "date": "2026-10-09",
+  "offline_only": true,
+  "hardware_actions": false,
+  "source": {
+    "path": "out/private-apple/kernelcache.decoded",
+    "bytes": 119308288,
+    "sha256": "6158e1c0d591240808e26ff1da050b2fa0ed3eb17c1779d2ddde3171b959536f",
+    "container_uuids": [
+      "41811D69-3027-674E-E0DB-2F6F64C70EEB"
+    ]
+  },
+  "adt": {
+    "path": "out/recovery-progress/candidate/adt-current/boot.adt",
+    "sha256": "3e1cd0357ff67c99fb1f07f3b9567c4db620f5265903eecd6758e925c542b477",
+    "selected_properties": {
+      "/device-tree/arm-io/gfx-asc": {
+        "compatible": {
+          "present": true,
+          "bytes": 15,
+          "hex": "696f702c617363777261702d763600",
+          "sha256": "75c5bc1f4741c46209358afd33ee187d65ecc22c714189a8c4ac6778075e19f9"
+        },
+        "reg": {
+          "present": true,
+          "bytes": 32,
+          "hex": "0000608a0000000000800800000000000000058a000000000000060000000000",
+          "sha256": "514e389c0c3ec047f962e839ba8af790b9ab56b905bb935425cc7aa3ecee57aa"
+        },
+        "role": {
+          "present": true,
+          "bytes": 4,
+          "hex": "47465800",
+          "sha256": "128412b1fa1fa53610098f009324c74e7b2d43da7379fe6e6604de3ae641f71b"
+        },
+        "iop-version": {
+          "present": true,
+          "bytes": 4,
+          "hex": "01000000",
+          "sha256": "67abdd721024f0ff4e0b3f4c2fc13bc5bad42d0b7851d456d88d203d15aaa450"
+        },
+        "power-gates": {
+          "present": true,
+          "bytes": 4,
+          "hex": "91010000",
+          "sha256": "e1299afaae72d55c4415bd670d42b3be00b47439ae12479b5672d718e4ce8ed5"
+        },
+        "iommu-parent": {
+          "present": true,
+          "bytes": 4,
+          "hex": "b5010000",
+          "sha256": "00f4a61262966c320b116310fcda74c9e6aa4ef21427b4baf4bec5e7b0fab7ee"
+        },
+        "sram-index": {
+          "present": false
+        },
+        "should-control-sram": {
+          "present": false
+        },
+        "cpu-ctrl-filtered": {
+          "present": false
+        },
+        "no-activate-mapper": {
+          "present": false
+        },
+        "idle-ctrl-check": {
+          "present": false
+        },
+        "segment-names": {
+          "present": true,
+          "bytes": 14,
+          "hex": "5f5f544558543b5f5f4441544100",
+          "sha256": "7ede3c2dd5ce9df0d6023eb5e58908ca2507226207c892bdf263c345a674b6c4"
+        },
+        "segment-ranges": {
+          "present": true,
+          "bytes": 64,
+          "hex": "0040be00000100000000000000fcffff0040be000001000000000600010000000040d401000100000000060000fcffff0040d401000100000080130000000000",
+          "sha256": "ed7648971d4858940656bf1f32bc8d4a29f62ef9360d1a1550e5cc3c5e6dcf5a"
+        }
+      },
+      "/device-tree/arm-io/gfx-asc/iop-gfx-nub0": {
+        "compatible": {
+          "present": true,
+          "bytes": 19,
+          "hex": "696f702d6e75622c727462756464792d763200",
+          "sha256": "77ff35c9e12e6034c5f1837a71bd89c05904077952c0adb6b5b59f379d0be74e"
+        },
+        "pre-loaded": {
+          "present": true,
+          "bytes": 4,
+          "hex": "01000000",
+          "sha256": "67abdd721024f0ff4e0b3f4c2fc13bc5bad42d0b7851d456d88d203d15aaa450"
+        },
+        "no-firmware-service": {
+          "present": true,
+          "bytes": 0,
+          "hex": "",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "shutdown-sleep": {
+          "present": true,
+          "bytes": 0,
+          "hex": "",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "power-managed": {
+          "present": true,
+          "bytes": 5,
+          "hex": "7472756500",
+          "sha256": "debc2f07db78d52d2def07b7bc620d7042367501d9439a62ba09b559a98e0957"
+        },
+        "firmware-name": {
+          "present": true,
+          "bytes": 4,
+          "hex": "47465800",
+          "sha256": "128412b1fa1fa53610098f009324c74e7b2d43da7379fe6e6604de3ae641f71b"
+        },
+        "running": {
+          "present": false
+        },
+        "disable": {
+          "present": false
+        },
+        "disable-in-restore": {
+          "present": false
+        },
+        "uuid": {
+          "present": true,
+          "bytes": 37,
+          "hex": "35414444363230462d333145322d334445362d423444362d44333037313737313137424100",
+          "sha256": "8a963f5b458cf2590e638c8bf52cab2d993766970d88e207f62cf45ed5d6158c"
+        },
+        "segment-names": {
+          "present": true,
+          "bytes": 14,
+          "hex": "5f5f544558543b5f5f4441544100",
+          "sha256": "7ede3c2dd5ce9df0d6023eb5e58908ca2507226207c892bdf263c345a674b6c4"
+        },
+        "segment-ranges": {
+          "present": true,
+          "bytes": 64,
+          "hex": "0040be00000100000000000000fcffff0040be000001000000000600010000000040d401000100000000060000fcffff0040d401000100000080130000000000",
+          "sha256": "ed7648971d4858940656bf1f32bc8d4a29f62ef9360d1a1550e5cc3c5e6dcf5a"
+        }
+      }
+    },
+    "selected_classes": [
+      "AppleASCWrapV6",
+      "RTBuddy"
+    ],
+    "selection_qualification": "Saved ADT plus exact PRELINK personalities; no live macOS registry object was observed.",
+    "segment_records": [
+      {
+        "name": "__TEXT",
+        "physical": "0x10000be4000",
+        "address_plus8": "0xfffffc0000000000",
+        "mapper_iova": "0x10000be4000",
+        "size": "0x60000",
+        "adt_flags": "0x1",
+        "native_segment_flags": "0x0",
+        "needs_backup": false,
+        "writable": false
+      },
+      {
+        "name": "__DATA",
+        "physical": "0x10001d44000",
+        "address_plus8": "0xfffffc0000060000",
+        "mapper_iova": "0x10001d44000",
+        "size": "0x138000",
+        "adt_flags": "0x0",
+        "native_segment_flags": "0x2",
+        "needs_backup": false,
+        "writable": true
+      }
+    ]
+  },
+  "inputs": [
+    {
+      "path": "out/private-apple/provider-plist-metadata.json",
+      "sha256": "9569e0e1a9a480547623e7aa555a9d3df0d9beea888f23dbcf438a220478df2c",
+      "bytes": 4903
+    },
+    {
+      "path": "out/private-apple/kernel-symbols.json",
+      "sha256": "eff79feadb6a570f2856baa5d8950c3e77101b22a37f3999c12d9879404163e2",
+      "bytes": 92043155
+    },
+    {
+      "path": "docs/evidence/2026-10-08-warm-restart-native-result.json",
+      "sha256": "aef0663b3cf50a3e9594c8efc8eabc4017df337101a0f272c750a9cfcc09fbef",
+      "bytes": 2455
+    },
+    {
+      "path": "docs/evidence/2026-10-08-warm-init-native-result.json",
+      "sha256": "83369497b437ff2e6b32b635ba5acb86a9126f2574c5c4ccc5b80d91a6d625c9",
+      "bytes": 7964
+    },
+    {
+      "path": "docs/evidence/2026-10-07-gravity-gpu-managed-wake.json",
+      "sha256": "22e87e89d7134d1e08cef165e7ad28d370e719abec8bc560d3c1560b3e6e76a7",
+      "bytes": 3116
+    },
+    {
+      "path": "docs/evidence/2026-10-07-gravity-gpu-explicit-wake.json",
+      "sha256": "a01d97b7102a63ad26a7ca60b9b40dfc7c9e97bb9f188f9b5bc94ecb16a56844",
+      "bytes": 3557
+    },
+    {
+      "path": "docs/evidence/2026-10-07-gravity-gpu-shutdown.json",
+      "sha256": "712efc75e6955eafdcacf8f29da7f24d06c6db62f944416eba86512e74367526",
+      "bytes": 2187
+    },
+    {
+      "path": "docs/evidence/2026-10-09-gpc-recovery-live.json",
+      "sha256": "a0beef162790300a942676d386877f8eb2acc1fcebd459affa5327487cedfb09",
+      "bytes": 17662
+    },
+    {
+      "path": "out/recovery-dispatch/candidate/asc-graph-init/asc-graph-init.c",
+      "sha256": "f09a97ae66c50cdd5add20a39f0c8eb9be7dff353368b6441c3ff30eb35fe49f",
+      "bytes": 23265,
+      "historical_workspace_path": "experiments/t6040-gpu/asc-graph-init/asc-graph-init.c"
+    },
+    {
+      "path": "out/gpu-gravity-contract/linux/drivers/soc/apple/rtkit.c",
+      "sha256": "4a3c96085d9157eab786cf5c40df9f96a9c64895d6e70f618eb7cd36cd11bba4",
+      "bytes": 30653
+    }
+  ],
+  "range_proofs": [
+    {
+      "label": "A7IOP_constructor",
+      "start": "0xfffffe0008a42050",
+      "end_exclusive": "0xfffffe0008a42094",
+      "bytes": 68,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 27517008,
+      "sha256": "3de1384184e5a2bb429f4f1a55e561b2b8ad8721377cf60c2f1b1d6b4b3a26dc"
+    },
+    {
+      "label": "iBoot_property_and_mapflag_init",
+      "start": "0xfffffe0008a42458",
+      "end_exclusive": "0xfffffe0008a42498",
+      "bytes": 64,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 27518040,
+      "sha256": "b6b6d5d876a4c057bf462d904495ec0d6b0b7af8f6bda97baff846ca895dff6e"
+    },
+    {
+      "label": "gating_and_sram_properties",
+      "start": "0xfffffe0008a4284c",
+      "end_exclusive": "0xfffffe0008a42950",
+      "bytes": 260,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 27519052,
+      "sha256": "5275e27e3c65eb7bcdfd23f3dca9424656c47876ebc708bcfb40a49eb9f0708b"
+    },
+    {
+      "label": "control_mapper_policies",
+      "start": "0xfffffe0008a42990",
+      "end_exclusive": "0xfffffe0008a42a3c",
+      "bytes": 172,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 27519376,
+      "sha256": "c94a3518ea133f16888a6e88d2c1198c475b740a7d260691aec3eb7f806c87e5"
+    },
+    {
+      "label": "V6_idle_property",
+      "start": "0xfffffe0008a3f9d4",
+      "end_exclusive": "0xfffffe0008a3f9e8",
+      "bytes": 20,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 27507156,
+      "sha256": "693165e3a0230501e92830bce169cbe2605799e53a433bdda6e6a726d9f09456"
+    },
+    {
+      "label": "V6_runCPU",
+      "start": "0xfffffe0008a3fcf4",
+      "end_exclusive": "0xfffffe0008a3fda4",
+      "bytes": 176,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 27507956,
+      "sha256": "d875ef3271218b40d767f2428ffe91f340c0f34cbc05ee6867462437ca604278"
+    },
+    {
+      "label": "V6_isIdle",
+      "start": "0xfffffe0008a3fc54",
+      "end_exclusive": "0xfffffe0008a3fcf4",
+      "bytes": 160,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 27507796,
+      "sha256": "4ff5abbdbfe25f8aa81495cf25db2047005c4fc8d3eb08c0967e82e05fa5d031"
+    },
+    {
+      "label": "common_stopCPU",
+      "start": "0xfffffe0008a43270",
+      "end_exclusive": "0xfffffe0008a434c8",
+      "bytes": 600,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 27521648,
+      "sha256": "f718e6299544e2e22acc8a6899f8a60410c93fc2ab7d48964771d21542bb87a9"
+    },
+    {
+      "label": "SISP_idle_override_not_GFX",
+      "start": "0xfffffe0008a3f178",
+      "end_exclusive": "0xfffffe0008a3f230",
+      "bytes": 184,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 27505016,
+      "sha256": "37f56b49d9e9422278ddb7e0bc411032a4865adc2f09d93c6111f561ffca6485"
+    },
+    {
+      "label": "common_enablePower",
+      "start": "0xfffffe0008a42d88",
+      "end_exclusive": "0xfffffe0008a42e2c",
+      "bytes": 164,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 27520392,
+      "sha256": "5495aa938202b32ea0ab4de65561ab1bb25b25302408db853f415658c519739f"
+    },
+    {
+      "label": "common_enableSRAM",
+      "start": "0xfffffe0008a42e2c",
+      "end_exclusive": "0xfffffe0008a42e84",
+      "bytes": 88,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 27520556,
+      "sha256": "a06f271df11a4ddf1729f5e3082b1b5e822ef83b0b937700d17151fc255f1044"
+    },
+    {
+      "label": "common_enablePowerLate",
+      "start": "0xfffffe0008a42e84",
+      "end_exclusive": "0xfffffe0008a42eb8",
+      "bytes": 52,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 27520644,
+      "sha256": "1a2590606dcc1f906d5d2ba3e1c662f45e507e2b202c63025706aaaf5bcff598"
+    },
+    {
+      "label": "common_disable_and_domain",
+      "start": "0xfffffe0008a42eb8",
+      "end_exclusive": "0xfffffe0008a42f40",
+      "bytes": 136,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 27520696,
+      "sha256": "dc46405caa9872e3352e4794f3585f254df11b9df79d99966b8d50fc25bed94e"
+    },
+    {
+      "label": "common_startCPUWithOptions",
+      "start": "0xfffffe0008a42f40",
+      "end_exclusive": "0xfffffe0008a43260",
+      "bytes": 800,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 27520832,
+      "sha256": "7a758f60ea99876e999d7843fa55fd2f7bcb988da402c440e5033598142100f7"
+    },
+    {
+      "label": "V6_mapFirmware",
+      "start": "0xfffffe0008a3fa70",
+      "end_exclusive": "0xfffffe0008a3fad8",
+      "bytes": 104,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 27507312,
+      "sha256": "fc0b80f63301bd8f4a68315f928e969d4de6b029fd4f99f43f93be5e7307e8d6"
+    },
+    {
+      "label": "V6_unmapFirmware",
+      "start": "0xfffffe0008a3fad8",
+      "end_exclusive": "0xfffffe0008a3fb50",
+      "bytes": 120,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 27507416,
+      "sha256": "f67ef932a96a63254d0599ba9af7005d1d48877c967389c4afa7d240c6cf2021"
+    },
+    {
+      "label": "common_hasiBootFirmware",
+      "start": "0xfffffe0008a43558",
+      "end_exclusive": "0xfffffe0008a4356c",
+      "bytes": 20,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 27522392,
+      "sha256": "904f02019d12ce02bcbfd4d97541d136f2bacfeaae72e92005a85f62092dc647"
+    },
+    {
+      "label": "common_dartMapiBootFirmware",
+      "start": "0xfffffe0008a43584",
+      "end_exclusive": "0xfffffe0008a439d8",
+      "bytes": 1108,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 27522436,
+      "sha256": "5e6eb2a956b01c8951274cc55807efad8505559f591677a46be708280d9d5ad1"
+    },
+    {
+      "label": "common_mapper_active",
+      "start": "0xfffffe0008a43bd0",
+      "end_exclusive": "0xfffffe0008a43c2c",
+      "bytes": 92,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 27524048,
+      "sha256": "9887c617a0886ac525d0216b6ad7bfba754d7922a971e81ac54fa064ca82aac1"
+    },
+    {
+      "label": "RTBuddy_forcePowerOff",
+      "start": "0xfffffe000b1e1a84",
+      "end_exclusive": "0xfffffe000b1e1bf4",
+      "bytes": 368,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 69065348,
+      "sha256": "3c7db00a5d1725871a5f7afec73543ada987f3ab46319ba4dcd2053a1c3f53a6"
+    },
+    {
+      "label": "RTBuddy_performPowerStateChangeGated",
+      "start": "0xfffffe000b1e00c8",
+      "end_exclusive": "0xfffffe000b1e08ac",
+      "bytes": 2020,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 69058760,
+      "sha256": "b0f0812f136a87574c3d645a517a364e32d8a6615e706c3a52044c53b903d3fd"
+    },
+    {
+      "label": "RTBuddy_enableSRAM_wrapper",
+      "start": "0xfffffe000b1e097c",
+      "end_exclusive": "0xfffffe000b1e09dc",
+      "bytes": 96,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 69060988,
+      "sha256": "d4c3007992645bb3a4e1618a9c09a0d0b4d01b93be6585ba562c03da873a9be3"
+    },
+    {
+      "label": "RTBuddy_disable_gate",
+      "start": "0xfffffe000b1e3b84",
+      "end_exclusive": "0xfffffe000b1e3d80",
+      "bytes": 508,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 69073796,
+      "sha256": "c23b90d1f1dc29a90e78ead775655e38071729f7cb0655f3994625707db5d754"
+    },
+    {
+      "label": "RTBuddy_preloaded_running_noservice",
+      "start": "0xfffffe000b1e42b0",
+      "end_exclusive": "0xfffffe000b1e4378",
+      "bytes": 200,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 69075632,
+      "sha256": "5a0d95e705e564b2a3f2988d32cb57f08634b2778d6c09bb33b4d6ae54606710"
+    },
+    {
+      "label": "RTBuddy_reloadFirmware",
+      "start": "0xfffffe000b1e4808",
+      "end_exclusive": "0xfffffe000b1e48e0",
+      "bytes": 216,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 69077000,
+      "sha256": "09a1f951d7d75f1f72e8131b9b7cc5a33e7103565c69d8717124eaa21c1da228"
+    },
+    {
+      "label": "RTBuddy_attemptFirmwareLoad",
+      "start": "0xfffffe000b1dcf30",
+      "end_exclusive": "0xfffffe000b1dd040",
+      "bytes": 272,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 69046064,
+      "sha256": "334f2540ade218fddfb6dd713277eef4ffe0529297043c0dbd2d88cb80dd753b"
+    },
+    {
+      "label": "RTBuddy_handlePreloadFirmware",
+      "start": "0xfffffe000b1dd4c0",
+      "end_exclusive": "0xfffffe000b1dd548",
+      "bytes": 136,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 69047488,
+      "sha256": "16921ae50e367e89276bf7b8b8bab6cb7ccf7f42faa8b3d35038d87567c1ee9b"
+    },
+    {
+      "label": "Firmware_preloadedFirmware",
+      "start": "0xfffffe000b1ee974",
+      "end_exclusive": "0xfffffe000b1eea14",
+      "bytes": 160,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 69118324,
+      "sha256": "7917c69ccb865e23f2cc05365683481ef91c95718914f16f10959cc65b7338e1"
+    },
+    {
+      "label": "Firmware_fixup",
+      "start": "0xfffffe000b1efad4",
+      "end_exclusive": "0xfffffe000b1efc6c",
+      "bytes": 408,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 69122772,
+      "sha256": "7232f2547b22b91668d82bae6d6329cf32ed432a58a58ab3a5dbbc4dd14c43f1"
+    },
+    {
+      "label": "RTBuddy_SRAM_policy",
+      "start": "0xfffffe000b1e46c0",
+      "end_exclusive": "0xfffffe000b1e47f4",
+      "bytes": 308,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 69076672,
+      "sha256": "072e035b2bd2779c34d7bdeff1cef0da2295ba049d314b3f6384f9792b4788da"
+    },
+    {
+      "label": "RTBuddy_segment_flag_translation",
+      "start": "0xfffffe000b1e4d70",
+      "end_exclusive": "0xfffffe000b1e4dc4",
+      "bytes": 84,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 69078384,
+      "sha256": "2668fdfe9005e2466223598365c1108c7462b1f2f2d573666f300cbc536ecb36"
+    },
+    {
+      "label": "segment_needsBackup",
+      "start": "0xfffffe000b1d8f80",
+      "end_exclusive": "0xfffffe000b1d8f90",
+      "bytes": 16,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 69029760,
+      "sha256": "1b9316c14d434bbf66fc4eb3d3eda79b04b0916f8f954a01161095242a0f460d"
+    },
+    {
+      "label": "RTBuddy_save_restoreSRAM",
+      "start": "0xfffffe000b1e5264",
+      "end_exclusive": "0xfffffe000b1e53f4",
+      "bytes": 400,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 69079652,
+      "sha256": "9be50deef5ca8db2875784dc863ec6a1dd11b06a83ee97149df8c89ddf7b2ee0"
+    },
+    {
+      "label": "SavedSegment_copy",
+      "start": "0xfffffe000b1d9468",
+      "end_exclusive": "0xfffffe000b1d95c0",
+      "bytes": 344,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 69031016,
+      "sha256": "676a52ed68736c4e68205b603d039193ceb64d7c14c163174910e81dfa03adf4"
+    },
+    {
+      "label": "RTBuddy_routeOnly",
+      "start": "0xfffffe000b1e6b4c",
+      "end_exclusive": "0xfffffe000b1e6b58",
+      "bytes": 12,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 69086028,
+      "sha256": "08df8e2fe088d7a74ac9e012b00241d6c8ef878f542655db02cea557c6b3e7de"
+    },
+    {
+      "label": "management_requestPowerState",
+      "start": "0xfffffe000b1f27e0",
+      "end_exclusive": "0xfffffe000b1f286c",
+      "bytes": 140,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 69134304,
+      "sha256": "292df21156f3d8122bc2de905b1c2413bc5c917a2a495a9ba2c3e53208340c69"
+    }
+  ],
+  "v6_vtable": {
+    "symbol_address": "0xfffffe0007ec5e78",
+    "address_point": "0xfffffe0007ec5e88",
+    "entries": [
+      {
+        "slot": "0x888",
+        "word_address": "0xfffffe0007ec6710",
+        "encoded": "0x80113fb201a3ef40",
+        "file_offset": 15476496,
+        "sha256": "f0d77a542fec63d9541eacbc42eb8304fccd4c3a1b3116a76ea54335827fe653",
+        "candidate_target": "0xfffffe0008a42f40",
+        "symbol": "__ZN10AppleA7IOP19startCPUWithOptionsEP15IOSlaveFirmwarej",
+        "owner": "com.apple.driver.AppleA7IOP"
+      },
+      {
+        "slot": "0x8c0",
+        "word_address": "0xfffffe0007ec6748",
+        "encoded": "0x8011897d01a3c400",
+        "file_offset": 15476552,
+        "sha256": "8360c73811bf3d3d275c5cfda34723215062fb2ecda238210f40462140674adf",
+        "candidate_target": "0xfffffe0008a40400",
+        "symbol": "__ZN10AppleA7IOP7stopCPUEb",
+        "owner": "com.apple.driver.AppleA7IOP-ASCWrap-v6"
+      },
+      {
+        "slot": "0x8c8",
+        "word_address": "0xfffffe0007ec6750",
+        "encoded": "0x8011cbe401a3f270",
+        "file_offset": 15476560,
+        "sha256": "788adca461ad2e1903ee0bb16da8adb4cf708f8f0c75730aac890b1d186f4d01",
+        "candidate_target": "0xfffffe0008a43270",
+        "symbol": "__ZN10AppleA7IOP7stopCPUEbb",
+        "owner": "com.apple.driver.AppleA7IOP"
+      },
+      {
+        "slot": "0x900",
+        "word_address": "0xfffffe0007ec6788",
+        "encoded": "0x801162b601a3ed34",
+        "file_offset": 15476616,
+        "sha256": "04b7fbcf07dca9e3d1c33c12c7d0234e486c5daea888fbfac3ed92b9cd9b1157",
+        "candidate_target": "0xfffffe0008a42d34",
+        "symbol": "__ZN10AppleA7IOP11enablePowerEv",
+        "owner": "com.apple.driver.AppleA7IOP"
+      },
+      {
+        "slot": "0x908",
+        "word_address": "0xfffffe0007ec6790",
+        "encoded": "0x801182b901a3f4c8",
+        "file_offset": 15476624,
+        "sha256": "d20778e619ce7f22c113b6fe4141b02ecf43d30e7067daca8579b9aa95798280",
+        "candidate_target": "0xfffffe0008a434c8",
+        "symbol": "__ZN10AppleA7IOP16disablePowerLateEv",
+        "owner": "com.apple.driver.AppleA7IOP"
+      },
+      {
+        "slot": "0x978",
+        "word_address": "0xfffffe0007ec6800",
+        "encoded": "0x8011199401a3ee2c",
+        "file_offset": 15476736,
+        "sha256": "ae48eb74c24b2144130d1fe290767e4b87af6fc85faf365ee0b22203694bb841",
+        "candidate_target": "0xfffffe0008a42e2c",
+        "symbol": "__ZN10AppleA7IOP10enableSRAMEb",
+        "owner": "com.apple.driver.AppleA7IOP"
+      },
+      {
+        "slot": "0x988",
+        "word_address": "0xfffffe0007ec6810",
+        "encoded": "0x8011a79e01a3ee84",
+        "file_offset": 15476752,
+        "sha256": "f17fa13ff452ab03840edb3ee85c5b9e615f9b4b196ae5b2f4d89e0632724e6b",
+        "candidate_target": "0xfffffe0008a42e84",
+        "symbol": "__ZN10AppleA7IOP16_enablePowerLateEv",
+        "owner": "com.apple.driver.AppleA7IOP"
+      },
+      {
+        "slot": "0x9c8",
+        "word_address": "0xfffffe0007ec6850",
+        "encoded": "0x80118cfe01a3ed88",
+        "file_offset": 15476816,
+        "sha256": "a2c58cc3f023372820b53dd0d90b05c15299c6c83e9c6bfff18b81739848af2a",
+        "candidate_target": "0xfffffe0008a42d88",
+        "symbol": "__ZN10AppleA7IOP12_enablePowerEbj",
+        "owner": "com.apple.driver.AppleA7IOP"
+      },
+      {
+        "slot": "0x9d0",
+        "word_address": "0xfffffe0007ec6858",
+        "encoded": "0x8011aca701a3ef0c",
+        "file_offset": 15476824,
+        "sha256": "25b2e1731fd782a5554df86eecb7ebb647360f9baaca4b8086eacee62308b96b",
+        "candidate_target": "0xfffffe0008a42f0c",
+        "symbol": "__ZN10AppleA7IOP14_turnOffDomainEb",
+        "owner": "com.apple.driver.AppleA7IOP"
+      },
+      {
+        "slot": "0xa18",
+        "word_address": "0xfffffe0007ec68a0",
+        "encoded": "0x8011515901a3ba70",
+        "file_offset": 15476896,
+        "sha256": "8e222f6d3fcdfc7b519aa8de5913ee0c676634c78734c50eaa5fa07ff6d9375a",
+        "candidate_target": "0xfffffe0008a3fa70",
+        "symbol": "__ZN14AppleASCWrapV612_mapFirmwareEyP18IOMemoryDescriptorj",
+        "owner": "com.apple.driver.AppleA7IOP-ASCWrap-v6"
+      },
+      {
+        "slot": "0xa20",
+        "word_address": "0xfffffe0007ec68a8",
+        "encoded": "0x8011cd6701a3bad8",
+        "file_offset": 15476904,
+        "sha256": "9023f985c47343f5810c26b4d86ce8e5438cf01d286844cc1e2dc31992401578",
+        "candidate_target": "0xfffffe0008a3fad8",
+        "symbol": "__ZN14AppleASCWrapV614_unmapFirmwareEv",
+        "owner": "com.apple.driver.AppleA7IOP-ASCWrap-v6"
+      },
+      {
+        "slot": "0xa28",
+        "word_address": "0xfffffe0007ec68b0",
+        "encoded": "0x8011f38801a3bcf4",
+        "file_offset": 15476912,
+        "sha256": "7dc6862ad32a1f9a0f188ea84ef5f11f245358845bfc47eecf08d0f42d6b1b01",
+        "candidate_target": "0xfffffe0008a3fcf4",
+        "symbol": "__ZN14AppleASCWrapV67_runCPUEb",
+        "owner": "com.apple.driver.AppleA7IOP-ASCWrap-v6"
+      },
+      {
+        "slot": "0xa40",
+        "word_address": "0xfffffe0007ec68c8",
+        "encoded": "0x8011d06701a3fbd0",
+        "file_offset": 15476936,
+        "sha256": "8fbd783a76f1d6f3c4dadc656633c4ba2d891c8c379d35c3c3666bf483b2d6a0",
+        "candidate_target": "0xfffffe0008a43bd0",
+        "symbol": "__ZN10AppleA7IOP16_setMapperActiveEb",
+        "owner": "com.apple.driver.AppleA7IOP"
+      },
+      {
+        "slot": "0xa58",
+        "word_address": "0xfffffe0007ec68e0",
+        "encoded": "0x80116ccb01a3eeb8",
+        "file_offset": 15476960,
+        "sha256": "f18a1bb23aebabc7f9b818b4c39d28f8fa6f6f6ad7bdc2533e70904e4e761410",
+        "candidate_target": "0xfffffe0008a42eb8",
+        "symbol": "__ZN10AppleA7IOP13_disablePowerEv",
+        "owner": "com.apple.driver.AppleA7IOP"
+      },
+      {
+        "slot": "0xa60",
+        "word_address": "0xfffffe0007ec68e8",
+        "encoded": "0x8041cea501a3bc54",
+        "file_offset": 15476968,
+        "sha256": "37f61d531cda61facb54ddc8a2e265abd53d6fae06b1855efd1a47efc704fdc8",
+        "candidate_target": "0xfffffe0008a3fc54",
+        "symbol": "__ZN14AppleASCWrapV67_isIdleEPj",
+        "owner": "com.apple.driver.AppleA7IOP-ASCWrap-v6"
+      }
+    ]
+  },
+  "rtbuddy_vtable": {
+    "symbol_address": "0xfffffe00088a1480",
+    "address_point": "0xfffffe00088a1490",
+    "entries": [
+      {
+        "slot": "0x950",
+        "word_address": "0xfffffe00088a1de0",
+        "encoded": "0x801189c9041e1264",
+        "file_offset": 25812448,
+        "sha256": "8ce79997f36f62b3700ade75ccf707bb7aab03244f15f75bb14b3730225737d7",
+        "candidate_target": "0xfffffe000b1e5264",
+        "symbol": "__ZN7RTBuddy8saveSRAMEv",
+        "owner": "com.apple.driver.RTBuddy"
+      },
+      {
+        "slot": "0x958",
+        "word_address": "0xfffffe00088a1de8",
+        "encoded": "0x80118b1f041e1324",
+        "file_offset": 25812456,
+        "sha256": "409dd86dabb5100d2ee71cae9a471245413ef2281cdc3eda2ea525cd3fcdd52e",
+        "candidate_target": "0xfffffe000b1e5324",
+        "symbol": "__ZN7RTBuddy11restoreSRAMEv",
+        "owner": "com.apple.driver.RTBuddy"
+      },
+      {
+        "slot": "0x9b8",
+        "word_address": "0xfffffe00088a1e48",
+        "encoded": "0x8011b710041e0adc",
+        "file_offset": 25812552,
+        "sha256": "434ce321726b86a39796aa1b00da9b20b3813b093939dd04e5655dfa468aacb4",
+        "candidate_target": "0xfffffe000b1e4adc",
+        "symbol": "__ZNK7RTBuddy11getSegmentsEv",
+        "owner": "com.apple.driver.RTBuddy"
+      },
+      {
+        "slot": "0x9f8",
+        "word_address": "0xfffffe00088a1e88",
+        "encoded": "0x80418acb041e2b4c",
+        "file_offset": 25812616,
+        "sha256": "e97e3fb54b47eada5600f7a101d42691b3aa200a27352cdc6345304eddbd0ffe",
+        "candidate_target": "0xfffffe000b1e6b4c",
+        "symbol": "__ZNK7RTBuddy11isRouteOnlyEv",
+        "owner": "com.apple.driver.RTBuddy"
+      }
+    ]
+  },
+  "pointer_qualification": "Matched candidate=0xfffffe0007004000+low32(encoded); calibrated selected targets and native typed slots. No general chained-pointer or PAC implementation claim.",
+  "strings": [
+    {
+      "address": "0xfffffe000714901c",
+      "file_offset": 1331228,
+      "bytes": 18,
+      "sha256": "c3b2c2dc6ff5a72e2e8c002b22b08c3394f29684c658f9f467ae145497cf0e72",
+      "value": "cpu-ctrl-filtered"
+    },
+    {
+      "address": "0xfffffe00071490c1",
+      "file_offset": 1331393,
+      "bytes": 19,
+      "sha256": "f46f590b5341901b92923a5fa4894218794dae6f86f00740caf3572a232ff8bc",
+      "value": "no-activate-mapper"
+    },
+    {
+      "address": "0xfffffe0007147b98",
+      "file_offset": 1325976,
+      "bytes": 16,
+      "sha256": "3dafa22ef3dcb57bb9db09745ff50d0817b864ae00892f62612b7f7bacbacab8",
+      "value": "idle-ctrl-check"
+    },
+    {
+      "address": "0xfffffe00071493c9",
+      "file_offset": 1332169,
+      "bytes": 10,
+      "sha256": "a2a65695d79d999014eac86e3064b408283c155f570d7c9465c461187b9d0fdb",
+      "value": "setActive"
+    },
+    {
+      "address": "0xfffffe0007148fdb",
+      "file_offset": 1331163,
+      "bytes": 14,
+      "sha256": "ab258832cfce94e307d629cc4729174efac28acc1667e13908f58ed9344e8b0b",
+      "value": "ignore-gating"
+    },
+    {
+      "address": "0xfffffe0007148fe9",
+      "file_offset": 1331177,
+      "bytes": 11,
+      "sha256": "3a799c6e945de8fe4434677975deb57c6b176162bfb7dcf1ca039e7b8afb427d",
+      "value": "sram-index"
+    },
+    {
+      "address": "0xfffffe0007148ff4",
+      "file_offset": 1331188,
+      "bytes": 20,
+      "sha256": "63f750998e9ca086e4814392bde1369a7cb2d919a83b753c861345182d3bc36f",
+      "value": "should-control-sram"
+    },
+    {
+      "address": "0xfffffe0007bf8a4b",
+      "file_offset": 12536395,
+      "bytes": 20,
+      "sha256": "05fc8aecb3e67e6ce66fa307e79ce06013a865c9ba23f9b6f6e3f4c135830481",
+      "value": "rtb_disable_fw_load"
+    },
+    {
+      "address": "0xfffffe0007bf8a6e",
+      "file_offset": 12536430,
+      "bytes": 19,
+      "sha256": "df1ce55813c4adbee96830cc3cf3b268599b74e29ee461f13f3a397f0c0fbf75",
+      "value": "disable-in-restore"
+    },
+    {
+      "address": "0xfffffe0007bf8a81",
+      "file_offset": 12536449,
+      "bytes": 9,
+      "sha256": "d03b03dc8120e877e9760e2d01e2f5077e654b9094b10619b020d12d65bd01cf",
+      "value": "-restore"
+    },
+    {
+      "address": "0xfffffe0007bf8a8a",
+      "file_offset": 12536458,
+      "bytes": 8,
+      "sha256": "2b367168bb962e6bd4d9d90c4946624e718338dcae63a22664f2182c13204954",
+      "value": "disable"
+    },
+    {
+      "address": "0xfffffe0007bf8ccb",
+      "file_offset": 12537035,
+      "bytes": 11,
+      "sha256": "8cf90752d7cae7546efb6db9f3d4b553b50dce056d416b75d79eefbf203e4ddb",
+      "value": "pre-loaded"
+    },
+    {
+      "address": "0xfffffe0007bf8cd6",
+      "file_offset": 12537046,
+      "bytes": 8,
+      "sha256": "aa4ca2ac309fb64f39e2f74ca378693fc3dd4db575224757c595191c7f062bfb",
+      "value": "running"
+    },
+    {
+      "address": "0xfffffe0007bf8cde",
+      "file_offset": 12537054,
+      "bytes": 20,
+      "sha256": "d053afb5dd6813d603460e253d0b245196d8669a045120099eba9d866d3b8483",
+      "value": "no-firmware-service"
+    },
+    {
+      "address": "0xfffffe0007bf8dcb",
+      "file_offset": 12537291,
+      "bytes": 20,
+      "sha256": "63f750998e9ca086e4814392bde1369a7cb2d919a83b753c861345182d3bc36f",
+      "value": "should-control-sram"
+    }
+  ],
+  "management_state_table": {
+    "address": "0xfffffe0007bfe338",
+    "file_offset": 12559160,
+    "sha256": "4ffd451f7888c049df63fc0a165d9368092bf42d2b6a46fbc04d0895d8877d9d",
+    "words": [
+      "0x60000000000201",
+      "0x60000000000220",
+      "0x60000000000202",
+      "0x60000000000000"
+    ]
+  },
+  "saved_control_samples": [
+    {
+      "path": "docs/evidence/2026-10-08-warm-restart-native-result.json",
+      "line": 32,
+      "text": "\"[  485.582463] m4rch graph-init: entry control=0x0 status=0x6e warm_restart=1\","
+    },
+    {
+      "path": "docs/evidence/2026-10-08-warm-restart-native-result.json",
+      "line": 33,
+      "text": "\"[  485.582479] m4rch ASC crashlog: cold control=0x0 status=0x6e; starting bounded poll\","
+    },
+    {
+      "path": "docs/evidence/2026-10-08-warm-restart-native-result.json",
+      "line": 36,
+      "text": "\"[  489.581818] m4rch ASC crashlog: final control=0x0 status=0x6e stop_readback=1\","
+    },
+    {
+      "path": "docs/evidence/2026-10-08-warm-init-native-result.json",
+      "line": 176,
+      "text": "\"[   73.951748] m4rch ASC crashlog: final control=0x0 status=0x6e stop_readback=1\""
+    },
+    {
+      "path": "docs/evidence/2026-10-08-warm-init-native-result.json",
+      "line": 208,
+      "text": "\"[  104.815200] m4rch graph-init: entry control=0x0 status=0x6e warm_restart=1\","
+    },
+    {
+      "path": "docs/evidence/2026-10-08-warm-init-native-result.json",
+      "line": 209,
+      "text": "\"[  104.815207] m4rch ASC crashlog: cold control=0x0 status=0x6e; starting bounded poll\","
+    },
+    {
+      "path": "docs/evidence/2026-10-08-warm-init-native-result.json",
+      "line": 213,
+      "text": "\"[  108.915246] m4rch ASC crashlog: final control=0x0 status=0x48 stop_readback=0\","
+    },
+    {
+      "path": "docs/evidence/2026-10-07-gravity-gpu-managed-wake.json",
+      "line": 13,
+      "text": "\"[   61.558283] m4rch ASC crashlog: cold control=0x0 status=0x6a; starting bounded poll\","
+    },
+    {
+      "path": "docs/evidence/2026-10-07-gravity-gpu-managed-wake.json",
+      "line": 37,
+      "text": "\"[   65.674121] m4rch ASC crashlog: final control=0x0 status=0x48 stop_readback=0\","
+    },
+    {
+      "path": "docs/evidence/2026-10-07-gravity-gpu-explicit-wake.json",
+      "line": 15,
+      "text": "\"[   65.108589] m4rch ASC crashlog: cold control=0x0 status=0x6a; starting bounded poll\","
+    },
+    {
+      "path": "docs/evidence/2026-10-07-gravity-gpu-explicit-wake.json",
+      "line": 34,
+      "text": "\"[   65.123122] m4rch ASC crashlog: final control=0x0 status=0x6e stop_readback=1\","
+    },
+    {
+      "path": "docs/evidence/2026-10-07-gravity-gpu-explicit-wake.json",
+      "line": 46,
+      "text": "\"[   65.157787] m4rch ASC crashlog: cold control=0x0 status=0x6e; starting bounded poll\","
+    },
+    {
+      "path": "docs/evidence/2026-10-07-gravity-gpu-explicit-wake.json",
+      "line": 50,
+      "text": "\"[   69.257373] m4rch ASC crashlog: final control=0x0 status=0x48 stop_readback=0\","
+    },
+    {
+      "path": "docs/evidence/2026-10-07-gravity-gpu-shutdown.json",
+      "line": 12,
+      "text": "\"[  246.914135] m4rch ASC shutdown: cold control=0x0 status=0x6a; starting bounded poll\","
+    },
+    {
+      "path": "docs/evidence/2026-10-07-gravity-gpu-shutdown.json",
+      "line": 23,
+      "text": "\"[  248.919910] m4rch ASC shutdown: final control=0x0 status=0x6e stop_readback=1\","
+    },
+    {
+      "path": "docs/evidence/2026-10-09-gpc-recovery-live.json",
+      "line": 669,
+      "text": "\"[  379.602614] m4rch power-poll-sample: asc_control=0x10 asc_status=0x6c raw5960=0x0 raw5970=0x0 raw5978=0x0\","
+    }
+  ],
+  "control_search": {
+    "roots": [
+      "docs/evidence",
+      "out/recovery-progress",
+      "out/recovery-dispatch",
+      "out/owned-zero-baseline",
+      "out/gpu-normal"
+    ],
+    "pattern": "(?:(?:asc_)?control|ctrl44|ctrl_before|ctrl_after)[=:] *0x[0-9a-f]+",
+    "command": [
+      "rg",
+      "-n",
+      "-i",
+      "(?:(?:asc_)?control|ctrl44|ctrl_before|ctrl_after)[=:] *0x[0-9a-f]+",
+      "docs/evidence",
+      "out/recovery-progress",
+      "out/recovery-dispatch",
+      "out/owned-zero-baseline",
+      "out/gpu-normal",
+      "-g",
+      "*.log",
+      "-g",
+      "*.txt",
+      "-g",
+      "*.json",
+      "-g",
+      "*.md",
+      "-g",
+      "!preparation.json",
+      "-g",
+      "!graph-receipt.json",
+      "-g",
+      "!attempt.json",
+      "-g",
+      "!validation.json",
+      "-g",
+      "!*disassembly.txt",
+      "-g",
+      "!2026-10-09-rtbuddy-reset-review.json"
+    ],
+    "values": [
+      {
+        "value": "0x0",
+        "references": 134,
+        "files": 66
+      },
+      {
+        "value": "0x10",
+        "references": 2,
+        "files": 2
+      }
+    ],
+    "logged_bit20_set": false,
+    "qualification": "Bounded saved-log search; repeated snapshots duplicate evidence. Not a continuous hardware trace."
+  },
+  "findings": {
+    "run_true": "CTRL44 |= 0x10 only; no status test, bit20 set, reset-vector write or DATA restore in this method.",
+    "run_false": "Fresh read44/clear10/write; fresh read44/clear20/write; logged20clear is not a demonstrated causal change.",
+    "native_idle": "(STATUS48 & 3) != 0; optionalCTRL40bit0 disabled in saved GFX property inference.",
+    "stop_precondition": "Generic +109=1; up to10ms idle retries; forcebool does not bypass strict-idle panic.",
+    "powergate": "Nativeordinal2/raw202 status2 then ordinary stopCPU(false,false); distinct LinuxretainedIDLE201.",
+    "restart": "Priorstatus1/2 options0 (runningpropertyabsent); prior3 optsbit0 +wakeQuiesced. Physical restart contract remains unproven.",
+    "preloaded": "iBootLoaded+c0=1 -> fixupskipscopyToTarget. No-firmware-service selectsdirectpreloadedloading, not reloadAPI prohibition.",
+    "reload_disable": "d0=rtb_disable_fw_load OR(disable-in-restore AND -restore) OR providerdisable; nofirmwareservice is different.",
+    "sram": "Saved sram-index absent=>mask15c0=>enableSRAM e00002e2; TEXTflags1/DATAflags0=>backupfalse=>savedpropertycontract2244false.",
+    "mapping": "_dartMapiBootFirmware guard130 permitsretainedmapno-op; _unmapFirmware onlyoptional198. No proof rebuiltmapperroot or physicalpowercycle."
+  },
+  "limitations": [
+    "Code/property contracts only, no successful cold restart or reset trial.",
+    "No whole-GPU reset, GFX PMGR RESET31 or DMA retirement coverage demonstrated.",
+    "Mapper setActive physical scope and platform device-power completion not qualified.",
+    "Caller backing remains retained after failed trial.",
+    "Nullable map pointers and empty descriptors are not inferred from pre-loaded or no-firmware-service."
+  ],
+  "historical_owner_binding": "Root rebound the unchanged reviewed f09a97ae bytes to the saved immutable old candidate after the workspace owner gained the separately reviewed reset feature. No reviewed input bytes or findings changed."
+}

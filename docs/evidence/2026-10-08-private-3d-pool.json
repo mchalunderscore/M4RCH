@@ -1,0 +1,69 @@
+{
+  "binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "selection_cases": 1024,
+  "backing_geometry_cases": 512,
+  "geometry_ranges": [
+    [
+      "0xfffffe00089abe58",
+      "0xfffffe00089abe78"
+    ],
+    [
+      "0xfffffe00089ac0c0",
+      "0xfffffe00089ac0cc"
+    ]
+  ],
+  "geometry_slice_sha256": [
+    "ab975d910b7b5a6e08d2c0412d81b5cba419963e1948d3e206a8990a5e0197a4",
+    "e412909da9e49f8f3b4600fe4c7fa191ae30ccf0a03c5519457f707e32ebfaf0"
+  ],
+  "found_cases": 533,
+  "full_cases": 491,
+  "address_bookkeeping_cases": 533,
+  "bindings": [
+    {
+      "vtable": "0xfffffe0007ea7860",
+      "slot": "0x2a0",
+      "target": "0xfffffe00089a6624",
+      "pool": "3D"
+    },
+    {
+      "vtable": "0xfffffe0007ea7860",
+      "slot": "0x2a8",
+      "target": "0xfffffe00089a64ac",
+      "pool": "FastBlit"
+    },
+    {
+      "vtable": "0xfffffe0007ea8668",
+      "slot": "0x2a0",
+      "target": "0xfffffe00089a6624",
+      "pool": "3D"
+    },
+    {
+      "vtable": "0xfffffe0007ea8668",
+      "slot": "0x2a8",
+      "target": "0xfffffe00089a64ac",
+      "pool": "FastBlit"
+    }
+  ],
+  "selection_range": [
+    "0xfffffe00089a6658",
+    "0xfffffe00089a66a4"
+  ],
+  "patch_ranges": [
+    [
+      "0xfffffe00089a66d8",
+      "0xfffffe00089a66e0"
+    ],
+    [
+      "0xfffffe00089a6720",
+      "0xfffffe00089a6768"
+    ]
+  ],
+  "code_sha256": "f24021ffe5727211e5fe6ad0619d4565f80699a782e49f9b6d36c30009ac70a8",
+  "findings": [
+    "Pool bitmap +1330, capacity1340, scan cursor1344, stride1338, CPU base1328, resource1320",
+    "Return CPU base+slot*stride; second output resource50 map+offset; first output resource58 map+offset",
+    "3D descriptor438 CPU,440 resource58 address,448 resource50 address; FastBlit420/428/430"
+  ],
+  "qualification": "Native selection and post-callback store/bookkeeping slices only. External lock and mapping getters excluded; mapping return values supplied independently, attributes unqualified. Allocation rounding/capacity qualified for supplied stride/page shift; live stride initialization, release and live firmware execution not established."
+}

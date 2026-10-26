@@ -1,0 +1,158 @@
+{
+  "schema": "m4rch-recovery-dispatch-candidate-v1",
+  "stage": "Built and independently reviewed offline, NOT RUN. Currentboot1730bf24 diagnostic-only; normal reboot required.",
+  "candidate": "out/recovery-dispatch/candidate",
+  "prepared": "out/recovery-dispatch/prepared",
+  "module_sha256": "332d9d04f3dc2ada1de5b312910a5d5e65eb92165a28f9a6f3768cb627b81191",
+  "build_receipt_sha256": "400467b3473b9f75026e71006a7fe555bf77a30f6524ea072a1692676edb893b",
+  "graph_sha256": "287f2c53bc6ef7ed226c4a2995b9d9904e7623acae9713af105be6b04fc690a9",
+  "graph_receipt_sha256": "92771b8036464c8dc9bdadd1dd4e1458a6c5a9f95f87fbdac34696bd2b3af219",
+  "source_sha256": {
+    "joined-context-init.h": "1851e697907d50a3f47d153879f47f1b6b07065f5d58055fa6269bc436bc15b2",
+    "graph-contract.h": "f8c5a1536aa88ef7a1eb09b9a862cece4a2e822dd2eda54a449e6b3c11b20410",
+    "render-data.h": "3bdbf04b9a3219c8e818beb464b5f55626e8a9b3d184680e3fd05a6361c47cbd",
+    "recovery-contract.h": "9bce940061421a78fde0e509fdeba59a8c66c3d5ab32c4faf59dd613c14d4b23",
+    "receive-service.h": "bab356c9a2467fbb46760345102a7fb8369a9efe8db31efd058b1fd918b11043",
+    "job-data.h": "c18ede083b691fbd3044237aaf30eb1e34c775e9391d3c6f1bea8e61561e0913",
+    "render-backing-map.h": "ade8cedde4da68f2f463ed8604f47ab6b56cdf1c8ff3984d592e00f4a065978b",
+    "command-pool-map.h": "1e4696787075de13a56f4946018221803a5a01a3c5a653bbbdbd48f319e74b6b",
+    "recovery-cycle.h": "7e60090ced75ce1781272315de97f267b038ba9b4610f4fd8499d81332943630",
+    "graph-map.h": "704836d10b86e3d2bcb20b457853a700a2153aae505b0aae473aea4daee7f13e",
+    "boot-contract.h": "5194505b49f3b40acdc80f29bf1e8c5c5f11374f483ed6a22df2c22ea904e082",
+    "asc-graph-init.c": "f09a97ae66c50cdd5add20a39f0c8eb9be7dff353368b6441c3ff30eb35fe49f"
+  },
+  "host_source_sha256": {
+    "prepare-recovery-dispatch.py": "8324961fdae1a8318e9089bbb575efc43d1d8b95c2560935dee9af9bd006f132",
+    "prepare-joined-init-trial.py": "aaccae2728e630bc0f22e6a11b0dc6e3c49ac3a3480cbbf828ac8594f642f5e1",
+    "run-root-envelope.py": "8ecf04cfffb6b3956cba41d1806d4d3bd45da4eb17d5e495e125a1f2e431c3a0",
+    "run-resident-gpu.py": "6ba89540cdbd76dfc89550d1f8cffe744c905119213a1eba8d287a49ac75056e",
+    "test-recovery-trace-off.py": "d192b4720211e39b4cfd21a203edb53400c892a60fd7ebf16fac753d246c86a2",
+    "analyze-recovery-progress.py": "97079abd111c320c3283be8ed37a3f4c38ea89474035a1e885ece6fe4d0c1d7c",
+    "audit-recovery-empty-callbacks.py": "5fbe1878cded57e29363d91c3471e80381bd69d79d8933e2e221d7b51b8a433f"
+  },
+  "proof_sha256": {
+    "2026-10-09-recovery-worker-ack-path.json": "587e0276d56f664034d141be7bbf265851cb86da3eb19df7532adcd68245dd35",
+    "2026-10-09-recovery-empty-callbacks.json": "47fe5c247d029da18dad12f47e522c1628a780bdeaeb045526c160c4c0a0b94a",
+    "2026-10-09-recovery-trace-off-native-review.json": "35fe88f8436d2c5bb9e1e04481302014c3e96091f320a08aec00091e47323395",
+    "2026-10-09-recovery-trace-off-c-replay.json": "2a770878a65991a842e670e1b06ed007b7a0c3af698c0324320833f83eff49ea",
+    "2026-10-09-recovery-dispatch-offline-review.json": "39580434936348159b1f5e3b8b886258b0142a2b3798dae99ed2aca35aad1aeb"
+  },
+  "preparation": {
+    "schema": "m4rch-recovery-dispatch-preparation-v1",
+    "hardware_actions": false,
+    "source": "out/recovery-progress/prepared",
+    "source_graph_sha256": "5b8e184cf501747f0b985418f37d8dc999f4c936a42fbc1cc840de91fa8aba09",
+    "arena_sha256": "287f2c53bc6ef7ed226c4a2995b9d9904e7623acae9713af105be6b04fc690a9",
+    "source_layout_sha256": "135852d0b064f9c4605d8bc4170dfaef8e2da5f6f2a1d06264d3db57de9a46f9",
+    "source_preparation_sha256": "b136bc7e21e3977d611d8245fb6f5372a7f6c232ea576de58e39c9544c504135",
+    "worker_proof": {
+      "path": "docs/evidence/2026-10-09-recovery-worker-ack-path.json",
+      "sha256": "587e0276d56f664034d141be7bbf265851cb86da3eb19df7532adcd68245dd35"
+    },
+    "private_driver_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+    "firmware_text_identity": {
+      "raw_sha256": "215dc0f5361dffa91766c327a2fb3e7440fec2922e218543fcadff7ef95c27cc",
+      "normalized_sha256": "190cef1946a23dfbde180592629631c3b28d0509a17eb76108b7c9a52accd9ac",
+      "observed_variable_payloads": [
+        {
+          "offset": "0x59841",
+          "tag_bytes": "GKTS",
+          "payload_hex": "7e0b1f16038e004c"
+        },
+        {
+          "offset": "0x59924",
+          "tag_bytes": "ECAP",
+          "payload_hex": "223f656ed4ab337d"
+        }
+      ],
+      "qualification": "Exact match outside two tagged eight-byte boot metadata payloads; tags and lengths are also checked. No instruction bytes excluded."
+    },
+    "firmware_instruction_checks": {
+      "0x37ab8": "0x397b32e8",
+      "0x37abc": "0x36080108",
+      "0x37ac8": "0x528025e0",
+      "0x37ad8": "0x97ff9e2b",
+      "0x37ae4": "0xd63f091f",
+      "0x37af4": "0x397b32e8",
+      "0x37af8": "0x36080108",
+      "0x37b04": "0x52802600",
+      "0x37b10": "0x97ff9e1d",
+      "0x36074": "0x36080108",
+      "0x36078": "0x528020a0",
+      "0x36090": "0x97ffa4bd"
+    },
+    "changes": [
+      {
+        "object": "status_a",
+        "byte_offset": 0,
+        "width": 4,
+        "before": 1,
+        "after": 3
+      }
+    ],
+    "changed_bytes": [
+      {
+        "arena_offset": 245760,
+        "object": "status_a",
+        "byte_offset": 0,
+        "before": 1,
+        "after": 3
+      }
+    ],
+    "changed_byte_count": 1,
+    "preserved_input_sha256": {
+      "Makefile": "53a8d913a23b93c9aee15a2ca572d9d7da68e25d8b873daaa675d8b0a24dfdd8",
+      "asc-graph-init.c": "ce560056ab2c263876632033253f34a65c81d787577a0b4516d3b0919561d847",
+      "backing.bin": "35112ef3c261673bda227a3867a0d2b9dd58ac89f35f7bba9c8c05f1dee118d3",
+      "boot-contract.h": "5194505b49f3b40acdc80f29bf1e8c5c5f11374f483ed6a22df2c22ea904e082",
+      "command-pool-map.h": "1e4696787075de13a56f4946018221803a5a01a3c5a653bbbdbd48f319e74b6b",
+      "graph-map.h": "5fa2a6da431066f58251cc7fc3026129921de7f48eb4e894bcdbad310e3cb40b",
+      "job-data.h": "c18ede083b691fbd3044237aaf30eb1e34c775e9391d3c6f1bea8e61561e0913",
+      "native-init-recovery.json": "db98fe566bddbb0bb9c42d265c142fb6930654e53ff28f85fc37cf3907f11bc4",
+      "progress-preparation.json": "c1acb599de8b828fdd164b289210357a5d7b2906d70f11e4f7ea4ca72382fe40",
+      "render-backing-map.h": "ade8cedde4da68f2f463ed8604f47ab6b56cdf1c8ff3984d592e00f4a065978b",
+      "render-data.h": "3bdbf04b9a3219c8e818beb464b5f55626e8a9b3d184680e3fd05a6361c47cbd"
+    },
+    "recovery_contract": {
+      "original_sha256": "bb9ea9a5b5701f75be597dfd14ae952c5efa561c005493f58c7bad1eee806236",
+      "sha256": "9bce940061421a78fde0e509fdeba59a8c66c3d5ab32c4faf59dd613c14d4b23",
+      "original_prefix_preserved": true,
+      "trace_mask_arena_offset": 245760,
+      "initial_mask": 3
+    },
+    "graph_header": {
+      "source_sha256": "44fcec0dc04cf4aaaf377ee90d0b1a6242f58ee7b8086870b749942c98b57466",
+      "sha256": "f8c5a1536aa88ef7a1eb09b9a862cece4a2e822dd2eda54a449e6b3c11b20410",
+      "original_descriptor_prefix_preserved": true
+    },
+    "native_trace_disable": {
+      "object": "status_a",
+      "byte_offset": 0,
+      "value": 0,
+      "force_snapshot_opcode": 22,
+      "minimum_completed_idle_cycles": 4
+    },
+    "generator_sha256": "8324961fdae1a8318e9089bbb575efc43d1d8b95c2560935dee9af9bd006f132",
+    "qualification": "Native status_a trace mask bit1 is added to existing bit0 for main-dispatch entry/exit observations. Special timer40000000 uses separate event105. Observations require independent phase/token/timestamp chronology; missing events identify no live PC. This is not a recovery fix, complete ACK qualification, teardown, retirement or rendering proof. Trace-off metadata requires at least4 completed idle cycles and forceconfig22; it does not authorize a private semaphore write or bypass an incomplete recovery."
+  },
+  "owned_dma_pages": 174,
+  "deferred_triangle_pages": 56,
+  "validation": {
+    "w1_build": "passed",
+    "artifact_source_graph_receipts": "passed",
+    "graph_difference": "exactly one byte at0x3c000,1->3; original mappings/pointers/control/draw retained",
+    "host_trace_off_replay": "88 cases, ASan/UBSan; source matches final built header",
+    "native_trace_off_copy": "three native stores and two complete firmware mask3/0 copy paths; only18eecc differs",
+    "empty_callbacks": "nine actual firmware RAM cases and four binary semaphore token cases; cache/PAC/scheduling/trace helper effects excluded",
+    "generator": "all17 files reproduce byte-identically; five invalid-input cases rejected"
+  },
+  "trial_sequence": [
+    "Fresh different boot; no conflicting GPU modules; all three PD bindings and USB role providers verified.",
+    "One guarded cold trial for two idle cycles with bit0+bit1 trace. Interpret fresh role0 12f/130 and mask0x2000000 with recovery chronology.",
+    "Only if clean and resident, one recover operation for two additional idle cycles.",
+    "Only after four completed idle cycles, typed trace-off clears owned mask and consumes one fresh native opcode22 (0x16); verify retained journal healthy and native control consumed.",
+    "Only if trace-off succeeds and session remains usable, publish one immutable triangle and inspect completion backing/target pixels at1/5/15/30seconds.",
+    "Any failure seals publication; sample/stop only; all backing/module remain pinned. No warm retry or force unload."
+  ],
+  "qualification": "Native diagnostic expansion, not a recovery fix. Entry of bit25 main handler after fresh recovery marker supports first wait passing; matching exit supports return after second ACK signal but does not prove signal consumption or final power ACK. No new wait-semaphore writes, maps or allocation changes. Trace volume model is not a bound; existing journal limits seal. Trace-off reduces gated records; already queued and unconditional records can remain. No recovery, teardown, rendering or retirement success claimed."
+}

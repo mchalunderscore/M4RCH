@@ -1,0 +1,98 @@
+#!/bin/busybox sh
+# Dedicated test initramfs: the existing ext4 root, temporary modules and Mesa.
+PATH=/usr/bin:/bin:/sbin
+export PATH
+mount -t devtmpfs devtmpfs /dev
+mount -t proc proc /proc
+mount -t sysfs sysfs /sys
+mount -t tmpfs tmpfs /run
+. /etc/nvme-root.conf
+stop() {
+    echo "CPUs online: $(cat /sys/devices/system/cpu/online)"
+    dmesg >/run/aurora-direct/early-dmesg.log 2>/dev/null
+    echo "AURORA TEST STOP: $*"
+    while :; do setsid cttyhack sh; sleep 1; done
+}
+[ "$(uname -r)" = "$KERNEL_RELEASE" ] || stop 'Kernel/initramfs mismatch'
+case "$(tr '\000' '\n' </proc/device-tree/compatible)" in
+    *apple,j614s*) ;; *) stop 'Wrong machine' ;; esac
+[ "$(tr -d '\000' </proc/device-tree/chosen/m4rch,aurora-direct)" = AURD001 ] || stop 'Missing live board handoff'
+[ "$(tr -d '\000' </proc/device-tree/chosen/m4rch,ans-live-handoff)" = v1 ] || stop 'Missing live ANS handoff contract'
+mkdir -p /run/aurora-modules /run/aurora-userspace /run/aurora-direct
+tar -xzf /modules.tar.gz -C /run/aurora-modules || stop 'Cannot unpack test modules'
+tar -xzf /mesa.tar.gz -C /run/aurora-userspace || stop 'Cannot unpack test Mesa'
+rm -rf /usr/lib/modules
+ln -s /run/aurora-modules/lib/modules /usr/lib/modules
+printf 'blacklist asahi_m4\nblacklist tas2764\nblacklist tas2770\n' >/run/aurora-direct/modprobe.conf
+echo "Aurora CPUs: online=$(cat /sys/devices/system/cpu/online) present=$(cat /sys/devices/system/cpu/present)"
+cat /sys/devices/system/cpu/online >/run/aurora-direct/cpus-online
+# Bring up recovery-shell input before storage: the first native test stopped
+# before runtime.sh, so its keyboard/trackpad drivers never loaded.
+for module in gpio_macsmc apple_rtkit_helper apple_dockchannel dockchannel_hid hid_apple hid_magicmouse hid_generic pwm_apple leds_pwm; do
+    /usr/bin/modprobe -C /run/aurora-direct/modprobe.conf "$module" || echo "Early driver did not load: $module"
+done
+/usr/bin/modprobe -C /run/aurora-direct/modprobe.conf nvme_apple || stop 'Cannot load Apple NVMe driver'
+root=
+for attempt in $(seq 1 30); do
+    for candidate in /dev/nvme*n*p*; do
+        [ -b "$candidate" ] || continue
+        [ "$(blkid -p -s UUID -o value "$candidate")" = "$ROOT_UUID" ] || continue
+        [ -z "$root" ] || stop 'Duplicate root UUID'
+        root=$candidate
+    done
+    [ -n "$root" ] && break
+    sleep 1
+done
+[ -n "$root" ] || stop 'NVMe root not found'
+[ "$(blkid -p -s PART_ENTRY_UUID -o value "$root")" = "$ROOT_PARTITION_UUID" ] || stop 'Wrong root partition'
+[ "$(blkid -p -s TYPE -o value "$root")" = ext4 ] || stop 'Root is not ext4'
+[ "$(( $(cat /sys/class/block/${root##*/}/start) * 512 ))" = "$ROOT_OFFSET" ] || stop 'Wrong root offset'
+[ "$(( $(cat /sys/class/block/${root##*/}/size) * 512 ))" = "$ROOT_BYTES" ] || stop 'Wrong root size'
+e2fsck -p "$root"
+case "$?" in 0|1) ;; *) stop 'Filesystem check failed' ;; esac
+mount -t ext4 -o rw,noatime "$root" /newroot || stop 'Cannot mount root'
+# The module tree survives switch_root because its backing files live in /run.
+mount --bind /run/aurora-modules/lib/modules /newroot/usr/lib/modules || stop 'Cannot bind test modules'
+mkdir -p /newroot/opt/m4rch-aurora-direct1
+mount --bind /run/aurora-userspace/opt/m4rch-aurora-direct1 /newroot/opt/m4rch-aurora-direct1 || stop 'Cannot bind test Mesa'
+# Merge the current Aurora card definitions over the installed ALSA definitions
+# in RAM. Only the jack and microphone cards can bind; speaker amps are absent.
+mkdir -p /run/aurora-userspace/ucm2
+if [ -d /newroot/usr/share/alsa/ucm2 ]; then
+    cp -a /newroot/usr/share/alsa/ucm2/. /run/aurora-userspace/ucm2/ || stop 'Cannot preserve installed UCM'
+fi
+tar -xzf /ucm.tar.gz -C /run/aurora-userspace || stop 'Cannot unpack Aurora UCM'
+mkdir -p /newroot/usr/share/alsa/ucm2
+mount --bind /run/aurora-userspace/ucm2 /newroot/usr/share/alsa/ucm2 || stop 'Cannot bind test UCM'
+# Offer an explicit graphics test session while retaining the existing session.
+mkdir -p /run/aurora-userspace/wayland-sessions
+if [ -d /newroot/usr/share/wayland-sessions ]; then
+    cp -a /newroot/usr/share/wayland-sessions/. /run/aurora-userspace/wayland-sessions/ || stop 'Cannot preserve sessions'
+fi
+cp /plasma-aurora.desktop /run/aurora-userspace/wayland-sessions/
+mkdir -p /newroot/usr/share/wayland-sessions
+mount --bind /run/aurora-userspace/wayland-sessions /newroot/usr/share/wayland-sessions || stop 'Cannot bind sessions'
+# Lift the old bring-up sleep masks for this boot only. Keep hibernation off.
+if ! grep -q 'm4rch.aurora_gpu=off' /proc/cmdline; then
+mkdir -p /run/aurora-userspace/systemd-system
+cp -a /newroot/etc/systemd/system/. /run/aurora-userspace/systemd-system/ || stop 'Cannot preserve unit overrides'
+for unit in sleep.target suspend.target systemd-suspend.service; do
+    path=/run/aurora-userspace/systemd-system/$unit
+    if [ -L "$path" ] && [ "$(readlink "$path")" = /dev/null ]; then rm "$path"; fi
+done
+mount --bind /run/aurora-userspace/systemd-system /newroot/etc/systemd/system || stop 'Cannot bind temporary unit overrides'
+mkdir -p /run/systemd/sleep.conf.d /run/systemd/logind.conf.d
+printf '[Sleep]\nAllowSuspend=yes\nAllowHibernation=no\nAllowHybridSleep=no\nSuspendState=freeze\n' >/run/systemd/sleep.conf.d/zz-aurora-direct.conf
+printf '[Login]\nHandleLidSwitch=suspend\nHandleLidSwitchExternalPower=suspend\nHandleLidSwitchDocked=ignore\n' >/run/systemd/logind.conf.d/zz-aurora-direct.conf
+fi
+cp /aurora-runtime.sh /run/aurora-direct/runtime.sh
+cp /aurora-with-mesa /run/aurora-direct/with-mesa
+cp /aurora-collect.sh /run/aurora-direct/collect.sh
+mkdir -p /run/systemd/system/multi-user.target.wants
+cp /aurora-direct.service /run/systemd/system/aurora-direct.service
+ln -s ../aurora-direct.service /run/systemd/system/multi-user.target.wants/aurora-direct.service
+for directory in dev proc sys run; do
+    mount --move /$directory /newroot/$directory || stop "Cannot move $directory"
+done
+exec switch_root /newroot /sbin/init
+stop 'switch_root returned'

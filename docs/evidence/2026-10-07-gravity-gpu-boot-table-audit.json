@@ -1,0 +1,88 @@
+{
+  "boot_id": "9a7d7e28-5156-4a4b-aeb5-c24bbcd50c5a",
+  "geometry": {
+    "page_bytes": 16384,
+    "shifts": [
+      36,
+      25,
+      14
+    ],
+    "address_bits": 42
+  },
+  "checks": {
+    "firmware_text": {
+      "physical": "0x10000be4000",
+      "trace": [
+        {
+          "level": 0,
+          "table": "0x105fff78000",
+          "index": 0,
+          "entry": "0x105fff7c403"
+        },
+        {
+          "level": 1,
+          "table": "0x105fff7c000",
+          "index": 0,
+          "entry": "0x105fff80403"
+        },
+        {
+          "level": 2,
+          "table": "0x105fff80000",
+          "index": 0,
+          "entry": "0x10000be44c3"
+        }
+      ]
+    },
+    "firmware_data": {
+      "physical": "0x10001d44000",
+      "trace": [
+        {
+          "level": 0,
+          "table": "0x105fff78000",
+          "index": 0,
+          "entry": "0x105fff7c403"
+        },
+        {
+          "level": 1,
+          "table": "0x105fff7c000",
+          "index": 0,
+          "entry": "0x105fff80403"
+        },
+        {
+          "level": 2,
+          "table": "0x105fff80000",
+          "index": 24,
+          "entry": "0x20010001d444c3"
+        }
+      ]
+    },
+    "candidate_root": {
+      "physical": null,
+      "trace": [
+        {
+          "level": 0,
+          "table": "0x105fff78000",
+          "index": 2,
+          "entry": "0x0"
+        }
+      ]
+    },
+    "candidate_bundle": {
+      "physical": null,
+      "trace": [
+        {
+          "level": 0,
+          "table": "0x105fff78000",
+          "index": 2,
+          "entry": "0x0"
+        }
+      ]
+    }
+  },
+  "zero_regions": [
+    "ttbs",
+    "l2",
+    "handoff"
+  ],
+  "qualification": "Snapshot translations at these addresses only. Not a full free-space/collision audit, allocation authorization, cache-coherency test or initialized GPU qualification."
+}

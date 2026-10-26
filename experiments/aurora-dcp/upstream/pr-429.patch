@@ -1,0 +1,86 @@
+diff --git a/Documentation/devicetree/bindings/gpu/apple,agx.yaml b/Documentation/devicetree/bindings/gpu/apple,agx.yaml
+--- a/Documentation/devicetree/bindings/gpu/apple,agx.yaml
++++ b/Documentation/devicetree/bindings/gpu/apple,agx.yaml
+@@ -40,6 +40,8 @@ properties:
+   power-domains:
+     maxItems: 1
+ 
++  dma-noncoherent: true
++
+   mboxes:
+     minItems: 1
+     maxItems: 2
+diff --git a/arch/arm64/boot/dts/apple/t8132-j713-display.dtsi b/arch/arm64/boot/dts/apple/t8132-j713-display.dtsi
+--- a/arch/arm64/boot/dts/apple/t8132-j713-display.dtsi
++++ b/arch/arm64/boot/dts/apple/t8132-j713-display.dtsi
+@@ -16,6 +16,8 @@
+  * frontend mappings it adds memory-region and apple,j713-inherited-mappings
+  * to piodma and display-subsystem and enables them and disp0_dart.
+  * apple,j713-native-piodma and apple,j713-native-scanout opt in to that.
++ * The DCP, PIODMA and scanout paths use non-coherent DMA only, so those
++ * nodes are marked dma-noncoherent.
+  * The DART driver also reads the ADT through the loader's phram "adt"
+  * region. Without that handoff the DCP and frontend are refused.
+  *
+@@ -81,6 +83,7 @@
+ 		mbox-names = "mbox";
+ 		iommus = <&dcp_dart 23>;
+ 		power-domains = <&ps_disp_cpu>;
++		dma-noncoherent;
+ 		apple,j713-native-piodma;
+ 		apple,j713-native-scanout;
+ 		/* Full 2560x1664 panel including the notch rows, 224 ppi. */
+@@ -91,13 +94,15 @@
+ 
+ 		disp0_piodma: piodma {
+ 			iommus = <&disp0_dart 16>;
++			dma-noncoherent;
+ 			status = "disabled"; /* Enabled by the loader. */
+ 		};
+ 	};
+ 
+ 	display: display-subsystem {
+ 		compatible = "apple,t8132-display-subsystem", "apple,t8132-display-diagnostics";
+ 		iommus = <&disp0_dart 0>;
++		dma-noncoherent;
+ 		status = "disabled"; /* Enabled by the loader. */
+ 	};
+ };
+diff --git a/arch/arm64/boot/dts/apple/t8132-j713-gpu.dtsi b/arch/arm64/boot/dts/apple/t8132-j713-gpu.dtsi
+--- a/arch/arm64/boot/dts/apple/t8132-j713-gpu.dtsi
++++ b/arch/arm64/boot/dts/apple/t8132-j713-gpu.dtsi
+@@ -69,6 +69,8 @@
+ 		reg-names = "asc", "sgx";
+ 		mboxes = <&agx_mbox>;
+ 		power-domains = <&ps_gfx>;
++		/* G16 is admitted on non-coherent DMA only. */
++		dma-noncoherent;
+ 		apple,pmp = <&pmp>;
+ 		memory-region = <&gpu_ttbs>, <&gpu_pagetables>, <&gpu_handoff>,
+ 				<&gpu_shared_l2>, <&gpu_fw_text>, <&gpu_fw_data>;
+diff --git a/arch/arm64/mm/dma-mapping.c b/arch/arm64/mm/dma-mapping.c
+--- a/arch/arm64/mm/dma-mapping.c
++++ b/arch/arm64/mm/dma-mapping.c
+@@ -7,6 +7,7 @@
+ #include <linux/gfp.h>
+ #include <linux/cache.h>
+ #include <linux/dma-map-ops.h>
++#include <linux/property.h>
+ #include <xen/xen.h>
+ 
+ #include <asm/cacheflush.h>
+@@ -42,7 +43,12 @@ void arch_setup_dma_ops(struct device *dev, bool coherent)
+ {
+ 	int cls = cache_line_size_of_cpu();
+ 
+-	if (!coherent && !CLIDR_LOC(read_sysreg(clidr_el1))) {
++	/*
++	 * A device explicitly marked "dma-noncoherent" keeps non-coherent DMA:
++	 * its driver may depend on the non-cacheable attributes of that path.
++	 */
++	if (!coherent && !CLIDR_LOC(read_sysreg(clidr_el1)) &&
++	    !device_property_present(dev, "dma-noncoherent")) {
+ 		dev_warn(dev, "CLIDR_EL1.LoC == 0, treating as coherent\n");
+ 		coherent = true;
+ 	}
+

@@ -1,0 +1,75 @@
+{
+  "binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "callback_cases": 1536,
+  "wrapper_tail_cases": 512,
+  "caller_payload_cases": 512,
+  "caller_payload_range": [
+    "0xfffffe000895bfc8",
+    "0xfffffe000895bfe4"
+  ],
+  "caller_payload_sha256": "fa5939c3ec5101fc2cfd4c7d119e88b7a29e8e2cbab433095f07b6016668d396",
+  "scheduler_3d_slot": "0x168",
+  "descriptor_slots": [
+    {
+      "class_name": "3D",
+      "slot": "0x1e0",
+      "target": "0xfffffe000895d5e4",
+      "descriptor_offset": "0x210",
+      "cases": 256
+    },
+    {
+      "class_name": "3D",
+      "slot": "0x1e8",
+      "target": "0xfffffe000895d5d8",
+      "descriptor_offset": "0x218",
+      "cases": 256
+    },
+    {
+      "class_name": "TA",
+      "slot": "0x1e0",
+      "target": "0xfffffe0008a20cb0",
+      "descriptor_offset": "0x210",
+      "cases": 256
+    },
+    {
+      "class_name": "TA",
+      "slot": "0x1e8",
+      "target": "0xfffffe0008a20ca4",
+      "descriptor_offset": "0x218",
+      "cases": 256
+    },
+    {
+      "class_name": "CL",
+      "slot": "0x1b8",
+      "target": "0xfffffe0008985c78",
+      "descriptor_offset": "0x1c4",
+      "cases": 256
+    },
+    {
+      "class_name": "CL",
+      "slot": "0x1c0",
+      "target": "0xfffffe0008985c6c",
+      "descriptor_offset": "0x1cc",
+      "cases": 256
+    }
+  ],
+  "wrapper_range": [
+    "0xfffffe00089db75c",
+    "0xfffffe00089db7cc"
+  ],
+  "wrapper_slice_sha256": "9b0effc4b29eceea47419389514a4c5a5977bcae7a73d0d7facc803d08754d9a",
+  "argument_provenance": {
+    "x0": "scheduler",
+    "x1": "3D descriptor+0x210 event command",
+    "x2": "3D descriptor+0x218 event barrier",
+    "x3": "descriptor+0x820 RCE",
+    "x4": "descriptor+0xa98 aperture",
+    "x5": "descriptor+0x168 or table at *(descriptor+0x10)+0xfd48+(index&127)*8",
+    "x6": "original payload reference",
+    "x7": "stack+0x14 previously assembled QOS",
+    "stack0": "original notification-mask reference",
+    "stack8": "1 when descriptor byte c44 equals3, else descriptor byte4c lowbit",
+    "stack9": "descriptor byteb48 lowbit"
+  },
+  "qualification": "Matched vtable slots and native getters; call-free 3D wrapper tail only. Earlier external resource/QOS lookups, descriptor construction, payload identity, mapping/cache and live firmware acceptance excluded. Getter emulation stops before RET; no PAC bypass or external code executed."
+}

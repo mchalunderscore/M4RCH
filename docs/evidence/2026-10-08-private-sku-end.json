@@ -1,0 +1,101 @@
+{
+  "binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "counts": {
+    "primary_end": 1024,
+    "secondary_end": 1024
+  },
+  "examples": [
+    {
+      "notification_pattern": 0,
+      "config": 0,
+      "relative_word": "0x0",
+      "primary_mode": "0x8e22fbf1"
+    },
+    {
+      "notification_pattern": 1,
+      "config": 1,
+      "relative_word": "0xfffffffc",
+      "primary_mode": "0x49d125af"
+    },
+    {
+      "notification_pattern": 2,
+      "config": 2,
+      "relative_word": "0xfffffff8",
+      "primary_mode": "0x5d19362b"
+    },
+    {
+      "notification_pattern": 3,
+      "config": 3,
+      "relative_word": "0xfffffff4",
+      "primary_mode": "0xdef117e"
+    },
+    {
+      "notification_pattern": 4,
+      "config": 4,
+      "relative_word": "0xfffffff0",
+      "primary_mode": "0x74bbd4c0"
+    },
+    {
+      "notification_pattern": 5,
+      "config": 5,
+      "relative_word": "0xffffffec",
+      "primary_mode": "0xa3ea8f8a"
+    },
+    {
+      "notification_pattern": 0,
+      "config": 6,
+      "relative_word": "0xffffffe8",
+      "primary_mode": "0xf24f1cbe"
+    },
+    {
+      "notification_pattern": 1,
+      "config": 7,
+      "relative_word": "0xffffffe4",
+      "primary_mode": "0xf3c53acd"
+    },
+    {
+      "notification_pattern": 2,
+      "config": 8,
+      "relative_word": "0xffffffe0",
+      "primary_mode": "0x31fd5797"
+    },
+    {
+      "notification_pattern": 3,
+      "config": 9,
+      "relative_word": "0xffffffdc",
+      "primary_mode": "0xf7630464"
+    },
+    {
+      "notification_pattern": 4,
+      "config": 10,
+      "relative_word": "0xffffffd8",
+      "primary_mode": "0x5cfc4dae"
+    },
+    {
+      "notification_pattern": 5,
+      "config": 11,
+      "relative_word": "0xffffffd4",
+      "primary_mode": "0x8054d756"
+    }
+  ],
+  "secondary_mode_constant": "0x100000000",
+  "ranges": [
+    {
+      "start": "0xfffffe00089d56b4",
+      "end": "0xfffffe00089d57e4",
+      "sha256": "c33d67aad08a2779c8627d5bd13f411aac0d6793d7644794bff1be6a8d869cd2"
+    },
+    {
+      "start": "0xfffffe00089d58b8",
+      "end": "0xfffffe00089d5980",
+      "sha256": "b9c89e419f732b287a5ef87f0b544b011c1784bd18c5d04b35ec2ee21999f623"
+    }
+  ],
+  "primary_zero_vector_branch": {
+    "start": "0xfffffe00089d59cc",
+    "end": "0xfffffe00089d59d4",
+    "sha256": "ab9680212dec014aa09b7dd089933619aec66d779cc1e6c4cf080161016ea420"
+  },
+  "visited_instruction_count": 128,
+  "qualification": "Actual native primary/secondary opcode8 record construction slices, numeric models and full backing/encoder/source byte checks. Primary notification selection executed, synthetic safe stack/frame/descriptor/resource addresses; secondary saved register inputs and d8 native constant supplied. No external callbacks or PAC bypass in slices. Full upstream construction, branch selection for secondary phase, mapping/cache, instruction completion semantics and live GPU execution remain unproved."
+}

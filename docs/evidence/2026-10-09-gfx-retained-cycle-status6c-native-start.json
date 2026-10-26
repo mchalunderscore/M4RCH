@@ -1,0 +1,390 @@
+{
+  "schema": "m4rch.gfx-retained-cycle-status6c-native-start.v1",
+  "offline_only": true,
+  "hardware_actions": [],
+  "source_changes": [],
+  "new_policy_prepared": false,
+  "new_candidate_built": false,
+  "boot_id": "5bf0a178-e6d8-4def-8088-74ad7ea87727",
+  "container": {
+    "path": "/home/alice/Desktop/m4rch/out/private-apple/kernelcache.decoded",
+    "bytes": 119308288,
+    "previously_bound_sha256": "6158e1c0d591240808e26ff1da050b2fa0ed3eb17c1779d2ddde3171b959536f",
+    "whole_container_rehash_performed_this_review": false
+  },
+  "existing15_ranges_reverified": [
+    {
+      "label": "common_startCPUWithOptions",
+      "start": "0xfffffe0008a42f40",
+      "end_exclusive": "0xfffffe0008a43260",
+      "bytes": 800,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 27520832,
+      "sha256": "7a758f60ea99876e999d7843fa55fd2f7bcb988da402c440e5033598142100f7",
+      "provenance": "existing matched reset range reused"
+    },
+    {
+      "label": "V6_runCPU",
+      "start": "0xfffffe0008a3fcf4",
+      "end_exclusive": "0xfffffe0008a3fda4",
+      "bytes": 176,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 27507956,
+      "sha256": "d875ef3271218b40d767f2428ffe91f340c0f34cbc05ee6867462437ca604278",
+      "provenance": "existing matched reset range reused"
+    },
+    {
+      "label": "V6_mapFirmware",
+      "start": "0xfffffe0008a3fa70",
+      "end_exclusive": "0xfffffe0008a3fad8",
+      "bytes": 104,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 27507312,
+      "sha256": "fc0b80f63301bd8f4a68315f928e969d4de6b029fd4f99f43f93be5e7307e8d6",
+      "provenance": "existing matched reset range reused"
+    },
+    {
+      "label": "V6_unmapFirmware",
+      "start": "0xfffffe0008a3fad8",
+      "end_exclusive": "0xfffffe0008a3fb50",
+      "bytes": 120,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 27507416,
+      "sha256": "f67ef932a96a63254d0599ba9af7005d1d48877c967389c4afa7d240c6cf2021",
+      "provenance": "existing matched reset range reused"
+    },
+    {
+      "label": "RTBuddy_performPowerStateChangeGated",
+      "start": "0xfffffe000b1e00c8",
+      "end_exclusive": "0xfffffe000b1e08ac",
+      "bytes": 2020,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 69058760,
+      "sha256": "b0f0812f136a87574c3d645a517a364e32d8a6615e706c3a52044c53b903d3fd",
+      "provenance": "existing matched reset range reused"
+    },
+    {
+      "label": "Firmware_preloadedFirmware",
+      "start": "0xfffffe000b1ee974",
+      "end_exclusive": "0xfffffe000b1eea14",
+      "bytes": 160,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 69118324,
+      "sha256": "7917c69ccb865e23f2cc05365683481ef91c95718914f16f10959cc65b7338e1",
+      "provenance": "existing matched reset range reused"
+    },
+    {
+      "label": "Firmware_fixup",
+      "start": "0xfffffe000b1efad4",
+      "end_exclusive": "0xfffffe000b1efc6c",
+      "bytes": 408,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 69122772,
+      "sha256": "7232f2547b22b91668d82bae6d6329cf32ed432a58a58ab3a5dbbc4dd14c43f1",
+      "provenance": "existing matched reset range reused"
+    },
+    {
+      "label": "RTBuddy_preloaded_running_noservice",
+      "start": "0xfffffe000b1e42b0",
+      "end_exclusive": "0xfffffe000b1e4378",
+      "bytes": 200,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 69075632,
+      "sha256": "5a0d95e705e564b2a3f2988d32cb57f08634b2778d6c09bb33b4d6ae54606710",
+      "provenance": "existing matched reset range reused"
+    },
+    {
+      "label": "RTBuddy_SRAM_policy",
+      "start": "0xfffffe000b1e46c0",
+      "end_exclusive": "0xfffffe000b1e47f4",
+      "bytes": 308,
+      "root_segment": "__TEXT_EXEC",
+      "file_offset": 69076672,
+      "sha256": "072e035b2bd2779c34d7bdeff1cef0da2295ba049d314b3f6384f9792b4788da",
+      "provenance": "existing matched reset range reused"
+    },
+    {
+      "label": "management_complete_dispatch",
+      "start": "0xfffffe000b1f1e58",
+      "end_exclusive": "0xfffffe000b1f2038",
+      "bytes": 480,
+      "file_offset": 69131864,
+      "provenance": "new bounded matched range",
+      "sha256": "9740a15b128fb51c5757aa68f586fa4c92ecdd61b60a1a353ec8fab5f61368f3"
+    },
+    {
+      "label": "management_handleHello",
+      "start": "0xfffffe000b1f2ae8",
+      "end_exclusive": "0xfffffe000b1f2d38",
+      "bytes": 592,
+      "file_offset": 69135080,
+      "provenance": "new bounded matched range",
+      "sha256": "d5e360c0c3ee6ddfd842a152185462ece1bb9a63e5272451762115228b553719"
+    },
+    {
+      "label": "management_handleEPRollCall",
+      "start": "0xfffffe000b1f2d38",
+      "end_exclusive": "0xfffffe000b1f2e7c",
+      "bytes": 324,
+      "file_offset": 69135672,
+      "provenance": "new bounded matched range",
+      "sha256": "6d711472176e0bbf2637db959dabf3eb7ac7d266e3f70585853783983a703e17"
+    },
+    {
+      "label": "normal_started_iopValidate",
+      "start": "0xfffffe000b1e0f28",
+      "end_exclusive": "0xfffffe000b1e0fb8",
+      "bytes": 144,
+      "file_offset": 69062440,
+      "provenance": "new bounded matched range",
+      "sha256": "03d716ef12b3229976b16f1657c4ad7787efb21ef138ede5d71dee3fc4e0324b"
+    },
+    {
+      "label": "management_requestPowerState_complete",
+      "start": "0xfffffe000b1f27e0",
+      "end_exclusive": "0xfffffe000b1f2870",
+      "bytes": 144,
+      "file_offset": 69134304,
+      "provenance": "new bounded matched range",
+      "sha256": "58e696739370931ac11a868e367ac0c082864408351c65966c195bea396e3bd1"
+    },
+    {
+      "label": "endpoint_powerStatePreservesMemory",
+      "start": "0xfffffe000b1e8170",
+      "end_exclusive": "0xfffffe000b1e8180",
+      "bytes": 16,
+      "file_offset": 69091696,
+      "provenance": "new bounded matched range",
+      "sha256": "d124f9dd2941b1a111732bcb8858543b96a94cacf0184a1503dae625d4299f87"
+    }
+  ],
+  "bounded_additional_ranges": [
+    {
+      "label": "V6_enableOutbox_RMW_RX114_bit0",
+      "start": "0xfffffe0008a40184",
+      "end_exclusive": "0xfffffe0008a401f0",
+      "file_offset": 27509124,
+      "bytes": 108,
+      "root_segment": "__TEXT_EXEC",
+      "sha256": "785addf5b4a50519f3f086eb62aaafaee9963b8b975699a0b9c7116f1047e885"
+    },
+    {
+      "label": "V6_interrupt_callbacks_all_noop",
+      "start": "0xfffffe0008a4038c",
+      "end_exclusive": "0xfffffe0008a403a4",
+      "file_offset": 27509644,
+      "bytes": 24,
+      "root_segment": "__TEXT_EXEC",
+      "sha256": "ad0a4b49443dcb48268a8feb9ee8bf4ac50a1b45edf1e59fa96a34cdc370d1e4"
+    },
+    {
+      "label": "A7IOP_apInitializesMailboxes_const_true",
+      "start": "0xfffffe0008a446f8",
+      "end_exclusive": "0xfffffe0008a44704",
+      "file_offset": 27526904,
+      "bytes": 12,
+      "root_segment": "__TEXT_EXEC",
+      "sha256": "185b69410ba1e6bd9bbd267500bfbd9aaf87eb4672710113c02ff2e99c98a9da"
+    },
+    {
+      "label": "A7IOP_ignore_mailboxes_property",
+      "start": "0xfffffe0008a42494",
+      "end_exclusive": "0xfffffe0008a424f8",
+      "file_offset": 27518100,
+      "bytes": 100,
+      "root_segment": "__TEXT_EXEC",
+      "sha256": "d4ba9c9d1bb2b555f7d8d4c24b1f002c7c66da376da68c17c98713990d96f991"
+    },
+    {
+      "label": "A7IOP_force_timebase_sync_property",
+      "start": "0xfffffe0008a42950",
+      "end_exclusive": "0xfffffe0008a42990",
+      "file_offset": 27519312,
+      "bytes": 64,
+      "root_segment": "__TEXT_EXEC",
+      "sha256": "22be891305ee521b2f9656d67a8269254b22bb4f92b73c1786d5db3f75b708ec"
+    },
+    {
+      "label": "A7IOP_provider_enable_clock_then_power",
+      "start": "0xfffffe0008a42d34",
+      "end_exclusive": "0xfffffe0008a42e2c",
+      "file_offset": 27520308,
+      "bytes": 248,
+      "root_segment": "__TEXT_EXEC",
+      "sha256": "6551ea43e935d2eda349b6c6311d97eeb21d52d63d1998c86b0da8491533ac24"
+    }
+  ],
+  "bounded_backend_slots": [
+    {
+      "address_point": "0xfffffe0007ec5e88",
+      "slot": "0x9c0",
+      "pointer_address": "0xfffffe0007ec6848",
+      "file_offset": 15476808,
+      "sha256": "56c93d445c974e788c16fee2422c58b181f756030f2d857c70943009bb8cf5ac",
+      "encoded": "0x8011cf8a01a406f8",
+      "target": "0xfffffe0008a446f8",
+      "target_qualification": "Previously calibrated matched-container low32+0xfffffe0007004000 rule"
+    },
+    {
+      "address_point": "0xfffffe0007ec5e88",
+      "slot": "0x9d8",
+      "pointer_address": "0xfffffe0007ec6860",
+      "file_offset": 15476832,
+      "sha256": "a2223a6c5689669f5bfdc6fce3724870254ee36d51f7c5ba23a7b4d4f5241523",
+      "encoded": "0x8011e3c501a3c38c",
+      "target": "0xfffffe0008a4038c",
+      "target_qualification": "Previously calibrated matched-container low32+0xfffffe0007004000 rule"
+    },
+    {
+      "address_point": "0xfffffe0007ec5e88",
+      "slot": "0xa10",
+      "pointer_address": "0xfffffe0007ec6898",
+      "file_offset": 15476888,
+      "sha256": "98ad6383da7bb7bcb1aa6ea1d1031b896a9c4a23c4b6ecaa3acc325e74a8c288",
+      "encoded": "0x8011c91c01a3c394",
+      "target": "0xfffffe0008a40394",
+      "target_qualification": "Previously calibrated matched-container low32+0xfffffe0007004000 rule"
+    },
+    {
+      "address_point": "0xfffffe0007ec5e88",
+      "slot": "0x9e8",
+      "pointer_address": "0xfffffe0007ec6870",
+      "file_offset": 15476848,
+      "sha256": "f7c36b2e89dc806aabf59e5ba69d4f0ca49eb40719f16e4379da1102af451249",
+      "encoded": "0x80118ac201a3c39c",
+      "target": "0xfffffe0008a4039c",
+      "target_qualification": "Previously calibrated matched-container low32+0xfffffe0007004000 rule"
+    },
+    {
+      "address_point": "0xfffffe0007ec5e88",
+      "slot": "0x9f0",
+      "pointer_address": "0xfffffe0007ec6878",
+      "file_offset": 15476856,
+      "sha256": "986fc9bf75006cb6f4d4d9c900406713f6be016a120d33933185d3f9264dcb99",
+      "encoded": "0x8011e96201a3c184",
+      "target": "0xfffffe0008a40184",
+      "target_qualification": "Previously calibrated matched-container low32+0xfffffe0007004000 rule"
+    },
+    {
+      "address_point": "0xfffffe0007ec5e88",
+      "slot": "0xa38",
+      "pointer_address": "0xfffffe0007ec68c0",
+      "file_offset": 15476928,
+      "sha256": "14211287e5681a8d177e2264db1a32c96b9594ed6ff5d92a8d86af3e43e9c617",
+      "encoded": "0x8011666101a43a34",
+      "target": "0xfffffe0008a47a34",
+      "target_qualification": "Previously calibrated matched-container low32+0xfffffe0007004000 rule"
+    }
+  ],
+  "strings": [
+    {
+      "address": "0xfffffe0007148f43",
+      "file_offset": 1331011,
+      "bytes": 17,
+      "value": "ignore-mailboxes",
+      "sha256": "ca853acc22f4ebacfa42ede222306947495186aff2f0661ff920626290949364"
+    },
+    {
+      "address": "0xfffffe0007149008",
+      "file_offset": 1331208,
+      "bytes": 20,
+      "value": "force-timebase-sync",
+      "sha256": "a456f3060dba02a2a09d139a09ad5ab9d842a665bda8a985deb8f337950584be"
+    }
+  ],
+  "current_adt": {
+    "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/boot.adt",
+    "bytes": 606208,
+    "sha256": "49e9113e005e14dce65c2e0b6664133c64b63b795daab353c803960ea132e7c5"
+  },
+  "current_adt_selected_properties": {
+    "ignore-mailboxes": {
+      "present": false,
+      "hex": ""
+    },
+    "force-timebase-sync": {
+      "present": false,
+      "hex": ""
+    },
+    "no-activate-mapper": {
+      "present": false,
+      "hex": ""
+    },
+    "cpu-ctrl-filtered": {
+      "present": false,
+      "hex": ""
+    },
+    "idle-ctrl-check": {
+      "present": false,
+      "hex": ""
+    }
+  },
+  "actual_refusal_lines": [
+    {
+      "line": 1171,
+      "text": "[  255.470242] m4rch gfx-retained-cycle: phase=diagnostic-current result=0 refused_condition=none intent=0 identity_captured=0 identities_preserved=0 first_off_preserved=0 first_off_fields_historical=1 pm_get_attempted=0 pm_get_result=0 second_ref_held=0 held=1 usage=1 runtime_error=0 runtime_status=0 active=1 suspended=0 second_on_attempted=0 second_on_complete=0 boundary_qualified=0 control44=0x0 status48=0x0 rx_status=0x0 tx_status=0x0 start_attempted=0 hello_reply_attempts=0 hello_replied=0 map_reply_attempts=0 endpoint_map=0 appmap=0x0 map_seen=0x0 protocol_records=0 protocol_polls=0 second_request_attempted=0 second_ack_observed=0 second_ack_message=0x0 second_ack_metadata=0x0 second_ack_polls=0 second_idle_polls=0 second_clear10_attempted=0 second_clear20_attempted=0 second_cpu_stopped=0 second_off_attempted=0 second_off_complete=0 second_pm_put_attempted=0 second_pm_put_result=0 second_off_snapshot_result=0 second_off_samples=0 second_provider_off_observed=0 second_accounting_ok=0 powercycle_complete=0 applicatio"
+    },
+    {
+      "line": 1236,
+      "text": "[  288.315845] m4rch gfx-retained-cycle: phase=intent result=0 refused_condition=none intent=1 identity_captured=1 identities_preserved=0 first_off_preserved=0 first_off_fields_historical=1 pm_get_attempted=0 pm_get_result=0 second_ref_held=0 held=0 usage=0 runtime_error=0 runtime_status=2 active=0 suspended=1 second_on_attempted=0 second_on_complete=0 boundary_qualified=0 control44=0x0 status48=0x0 rx_status=0x0 tx_status=0x0 start_attempted=0 hello_reply_attempts=0 hello_replied=0 map_reply_attempts=0 endpoint_map=0 appmap=0x0 map_seen=0x0 protocol_records=0 protocol_polls=0 second_request_attempted=0 second_ack_observed=0 second_ack_message=0x0 second_ack_metadata=0x0 second_ack_polls=0 second_idle_polls=0 second_clear10_attempted=0 second_clear20_attempted=0 second_cpu_stopped=0 second_off_attempted=0 second_off_complete=0 second_pm_put_attempted=0 second_pm_put_result=0 second_off_snapshot_result=0 second_off_samples=0 second_provider_off_observed=0 second_accounting_ok=0 powercycle_complete=0 application_rejoined=0"
+    },
+    {
+      "line": 1239,
+      "text": "[  288.315899] m4rch gfx-retained-cycle: phase=second-pm-get-intent result=0 refused_condition=none intent=1 identity_captured=1 identities_preserved=1 first_off_preserved=1 first_off_fields_historical=1 pm_get_attempted=1 pm_get_result=0 second_ref_held=0 held=0 usage=0 runtime_error=0 runtime_status=2 active=0 suspended=1 second_on_attempted=0 second_on_complete=0 boundary_qualified=0 control44=0x0 status48=0x0 rx_status=0x0 tx_status=0x0 start_attempted=0 hello_reply_attempts=0 hello_replied=0 map_reply_attempts=0 endpoint_map=0 appmap=0x0 map_seen=0x0 protocol_records=0 protocol_polls=0 second_request_attempted=0 second_ack_observed=0 second_ack_message=0x0 second_ack_metadata=0x0 second_ack_polls=0 second_idle_polls=0 second_clear10_attempted=0 second_clear20_attempted=0 second_cpu_stopped=0 second_off_attempted=0 second_off_complete=0 second_pm_put_attempted=0 second_pm_put_result=0 second_off_snapshot_result=0 second_off_samples=0 second_provider_off_observed=0 second_accounting_ok=0 powercycle_complete=0 applicat"
+    },
+    {
+      "line": 1242,
+      "text": "[  288.315935] m4rch gfx-retained-cycle: phase=cold-boundary result=0 refused_condition=none intent=1 identity_captured=1 identities_preserved=1 first_off_preserved=1 first_off_fields_historical=1 pm_get_attempted=1 pm_get_result=0 second_ref_held=1 held=1 usage=1 runtime_error=0 runtime_status=0 active=1 suspended=0 second_on_attempted=0 second_on_complete=0 boundary_qualified=0 control44=0x0 status48=0x6c rx_status=0x20001 tx_status=0x20001 start_attempted=0 hello_reply_attempts=0 hello_replied=0 map_reply_attempts=0 endpoint_map=0 appmap=0x0 map_seen=0x0 protocol_records=0 protocol_polls=0 second_request_attempted=0 second_ack_observed=0 second_ack_message=0x0 second_ack_metadata=0x0 second_ack_polls=0 second_idle_polls=0 second_clear10_attempted=0 second_clear20_attempted=0 second_cpu_stopped=0 second_off_attempted=0 second_off_complete=0 second_pm_put_attempted=0 second_pm_put_result=0 second_off_snapshot_result=0 second_off_samples=0 second_provider_off_observed=0 second_accounting_ok=0 powercycle_complete=0 applic"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "out/gfx-retained-power-cycle/independent-native-ranges.json",
+      "bytes": 8671,
+      "sha256": "e2d9231bc06349bd207c43787e6fa605f839000f2f3b6146e19d5b6da4ea4934"
+    },
+    {
+      "path": "docs/evidence/2026-10-09-rtbuddy-reset-review.json",
+      "bytes": 37336,
+      "sha256": "c43a596e018b705d33652437e87a6673433019d169b56adefb15307cd713fb87"
+    },
+    {
+      "path": "docs/evidence/2026-10-09-rtbuddy-matched-provider.json",
+      "bytes": 25743,
+      "sha256": "8606640b84e12fc8f18891b53ed1ebc913123bfc533e5108fd703f5c139a0027"
+    },
+    {
+      "path": "docs/evidence/2026-10-09-retained-transport-reentry-boundary.json",
+      "bytes": 7200,
+      "sha256": "f2ae2bf62e64dcf8b27a30f9ca15ff18140440531924421672e56e2dee581f37"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214814.484578Z-gfx-retained-cycle-9cfd283d/attempt.json",
+      "bytes": 39000,
+      "sha256": "49a68c836f865ee6755d380f8152f5e2de1cddf31fe7e8f531a7734f9e0cad75"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/candidate/asc-graph-init/boot-5bf0a178-e6d8-4def-8088-74ad7ea87727/resident-operations/20261009T214814.484578Z-gfx-retained-cycle-9cfd283d/dmesg-after.log",
+      "bytes": 130427,
+      "sha256": "2da49abebfa0a096385a6bf36a90cf8fc921d614de5ef6a54d43aa58c5dc79fc"
+    },
+    {
+      "path": "out/gfx-retained-power-cycle/prepared-owner-v6/retained-power-cycle-owner-source-receipt.json",
+      "bytes": 12787,
+      "sha256": "4f8288982b3d2e926cce11ebe800744ea92f668008e77600929d691319e3ec9a"
+    }
+  ],
+  "native_predicate": "common_startCPUWithOptions options0 and V6_runCPU(true) contain no STATUS48/idle/exact6a admission. Exact6a is the local experiment conservative cold gate. Native_isIdle tests STATUS48 lowbits only for stop; 6c fails stop-idle, not a checked native start predicate. External mapper/provider callbacks are separate scopes.",
+  "native_order": [
+    "Stopped IOPstatus2 and absent native running property select options0, record host IOPstatus4.",
+    "Provider enable/clock power, optional mapper setActive(true), retained preloaded firmware mapping.",
+    "Native started host flag, mailbox interrupt setup and outbox enable.",
+    "Optional timebase synchronization when force-timebase-sync is present (absent here).",
+    "Fresh CTRL44 RMW OR0x10; no reset vector, firmwareDATA copy or STATUS6a check in these bodies."
+  ],
+  "mailbox_findings": "Native matched disableAllInterrupts/inbox/outbox interrupt callbacks are noops. _apInitializesMailboxes returns true; _enableOutbox(true) RMW sets RX114 bit0. Actual RX1140x20001 already has that bit; no missing outbox-enabled value is shown. Native IOInterruptEventSource enable calls are host bookkeeping, and our owner polls.",
+  "memory_limits": "Preloaded fixup skips DATA copying; repeated iBoot map may be no-op because retained mapped flag stays set. Generic saved SRAM backup/timebase policies remain absent. Runtime mapper setActive implementation and its physical UAT effects are not resolved here. No new mapper/root/firmware publication or restore is qualified.",
+  "order_difference": "The attempted second cold-boundary6a check occurred before separate second pairedON; no second native ON transition, START or protocol observation was attempted. Consequently the actual result does not test autonomous reentry after native-ordered pairedON.",
+  "concrete_distinct_hypothesis": "Future separately prepared candidate could recognize ONLY saved CTRLSTARTclear/STATUS6c/RXEMPTY/TXavailable after its own qualified202+checkedCPUstop+pairedOFF+strictphysicalOFF+freshPMget/ACTIVE, admit one separate pairedON, then refresh all operands and admit one native freshCTRL44 ORSTART at known6a/6c. It would seek autonomous HELLO12/map and preserve original backing; no INIT220 or application rejoin. This differs from failed warm trials whose strict physical OFF and own native202 boundary were absent/unproved.",
+  "hypothesis_limit": "No current command retry or newpolicy is authorized by this report. The binary does not promise STATUS6c means bootable, that pairedON restores6a, or that our reduced sequence reproduces mapper/provider effects. A future known6c START is a bounded experiment, not native recovery proof."
+}

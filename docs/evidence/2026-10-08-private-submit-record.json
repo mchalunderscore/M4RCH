@@ -1,0 +1,17 @@
+{
+  "binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "submit_model_cases": 1024,
+  "event_model_cases": 72,
+  "submit_slice_sha256": "c4f002d3c811151b3fb5979d42acf6052aade2467a4e4ee9139c8c09c2723a38",
+  "consumer_slice_sha256": "03dc81e5c51679949ac80dfd637a04ae343bbe306398da68ea2a8482902d0fd4",
+  "native_event_allowed_mask": "0x2000ffd3",
+  "native_event_capacity": 256,
+  "event_size": 72,
+  "submit_size": 24,
+  "limits": [
+    "Emulated RAM only; no hardware validation",
+    "Event model covers accepted copy/update slice only, not dispatch or error paths",
+    "Pointer role and submit prefix remain unresolved",
+    "DMB opcode checked; emulator does not establish DMA/cache coherency"
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "prepared_after_boot": "3c210c1d-4b3d-4f02-bdb3-f642f19baf8c",
+  "prior_trial_commit": "8d6ccbb",
+  "objects_pages": 47,
+  "device_leaves": 100,
+  "mapped_pages": 147,
+  "change": "13 explicit zero RAM cursor pages and13 zero16KiB ring pages appended. Main channel records+20+i*20 point at3 independent cursor words and ring. Channels13..16 unchanged.",
+  "qualification": "Structural experiment only. Hardware-backed T6040 work cursors, full receive-channel setup, production ring capacities, queue execution and rendering remain unqualified. No host work submission or cursor advance. RAM fixture is not a real hardware queue implementation.",
+  "tests": "10 serialization/permissions/overlap tests; W=1 build; actual matched TEXT66ec empty return0 and each12 individually unequal cursor return1 in offline emulator",
+  "model_result": {
+    "scope": "Offline firmware predicate only; no hardware initialization or queue submission",
+    "empty_result": 0,
+    "unequal_results": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "matched_text_sha256": "0ff064fffab74653e116ac869c372d84768a2991b995929a4b327b1ca06a8a22",
+    "empty_check_reads": 48
+  },
+  "native_trial_performed": false,
+  "next": "Normal Linux reboot, verify USB/input then one cold graph publication. No force unload of current pinned resources.",
+  "artifacts": {
+    "out/gpu-gravity-contract/empty-channel-candidate/graph-contract.h": "8169d763f70d049517a8b42f8e8c2ea6f746aa2372924e149c32725e9cd29fcc",
+    "out/gpu-gravity-contract/empty-channel-candidate/asc-graph-init.ko": "5b0890e74bf859503382bdb112299f4ef19257d1afc2ca9d4fe68d1b842476d3",
+    "out/gpu-gravity-contract/empty-channel-candidate/build-receipt.json": "4553d4a3b5b80f2eebbc73431d3d9e29ef4c33d53871b0f91ee8dff4ca964d58",
+    "out/gpu-gravity-contract/empty-channel-candidate/build.log": "d8b231f54eaadc6f2978a57ad207b91e74b52fbe28ba32df6583ad54a741839b",
+    "out/gpu-gravity-contract/empty-channel-candidate/graph-receipt.json": "81a91361a6b7fa38f0e89428e4b5a8198f0a263441a62af7df8b326c7737cdf9",
+    "out/gpu-gravity-contract/empty-channel-candidate/model-result.json": "6cf1aee38d068633b674b8e1f5c767410ca941b51c3010788a69da8fbcd1c2aa",
+    "out/gpu-gravity-contract/empty-channel-candidate/graph-map.h": "16bdfab112087d66014d154c2101cefdec1dc370effe25a37f107f585649ce93",
+    "out/gpu-gravity-contract/empty-channel-candidate/graph-before.bin": "b816a31749de6a9bf87ec93e1a5f06c016b022cc4b429df6f235fc5becd34c8d"
+  }
+}

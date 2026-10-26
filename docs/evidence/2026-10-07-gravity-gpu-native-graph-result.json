@@ -1,0 +1,157 @@
+{
+  "boot_id": "e1e8db50-10f6-46b5-8d73-a593b7e2c611",
+  "root_published": true,
+  "object_pages": 21,
+  "owned_table_pages": 2,
+  "object_changes": [
+    {
+      "name": "root",
+      "changed_bytes": 0,
+      "first_changed_offsets": []
+    },
+    {
+      "name": "main",
+      "changed_bytes": 0,
+      "first_changed_offsets": []
+    },
+    {
+      "name": "hardware",
+      "changed_bytes": 0,
+      "first_changed_offsets": []
+    },
+    {
+      "name": "region_c",
+      "changed_bytes": 0,
+      "first_changed_offsets": []
+    },
+    {
+      "name": "extra_root",
+      "changed_bytes": 0,
+      "first_changed_offsets": []
+    },
+    {
+      "name": "main_header",
+      "changed_bytes": 0,
+      "first_changed_offsets": []
+    },
+    {
+      "name": "shared_0",
+      "changed_bytes": 0,
+      "first_changed_offsets": []
+    },
+    {
+      "name": "shared_1",
+      "changed_bytes": 0,
+      "first_changed_offsets": []
+    },
+    {
+      "name": "shared_2",
+      "changed_bytes": 0,
+      "first_changed_offsets": []
+    },
+    {
+      "name": "shared_3",
+      "changed_bytes": 0,
+      "first_changed_offsets": []
+    },
+    {
+      "name": "shared_4",
+      "changed_bytes": 0,
+      "first_changed_offsets": []
+    },
+    {
+      "name": "hardware_counters",
+      "changed_bytes": 0,
+      "first_changed_offsets": []
+    },
+    {
+      "name": "power",
+      "changed_bytes": 0,
+      "first_changed_offsets": []
+    },
+    {
+      "name": "region_a",
+      "changed_bytes": 0,
+      "first_changed_offsets": []
+    },
+    {
+      "name": "status_a",
+      "changed_bytes": 1,
+      "first_changed_offsets": [
+        "0x10"
+      ]
+    },
+    {
+      "name": "status_b",
+      "changed_bytes": 0,
+      "first_changed_offsets": []
+    },
+    {
+      "name": "extra_root_1",
+      "changed_bytes": 0,
+      "first_changed_offsets": []
+    }
+  ],
+  "data_changed_bytes": 43799,
+  "module_pinned_until_reboot": true,
+  "root_parser_globals": {
+    "0x18e4c0": "0xfffffc2000104000",
+    "0x18e4c8": "0xc8aa322039604c0",
+    "0x18e3f0": "0xfffffc200013c000",
+    "0x18ee70": "0xfffffc2000140000",
+    "0x195748": "0xfffffc200010c000"
+  },
+  "exception": {
+    "pc": "0xfffffc0000029ea8",
+    "far": "0x10",
+    "esr": "0x96000004"
+  },
+  "x9": "0x0",
+  "instruction_checks": {
+    "0x29ea0": "0xd0000b29",
+    "0x29ea4": "0xf9441d29",
+    "0x29ea8": "0xb9401129",
+    "0x34094": "0x97fffb8b",
+    "0x340b0": "0x97ffd763"
+  },
+  "required_register_descriptor": {
+    "slot": 26,
+    "name": "FenderRegsGFenderCfg",
+    "name_text_offset": "0x5bee7",
+    "raw_table_word_3": "0x200000",
+    "hardware_record_offset": "0xa50",
+    "firmware_cached_record": "0x18f830"
+  },
+  "interpretation": "Native allocations-enabled root consumed; later initialization faults reading a null cached descriptor26 virtual address+0x10 (FAR0x10). Missing GFenderCfg mapping is now a concrete next blocker. No complete initialization/rendering success.",
+  "source_qualification": "Descriptor name/slot from pinned firmware table; physical register location and access permissions still require T6040-specific qualification.",
+  "artifact_sha256": {
+    "data-before.bin": "3a5b8cc02d184f78c42df9bd0cb33c6645ee49b5e3e871c0d14b4535e87efd17",
+    "objects-before.bin": "5b5b228436ccae9cc76dd16a0937c51c50dcef6e7bb6f626241ce452973dbe81",
+    "validation.json": "efed470d5d0725f80fb92bc43dc3f3c63a8e21c7c70f370a968efdb4321cadc6",
+    "dmesg-after.log": "ab5c8ff4940ca331317acfeab3e3a85b9dfe6367cf170495180cbd9fae7a6167",
+    "text.bin": "bf788c6d2f847d6581bf614cf9897c48f2c408e7957a8100ecd1de965fe20c19",
+    "pagetables.bin": "8a39d2abd3999ab73c34db2476849cddf303ce389b35826850f9a700589b4a90",
+    "boot.adt": "e948f51fbc3e1aa8b75722aeb158b48bf869c0de0d746e5815be41988b9501a0",
+    "data-after.bin": "7dd68379192cfc16a0dfe6e8aac0ea4d08570338f7d89cfb817dfaf8bb658f78",
+    "attempt.json": "891fbe2d7945662f7e7b57ff63e936c67f1270609495f1da5fec62095fbbb982",
+    "crashlog.json": "e5e73368a03bd852387c55896e9daab75b27e2f3d6f960ea73b60447aa1f361a",
+    "objects-after.bin": "3bd09722cc5a64b359e9e1bdc9f4def9e8748723773d80584cb1ebc888b6b3bf",
+    "gfender-candidate-read.log": "b6839bef806f7a5e303a1868d6199d90534f721dc293206a15b36483306b40fc",
+    "dmesg-before.log": "350fef35a1e0dda8aea26a431944f2ac17a5ae2ab313b1e434bfb30ddc06ec6e"
+  },
+  "gfender_candidate_read": {
+    "address": "0x288d04010",
+    "value": "0x11020a",
+    "read_only": true,
+    "helper_unloaded": true,
+    "gfx_power_held_by_retained_graph": true,
+    "firmware_consumed_fields": {
+      "bits_8_15": 2,
+      "bits_16_19": 1,
+      "product": 2
+    },
+    "low_byte": 10,
+    "qualification": "Address derived from donor offset0xd04000 relative to primary T6040 SGX aperture; contained in both observed SGX apertures. Fields are consistent with topology but do not alone establish all register semantics or access permissions."
+  },
+  "user_smoke_check": "All feels normal: desktop, built-in keyboard/trackpad, USB and networking after batch"
+}

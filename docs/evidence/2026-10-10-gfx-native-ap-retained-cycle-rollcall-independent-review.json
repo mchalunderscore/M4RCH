@@ -1,0 +1,435 @@
+{
+  "schema": "m4rch.gfx-native-ap-retained-cycle-rollcall-independent-review.v1",
+  "boot_id": "911ae710-78af-4702-8dfc-f4145decbd38",
+  "offline_only": true,
+  "hardware_actions": [],
+  "test_actions": [],
+  "source_changes": [],
+  "finding": "Retained endpoint rollcall is an application lifecycle gap separate from the successful v11 management roundtrip. Native preserved enabled endpoints produce an enabled bitmap. Actual v11 cold issued EP32/33 starts and witnessed application activity; its retained final type8 reply has bitmap0 despite advertised3. Matched FW sets endpoint+58bit0 only for reply setbits; an inspected power path clears those flags. Frozen historical df540 DATA has EP32/33flags0 after a same-image zero-map warm restart. Current v11 FWendpointstate and nativeenabledflags are not captured.",
+  "current_cold_rows": {
+    "EP32_start": "[  234.508272] m4rch ASC crashlog: application endpoint 32 start sent; no init graph",
+    "EP33_start": "[  234.508273] m4rch ASC crashlog: application endpoint 33 start sent; no init graph",
+    "root": "[  234.508310] m4rch graph-init: G16S root sent to EP32; host allocations enabled; structural fixture, NOT rendering readiness",
+    "observed_FW_records": "[  239.505360] m4rch graph-init: observation doorbells=0 records=22792 receive_status=0x0",
+    "EP33_recovery_send": "[  239.505788] m4rch recovery-send: endpoint=33 packet=0x86000000000000",
+    "FW_phase1": "[  239.511272] m4rch recovery-state: cycle=1 phase=pre counter=1 state=1 host_stop=1 request_state=2 request_flag=1 control=32/32/32",
+    "incomplete_recovery": "[  244.509239] m4rch recovery-result: completed=0 requested=2 allocations_retained=1 work_submitted=0"
+  },
+  "current_cold_EP32_start_sent": true,
+  "current_cold_EP33_start_sent": true,
+  "current_root_requires_both_start_writes": true,
+  "cold_activity_qualification": {
+    "EP32": "FirstOFF removed eight exact EP32 notification frames; root publication and22792 capturedFWrecords preceded that. This witnesses endpoint traffic, not a native IOEventSource enabled flag.",
+    "EP33": "After the own endpoint33 recovery request, shared token advanced0\u21921 and phase became1 before the pinned host writes phase2. This supports firmware handling of that bounded request; recovery completed0of2.",
+    "native_host_enabled_bitmap_at_runtime": "Unobserved; preserve a future owner-bound cold enabled mirror only after defining its exact proof."
+  },
+  "current_E2_map_RX": [
+    {
+      "monotonic": 358.483029,
+      "delta_line": 67,
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/resident-operations/20261010T101247.170546Z-gfx-native-ap-retained-cycle-ffa7e006/dmesg-after.log",
+      "raw": "[  358.483029] m4rch gfx-native-ap-retained-cycle-rx: epoch=2 index=2 message=0x80000000000003 metadata=0x10120000000000",
+      "payload_bytes_including_newline": 106,
+      "epoch": 2,
+      "index": 2,
+      "message": 36028797018963971,
+      "metadata": 4523390836670464
+    },
+    {
+      "monotonic": 358.484141,
+      "delta_line": 69,
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/resident-operations/20261010T101247.170546Z-gfx-native-ap-retained-cycle-ffa7e006/dmesg-after.log",
+      "raw": "[  358.484141] m4rch gfx-native-ap-retained-cycle-rx: epoch=2 index=3 message=0x88000100000003 metadata=0x10230000000000",
+      "payload_bytes_including_newline": 106,
+      "epoch": 2,
+      "index": 3,
+      "message": 38280601127616515,
+      "metadata": 4542082534342656
+    }
+  ],
+  "current_E2_map_TX": [
+    {
+      "monotonic": 358.483033,
+      "delta_line": 68,
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/resident-operations/20261010T101247.170546Z-gfx-native-ap-retained-cycle-ffa7e006/dmesg-after.log",
+      "raw": "[  358.483033] m4rch gfx-native-ap-retained-cycle-tx: hello=0 packet=0x80000000000001 endpoint=0 root_publications=0 application_starts=0 init220_requests=0",
+      "payload_bytes_including_newline": 142,
+      "hello": 0,
+      "packet": 36028797018963969,
+      "endpoint": 0,
+      "root_publications": 0,
+      "application_starts": 0,
+      "init220_requests": 0
+    },
+    {
+      "monotonic": 358.484146,
+      "delta_line": 70,
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/resident-operations/20261010T101247.170546Z-gfx-native-ap-retained-cycle-ffa7e006/dmesg-after.log",
+      "raw": "[  358.484146] m4rch gfx-native-ap-retained-cycle-tx: hello=0 packet=0x88000100000000 endpoint=0 root_publications=0 application_starts=0 init220_requests=0",
+      "payload_bytes_including_newline": 142,
+      "hello": 0,
+      "packet": 38280601127616512,
+      "endpoint": 0,
+      "root_publications": 0,
+      "application_starts": 0,
+      "init220_requests": 0
+    }
+  ],
+  "advertised_block1_bitmap": 3,
+  "retained_final_reply_block1_bitmap": 0,
+  "no_current_E2_application_start_or_root_publication": true,
+  "native_ranges_verified": [
+    {
+      "name": "RTBuddyManagementEndpoint::_handleEPRollCall",
+      "start": "0xfffffe000b1f2d38",
+      "end_exclusive": "0xfffffe000b1f2e7c",
+      "file_offset": 69135672,
+      "bytes": 324,
+      "sha256": "6d711472176e0bbf2637db959dabf3eb7ac7d266e3f70585853783983a703e17",
+      "saved_disassembly_bytes_match": true
+    },
+    {
+      "name": "RTBuddyManagementEndpoint::_buildRollCall",
+      "start": "0xfffffe000b1f31a4",
+      "end_exclusive": "0xfffffe000b1f3234",
+      "file_offset": 69136804,
+      "bytes": 144,
+      "sha256": "f94d9fba3f2ad3098aa9716b5bb58cd5c3dac07a478bface137883b6661bc6fe",
+      "saved_disassembly_bytes_match": true
+    },
+    {
+      "name": "IOEventSource::isEnabled",
+      "start": "0xfffffe000bf86424",
+      "end_exclusive": "0xfffffe000bf86434",
+      "file_offset": 83371044,
+      "bytes": 16,
+      "sha256": "526eaa1a5685dfc0c9ccc971bda1b606d84622a3c846fb0be3bdc44f9c767373",
+      "instruction_semantics": "BTI; ldrb w8,[x0,+0x28]; and w0,w8,1; ret"
+    }
+  ],
+  "native_instruction_checks": {
+    "0xfffffe000b1f2d70": "ldrb\tw8, [x19, #0x121]",
+    "0xfffffe000b1f2d74": "tbnz\tw8, #0x0, 0xfffffe000b1f2dd0",
+    "0xfffffe000b1f2dd8": "bl\t__ZN25RTBuddyManagementEndpoint14_buildRollCallEj",
+    "0xfffffe000b1f31d8": "bl\t__ZN7RTBuddy11getEndpointEj",
+    "0xfffffe000b1f31f0": "mov\tx17, #0x180",
+    "0xfffffe000b1f3204": "cbz\tw0, 0xfffffe000b1f3210",
+    "0xfffffe000b1f320c": "orr\tw20, w20, w8"
+  },
+  "native_vtable_slot_calibration": [
+    {
+      "vtable": "0xfffffe00088a1fb0",
+      "header_bytes": 16,
+      "slot": "0x0",
+      "file_offset": 25812928,
+      "target": "0xfffffe000b1e7370",
+      "raw_sha256": "febb56d35f7be79a46673b83767850b3fcc265968b27d85390c965391d70192a"
+    },
+    {
+      "vtable": "0xfffffe00088a1fb0",
+      "header_bytes": 16,
+      "slot": "0x8",
+      "file_offset": 25812936,
+      "target": "0xfffffe000b1e7378",
+      "raw_sha256": "f50b486b5815232a57702764bfaf75d143c4272860850877c7d5914b3fa00498"
+    },
+    {
+      "vtable": "0xfffffe00088a1fb0",
+      "header_bytes": 16,
+      "slot": "0x180",
+      "file_offset": 25813312,
+      "target": "0xfffffe000bf86424",
+      "raw_sha256": "bb9b076792ffdc59e513892183036f84ef331f38a1a113eafc2c8fc0eaf85410"
+    }
+  ],
+  "native_rollcall_semantics": "Cold final map sets management flag121; retained flag121 branch calls buildRollCall(block*32). For32entries it finds existing endpoint and calls virtual180=isEnabled (+28bit0); only true flags enter the low32 reply bitmap. Advertisement bitmap and enabled bitmap are distinct.",
+  "firmware_TEXT_qualification": {
+    "raw_sha256": "211b9912bf071baa208868fc1bfc17299a8793a13503c9b560f4dbe0a231f75f",
+    "normalized_sha256": "190cef1946a23dfbde180592629631c3b28d0509a17eb76108b7c9a52accd9ac",
+    "observed_variable_payloads": [
+      {
+        "offset": "0x59841",
+        "tag_bytes": "GKTS",
+        "payload_hex": "5e681a3f0065e73e"
+      },
+      {
+        "offset": "0x59924",
+        "tag_bytes": "ECAP",
+        "payload_hex": "b10bcdbea489c0e2"
+      }
+    ],
+    "qualification": "Exact match outside two tagged eight-byte boot metadata payloads; tags and lengths are also checked. No instruction bytes excluded."
+  },
+  "firmware_ranges_verified": [
+    {
+      "label": "management-dispatch",
+      "start_offset": "0x481e0",
+      "end_exclusive_offset": "0x4836c",
+      "bytes": 396,
+      "sha256": "7e4063b7fca89e0dd05878ba77abdc084e9201e10ac9ff2dc0a544f181bb05f3",
+      "saved_disassembly_bytes_match_current_TEXT": true
+    },
+    {
+      "label": "management-dispatch-table",
+      "start_offset": "0x4836c",
+      "end_exclusive_offset": "0x483ac",
+      "bytes": 64,
+      "sha256": "e1ca53c836ad3073dd0fe59738a2cb89f3d1e27fff0b2c21d51ca28b3175f32d",
+      "saved_disassembly_bytes_match_current_TEXT": true
+    },
+    {
+      "label": "queued-handshake-worker",
+      "start_offset": "0x483ac",
+      "end_exclusive_offset": "0x485c4",
+      "bytes": 536,
+      "sha256": "10556a5d8c1f8cb96e9fe8fcbb2cb5c651198400252cbed98185c9358274cea0",
+      "saved_disassembly_bytes_match_current_TEXT": true
+    },
+    {
+      "label": "endpoint-lookup",
+      "start_offset": "0x46908",
+      "end_exclusive_offset": "0x4694c",
+      "bytes": 68,
+      "sha256": "83b3a2edd91b1c4a135436b9e7193068a75e18d1851f600f12674b83cf112b09",
+      "saved_disassembly_bytes_match_current_TEXT": true
+    },
+    {
+      "label": "endpoint-start-bit-update",
+      "start_offset": "0x4714c",
+      "end_exclusive_offset": "0x47264",
+      "bytes": 280,
+      "sha256": "348970bc36939c53e353ac765d814d3e0eea643aa0e5820d5fa585037fc57d30",
+      "saved_disassembly_bytes_match_current_TEXT": true
+    },
+    {
+      "label": "power-transition-endpoint-clear",
+      "start_offset": "0x47f94",
+      "end_exclusive_offset": "0x481b8",
+      "bytes": 548,
+      "sha256": "19b94b4bbb7de93b17b005f29f20bf7564ac866b10a4c9e0da8c07454704ee8e",
+      "saved_disassembly_bytes_match_current_TEXT": true
+    },
+    {
+      "label": "wire-power-convert",
+      "start_offset": "0x48648",
+      "end_exclusive_offset": "0x486b0",
+      "bytes": 104,
+      "sha256": "41668aad112018c630a6ee019764cf6a7dadcb8be464f8a9087127658066219a",
+      "saved_disassembly_bytes_match_current_TEXT": true
+    },
+    {
+      "label": "power-mode-conditional",
+      "start_offset": "0x4a534",
+      "end_exclusive_offset": "0x4a584",
+      "bytes": 80,
+      "sha256": "687d834865e133a3c108ed436ec146b84e7ef283280633b26d11fd2afe74fb93",
+      "saved_disassembly_bytes_match_current_TEXT": true
+    },
+    {
+      "label": "power-state-mask",
+      "start_offset": "0x4ce74",
+      "end_exclusive_offset": "0x4ce8c",
+      "bytes": 24,
+      "sha256": "12b618677db1b41da9a5165952e42fbb717fbab89a4a48571ecc6c042ef5a019",
+      "saved_disassembly_bytes_match_current_TEXT": true
+    },
+    {
+      "label": "queued-work-wake",
+      "start_offset": "0x4c05c",
+      "end_exclusive_offset": "0x4c080",
+      "bytes": 36,
+      "sha256": "1f711c35ccb670b7c496c5bfbc899647b3da86f28e1c8173b823014ea3141e68",
+      "saved_disassembly_bytes_match_current_TEXT": true
+    }
+  ],
+  "firmware_type8_dispatch": {
+    "generic_jump_target": "0x48298",
+    "queued_worker_jump_target": "0x48474",
+    "queued_wake": "48298\u21924c05c",
+    "worker_effect": "48490..484d8 derivesblock*32 and low32bitmap, looks up eachsetbit through46908, then ORs endpointrecord+58bit0. Zero bits cause no write in this handler. Lastbit51 ends handshake state4 at48540.",
+    "base0_special_case": "Worker skipsEP0 and shifts the lowbitmap once forbase0; application block1 starts atEP32.",
+    "retained_reply_with_bitmap3": "0x0088000100000003 would markEP32/33 +58bit0 if endpoints exist. This is an untested future application lifecycle hypothesis, not an admitted current command."
+  },
+  "firmware_type5_cold_start_effect": "48230/48338\u21924714c\u2192471a4/471cc sets endpoint+58bit0 and invokes transition callback. This explains why cold explicit starts can follow an initial zero application map reply.",
+  "firmware_endpoint_clear_path": {
+    "range": "47f94..481b8",
+    "effect": "4810c..4817c enumerates existing endpoints and passes flags&~1 through471cc before renewed handshake. Branch480b4 depends onnew/oldpowerstates, sharedglobal826c0 and managementstate.",
+    "actual_current_clear_route_execution_proved": false,
+    "historical_global826c0": 33,
+    "zero_bitmap_clears_bits_directly": false
+  },
+  "historical_df540_DATA": {
+    "boot_id": "df540c1c-5ec4-44f5-894c-37be6c2f3527",
+    "capture_path": "out/gfx-native-running-cycle/post-event-fw-data-df540",
+    "DATA_virtual_base": "0xfffffc0000060000",
+    "domain_table": "0xfffffc00000825e0",
+    "domain_count": 8,
+    "domain_pointer_table": "0xfffffc00000825a0",
+    "domain0": "0xfffffc0000189ad8",
+    "endpoint_limit": 33,
+    "endpoint_record_base": "0xfffffc0000189928",
+    "endpoint_mapping": "0xfffffc0000189ab0",
+    "bounded_endpoint_states": [
+      {
+        "endpoint": 1,
+        "mapping_index": 1,
+        "mapping_address": "0xfffffc0000189ab2",
+        "mapping_entry": "0x3",
+        "record_address": "0xfffffc0000189988",
+        "record_bytes": 96,
+        "record_sha256": "6b3740a60a5366df69944115fbf2012a35ec1b9be89744dd280ed87da669bf80",
+        "flags_plus58": "0x1",
+        "bit0": 1
+      },
+      {
+        "endpoint": 32,
+        "mapping_index": 14,
+        "mapping_address": "0xfffffc0000189acc",
+        "mapping_entry": "0x5",
+        "record_address": "0xfffffc00001899e8",
+        "record_bytes": 96,
+        "record_sha256": "efaafd00c191f4499bf8f4de5ea18aef4ce68b2a04361f96e2e2956130884216",
+        "flags_plus58": "0x0",
+        "bit0": 0
+      },
+      {
+        "endpoint": 33,
+        "mapping_index": 15,
+        "mapping_address": "0xfffffc0000189ace",
+        "mapping_entry": "0x7",
+        "record_address": "0xfffffc0000189a48",
+        "record_bytes": 96,
+        "record_sha256": "667828792ae5bc468274a16a70741d48a3c60041c8c344255ae9039520486d6b",
+        "flags_plus58": "0x0",
+        "bit0": 0
+      }
+    ],
+    "qualification": "One previously frozen non-atomic postpanic DATA capture after historical same-image warm HELLO/maps/Running andzero application bitmap followed by duplicateB20. It corroborates flagloss in that historicaltrial; it is not current911aDATA or a direct timed branchtrace."
+  },
+  "supported_next_offline_condition": "Preserve endpoint identities and a proved owner-bound desired enabled set across retained202, distinguish advertisement from enabled reply, and qualify a retained rollcall bitmap corresponding to that proof. Reconcile native retained AGX callbacks separately. Do not add coldtype5 starts/root/context replay from this finding alone.",
+  "limits": [
+    "Management roundtrip success remains independently proved; application rejoin is still0 and work/pixels remain unproved.",
+    "No current MacOS/native endpoint object enabled values or currentv11 internal FWendpointflags were sampled.",
+    "Bitmapzero does not directly clear bits in the worker; inspected powerclear path and historicalsavedflags support a lifecycle concern without qualifying actual currentbranch timing.",
+    "Actual cold source write/send chronology and firmware activity do not alone prove complete native application recovery parity.",
+    "No further hardware, module build, emulation/test, source modification or control admission was performed."
+  ],
+  "unique_input_pins": 23,
+  "inputs": [
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-root-envelope/build-receipt.json",
+      "sha256": "a8a24d16dc8ea0f6836b7a03697c55a4a60954de01bc663c756a49574bb4efb9",
+      "bytes": 31662
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/asc-graph-init.c",
+      "sha256": "bc290b6aea00d43592ee1f98ba86e8c41240df4b714cbc1b2d2d32794adf32d1",
+      "bytes": 25206
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/gfx-native-ap-retained-cycle.h",
+      "sha256": "7bf2d260bdf38f8766b04a8e6811ca0354e1ead22d3452be5e38324cd5dff3f2",
+      "bytes": 35716
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/recovery-cycle.h",
+      "sha256": "e357f18422a1851f36175091ae68f8b0171c99854c1eb839f4415968a6579ca4",
+      "bytes": 11332
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/receive-service.h",
+      "sha256": "bab356c9a2467fbb46760345102a7fb8369a9efe8db31efd058b1fd918b11043",
+      "bytes": 3787
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/attempt.json",
+      "sha256": "185be70d696311120ceeeff3b93264d0253ee99b2946d39756e0b3d46e217e83",
+      "bytes": 46896
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/dmesg-after.log",
+      "sha256": "f241900a46ccac3d1f06e008dbd08a7eb6e99362177d56b61000ffd3e3585c84",
+      "bytes": 131764
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/dmesg-before.log",
+      "sha256": "a2c3cdb0db2bf1b706b675359588df46f463bf8c55c1dbd95a365556379e6b19",
+      "bytes": 63813
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/resident-operations/20261010T101220.043342Z-gfx-powergate-3e63fc08/attempt.json",
+      "sha256": "8943b5545e3ee4a21774a357a05f4e264788e1ff4ae18ee89445c45eac491b1b",
+      "bytes": 35149
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/resident-operations/20261010T101220.043342Z-gfx-powergate-3e63fc08/dmesg-after.log",
+      "sha256": "86ea0be5d318ccd62be8471db3412c2ed17a2b5fd8f38ab1b3490efe8f89f76e",
+      "bytes": 131422
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/resident-operations/20261010T101247.170546Z-gfx-native-ap-retained-cycle-ffa7e006/attempt.json",
+      "sha256": "a8b0657b28ef88bf85ab3a8d1cfc51b36651a16bb4823b848481aa7e81dd0a74",
+      "bytes": 41076
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/resident-operations/20261010T101247.170546Z-gfx-native-ap-retained-cycle-ffa7e006/dmesg-after.log",
+      "sha256": "4197910873e949287cedf85f187e70ddfbe2901176b2d1f853a990fc7e643a29",
+      "bytes": 131496
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/resident-operations/20261010T101247.170546Z-gfx-native-ap-retained-cycle-ffa7e006/dmesg-before.log",
+      "sha256": "86ea0be5d318ccd62be8471db3412c2ed17a2b5fd8f38ab1b3490efe8f89f76e",
+      "bytes": 131422
+    },
+    {
+      "path": "docs/evidence/2026-10-10-gfx-native-ap-retained-cycle-live-terminal.json",
+      "sha256": "87e6bfe5eb6a439d3040c7433330c77fd2f6059be46cd09f9c1d76e9690340ef",
+      "bytes": 334871
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/loaded-identity-911a.json",
+      "sha256": "316f4384395086e80add461befc157e60682cb2e508258fede05008ba3c7d56b",
+      "bytes": 693
+    },
+    {
+      "path": "out/private-apple/kernelcache.decoded",
+      "sha256": "6158e1c0d591240808e26ff1da050b2fa0ed3eb17c1779d2ddde3171b959536f",
+      "bytes": 119308288
+    },
+    {
+      "path": "out/private-apple/rtbuddy-disassembly.txt",
+      "sha256": "f3b2d761afeb65c0b23d75049442ee3e0d636bb758878b548a86334b43bea8a3",
+      "bytes": 3749663
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/candidate/asc-graph-init/boot-911ae710-78af-4702-8dfc-f4145decbd38/text.bin",
+      "sha256": "211b9912bf071baa208868fc1bfc17299a8793a13503c9b560f4dbe0a231f75f",
+      "bytes": 393216
+    },
+    {
+      "path": "experiments/t6040-gpu/firmware_text_contract.py",
+      "sha256": "4e26c2e87486970e0c8a62017760f2c95ebf24ab96e5fef65e54107ff96d3e2f",
+      "bytes": 1407
+    },
+    {
+      "path": "out/gpu-gravity-contract/firmware-text-disassembly.txt",
+      "sha256": "c66b9ee3eb696c031e2dbbc9065ce2a270b34c920beed35f83cad549f15de202",
+      "bytes": 5140557
+    },
+    {
+      "path": "out/gfx-native-running-cycle/post-event-fw-data-df540/data-after.bin",
+      "sha256": "7204e27e9cc9fd5f5a145378b050a062f5f33dc20ed651e7d3d2090ba30caded",
+      "bytes": 1277952
+    },
+    {
+      "path": "out/gfx-native-running-cycle/post-event-fw-data-df540/capture.json",
+      "sha256": "f802354348632c34e8f7bf422d0edb860059142c5018177cd56775c7b826da6d",
+      "bytes": 3717
+    },
+    {
+      "path": "out/gfx-native-ap-retained-cycle/review-rollcall-911a.py",
+      "sha256": "3fb91e3e917fc740e02bff17e8f562a6619aba46348ae0512c0e7a755ee0942a",
+      "bytes": 17380
+    }
+  ]
+}

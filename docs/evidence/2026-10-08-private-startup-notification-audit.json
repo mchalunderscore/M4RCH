@@ -1,0 +1,40 @@
+{
+  "apple_build": "25G83",
+  "agx_version": "353.14",
+  "macho_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "exact_pinned_site_checks": 12,
+  "facts": [
+    {
+      "topic": "Host startup bookkeeping",
+      "observation": "notifyFirmwareStarted writes CPU-object byte1715; bootFirmware waits for its bit0 then sets CPU-object byte2a8; isGFXBooted reads1715. These are CPU-side state, absent from our firmware-visible fixture.",
+      "evidence_addresses": [
+        "0xfffffe00089b7948..0xfffffe00089b79d8",
+        "0xfffffe00089ca7cc..0xfffffe00089ca8ec",
+        "0xfffffe00089d15ac..0xfffffe00089d15cc"
+      ]
+    },
+    {
+      "topic": "Mailbox event class",
+      "observation": "receivedMessageFromAKF tests mask0x3f000000000000 against0x2000000000000, then invokes an accelerator callback. It does not directly set1715; callback routing remains unqualified. No such notification observed in the bounded native trial.",
+      "evidence_addresses": [
+        "0xfffffe00089b7c90..0xfffffe00089b7cf4"
+      ]
+    },
+    {
+      "topic": "Unpopulated main field",
+      "observation": "initFirmwareSharedData maps CPU resource880 via the same GPU-address getter and stores its result at main+200. That field overlaps the existing17-descriptor region and is currently zero. Backing size, role and receive-channel routing require full allocation/callback audit; do not infer an event ring merely from the offset.",
+      "evidence_addresses": [
+        "0xfffffe00089be758..0xfffffe00089be798"
+      ]
+    },
+    {
+      "topic": "Shared pointer corroboration",
+      "observation": "Five mapping results from CPU resources308/310/318/328/330 occupy main+254..274; main+250 is zeroed and shared status through CPU960 begins with zero. Existing graph follows five pointer positions; this does not validate complete nested content.",
+      "evidence_addresses": [
+        "0xfffffe00089be494..0xfffffe00089be5f0",
+        "0xfffffe00089be79c..0xfffffe00089be7b4"
+      ]
+    }
+  ],
+  "qualification": "Static implementation-derived private analysis, not clean-room. Named numeric ABI observations only; no instruction listing included. Native control consumption is distinct from macOS host startup bookkeeping, full resource setup and rendering readiness."
+}

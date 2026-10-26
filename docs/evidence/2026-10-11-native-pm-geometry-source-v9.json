@@ -1,0 +1,110 @@
+{
+  "schema": "m4rch.native-pm-geometry-source.v9",
+  "driver_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "hardware_actions": [],
+  "address_point": "0xfffffe0007eae398",
+  "provider_b90": "0xfffffe00089d8c2c",
+  "provider_1078": "0xfffffe00089e80e4",
+  "device_config_u64": [
+    4,
+    4,
+    6144,
+    8,
+    8,
+    16
+  ],
+  "device_config_roles": [
+    "page_factor",
+    "registration_alignment",
+    "scene_divisor_units",
+    "scene_fixed_bytes",
+    "scene_bytes_per_unit",
+    "scene_alignment"
+  ],
+  "device_config_destination": "PM1d8..207, not PM1d4",
+  "scene_count": 80,
+  "state_count": 36,
+  "base_counts": [
+    36,
+    36,
+    0,
+    0
+  ],
+  "group_shift": 0,
+  "group_allowance": false,
+  "extra_scene_stride": false,
+  "native_count_chain": "CFG14=ceil(initialPBbytes/20000),CFG18=ceil(maxPBbytes/20000);PM154/15c copy;HWstate80/7c multiply4",
+  "support_extent_chain": "HWParamBufferManager20 is retained AGXResource. Resource allocation bytes=PM148capacity*DevicePMConfigpagefactor*4; reset resource78 low32\u2192HWstate30. It is byte extent, not support lease count.",
+  "linux_bindings": {
+    "initial_blocks": 11,
+    "max_blocks": "tvb_max_blocks",
+    "capacity": "max_blocks+1 explicit free-slot Linux policy",
+    "registration_stride": 4,
+    "scene_stride_default_max2193": 32,
+    "hardware_support_extent": "actual mapped page-list allocation bytes",
+    "PM1d4": "explicit fresh Linux zero; no direct native setter established"
+  },
+  "ranges": [
+    {
+      "start": "0xfffffe0008967348",
+      "end": "0xfffffe0008967350",
+      "sha256": "cd346fc28634af8e7049301945913e19a85be330bcce78be16f7ce1fab47553e"
+    },
+    {
+      "start": "0xfffffe00089675f4",
+      "end": "0xfffffe0008967600",
+      "sha256": "eaca20d5817f7d492c3b3db776590e546415aaf138f058d2df9800657c0dcbba"
+    },
+    {
+      "start": "0xfffffe0008967648",
+      "end": "0xfffffe000896766c",
+      "sha256": "15b02c5dc918131dbcc5b8c796f05750a013e13be8a22ec09a767c4a6a90f4d6"
+    },
+    {
+      "start": "0xfffffe00089678bc",
+      "end": "0xfffffe00089678c8",
+      "sha256": "fa5f762139b628c7f93a9744c6922256c5af1c68f2d17126490a4dd1bd528c56"
+    },
+    {
+      "start": "0xfffffe00089d9c0c",
+      "end": "0xfffffe00089d9c14",
+      "sha256": "3ee7634871f668f527c5647ebc2a0f893a0bcfef5acb9ef8c6b62707be84fdb1"
+    },
+    {
+      "start": "0xfffffe00089d8c2c",
+      "end": "0xfffffe00089d8c54",
+      "sha256": "771fd75fcf8d1db5194a2ad2cfc3be3ae655bbac3c5b141fb2f3231eb27cf4e1"
+    },
+    {
+      "start": "0xfffffe00089fc75c",
+      "end": "0xfffffe00089fc770",
+      "sha256": "b34695bbedfeaff23dcd73f333422a908b03d64b7ac455d43f44702eaa24584c"
+    },
+    {
+      "start": "0xfffffe00089fd168",
+      "end": "0xfffffe00089fd180",
+      "sha256": "da673ad488c6104c95678be675a5a86c8d82264c00298bae9da2d73df40df25f"
+    },
+    {
+      "start": "0xfffffe00089fb880",
+      "end": "0xfffffe00089fb898",
+      "sha256": "2da8c409d23934bf0515a116396566d9abc83b3940a09bf405559b258d929940"
+    },
+    {
+      "start": "0xfffffe00089fd440",
+      "end": "0xfffffe00089fd450",
+      "sha256": "25f65c7c14f68a842be6bb114646be485fecf060a87e20e16c971b4ad9c12def"
+    },
+    {
+      "start": "0xfffffe00089fb83c",
+      "end": "0xfffffe00089fb848",
+      "sha256": "66b82de211477af913b54753861d2e93143c14da76981e1248d80de1b50c03b3"
+    },
+    {
+      "start": "0xfffffe00089ff10c",
+      "end": "0xfffffe00089ff168",
+      "sha256": "fad0d7358fe3a76d1db44d2c9dd8d70c17516f0c906d852284097b2d77c8666f"
+    }
+  ],
+  "qualification": "Static instruction/constant/vtable closure. Native allocator, property overrides and memory provider not replayed here. Linux requested-memory/free-slot policy remains explicit; no firmware execution or retirement proved."
+}

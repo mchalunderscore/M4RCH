@@ -225,5 +225,13 @@ class BootPreflightTests(unittest.TestCase):
                 boot.check_config(path)
 
 
+class HarnessPaths(unittest.TestCase):
+    def test_replacement_paths_are_not_reprocessed(self):
+        text = 'echo "== deps =="\napt-get update\nBUILD_DIR="/build"\ngit clone /src /build\ncp /out/a /src/a\n'
+        result = boot.adapt_harness(text, Path('/work/out/linux'), Path('/work/src/stage'))
+        self.assertNotIn('apt-get', result)
+        self.assertIn('git clone /work/out/linux /build', result)
+        self.assertIn('cp /work/src/stage/a /work/out/linux/a', result)
+
 if __name__ == "__main__":
     unittest.main()

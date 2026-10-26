@@ -1,0 +1,144 @@
+{
+  "private_binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "counts": {
+    "3d_vector_a": 512,
+    "3d_aux_end": 512,
+    "ta_vector_a": 512,
+    "ta_aux_end": 512,
+    "scene_host_write": 512
+  },
+  "scene_write_modes": {
+    "0": 128,
+    "1": 128,
+    "2": 128,
+    "3": 128
+  },
+  "windows": [
+    {
+      "name": "3d_vector_a",
+      "start": "0xfffffe000895b530",
+      "end": "0xfffffe000895b57c",
+      "sha256": "8ce87efc1694573fafdfb21287b0e81b60604d842a203b69f3f1e916e53f033f",
+      "source_offset": "0x910",
+      "output_offset": "0x30"
+    },
+    {
+      "name": "3d_aux_end",
+      "start": "0xfffffe000895b57c",
+      "end": "0xfffffe000895b5cc",
+      "sha256": "b42fc3d9635f12a3663e2feaba218b49fa4e3cdf2d7edd63dcb797fcf0bf5fc5",
+      "source_offset": "0x938",
+      "output_offset": "0x38"
+    },
+    {
+      "name": "ta_vector_a",
+      "start": "0xfffffe0008a1f43c",
+      "end": "0xfffffe0008a1f488",
+      "sha256": "bace2b708d4264aa9e93c2f6337fa0478b910afb761e19a6de909284afd3dcb6",
+      "source_offset": "0x1228",
+      "output_offset": "0x28"
+    },
+    {
+      "name": "ta_aux_end",
+      "start": "0xfffffe0008a1f488",
+      "end": "0xfffffe0008a1f4d8",
+      "sha256": "a37074fd6f90630dc0bd38a9c4d8fa6e302f89aae15790e763fe65a39eb98040",
+      "source_offset": "0x1250",
+      "output_offset": "0x30"
+    }
+  ],
+  "scene_window": {
+    "start": "0xfffffe0008a22c4c",
+    "end": "0xfffffe0008a22c6c",
+    "sha256": "3e1fa10815cb0ef42a2e64cff683f53cdaf60a4ed673ea98a8efecb0fb0da3fa"
+  },
+  "examples": [
+    {
+      "window": "3d_vector_a",
+      "source_offset": "0x910",
+      "output_offset": "0x30",
+      "host_input": "0xa5578ca74ed7cd65",
+      "supplied_translation": "0x5d25d5245c1235fa"
+    },
+    {
+      "window": "3d_aux_end",
+      "source_offset": "0x938",
+      "output_offset": "0x38",
+      "host_input": "0xfe669a0f309fd136",
+      "supplied_translation": "0xf05530c0696904ab"
+    },
+    {
+      "window": "ta_vector_a",
+      "source_offset": "0x1228",
+      "output_offset": "0x28",
+      "host_input": "0x27119cec2864a538",
+      "supplied_translation": "0x844ffaea53226ba"
+    },
+    {
+      "window": "ta_aux_end",
+      "source_offset": "0x1250",
+      "output_offset": "0x30",
+      "host_input": "0x1e7b178a768441c6",
+      "supplied_translation": "0x4f3ff409637eb827"
+    }
+  ],
+  "qualification": "Actual native bounded consumer windows prove 3D910/938 and TA1228/1250 are passed to scheduler2d8(host_pointer,0), with translated results stored in output structures. TA1230 is CPU-dereferenced for an unaligned64-bit scene write at+4c when mode1or2. PAC bypassed; scheduler translation supplied and exact arguments checked. Output object class/final firmware serialization and actual translation implementation not qualified. Not complete prepare/submit; no hardware execution.",
+  "candidate_mapping_bindings": {
+    "submission_ready": false,
+    "mapping_bindings": [
+      {
+        "object": "manager",
+        "offset": "0x58",
+        "candidate": "hw_state",
+        "value": "0xfffffc2000a40000"
+      },
+      {
+        "object": "manager",
+        "offset": "0x60",
+        "candidate": "hw_counter",
+        "value": "0xfffffc2000a44000"
+      },
+      {
+        "object": "state",
+        "offset": "0x20",
+        "candidate": "reset_translated",
+        "value": "0x10000a0000"
+      },
+      {
+        "object": "state",
+        "offset": "0x28",
+        "candidate": "page_list",
+        "value": "0x10000a0000"
+      },
+      {
+        "object": "state",
+        "offset": "0x64",
+        "candidate": "hw_counter",
+        "value": "0xfffffc2000a44000"
+      },
+      {
+        "object": "state",
+        "offset": "0x84",
+        "candidate": "discard",
+        "value": "0xfffffc2000a48000"
+      }
+    ],
+    "scene_records_checked": 16,
+    "ring_entry_checked": 0,
+    "ring_entry_hex": "06a000000400c00b000000200000c07a",
+    "qualification": "Native initializer/reset/scene/retention/caller used supplied mapping candidates and full independent byte comparisons passed256 chains. Post-export checks match6 state/manager address fields,16 scene pointers and packed-ring projection. Mapping services/translator are supplied candidates, address domain semantics and actual FW aliases not proven. CPU map50/map60 and copied vector pointers remain emulation identities; cannot publish snapshots."
+  },
+  "candidate_initialized_retention_counts": {
+    "chains": 256,
+    "fresh_page_mappings": 256,
+    "descriptor_resources": 2304,
+    "page_entries": 1024,
+    "initializer_mode_one": 256,
+    "caller_bindings": 256,
+    "usage_event_service_calls": 512,
+    "uma_validations": 256,
+    "uma_usage_updates": 256,
+    "uma_descriptor_event_updates": 243,
+    "initialized_parameter_loads": 256
+  }
+}

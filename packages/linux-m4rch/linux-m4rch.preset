@@ -1,0 +1,3 @@
+ALL_kver='/boot/vmlinuz-linux-m4rch'
+PRESETS=('default')
+default_image='/boot/initramfs-linux-m4rch.img'

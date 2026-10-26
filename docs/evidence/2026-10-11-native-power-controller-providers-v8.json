@@ -1,0 +1,593 @@
+{
+  "schema": "m4rch.native-power-controller-provider.v8",
+  "inputs": [
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/bind_power_controller_v8.py",
+      "bytes": 3947,
+      "sha256": "2857c4a756b3f5122248a8e1fc3ed74af60bc89df8e1df96a9bbd724e5679b52"
+    },
+    {
+      "path": "/boot/GPUC003/private-apple/com.apple.AGXG16X",
+      "bytes": 1566304,
+      "sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-fender-runtime-cycle/candidate/asc-graph-init/boot-f4a7b737-ed3d-4851-8fcd-cac56eb233d7/boot.adt",
+      "bytes": 606208,
+      "sha256": "01fb4c838a75aac89a3ddaa90996a65c394c07933a5b6927ec7ec13f6867cf39"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/adt.py",
+      "bytes": 2738,
+      "sha256": "09ff91633924f1e352c288fd62323861fb80e417775fc802b625cebb2782a23a"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/qualify_power_v7.py",
+      "bytes": 19440,
+      "sha256": "6e854d1fdcf79b220bf13a33561f3dfe1011715f9915bd929e269eb003f4574a"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/t6040-native-boot/prepare_power_complete_v7.py",
+      "bytes": 4503,
+      "sha256": "e1eb01baa29e3f36fb1e2fda21f33302dd3d8b765b8d39c2b4a6c8541970afa3"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-full-power-draft-comparison-v1/power.bin",
+      "bytes": 25976,
+      "sha256": "0fcd37096d322fa5237f642dd8992d8fb451608bcc4c1db49463d332063792e3"
+    }
+  ],
+  "native_sustained_controller_returned": true,
+  "sustained_call_site": "0x89637d4",
+  "sustained_selected_target": "0x8960a28",
+  "native_full_setup_returned": true,
+  "native_full_power_returned": true,
+  "providers": {
+    "sample_period_ms": 8,
+    "accelerator_sample_period_offset": "0xedac",
+    "gpu_clusters": 2,
+    "auxiliary_soc_die_count": 1,
+    "maximum_power_mw": 20000,
+    "ticks": 24,
+    "support26_gpu": "0xfffffc20003c3180",
+    "optional_aon_dictionary": "absent"
+  },
+  "entrypoints": [
+    "0x89ea270",
+    "0x89e9678",
+    "0x89cf0ec",
+    "0x89cad50"
+  ],
+  "calls": [
+    {
+      "kind": "native_virtual",
+      "site": "0x89637d4",
+      "target": "0x8960a28"
+    },
+    {
+      "kind": "native_virtual",
+      "site": "0x8960a70",
+      "target": "0x89e8b2c"
+    },
+    {
+      "kind": "native_virtual",
+      "site": "0x8963810",
+      "target": "0x89e8b18"
+    },
+    {
+      "kind": "native_virtual",
+      "site": "0x89638a0",
+      "target": "0x89e8b2c"
+    },
+    {
+      "kind": "native_virtual",
+      "site": "0x896391c",
+      "target": "0x89e8b2c"
+    },
+    {
+      "kind": "native_virtual",
+      "site": "0x89639ec",
+      "target": "0x89e8b2c"
+    },
+    {
+      "kind": "native_virtual",
+      "site": "0x8963a98",
+      "target": "0x89e8b2c"
+    },
+    {
+      "kind": "native_virtual",
+      "site": "0x8963af0",
+      "target": "0x89e8b2c"
+    },
+    {
+      "kind": "native_virtual",
+      "site": "0x89ea34c",
+      "target": "0x89e8b2c"
+    },
+    {
+      "kind": "native_virtual",
+      "site": "0x89ac468",
+      "target": "0x89e7df4"
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-pwr-min-duty-cycle",
+      "present": false
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-device-max-power",
+      "present": false
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-max-power",
+      "present": false
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-pwr-filter-time-constant",
+      "present": false
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-pwr-integral-gain",
+      "present": false
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-pwr-integral-min-clamp",
+      "present": false
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-pwr-proportional-gain",
+      "present": false
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-perf-base-pstate",
+      "present": false
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-perf-tgt-utilization",
+      "present": false
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-perf-dz",
+      "present": false
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-perf-filter-time-constant",
+      "present": false
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-perf-filter-time-constant2",
+      "present": false
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-perf-filter-drop-threshold",
+      "present": false
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-perf-integral-gain",
+      "present": false
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-perf-integral-gain2",
+      "present": false
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-perf-integral-min-clamp",
+      "present": false
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-perf-proportional-gain",
+      "present": false
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-perf-proportional-gain2",
+      "present": false
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-perf-limiter-filter-time-constant",
+      "present": false
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-idle-off-delay-ms",
+      "present": false
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-fender-idle-off-delay-ms",
+      "present": false
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-fw-early-wake-timeout-ms",
+      "present": false
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-perf-boost-min-util",
+      "present": false
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-perf-boost-ce-step",
+      "present": false
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-perf-reset-iters",
+      "present": false
+    },
+    {
+      "kind": "native_virtual",
+      "site": "0x89d0094",
+      "target": "0x89e9548"
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-fast-die0-sensor-mask64",
+      "present": false
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-fast-die0-sensor-mask",
+      "present": false
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-fast-die0-target",
+      "present": false
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-fast-die0-release-temp",
+      "present": false
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-fast-die0-prop-tgt-delta",
+      "present": false
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-fast-die0-proportional-gain",
+      "present": false
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-fast-die0-integral-gain",
+      "present": false
+    },
+    {
+      "kind": "native_virtual",
+      "site": "0x89d0434",
+      "target": "0x89e938c"
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-ppm-filter-time-constant-ms",
+      "present": false
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-ppm-kp",
+      "present": false
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-ppm-ki",
+      "present": false
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-se-filter-time-constant",
+      "present": false
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-se-filter-time-constant-1",
+      "present": false
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-se-kp",
+      "present": false
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-se-kp-1",
+      "present": false
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-se-ki",
+      "present": false
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-se-ki-1",
+      "present": false
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-se-tgt",
+      "present": false
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-se-dz",
+      "present": false
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-se-inactive-threshold",
+      "present": false
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-se-engagement-criteria",
+      "present": false
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-se-engagement-tolerance",
+      "present": false
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-se-reset-tolerance",
+      "present": false
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-se-reset-criteria",
+      "present": false
+    },
+    {
+      "kind": "native_virtual",
+      "site": "0x89d0d38",
+      "target": "0x89e9394"
+    },
+    {
+      "kind": "raw_property",
+      "key": "gpu-sochot-temp",
+      "present": false
+    },
+    {
+      "kind": "external_service",
+      "target": "0xb744da0"
+    },
+    {
+      "kind": "external_service",
+      "target": "0xb744bf0"
+    },
+    {
+      "kind": "native_virtual",
+      "site": "0x89a86a4",
+      "target": "0x89e8b18"
+    },
+    {
+      "kind": "external_service",
+      "target": "0xb928a20"
+    },
+    {
+      "kind": "native_virtual",
+      "site": "0x89a87c8",
+      "target": "0x89be130"
+    },
+    {
+      "kind": "native_virtual",
+      "site": "0x89a8814",
+      "target": "0x89be164"
+    },
+    {
+      "kind": "native_virtual",
+      "site": "0x89a886c",
+      "target": "0x89be20c"
+    },
+    {
+      "kind": "native_virtual",
+      "site": "0x89a88b0",
+      "target": "0x89be1b8"
+    },
+    {
+      "kind": "native_virtual",
+      "site": "0x89a88f4",
+      "target": "0x89be164"
+    },
+    {
+      "kind": "native_virtual",
+      "site": "0x89a894c",
+      "target": "0x89be20c"
+    },
+    {
+      "kind": "native_virtual",
+      "site": "0x89a8990",
+      "target": "0x89be1b8"
+    },
+    {
+      "kind": "native_virtual",
+      "site": "0x89a8a3c",
+      "target": "0x89e9d7c"
+    },
+    {
+      "kind": "external_service",
+      "target": "0xb7b13c4"
+    },
+    {
+      "kind": "external_service",
+      "target": "0xbfec11c"
+    },
+    {
+      "kind": "external_service",
+      "target": "0xb7b27c0"
+    },
+    {
+      "kind": "external_service",
+      "target": "0xb7b13c4"
+    },
+    {
+      "kind": "external_service",
+      "target": "0xb7b27c0"
+    },
+    {
+      "kind": "external_service",
+      "target": "0xb7b13c4"
+    },
+    {
+      "kind": "external_service",
+      "target": "0xb7b27c0"
+    },
+    {
+      "kind": "external_service",
+      "target": "0xb744da0"
+    },
+    {
+      "kind": "external_service",
+      "target": "0xb744da0"
+    },
+    {
+      "kind": "native_virtual",
+      "site": "0x89cc42c",
+      "target": "0x89ea18c"
+    },
+    {
+      "kind": "native_virtual",
+      "site": "0x89cc554",
+      "target": "0x89c8ff8"
+    },
+    {
+      "kind": "external_service",
+      "target": "0xbfec11c"
+    },
+    {
+      "kind": "external_service",
+      "target": "0xb7b13c4"
+    },
+    {
+      "kind": "native_virtual",
+      "site": "0x89cc6e4",
+      "target": "0x89b7db8"
+    },
+    {
+      "kind": "external_service",
+      "target": "0xbfec11c"
+    },
+    {
+      "kind": "external_service",
+      "target": "0xb7b27c0"
+    },
+    {
+      "kind": "external_service",
+      "target": "0xb7b13c4"
+    },
+    {
+      "kind": "native_virtual",
+      "site": "0x89cc76c",
+      "target": "0x89b7d18"
+    },
+    {
+      "kind": "external_service",
+      "target": "0xb7b27c0"
+    },
+    {
+      "kind": "native_virtual",
+      "site": "0x89cc7c4",
+      "target": "0x8960c2c"
+    },
+    {
+      "kind": "external_service",
+      "target": "0xb744da0"
+    },
+    {
+      "kind": "native_virtual",
+      "site": "0x89ccc3c",
+      "target": "0x89e90d8"
+    },
+    {
+      "kind": "native_virtual",
+      "site": "0x89ccc88",
+      "target": "0x89e92fc"
+    },
+    {
+      "kind": "external_service",
+      "target": "0xb744bf0"
+    },
+    {
+      "kind": "external_service",
+      "target": "0xb744bf0"
+    },
+    {
+      "kind": "optional_aon_registry_lookup",
+      "result": 0
+    },
+    {
+      "kind": "native_virtual",
+      "site": "0x89cce38",
+      "target": "0x89c8ff8"
+    }
+  ],
+  "fixtures": [
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-controller-providers-v8-v2/power.bin",
+      "bytes": 25976,
+      "sha256": "0fcd37096d322fa5237f642dd8992d8fb451608bcc4c1db49463d332063792e3"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-controller-providers-v8-v2/hardware.bin",
+      "bytes": 10008,
+      "sha256": "4454f9c9d20721308c855b98ddf0a11301d1540374d51a8e5c1d663ec56f7fe9"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-controller-providers-v8-v2/region-c.bin",
+      "bytes": 3672,
+      "sha256": "d8d1b2b25801387638c1f616aefb55e699ca3fb1105ef3f97527e095e1490745"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-controller-providers-v8-v2/aonptd.bin",
+      "bytes": 228,
+      "sha256": "fb678f67aea5293efa9930a41b828fdfb475dc2b427628588640e080884f0e45"
+    }
+  ],
+  "power_mismatches": [],
+  "tags_source": {
+    "entry": "0x89e92fc",
+    "gpu_tag_table": "0x712dff0",
+    "gpu_tags_dest": "power+0x6320",
+    "aux_tag": "0x72305452"
+  },
+  "limitations": [
+    "Secondary frequency CPU owner remains independent fixture",
+    "Native sustained defaults must not be replaced with draft constants to manufacture agreement",
+    "This compares the already built Rust draft fixture; root must qualify integrated source and all full components in its combined qualifier"
+  ],
+  "hardware_actions": [],
+  "triangle_trial_ready": false,
+  "output_report_pin": {
+    "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-controller-providers-v8-v2/report.json",
+    "sha256": "7f77c933a512cdd5809269577b6474ebadeb885b2fab4b25d8ff20cef1abf2a4"
+  },
+  "byte_comparison": {
+    "component": "power",
+    "bytes": 25976,
+    "mismatched_u32_words": 0,
+    "draft_sha256": "0fcd37096d322fa5237f642dd8992d8fb451608bcc4c1db49463d332063792e3",
+    "native_sha256": "0fcd37096d322fa5237f642dd8992d8fb451608bcc4c1db49463d332063792e3"
+  }
+}

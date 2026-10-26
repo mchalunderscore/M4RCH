@@ -1,0 +1,24 @@
+{
+  "private_binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "counts": {
+    "cases": 1024,
+    "successful_validation": 64,
+    "seed_mismatch": 640,
+    "event_rejection": 320,
+    "usage_updates": 64,
+    "descriptor_event_updates": 79
+  },
+  "ranges": [
+    {
+      "start": "0xfffffe0008a20b48",
+      "end": "0xfffffe0008a20c9c",
+      "sha256": "07834d56bb0c024ee2107574b26034f2a4ea18d34ac38fd5deb8e62d35b2b5b3"
+    },
+    {
+      "start": "0xfffffe0008a29f88",
+      "end": "0xfffffe0008a2a080",
+      "sha256": "6cb87c307cae23cda6ec9a71e725e142d0c19f6102bbab08c50c1df9164477ff"
+    }
+  ],
+  "qualification": "1024 actual TA UMA lock calls with full native canSubmitLocked nested for reached pools; both seed mismatches and low-bit event service success/rejection, counter wrap. Successful cases execute actual usage update; randomized byte flags and full descriptor/pool/node comparisons. Mutex, event-copy/compare services explicit argument-checked fixtures; optional host tracing disabled. Logical lock order only, no real concurrency, allocation, cache, fence semantics or GPU submission."
+}

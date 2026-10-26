@@ -1,0 +1,15 @@
+{
+  "private_binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "range": [
+    "0xfffffe00089d712c",
+    "0xfffffe00089d71ec"
+  ],
+  "range_sha256": "c2825aa7da6e15521d1b5a9340079f458cab3664cda5041229344946a5f4c425",
+  "counts": {
+    "cases": 1024,
+    "first_failure": 512,
+    "second_failure": 256,
+    "success": 256
+  },
+  "qualification": "Actual G16 allocKSMCompletionQueues1024 full accelerator comparisons and service argument/order checks. Capacityu32 fromee58; size=(capacity*64+255)&0x7fffffff00. Allocates resource slots1af70 then1af80 only, first failure short-circuits, second failure leaves successful first output; second allocation tail call covered. Zero and maxu32 are arithmetic cases, not valid/recommended live allocations. Underlying allocSingleKSMCompletionQueue remains explicit success/failure fixture; actual unwind/allocation/mapping not qualified. No GPU completion consumer/retirement or commands."
+}

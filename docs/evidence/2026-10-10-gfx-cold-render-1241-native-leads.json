@@ -1,0 +1,669 @@
+{
+  "schema": "m4rch.gfx-cold-render.native-execution-leads.v1",
+  "date": "2026-10-10",
+  "boot_id": "1241f6b5-f2c5-4678-9078-dce0ed367d60",
+  "scope": {
+    "saved_evidence_only": true,
+    "hardware_access": false,
+    "builds_or_tests": false,
+    "source_changes": false,
+    "private_binary_or_full_disassembly_exported": false
+  },
+  "status": "Firmware root/control and both work records accepted. First missing proof is GPU command fetch/dispatch/execution and job-bound completion; native caller/currentPC remain unresolved.",
+  "identity": {
+    "module_sha256": "b041f08ff9a2b95e2a90cca3c0752b3e17a419d1d932cd07d1e7fee49859def7",
+    "loaded_note_hex": "040000001400000003000000474e5500415a18ead0778c39d8c719d803e40ca90a1a82bd",
+    "allocations_retained": 174,
+    "refcount": 1
+  },
+  "capture_boundary": {
+    "original_strict_attempt_complete": false,
+    "original_error": [
+      "Dmesg rotated or prior prefix changed; no cumulative-log fallback"
+    ],
+    "readonly_salvage_closed": true,
+    "rotation_reconstruction": {
+      "method": "Unique exact line-boundary suffix of frozen before log is full prefix of frozen after log; extract only following bytes. No cumulative-log qualification or fuzzy normalization.",
+      "before_discarded_bytes": 50253,
+      "exact_overlap_bytes": 13486,
+      "delta_bytes": 117742,
+      "delta_sha256": "f36c59a9b358cf356fc4f1b55d10f4c538fc9b3fd751be8610335bece34e5f19"
+    },
+    "nonatomic_observations": true,
+    "firmware_DATA_after_available": false,
+    "firmware_PC_available": false,
+    "hardware_controls": []
+  },
+  "execution_observations": {
+    "control_cursors": "33/33/33",
+    "TA_3D_cursors": "1/1/1",
+    "fresh_fault_samples": 6,
+    "fault_information_and_address_zero": true,
+    "target_changed_bytes": 0,
+    "software_completion_changed_bytes": 0,
+    "hardware_completion_changed_bytes": 0,
+    "GPU_execution_verified": false,
+    "rendering_verified": false,
+    "before_submit": {
+      "raw21038": 0,
+      "raw21040": 0,
+      "raw211c8": 1,
+      "raw211d0": 1,
+      "raw21058": 0,
+      "raw21060": 0,
+      "PRCd4c004": 0,
+      "PRCd4c000": 0
+    },
+    "post100ms_through15000ms": {
+      "raw21038": 3,
+      "raw21040": 0,
+      "raw211c8": 3,
+      "raw211d0": 2,
+      "raw21058": "0xffffffffffffffff",
+      "raw21060": "0xffffffffffffffff",
+      "PRCd4c004": 1,
+      "PRCd4c000": 1,
+      "raw5960": 0,
+      "raw5978": 0,
+      "raw5970": 0,
+      "rawd44070": 0
+    },
+    "old520d_difference": "Old request/ack0/0 and raw21058/60zero; currentPRC1/1 is a new transition and does not establish the old PRC0 startup failure."
+  },
+  "pause_contract": {
+    "helper": "FW32104..32214",
+    "request": "Fullx0 written211c8 at32138",
+    "ack": "211d0&1 compared withx1",
+    "deadline": "initial platformticks+0xe10; returns nonzero if lowbit mismatch remains",
+    "bound_caller_pairs": [
+      {
+        "reason": "0x10",
+        "pause": "1abc0..1abcc:existing|1,expected1",
+        "release": "1b1f0..1b1fc:existing&~1,expected0"
+      },
+      {
+        "reason": "0x80",
+        "pause": "19644..19650",
+        "release": "19700..1970c"
+      },
+      {
+        "reason": "0x800",
+        "pause": "32a7c..32a88",
+        "release": "32b44..32b50"
+      }
+    ],
+    "current_classification": "Request3bit0set andACK2bit0clear disagree. This is not a completed pause expected1. ACKlowbit0 agrees with releaseexpected0, but a completed releasecaller clears requestbit0. The pair alone identifies no activecaller, timeout, pausedexecution or failedresume.",
+    "bit1": "Producer/readbackmeaning unresolved; directbit2sites17958/16c04 do not explainbit1. Immediate-registersearches do not exclude computed/aliaswrites or hardwaresemantics.",
+    "mask_wait": "FW1aae0..1ab50 tests requested coverage in21060/21058; allones satisfies those64bitcoverage predicates.1ab54..1ab80 waitsACKbit1clear unless main+26c pointee state2. CurrentACK2setsbit1, but noPCbinds that wait."
+  },
+  "startup_trace": {
+    "record_layout": "type5 timestampu64@4,4xu64args@0xc,eventu32@0x2c(rolehighbyte),functionu32@0x30",
+    "authoritative_records_sha256": "ab988a47cff959eac9965fe6beab305f7da5ae829ce885b81093c641f99ea038",
+    "header": {
+      "magic": 1481787213,
+      "version": 1,
+      "entry_bytes": 80,
+      "capacity": 65536,
+      "used": 2903,
+      "status_flags": 0,
+      "doorbells": 3
+    },
+    "type_counts": {
+      "5": 1065,
+      "17": 6,
+      "25": 11,
+      "28": 11,
+      "27": 1805,
+      "18": 5
+    },
+    "trace_records": 1065,
+    "last_trace_sequence": 1071,
+    "exact_role0_function0_event46": [
+      {
+        "sequence": 1,
+        "ring": "rx14_trace_a",
+        "timestamp": 3651236704,
+        "role": 0,
+        "event": "0x46",
+        "function_type": 0,
+        "args": [
+          0,
+          2,
+          0,
+          0
+        ]
+      },
+      {
+        "sequence": 54,
+        "ring": "rx14_trace_a",
+        "timestamp": 3651250067,
+        "role": 0,
+        "event": "0x46",
+        "function_type": 0,
+        "args": [
+          1,
+          8,
+          8,
+          0
+        ]
+      },
+      {
+        "sequence": 55,
+        "ring": "rx14_trace_a",
+        "timestamp": 3651250861,
+        "role": 0,
+        "event": "0x46",
+        "function_type": 0,
+        "args": [
+          1,
+          2,
+          10,
+          0
+        ]
+      },
+      {
+        "sequence": 56,
+        "ring": "rx14_trace_a",
+        "timestamp": 3651250965,
+        "role": 0,
+        "event": "0x46",
+        "function_type": 0,
+        "args": [
+          1,
+          16,
+          26,
+          0
+        ]
+      },
+      {
+        "sequence": 57,
+        "ring": "rx14_trace_a",
+        "timestamp": 3651251162,
+        "role": 0,
+        "event": "0x46",
+        "function_type": 0,
+        "args": [
+          0,
+          16,
+          10,
+          0
+        ]
+      },
+      {
+        "sequence": 58,
+        "ring": "rx14_trace_a",
+        "timestamp": 3651251547,
+        "role": 0,
+        "event": "0x46",
+        "function_type": 0,
+        "args": [
+          0,
+          8,
+          2,
+          0
+        ]
+      }
+    ],
+    "last_recorded_startup_reason": 2,
+    "static_chain": "3796c reason8 acquire37cd4;37d74->bc7c(0)->c288/15e60(0,0,0)->16340 reason2 acquire16378;163c4->1a994 reason16 acquire/release;38020 reason8release;reason2release162cc..162d4/traced1633c",
+    "cutoff": {
+      "trace_mask_before": 3,
+      "trace_mask_after": 0,
+      "disabled_before_control33_and_draw": true,
+      "journal_used_controlready": 1079,
+      "journal_used_beforesubmit": 1086,
+      "journal_used_drawpublished": 1093,
+      "journal_used_final": 2903,
+      "postdraw_records": 1810,
+      "postdraw_type_counts": {
+        "17": 2,
+        "25": 3,
+        "28": 3,
+        "27": 1801,
+        "18": 1
+      },
+      "postdraw_trace_records": 0
+    },
+    "limit": "Six tuples bind startup observations only. Trace is disabled beforedraw; absent laterrelease2 cannot establish postdraw finalreason2, PC, stallcaller or stallcause. No firmwaretimestamp-to-walltime conversion or final13f018 snapshot claimed."
+  },
+  "initialization_ABI_limits": {
+    "native_cold_profile": "Qualifiednativef30vector(0,1,1,0),actualJ614masks3/7/7,eightstatecaps7/7 preserved. PRC1/1 observed does not uniquelyidentify lifecyclePC.",
+    "dynamic_gating": "NativeG16reset/override methods89d15fc/89d160c return0xe00002c7 unsupported; names do not justify a reset/enableoperation.",
+    "init_table": "Host89d1694..89d179c appends18byte initregister64PA/64 records throughFWresource+16a0/cursor+1710; mandatoryconsumer/defaultbinding remains unproven.",
+    "job_resources": "SavednativeTA/3DproducerRAM proofs still exclude opaque resource/provider/translationservices. Complete scene/parameter-memoryconstructor RAM proof does not prove experimental ownedscene/page-list/zeroedbackingpolicy or GPUUAT/fetch.",
+    "upload": "J61620core reference differs from J61416core. Matchedqueueproducer+40 overrides document+50; TAextent9a0 differs from allocatedstride9c0. Attachedinstructions do not authorize hardwarechanges."
+  },
+  "prioritized_offline_work": [
+    {
+      "priority": 1,
+      "objective": "Close scheduler/power caller predicates and bit1 producer before changing this accepted submission",
+      "addresses": [
+        "FW15e60/16340/162c8..16340 reason2 acquire/release",
+        "FW1a994/1aae0..1ab94 maskcoverage andACKbit1wait",
+        "FW32a40..32b68 timestamp/cursor lifecycle",
+        "Host89dad38 KSMconfigure;89d1694..89d179c initregistertable"
+      ],
+      "deliverable": "Complete original operand/lifecycle dataflow and native initialization consumer binding; currentPC/finalDATA gap remains explicit."
+    },
+    {
+      "priority": 2,
+      "objective": "Close native scene/parameter-memory/context/stamp and mapping services",
+      "addresses": [
+        "Host89fefb0..89ff3a4 complete sceneproducer",
+        "SavedTA/3Dcommandproducer/provider audits",
+        "Exactcurrentbuildreceipt GPU/FW/PA/command bindings"
+      ],
+      "deliverable": "Field-by-field native allocation and GPU-readable resource closure; only justified ABIcorrections."
+    },
+    {
+      "priority": 3,
+      "objective": "Future bounded discriminator after an offline-proven correction",
+      "deliverable": "Capture relevant native lifecycle or job-bound fetch/completion; no currentconsumedbootretry, warmSTART/INIT,class86,management-onlyrestart,guessedresume orselector/registerwrites."
+    }
+  ],
+  "qualification": {
+    "all21_salvage_source_capture_pins_match": true,
+    "all12_old_native_main_path_instruction_spans_match_current_TEXT": true,
+    "trace_decoded_without_private_code_execution": true,
+    "new_tests_run": false
+  },
+  "range_convention": "FWoffsets into current saved393216byteTEXT; endexclusive; hashes of machinebytes. Fullprivate disassembly stayslocal.",
+  "firmware_ranges": [
+    {
+      "start": "0x32104",
+      "end_exclusive": "0x32214",
+      "bytes": 272,
+      "sha256": "1523b80e1d8b26be333cced05299c9b28c0e47399a83b759e678e03fa6fb83e3",
+      "meaning": "pause helper full request; bit0 acknowledgement"
+    },
+    {
+      "start": "0x1aae0",
+      "end_exclusive": "0x1ab94",
+      "bytes": 180,
+      "sha256": "233c588933586dd04fbc55f8dd83acd86d98c90ead531bb80bbab4ad577c8d37",
+      "meaning": "mask coverage followed by ACKbit1 clear or main-state2 escape"
+    },
+    {
+      "start": "0x1ab94",
+      "end_exclusive": "0x1ac10",
+      "bytes": 124,
+      "sha256": "70a6c47940e751fdb617093d825d0cf3a4e01137dca79f28d1e4a3231c5502ff",
+      "meaning": "reason16 acquire"
+    },
+    {
+      "start": "0x1b1bc",
+      "end_exclusive": "0x1b234",
+      "bytes": 120,
+      "sha256": "5bf41da91ce812ecf589a2144f65c07d8579f54bf0315d2e583444037ea93a5f",
+      "meaning": "reason16 release"
+    },
+    {
+      "start": "0x19608",
+      "end_exclusive": "0x19740",
+      "bytes": 312,
+      "sha256": "d3840a82ff4b0045eb9afced3b31685911b17f2d87df683e2cbd29cebc71a0c6",
+      "meaning": "entry signal reason128 acquire/update/release"
+    },
+    {
+      "start": "0x32a40",
+      "end_exclusive": "0x32b68",
+      "bytes": 296,
+      "sha256": "55f21b3a7c02530cfbac3b077540ab0e75197834403b68027de93d02f8f4582a",
+      "meaning": "timestamp advancement reason2048 acquire/update/release"
+    },
+    {
+      "start": "0x17958",
+      "end_exclusive": "0x179a0",
+      "bytes": 72,
+      "sha256": "06df97a7bfbb5bd08849ab8051bfd30e04392096f15b771ceeaf1a3e9e684e72",
+      "meaning": "211c8bit2 set;211d0bit2 wait"
+    },
+    {
+      "start": "0x16c04",
+      "end_exclusive": "0x16c4c",
+      "bytes": 72,
+      "sha256": "a4b137c446d676409891903c2da8fde1d4fae3019fc1889f7ed8a31a156b55a0",
+      "meaning": "211c8bit2 clear;211d0bit2 wait"
+    },
+    {
+      "start": "0x19834",
+      "end_exclusive": "0x198c8",
+      "bytes": 148,
+      "sha256": "71efb7ee5cc1c946c6feabd444eee42d0b2a6b40ee5d98cbcb8519e34c87b68c",
+      "meaning": "selected queue config real21008 write"
+    },
+    {
+      "start": "0x16340",
+      "end_exclusive": "0x163c8",
+      "bytes": 136,
+      "sha256": "e9461b545ee7cde5911e744e4cf6b2550dc79a5bc55014d9e6f40e64fb0c490a",
+      "meaning": "reason2 acquire; call1a994"
+    },
+    {
+      "start": "0x162c8",
+      "end_exclusive": "0x16340",
+      "bytes": 120,
+      "sha256": "808efda3486fb4e4f615db6c103e9e994992644cd3dbd4690694d81ef54f7327",
+      "meaning": "reason2 release"
+    },
+    {
+      "start": "0x37c9c",
+      "end_exclusive": "0x37d78",
+      "bytes": 220,
+      "sha256": "711ba0b607e3c671917e9d0a046e538b309462702ef2e75f8096dcbf7b71bcf0",
+      "meaning": "main reason8 acquire and nested power call"
+    },
+    {
+      "start": "0x37eb4",
+      "end_exclusive": "0x38078",
+      "bytes": 452,
+      "sha256": "830dde0a042ad6540bbb634d7d4936f1d89f1bd8a46662f896707c88c3f9e420",
+      "meaning": "main reason8 release"
+    },
+    {
+      "start": "0x15e60",
+      "end_exclusive": "0x15eb0",
+      "bytes": 80,
+      "sha256": "0208d29b50b65a5bf2fcf56964d1b6fd4f10e87ec36e5fbc27c1cac10cb278fd",
+      "meaning": "shared power caller leading to16340"
+    }
+  ],
+  "prior_native_path_range_checks": [
+    {
+      "start": "0x37990",
+      "end_exclusive": "0x379ac",
+      "sha256": "200bbf27c64880645ba02d24f8d90984d5b2de56d16472a89859cfe5234fac0f",
+      "current_sha256": "200bbf27c64880645ba02d24f8d90984d5b2de56d16472a89859cfe5234fac0f",
+      "matches": true
+    },
+    {
+      "start": "0x37c9c",
+      "end_exclusive": "0x37d0c",
+      "sha256": "fc9444c21d9d18b4b17c91e97fb11f768c1e8d0e8890f97b0ef60ecc8fe56079",
+      "current_sha256": "fc9444c21d9d18b4b17c91e97fb11f768c1e8d0e8890f97b0ef60ecc8fe56079",
+      "matches": true
+    },
+    {
+      "start": "0x37d70",
+      "end_exclusive": "0x37d78",
+      "sha256": "b5dcb6266c18d6d520401366bfbbe48b214f0ee335c3d0af6eead8c3f6bb1333",
+      "current_sha256": "b5dcb6266c18d6d520401366bfbbe48b214f0ee335c3d0af6eead8c3f6bb1333",
+      "matches": true
+    },
+    {
+      "start": "0xc288",
+      "end_exclusive": "0xc298",
+      "sha256": "ab4b30f2e5e6aa92c0687696cb128b50449d737c95545aaa09a19adcf4ce1e9a",
+      "current_sha256": "ab4b30f2e5e6aa92c0687696cb128b50449d737c95545aaa09a19adcf4ce1e9a",
+      "matches": true
+    },
+    {
+      "start": "0x15e78",
+      "end_exclusive": "0x15ea8",
+      "sha256": "20db883ad68d3eef1672ae458fd6399797680d69c37a42d4a44547b8f5698a7e",
+      "current_sha256": "20db883ad68d3eef1672ae458fd6399797680d69c37a42d4a44547b8f5698a7e",
+      "matches": true
+    },
+    {
+      "start": "0x16340",
+      "end_exclusive": "0x163c8",
+      "sha256": "e9461b545ee7cde5911e744e4cf6b2550dc79a5bc55014d9e6f40e64fb0c490a",
+      "current_sha256": "e9461b545ee7cde5911e744e4cf6b2550dc79a5bc55014d9e6f40e64fb0c490a",
+      "matches": true
+    },
+    {
+      "start": "0x1ab94",
+      "end_exclusive": "0x1ac10",
+      "sha256": "70a6c47940e751fdb617093d825d0cf3a4e01137dca79f28d1e4a3231c5502ff",
+      "current_sha256": "70a6c47940e751fdb617093d825d0cf3a4e01137dca79f28d1e4a3231c5502ff",
+      "matches": true
+    },
+    {
+      "start": "0x1b1bc",
+      "end_exclusive": "0x1b234",
+      "sha256": "5bf41da91ce812ecf589a2144f65c07d8579f54bf0315d2e583444037ea93a5f",
+      "current_sha256": "5bf41da91ce812ecf589a2144f65c07d8579f54bf0315d2e583444037ea93a5f",
+      "matches": true
+    },
+    {
+      "start": "0x37eb4",
+      "end_exclusive": "0x37ebc",
+      "sha256": "cfdbfd13263cb9f1d684eea8d36af4f090b6ae82d8bf3a416f748b902ae9e406",
+      "current_sha256": "cfdbfd13263cb9f1d684eea8d36af4f090b6ae82d8bf3a416f748b902ae9e406",
+      "matches": true
+    },
+    {
+      "start": "0x3800c",
+      "end_exclusive": "0x38078",
+      "sha256": "e41363e920c382ddd0df5a971972978e7203a839886b14e926da58e5782779ed",
+      "current_sha256": "e41363e920c382ddd0df5a971972978e7203a839886b14e926da58e5782779ed",
+      "matches": true
+    },
+    {
+      "start": "0x162c8",
+      "end_exclusive": "0x16340",
+      "sha256": "808efda3486fb4e4f615db6c103e9e994992644cd3dbd4690694d81ef54f7327",
+      "current_sha256": "808efda3486fb4e4f615db6c103e9e994992644cd3dbd4690694d81ef54f7327",
+      "matches": true
+    },
+    {
+      "start": "0x11dfc",
+      "end_exclusive": "0x11ec8",
+      "sha256": "5904d6d37840517b3bdb5ef4c6888de3080abf79a45ffa5a756c53ed07da2822",
+      "current_sha256": "5904d6d37840517b3bdb5ef4c6888de3080abf79a45ffa5a756c53ed07da2822",
+      "matches": true
+    }
+  ],
+  "input_pins": [
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render/candidate-v2/asc-graph-init/boot-1241f6b5-f2c5-4678-9078-dce0ed367d60/attempt.json",
+      "bytes": 28616,
+      "sha256": "3eead45ce72ff4851da2b087c69f85ea478e88ae75287fac0a55efbecee97858"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render/candidate-v2/asc-graph-init/boot-1241f6b5-f2c5-4678-9078-dce0ed367d60/dmesg-before.log",
+      "bytes": 63739,
+      "sha256": "ef7c43ef21f6a9507d94d5d42c12f291ab29a8378687a6524a6f7526edd420c2"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render/candidate-v2/asc-graph-init/boot-1241f6b5-f2c5-4678-9078-dce0ed367d60/dmesg-after.log",
+      "bytes": 131228,
+      "sha256": "e9d9904f6ea647583ad9dcb9d026ab46710a9f43a47b676fd0a89c319270a3a5"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render/candidate-v2/cold-render-preparation.json",
+      "bytes": 39746,
+      "sha256": "9bb1a2732991cd4e53ec8b76d8f8a0166427fa4e82f1100e683d8b08d6d28ff9"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render/candidate-v2/asc-root-envelope/build-receipt.json",
+      "bytes": 23458,
+      "sha256": "89175955c8981047707c983ea2f4fb7cfc79e71374ac9a8548e7afea6c33a172"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render/candidate-v2/asc-graph-init/asc-graph-init.ko",
+      "bytes": 7959608,
+      "sha256": "b041f08ff9a2b95e2a90cca3c0752b3e17a419d1d932cd07d1e7fee49859def7"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render/fresh-preflight.json",
+      "bytes": 1849,
+      "sha256": "ca97aaa29675d6f848ea651e4445ee39dcabed99cf86469a63713f4e8df98a86"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/gfx-cold-render/analyze_cold_render.py",
+      "bytes": 15699,
+      "sha256": "29f8cf50594dbb5af352303fde6c3e4401ef3765087c6199f22ed50a9826dd7d"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/gfx-cold-render/readback.py",
+      "bytes": 3281,
+      "sha256": "09c0b012ff2b85496f684c08cf4770ef935e17ec071e2e13a1cd0b2acc5d7e43"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render/salvage-retained-1241.py",
+      "bytes": 6898,
+      "sha256": "0585faadaac9cc214f4025c83dbdfbfd95d75a7e74bd4c21c480d3a04d309fd0"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render/candidate-v2/asc-graph-init/boot-1241f6b5-f2c5-4678-9078-dce0ed367d60/retained-readback-v1/completion-after.bin",
+      "bytes": 16384,
+      "sha256": "4fe7b59af6de3b665b67788cc2f99892ab827efae3a467342b3bb4e3bc8e5bfe"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render/candidate-v2/asc-graph-init/boot-1241f6b5-f2c5-4678-9078-dce0ed367d60/retained-readback-v1/hardware-completions-after.bin",
+      "bytes": 65536,
+      "sha256": "de2f256064a0af797747c2b97505dc0b9f3df0de4f489eac731c23ae9ca9cc31"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render/candidate-v2/asc-graph-init/boot-1241f6b5-f2c5-4678-9078-dce0ed367d60/retained-readback-v1/notifications-after.bin",
+      "bytes": 5242944,
+      "sha256": "c51dc25c4c0f59329404c43886ca7011458c8447c41de2ab96641b9cccbffd0c"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render/candidate-v2/asc-graph-init/boot-1241f6b5-f2c5-4678-9078-dce0ed367d60/retained-readback-v1/notifications-after.json",
+      "bytes": 868329,
+      "sha256": "a9f8f518e64d377b5b7fdea1a03c47c2f7ab938fc9deed942da6fde51fe869cd"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render/candidate-v2/asc-graph-init/boot-1241f6b5-f2c5-4678-9078-dce0ed367d60/retained-readback-v1/objects-after.bin",
+      "bytes": 1130496,
+      "sha256": "50099204411984f3a8f64c52ce66d4dbc437b188ca45233aab1ccfde627bec1b"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render/candidate-v2/asc-graph-init/boot-1241f6b5-f2c5-4678-9078-dce0ed367d60/retained-readback-v1/operation-delta.recovered.log",
+      "bytes": 117742,
+      "sha256": "f36c59a9b358cf356fc4f1b55d10f4c538fc9b3fd751be8610335bece34e5f19"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render/candidate-v2/asc-graph-init/boot-1241f6b5-f2c5-4678-9078-dce0ed367d60/retained-readback-v1/owned-after.bin",
+      "bytes": 2850816,
+      "sha256": "846f9827d584677b1b3f764e4d43dff110f25fbeae52665d6ed847de4996e97e"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render/candidate-v2/asc-graph-init/boot-1241f6b5-f2c5-4678-9078-dce0ed367d60/retained-readback-v1/queues-after.bin",
+      "bytes": 65536,
+      "sha256": "23918ce843f0ed8a8482f86e52cb4b1d52a7c723851bc6e009704d9b625f5203"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render/candidate-v2/asc-graph-init/boot-1241f6b5-f2c5-4678-9078-dce0ed367d60/retained-readback-v1/salvage-intent.json",
+      "bytes": 368,
+      "sha256": "36bbe2e405b008eade2a05b6dff19a19dec10a42d64fe4b71b2e9ac477de1766"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render/candidate-v2/asc-graph-init/boot-1241f6b5-f2c5-4678-9078-dce0ed367d60/retained-readback-v1/target-after.bin",
+      "bytes": 16384,
+      "sha256": "add4fa3e6dbfb8723b21cfe7debadbed5d5f2ca1ab88c666470daed16afbe21a"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render/candidate-v2/asc-graph-init/boot-1241f6b5-f2c5-4678-9078-dce0ed367d60/retained-readback-v1/target-after.png",
+      "bytes": 204,
+      "sha256": "b762dcbb726b6874a02df835eb6397f15a20361606da2f12a9f6af7bc3619461"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render/candidate-v2/asc-graph-init/boot-1241f6b5-f2c5-4678-9078-dce0ed367d60/retained-readback-v1/salvage-result.json",
+      "bytes": 48617,
+      "sha256": "224a0605e3f423d521ac02baec97851f092912c12a14cba570997efccc9c509b"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render/candidate-v2/asc-graph-init/boot-1241f6b5-f2c5-4678-9078-dce0ed367d60/text.bin",
+      "bytes": 393216,
+      "sha256": "1d72676691a73eb425e7c6ca0d064be5d31416b0525dae1b4928b282adec9591"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render/candidate-v2/asc-graph-init/boot-1241f6b5-f2c5-4678-9078-dce0ed367d60/data-before.bin",
+      "bytes": 1277952,
+      "sha256": "3a5b8cc02d184f78c42df9bd0cb33c6645ee49b5e3e871c0d14b4535e87efd17"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render/candidate-v2/asc-graph-init/boot-1241f6b5-f2c5-4678-9078-dce0ed367d60/objects-before.bin",
+      "bytes": 1130496,
+      "sha256": "287f2c53bc6ef7ed226c4a2995b9d9904e7623acae9713af105be6b04fc690a9"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render/prepared-owner-v2/gfx-cold-render.h",
+      "bytes": 18337,
+      "sha256": "9c3c85519da5f40b84cfed2705345b2728e9315ac2d5caea7531322d6bba6291"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-cold-render/prepared-owner-v2/cold-render-owner-source-receipt.json",
+      "bytes": 13070,
+      "sha256": "2ebd9dbe52a5e0be4de5793d9c3c6ee454ead602569e52ed16e5260e3a4cfec7"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/private-apple/live-text.dis",
+      "bytes": 3783769,
+      "sha256": "d7f6605e8c944ca98b7921d7a9123723335c5bc9c04e5d9462f963f308e3a1f8"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/private-apple/agx-disassembly.txt",
+      "bytes": 11343250,
+      "sha256": "45921fcdb496c8d914848f63bffdf1d8bd583bf8bc9620606c09f3dcec7a0317"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/private-apple/kernel-symbols.json",
+      "bytes": 92043155,
+      "sha256": "eff79feadb6a570f2856baa5d8950c3e77101b22a37f3999c12d9879404163e2"
+    },
+    {
+      "path": "/boot/GPUC003/private-apple/com.apple.AGXG16X",
+      "bytes": 1566304,
+      "sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e"
+    },
+    {
+      "path": "/home/alice/Downloads/M4-PRO-GPU-HARDWARE-ABI.md",
+      "bytes": 9527,
+      "sha256": "2818ced00eea77f662be9339ee6dae717bd1330e2a46bc927e53190edf6b98db"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-10-gfx-cold-render-1241-execution-review.json",
+      "bytes": 94722,
+      "sha256": "216eefb218747925cb8f07145c893e605280ccb622024d230de29a20b59462b6"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-09-gpc-startup-path.json",
+      "bytes": 13458,
+      "sha256": "0e1a420091a3221bffedb30001861188879c99ea4aad9d366e336aa8d5f92f51"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-09-execution-integration-review.md",
+      "bytes": 11298,
+      "sha256": "6130d449ab3e6e10383e262ee2d93f454d32a6aad94facbbf01b34318093f69c"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-09-recovery-progress-policy-live.json",
+      "bytes": 32935,
+      "sha256": "3472ced5ab2f13b7d8dd99da216d841608eac5795dda54470ad3512f4c7f5b1e"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-09-owned-zero-baseline-live.json",
+      "bytes": 27290,
+      "sha256": "91aa4e4684437f943647e5c6faddc423e139f7fec81835141cc19679e90e3927"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-09-owned-hw-completions-live.json",
+      "bytes": 13994,
+      "sha256": "6636ee7c204835d8a75f29fea5456133aa135a5659e7de4feebacb5b9e4a6de7"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-09-driver-abi-process-review.md",
+      "bytes": 7938,
+      "sha256": "3fee4435467a539f1149469121e5524f2514296d0730b03f32f124feefcae7ce"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-09-owned-integrated-command-pair.json",
+      "bytes": 17506,
+      "sha256": "1c476e7ef442b69931d1b1da64182772f1d818aa73976769561ec4e21435abd3"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-09-owned-render-pm-backing.json",
+      "bytes": 10222,
+      "sha256": "14d2c01893c5f76f9e02083ec66676d6feee7bc58d26ea847f0f8ae62276eca2"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-08-private-pm-scene-setup.json",
+      "bytes": 879,
+      "sha256": "bac400c527a7eadbf96e8deb9c8e8b13ada5551b335cd299f7664944efe63c85"
+    }
+  ]
+}

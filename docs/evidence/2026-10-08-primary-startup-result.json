@@ -1,0 +1,64 @@
+{
+  "boot_id": "bf7ba896-2325-4cc6-9d3a-fe8aa338a37e",
+  "trial_source_commit": "4ea2cc8",
+  "module_at_trial_sha256": "f7814bf697f614c5c2379d9cf6b00d956082025bfb7f61642f63ff62de4cf370",
+  "preparation_errors": "Python and native permission allowlists omitted five pages. Both corrected before gate2. First rejection before intent; second gate1 shadow allocation rejected/freed, no ASC started; partial intent/log retained, then normal fresh trial.",
+  "post_publication_messages": 1,
+  "crashlog_bytes": 2576,
+  "footer_valid": true,
+  "crashlog_new": true,
+  "pc": "0xfffffc000000aac8",
+  "far": "0xfffffc2000201710",
+  "esr": "0x9600004f",
+  "instruction": "STR X19,[X8,#0x1710] at aac8",
+  "physical_fault": "0x288001710",
+  "prior_page": "0x288000000 read-only",
+  "control_cursors_after": [
+    0,
+    0,
+    1
+  ],
+  "live_frames": 29,
+  "unique_frame_hashes": [
+    "e83519f612dbbea0483ab775d9f38b7bf33fcaf7b2d8e46f9ce1bdeacebf6c6e"
+  ],
+  "changed_objects": [
+    {
+      "name": "main_header",
+      "changed_bytes": 1,
+      "first_changed_offsets": [
+        "0x0"
+      ]
+    },
+    {
+      "name": "power",
+      "changed_bytes": 5,
+      "first_changed_offsets": [
+        "0x38",
+        "0x78",
+        "0x922",
+        "0x923",
+        "0x652c"
+      ]
+    },
+    {
+      "name": "status_a",
+      "changed_bytes": 2,
+      "first_changed_offsets": [
+        "0x10",
+        "0x14"
+      ]
+    },
+    {
+      "name": "status_b",
+      "changed_bytes": 2,
+      "first_changed_offsets": [
+        "0xc734",
+        "0xc744"
+      ]
+    }
+  ],
+  "usb": "All3 role providers and all3 PD controllers remain bound; user Everything normal",
+  "interpretation": "Native startup advanced beyond8050 to aac8 after five-page batch. No claim all modeled writes executed or opcode16 consumed. No full init/rendering.",
+  "next": "Late bounded continuation aac8..b4a4 and helper2a7c8;222 instructions; one remaining modeled page0 now RW. Same control and no new addresses/commands. Normal Linux reboot needed."
+}

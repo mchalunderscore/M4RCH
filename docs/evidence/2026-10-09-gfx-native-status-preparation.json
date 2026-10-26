@@ -1,0 +1,81 @@
+{
+  "schema": "m4rch.gfx-native-status-ready-review.v1",
+  "current_boot": "493814fd-b859-42b5-b257-c0ac4960e8a1",
+  "current_stage": "startup-retained-before-firmware",
+  "current_commands_admitted": [],
+  "current_owner_pm_ref_held": true,
+  "current_graph_allocated_or_published": false,
+  "candidate": "/home/alice/Desktop/m4rch/out/gfx-coordinate-native-status/candidate",
+  "module_sha256": "ad9a2908673247c66ed97383785a290ef566a4e9b7638abf57d23640801e842c",
+  "receipt_sha256": "2f45d761f1ba9a4b95bdb1a848c06aae9a47740cf4536ce39dc45dddd19ae29c",
+  "artifact_pins_verified": 10,
+  "owner_source_pins_verified": 17,
+  "preparation_inputs_verified": 19,
+  "core_cases": 276,
+  "adapter_cases": 56,
+  "python_cases": 593,
+  "inherited_dispatcher_cases": 178,
+  "known_stop_negative_cases": 17,
+  "current_boot_preflight_refused_before_gpu_access": true,
+  "build_warnings": 0,
+  "module_loaded": false,
+  "kernel_rebuilt": false,
+  "boot_configuration_changed": false,
+  "hardware_actions": [],
+  "next_step": "Normal user boot, fresh preflight, then ONE distinct native STATUS0 cold owner trial.",
+  "files": [
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/native-status-preparation.json",
+      "sha256": "af522a6f563d2bdc194c0a30fc31dc3bc9d21fa872bad2557a29e483c6cacbf2"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-root-envelope/build-receipt.json",
+      "sha256": "2f45d761f1ba9a4b95bdb1a848c06aae9a47740cf4536ce39dc45dddd19ae29c"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-coordinate-native-status/confirm-stop.py",
+      "sha256": "6c0132166229f766201fc476b1c11513a577ec1484a327f84242d43ba97a4027"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-coordinate-native-status/test-confirm-stop.py",
+      "sha256": "80566cd8e580ad6889b2c21abe9267f32eae98d17d09e9d71a611d966a36bc72"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-coordinate-native-status/preflight-fresh.py",
+      "sha256": "826d93d69b8e6bdb065a77f378380d8c325227be708b9f663ec38e80f668d1db"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-coordinate-native-status/analyze-execution.py",
+      "sha256": "4e74885c8b11cea96e12581225e5f78fae8b554b8d1b573d1753d0b5f596d541"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/known-stop-eagain-replay.json",
+      "sha256": "2af020c17245b6a8c910b09f126ca1d139897b90a060a3adc30b3f5afe0a5a18"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/core-qualification.json",
+      "sha256": "ee9d320e6e640e7b5ededda9e5a67d49f686975a4eb14ecc43c8561e9d21266a"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/adapter-qualification.json",
+      "sha256": "2f10f7e453a49a83b2d16ca377aad38c2eda4b576e98bd1d9acd4f5aba84b97e"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/parser-qualification.json",
+      "sha256": "9ff14fda1e7510499b18c9d8d57cbf0c863d9a42805b24f58a294a2aecb7e2ba"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/wrapper-qualification.json",
+      "sha256": "4dbe8b3e6affa3b10aeaa40013943246f9979e9347dfd3ad4902d957220e63f6"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/flash-guard-qualification.json",
+      "sha256": "c929ae49bcdd0c1693c859ecb6e1536326fc0045cd7059df6847999db9d57b87"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/owner-build.log",
+      "sha256": "bdbd3d4a2b8e1cd607400c304404ec969d17eb8bdea77b294dfcec971d0f59f3"
+    }
+  ],
+  "qualification": "Readiness is offline only. No GPU recovery, reset, teardown, DMA/UAT retirement or rendering is established. Do not load on current retained owner."
+}

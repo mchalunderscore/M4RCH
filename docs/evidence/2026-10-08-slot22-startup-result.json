@@ -1,0 +1,85 @@
+{
+  "boot_id": "c22c7dac-2c96-41b7-8796-cf1a92a5cb7b",
+  "trial_source_commit": "3f79d32",
+  "module_at_trial_sha256": "12f0a6a782de6c37de1cb4fbd831c89131e9f96dc797f961d6efe0246c515b29",
+  "load_returncode": 0,
+  "root_published": true,
+  "crashlog_bytes": 2560,
+  "footer_valid": true,
+  "new_crashlog": true,
+  "pc": "0xfffffc0000024210",
+  "far": "0xfffffc2001204004",
+  "esr": "0x9600004f",
+  "fault_physical": "0x289004004",
+  "fault_page": "0x289004000",
+  "control_cursors_after": [
+    0,
+    0,
+    1
+  ],
+  "live_frames": 29,
+  "unique_frame_hashes": [
+    "ad9c943d1528c5b7716157e97dd2cb3ebcbe2a8d1de3736f0bb8716fd0d6e0bf"
+  ],
+  "observer_errors": [],
+  "changed_objects": [
+    {
+      "name": "main",
+      "changed_bytes": 5,
+      "first_changed_offsets": [
+        "0x32c",
+        "0x344",
+        "0x345",
+        "0x346",
+        "0x347"
+      ]
+    },
+    {
+      "name": "main_header",
+      "changed_bytes": 1,
+      "first_changed_offsets": [
+        "0x0"
+      ]
+    },
+    {
+      "name": "power",
+      "changed_bytes": 5,
+      "first_changed_offsets": [
+        "0x38",
+        "0x78",
+        "0x922",
+        "0x923",
+        "0x652c"
+      ]
+    },
+    {
+      "name": "status_a",
+      "changed_bytes": 2,
+      "first_changed_offsets": [
+        "0x10",
+        "0x14"
+      ]
+    },
+    {
+      "name": "status_b",
+      "changed_bytes": 2,
+      "first_changed_offsets": [
+        "0xc734",
+        "0xc744"
+      ]
+    }
+  ],
+  "usb_role_providers": [
+    "382280000.usb-role-switch",
+    "38a280000.usb-role-switch",
+    "392280000.usb-role-switch"
+  ],
+  "pd_controllers": [
+    "0-0a",
+    "2-0c",
+    "0-0c"
+  ],
+  "user_confirmation": "yes: desktop, built-in input, USB and networking normal",
+  "interpretation": "Advanced from primary aac8 fault to slot22 write at24210. No control consumption, complete startup or rendering established.",
+  "next": "Qualify slot22 +4004/+4010 writes and earlier-selector replay; grant only physical289004000, retain289000000 read-only and opaque descriptor flags unchanged. Normal reboot required before next root publication."
+}

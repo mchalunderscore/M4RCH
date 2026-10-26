@@ -1,0 +1,441 @@
+{
+  "binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "counts": {
+    "notification_present": 512,
+    "single_phase": 768,
+    "timestamp_pair": 512,
+    "second_phase": 256,
+    "wait_pair": 192,
+    "notification_absent": 512
+  },
+  "examples": [
+    {
+      "case": 0,
+      "order": [
+        "start",
+        "timestamp_begin",
+        "wfi",
+        "timestamp_end",
+        "end",
+        "terminate"
+      ],
+      "bytes": 840,
+      "reported": 896
+    },
+    {
+      "case": 1,
+      "order": [
+        "start",
+        "wfi",
+        "end",
+        "terminate"
+      ],
+      "bytes": 688,
+      "reported": 704
+    },
+    {
+      "case": 2,
+      "order": [
+        "start",
+        "timestamp_begin",
+        "wfi",
+        "timestamp_end",
+        "end",
+        "terminate"
+      ],
+      "bytes": 840,
+      "reported": 896
+    },
+    {
+      "case": 3,
+      "order": [
+        "start",
+        "wfi",
+        "end",
+        "terminate"
+      ],
+      "bytes": 688,
+      "reported": 704
+    },
+    {
+      "case": 4,
+      "order": [
+        "start",
+        "timestamp_begin",
+        "wfi",
+        "timestamp_end",
+        "end",
+        "terminate"
+      ],
+      "bytes": 840,
+      "reported": 896
+    },
+    {
+      "case": 5,
+      "order": [
+        "start",
+        "wfi",
+        "end",
+        "terminate"
+      ],
+      "bytes": 688,
+      "reported": 704
+    },
+    {
+      "case": 6,
+      "order": [
+        "start",
+        "timestamp_begin",
+        "wfi",
+        "timestamp_end",
+        "end",
+        "terminate"
+      ],
+      "bytes": 840,
+      "reported": 896
+    },
+    {
+      "case": 7,
+      "order": [
+        "start",
+        "wfi",
+        "end",
+        "terminate"
+      ],
+      "bytes": 688,
+      "reported": 704
+    },
+    {
+      "case": 8,
+      "order": [
+        "start",
+        "timestamp_begin",
+        "wfi",
+        "timestamp_end",
+        "end",
+        "terminate"
+      ],
+      "bytes": 840,
+      "reported": 896
+    },
+    {
+      "case": 9,
+      "order": [
+        "start",
+        "wfi",
+        "end",
+        "terminate"
+      ],
+      "bytes": 688,
+      "reported": 704
+    },
+    {
+      "case": 10,
+      "order": [
+        "start",
+        "timestamp_begin",
+        "wfi",
+        "timestamp_end",
+        "end",
+        "terminate"
+      ],
+      "bytes": 840,
+      "reported": 896
+    },
+    {
+      "case": 11,
+      "order": [
+        "start",
+        "wfi",
+        "end",
+        "terminate"
+      ],
+      "bytes": 688,
+      "reported": 704
+    },
+    {
+      "case": 12,
+      "order": [
+        "start",
+        "timestamp_begin",
+        "wfi",
+        "timestamp_end",
+        "end",
+        "second_start",
+        "second_wfi",
+        "second_end",
+        "terminate"
+      ],
+      "bytes": 1524,
+      "reported": 1536
+    },
+    {
+      "case": 13,
+      "order": [
+        "start",
+        "wfi",
+        "end",
+        "second_start",
+        "second_wfi",
+        "second_end",
+        "terminate"
+      ],
+      "bytes": 1372,
+      "reported": 1408
+    },
+    {
+      "case": 14,
+      "order": [
+        "start",
+        "timestamp_begin",
+        "wfi",
+        "timestamp_end",
+        "end",
+        "second_start",
+        "second_wfi",
+        "second_end",
+        "terminate"
+      ],
+      "bytes": 1524,
+      "reported": 1536
+    },
+    {
+      "case": 15,
+      "order": [
+        "start",
+        "wfi",
+        "end",
+        "second_start",
+        "second_wfi",
+        "second_end",
+        "terminate"
+      ],
+      "bytes": 1372,
+      "reported": 1408
+    },
+    {
+      "case": 16,
+      "order": [
+        "start",
+        "timestamp_begin",
+        "wfi",
+        "timestamp_end",
+        "end",
+        "terminate"
+      ],
+      "bytes": 840,
+      "reported": 896
+    },
+    {
+      "case": 17,
+      "order": [
+        "start",
+        "wfi",
+        "end",
+        "terminate"
+      ],
+      "bytes": 688,
+      "reported": 704
+    },
+    {
+      "case": 18,
+      "order": [
+        "start",
+        "timestamp_begin",
+        "wfi",
+        "timestamp_end",
+        "end",
+        "terminate"
+      ],
+      "bytes": 840,
+      "reported": 896
+    },
+    {
+      "case": 19,
+      "order": [
+        "start",
+        "wfi",
+        "end",
+        "terminate"
+      ],
+      "bytes": 688,
+      "reported": 704
+    },
+    {
+      "case": 20,
+      "order": [
+        "start",
+        "timestamp_begin",
+        "wfi",
+        "timestamp_end",
+        "end",
+        "terminate"
+      ],
+      "bytes": 840,
+      "reported": 896
+    },
+    {
+      "case": 21,
+      "order": [
+        "start",
+        "wfi",
+        "end",
+        "terminate"
+      ],
+      "bytes": 688,
+      "reported": 704
+    },
+    {
+      "case": 22,
+      "order": [
+        "start",
+        "timestamp_begin",
+        "wfi",
+        "timestamp_end",
+        "end",
+        "terminate"
+      ],
+      "bytes": 840,
+      "reported": 896
+    },
+    {
+      "case": 23,
+      "order": [
+        "start",
+        "wfi",
+        "end",
+        "terminate"
+      ],
+      "bytes": 688,
+      "reported": 704
+    },
+    {
+      "case": 24,
+      "order": [
+        "start",
+        "timestamp_begin",
+        "wfi",
+        "timestamp_end",
+        "end",
+        "terminate"
+      ],
+      "bytes": 840,
+      "reported": 896
+    },
+    {
+      "case": 25,
+      "order": [
+        "start",
+        "wfi",
+        "end",
+        "terminate"
+      ],
+      "bytes": 688,
+      "reported": 704
+    },
+    {
+      "case": 26,
+      "order": [
+        "start",
+        "timestamp_begin",
+        "wfi",
+        "timestamp_end",
+        "end",
+        "terminate"
+      ],
+      "bytes": 840,
+      "reported": 896
+    },
+    {
+      "case": 27,
+      "order": [
+        "start",
+        "wfi",
+        "end",
+        "terminate"
+      ],
+      "bytes": 688,
+      "reported": 704
+    },
+    {
+      "case": 28,
+      "order": [
+        "start",
+        "timestamp_begin",
+        "wfi",
+        "timestamp_end",
+        "end",
+        "second_start",
+        "second_wfi",
+        "second_end",
+        "terminate"
+      ],
+      "bytes": 1524,
+      "reported": 1536
+    },
+    {
+      "case": 29,
+      "order": [
+        "start",
+        "wfi",
+        "end",
+        "second_start",
+        "second_wfi",
+        "second_end",
+        "terminate"
+      ],
+      "bytes": 1372,
+      "reported": 1408
+    },
+    {
+      "case": 30,
+      "order": [
+        "start",
+        "timestamp_begin",
+        "wfi",
+        "timestamp_end",
+        "end",
+        "second_start",
+        "second_wfi",
+        "second_end",
+        "terminate"
+      ],
+      "bytes": 1524,
+      "reported": 1536
+    },
+    {
+      "case": 31,
+      "order": [
+        "start",
+        "wfi",
+        "end",
+        "second_start",
+        "second_wfi",
+        "second_end",
+        "terminate"
+      ],
+      "bytes": 1372,
+      "reported": 1408
+    }
+  ],
+  "visited_instruction_count": 773,
+  "function": {
+    "start": "0xfffffe00089d517c",
+    "end": "0xfffffe00089d5a30",
+    "sha256": "6be54fac5e757b93a0d92a3e92687b35fa06952217a54edd2bd7c3bf21679d82"
+  },
+  "wfi_vtable": {
+    "base": "0xfffffe0007eaa560",
+    "slot": "0x258",
+    "target": "0xfffffe00089d4b54"
+  },
+  "qualification": "Whole native G16 3D SKU builder, native begin/timestamp/WFI/finish run in RAM versus composed independently checked models; complete stream/encoder/command outputs compared. PAC bypassed; external availability/event association/resource/firmware maps and memcpy stubbed. Both optional second phase and wait/timestamp branches covered. Native G16 SKU path is not proof SKSM uses this path; no valid shader/job, mapping/cache or live firmware execution established.",
+  "sksm_register_generator": {
+    "vtable": "0xfffffe0007eaa8e0",
+    "slot": "0x228",
+    "wrapper": "0xfffffe00089d5ce4",
+    "parent": "0xfffffe00089df73c",
+    "wrapper_sha256": "d4f46f30ec12a649c22d01aab5b1854a33a2d147047b8aa36ec0bdce07a62b13",
+    "qualification": "Static native vtable/wrapper route to previously audited common register generator; not proof of whole SKSM submission or GPU execution."
+  }
+}

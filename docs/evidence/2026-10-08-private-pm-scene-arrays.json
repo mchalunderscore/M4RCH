@@ -1,0 +1,72 @@
+{
+  "private_binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "range": [
+    "0xfffffe00089fcf2c",
+    "0xfffffe00089fd040"
+  ],
+  "range_sha256": "7caa738d0e54693d37a9c74058a4679c1129b2c0a503866a1f99dfaddb75c358",
+  "counts": {
+    "scene_arrays": 1024,
+    "scene_records": 16368,
+    "vector_elements": 32736
+  },
+  "examples": [
+    {
+      "count": 0,
+      "alignment": 1,
+      "stride": 4,
+      "scene_element_bytes": 128,
+      "zero_bytes": 0
+    },
+    {
+      "count": 1,
+      "alignment": 2,
+      "stride": 4,
+      "scene_element_bytes": 128,
+      "zero_bytes": 4
+    },
+    {
+      "count": 2,
+      "alignment": 4,
+      "stride": 4,
+      "scene_element_bytes": 128,
+      "zero_bytes": 8
+    },
+    {
+      "count": 3,
+      "alignment": 8,
+      "stride": 8,
+      "scene_element_bytes": 128,
+      "zero_bytes": 24
+    },
+    {
+      "count": 4,
+      "alignment": 16,
+      "stride": 16,
+      "scene_element_bytes": 128,
+      "zero_bytes": 64
+    },
+    {
+      "count": 5,
+      "alignment": 32,
+      "stride": 32,
+      "scene_element_bytes": 128,
+      "zero_bytes": 160
+    },
+    {
+      "count": 6,
+      "alignment": 64,
+      "stride": 64,
+      "scene_element_bytes": 128,
+      "zero_bytes": 384
+    },
+    {
+      "count": 7,
+      "alignment": 128,
+      "stride": 128,
+      "scene_element_bytes": 128,
+      "zero_bytes": 896
+    }
+  ],
+  "qualification": "Actual PM initializer alignment/zero/scene-array/publication slice. Independent complete object, vectors, scene array and scratch comparisons; record backing unchanged. Count0..32, power-of-two alignment1..128, valid vector capacity equal count. Distinct synthetic map domains from saved stack; preceding resource allocation, vtable registration, bounds failures, remaining initializer and HWPB reset excluded. Zero helper explicit byte-service implementation. No live PM or GPU job proved."
+}

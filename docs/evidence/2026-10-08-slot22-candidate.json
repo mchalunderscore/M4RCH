@@ -1,0 +1,152 @@
+{
+  "prepared_after_boot": "c22c7dac-2c96-41b7-8796-cf1a92a5cb7b",
+  "hardware_trial_performed": false,
+  "mapped_pages": 147,
+  "owned_pages": 47,
+  "device_pages": 100,
+  "writable_device_pages": 36,
+  "changed_permissions_read_to_write": [
+    "0x289004000"
+  ],
+  "slot22_first_page_readonly": true,
+  "opaque_descriptor_flag_unchanged": true,
+  "graph_bytes_unchanged": true,
+  "model": {
+    "start": "0x24048",
+    "boundary": "0x2427c before timer helper",
+    "instructions": 118,
+    "writes": 8,
+    "write_pages": [
+      "0x288004000",
+      "0x289004000"
+    ],
+    "accesses": [
+      {
+        "bank": "primary",
+        "pc": "0x24084",
+        "offset": "0x40a0",
+        "bytes": 8,
+        "write": true,
+        "value": "0x28040000019cd8"
+      },
+      {
+        "bank": "primary",
+        "pc": "0x24094",
+        "offset": "0x40a8",
+        "bytes": 8,
+        "write": false,
+        "value": null
+      },
+      {
+        "bank": "primary",
+        "pc": "0x2409c",
+        "offset": "0x40a0",
+        "bytes": 8,
+        "write": true,
+        "value": "0x28040000019ce0"
+      },
+      {
+        "bank": "primary",
+        "pc": "0x240a4",
+        "offset": "0x40a8",
+        "bytes": 8,
+        "write": false,
+        "value": null
+      },
+      {
+        "bank": "primary",
+        "pc": "0x2410c",
+        "offset": "0x40a0",
+        "bytes": 8,
+        "write": true,
+        "value": "0x28040000019ce8"
+      },
+      {
+        "bank": "primary",
+        "pc": "0x24114",
+        "offset": "0x40a8",
+        "bytes": 8,
+        "write": false,
+        "value": null
+      },
+      {
+        "bank": "primary",
+        "pc": "0x2411c",
+        "offset": "0x40a0",
+        "bytes": 8,
+        "write": true,
+        "value": "0x28040000019cf0"
+      },
+      {
+        "bank": "primary",
+        "pc": "0x24124",
+        "offset": "0x40a8",
+        "bytes": 8,
+        "write": false,
+        "value": null
+      },
+      {
+        "bank": "primary",
+        "pc": "0x24188",
+        "offset": "0x40a0",
+        "bytes": 8,
+        "write": true,
+        "value": "0x28040000019ca8"
+      },
+      {
+        "bank": "primary",
+        "pc": "0x24190",
+        "offset": "0x40a8",
+        "bytes": 8,
+        "write": false,
+        "value": null
+      },
+      {
+        "bank": "primary",
+        "pc": "0x241a0",
+        "offset": "0x40a0",
+        "bytes": 8,
+        "write": true,
+        "value": "0x28040000019cc0"
+      },
+      {
+        "bank": "primary",
+        "pc": "0x241a8",
+        "offset": "0x40a8",
+        "bytes": 8,
+        "write": false,
+        "value": null
+      },
+      {
+        "bank": "slot22",
+        "pc": "0x24210",
+        "offset": "0x4004",
+        "bytes": 4,
+        "write": true,
+        "value": "0x0"
+      },
+      {
+        "bank": "slot22",
+        "pc": "0x24218",
+        "offset": "0x4010",
+        "bytes": 4,
+        "write": true,
+        "value": "0x0"
+      }
+    ]
+  },
+  "tests": "14 mapping/serialization/allowlist tests; native continuation and118-instruction selector replay; W=1 eight-helper build without warnings",
+  "qualification": "Captured native DATA/objects/registers; device reads explicitly zero RAM. Earlier replay assumes preserved registers and native state-query result3. Stops before timer helper; no peripheral semantics, later callback, whole function, startup or rendering success established. Implementation-derived evidence.",
+  "artifacts": {
+    "out/gpu-gravity-contract/slot22-startup-candidate/graph-contract.h": "601351279e5d50c16911e0a1c5e3e0e71a527b9749571e078ff3bdd484effd99",
+    "out/gpu-gravity-contract/slot22-startup-candidate/asc-graph-init.ko": "210e5ad64084707c2911d296609bee5df86d79c9ea22364e61658a4802038f53",
+    "out/gpu-gravity-contract/slot22-startup-candidate/build-receipt.json": "e85807f2f5b6c052c8c0ea2d2360c4abbf7183ca7783d2662364a537f1a37e11",
+    "out/gpu-gravity-contract/slot22-startup-candidate/asc-graph-init.c": "f9dc49f87e28076ef8ddee930c75ac3534864c9c00dc033e9774c5d757784386",
+    "out/gpu-gravity-contract/slot22-startup-candidate/run-root-envelope.py": "1a25fc8723bb60b430183c902bfe475727a93a88721091b064f8b021005a6bd7",
+    "out/gpu-gravity-contract/slot22-startup-candidate/build.log": "d8b231f54eaadc6f2978a57ad207b91e74b52fbe28ba32df6583ad54a741839b",
+    "out/gpu-gravity-contract/slot22-startup-candidate/graph-receipt.json": "4c9705806c6b67e7f69da6904248e36e7e7171373bf24d20902ed4eba3617c5a",
+    "out/gpu-gravity-contract/slot22-startup-candidate/model-result.json": "471e87fb102ef7600cb58ac1c6625455a29c3618503516fe71c2e0c4c94f58be",
+    "out/gpu-gravity-contract/slot22-startup-candidate/graph-map.h": "51343efc9367c372b2771691830fbc287d208334ffce50b80fa12186c0f89c0a",
+    "out/gpu-gravity-contract/slot22-startup-candidate/graph-before.bin": "f4f377abefbffa2bd7fb34f87384d4021ed02f35847217a96cbef8bfa46aebcd"
+  }
+}

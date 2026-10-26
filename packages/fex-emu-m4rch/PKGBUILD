@@ -1,0 +1,25 @@
+pkgname=fex-emu-m4rch
+pkgver=2610
+pkgrel=1
+pkgdesc='Fast usermode x86 and x86-64 emulator for Arm64'
+arch=('aarch64')
+url='https://fex-emu.com/'
+license=('MIT')
+depends=('glibc' 'gcc-libs' 'squashfs-tools' 'squashfuse' 'erofs-utils' 'curl' 'fmt' 'xxhash')
+makedepends=('cmake' 'ninja' 'clang' 'python' 'pkgconf')
+provides=('fex-emu')
+conflicts=('fex-emu')
+options=('!lto' '!debug')
+source=('fex-source.tar.gz')
+build() {
+  cmake -S "$srcdir/fex" -B "$srcdir/build" -G Ninja \
+    -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ \
+    -DENABLE_LTO=False -DBUILD_TESTING=False -DBUILD_FEXCONFIG=False \
+    -DOVERRIDE_VERSION=FEX-2610 -DOVERRIDE_HASH=14c92681f4d62cf84d901460e0358de09c8847a7
+  cmake --build "$srcdir/build" -j3
+}
+package() {
+  DESTDIR="$pkgdir" cmake --install "$srcdir/build"
+  install -Dm644 "$srcdir/fex/LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}

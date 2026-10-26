@@ -1,0 +1,229 @@
+{
+  "schema": "m4rch.gfx-native-powergate-independent-review.v1",
+  "date": "2026-10-09",
+  "reviewer": "pmp_integration_review",
+  "prepared_owner": "out/gfx-native-powergate/prepared-owner-v5",
+  "passed": true,
+  "hardware_actions": [],
+  "module_build_actions": [],
+  "inputs": [
+    {
+      "path": "experiments/t6040-gpu/gfx-native-powergate/gfx-native-powergate.h",
+      "sha256": "068abf0ba07c4c4777910d5074229bea3754b37f0c183a05ca73d967ede39f62"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-powergate/prepare-powergate-owner.py",
+      "sha256": "0380c5d533a2e75e6a83534e77e79bb1a485b1d7465c5cf12c0582a941cfd240"
+    },
+    {
+      "path": "experiments/t6040-gpu/gfx-native-powergate/test-powergate-owner.py",
+      "sha256": "d96d2769d5fec6d65b7831beba0e1fdfaa66c54d4d9c31d605debdbaf4470d2a"
+    },
+    {
+      "path": "out/gfx-native-powergate/prepared-owner-v5/powergate-owner-source-receipt.json",
+      "sha256": "29aedde66ac1a15ef0ea180d79dcb2470a1fb638fbaf3750c15afd4a52a2a2f7"
+    },
+    {
+      "path": "out/gfx-native-powergate/independent-owner-qualification-v5.json",
+      "sha256": "dc07f9c1b37de7ba4aa7ccfb5328af89b16dabc64e7e95bd7c3c04ad1256e914"
+    },
+    {
+      "path": "out/gfx-native-powergate/owner-qualification-final-v5.json",
+      "sha256": "dc07f9c1b37de7ba4aa7ccfb5328af89b16dabc64e7e95bd7c3c04ad1256e914"
+    },
+    {
+      "path": "out/gfx-native-powergate/native-ranges.json",
+      "sha256": "a438f9167860e6518169c3881b944e693ad5867d081fbad8020f752a08691ae3"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/candidate/asc-root-envelope/build-receipt.json",
+      "sha256": "2f45d761f1ba9a4b95bdb1a848c06aae9a47740cf4536ce39dc45dddd19ae29c"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/core-qualification.json",
+      "sha256": "ee9d320e6e640e7b5ededda9e5a67d49f686975a4eb14ecc43c8561e9d21266a"
+    },
+    {
+      "path": "out/gfx-coordinate-native-status/adapter-qualification.json",
+      "sha256": "2f10f7e453a49a83b2d16ca377aad38c2eda4b576e98bd1d9acd4f5aba84b97e"
+    },
+    {
+      "path": "docs/evidence/2026-10-09-rtbuddy-matched-provider.json",
+      "sha256": "8606640b84e12fc8f18891b53ed1ebc913123bfc533e5108fd703f5c139a0027"
+    }
+  ],
+  "source_pins": [
+    {
+      "path": "out/gfx-native-powergate/prepared-owner-v5/Makefile",
+      "sha256": "7aec54cffc272d970df9a3d3fd80c768cefb3d8fe99abd45e996ea820babd9c5",
+      "frozen_sha256": "12508e7b773274cb8474d32fa33be952ef00eea09aa89390ad8061df4fe08d01",
+      "changed": true
+    },
+    {
+      "path": "out/gfx-native-powergate/prepared-owner-v5/asc-graph-init.c",
+      "sha256": "8e17ce7d7cb10132497a712e99699177ee49841b703c4ae91b70a135ce644f1b",
+      "frozen_sha256": "5e6156de5894c93b97b7ae43f2e6cf00df698e0e14c3c380e62c4432b049a29b",
+      "changed": true
+    },
+    {
+      "path": "out/gfx-native-powergate/prepared-owner-v5/boot-contract.h",
+      "sha256": "5194505b49f3b40acdc80f29bf1e8c5c5f11374f483ed6a22df2c22ea904e082",
+      "frozen_sha256": "5194505b49f3b40acdc80f29bf1e8c5c5f11374f483ed6a22df2c22ea904e082",
+      "changed": false
+    },
+    {
+      "path": "out/gfx-native-powergate/prepared-owner-v5/command-pool-map.h",
+      "sha256": "1e4696787075de13a56f4946018221803a5a01a3c5a653bbbdbd48f319e74b6b",
+      "frozen_sha256": "1e4696787075de13a56f4946018221803a5a01a3c5a653bbbdbd48f319e74b6b",
+      "changed": false
+    },
+    {
+      "path": "out/gfx-native-powergate/prepared-owner-v5/gfx-coordinate-core.h",
+      "sha256": "b7a7376ab2a7e1b054e0338ce37efe035b85acaa6ba5072ed7231b6dcb245a95",
+      "frozen_sha256": "b7a7376ab2a7e1b054e0338ce37efe035b85acaa6ba5072ed7231b6dcb245a95",
+      "changed": false
+    },
+    {
+      "path": "out/gfx-native-powergate/prepared-owner-v5/gfx-coordinate-owner.h",
+      "sha256": "9798b26320e2b0f9b270da9b598f21e909cf037e58070154a6818ac6156601b4",
+      "frozen_sha256": "9798b26320e2b0f9b270da9b598f21e909cf037e58070154a6818ac6156601b4",
+      "changed": false
+    },
+    {
+      "path": "out/gfx-native-powergate/prepared-owner-v5/gfx-reset-scope.h",
+      "sha256": "78cff00b01dfafa8f37c24cfc694b0da2b3233bbdc781777fd7be3f24abe893f",
+      "frozen_sha256": "4ad396fa170b694f7b7e00e37d7f88bbcd07b55ba44d767ee825a4cff8de7fff",
+      "changed": true
+    },
+    {
+      "path": "out/gfx-native-powergate/prepared-owner-v5/gfx-reset-startup.h",
+      "sha256": "f33ff5251683d7bc2aaca7f6e559d6b95696b2f1524ff68a6ab8e82fab18aecd",
+      "frozen_sha256": "f33ff5251683d7bc2aaca7f6e559d6b95696b2f1524ff68a6ab8e82fab18aecd",
+      "changed": false
+    },
+    {
+      "path": "out/gfx-native-powergate/prepared-owner-v5/graph-contract.h",
+      "sha256": "f8c5a1536aa88ef7a1eb09b9a862cece4a2e822dd2eda54a449e6b3c11b20410",
+      "frozen_sha256": "f8c5a1536aa88ef7a1eb09b9a862cece4a2e822dd2eda54a449e6b3c11b20410",
+      "changed": false
+    },
+    {
+      "path": "out/gfx-native-powergate/prepared-owner-v5/graph-map.h",
+      "sha256": "704836d10b86e3d2bcb20b457853a700a2153aae505b0aae473aea4daee7f13e",
+      "frozen_sha256": "704836d10b86e3d2bcb20b457853a700a2153aae505b0aae473aea4daee7f13e",
+      "changed": false
+    },
+    {
+      "path": "out/gfx-native-powergate/prepared-owner-v5/job-data.h",
+      "sha256": "c18ede083b691fbd3044237aaf30eb1e34c775e9391d3c6f1bea8e61561e0913",
+      "frozen_sha256": "c18ede083b691fbd3044237aaf30eb1e34c775e9391d3c6f1bea8e61561e0913",
+      "changed": false
+    },
+    {
+      "path": "out/gfx-native-powergate/prepared-owner-v5/joined-context-init.h",
+      "sha256": "1851e697907d50a3f47d153879f47f1b6b07065f5d58055fa6269bc436bc15b2",
+      "frozen_sha256": "1851e697907d50a3f47d153879f47f1b6b07065f5d58055fa6269bc436bc15b2",
+      "changed": false
+    },
+    {
+      "path": "out/gfx-native-powergate/prepared-owner-v5/receive-service.h",
+      "sha256": "bab356c9a2467fbb46760345102a7fb8369a9efe8db31efd058b1fd918b11043",
+      "frozen_sha256": "bab356c9a2467fbb46760345102a7fb8369a9efe8db31efd058b1fd918b11043",
+      "changed": false
+    },
+    {
+      "path": "out/gfx-native-powergate/prepared-owner-v5/recovery-contract.h",
+      "sha256": "9bce940061421a78fde0e509fdeba59a8c66c3d5ab32c4faf59dd613c14d4b23",
+      "frozen_sha256": "9bce940061421a78fde0e509fdeba59a8c66c3d5ab32c4faf59dd613c14d4b23",
+      "changed": false
+    },
+    {
+      "path": "out/gfx-native-powergate/prepared-owner-v5/recovery-cycle.h",
+      "sha256": "ac22d90a600a0ae27d435f64eec79e30bd6a1cab6a7d9ac216fa03525a6455d3",
+      "frozen_sha256": "9971b319f7bbcc265ec6a9eca5b2f9bdf00e44a7c19eabce301eb48cc0debe71",
+      "changed": true
+    },
+    {
+      "path": "out/gfx-native-powergate/prepared-owner-v5/render-backing-map.h",
+      "sha256": "ade8cedde4da68f2f463ed8604f47ab6b56cdf1c8ff3984d592e00f4a065978b",
+      "frozen_sha256": "ade8cedde4da68f2f463ed8604f47ab6b56cdf1c8ff3984d592e00f4a065978b",
+      "changed": false
+    },
+    {
+      "path": "out/gfx-native-powergate/prepared-owner-v5/render-data.h",
+      "sha256": "3bdbf04b9a3219c8e818beb464b5f55626e8a9b3d184680e3fd05a6361c47cbd",
+      "frozen_sha256": "3bdbf04b9a3219c8e818beb464b5f55626e8a9b3d184680e3fd05a6361c47cbd",
+      "changed": false
+    },
+    {
+      "path": "out/gfx-native-powergate/prepared-owner-v5/gfx-native-powergate.h",
+      "sha256": "068abf0ba07c4c4777910d5074229bea3754b37f0c183a05ca73d967ede39f62",
+      "added": true
+    }
+  ],
+  "source_binding": {
+    "frozen_common_source_pins_verified": 17,
+    "unchanged_common_sources": 13,
+    "changed_common_sources": [
+      "Makefile",
+      "asc-graph-init.c",
+      "gfx-reset-scope.h",
+      "recovery-cycle.h"
+    ],
+    "added_source": "gfx-native-powergate.h",
+    "actual_preparer_transformations_match": true,
+    "paired_off_body_byte_equivalent_except_command_result_labels": true
+  },
+  "actual_c_qualification": {
+    "path": "out/gfx-native-powergate/independent-owner-qualification-v5.json",
+    "sha256": "dc07f9c1b37de7ba4aa7ccfb5328af89b16dabc64e7e95bd7c3c04ad1256e914",
+    "case_count": 55,
+    "ASan_UBSan": true,
+    "independent_replay_matches_author_receipt": true,
+    "actual_post_start_fallback_replay_verified": true,
+    "limits": "Actual new header and transformed startup labels execute against mocked preexisting OFF, provider and receive helpers; earlier frozen native STATUS0 core/adapter/OFF qualification remains separate."
+  },
+  "native_epoch": {
+    "requires_fresh_cold_owner": true,
+    "only_iop_power_request_admitted": "EP0 type6 payload0x202",
+    "native_reply_type_bits": "52..55",
+    "native_reply_low8": [
+      1,
+      2
+    ],
+    "native_wait_state": "7 -> 2",
+    "no_prior_sleep201_request_on_admitted_resident_path": true,
+    "warm_wake220_refused_by_startup_profile": true,
+    "old_sleep_and_cpu_stop_startup_fallback_removed": true,
+    "ack_identity_limit": "Fresh RX-empty entry, a sole own202 request and no201 outstanding bound the pending exchange; an ACK is not a firmware-cessation or DMA-retirement witness."
+  },
+  "reviewed_order": [
+    "lock and consume one terminal intent; preserve initial failed/healthy admission state; seal worker",
+    "qualify held retained context, no work, exact initial phase/counter/request/control bounds, empty RX and available TX",
+    "publish exactly one EP0 type6/202 request",
+    "accept EP0 type7 native low8=1 or2 before timeout; retain raw frame; qualified bounded receive service only",
+    "fresh non-allones RX-empty after ACK",
+    "native STATUS48 lowbit idle poll before writes, then fresh RX-empty before CPU stop",
+    "fresh CTRL44 clear0x10/readback; fresh second read rejects reassertedSTART, then clear0x20/readback; check final nativeidle",
+    "delegate unchanged paired PMP/PMC OFF and sole held=false/PMput once",
+    "retain all174 backing/context/maps/module/consumer on every result; no restart or retirement"
+  ],
+  "resolved_findings": [
+    "ACK followed by pending or invalid RX refuses before CPU writes/OFF",
+    "START reappearing before freshsecond RMW refuses without write carryingSTART",
+    "startup healthy and diagnostic markers accurately distinguish initial admission",
+    "postON/START unknown startup no longer sends AP/SLEEP or stale stop fallback; retains exact present resources",
+    "unknown startup explicit command barrier refuses all3commands before callbacks",
+    "fault cases cover repeated calls after partial CPU writes, coordinator refusal, negativePMput and physicalOFFtimeout"
+  ],
+  "remaining_source_blockers": [],
+  "not_established": [
+    "live native powergate ACK",
+    "normal native mailbox-interrupt/endpoint/mapper callback equivalence",
+    "physical GPU or firmware cessation",
+    "powercollapse or BUSY11clear",
+    "samecontext reentry",
+    "rendering or174page DMAretirement"
+  ],
+  "next_admissible_step": "Root separately verifies the built module/receipt and wrappers, then selects one fresh cold native-PWRGATE experiment. Current boot94cb retained owner is not a reusable trial context."
+}

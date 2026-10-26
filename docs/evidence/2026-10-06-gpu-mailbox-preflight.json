@@ -1,0 +1,28 @@
+{
+  "raw_adt_irq_order": [
+    1502,
+    1501,
+    1504,
+    1503
+  ],
+  "linux_named_irqs": {
+    "send-empty": 1501,
+    "send-not-empty": 1502,
+    "recv-empty": 1503,
+    "recv-not-empty": 1504
+  },
+  "live_aic_phandle": 24,
+  "asc_base": "0x28a600000",
+  "mailbox_base": "0x28a608000",
+  "linux_driver": "apple,asc-mailbox-v4",
+  "qualification": "Registration only. IRQ role inferred from matched ASC convention; no actual signal delivery proven. No RTKit client or firmware-start code.",
+  "bound": true,
+  "driver": "apple-mailbox",
+  "irq_lines": [
+    " 76:          0          0          0          0          0          0          0          0          0          0          0          0     AIC2 67040 Level     28a608000.mailbox-recv",
+    " 77:          0          0          0          0          0          0          0          0          0          0          0          0     AIC2 67037 Level     28a608000.mailbox-send"
+  ],
+  "firmware_started": false,
+  "mailbox_messages_sent": false,
+  "cleanup_verified": true
+}

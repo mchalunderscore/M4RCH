@@ -1,0 +1,58 @@
+{
+  "schema": "m4rch-gpc-telemetry-recovery-candidate-v1",
+  "stage": "Executed on bootf5f3a7cc; see telemetry-recovery-live report. Superseded by RX servicing candidate.",
+  "candidate": "out/gpc-telemetry-recovery/candidate",
+  "prepared": "out/gpc-telemetry-recovery/prepared",
+  "module_sha256": "0c7c32b00592aa0d42a2a96313e26fe87a426175f03b17739a125ecb5bfd8f3d",
+  "build_receipt_sha256": "2c9caefb21c3f87a1a39e7327c6eb226a88c74bb3cac5dd98fed6fe8321edb32",
+  "graph_sha256": "de44a28ecca7f28eae47f511d67a20cd774be09c9c90fb8e6d7e2af0c58ad871",
+  "graph_receipt_sha256": "efe0bf28c896cc508ca685e375355ac49c8d3020e4d1c4ec951f8ff44a7519b0",
+  "source_sha256": {
+    "joined-context-init.h": "1851e697907d50a3f47d153879f47f1b6b07065f5d58055fa6269bc436bc15b2",
+    "graph-contract.h": "0b1be80330cd8cf42c33228ab809072bdc679a43e21dd510f2bfc68192a5e2ef",
+    "render-data.h": "3bdbf04b9a3219c8e818beb464b5f55626e8a9b3d184680e3fd05a6361c47cbd",
+    "recovery-contract.h": "2ffe44545a74631cbb86c33d26e52da4b8f49c3e587d5351955495d7e7ecee31",
+    "job-data.h": "c18ede083b691fbd3044237aaf30eb1e34c775e9391d3c6f1bea8e61561e0913",
+    "render-backing-map.h": "ade8cedde4da68f2f463ed8604f47ab6b56cdf1c8ff3984d592e00f4a065978b",
+    "command-pool-map.h": "1e4696787075de13a56f4946018221803a5a01a3c5a653bbbdbd48f319e74b6b",
+    "recovery-cycle.h": "6b5465b6e4c65932f031054a83fbe560166e6f1a37bcf4155453422f077a16f7",
+    "graph-map.h": "704836d10b86e3d2bcb20b457853a700a2153aae505b0aae473aea4daee7f13e",
+    "boot-contract.h": "5194505b49f3b40acdc80f29bf1e8c5c5f11374f483ed6a22df2c22ea904e082",
+    "asc-graph-init.c": "140f8a968854a916cc4eab8d7bd708640a30c5573def1de6b33f67fae4c4cacd"
+  },
+  "native_generator_sha256": "ed06f0c04af3b9386ab4abdfe545d464bcbc37bcfc21ed9a134d18395617fa77",
+  "runner_sha256": "9b0cc183c79c99ba13aa3f11c9835c212bfd920c3b8f4b21f9b9dc6462251e58",
+  "mapping": {
+    "slot": 9,
+    "physical": "0x5003d0000",
+    "gpu_va": "0xfffffc2001b10000",
+    "bytes": 16384,
+    "writable": true,
+    "firmware_cached_va": "0x18f590",
+    "fault_pc": "0x25674",
+    "selectors": [
+      "0x10f98",
+      "0x10f9c"
+    ],
+    "mapping_offsets": [
+      "0xf98",
+      "0xf9c"
+    ],
+    "qualification": "Native constructor and captured null mapping fault; firmware performs transition reporting writes, no host register poke"
+  },
+  "changed_graph_bytes_vs_aux": 11,
+  "mmio_leaves": 101,
+  "mapped_graph_pages": 170,
+  "owned_pages": 174,
+  "controls_initial": 32,
+  "controls_staged": 128,
+  "checks": [
+    "W=1 module build",
+    "all artifact/source hashes match",
+    "only slot9 descriptor differs from preceding graph",
+    "immutable triangle backing and commands byte-identical",
+    "20 existing mapping tests pass",
+    "Python syntax and git diff checks pass"
+  ],
+  "qualification": "Next hardware hypothesis, no successful recovery/retirement/rendering yet. Current stopped session cannot be reused; fresh reboot required."
+}

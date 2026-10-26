@@ -1,0 +1,19 @@
+{
+  "stage": "prepared; no hardware result yet",
+  "boot_id": "e3501874-8c10-47f2-92e1-a8de666e7caf",
+  "module_sha256": "6a436db0a234d53db22ab7353a9d7f98974908278dbc2408c15af6a2e38468e3",
+  "source_commit": "6545b0f plus recorded working changes",
+  "cycles": 2,
+  "owned_pages": 174,
+  "work_submitted": false,
+  "firmware_audit": "out/recovery-idle/firmware-audit.json",
+  "candidate": "out/recovery-idle/live-candidate",
+  "hypothesis": "Matched application recovery can return an idle joined graph to fresh control consumption twice without sleep/wake between cycles",
+  "success": [
+    "counter increments once per request",
+    "phase1->host2->phase3->host0",
+    "request state/flag return0",
+    "control read/prefetch/producer32->33->34"
+  ],
+  "retirement": "All joined allocations retained; final ordinary stop; no safe unload claim"
+}

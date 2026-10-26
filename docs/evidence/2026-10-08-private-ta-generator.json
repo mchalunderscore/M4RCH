@@ -1,0 +1,556 @@
+{
+  "private_binary_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "native_range": [
+    "0xfffffe00089dd2c4",
+    "0xfffffe00089df4c0"
+  ],
+  "native_range_sha256": "5bbbf783f3371331550eaf12b5211d5e4751d07eea3656e189ffca1be45f14bd",
+  "counts": {
+    "complete_ta_producer": 128,
+    "independent_entry_bytes": 10496,
+    "metadata_links": 256
+  },
+  "fixtures": [
+    {
+      "case": 0,
+      "descriptor1558": 0,
+      "descriptor960": 0,
+      "backing_count": 83,
+      "exported_count": 81,
+      "encoder_calls": 82,
+      "map_calls": 1,
+      "command_sha256": "a02137dbea4161bc228b5de92b8b1332ffa7a241681391671fd911d351b5d3f4"
+    },
+    {
+      "case": 1,
+      "descriptor1558": 1,
+      "descriptor960": 2,
+      "backing_count": 84,
+      "exported_count": 82,
+      "encoder_calls": 82,
+      "map_calls": 1,
+      "command_sha256": "05b6d695aefa946613f66619f7d3f53dba42953a8459905379ddf67ea36a562c"
+    },
+    {
+      "case": 2,
+      "descriptor1558": 0,
+      "descriptor960": 3,
+      "backing_count": 83,
+      "exported_count": 81,
+      "encoder_calls": 82,
+      "map_calls": 1,
+      "command_sha256": "dc69c96524f5c4fc56d2b6e010c4fd7f90da4902f06da660459165007aea7f09"
+    },
+    {
+      "case": 3,
+      "descriptor1558": 1,
+      "descriptor960": 0,
+      "backing_count": 84,
+      "exported_count": 82,
+      "encoder_calls": 82,
+      "map_calls": 1,
+      "command_sha256": "3c4059cde1b0de6b9cf9b731a21e446dbed37384044826643d02a64a6f7b1a85"
+    },
+    {
+      "case": 4,
+      "descriptor1558": 0,
+      "descriptor960": 2,
+      "backing_count": 83,
+      "exported_count": 81,
+      "encoder_calls": 82,
+      "map_calls": 1,
+      "command_sha256": "8e1097ae7c2b994d6b4716643890c0db15aac93d7df1fdfbbbaa73c2d4f4161e"
+    },
+    {
+      "case": 5,
+      "descriptor1558": 1,
+      "descriptor960": 3,
+      "backing_count": 84,
+      "exported_count": 82,
+      "encoder_calls": 82,
+      "map_calls": 1,
+      "command_sha256": "80110339211bed130f3e7e9000dafd392d1e3c040dee02fe63e2cdfb242846dc"
+    }
+  ],
+  "baseline_records": [
+    {
+      "register": "0x10140",
+      "flag": 1,
+      "value": "0x200"
+    },
+    {
+      "register": "0x1c038",
+      "flag": 1,
+      "value": "0x0"
+    },
+    {
+      "register": "0x1c9c8",
+      "flag": 0,
+      "value": "0x0"
+    },
+    {
+      "register": "0x1c040",
+      "flag": 1,
+      "value": "0x0"
+    },
+    {
+      "register": "0x1c9d0",
+      "flag": 0,
+      "value": "0x0"
+    },
+    {
+      "register": "0x1c0a0",
+      "flag": 1,
+      "value": "0x0"
+    },
+    {
+      "register": "0x1c030",
+      "flag": 1,
+      "value": "0x8000000000000000"
+    },
+    {
+      "register": "0x1c9c0",
+      "flag": 0,
+      "value": "0x8000000000000000"
+    },
+    {
+      "register": "0x1c050",
+      "flag": 1,
+      "value": "0x0"
+    },
+    {
+      "register": "0x1c060",
+      "flag": 1,
+      "value": "0x0"
+    },
+    {
+      "register": "0x10148",
+      "flag": 1,
+      "value": "0x0"
+    },
+    {
+      "register": "0x10138",
+      "flag": 1,
+      "value": "0x0"
+    },
+    {
+      "register": "0x10110",
+      "flag": 1,
+      "value": "0x0"
+    },
+    {
+      "register": "0x1c9b0",
+      "flag": 0,
+      "value": "0x0"
+    },
+    {
+      "register": "0x10118",
+      "flag": 1,
+      "value": "0x0"
+    },
+    {
+      "register": "0x1c9b8",
+      "flag": 0,
+      "value": "0x0"
+    },
+    {
+      "register": "0x1c958",
+      "flag": 0,
+      "value": "0x1"
+    },
+    {
+      "register": "0x1c950",
+      "flag": 0,
+      "value": "0x0"
+    },
+    {
+      "register": "0x1c930",
+      "flag": 0,
+      "value": "0x0"
+    },
+    {
+      "register": "0x1c880",
+      "flag": 0,
+      "value": "0x0"
+    },
+    {
+      "register": "0x1c948",
+      "flag": 0,
+      "value": "0x0"
+    },
+    {
+      "register": "0x1c888",
+      "flag": 0,
+      "value": "0x0"
+    },
+    {
+      "register": "0x1c890",
+      "flag": 0,
+      "value": "0x0"
+    },
+    {
+      "register": "0x1c918",
+      "flag": 0,
+      "value": "0x0"
+    },
+    {
+      "register": "0x1c078",
+      "flag": 1,
+      "value": "0x0"
+    },
+    {
+      "register": "0x1c9d8",
+      "flag": 0,
+      "value": "0x0"
+    },
+    {
+      "register": "0x1c088",
+      "flag": 1,
+      "value": "0x0"
+    },
+    {
+      "register": "0x1c9e0",
+      "flag": 0,
+      "value": "0x0"
+    },
+    {
+      "register": "0x16c40",
+      "flag": 1,
+      "value": "0x0"
+    },
+    {
+      "register": "0x1ca40",
+      "flag": 0,
+      "value": "0x0"
+    },
+    {
+      "register": "0x1c9a8",
+      "flag": 0,
+      "value": "0x0"
+    },
+    {
+      "register": "0x1c920",
+      "flag": 0,
+      "value": "0x0"
+    },
+    {
+      "register": "0x10150",
+      "flag": 1,
+      "value": "0x0"
+    },
+    {
+      "register": "0x1c198",
+      "flag": 1,
+      "value": "0x0"
+    },
+    {
+      "register": "0x1c1a0",
+      "flag": 1,
+      "value": "0x0"
+    },
+    {
+      "register": "0x1c1a8",
+      "flag": 1,
+      "value": "0x0"
+    },
+    {
+      "register": "0x1c1b0",
+      "flag": 1,
+      "value": "0x0"
+    },
+    {
+      "register": "0x1c1b8",
+      "flag": 1,
+      "value": "0x0"
+    },
+    {
+      "register": "0x1c8f8",
+      "flag": 0,
+      "value": "0x8860"
+    },
+    {
+      "register": "0x1c0b0",
+      "flag": 1,
+      "value": "0x0"
+    },
+    {
+      "register": "0x1c850",
+      "flag": 0,
+      "value": "0x0"
+    },
+    {
+      "register": "0x10130",
+      "flag": 1,
+      "value": "0x88"
+    },
+    {
+      "register": "0x10120",
+      "flag": 1,
+      "value": "0x2"
+    },
+    {
+      "register": "0x10128",
+      "flag": 1,
+      "value": "0x0"
+    },
+    {
+      "register": "0x101b8",
+      "flag": 1,
+      "value": "0x0"
+    },
+    {
+      "register": "0x1c068",
+      "flag": 1,
+      "value": "0x0"
+    },
+    {
+      "register": "0x1c070",
+      "flag": 1,
+      "value": "0x0"
+    },
+    {
+      "register": "0x1c080",
+      "flag": 1,
+      "value": "0x0"
+    },
+    {
+      "register": "0x1c0a8",
+      "flag": 1,
+      "value": "0x0"
+    },
+    {
+      "register": "0x10170",
+      "flag": 1,
+      "value": "0x100"
+    },
+    {
+      "register": "0x10168",
+      "flag": 1,
+      "value": "0xffffffff"
+    },
+    {
+      "register": "0xa308",
+      "flag": 1,
+      "value": "0x0"
+    },
+    {
+      "register": "0x1c8e0",
+      "flag": 0,
+      "value": "0xffffffffffffffff"
+    },
+    {
+      "register": "0x1c8e8",
+      "flag": 0,
+      "value": "0xffffffffffffffff"
+    },
+    {
+      "register": "0x1c898",
+      "flag": 0,
+      "value": "0x0"
+    },
+    {
+      "register": "0x101e0",
+      "flag": 1,
+      "value": "0x0"
+    },
+    {
+      "register": "0x1c9e8",
+      "flag": 0,
+      "value": "0x47ff"
+    },
+    {
+      "register": "0x1a098",
+      "flag": 1,
+      "value": "0x0"
+    },
+    {
+      "register": "0x1a0a0",
+      "flag": 1,
+      "value": "0x0"
+    },
+    {
+      "register": "0x1a068",
+      "flag": 1,
+      "value": "0x0"
+    },
+    {
+      "register": "0x1a070",
+      "flag": 1,
+      "value": "0x0"
+    },
+    {
+      "register": "0x1a0c8",
+      "flag": 1,
+      "value": "0x0"
+    },
+    {
+      "register": "0x1a0d0",
+      "flag": 1,
+      "value": "0x0"
+    },
+    {
+      "register": "0x101c8",
+      "flag": 1,
+      "value": "0x0"
+    },
+    {
+      "register": "0xd470",
+      "flag": 1,
+      "value": "0x0"
+    },
+    {
+      "register": "0x1a0f0",
+      "flag": 1,
+      "value": "0x0"
+    },
+    {
+      "register": "0x10798",
+      "flag": 1,
+      "value": "0xff0000"
+    },
+    {
+      "register": "0x1c830",
+      "flag": 0,
+      "value": "0x0"
+    },
+    {
+      "register": "0x1ca30",
+      "flag": 0,
+      "value": "0x0"
+    },
+    {
+      "register": "0x16c38",
+      "flag": 1,
+      "value": "0x0"
+    },
+    {
+      "register": "0x1c910",
+      "flag": 0,
+      "value": "0x7000000001"
+    },
+    {
+      "register": "0xa5a0",
+      "flag": 1,
+      "value": "0x6000400020"
+    },
+    {
+      "register": "0xd418",
+      "flag": 1,
+      "value": "0x200000001"
+    },
+    {
+      "register": "0x1ca10",
+      "flag": 0,
+      "value": "0x0"
+    },
+    {
+      "register": "0x14a0",
+      "flag": 1,
+      "value": "0x0"
+    },
+    {
+      "register": "0xa348",
+      "flag": 1,
+      "value": "0x0"
+    },
+    {
+      "register": "0x10208",
+      "flag": 1,
+      "value": "0x0"
+    },
+    {
+      "register": "0x1c9f0",
+      "flag": 0,
+      "value": "0x0"
+    },
+    {
+      "register": "0x14320",
+      "flag": 0,
+      "value": "0x0"
+    },
+    {
+      "register": "0x14308",
+      "flag": 0,
+      "value": "0x0"
+    },
+    {
+      "register": "0x14318",
+      "flag": 0,
+      "value": "0x840000001"
+    },
+    {
+      "register": "0x1c880",
+      "flag": 0,
+      "value": "0x0"
+    },
+    {
+      "register": "0x1c898",
+      "flag": 0,
+      "value": "0x1"
+    }
+  ],
+  "donor_comparison": {
+    "shared_unique_identities": 69,
+    "native_only_unique": [
+      {
+        "register": "0x16c40",
+        "flag": 1
+      },
+      {
+        "register": "0x1c040",
+        "flag": 1
+      },
+      {
+        "register": "0x1c088",
+        "flag": 1
+      },
+      {
+        "register": "0x1c888",
+        "flag": 0
+      },
+      {
+        "register": "0x1c890",
+        "flag": 0
+      },
+      {
+        "register": "0x1c918",
+        "flag": 0
+      },
+      {
+        "register": "0x1c920",
+        "flag": 0
+      },
+      {
+        "register": "0x1c948",
+        "flag": 0
+      },
+      {
+        "register": "0x1c9a8",
+        "flag": 0
+      },
+      {
+        "register": "0x1c9d0",
+        "flag": 0
+      },
+      {
+        "register": "0x1c9e0",
+        "flag": 0
+      },
+      {
+        "register": "0x1ca40",
+        "flag": 0
+      }
+    ],
+    "donor_only_unique": [
+      {
+        "register": "0x1740",
+        "flag": 0
+      },
+      {
+        "register": "0x1748",
+        "flag": 0
+      }
+    ]
+  },
+  "qualification": "Complete native TA producer and actual encoder/append/empty override execute in Unicorn RAM. Hash-pinned 3D harness supplies shared helper slots; PAC bypassed. One map158 provider returns synthetic address, descriptor1230/190 objects are zero fixture data. 128 flag/subtype cases; not128 independently meaningful full render inputs. Every actual encoder output compared to independent entry codec; manually written registers and complete recipe semantics only observed. Metadata pointers/counts checked. Donor is T8132 and baseline omits conditional entry, so identity differences do not alone prove binned-hardware differences. No initialized parameter manager, live queue, GPU execution or submission-ready TA job."
+}

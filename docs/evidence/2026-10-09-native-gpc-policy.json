@@ -1,0 +1,222 @@
+{
+  "schema": "m4rch-native-gpc-policy-proof-v1",
+  "reconstruction": {
+    "reason": "Original /tmp report lost on user reboot before root copied it.",
+    "previous_report_path": "/tmp/gpc-native-policy-report.json",
+    "previous_report_sha256": "9d79faafd18431b0c1f65aec59e35ae123aa0dcf7d4f9aca0a736f541c6987a2",
+    "status": "Native/firmware span hashes, instruction words, saved ADT and graph identities re-read from persistent files; prior-session emulation outcomes preserved without rerunning emulation."
+  },
+  "native_path": "/boot/GPUC003/private-apple/com.apple.AGXG16X",
+  "native_sha256": "3df1db22f1c6d47c2ddc9cf14d57dc6be62ce2fffc3cd8b61bbb423d9f643e7e",
+  "firmware_text_path": "out/owned-power-timing/live-candidate/asc-graph-init/boot-afbd7878-a13d-4a5c-a283-55344bef5243/text.bin",
+  "firmware_text_identity": {
+    "raw_sha256": "ba525508eec9d2893a26a707aa46d5bbcc461eb5faa9a504451d568d0f57d1dd",
+    "normalized_sha256": "190cef1946a23dfbde180592629631c3b28d0509a17eb76108b7c9a52accd9ac",
+    "observed_variable_payloads": [
+      {
+        "offset": "0x59841",
+        "tag_bytes": "GKTS",
+        "payload_hex": "c012861efc7f4000"
+      },
+      {
+        "offset": "0x59924",
+        "tag_bytes": "ECAP",
+        "payload_hex": "407611f941aac3dc"
+      }
+    ],
+    "qualification": "Exact match outside two tagged eight-byte boot metadata payloads; tags and lengths are also checked. No instruction bytes excluded."
+  },
+  "native_ranges": [
+    {
+      "name": "gpc_policy_default",
+      "start": "0xfffffe00089a1804",
+      "end": "0xfffffe00089a1810",
+      "sha256": "038859ec4f34711c83ad59e481b0bd3daba793af17d548be0d3323ec08c2d96e"
+    },
+    {
+      "name": "no_gpc_property",
+      "start": "0xfffffe00089a18b4",
+      "end": "0xfffffe00089a1910",
+      "sha256": "d05b88563d662cac800728517f64715ec7f6cfa5e1ebc9fb7556a4beaa1d958f"
+    },
+    {
+      "name": "gpc_policy_predicate",
+      "start": "0xfffffe00089a1a68",
+      "end": "0xfffffe00089a1b08",
+      "sha256": "cae9982228cb68bbf890e2c3f03049f0456fbb0f93404a5bc11b1395332e3da0"
+    },
+    {
+      "name": "shared_probe_global_base",
+      "start": "0xfffffe00089aa118",
+      "end": "0xfffffe00089aa120",
+      "sha256": "f2f0fdf754e336f97ee54b0001b2db316044d8ccf5f255178a70696c5e551947"
+    },
+    {
+      "name": "hardware_ea0_producer",
+      "start": "0xfffffe00089aa388",
+      "end": "0xfffffe00089aa3a4",
+      "sha256": "7ab0b5f24699a3078cab3b85b4d5a4504f4fc3ae7123f3361ac8f8124c72b902"
+    },
+    {
+      "name": "hardware_f20_zero",
+      "start": "0xfffffe00089cd1f4",
+      "end": "0xfffffe00089cd200",
+      "sha256": "6895c9ed3125623e97a3516d778b055ffe2d1f3b4fc13c7aa3149e36427d78b3"
+    }
+  ],
+  "native_instruction_words": {
+    "0x89a1804": "0x52804048",
+    "0x89a1808": "0xd001ea29",
+    "0x89a180c": "0x79122128",
+    "0x89a18b4": "0xb0ff3c81",
+    "0x89a18b8": "0x911cf021",
+    "0x89a1908": "0x52800048",
+    "0x89a190c": "0x39002f28",
+    "0x89aa118": "0xb001e9f5",
+    "0x89aa390": "0x396466a9",
+    "0x89aa394": "0x5301052a",
+    "0x89aa398": "0xb90ea10a",
+    "0x89cd1fc": "0xb90f211f"
+  },
+  "firmware_ranges": [
+    {
+      "start": "0x2f304",
+      "end": "0x2f32c",
+      "sha256": "11570ef67c92f99160f4df7517c22757aedad9d8c567eb626573d4d734291ff0"
+    },
+    {
+      "start": "0x2f3c8",
+      "end": "0x2f3d4",
+      "sha256": "3491929a3d492787659932a82685d83a98c9a1695967ab1d2d1039278989ad21"
+    },
+    {
+      "start": "0xd364",
+      "end": "0xd428",
+      "sha256": "070e3e5b78c146e9738dc82c26e881b87d1330b5ee482ffcbc30eafccc6728b9"
+    },
+    {
+      "start": "0xd494",
+      "end": "0xd49c",
+      "sha256": "d2cf5cfc691e9765989e17ae7b6a00beaf9b45146a9c995071a98d1280c852ab"
+    },
+    {
+      "start": "0xd808",
+      "end": "0xd820",
+      "sha256": "6cf294a2032451874af81d8166553938d149cfaa85e230afdbba35f43190bc1b"
+    }
+  ],
+  "firmware_instruction_words": {
+    "0x2f304": "0xf0000ae9",
+    "0x2f308": "0x913b2129",
+    "0x2f324": "0xb94ea14a",
+    "0x2f328": "0xb90db12a",
+    "0x2f3cc": "0xb94f214a",
+    "0x2f3d0": "0xb90e012a",
+    "0xd368": "0xb94c7b28",
+    "0xd36c": "0x340002a8",
+    "0xd3c0": "0x52800028",
+    "0xd3c4": "0xb9003a68",
+    "0xd3d8": "0xb9007a68",
+    "0xd494": "0xb94c7b28",
+    "0xd498": "0x34001b88",
+    "0xd808": "0xb9416708",
+    "0xd810": "0xb9016708"
+  },
+  "policy": {
+    "global_symbol": "gSharedProbeConfig",
+    "global_base": "0xfffffe000c6e7908",
+    "policy_byte": "0xfffffe000c6e7911",
+    "native_default_policy": 2,
+    "property_name": "no-gpc",
+    "property_name_address": "0xfffffe000713273c",
+    "property_string_sha256": "a50817e54bbc41ef19d50a39b8f296505d95022c7499ac14d1b20e8825fa9610",
+    "property_tristates": {
+      "present_zero": 0,
+      "present_nonzero": 1,
+      "absent": 2
+    },
+    "computed_flag_byte": "0xfffffe000c6e7919",
+    "computed_flag_bit": 1,
+    "predicate": "policy == 2 ? no_gpc_tristate != 1 : policy == 1",
+    "hardware_field": "0xea0",
+    "native_value_for_captured_adt": 1
+  },
+  "emulation": {
+    "performed": true,
+    "observation": "Prior-session observed results; not rerun while reconstructing this persistent report.",
+    "hardware_access": false,
+    "native_ranges": [
+      "0xfffffe00089a1a68..0xfffffe00089a1b08",
+      "0xfffffe00089aa390..0xfffffe00089aa3a4"
+    ],
+    "native_cases": [
+      {
+        "no_gpc_tristate": 0,
+        "flags": 7,
+        "hardware_ea0": 1
+      },
+      {
+        "no_gpc_tristate": 1,
+        "flags": 1,
+        "hardware_ea0": 0
+      },
+      {
+        "no_gpc_tristate": 2,
+        "flags": 7,
+        "hardware_ea0": 1
+      }
+    ],
+    "firmware_marker_copies": [
+      {
+        "field": "0xea0",
+        "marker": "0x12345678",
+        "destination": "0x18fc78",
+        "range": "0x2f304..0x2f32c"
+      },
+      {
+        "field": "0xf20",
+        "marker": "0x87654321",
+        "destination": "0x18fcc8",
+        "range": "0x2f3c8..0x2f3d4"
+      }
+    ],
+    "qualification": "Actual native straight-line predicate/producer and matched firmware parser instructions previously executed in Unicorn RAM only. Property-service calls and hardware power-up were not emulated. Property/default selection established by native disassembly; captured ADT absence independently checked."
+  },
+  "adt": {
+    "path": "out/recovery-power-wait/candidate/adt-current/boot.adt",
+    "sha256": "3e1cd0357ff67c99fb1f07f3b9567c4db620f5265903eecd6758e925c542b477",
+    "sgx_path": "/device-tree/arm-io/sgx",
+    "no_gpc_present": false,
+    "has_kf": 1
+  },
+  "candidate_graph": {
+    "path": "out/recovery-power-wait/prepared/graph-before.bin",
+    "sha256": "d9e21a9d9d33c6a5186a1f201f5a99374a5e478491feb43ab3ad0fc0d6e2985c",
+    "receipt_path": "out/recovery-power-wait/prepared/graph-receipt.json",
+    "receipt_sha256": "5b2526dcaf93af1bdaa13b06d8bff32b0b06160f3009319e527e96a7d8c869c5",
+    "hardware_arena_offset": "0x8000",
+    "ea0": 0,
+    "f20": 0
+  },
+  "correction": {
+    "previous_incorrect": "hardware+f20 -> runtime18fc78",
+    "correct": {
+      "hardware+ea0": "18eec8+db0 = 18fc78",
+      "hardware+f20": "18eec8+e00 = 18fcc8"
+    },
+    "retain_f20_zero": true
+  },
+  "causal_path": [
+    "d368 reads 18fc78; zero takes d3c0, setting power+38=1 and power+78=1 without 32248/2bdac power-up.",
+    "d494 reads 18fc78; zero skips remaining GPC initialization and increments software count power+652c at d808..810.",
+    "Therefore software state1 and up_count1 do not prove physical GPU power-up. Recovery may then await 5978 bit1 from hardware never powered by this path."
+  ],
+  "gravity_existing_initializer": {
+    "path": "out/gpu-gravity-contract/linux/drivers/gpu/drm/asahi/g16_platform.rs",
+    "sha256": "a051ce1add8bd67fb925637bffa578818b64601f115ee784f123123ef97de3e3",
+    "property_line": 129,
+    "publication_line": 312,
+    "behavior": "apple,sgx-no-gpc default0; hardware+ea0 = u32::from(self.gpc)"
+  },
+  "confidence": "High in native policy, corrected field binding, and omitted graph GPC enable. Restoring ea0=1 resolving recovery/rendering remains a hardware hypothesis."
+}

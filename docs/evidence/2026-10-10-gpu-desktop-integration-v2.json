@@ -1,0 +1,87 @@
+{
+  "schema": "m4rch.gpu-desktop-integration-handoff.v2",
+  "date": "2026-10-10",
+  "selected_staging": "/home/alice/Desktop/m4rch/out/gpu-desktop-integration-v2",
+  "supersedes": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-10-gpu-desktop-integration-v1.json",
+  "correction": "Actual isolated external-module compile found v1 obsolete platform.core_mask in its probe diagnostic. V2 uses platform.topology.core_masks[0] and adds a stale singular-mask-member scan over all five changed callers. All v1 evidence/source/patches remain preserved.",
+  "implementation": "Same profile\u2192DRM\u2192bootstrap\u2192platform identity binding, validated explicit topology masks and GET_PARAMS fields; Mesa complete metadata decoding and early refusal before VM_CREATE; linked unexecuted headless hardware renderer/fence/readback harness. T6040 initialization/G16S firmware graphics gates unchanged and closed.",
+  "qualification": {
+    "passed": true,
+    "rust_tests": 6,
+    "mesa_assertions": 5194,
+    "synthetic_smoke_criteria_assertions": 22,
+    "input_pins": 31,
+    "patch_replay_exact": true,
+    "canonical_kernel_mesa_match": "BIND,16,24640,83,1,2,10,16,987,987",
+    "frozen_baseline_sources_unchanged": true,
+    "stale_member_access_absent": true,
+    "headless_harness_executed": false,
+    "full_kernel_or_mesa_build": false,
+    "hardware_operations": false
+  },
+  "parent_external_module_compile": "V2 selected sources provided to parent for isolated targeted module compile. Result is not yet included in this frozen handoff.",
+  "remaining_critical_gaps": [
+    "T6040 normal initialization/power/initdata/application and completed TA/3D execution contract",
+    "Live multi-cluster boot input/topology binding",
+    "G16S firmware scene/tiling/resource and Apple9 shader-entry/graphics layouts, then explicit supported Mesa selection",
+    "Full Mesa integration compilation and actual headless renderer/fence/readback",
+    "Desktop dma-buf import/copy/formats/modifiers/fences/compositor selection and DCP as applicable"
+  ],
+  "input_pins": [
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-integration-v2/selected-source-receipt.json",
+      "sha256": "8912abf6dc6a3166327149a84bffe74d16d61627d5ed45077c1f8cb12747108d",
+      "bytes": 3481
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-integration-v2/stage-receipt.json",
+      "sha256": "a5a390b782fc62e0167526450c4dd1ee23cdeeb9d13fcb3102434a78ba0980e4",
+      "bytes": 7000
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-integration-v2/qualification-v1/qualification.json",
+      "sha256": "c6b94c67df11510130c4478b2ab36fb380c28486e407194e15e307dc80226be4",
+      "bytes": 16272
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/README-v2.md",
+      "sha256": "5118e07e225b4e2a22d94049c090b77856a266171e1ab0dc78257ccba0fd1d07",
+      "bytes": 1494
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/stage_v2.py",
+      "sha256": "b353e6415afd864bd4e6465d8f6685824d6a03d16ea11ba6f24f49d4db7f77ca",
+      "bytes": 3251
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/qualify_v2.py",
+      "sha256": "9a6f6cc4b4cae77a8e7d9d50ef12aab297a25aeeac231e83c7a26cd77c3eeaaf",
+      "bytes": 8681
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/gravity-linux-g16-topology-binding-v2.patch",
+      "sha256": "19798565237336c1b743536b03166c737a6e6a5dc21386a485bc49a30f0b03aa",
+      "bytes": 11480
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/experiments/t6040-gpu/desktop-integration/gravity-mesa-g16-device-metadata.patch",
+      "sha256": "271c079474b208bbc9b4dff3b483834e527f274e388e9af34e675353cbd79890",
+      "bytes": 4843
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-10-gpu-desktop-integration-v1.json",
+      "sha256": "f5179292ab43ca7c7991001c5f1e6759ca7ae207a2106768e77773ad58f41000",
+      "bytes": 9054
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-integration-v1/asahi-module-build.log",
+      "sha256": "27f5dfe5e8099d5107a743fe9c6f4d571ce867ae0feeaddc96998abb631f3f77",
+      "bytes": 1812
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-desktop-integration-v1/asahi-module-build-command.json",
+      "sha256": "177e5e18b787d54341792fb0c80a6e9b023bf78d1cb547a7c0456ba470d763f4",
+      "bytes": 1195
+    }
+  ]
+}

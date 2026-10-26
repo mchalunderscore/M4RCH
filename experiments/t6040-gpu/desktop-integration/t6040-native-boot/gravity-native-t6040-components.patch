@@ -1,0 +1,179 @@
+--- a/drivers/gpu/drm/asahi/asahi_m4.rs
++++ b/drivers/gpu/drm/asahi/asahi_m4.rs
+@@ -8,6 +8,7 @@
+ mod float;
+ mod g16;
+ mod g16_profile;
++mod g16_t6040;
+ mod g16_alloc;
+ mod g16_compute;
+ mod g16_drm;
+--- a/drivers/gpu/drm/asahi/g16_platform.rs
++++ b/drivers/gpu/drm/asahi/g16_platform.rs
+@@ -70,10 +70,14 @@
+     pub(crate) registers: KVec<Register>,
+     pub(crate) mcc: KVec<u64>,
+     gpc: bool,
++    pub(crate) native_hardware: Option<crate::g16_t6040::Hardware>,
+ }
+ 
+ impl Platform {
+     pub(crate) fn new(dev: &device::Device, profile: &'static crate::g16_profile::Profile) -> Result<Self> {
++        if profile.chip == 0x6040 && profile.variant == crate::g16_profile::Variant::S {
++            return Self::new_t6040(dev, profile);
++        }
+         // Refuse unimplemented profiles before consuming donor initialization
+         // inputs. This check also protects direct callers outside probe.
+         profile.initialization().ok_or(ENOTSUPP)?;
+@@ -120,6 +124,7 @@
+         let core_mask: u32 = node.get_property(c_str!("apple,m4-core-mask"))?;
+         let topology = profile.topology(&[core_mask]).ok_or(EINVAL)?;
+         let mut this = Self {
++            native_hardware: None,
+             core_voltage: ladder(&node, c_str!("apple,m4-core-voltage"))?,
+             memory_voltage: ladder(&node, c_str!("apple,m4-memory-voltage"))?,
+             index_a: ladder(&node, c_str!("apple,m4-index-a"))?,
+@@ -140,6 +145,43 @@
+         };
+         this.build_registers()?;
+         Ok(this)
++    }
++
++    /// Native register/voltage components, without a donor boot bundle.
++    fn new_t6040(dev: &device::Device, profile: &'static crate::g16_profile::Profile) -> Result<Self> {
++        let node = dev.of_node().ok_or(ENODEV)?;
++        let reg: KVec<u32> = node.get_property(c_str!("reg"))?;
++        if reg.len() != 8 { return Err(EINVAL); }
++        let physical = (u64::from(reg[4]) << 32) | u64::from(reg[5]);
++        let bytes = (u64::from(reg[6]) << 32) | u64::from(reg[7]);
++        if physical != crate::g16_t6040::SGX_PHYSICAL || bytes != crate::g16_t6040::SGX_BYTES {
++            return Err(EINVAL);
++        }
++        let masks: KVec<u32> = node.get_property(c_str!("apple,m4-core-masks"))?;
++        let masks: [u32; 2] = masks.as_slice().try_into().map_err(|_| EINVAL)?;
++        let topology = profile.topology(&masks).ok_or(EINVAL)?;
++        // Opaque LE ADT pair arrays; get_property<u32> would byte-swap them.
++        let core: KVec<u8> = node.get_property(c_str!("apple,sgx-perf-states"))?;
++        let sram: KVec<u8> = node.get_property(c_str!("apple,sgx-perf-states-sram"))?;
++        let native = crate::g16_t6040::Hardware::from_adt(masks, &core, &sram).ok_or(EINVAL)?;
++        let maximum_power: u32 = node.get_property(c_str!("apple,m4-max-power-mw"))?;
++        if maximum_power == 0 || maximum_power > i32::MAX as u32 { return Err(EINVAL); }
++        let mut freq_a = [0; 11];
++        for (state, value) in freq_a.iter_mut().enumerate() {
++            *value = native.steps.iter().map(|cluster| cluster[state].high_mhz).max().ok_or(EINVAL)?;
++        }
++        let mut registers = KVec::new();
++        for r in crate::g16_t6040::registers() {
++            registers.push(Register { slot: r.slot, physical: r.physical, address: r.address,
++                size: r.size, stride: r.stride, relative: r.relative, flags: r.flags }, GFP_KERNEL)?;
++        }
++        // Zero placeholders below are unreachable by normal boot producers:
++        // region_c(), bundle(), and power_data() reject this profile explicitly.
++        Ok(Self { revision: node.get_property(c_str!("apple,chip-revision"))?, node,
++            topology, maximum_power, freq_a, freq_b: [0; 11], core_voltage: [0; 11],
++            memory_voltage: [0; 11], index_a: [0; 11], index_b: [0; 11],
++            relative_a: [0; 11], relative_b: [0; 11], period_ms: 0, period_clocks: 0,
++            registers, mcc: KVec::new(), gpc: false, native_hardware: Some(native) })
+     }
+ 
+     fn build_registers(&mut self) -> Result {
+@@ -265,6 +307,11 @@
+     }
+ 
+     pub(crate) fn hwdata(&self) -> Result<KVec<u8>> {
++        if let Some(native) = &self.native_hardware {
++            let mut out = zeroed(crate::g16_t6040::COMPONENT_BYTES)?;
++            native.write(&mut out).ok_or(EINVAL)?;
++            return Ok(out);
++        }
+         let mut out = zeroed(0x3db4)?;
+         for r in &self.registers {
+             let off = 0x640 + r.slot * 0x28;
+@@ -337,6 +384,7 @@
+     }
+ 
+     pub(crate) fn region_c(&self) -> Result<KVec<u8>> {
++        if self.native_hardware.is_some() { return Err(ENOTSUPP); }
+         let mut out = zeroed(PAGE as usize)?;
+         for (off, value) in [
+             (0x78, 1),
+--- a/drivers/gpu/drm/asahi/g16_power.rs
++++ b/drivers/gpu/drm/asahi/g16_power.rs
+@@ -57,6 +57,7 @@
+ impl Platform {
+     /// Entire source-built bundle, including the firmware's power controllers.
+     pub(crate) fn bundle(&self, entropy: u32) -> Result<KVec<u8>> {
++        if self.native_hardware.is_some() { return Err(ENOTSUPP); }
+         let mut out = zeroed(crate::g16_fw::BUNDLE_SIZE)?;
+         let hwdata = self.hwdata()?;
+         out[..hwdata.len()].copy_from_slice(&hwdata);
+@@ -71,6 +72,7 @@
+     }
+ 
+     pub(crate) fn power_data(&self, out: &mut [u8]) -> Result {
++        if self.native_hardware.is_some() { return Err(ENOTSUPP); }
+         if out.len() < 0xb758 || self.period_ms == 0 {
+             return Err(EINVAL);
+         }
+--- a/drivers/gpu/drm/asahi/g16.rs
++++ b/drivers/gpu/drm/asahi/g16.rs
+@@ -392,30 +392,39 @@
+             PAGE_SIZE as usize,
+             crate::pgtable::prot::PROT_FW_PRIV_RW,
+         )?;
+-        for r in &platform.registers {
+-            let prot = if r.flags & 2 != 0 {
+-                crate::pgtable::prot::PROT_FW_MMIO_RW
+-            } else {
+-                crate::pgtable::prot::PROT_FW_MMIO_RO
+-            };
+-            if r.slot == 3 {
+-                for (i, physical) in platform.mcc.iter().enumerate() {
++        if platform.native_hardware.is_some() {
++            crate::g16_t6040::pages(|page| {
++                let prot = if page.writable { crate::pgtable::prot::PROT_FW_MMIO_RW }
++                    else { crate::pgtable::prot::PROT_FW_MMIO_RO };
++                firmware_space.map_external(page.virtual_address, page.physical,
++                    crate::g16_t6040::PAGE as usize, prot)
++            })?;
++        } else {
++            for r in &platform.registers {
++                let prot = if r.flags & 2 != 0 {
++                    crate::pgtable::prot::PROT_FW_MMIO_RW
++                } else {
++                    crate::pgtable::prot::PROT_FW_MMIO_RO
++                };
++                if r.slot == 3 {
++                    for (i, physical) in platform.mcc.iter().enumerate() {
++                        firmware_space.map_external(
++                            r.address + i as u64 * u64::from(r.stride),
++                            *physical,
++                            r.stride as usize,
++                            prot,
++                        )?;
++                    }
++                } else {
++                    let offset = r.physical & (PAGE_SIZE - 1);
++                    let size = (offset + u64::from(r.size) + PAGE_SIZE - 1) & !(PAGE_SIZE - 1);
+                     firmware_space.map_external(
+-                        r.address + i as u64 * u64::from(r.stride),
+-                        *physical,
+-                        r.stride as usize,
++                        r.address - offset,
++                        r.physical - offset,
++                        size as usize,
+                         prot,
+                     )?;
+                 }
+-            } else {
+-                let offset = r.physical & (PAGE_SIZE - 1);
+-                let size = (offset + u64::from(r.size) + PAGE_SIZE - 1) & !(PAGE_SIZE - 1);
+-                firmware_space.map_external(
+-                    r.address - offset,
+-                    r.physical - offset,
+-                    size as usize,
+-                    prot,
+-                )?;
+             }
+         }
+         // Work-channel cursor pages use shared attributes, unlike other MMIO.

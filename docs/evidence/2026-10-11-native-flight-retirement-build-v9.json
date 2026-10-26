@@ -1,0 +1,25 @@
+{
+  "schema": "m4rch.native-flight-retirement-build.v9",
+  "module": {
+    "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-native-flight-retirement-v9/build-owner/asahi_m4.ko",
+    "bytes": 446912,
+    "sha256": "81a2558f165171782e75f221f993710325f5f98163e203134f23a4f146f905ea"
+  },
+  "log": {
+    "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-native-flight-retirement-v9/module-build.log",
+    "bytes": 14983,
+    "sha256": "c20cd0ebd9ad196e2b0a1185a4efd44628cba7de14caaa84465b2b91fb1bacd0"
+  },
+  "source_pins_verified": 79,
+  "input_pins_verified": 3,
+  "warnings": 54,
+  "errors": 0,
+  "submission_enabled": false,
+  "hardware_actions": [],
+  "scope": "Actual kernel Rust Flight fields and validated native credit retirement compile. Caller/native PM routing and DMA retirement remain unproved.",
+  "remaining": [
+    "Native producer sets actual notifier and both retained credit fields",
+    "Native PM scene/growth routing replaces donor TVB in caller stage",
+    "Hardware validates native stamp/notifier/transport completion before resource reuse"
+  ]
+}

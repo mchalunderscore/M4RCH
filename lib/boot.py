@@ -119,7 +119,8 @@ def adapt_harness(text, source, stage):
     # The builder image supplies these packages once. Upstream's unconditional
     # apt-get would require root/network every time its config helper is run.
     text = text[:start] + text[end:]
-    return text.replace("/src", str(source)).replace("/out", str(stage))
+    return re.sub(r"/src|/out",
+                  lambda match: str(source if match.group() == "/src" else stage), text)
 
 
 def check_config(path, profile="stable"):

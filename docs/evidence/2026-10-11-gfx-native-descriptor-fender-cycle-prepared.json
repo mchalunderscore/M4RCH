@@ -1,0 +1,125 @@
+{
+  "schema": "m4rch.gfx-native-descriptor-fender-cycle-prepared.v1",
+  "ready": true,
+  "selected_next_hardware_candidate": true,
+  "selection_record_is_separate_from_frozen_preparation": true,
+  "version": 21,
+  "candidate": "/home/alice/Desktop/m4rch/out/gfx-native-descriptor-fender-cycle/candidate",
+  "consumed_boot": "09a48fe3-925a-46d9-b99b-b9aecc71e6f3",
+  "owner_sha256": "375a77b3a528e52dfd15f66b0dfcfbc1ffb7b064e06ddcf8da50189e75719519",
+  "owner_GNU_note_hex": "040000001400000003000000474e5500871010f61a24d1041c4778000be81e9c3a0daa7d",
+  "candidate_receipt_sha256": "a96c79e715f53ff89664c186f4b283f23f727efa4f801596f90faca446e10aa3",
+  "preparation_sha256": "f41ec01f92b7b8eee47ae15fa5a77e10b2b85bd89e0bad376905b212d507ce3c",
+  "source_receipt_sha256": "d9c3abf1deff7d0a72c4229877598ec35b6c3a8fed7344b6ffca99b189b9c5f0",
+  "new_descriptor_data_cases": 19,
+  "new_host_cases": 9,
+  "new_actual_main_flows": 1,
+  "new_early_refusal_flows": 2,
+  "qualification_composition": {
+    "new_C_Fender_OFF_cases": 65,
+    "new_host_cases": 9,
+    "new_actual_main_flows": 1,
+    "new_early_refusal_flows": 2,
+    "frozen_v19_runtime_C_cases": 829,
+    "frozen_v19_host_cases": 36,
+    "frozen_v19_actual_main_flows": 1,
+    "frozen_v18_Fender_C_cases": 45,
+    "frozen_v18_host_cases": 21,
+    "frozen_v18_actual_main_flows": 1,
+    "frozen_v17_C_cases": 64,
+    "frozen_v17_preasc_C_cases": 39,
+    "frozen_v17_host_cases": 41,
+    "frozen_v17_actual_main_flows": 10,
+    "unchanged_cases_repeated": false,
+    "frozen_v20_Fender_OFF_C_cases": 65,
+    "frozen_v20_host_cases": 27,
+    "frozen_v20_actual_main_flows": 1,
+    "new_descriptor_data_cases": 19
+  },
+  "clean_external_module_build": true,
+  "kernel_rebuilt": false,
+  "kernel_GRUB_unchanged": true,
+  "module_loaded": false,
+  "hardware_controls": [],
+  "manual_fresh_reboot_required": true,
+  "hypothesis": "Correct the native hardware-descriptor flags and remove the unsupported slot27 descriptor before the same cold draw and postdraw teardown. Test whether inconsistent native resource metadata caused the firmware/hardware wait and persistent postdraw BUSY.",
+  "graph_changed_byte_count": 19,
+  "native_descriptor_slots": [
+    3,
+    22,
+    27,
+    39,
+    41
+  ],
+  "canonical_native_absent_slot27": true,
+  "unused_donor_slot27_PTE_retained": true,
+  "actual_owner_ELF_graph_array_equals_corrected_arena": true,
+  "strict_OFF_unchanged": true,
+  "strict_fresh_ON_rejoin_unchanged": true,
+  "draw_start_runtime_Fender_NMI_unchanged": true,
+  "unchanged_trial": "Cold paired ON/Gravity preASC/AP20/application32/33/root/control33; native Fender enable; one TA/3D draw/trace3/15s; immutable raw capture before one native202/NMI/CPUstop/FenderOFF/pairedOFF/PMput, strict OFF/accounting and optional management-only rejoin.",
+  "limitations": [
+    "This corrects nineteen existing descriptor bytes; it is not the complete normal T6040 native hardware/boot bundle.",
+    "Slot3 geometry remains absent; the native MCC resource geometry is implemented separately in Gravity v3/v4, not added to this owner.",
+    "The unused donor slot27 PTE and all174 pages, backing, shaders, work and mapping ownership remain retained; it is no longer referenced by descriptor27.",
+    "Full native poweroff enclosure/order and application recovery remain unproved.",
+    "A qualified management rejoin would not prove rendering restart or DMA retirement."
+  ],
+  "input_pins": [
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-descriptor-fender-cycle/candidate/cold-render-preparation.json",
+      "bytes": 112662,
+      "sha256": "f41ec01f92b7b8eee47ae15fa5a77e10b2b85bd89e0bad376905b212d507ce3c"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-descriptor-fender-cycle/candidate/asc-root-envelope/build-receipt.json",
+      "bytes": 28099,
+      "sha256": "a96c79e715f53ff89664c186f4b283f23f727efa4f801596f90faca446e10aa3"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-descriptor-fender-cycle/candidate/asc-graph-init/native-descriptor-fender-cycle-owner-source-receipt.json",
+      "bytes": 33601,
+      "sha256": "d9c3abf1deff7d0a72c4229877598ec35b6c3a8fed7344b6ffca99b189b9c5f0"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-descriptor-fender-cycle/descriptor-qualification-v1.json",
+      "bytes": 20998,
+      "sha256": "3aac74351e922cfb5b7843df2f01a909c70b5fd294f92c6553b9b1433edc05e5"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-descriptor-fender-cycle/host-qualification-v2.json",
+      "bytes": 50390,
+      "sha256": "06cb78ab76f96e0e2eeeb354f8dfad3b1a0faf9399b27967980fa5b49071d452"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-descriptor-fender-cycle/owner-build-command.json",
+      "bytes": 1668,
+      "sha256": "34a0bb0d42fb70b6ca13ba95bf6c44bcd221a18ecd7c6bbaee5018029b2bb3b6"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-descriptor-fender-cycle/owner-build.log",
+      "bytes": 550,
+      "sha256": "9de37eaa9b333d97f89e09fcbd9393b6e7736917e5d2f059c9204b063c7c24fc"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/build-native-descriptor-fender-owner.py",
+      "bytes": 2569,
+      "sha256": "d15219e92a2cc478ba073755928c42bc7af19c1eb74b3aac1dc667d91d5109b6"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gfx-native-fender-off-cycle/live-state-09.json",
+      "bytes": 24988,
+      "sha256": "37aacbc0046a7905b259633aba2252bdc0929c581e8f0fd051d3db266d4cac23"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/out/gpu-gravity-normal-boot-v3/custom-v19-descriptor-proposal.json",
+      "bytes": 8320,
+      "sha256": "4fffc9d3228f21e1e0289f6d6bf524f6ff4f9e4f740357ffd6da8d2692f2f1b8"
+    },
+    {
+      "path": "/home/alice/Desktop/m4rch/docs/evidence/2026-10-11-gfx-native-fender-off-cycle-09-live.json",
+      "bytes": 25212,
+      "sha256": "84aec6ffbfd11222a2679ead3404b71c8c67bca562bc11ea7c0a5d9813f5e98b"
+    }
+  ]
+}

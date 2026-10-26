@@ -1,0 +1,21 @@
+{
+  "prepared_after_boot": "6a0a6204-876f-4fd5-9330-60efe15d5186",
+  "prior_trial_commit": "c050fe6",
+  "added_writable_existing_pages": [
+    "0x288010000",
+    "0x288020000"
+  ],
+  "qualification": "Captured firmware15e60 routine: STRX160a8 at primary+21108; loop selector STRX160d0 at+103a8. Same routine other writes remain on21108-containing page. No wider aperture write grant.",
+  "tests": "9 serialization tests pass; W=1 external helper build pass; protected kernel sources/config unchanged by builder",
+  "native_trial_performed": false,
+  "next_action": "Normal Linux reboot to regular default1; then one cold graph gate2 on new boot after USB baseline",
+  "artifacts": {
+    "out/gpu-gravity-contract/gpuc004-next-candidate/graph-contract.h": "313db1c2e134aa1e8033e58615561f85f58bb5249c470f6aa6eae23d6dc98807",
+    "out/gpu-gravity-contract/gpuc004-next-candidate/asc-graph-init.ko": "1edf1508d2cfec60a70c7fda585ac29989b95874c47ebcd2a8f541c659ece096",
+    "out/gpu-gravity-contract/gpuc004-next-candidate/build-receipt.json": "5108dec265ece329e55a1971b8a705e810ad4cc93e943a38d948402287d85c52",
+    "out/gpu-gravity-contract/gpuc004-next-candidate/build.log": "d8b231f54eaadc6f2978a57ad207b91e74b52fbe28ba32df6583ad54a741839b",
+    "out/gpu-gravity-contract/gpuc004-next-candidate/graph-receipt.json": "cbc79bfd002ae7e456863420baa30a0325a0b4a1d4a06fe6aa4cfc51eaf2f4d6",
+    "out/gpu-gravity-contract/gpuc004-next-candidate/graph-map.h": "16bdfab112087d66014d154c2101cefdec1dc370effe25a37f107f585649ce93",
+    "out/gpu-gravity-contract/gpuc004-next-candidate/graph-before.bin": "2553b03354f4e53389a1bd1ca431061ada7b8ccefb5f6caeddf1cad693c7e78a"
+  }
+}
