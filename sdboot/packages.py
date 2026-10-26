@@ -48,10 +48,10 @@ def render_boot_configuration(project, stage, config, release):
     settings = boot_settings(config)
     write(stage, "etc/arch-m4/boot.conf", "".join(f"{key}='{value}'\n" for key, value in settings.items()))
     write(stage, "etc/mkinitcpio.m4rch.conf", "MODULES=()\nBINARIES=()\nFILES=()\nHOOKS=(m4rch-root)\nCOMPRESSION=gzip\nCOMPRESSION_OPTIONS=(-9)\n")
-    write(stage, "usr/lib/initcpio/install/m4rch-root", (project / "packages/config-m4rch/mkinitcpio-install").read_text(), 0o755)
+    write(stage, "usr/lib/initcpio/install/m4rch-root", (project / "packages/legacy/config-m4rch/mkinitcpio-install").read_text(), 0o755)
     write(stage, "usr/lib/m4rch/init-nvme", (project / "tools/nvme/init").read_text(), 0o755)
     write(stage, "usr/lib/m4rch/init", (project / "sdboot/init").read_text(), 0o755)
-    write(stage, "usr/bin/m4rch-boot-update", (project / "packages/config-m4rch/m4rch-boot-update").read_text(), 0o755)
+    write(stage, "usr/bin/m4rch-boot-update", (project / "packages/legacy/config-m4rch/m4rch-boot-update").read_text(), 0o755)
     write(stage, "usr/share/m4rch/grub-embedded.cfg.in", "search --no-floppy --fs-uuid --set=root @BOOT_FAT_UUID@\nconfigfile ($root)/grub/grub.cfg\n")
     menu = "set timeout=5\nset default=0\n"
     for label, extra in ((release, ""), (release + " (peripherals off)", " arch_m4.peripherals=off")):
@@ -326,7 +326,7 @@ def _build_and_install(project, root, config, lock, kernel_dir, module_manifest,
         make_source_archive(stage, source, lock["source_date_epoch"])
         version = kernel_package_version(release) if name == "linux-m4rch" else "1.0.0"
         backup = " ".join("'" + path.relative_to(stage).as_posix() + "'" for path in sorted((stage / "etc").rglob("*")) if path.is_file() and not path.is_symlink())
-        recipe = (project / "packages" / name / "PKGBUILD").read_text().replace("@VERSION@", version).replace("@PAYLOAD_SHA256@", sha256(source)).replace("@BACKUP@", backup)
+        recipe = (project / "packages" / ("legacy" if name in ("linux-m4rch", "config-m4rch") else ".") / name / "PKGBUILD").read_text().replace("@VERSION@", version).replace("@PAYLOAD_SHA256@", sha256(source)).replace("@BACKUP@", backup)
         (directory / "PKGBUILD").write_text(recipe)
         # User 'alarm' still exists until configuration of the final identity.
         run(["chroot", root, "chown", "-R", "alarm:alarm", "/tmp/arch-m4-packaging"])

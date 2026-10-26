@@ -141,8 +141,8 @@ def main():
         conf=re.sub(r'(?m)^'+key+r'=.*\n?','',conf)+f"{key}='{value}'\n"
     root_files={'/etc/fstab':newfstab.encode(),'/etc/arch-m4/boot.conf':conf.encode(),
                 '/usr/lib/m4rch/init-nvme':(PROJECT/'tools/nvme/init').read_bytes(),
-                '/usr/lib/initcpio/install/m4rch-root':(PROJECT/'packages/config-m4rch/mkinitcpio-install').read_bytes(),
-                '/usr/bin/m4rch-boot-update':(PROJECT/'packages/config-m4rch/m4rch-boot-update').read_bytes()}
+                '/usr/lib/initcpio/install/m4rch-root':(PROJECT/'packages/legacy/config-m4rch/mkinitcpio-install').read_bytes(),
+                '/usr/bin/m4rch-boot-update':(PROJECT/'packages/legacy/config-m4rch/m4rch-boot-update').read_bytes()}
     sys.path.insert(0,str(PROJECT/'lib'))
     import internal_layout
     from card_disk import DiskUtil

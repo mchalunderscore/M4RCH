@@ -1,0 +1,15 @@
+pkgname=alsa-ucm-conf-m4rch
+pkgver=1.2.16.1
+pkgrel=2
+pkgdesc='ALSA Use Case Manager profiles with Apple Silicon support'
+arch=('any')
+url='https://github.com/aurora-silicon/alsa-ucm-conf'
+license=('BSD-3-Clause')
+provides=("alsa-ucm-conf=$pkgver")
+conflicts=('alsa-ucm-conf' 'ucm-aurora-m4rch')
+options=('!strip' '!debug')
+source=('alsa.tar.gz')
+package() {
+  install -d "$pkgdir/usr/share"
+  cp -a "$srcdir/alsa" "$pkgdir/usr/share/"
+}

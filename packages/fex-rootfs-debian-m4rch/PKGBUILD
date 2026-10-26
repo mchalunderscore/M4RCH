@@ -1,0 +1,22 @@
+pkgname=fex-rootfs-debian-m4rch
+pkgver=20261026
+pkgrel=2
+pkgdesc='Debian 13 x86 root filesystem with paired Aurora Mesa for FEX and muvm'
+arch=('any')
+url='https://www.debian.org/'
+license=('LicenseRef-Debian-packages')
+depends=('fex-emu' 'mesa-m4rch=1:26.3.0.r20261026.f2c9dc3')
+provides=('fex-rootfs')
+conflicts=('fex-rootfs')
+options=('!strip' '!debug')
+source=('debian.erofs' 'packages.txt' 'build-info.txt')
+noextract=('debian.erofs')
+package() {
+  install -Dm644 "$srcdir/debian.erofs" "$pkgdir/usr/share/fex-emu/RootFS/default.erofs"
+  install -Dm644 "$srcdir/packages.txt" "$pkgdir/usr/share/doc/$pkgname/packages.txt"
+  install -Dm644 "$srcdir/build-info.txt" "$pkgdir/usr/share/doc/$pkgname/build-info.txt"
+  # Each Debian package's copyright and licensing files remain in the image.
+  install -dm755 "$pkgdir/usr/share/licenses/$pkgname"
+  printf '%s\n' 'Per-package copyright and license notices are retained under /usr/share/doc inside default.erofs.' \
+    > "$pkgdir/usr/share/licenses/$pkgname/README"
+}

@@ -1,0 +1,13 @@
+[Unit]
+Description=Aurora J614s test drivers (speakers disabled)
+After=systemd-udev-trigger.service
+Before=display-manager.service
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh /run/aurora-test/runtime.sh
+TimeoutStartSec=90
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

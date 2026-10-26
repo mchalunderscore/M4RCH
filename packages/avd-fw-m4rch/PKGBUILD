@@ -1,0 +1,22 @@
+pkgname=avd-fw-m4rch
+pkgver=20261022
+pkgrel=1
+pkgdesc='Open source Apple Video Decoder firmware for AVD v5 tier 1'
+arch=('any')
+url='https://github.com/AsahiLinux/avd-fw'
+license=('MIT')
+makedepends=('clang' 'llvm' 'lld' 'make')
+provides=('avd-fw')
+conflicts=('avd-fw')
+options=('!strip' '!debug')
+source=('avd-fw-source.tar.gz::https://codeload.github.com/AsahiLinux/avd-fw/tar.gz/220b1e70c9d7dcccbf66d5194e372300aa3c5a32')
+sha256sums=('546df6f7aa4d3f7bca05f30a7f55abf1361e255ffb58d9a12634217aea34e57e')
+build() {
+  cd "$srcdir/avd-fw-220b1e70c9d7dcccbf66d5194e372300aa3c5a32"
+  make AVD_VER=5 AVD_TIER=1
+}
+package() {
+  cd "$srcdir/avd-fw-220b1e70c9d7dcccbf66d5194e372300aa3c5a32"
+  install -Dm644 build/avd-fw-v5-t1.bin "$pkgdir/usr/lib/firmware/apple/avd-fw-v5-t1.bin"
+  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}

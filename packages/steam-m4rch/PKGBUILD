@@ -1,0 +1,23 @@
+pkgname=steam-m4rch
+pkgver=1.0.0.81
+pkgrel=3
+pkgdesc='Valve Steam launcher using FEX and muvm on Apple Silicon'
+arch=('aarch64')
+url='https://store.steampowered.com/'
+license=('LicenseRef-Valve-Steam')
+depends=('bash' 'coreutils' 'dbus' 'muvm' 'fex-emu' 'fex-rootfs-debian-m4rch' 'xdg-utils' 'hicolor-icon-theme')
+makedepends=('binutils')
+provides=("steam=$pkgver")
+conflicts=('steam')
+options=('!strip' '!debug')
+source=("steam-launcher.deb::https://repo.steampowered.com/steam/archive/stable/steam-launcher_${pkgver}_all.deb" 'steam')
+package() {
+  cd "$srcdir"
+  ar p steam-launcher.deb data.tar.xz | tar -xJ -C "$pkgdir" ./usr/lib/steam ./usr/share/applications \
+    ./usr/share/icons ./usr/share/pixmaps ./usr/share/man ./usr/share/doc ./usr/share/metainfo
+  install -Dm755 "$srcdir/steam" "$pkgdir/usr/bin/steam"
+  install -dm755 "$pkgdir/usr/share/licenses/$pkgname"
+  gzip -dc "$pkgdir/usr/share/doc/steam/steam_subscriber_agreement.txt.gz" \
+    > "$pkgdir/usr/share/licenses/$pkgname/steam_subscriber_agreement.txt"
+  install -m644 "$pkgdir/usr/share/doc/steam-launcher/copyright" "$pkgdir/usr/share/licenses/$pkgname/copyright"
+}

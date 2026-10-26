@@ -1,0 +1,33 @@
+pkgname=asahi-scripts-m4rch
+pkgver=20261026
+pkgrel=1
+pkgdesc='Apple Silicon boot integration and hardware configuration'
+arch=('aarch64')
+url='https://github.com/AsahiLinux/asahi-scripts'
+license=('MIT')
+depends=('bash' 'coreutils' 'util-linux' 'kmod' 'mkinitcpio')
+optdepends=('sddm: graphical login' 'pipewire-audio: audio' 'wireplumber: audio policy')
+provides=('asahi-scripts')
+conflicts=('asahi-scripts' 'config-m4rch')
+backup=('etc/default/update-m1n1' 'etc/default/grub.d/apple-silicon.cfg' 'etc/mkinitcpio.conf.d/apple-silicon.conf')
+source=('asahi-scripts.tar.gz' 'files.tar.gz')
+package() {
+  local upstream="$srcdir/asahi-scripts-755b1d19e61d58b010f32349b7aba8f2c580fc29"
+  install -Dm755 "$upstream/update-m1n1" "$pkgdir/usr/bin/update-m1n1"
+  install -Dm644 "$upstream/functions.sh" "$pkgdir/usr/share/asahi-scripts/functions.sh"
+  install -Dm644 "$upstream/LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+  install -Dm644 "$srcdir/files/update-m1n1" "$pkgdir/etc/default/update-m1n1"
+  install -Dm644 "$srcdir/files/grub.cfg" "$pkgdir/etc/default/grub.d/apple-silicon.cfg"
+  install -Dm644 "$srcdir/files/95-m1n1-install.hook" "$pkgdir/usr/share/libalpm/hooks/95-m1n1-install.hook"
+  install -Dm644 "$srcdir/files/apple-silicon.conf" "$pkgdir/usr/lib/modprobe.d/apple-silicon.conf"
+  install -Dm644 "$srcdir/files/mkinitcpio.conf" "$pkgdir/etc/mkinitcpio.conf.d/apple-silicon.conf"
+  install -Dm644 "$srcdir/files/apple-silicon.service" "$pkgdir/usr/lib/systemd/system/apple-silicon.service"
+  install -Dm644 "$srcdir/files/graphics.conf" "$pkgdir/usr/lib/environment.d/60-mesa.conf"
+  install -Dm644 "$srcdir/files/graphics.sh" "$pkgdir/etc/profile.d/mesa.sh"
+  install -Dm644 "$srcdir/files/sddm.conf" "$pkgdir/etc/sddm.conf.d/10-wayland.conf"
+  install -Dm644 "$srcdir/files/sddm-graphics.conf" "$pkgdir/usr/lib/systemd/system/sddm.service.d/graphics.conf"
+  install -Dm644 "$srcdir/files/pipewire-microphone.conf" "$pkgdir/usr/share/pipewire/pipewire.conf.d/60-microphone.conf"
+  install -Dm644 "$srcdir/files/wireplumber-microphone.conf" "$pkgdir/usr/share/wireplumber/wireplumber.conf.d/60-microphone.conf"
+  install -Dm644 "$srcdir/files/sleep.conf" "$pkgdir/usr/lib/systemd/sleep.conf.d/60-display.conf"
+  install -Dm644 "$srcdir/files/logind.conf" "$pkgdir/usr/lib/systemd/logind.conf.d/60-display.conf"
+}

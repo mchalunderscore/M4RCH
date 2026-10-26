@@ -1,0 +1,16 @@
+{
+  "pr": 433,
+  "url": "https://github.com/aurora-silicon/linux/pull/433",
+  "head": "986ec63833586a1451575a4fb05b3d2b95679a53",
+  "base": "420a1c8f5492daeaa59ffba565aac610f5218d27",
+  "title": "drm/asahi: g17: keep innocent clients alive across another client's recovery",
+  "author": {
+    "login": "jgoyvaerts",
+    "name": "jgoyvaerts",
+    "email": null,
+    "avatar_url": "https://avatars.githubusercontent.com/u/1125884?v=4",
+    "id": 1125884
+  },
+  "checked_at": "2026-10-25",
+  "status_at_import": "open"
+}

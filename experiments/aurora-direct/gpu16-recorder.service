@@ -1,0 +1,12 @@
+[Unit]
+Description=Record Aurora GPU desktop startup immediately
+After=local-fs.target
+Before=aurora-direct.service
+
+[Service]
+Type=exec
+ExecStart=/bin/sh /run/aurora-direct/recorder.sh
+TimeoutStopSec=10
+
+[Install]
+WantedBy=multi-user.target

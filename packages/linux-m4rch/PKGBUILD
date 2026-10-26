@@ -1,22 +1,29 @@
-# Generated input hashes and version are substituted by sdboot/packages.py.
-# This recipe packages this project's verified, pinned kernel build. Compilation
-# remains `make kernel`; this is deliberately not advertised as an upstream
-# source-building Arch recipe.
+# Sources are the locally built kernel and modules; see ../tools/prepare.py.
 pkgname=linux-m4rch
-pkgver=@VERSION@
+pkgver=7.3.0
 pkgrel=2
-pkgdesc='m4rch Linux kernel and matching modules for J614s/T6040'
+pkgdesc='Linux kernel for Apple Silicon'
 arch=('aarch64')
-url='https://github.com/damsleth/linux'
+url='https://github.com/aurora-silicon/linux'
 license=('GPL-2.0-only')
-depends=('coreutils' 'kmod')
-provides=('linux' 'linux-t6040')
-conflicts=('linux-aarch64' 'linux-t6040')
-replaces=('linux-t6040')
+depends=('coreutils' 'kmod' 'mkinitcpio')
+provides=('linux')
+conflicts=('linux-aurora-m4rch')
 options=('!strip' '!debug' '!lto')
-backup=('etc/modprobe.d/m4rch-drivers.conf')
-source=('payload.tar.gz')
-sha256sums=('@PAYLOAD_SHA256@')
+source=('Image' 'modules.tar.gz' 'linux-m4rch.preset' 'apple-j614s.dtb' 'kernel.config' 'kernel.patch' 'GPL-2.0')
+# prepare.py appends checksums to the generated build directory.
 package() {
-    cp -a "$srcdir/payload/." "$pkgdir/"
+  local modules=("$srcdir"/lib/modules/*)
+  [[ ${#modules[@]} == 1 && ${modules[0]##*/} == 7.3.0-m4rch ]]
+  grep -aq 'Linux version 7.3.0-m4rch ' "$srcdir/Image"
+  install -d "$pkgdir/usr"
+  cp -a "$srcdir/lib" "$pkgdir/usr/"
+  rm -f "$pkgdir/usr/lib/modules/7.3.0-m4rch/build"
+  install -Dm644 "$srcdir/Image" "$pkgdir/usr/lib/modules/7.3.0-m4rch/vmlinuz"
+  echo "$pkgname" > "$pkgdir/usr/lib/modules/7.3.0-m4rch/pkgbase"
+  install -Dm644 "$srcdir/linux-m4rch.preset" "$pkgdir/etc/mkinitcpio.d/linux-m4rch.preset"
+  install -Dm644 "$srcdir/apple-j614s.dtb" "$pkgdir/usr/lib/asahi-boot/apple-j614s.dtb"
+  install -Dm644 "$srcdir/kernel.config" "$pkgdir/usr/share/doc/$pkgname/config"
+  install -Dm644 "$srcdir/kernel.patch" "$pkgdir/usr/share/doc/$pkgname/kernel.patch"
+  install -Dm644 "$srcdir/GPL-2.0" "$pkgdir/usr/share/licenses/$pkgname/GPL-2.0"
 }

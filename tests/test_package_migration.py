@@ -180,7 +180,7 @@ subprocess.run(['sh', str(root / 'usr/bin/m4rch-boot-update')], check=True)
                 self.command(binaries, "findmnt", 'case "$*" in *FSTYPE*) echo vfat;; *) echo /dev/fixture;; esac')
                 self.command(binaries, "blkid", f'case "$*" in *PARTUUID*) echo {actual["BOOT_PARTITION_UUID"]};; *) echo {actual["ROOT_UUID"]};; esac')
                 helper = base / "update.sh"
-                helper.write_text(self.map_script((PROJECT / "packages/config-m4rch/m4rch-boot-update").read_text(), root, binaries))
+                helper.write_text(self.map_script((PROJECT / "packages/legacy/config-m4rch/m4rch-boot-update").read_text(), root, binaries))
                 result = subprocess.run(["sh", helper], text=True, capture_output=True)
                 self.assertNotEqual(result.returncode, 0)
                 self.assertIn("transaction may already have committed; ESP files are unchanged", result.stderr)

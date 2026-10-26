@@ -1,0 +1,16 @@
+{
+  "pr": 429,
+  "url": "https://github.com/aurora-silicon/linux/pull/429",
+  "head": "90c0d00eb53799ed927526d90a4425ec07a9baa6",
+  "base": "420a1c8f5492daeaa59ffba565aac610f5218d27",
+  "title": "arm64: keep J713 GPU/DCP non-coherent when CLIDR_EL1.LoC == 0 (fixes J713 graphics on 7.3)",
+  "author": {
+    "login": "erikwb",
+    "name": "erikwb",
+    "email": null,
+    "avatar_url": "https://avatars.githubusercontent.com/u/169195?v=4",
+    "id": 169195
+  },
+  "checked_at": "2026-10-25",
+  "status_at_import": "open"
+}

@@ -1,0 +1,11 @@
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Path
+Target = usr/lib/asahi-boot/*
+Target = usr/bin/update-m1n1
+
+[Action]
+Description = Updating m1n1 and U-Boot...
+When = PostTransaction
+Exec = /usr/bin/update-m1n1

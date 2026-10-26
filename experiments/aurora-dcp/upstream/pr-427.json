@@ -1,0 +1,16 @@
+{
+  "pr": 427,
+  "url": "https://github.com/aurora-silicon/linux/pull/427",
+  "head": "bec833e0bc581f74744265f0613832e8291db0cc",
+  "base": "420a1c8f5492daeaa59ffba565aac610f5218d27",
+  "title": "drm/asahi: pgtable: check the struct page of a table outside the reserved regions",
+  "author": {
+    "login": "jgoyvaerts",
+    "name": "jgoyvaerts",
+    "email": null,
+    "avatar_url": "https://avatars.githubusercontent.com/u/1125884?v=4",
+    "id": 1125884
+  },
+  "checked_at": "2026-10-25",
+  "status_at_import": "open"
+}

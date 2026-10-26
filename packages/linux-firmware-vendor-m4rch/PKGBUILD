@@ -1,0 +1,15 @@
+pkgname=linux-firmware-vendor-m4rch
+pkgver=20261026
+pkgrel=1
+pkgdesc='Locally extracted Apple device firmware'
+arch=('aarch64')
+url='https://asahilinux.org/'
+license=('custom:Apple')
+provides=('linux-firmware-vendor')
+conflicts=('linux-firmware-vendor' 'firmware-apple-m4rch')
+options=('!strip' '!debug')
+source=('firmware.tar.gz')
+package() {
+  install -d "$pkgdir/usr/lib/firmware"
+  cp -a "$srcdir/firmware/." "$pkgdir/usr/lib/firmware/"
+}
