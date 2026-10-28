@@ -1,7 +1,0 @@
-V23 ran once on boot `14343c22-f598-4eae-974a-b0edf7009530`. Native descriptors and Fender enable passed the startup path. Firmware consumed both submitted work roots, but the target remained A5 through15s; no stage completion or pixels were observed.
-
-After the full capture was sealed, the class1 power assertion was published0→1 between the opcode0a/bool1 record and producer34/oneEP33. Readback and ownership checks passed. Firmware control read/prefetch stayed33, consumed counter stayed0, and statusA+10 stayed1 throughout separate2s processing and2s firmware-off waits. The new command therefore was not processed; this trial does not establish what successfully applying bool1 would do.
-
-The clean timeouts continued to the sole202. ACK timed out; native NMI produced one raw EP1 frame and fresh6e/RX-empty idle, then CPU stop succeeded. Native Fender OFF0→4, paired OFF and PM put completed. All101 physical OFF observations remained0f000b00 with BUSY800. Accounting reached held0/usage0/active0/suspended1/error0. No ON, START or rejoin followed.
-
-Boot is consumed. All174 pages/context/maps/claims/module remain retained; PM reference is released. No postcycle sampler, register read, retry, unload or free is admitted. Rendering, physical OFF, retirement and rebootless render restart remain unproved. The saved evidence shifts the next investigation toward the joined execution/control dispatch stall; no live wait PC is established. Full native normal boot integration continues offline.

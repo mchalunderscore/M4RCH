@@ -1,37 +1,64 @@
 # Documentation
 
-| Guide | Purpose |
+Start with the [project README](../README.md) for current working features and
+[package guide](../packages/README.md) for installed versions and build limits.
+The investigation notes preserve dated tests in chronological order; an early
+trial result does not necessarily describe the final promoted setup.
+
+## Current investigations
+
+| Topic | Guide |
 | --- | --- |
-| [Bootloader alignment](bootloader-alignment.md) | Gravity-based stage 2, build and rollback |
-| [Split internal boot](split-boot.md) | Enrolled stage 1 and replaceable ESP boot.bin |
-| [Setup](setup.md) | First installation, building, flashing, enrollment and updates |
-| [Hardware](hardware.md) | Tested devices, limits and useful native checks |
-| [Architecture](architecture.md) | Internal loader, SD UEFI files, packages and boot policy |
-| [Development](development.md) | Source pins, validation and contribution workflow |
-| [CPU experiments](cpu-performance.md) | Controlled placement and clock/cooling captures |
-| [Left USB trial](left-usb-trial.md) | Both-left USB2 candidate, driver dependency and rollback |
-| [USB patch provenance](usb-patchset-provenance.md) | Upstream basis and local USB adaptations |
+| Suspend and wake | [Suspend and boot](suspend-boot-investigation.md) |
+| Driver startup | [Autoload trial](driver-autoload-investigation.md) |
+| Internal display and VRR | [VRR](vrr-investigation.md), [HDR](hdr-investigation.md), [KWin submission](kwin-submit-investigation.md) |
+| HDMI and USB-C displays | [External displays](external-display-investigation.md) |
+| Power profiles | [Power profiles](power-profiles-investigation.md) |
+| Speaker protection | [J614s speaker safety](j614s-speaker-safety-investigation.md) |
+| Bootloader comparison | [Aurora U-Boot comparison](boot-upstream-comparison.md) |
+| Steam and graphics | [Steam acceleration](steam-acceleration.md), [GPU and memory](gpu-reclaim-investigation.md), [Plasma memory](plasma-memory-investigation.md) |
+| Fans and temperatures | [Fan investigation](mbpfan-investigation.md), [Plasma CPU temperature](plasma-cpu-temperature.md) |
+| Upstream review | [Opportunities reviewed on 27 October](upstream-opportunities-2026-10-27.md) |
+| Uncommitted work | [Worktree review](worktree-review.md) |
+| Repository cleanup | [Installation and maintenance cleanup plan](repository-slimming-plan.md) |
+| Installation and recovery | [Maintenance inventory](installation-maintenance.md) |
 
-The [native-agent instructions](native-agent-instructions.md) and
-[follow-up](native-agent-followup.md) are operational handoff files for the
-current test installation and are included in `make cpu-tools` kits. Verify
-live devices and settings before applying them to another installation.
-The current [HANDOVER.md](../HANDOVER.md) describes the first opt-in T6040 idle
-trial, with separate GRUB images and macOS-accessible selection rollback.
-The accepted clock diagnostic and its rollback remain available.
+## Historical records
 
-Curated evidence receipts are retained in [evidence/](evidence/):
+The earlier SD-card workflow and dependent Aurora trials were retired from the
+working tree. Their tracked sources remain in Git history at `bce491f`. The
+following guides preserve historical evidence, not current operating procedures:
 
-- [Initial CPU/source audit](evidence/2026-10-05-cpu-performance.json).
-- [Accepted left USB, capacity and cooling return](evidence/2026-10-05-native-round4.json).
-- [macOS SMC freshness comparison](evidence/2026-10-05-macos-smc-freshness.json).
-- [SMC key availability](evidence/2026-10-05-j614s-smc-keys.json).
-- [Native placement and desktop return](evidence/2026-10-05-native-return.json).
+- [Hardware](hardware.md), [architecture](architecture.md) and
+  [development](development.md).
+- [Bootloader alignment](bootloader-alignment.md), [split internal boot](split-boot.md),
+  [setup](setup.md), [stub upgrade](stub-upgrade.md) and [NVMe root migration](nvme-root.md).
+- [CPU experiments](cpu-performance.md), [left USB trial](left-usb-trial.md),
+  [USB provenance](usb-patchset-provenance.md) and [GPU register mappings](gpu-register-map.md).
+- [Native-agent instructions](native-agent-instructions.md),
+  [follow-up](native-agent-followup.md) and the historical [handover](../HANDOVER.md).
 
-Raw captures, generated packages, images and machine-specific enrollment
-state are local `out/` artifacts and are excluded from the source repository.
+Dated evidence receipts remain under [evidence/](evidence/). The historical
+GPU trial receipts from 8–11 October have been retired from the working tree; the
+[archive index](evidence-archive.tsv) lists their original paths and Git blob
+IDs at commit `bce491f8716aef6b23e60e1d5909e5be8d7f88f9`. To inspect one, run
+`git show bce491f:<path>`; to restore one to the working tree, run
+`git restore --source=bce491f -- <path>`. Historical trial conclusions and
+logs can be retrieved from the archive; remaining receipts cover other dates
+and work.
 
-- [Apple boot-stub upgrade](stub-upgrade.md): isolated 25G83 preparation and GPU ABI reference.
-- [GPU register mappings](gpu-register-map.md): static AGX mapping evidence and native qualification boundaries.
+Ignored `out/` directories include local builds and machine-specific captures;
+Git history cannot restore ignored or untracked files.
 
-- [NVMe root migration](nvme-root.md): storage layout, qualification and fallback plan.
+Retired trial and diagnostic sources, including unique uncommitted material,
+are preserved locally in `out/retired-experiment-sources-20261028.tar.gz` and
+`out/retired-diagnostics-20261028.tar.gz`. They are not in Git; back them up
+separately if they need to be retained. Historical commands in the notes may
+refer to retired files, kernels and boot entries and should not be run as
+current procedures.
+
+The fuller versions of several condensed notes are in
+`out/documentation-before-condensing-20261028.tar.gz`. The local
+`out/worktree-snapshot-20261028.tar.gz` contains the tracked and untracked
+working files before the local commits, plus the prior Git diff and status; it
+does not contain ignored build inputs, firmware or private captures.

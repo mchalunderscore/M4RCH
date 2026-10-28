@@ -1,5 +1,8 @@
 # Development
 
+This guide covers the historical SD-card workflow. For current package builds
+and checks, see the [package guide](../packages/README.md).
+
 ## Source layout
 
 | Path | Responsibility |

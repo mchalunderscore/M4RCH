@@ -1,9 +1,0 @@
-The eff8 trial changed request3→2 once and retained request/ACK2/2 through15 seconds. Target and completion pages remained unchanged. This rejects bit0 clearing as a sufficient fix for this draw; it does not identify a replacement bit to clear.
-
-A narrow native operand check adds a useful correction: firmware1a994 reaches its ACKbit1 wait only when incoming queue masks introduce new bits beyond cached masks6c3c8/6c3d0. Zero new masks skip the mask requests, coverage waits and ACKbit1 wait. The known reason2 startup caller163b8..163c4 passes(0,0,1), so that caller cannot explain a stall at1ab70. Of14 direct immediate call/branch sites,13 pass zero masks; the variable-mask entry is1a958 from per-owner1a8c0. Indirect/computed entry remains possible.
-
-For new nonzero masks, native code writes210a8/210b0, checks21058/21060 coverage, then waits for ACKbit1 clear unless main+26c state is2. Current all-ones readbacks satisfy coverage. ACK2 would fail the bit1 predicate if that caller were active, but currentPC/finalDATA were not captured. Traces stop before draw, so startup reason tuples and missing mask events do not establish postdraw ownership.
-
-Native release updates mutex-protected reasonword13f018, clears bit0 only after the last reason leaves, and performs queue-mask/config/cursor reconciliation with conditional kick replay. The host write supplies none of that lifecycle. Bit1 producer and paired transition remain unbound; explicit bit2 sites do not supply a bit1 recipe.
-
-Useful offline work is to bind variable-mask1a8c0 callers to current graph/command operands and queue ownership, then close computed/alias/init-register-table writes to211c8. Continue GPU resource/UAT/fetch and job-bound stage completion closure. The upload contains no missing pause/reset contract. This saved-file review made no hardware or candidate change; the companionJSON pins all inputs and exact machine-byte ranges.

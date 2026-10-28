@@ -1,3 +1,0 @@
-The corrected runtime guard admitted the observed clock-gated state and permitted draw publication, but active Fender enable did not change the execution result. Saved target, completion, queue and hardware-completion bytes are identical to the prior v17/e728 capture. The terminal pending-bit28 trace and pause-handler tail also match. The16 backing bytes changed from the prepared initial image are the same firmware initialization bytes seen previously.
-
-NMI, checked CPU stop, paired coordinate OFF and PM release completed. All101 physical OFF observations still contain BUSY bit11 (800) under the unchanged strict mask; no ON was attempted. The numeric comparison and exact input hashes are in the adjacent JSON. No additional device reads or controls were used.

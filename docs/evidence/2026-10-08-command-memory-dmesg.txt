@@ -1,3 +1,0 @@
-[ 3211.489531] m4rch command-memory: PASS jobs=64 pages=35 bytes=573440 crossings=34 two_aliases=1 trailing_zero=1 published=0
-[ 3211.489541] m4rch command-memory: CPU copies and software walks only; no GPU mappings/cache/acceptance/completion proof
-[ 3226.585250] m4rch command-memory: all owned pages released; published=0

@@ -1,5 +1,8 @@
 # Architecture
 
+This describes the historical SD-card workflow. For the current Aurora-based
+package setup, see the [package guide](../packages/README.md).
+
 ```text
 Internal 4 GiB APFS boot stub                 SD card
 ┌────────────────────────────────┐          ┌──────────────────────────┐
@@ -103,6 +106,6 @@ by compiled fixtures rather than physical fault injection. See
 
 SDDM's greeter remains X11. Autologin selects Plasma Wayland with
 `KWIN_COMPOSE=Q` in the KWin user service, plus software Qt/OpenGL rendering.
-Plasma X11 remains available with compositing enabled. These are userspace
-choices; neither supplies an M4 GPU driver. Wayland's native backend remains
-unverified until the next hardware test.
+Plasma 6.8 removed its X11 session; fresh images provide Plasma Wayland only.
+These are userspace choices; neither supplies an M4 GPU driver.
+Wayland's native backend remains unverified until the next hardware test.

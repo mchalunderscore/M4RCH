@@ -1,5 +1,0 @@
-V22 combines the frozen v21 native descriptor correction with one native idle-power policy command after the sealed draw capture and before the sole202 teardown. The command uses the source-bound zeroed64-byte opcode0a/bool1 record. The bool caller choice and enclosing order are explicit experimental transfers.
-
-The trial distinguishes command queue/counter completion, the owned firmware GPU-off word, and strict physical OFF/accounting. Clean bounded observation timeouts continue to the inherited202/NMI teardown with fresh transport admission; unsafe state retains the owner without retry. All174 pages remain owned. A command completion or zero off-word does not prove work retirement.
-
-The actual owner was compiled against the existing kernel and bound to new actual C and focused host qualifications. Frozen v21/v20 and earlier scopes are composed without rerunning them. V22 is selected by this separate root record; frozen preparation remains unselected. V21 was never loaded and is superseded. No rendering or rebootless rendering restart is claimed.

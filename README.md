@@ -4,29 +4,44 @@ Arch Linux ARM packages for the Apple MacBook Pro (14-inch, M4 Pro),
 Mac16,8 / J614s / T6040. Kernel, m1n1, U-Boot and Mesa builds derive from
 [Aurora Silicon](https://github.com/aurora-silicon).
 
-The working hardware configuration includes GPU acceleration, the internal
-120 Hz display and brightness, Wi-Fi, input, USB3, camera and microphone.
-Built-in speakers remain disabled. DCP suspend/resume, VRR and external display
-processors remain disabled. Headphone audio still needs a direct test.
+The working setup includes GPU acceleration, the internal 120 Hz display,
+brightness and approximate, uncalibrated HDR, Wi-Fi, input, USB3, camera and
+microphone. The owner reports Steam/Shinri and cooling are about as good as
+on macOS after extended use; this is practical experience rather than a
+claim that every workload has been qualified.
 
-[Package recipes and installation](packages/README.md) describe the current
-setup. Modified packages use the upstream name followed by `-m4rch`.
-The system uses pacman, stock mkinitcpio hooks and presets, `grub-mkconfig`,
-and Asahi's `update-m1n1`. Graphics libraries install to `/usr/lib` and Plasma
-uses its standard session. Routine updates use standard Arch tools; a one-time
-transition script is provided alongside the packages.
+- **Sleep:** attended suspend and lid wake passed on AC and battery. A USB-C
+  TV also returned after one suspend. See [sleep investigation](docs/suspend-boot-investigation.md).
+- **VRR:** the promoted display stack enables VRR and reapplies it after wake.
+  The desktop looked normal; physical refresh variation has not been
+  independently measured. See [VRR investigation](docs/vrr-investigation.md).
+- **External displays:** HDMI and a USB-C TV each produced a picture. HDMI
+  flicker and scaling were observed but not diagnosed. The normal GRUB entry
+  contains the promoted stack and has booted normally; external output under
+  automatic driver loading remains to be tested. See
+  [external display investigation](docs/external-display-investigation.md).
+- **Power profiles:** the installed daemon provides Power Saver, Balanced and
+  Performance. Power Saver caps P-cores at 3.300 GHz and E-cores at 1.788 GHz;
+  Balanced and Performance retain the existing maxima. An attended sleep/wake
+  passed with Power Saver active. See [power-profile investigation](docs/power-profiles-investigation.md).
+- **Audio:** the internal microphone is configured, with its local processing
+  package installed. The headphone jack awaits a direct test. Internal speakers
+  remain disabled pending machine-specific protection evidence; see the
+  [speaker safety assessment](docs/j614s-speaker-safety-investigation.md).
 
-```sh
-make packages
-```
+[Package recipes and installation notes](packages/README.md) describe the
+installed system and build limitations. The existing cached installation kit is
+older than the current promoted stack and must not be reapplied blindly. The
+working boot chain uses the local `archnvme` bridge; Aurora's standard boot
+work is being tracked in the [boot comparison](docs/boot-upstream-comparison.md).
 
-Build artifacts and validation logs are written to `out/packages/`.
-The current local build prerequisites are listed in the package documentation.
-The standardized package set has booted successfully on the Mac. The latest
-fan-controller revision still needs hardware verification. Steam's updater
-completes, but accelerated OpenGL inside muvm currently hangs; a graphical
-Steam session has not yet been verified.
+`make check` validates the retained source tests. `make packages` is a historical
+macOS-hosted container workflow that still needs local inputs and validation
+updates; it is not a one-command rebuild of the installed system. See the
+[package guide](packages/README.md) before building or installing packages.
 
-The [historical SD-card workflow](README.legacy.md), its `Makefile.legacy`,
-and `experiments/` retain earlier work for reference. Their update scripts are
-not part of the current packages.
+For the extensive uncommitted work, see the [worktree review](docs/worktree-review.md).
+
+The old SD-card implementation and dependent Aurora trial workflows have been
+retired. Historical tracked sources are available in Git history at `bce491f`;
+the current installation and build workflow is documented in the package guide.

@@ -1,3 +1,0 @@
-[ 4326.863999] m4rch command-memory: PASS jobs=64 pages=35 bytes=573440 crossings=34 two_aliases=1 trailing_zero=1 table_pages=6 rejected_invalid=17 published=0
-[ 4326.864020] m4rch command-memory: CPU copies through owned three-level shadow tables; candidate protections only; no installed GPU mappings/cache/acceptance/completion proof
-[ 4326.882390] m4rch command-memory: all owned pages released; published=0

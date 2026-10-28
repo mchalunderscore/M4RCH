@@ -1,9 +1,0 @@
-# One-shot reserved DATA loader review
-
-The concrete loader `capture-fw-data-df540.py`, SHA256 `d13477425f45a89951948b9f31c993d78b33c2840a467b56151ed55015c5cd7b`, has no remaining blocker in this bounded saved-source review. The static sampler review remains unchanged, and all its input pins were reverified.
-
-Before loading, the script checks the exact boot, kernel notes/release, loaded owner GNU note/ref1, owner file, candidate receipt/preparation/GRUB, all10 artifact/20 owner-source pins and16 preparation inputs. It pins the imported contract before use, checks the saved sameboot ADT and exact FW DATA contract, and obtains a read-only current Linux DT layout qualification matching that boot's preflight. The host state must belong to the selected family with both intents consumed, uncertain+failed, no in-flight operation and no submit. Both sampler module and private sysfs directory must be absent.
-
-A fixed exclusive directory and fsynced exclusive intent/state-before are durable before the sole insmod. The script reads the sampler's private `0x138000`-byte copy into a closed, fsynced exclusive file. Its finally block performs only normal `rmmod gpu_data_sample`. Fresh owner checks, unchanged host-state bytes and sampler absence precede the durable state-after and capture receipt. A retry encounters the existing directory and refuses; no owner unload, forced cleanup, mailbox or power command appears.
-
-The first version's missing closed-state conditions and directory/receipt durability were corrected in this ignored loader only. The selected kit, candidate and previous evidence remain unchanged. Root alone may execute the reviewed script; this reviewer executed no live guard or hardware action. Firmware private-cache writeback freshness and non-atomic DMA consistency remain unproved. Captured bytes may support crash diagnosis; they cannot complete B20/202 or establish reset, retirement or rendering.

@@ -1,10 +1,27 @@
 # CPU support
 
+> Historical trial commands and diagnostic paths in this record may have been retired.
+> See the [documentation index](README.md) for preserved source archives and
+> the current setup; do not treat trial boot paths as current recovery instructions.
+
 The current three-cluster cpufreq driver already scales: P policies expose
 1.260–4.512 GHz and the E policy 1.020–2.592 GHz. The accepted capacity overlay gives
 runtime P=1024/E=496 across all twelve live cores. Requested frequencies are not sustained physical-clock proof.
 
 ## Maintained SME and shallow idle
+
+**Current 7.3.0-m4rch kernel:** The older board-specific `SavedWFI` cpuidle
+patch and its `cpuidle_apple.saved_wfi` parameters are not present. Aurora's
+arm64 idle path instead detects M4-or-later Apple cores and preserves registers
+around WFI; it also saves and flushes FP/SIMD state before entering WFI. The
+current boot command line uses `idle=wfi arm64.nowfxt`. On this machine the
+Apple cpuidle driver exposes two WFI entries, both using that arm64 idle path.
+The boot log confirms that register preservation was enabled. This describes
+the running diagnostic kernel; the newly built main package contains the same
+Aurora idle implementation but has not yet been boot-tested.
+
+The following paragraphs describe the earlier 7.1.3-based implementation and
+its testing; they are not the configuration of the current 7.3.0 kernel.
 
 The normal `linux-m4rch` build enables ARM64 SME/SME2 support and registers
 one default-enabled SavedWFI state on J614s/T6040. The state explicitly saves
@@ -169,7 +186,7 @@ unproven. Individual SMC channels can return exact 40°C or implausibly low
 values on macOS. Nominal pressure does not calibrate those channels. Both fan
 modes 3/zero RPM and 0/positive RPM occur on macOS.
 
-The built [cpufreq snapshot diagnostic](../experiments/cpufreq-snapshot/README.md)
+The former cpufreq snapshot diagnostic
 captures command/status/OPP decoding inside the owning driver, without voltage,
 PLL or fan-control changes. The next-boot kit includes matched packages and
 accepted rollback; [HANDOVER.md](../HANDOVER.md) specifies one native session. macOS
@@ -220,7 +237,7 @@ to one attempt on CPU4, brackets the original
 register/WFI sequence with checkpoints and prints the saved exception frame
 before the ordinary dump. It aims to locate the fault, not enable useful idle
 or establish a performance gain. See the
-[experiment](../experiments/t6040-idle/README.md) for selection and rollback.
+retired trial notes for the historical selection and rollback procedure.
 
 The traced native run reached stages 1–4, then faulted at
 `ffffc000810dcdb0`: `msr s3_5_c15_c5_0, x0` in the exact linked kernel.

@@ -1,5 +1,8 @@
 # Hardware status
 
+This page records the historical SD-card bring-up. For current hardware status,
+see the [project README](../README.md) and [package guide](../packages/README.md).
+
 Target: **14-inch M4 Pro MacBook Pro, Mac16,8 / J614s / T6040**.
 Native evidence currently covers a 12-core, 24 GB machine. This is an
 experimental configuration, not certification of every device or workload.
@@ -135,7 +138,6 @@ qualification for this machine. macOS discovery did not activate capture or play
 
 GPU work now targets Gravity's G16 implementation. This machine reports G16S,
 two clusters and sixteen enabled cores. See the
-[GPU bring-up scope](../experiments/t6040-gpu/README.md) and
 [captured contract](evidence/2026-10-06-gpu-contract.json). The identification
 patch is not active in the maintained kernel; firmware/render-node bring-up
 and Mesa G16S support remain unverified.

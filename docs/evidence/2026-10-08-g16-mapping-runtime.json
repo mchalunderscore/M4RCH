@@ -1,8 +1,0 @@
-{
-  "boot_id": "8d5519d3-c1db-41a7-bb94-7c68e7ac0d10",
-  "kernel": "7.1.13-m4rch-gpu-contract",
-  "module_unloaded": true,
-  "published": false,
-  "module_sha256": "d4138886636d16c8b43b98b325274c205c923f32311f25f88950bd5ba81007c0",
-  "source_sha256": "8bace153e8c3cf240f8f600984d7ff9cf4d3d15193f63454e2c8d3b0d430e790"
-}
