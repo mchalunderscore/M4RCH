@@ -146,9 +146,10 @@ validation against a mounted root; it is not a native Linux one-command build.
 The bulk preparation, build, validation and installer package lists now include
 the installed power-profiles daemon and omit the retired muvm/FEX guest set.
 `validate.sh` targets `7.3.0-m4rch-vrr-ext`, the current boot options and the
-speaker-module blacklist. These script changes have not been exercised in the
-macOS container or through a disposable package transaction, and do not qualify
-the installer for use. Local build inputs
+speaker-module blacklist. The 14-package installer and boot hooks passed a
+disposable reinstall test with the limitations described in the [maintenance
+inventory](../docs/installation-maintenance.md); the macOS bulk builder and a
+fresh install have not been qualified. Local build inputs
 are under `out/packages/source/`; firmware inputs are machine-local. Kernel
 configuration and patches are included in the kernel package. The Flatpak
 build helper uses Freedesktop SDK 25.08/26.08 and LLVM 22; its pinned Mesa and

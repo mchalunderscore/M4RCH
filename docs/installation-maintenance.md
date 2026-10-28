@@ -81,12 +81,13 @@ SHA-256 values of the matching local binaries and module archive:
 
 `packages/tools/prepare.py` still requires the ignored promotion binaries and
 other local package inputs. It verifies that preserved source records match
-the promotion directory. The existing `make packages` and cached installer
-remain unqualified for the installed stack; do not run the installer blindly.
+the promotion directory. The existing `make packages` and older cached
+installer remain unqualified; do not run the older kit blindly.
 The bulk package lists now include power profiles and omit the retired guest
 packages, and the validator targets the current kernel and boot options. These
-changes still need an end-to-end disposable build and transaction. Firmware and calibration are machine-local and must be backed up
-separately rather than added to Git.
+changes still need an end-to-end bulk build; the separately assembled package
+set passed the limited transaction described below. Firmware and calibration
+are machine-local and must be backed up separately rather than added to Git.
 
 ## Boot recovery
 
@@ -122,4 +123,26 @@ installed binary, so this test does not establish byte-for-byte reproducibility.
 An isolated `pacman --dbonly --noscriptlet` transaction against a copy of the
 installed database resolved and reinstalled those four package records. It did
 not install files, run hooks, validate boot-bundle generation or test the full
-bulk package set. The full installer remains unqualified.
+bulk package set.
+
+## Isolated installer and boot-hook test, 28 October
+
+The 14-package installer ran against a copy-on-write view of the configured
+installation in private mount, PID and network namespaces, with a temporary
+ext4 root, FAT boot image, isolated devices and read-only sysfs. The package
+transaction, kernel and loader hooks, explicit mkinitcpio/update-m1n1 calls,
+GRUB generation and package ownership checks completed. The initramfs included
+Plymouth and Apple NVMe; GRUB syntax, default `Arch Linux` entry, boot options
+and the m1n1/DTB/U-Boot bundle contents were checked. Host boot files were
+unchanged by hash. PackageKit refresh could not contact the absent chroot
+system bus, and systemd manager and D-Bus reloads were skipped in the chroot.
+
+Mesa and virglrenderer were rebuilt from their pinned sources; their GPU library
+payloads matched the installed files. The power-profile test build passed its
+mock tests but differed from the installed binary. The test used the current
+configured system as its base and did not boot the generated image, exercise
+live service reloads, qualify a fresh install, or validate the old macOS bulk
+builder. Logs and the checksummed package set are preserved in
+`out/installer-qualification-20261028/`, outside Git. The kit contains private
+machine-specific firmware and is not a qualified fresh-install image. Do not
+use the older cached installer kit as a substitute for the tested package set.

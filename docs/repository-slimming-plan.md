@@ -36,6 +36,10 @@ traversable without missing objects.
 
 An extracted upstream U-Boot review tree was removed after all 38,034 files
 and symlinks matched the retained `out/boot-upstream-review/aurora-pr16-head.tar.gz`.
+The extracted KWin 6.8.1 tree was also removed after all 3,251 files and links
+matched its retained `out/kwin-vrr/kwin-v6.8.1.tar.gz`. The retired VRR force
+kernel source was archived to `out/vrr-force/source-retired.tar.zst` and
+compared to the extracted tree before removal; its checksum is alongside it.
 Other local builds and captures remain pending dependency and provenance review.
 
 Upstream review on 28 October: [Aurora distribution catalogs](https://github.com/aurora-silicon/aurora-distributions) document signed distribution delivery and private calibration handling, while [Asahi update-m1n1](https://github.com/AsahiLinux/asahi-scripts/blob/main/update-m1n1) assembles the boot bundle and keeps an old copy when it changes. Neither establishes a qualified replacement for this J614s package workflow.
