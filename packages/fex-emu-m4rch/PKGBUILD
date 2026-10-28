@@ -1,6 +1,6 @@
 pkgname=fex-emu-m4rch
 pkgver=2610
-pkgrel=1
+pkgrel=5
 pkgdesc='Fast usermode x86 and x86-64 emulator for Arm64'
 arch=('aarch64')
 url='https://fex-emu.com/'
@@ -10,7 +10,11 @@ makedepends=('cmake' 'ninja' 'clang' 'python' 'pkgconf')
 provides=('fex-emu')
 conflicts=('fex-emu')
 options=('!lto' '!debug')
-source=('fex-source.tar.gz')
+source=('fex-source.tar.gz' 'guest-data-limit.patch')
+prepare() {
+  cd "$srcdir/fex"
+  patch -Np1 -i "$srcdir/guest-data-limit.patch"
+}
 build() {
   cmake -S "$srcdir/fex" -B "$srcdir/build" -G Ninja \
     -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr \

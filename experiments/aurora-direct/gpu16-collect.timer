@@ -1,9 +1,0 @@
-[Unit]
-Description=Save the integrated GPU experiment return bundle
-
-[Timer]
-OnBootSec=2min
-Unit=gpu16-collect.service
-
-[Install]
-WantedBy=timers.target

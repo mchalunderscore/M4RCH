@@ -138,21 +138,7 @@ CPUFREQ_SNAPSHOT = {
     "native_verified": False,
 }
 
-IDLE_OPTIN = {'path': 'patches/experimental-t6040-idle-optin.patch',
- 'sha256': '822299b0370b8eb96db29f15df0bf546535de807c1696bc4a0e4620899c7d9af',
- 'source': 'drivers/cpuidle/cpuidle-apple.c',
- 'base_source_sha256': '117650f48d17e2db2f8246ce2cc73995b4881587572756b75d330df95da87ded',
- 'result_source_sha256': '47ddb1159e2971a21eb25efc76573ea215bb8d9e9c04df19c36c62e756f940a3',
- 'origin': 'm4rch default-off J614s/T6040 existing deep-idle trial',
- 'native_verified': False}
 
-IDLE_TRACE = {'path': 'patches/experimental-t6040-idle-trace.patch',
- 'sha256': '6bdd10f454d67fd9f583205f36bcb2fe3eb22e771e7965e697e2ccc670f762f3',
- 'source': 'drivers/cpuidle/cpuidle-apple.c',
- 'base_source_sha256': '47ddb1159e2971a21eb25efc76573ea215bb8d9e9c04df19c36c62e756f940a3',
- 'result_source_sha256': '9a27e79eb5316dea2fd242e5b3b25a8c2bba99a010e2d264e79f5429e983f338',
- 'origin': 'm4rch single-CPU first-entry idle checkpoints',
- 'native_verified': False}
 
 EARLY_FAULT = {'path': 'patches/experimental-arm64-early-fault.patch',
  'sha256': '0bbe062b919470ffb7160073a7c8072217df020a2488c44cfebed9b2df592eec',
@@ -162,46 +148,10 @@ EARLY_FAULT = {'path': 'patches/experimental-arm64-early-fault.patch',
  'origin': 'm4rch early numeric saved exception frame',
  'native_verified': False}
 
-SAVED_WFI = {'path': 'patches/experimental-t6040-saved-wfi.patch',
- 'sha256': '3d707c958bd9b1fac4ed0577534a79e861d706f65555ebfcd63a329cee8b3ea4',
- 'source': 'drivers/cpuidle/cpuidle-apple.c',
- 'base_source_sha256': '9a27e79eb5316dea2fd242e5b3b25a8c2bba99a010e2d264e79f5429e983f338',
- 'result_source_sha256': '56560175119fbc94e85ebdd1cfe1e44d0cee926bf34ebafdccad5ead3d5159aa',
- 'origin': 'm4rch CPU4 one-shot saved GPR WFI without CYC_OVRD accesses',
- 'native_verified': False}
 
-WFI_BATCH = {'path': 'patches/experimental-t6040-wfi-batch.patch',
- 'sha256': '152d78e37ee6f46db1fcce60370f1d10f577f3172ae4c447b957740c69d23f50',
- 'source': 'drivers/cpuidle/cpuidle-apple.c',
- 'base_source_sha256': '56560175119fbc94e85ebdd1cfe1e44d0cee926bf34ebafdccad5ead3d5159aa',
- 'result_source_sha256': '2f8a0a2eb65881f9a1eec03e9328ed52c781a35d90d2d6fbc606c013b0c3908e',
- 'origin': 'm4rch bounded CPU4/5 saved-WFI runtime batches',
- 'native_verified': False}
 
-WFI_ALLCORES = {'path': 'patches/experimental-t6040-wfi-allcores.patch',
- 'sha256': 'a6f5a1f556a5d2cd64e78703e949e1f11cd2e608f3b12d820482014f45b21c15',
- 'source': 'drivers/cpuidle/cpuidle-apple.c',
- 'base_source_sha256': '2f8a0a2eb65881f9a1eec03e9328ed52c781a35d90d2d6fbc606c013b0c3908e',
- 'result_source_sha256': 'dbdb6c8712a2a1e7c5f882e1023b174ba00dad81846bf8c810bd72ee0e53b8bf',
- 'origin': 'm4rch reviewed native-agent sequential all-core saved-WFI '
-           'candidate',
- 'native_verified': False}
 
-WFI_CONTINUOUS = {'path': 'patches/experimental-t6040-wfi-continuous.patch',
- 'sha256': '1da57d02ff25180ae4d7bb7a7d2a54dd4e1c9c849c53eb7946f20617e262f525',
- 'source': 'drivers/cpuidle/cpuidle-apple.c',
- 'base_source_sha256': 'dbdb6c8712a2a1e7c5f882e1023b174ba00dad81846bf8c810bd72ee0e53b8bf',
- 'result_source_sha256': 'c08e38add6b4628f3e737f91252c92ff20fbbdd687fcfc5c56ef80008ce826e7',
- 'origin': 'm4rch opt-in all-core sustained saved WFI trial',
- 'native_verified': False}
 
-WFI_SHALLOW = {'path': 'experiments/t6040-idle/shallow-wfi.patch',
- 'sha256': '3bbd188bb8675dce4491b3821e8d98c3740987b4eed1eebb68976a0480cfeecf',
- 'source': 'drivers/cpuidle/cpuidle-apple.c',
- 'base_source_sha256': 'c08e38add6b4628f3e737f91252c92ff20fbbdd687fcfc5c56ef80008ce826e7',
- 'result_source_sha256': 'e0be4b31e33739b5bae00c0a68bc07f22fb9d4e3321c14dc24c36541e01d5ed6',
- 'origin': 'm4rch opt-in shallow saved-WFI state replacing nop selection gaps',
- 'native_verified': False}
 
 MAINTAINED_WFI = {'path': 'patches/t6040-shallow-wfi.patch', 'sha256': '5f4d85b5f6b43a7b52f2cf37ae2cb49632890c0cb01f37ba76e13196df04885e', 'source': 'drivers/cpuidle/cpuidle-apple.c', 'base_source_sha256': '117650f48d17e2db2f8246ce2cc73995b4881587572756b75d330df95da87ded', 'result_source_sha256': '9a0bd7f4ef646593672693d73b5e279846171bea1c4f808fedd25f7bb919d88d', 'origin': 'm4rch J614s/T6040 maintained shallow saved-WFI integration', 'native_verified': False, 'path_native_verified': True}
 

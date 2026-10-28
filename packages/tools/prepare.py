@@ -12,7 +12,7 @@ import tarfile
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / 'out/packages'
 SOURCE = OUT / 'source'
-NAMES = ('linux-m4rch', 'mesa-m4rch', 'm1n1-m4rch', 'u-boot-m4rch',
+NAMES = ('linux-m4rch', 'mesa-m4rch', 'virglrenderer-m4rch', 'm1n1-m4rch', 'u-boot-m4rch',
          'linux-firmware-vendor-m4rch', 'alsa-ucm-conf-m4rch', 'asahi-scripts-m4rch',
          'mesa-flatpak-m4rch', 'muvm-m4rch', 'fex-emu-m4rch', 'avd-fw-m4rch',
          'fex-rootfs-debian-m4rch', 'steam-m4rch', 'mbpfan-m4rch', 'vesktop-m4rch')
@@ -38,13 +38,42 @@ def main():
         shutil.copytree(ROOT / 'packages' / name, dest)
 
     kernel = recipes / 'linux-m4rch'
-    for source, name in [(SOURCE/'Image', 'Image'), (SOURCE/'modules.tar.gz', 'modules.tar.gz'),
-                         (SOURCE/'control.dtb', 'apple-j614s.dtb'), (SOURCE/'.config', 'kernel.config'),
-                         (SOURCE/'kernel.patch', 'kernel.patch')]:
+    kernel_inputs = ROOT / 'out/external-investigation/promotion/linux'
+    # Refuse stale inputs that omit either hardware-tested fix.
+    for patch in ('linux-asahi-deferred-close-rebind.patch',
+                  'experimental-aurora-pr512-fan.patch',
+                  'experimental-j614s-fan-unlock-retry.patch',
+                  'experimental-j614s-hdr.patch',
+                  'experimental-j614s-hdr-gpu-conversion.patch',
+                  'experimental-j614s-hdr-transfer-probe.patch',
+                  'experimental-j614s-hdr-edr-ratio-probe.patch',
+                  'j614s-hdr-main-default.patch'):
+        if (ROOT / 'patches' / patch).read_bytes() not in (kernel_inputs / 'kernel.patch').read_bytes():
+            raise SystemExit(f'Kernel build inputs do not include {patch}.')
+    if b'Linux version 7.3.0-m4rch-vrr-ext ' not in (kernel_inputs / 'Image').read_bytes():
+        raise SystemExit('Kernel build inputs do not contain the promoted VRR image.')
+    for name in ('Image', 'modules.tar.gz', 'apple-j614s.dtb'):
+        shutil.copy2(kernel_inputs / name, kernel/name)
+    for name in ('kernel.config', 'kernel.patch', 'gpu-diagnostics.patch',
+                 'aurora-vrr.patch', 'force-vrr.patch', 'wake-hpd.patch',
+                 'wake-reapply.patch', 'external-display.patch'):
+        source = ROOT / 'packages/linux-m4rch/promoted-source' / name
+        if sha(source) != sha(kernel_inputs / name):
+            raise SystemExit(f'Preserved kernel source differs from promoted inputs: {name}')
         shutil.copy2(source, kernel/name)
-    shutil.copy2(SOURCE/'m1n1.bin', recipes/'m1n1-m4rch/m1n1.bin')
-    for source, name in [(SOURCE/'u-boot-nodtb.bin', 'u-boot-nodtb.bin'),
-                         (SOURCE/'uboot.patch', 'uboot.patch'), (SOURCE/'COPYING', 'COPYING')]:
+    shutil.copy2(ROOT/'out/external-investigation/promotion/m1n1/m1n1.bin', recipes/'m1n1-m4rch/m1n1.bin')
+    m1n1_patch = ROOT/'packages/m1n1-m4rch/promoted-source/external-handoff.patch'
+    if sha(m1n1_patch) != sha(ROOT/'out/external-investigation/promotion/m1n1/external-handoff.patch'):
+        raise SystemExit('Preserved m1n1 source differs from promoted inputs.')
+    shutil.copy2(m1n1_patch, recipes/'m1n1-m4rch/external-handoff.patch')
+    required_uboot_patch = ROOT / 'patches/uboot-j614s-default-handoff.patch'
+    if required_uboot_patch.read_bytes() not in (ROOT / 'out/external-investigation/promotion/uboot/uboot.patch').read_bytes():
+        raise SystemExit('U-Boot build inputs still require the experimental mode file.')
+    uboot_patch = ROOT/'packages/u-boot-m4rch/promoted-source/uboot.patch'
+    if sha(uboot_patch) != sha(ROOT/'out/external-investigation/promotion/uboot/uboot.patch'):
+        raise SystemExit('Preserved U-Boot source differs from promoted inputs.')
+    for source, name in [(ROOT/'out/external-investigation/promotion/uboot/u-boot-nodtb.bin', 'u-boot-nodtb.bin'),
+                         (uboot_patch, 'uboot.patch'), (SOURCE/'COPYING', 'COPYING')]:
         shutil.copy2(source, recipes/'u-boot-m4rch'/name)
 
     # Firmware stays local to the machine it was extracted from.
@@ -98,18 +127,18 @@ def main():
         shutil.copy2(SOURCE/filename, recipes/'vesktop-m4rch'/filename)
     # Record real checksums for every local source in ordinary PKGBUILDs.
     sources = {
-        'linux-m4rch': ['Image', 'modules.tar.gz', 'linux-m4rch.preset', 'apple-j614s.dtb', 'kernel.config', 'kernel.patch', 'GPL-2.0'],
-        'm1n1-m4rch': ['m1n1.bin', 'LICENSE'],
+        'linux-m4rch': ['Image', 'modules.tar.gz', 'linux-m4rch.preset', 'apple-j614s.dtb', 'kernel.config', 'kernel.patch', 'gpu-diagnostics.patch', 'aurora-vrr.patch', 'force-vrr.patch', 'wake-hpd.patch', 'wake-reapply.patch', 'external-display.patch', 'GPL-2.0'],
+        'm1n1-m4rch': ['m1n1.bin', 'external-handoff.patch', 'LICENSE'],
         'u-boot-m4rch': ['u-boot-nodtb.bin', 'uboot.patch', 'COPYING'],
         'linux-firmware-vendor-m4rch': ['firmware.tar.gz'],
         'alsa-ucm-conf-m4rch': ['alsa.tar.gz'],
         'asahi-scripts-m4rch': ['asahi-scripts.tar.gz', 'files.tar.gz'],
         'mesa-flatpak-m4rch': ['flatpak-extensions.tar.gz'],
-        'muvm-m4rch': ['muvm-source.tar.gz'],
-        'fex-emu-m4rch': ['fex-source.tar.gz'],
+        'muvm-m4rch': ['muvm-source.tar.gz', 'muvm-wrapper', 'muvm-dns-sync', 'muvm-dns-forward.py', 'muvm-dns-proxy.py', 'muvm-dns-forward.service'],
+        'fex-emu-m4rch': ['fex-source.tar.gz', 'guest-data-limit.patch'],
         'fex-rootfs-debian-m4rch': ['debian.erofs', 'packages.txt', 'build-info.txt'],
-        'steam-m4rch': ['steam-launcher.deb', 'steam'],
-        'mbpfan-m4rch': ['mbpfan-source.tar.gz', 'macsmc.patch', 'mbpfan.service', 'mbpfan.conf'],
+        'steam-m4rch': ['steam-launcher.deb', 'steam', 'steam-native4k-launch-loop.sh', 'userpages.c', 'userpages-prctl.h'],
+        'mbpfan-m4rch': ['mbpfan-source.tar.gz', 'macsmc.patch', 'smooth-curve.patch', 'mbpfan.service', 'mbpfan.conf'],
         'vesktop-m4rch': ['electron45.zip', 'vesktop-app.tar.gz'],
     }
     for name, files in sources.items():

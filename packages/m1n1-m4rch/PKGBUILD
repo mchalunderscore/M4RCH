@@ -1,6 +1,6 @@
 pkgname=m1n1-m4rch
 pkgver=20261025
-pkgrel=1
+pkgrel=2
 pkgdesc='Apple Silicon bootloader, stage two'
 arch=('aarch64')
 url='https://github.com/aurora-silicon/m1n1'
@@ -8,8 +8,9 @@ license=('MIT')
 provides=('m1n1')
 conflicts=('m1n1' 'bootloader-aurora-m4rch')
 options=('!strip' '!debug')
-source=('m1n1.bin' 'LICENSE')
+source=('m1n1.bin' 'external-handoff.patch' 'LICENSE')
 package() {
   install -Dm644 "$srcdir/m1n1.bin" "$pkgdir/usr/lib/asahi-boot/m1n1.bin"
+  install -Dm644 "$srcdir/external-handoff.patch" "$pkgdir/usr/share/doc/$pkgname/external-handoff.patch"
   install -Dm644 "$srcdir/LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }

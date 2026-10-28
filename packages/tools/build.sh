@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 mkdir -p /work/packages-new
-for name in linux-m4rch m1n1-m4rch u-boot-m4rch linux-firmware-vendor-m4rch alsa-ucm-conf-m4rch asahi-scripts-m4rch mesa-m4rch mesa-flatpak-m4rch muvm-m4rch fex-emu-m4rch avd-fw-m4rch fex-rootfs-debian-m4rch steam-m4rch mbpfan-m4rch vesktop-m4rch; do
+for name in linux-m4rch m1n1-m4rch u-boot-m4rch linux-firmware-vendor-m4rch alsa-ucm-conf-m4rch asahi-scripts-m4rch mesa-m4rch virglrenderer-m4rch mesa-flatpak-m4rch muvm-m4rch fex-emu-m4rch avd-fw-m4rch fex-rootfs-debian-m4rch steam-m4rch mbpfan-m4rch vesktop-m4rch; do
     build=/work/packages-new/$name
     if [[ $name == mesa-m4rch && -d /work/mesa-next/src ]]; then
         build=/work/mesa-next

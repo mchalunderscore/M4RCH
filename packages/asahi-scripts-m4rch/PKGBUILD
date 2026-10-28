@@ -1,6 +1,6 @@
 pkgname=asahi-scripts-m4rch
 pkgver=20261026
-pkgrel=1
+pkgrel=3
 pkgdesc='Apple Silicon boot integration and hardware configuration'
 arch=('aarch64')
 url='https://github.com/AsahiLinux/asahi-scripts'
@@ -21,12 +21,11 @@ package() {
   install -Dm644 "$srcdir/files/95-m1n1-install.hook" "$pkgdir/usr/share/libalpm/hooks/95-m1n1-install.hook"
   install -Dm644 "$srcdir/files/apple-silicon.conf" "$pkgdir/usr/lib/modprobe.d/apple-silicon.conf"
   install -Dm644 "$srcdir/files/mkinitcpio.conf" "$pkgdir/etc/mkinitcpio.conf.d/apple-silicon.conf"
-  install -Dm644 "$srcdir/files/apple-silicon.service" "$pkgdir/usr/lib/systemd/system/apple-silicon.service"
   install -Dm644 "$srcdir/files/graphics.conf" "$pkgdir/usr/lib/environment.d/60-mesa.conf"
   install -Dm644 "$srcdir/files/graphics.sh" "$pkgdir/etc/profile.d/mesa.sh"
   install -Dm644 "$srcdir/files/sddm.conf" "$pkgdir/etc/sddm.conf.d/10-wayland.conf"
   install -Dm644 "$srcdir/files/sddm-graphics.conf" "$pkgdir/usr/lib/systemd/system/sddm.service.d/graphics.conf"
-  install -Dm644 "$srcdir/files/pipewire-microphone.conf" "$pkgdir/usr/share/pipewire/pipewire.conf.d/60-microphone.conf"
+  install -Dm644 "$srcdir/files/microphone-graph.conf" "$pkgdir/usr/share/asahi-scripts/microphone-graph.conf"
   install -Dm644 "$srcdir/files/wireplumber-microphone.conf" "$pkgdir/usr/share/wireplumber/wireplumber.conf.d/60-microphone.conf"
   install -Dm644 "$srcdir/files/sleep.conf" "$pkgdir/usr/lib/systemd/sleep.conf.d/60-display.conf"
   install -Dm644 "$srcdir/files/logind.conf" "$pkgdir/usr/lib/systemd/logind.conf.d/60-display.conf"

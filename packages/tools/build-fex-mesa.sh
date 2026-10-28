@@ -6,6 +6,14 @@ set -euo pipefail
 work=${1:-/work}
 source=$work/mesa-f2c9dc3fb59c81fdaf51f19884175c856e3d1889
 runtime=$work/mesa-runtime
+# Apply the same transport changes as native Mesa to both x86 architectures.
+patch_file=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../mesa-m4rch" && pwd)/virtio-params.patch
+if patch --dry-run --silent -d "$source" -p1 < "$patch_file"; then
+    patch -d "$source" -p1 < "$patch_file"
+elif ! patch --dry-run --silent --reverse -d "$source" -p1 < "$patch_file"; then
+    echo 'Mesa source does not match the virtio parameter patch.' >&2
+    exit 1
+fi
 export LLVM_CONFIG=/usr/bin/llvm-config-19
 common=(--prefix=/usr --buildtype=release -Dgallium-drivers=asahi,zink
         -Dvulkan-drivers=asahi -Dvulkan-layers=device-select -Dplatforms=x11,wayland -Dglx=dri
@@ -46,3 +54,5 @@ DESTDIR="$runtime" ninja -C "$work/mesa32" install
 # Native build tools do not belong in a runtime rootfs.
 rm -rf "$runtime/usr/bin"
 install -Dm644 "$source/docs/license.rst" "$runtime/usr/share/doc/mesa-aurora/license.rst"
+
+printf '%s\n' 'Mesa virtio GET_PARAMS wire version: 3' > "$runtime/usr/share/doc/mesa-aurora/virtio-params.txt"

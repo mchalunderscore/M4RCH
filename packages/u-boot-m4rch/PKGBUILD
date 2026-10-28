@@ -1,6 +1,6 @@
 pkgname=u-boot-m4rch
 pkgver=2026.07
-pkgrel=1
+pkgrel=3
 pkgdesc='U-Boot for Apple Silicon'
 arch=('aarch64')
 url='https://github.com/aurora-silicon/u-boot'

@@ -1,0 +1,142 @@
+--- a/drivers/gpu/drm/apple/dcp.c
++++ b/drivers/gpu/drm/apple/dcp.c
+@@ -60,6 +60,7 @@
+ #include "dcp-external-bw.h"
+ #include "dptx-service.h"
+ #include "iomfb.h"
++#include "iomfb_internal.h"
+ #include "iomfb_m4.h"
+ #include "ibootep.h"
+ #include "parser.h"
+@@ -194,6 +195,18 @@
+ 	return ready;
+ }
+ 
++/* Trial gate: fixed refresh is unchanged unless explicitly selected at boot. */
++static bool j614s_vrr;
++module_param(j614s_vrr, bool, 0444);
++MODULE_PARM_DESC(j614s_vrr, "Experimental J614s internal-panel adaptive sync");
++
++bool dcp_j614s_vrr_allowed(struct apple_dcp *dcp)
++{
++	return j614s_vrr && of_machine_is_compatible("apple,j614s") &&
++		dcp->fw_compat == DCP_FIRMWARE_V_26_6_DESKTOP &&
++		dcp->main_display && dcp_has_panel(dcp);
++}
++
+ static bool show_notch;
+ module_param(show_notch, bool, 0644);
+ MODULE_PARM_DESC(show_notch, "Use the full display height and shows the notch");
+@@ -1233,6 +1246,20 @@
+ 	    crtc_state->vrr_enabled)
+ 		return -EINVAL;
+ 
++	/* Desktop 26.6 applies adaptive-sync changes as modesets. */
++	if (dcp->fw_compat == DCP_FIRMWARE_V_26_6_DESKTOP && crtc_state->enable) {
++		struct drm_crtc_state *old = drm_atomic_get_old_crtc_state(commit, crtc);
++		struct dcp_display_mode mode;
++
++		if (crtc_state->vrr_enabled &&
++		    (!dcp_j614s_vrr_allowed(dcp) ||
++		     !lookup_mode(dcp, &crtc_state->mode, &mode) || !mode.vrr ||
++		     !mode.min_vrr || mode.max_vrr <= mode.min_vrr))
++			return -EINVAL;
++		if (old && old->vrr_enabled != crtc_state->vrr_enabled)
++			crtc_state->mode_changed = true;
++	}
++
+ 	/* DRM core only caps the blob size; the gamma update copies a full table. */
+ 	if (crtc_state->color_mgmt_changed && crtc_state->gamma_lut &&
+ 	    drm_color_lut_size(crtc_state->gamma_lut) != dcp_gamma_lut_size(pdev))
+--- a/drivers/gpu/drm/apple/dcp-internal.h
++++ b/drivers/gpu/drm/apple/dcp-internal.h
+@@ -276,6 +276,8 @@
+ struct dcpext_scanout;
+ struct dcp_hdmi;
+ 
++bool dcp_j614s_vrr_allowed(struct apple_dcp *dcp);
++
+ struct apple_dcp {
+ 	/* Generation-specific wire/transaction state, sharing the common KMS owner. */
+ 	struct iomfb_m4 *v26_6;
+--- a/drivers/gpu/drm/apple/iomfb.c
++++ b/drivers/gpu/drm/apple/iomfb.c
+@@ -91,15 +91,14 @@
+ 	return dcpep_msg(id, 0, 0) | IOMFB_MSG_ACK;
+ }
+ 
+-/*
+- * Adaptive sync through IOMFBParameter 14 black-screens the J616s panel on
+- * the desktop 26.6 firmware: the firmware accepts the VRR mode, then no swap
+- * completes.  Do not offer it there.
+- */
++/* Desktop adaptive sync is admitted only on the opt-in J614s panel; the
++ * firmware-reported range must be usable before it is exposed to userspace. */
+ static bool dcp_mode_vrr_supported(struct apple_dcp *dcp,
+ 				   const struct dcp_display_mode *mode)
+ {
+-	return dcp->fw_compat != DCP_FIRMWARE_V_26_6_DESKTOP || !mode->vrr;
++	return dcp->fw_compat != DCP_FIRMWARE_V_26_6_DESKTOP || !mode->vrr ||
++	       (dcp_j614s_vrr_allowed(dcp) && mode->min_vrr &&
++		mode->max_vrr > mode->min_vrr);
+ }
+ 
+ /*
+@@ -2028,7 +2027,8 @@
+ 
+ 	if (d->trial_modeset_ok) {
+ 		d->trial_modeset_ok = false;
+-		if (d->mode_live && lookup_mode(dcp, &crtc_state->mode, &matched) &&
++		if (!crtc_state->vrr_enabled && d->mode_live &&
++		    lookup_mode(dcp, &crtc_state->mode, &matched) &&
+ 		    matched.timing_mode_id == d->trial_timing_mode_id &&
+ 		    matched.color_mode_id == d->trial_color_mode_id) {
+ 			dev_dbg(dcp->dev, "keeping the takeover mode " DRM_MODE_FMT "\n",
+--- a/drivers/gpu/drm/apple/iomfb_template.c
++++ b/drivers/gpu/drm/apple/iomfb_template.c
+@@ -2886,6 +2886,15 @@
+ 				  dcp_modeset_after_actual_info, cookie);
+ }
+ 
++static void dcp_j614s_sync_done(struct apple_dcp *dcp, void *data, void *cookie)
++{
++	if (!data || get_unaligned_le32(data)) {
++		complete_set_digital_out_mode(dcp, data, cookie);
++		return;
++	}
++	dcp_modeset_select(dcp, NULL, cookie);
++}
++
+ int DCP_FW_NAME(iomfb_modeset)(struct apple_dcp *dcp,
+ 			       struct drm_crtc_state *crtc_state)
+ {
+@@ -2971,7 +2980,19 @@
+ 			 modeset->bootstrap.timing_mode_id);
+ 	}
+ 
+-	dcp_modeset_select(dcp, NULL, cookie);
++	/* Upstream #451: parameter 14 is applied with the following mode set.
++	 * Also clear it when changing from a VRR mode to a fixed timing. */
++	if (dcp_j614s_vrr_allowed(dcp)) {
++		struct dcp_set_parameter_dcp param = {
++			.param = IOMFBPARAM_ADAPTIVE_SYNC,
++			.value = { crtc_state->vrr_enabled && mode->vrr ? mode->min_vrr : 0 },
++			.count = 3,
++		};
++
++		dcp_set_parameter_dcp(dcp, false, &param, dcp_j614s_sync_done, cookie);
++	} else {
++		dcp_modeset_select(dcp, NULL, cookie);
++	}
+ 
+ 	/*
+ 	 * The DCP firmware has an internal timeout of ~8 seconds for
+@@ -3004,6 +3025,8 @@
+ 	kref_put(&cookie->refcount, release_wait_cookie);
+ 
+ 	dcp->desktop->mode_live = !ret;
++	dcp->vrr_enabled = !ret && mode->vrr && crtc_state->vrr_enabled &&
++			   dcp_j614s_vrr_allowed(dcp);
+ 	return ret;
+ }
+ #else

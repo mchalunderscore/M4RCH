@@ -1,0 +1,22 @@
+--- a/arch/arm/mach-apple/archsd.c
++++ b/arch/arm/mach-apple/archsd.c
+@@ -98,16 +98,13 @@
+     /* Preserve U-Boot's active control tree. Translate only Linux's handoff
+      * after NVMe/EFI discovery, using the live Aurora control tree. */
+     {
+-        char mode[32] = {};
+-        size_t mode_size;
+         void *translated = memalign(16384, DT_LIMIT);
+         int ret;
+-        if (!translated || read_esp("/AURD001/mode", mode, sizeof(mode) - 1, &mode_size) ||
+-            (strcmp(mode, "test\n") && strcmp(mode, "framebuffer\n"))) {
+-            puts("Boot: missing Aurora test mode or handoff buffer\n");
++        if (!translated) {
++            puts("Boot: unable to allocate Aurora handoff buffer\n");
+             return CMD_RET_FAILURE;
+         }
+-        ret = aurora_prepare_fdt(dt, translated, DT_LIMIT, !strcmp(mode, "framebuffer\n"));
++        ret = aurora_prepare_fdt(dt, translated, DT_LIMIT, false);
+         if (ret) {
+             printf("Boot: Aurora live board handoff failed (%d)\n", ret);
+             return CMD_RET_FAILURE;

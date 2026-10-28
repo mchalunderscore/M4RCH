@@ -1,8 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=Plasma (Aurora GPU test)
-Comment=Plasma with the private Aurora graphics drivers
-Exec=/run/aurora-direct/with-mesa env KWIN_COMPOSE=O2 /usr/bin/startplasma-wayland
-TryExec=/usr/bin/startplasma-wayland
-DesktopNames=KDE
-X-KDE-PluginInfo-Version=6.0

@@ -1,0 +1,40 @@
+--- a/drivers/gpu/drm/apple/apple_drv.c
++++ b/drivers/gpu/drm/apple/apple_drv.c
+@@ -60,6 +60,16 @@
+ static bool j614s_hdr_test;
+ module_param(j614s_hdr_test, bool, 0444);
+ MODULE_PARM_DESC(j614s_hdr_test, "Enable experimental J614s internal HDR test");
++
++/* Opt-in HDR experiment only; writable for attended transfer-tag comparisons. */
++static bool j614s_hdr_pq_tag = true;
++module_param(j614s_hdr_pq_tag, bool, 0644);
++MODULE_PARM_DESC(j614s_hdr_pq_tag, "Tag J614s HDR primary surfaces as PQ (diagnostic)");
++
++bool apple_j614s_hdr_pq_tag(void)
++{
++	return READ_ONCE(j614s_hdr_pq_tag);
++}
+ 
+ bool apple_j614s_hdr_test(struct platform_device *pdev)
+ {
+--- a/drivers/gpu/drm/apple/dcp.h
++++ b/drivers/gpu/drm/apple/dcp.h
+@@ -65,6 +65,7 @@
+ bool dcp_fw_compat_is_14_7(struct platform_device *pdev);
+ bool dcp_fw_compat_is_desktop(struct platform_device *pdev);
+ bool apple_j614s_hdr_test(struct platform_device *pdev);
++bool apple_j614s_hdr_pq_tag(void);
+ unsigned int dcp_gamma_lut_size(struct platform_device *pdev);
+ /* T6041 external display processors may join the DRM device. */
+ bool dcp_t6041_ext_enabled(void);
+--- a/drivers/gpu/drm/apple/iomfb_template.c
++++ b/drivers/gpu/drm/apple/iomfb_template.c
+@@ -3231,7 +3231,7 @@
+ 			/* The atomic check pins and validates this state. */
+ 			if (cs && cs->colorspace == DRM_MODE_COLORIMETRY_BT2020_RGB)
+ 				req->surf[l].base.colorspace = DCP_COLORSPACE_BG_BT2020;
+-			if (cs && cs->hdr_output_metadata) {
++			if (cs && cs->hdr_output_metadata && apple_j614s_hdr_pq_tag()) {
+ 				req->surf[l].base.xfer_func = DCP_XFER_FUNC_HDR;
+ 				dev_info_once(dcp->dev,
+ 					"HDR test: submitting PQ primary surface\n");

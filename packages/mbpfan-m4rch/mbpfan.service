@@ -1,7 +1,5 @@
 [Unit]
 Description=MacBook fan temperature controller
-Wants=apple-silicon.service
-After=apple-silicon.service
 Conflicts=fancontrol.service
 
 [Service]

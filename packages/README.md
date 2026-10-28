@@ -1,8 +1,20 @@
 # Arch packages
 
-Modified packages use the existing package name with `-m4rch` appended.
-The machine name is `Apple MacBook Pro (14-inch, M4 Pro)` and the kernel
-release is `7.3.0-m4rch`. Built-in speakers remain disabled.
+This guide describes the local packages for the 14-inch M4 Pro J614s. As of
+27 October 2026, the installed package versions include `linux-m4rch 7.3.0-9`,
+`m1n1-m4rch 20261025-2`, `u-boot-m4rch 2026.07-3`, and
+`power-profiles-daemon-m4rch 0.30-1`. The current running session is the
+successful external-display trial kernel `7.3.0-m4rch-vrr-ext`; the promoted
+standard GRUB entry uses the matching tested boot stack but has not been
+booted separately. Built-in speakers remain disabled. See
+[external-display promotion](../docs/external-display-investigation.md) and
+[power profiles](../docs/power-profiles-investigation.md).
+
+The normal GRUB entry now permits device-driven driver autoloading. The running
+session passed the one-boot autoload trial and a lid wake; the newly promoted
+normal entry and external output have not yet been tested. Installed
+`asahi-scripts-m4rch 20261026-3` and `mbpfan-m4rch 2.4.0-4` remove the old
+service and fan dependency. See the [driver-autoload record](../docs/driver-autoload-investigation.md).
 
 | Package | Contents |
 | --- | --- |
@@ -15,50 +27,83 @@ release is `7.3.0-m4rch`. Built-in speakers remain disabled.
 | avd-fw-m4rch | Asahi open-source AVD v5 tier 1 firmware |
 | alsa-ucm-conf-m4rch | Stock ALSA profiles plus Apple profiles |
 | asahi-scripts-m4rch | Upstream update-m1n1 and hardware configuration |
-| muvm-m4rch | Host/guest microVM tools |
-| fex-emu-m4rch | FEX x86/x86-64 emulation tools |
-| fex-rootfs-debian-m4rch | Read-only Debian 13 amd64/i386 userland with paired Aurora Mesa |
-| steam-m4rch | Valve launcher, Steam menu entry and automatic muvm/FEX launch |
+| virglrenderer-m4rch | Asahi native-context backend paired with Aurora Mesa |
+| steam-m4rch | Native ARM64 Steam launcher using 4 KiB user processes |
 | mbpfan-m4rch | mbpfan with macsmc RPM target and temperature sensor support |
+| power-profiles-daemon-m4rch | J614s CPU frequency caps integrated with desktop power profiles |
 | vesktop-m4rch | Vesktop with Electron 45's corrected libyuv SME build |
+| signal-desktop-m4rch | Signal desktop with the local Electron runtime |
+| paru-m4rch | AUR helper |
+| grub-m4rch | GRUB EFI boot manager |
+
+Recipes for `muvm-m4rch`, `fex-emu-m4rch` and `fex-rootfs-debian-m4rch`
+describe an older Steam setup; those packages were not installed at this review.
+The current Steam package does not depend on them.
 
 The existing GRUB package and enrolled first-stage loader remain installed.
-The previous working GRUB entry uses its own kernel and initramfs.
 The bootloader pair uses the previous native-working m1n1 and U-Boot binaries.
-The NVMe timeout-recovery candidate was withdrawn after a native boot loop;
-its controller-reset fallback is not included in the installed package.
+The local NVMe timeout-recovery candidate was withdrawn after a native boot
+loop. A later audit found that the reconstructed source for the installed
+U-Boot binary contains a separate generic post-M4 timeout/reset path; the
+rebuilt binary matches the installed U-Boot byte for byte. Whether that path
+corresponds to the withdrawn candidate or has ever run on this machine has
+not been established. See [the boot comparison](../docs/boot-upstream-comparison.md).
 
-## Install
+## Installation and updates
 
-The offline package kit is staged at `/var/cache/pacman/pkg/m4rch/`.
-From a Linux terminal run:
-
-```sh
-sudo bash /var/cache/pacman/pkg/m4rch/install.sh
-```
-
-This verifies the archives, installs them with pacman, configures Flatpak's
-renderer selection, and runs mkinitcpio, upstream update-m1n1 and grub-mkconfig.
-It preserves the previous working entry and selects the normal Arch entry by
-default. It never reboots. Boot file backups go under `/root/boot-backup-*`.
+The older kit under `/var/cache/pacman/pkg/m4rch/` predates the promoted VRR,
+external-display, microphone and power-profile changes. Its installer writes
+boot files and regenerates GRUB. Do not run that older kit over the current
+system without reviewing and rebuilding it for the current package versions.
+The bulk package builder and installer do not yet include
+`power-profiles-daemon-m4rch`.
 
 Subsequent updates use ordinary pacman. Stock depmod/mkinitcpio hooks maintain
 `/boot/vmlinuz-linux-m4rch` and `/boot/initramfs-linux-m4rch.img`. Asahi's
 unmodified update-m1n1 maintains `/boot/boot.bin` and `/boot/boot.bin.old`.
 Regenerate GRUB with `sudo grub-mkconfig -o /boot/grub/grub.cfg` when needed.
 
-## Candidate contents
+## Package and runtime notes
 
-The October 26 candidate pairs Aurora kernel integration commit
+The earlier October 26 package candidate paired Aurora kernel integration commit
 `9cbdd0734d9e186c5f5f5949a21b909d10c2571b` with Mesa commit
 `f2c9dc3fb59c81fdaf51f19884175c856e3d1889`. It retains this machine's
 16-core GPU support, firmware identity, boot handoff and DCP settings.
 Kernel configuration enables KVM, vhost networking and vsock. Fan writes are
 opted in with macsmc_hwmon's fan_control parameter. The enabled mbpfan service
 uses macsmc's RPM targets and CPU/GPU/SoC temperatures, with firmware-provided
-RPM limits. It ramps cooling from 55 degrees Celsius and requests full cooling
-at 80 degrees; stopping the daemon restores firmware automatic operation.
-Actual fan response still requires a native boot test.
+RPM limits. The 2.4.0-3 quiet trial filters ordinary temperature changes with
+an eight-second time constant, ramps from 75 to 90 degrees Celsius, and requests
+full cooling immediately at a raw 90 degrees or on invalid sensor data. The
+curve is an initial tuning, not a measured reproduction of macOS. Stopping the
+daemon restores firmware automatic operation.
+The revised fan driver was tested on the J614s, including a fresh boot,
+both fans tracking requested speeds, and handoff back to firmware control.
+The owner reports that the fans have remained responsive during extended Linux
+use since boot; longer-term reliability remains to be established.
+
+The main kernel package also carries the Asahi deferred handle-close fix in
+`patches/linux-asahi-deferred-close-rebind.patch`. It prevents pending cleanup
+from removing a successfully rebound GEM mapping. The owner confirmed that the
+same fix resolved the KWin Alt+Tab freeze and that Alt+Tab works on the main
+kernel. A rebound
+object's older mappings can remain until a later handle close or VM teardown;
+the main kernel booted successfully on 27 October.
+
+The main kernel package also contains the fan changes in
+`patches/experimental-aurora-pr512-fan.patch` and
+`patches/experimental-j614s-fan-unlock-retry.patch`. The tested retry uses a
+three-second delay and a 30-second retry bound after the SMC unlock; a failing
+hwmon operation can therefore block for roughly 33 seconds. The main kernel
+booted on 27 October with both fans tracking mbpfan's targets.
+
+The earlier U-Boot `2026.07-2` promotion removed the experimental `/AURD001/mode` selector and uses
+the normal GPU handoff without reading an ESP mode file. The older ESP bundle
+and mode file were removed, and their temporary archive retired after the
+normal boot on 28 October. That
+loader booted successfully on 27 October; the removed selector's framebuffer mode
+is unavailable with it. This removes one local dependency, but the custom
+`archnvme` boot path remains distinct from upstream U-Boot standard boot.
 
 The native Vesktop package retains hardware acceleration. Electron 45 includes
 the libyuv build correction for SME-capable Apple CPUs without ordinary SVE;
@@ -81,42 +126,34 @@ AVD firmware availability does not establish working hardware video decoding.
 
 ## Steam
 
-Open **Steam** from the application menu, or run `steam` as your normal user.
-The launcher starts muvm and FEX automatically, with a private D-Bus session
-inside the VM for Steam's subprocess launcher. It selects Valve's 64-bit
-SteamRT3 client and uses Zink with the GLX path supported by muvm's X11 bridge.
-Valve's unmodified launcher
-performs the usual first-launch client download and sign-in. Steam, Proton,
-games and account state remain in your home directory; package upgrades replace
-the read-only rootfs without replacing that state. No manual rootfs extraction,
-FEX configuration, apt commands or installer run is needed after installation.
-
-The packaged Debian 13 userland includes both amd64 and i386 Steam dependencies
-and builds of the same Aurora Mesa commit as the host. Both x86 architectures
-also include the Mesa device-selection layer required by Zink. The current
-image vendors those layer libraries from Debian 25.0.7-2+deb13u1; subsequent
-Mesa builds include the layer alongside the paired drivers. muvm discovers it at its
-standard `/usr/share/fex-emu/RootFS/default.erofs` path. FEX runs inside muvm's
-4 KiB-page guest on this 16 KiB-page host. Native GPU/Steam/game behavior still
-requires the owner's boot test; container checks cannot establish that result.
-
-The latest native investigation confirms that the updater installs and verifies
-the client, but accelerated OpenGL also hangs for native ARM glxinfo inside
-muvm. The virtual GPU reports a rejected CmdSubmit3d command with EINVAL.
-Host acceleration and basic guest X11 forwarding work. A graphics protocol or
-backend compatibility gap remains a hypothesis; the rejected payload has not
-been identified. SteamRT also showed a separate single-instance exit after
-re-execution. No graphical Steam session has been verified.
+The installed `steam-m4rch 1.0.0.81-11` launches Valve's ARM64 Steam client
+as the regular user with Aurora's `userpages` helper. It requires the kernel's
+4 KiB user-process mode (`user4k=on`) and an existing ARM64 Steam installation
+under `~/.steam/root`; the launcher reports an error if either is missing.
+The client and local support libraries live in the user's Steam directory, so
+reinstalling the package alone does not create a complete fresh Steam setup.
+Proton may use FEX for Windows game code. The launcher uses an Aurora guest
+Mesa graphics provider when available. See the [graphics investigation](../docs/gpu-reclaim-investigation.md)
+and [Steam history](../docs/steam-acceleration.md) for tests and limitations.
+The older muvm/FEX launcher and Debian guest rootfs are historical, not the
+installed Steam package's default path.
 
 ## Build
 
-`make packages` prepares and builds ordinary PKGBUILDs in the Arch ARM build
-container and validates package dependencies, boot hooks, driver availability
-and native Mesa's dependency ABI against the mounted root. Local build inputs
+The historical `make packages` workflow uses a macOS `container` command and
+an Arch ARM build VM. It prepares and builds ordinary PKGBUILDs and runs
+validation against a mounted root; it is not a native Linux one-command build.
+The existing `validate.sh` also checks the older `7.3.0-m4rch` release and
+speaker-module exclusion, so it must be updated and requalified for the current
+`7.3.0-m4rch-vrr-ext` release before it can validate the promoted stack. Local build inputs
 are under `out/packages/source/`; firmware inputs are machine-local. Kernel
 configuration and patches are included in the kernel package. The Flatpak
 build helper uses Freedesktop SDK 25.08/26.08 and LLVM 22; its pinned Mesa and
-SPIR-V source inputs are recorded under `out/candidate-20261026/`.
+SPIR-V source inputs were recorded under `out/candidate-20261026/`.
+Some local build inputs, including `out/packages/source/`, are absent; prepare
+the required source archives, firmware and guest rootfs again before running
+`make packages`. Some promoted boot artifacts remain under
+`out/external-investigation/promotion/`. The repository alone does not contain these machine-local inputs.
 The Steam rootfs inputs are built using `packages/tools/build-fex-mesa.sh` and
 `packages/tools/build-fex-rootfs.sh` in disposable Debian 13 amd64 build VMs.
 The first needs Mesa's native and i386 development dependencies plus LLVM 19;
@@ -126,5 +163,11 @@ The runtime tree produced by the first script is passed to the second at
 build information belong in `out/packages/source/` before `make packages`.
 Debian packages retain their copyright/license files inside the image.
 
-`make check` checks host helper syntax. Linux hardware behavior is validated
-by booting the candidate, separately from the container build checks.
+`make check` checks host helper syntax and runs the retained Python unit tests.
+Standalone tests in `packages/tools/` may need patched upstream source trees or
+local socket access; they are not part of this check. Linux hardware behavior is
+validated by booting the candidate, separately from the container build checks.
+
+The [FEX package notes](fex-emu-m4rch/README.md) describe the older guest
+candidate and its compatibility limits. It is not part of the current native
+Steam package.

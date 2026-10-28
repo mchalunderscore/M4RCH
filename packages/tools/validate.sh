@@ -26,7 +26,7 @@ if ((${#obsolete[@]})); then
 fi
 ln -s /dev/null "$root/etc/pacman.d/hooks/95-m1n1-install.hook"
 pacman --root "$root" --config /work/package-check.conf --gpgdir /etc/pacman.d/gnupg -U --noconfirm --ask=4 --noscriptlet "${packages[@]}"
-for name in linux-m4rch mesa-m4rch m1n1-m4rch u-boot-m4rch linux-firmware-vendor-m4rch alsa-ucm-conf-m4rch asahi-scripts-m4rch mesa-flatpak-m4rch muvm-m4rch fex-emu-m4rch avd-fw-m4rch fex-rootfs-debian-m4rch steam-m4rch mbpfan-m4rch vesktop-m4rch; do
+for name in linux-m4rch mesa-m4rch virglrenderer-m4rch m1n1-m4rch u-boot-m4rch linux-firmware-vendor-m4rch alsa-ucm-conf-m4rch asahi-scripts-m4rch mesa-flatpak-m4rch muvm-m4rch fex-emu-m4rch avd-fw-m4rch fex-rootfs-debian-m4rch steam-m4rch mbpfan-m4rch vesktop-m4rch; do
     pacman --root "$root" -Qk "$name"
 done
 echo 'PASS: target package dependencies and ownership'
@@ -51,12 +51,9 @@ test -s /boot/boot.bin.old
 test "$(stat -c %s /boot/boot.bin)" -lt "$((4587520 - 32768))"
 test "$(fdtget /usr/lib/asahi-boot/apple-j614s.dtb / model)" = 'Apple MacBook Pro (14-inch, M4 Pro)'
 ! find /usr/lib/modules/7.3.0-m4rch -name '*tas2764.ko*' -o -name '*tas2770.ko*' | grep -q .
-# Check all requested drivers exist without inserting them into the VM kernel.
-modules=$(sed -n 's/^ExecStart=\/usr\/bin\/modprobe -a //p' /usr/lib/systemd/system/apple-silicon.service)
-for module in $modules; do
-    modprobe --set-version 7.3.0-m4rch --show-depends "$module" >/dev/null
-done
-systemd-analyze verify /usr/lib/systemd/system/apple-silicon.service
+# The fan service loads its own hwmon module; other devices use normal discovery.
+! test -e /usr/lib/systemd/system/apple-silicon.service
+systemd-analyze verify /usr/lib/systemd/system/mbpfan.service
 grub-mkconfig -o /boot/grub/grub.cfg
 grub-script-check /boot/grub/grub.cfg
 grep -q 'vmlinuz-linux-m4rch' /boot/grub/grub.cfg
@@ -73,4 +70,4 @@ for file in /usr/lib/libvulkan_asahi.so /usr/lib/libEGL_mesa.so.0 /usr/lib/libGL
     ! ldd "$file" | grep -q 'not found'
     ! readelf -d "$file" | grep -E '(RPATH|RUNPATH).*aurora-direct'
 done
-echo 'PASS: stock depmod/mkinitcpio hooks, upstream update-m1n1, stock GRUB generation, kernel reinstall, driver availability, speaker exclusion, Mesa dependencies'
+echo 'PASS: stock depmod/mkinitcpio hooks, upstream update-m1n1, stock GRUB generation, kernel reinstall, fan service, speaker exclusion, Mesa dependencies'

@@ -39,11 +39,15 @@ for lib in "${libs[@]}"; do packages+=("$lib:amd64" "$lib:i386"); done
 chroot "$root" /usr/bin/env DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends "${packages[@]}"
 # Install build-fex-mesa.sh's paired Mesa into Debian's multiarch paths.
 # No compiler, build tree or host libraries go into the image.
+grep -qx 'Mesa virtio GET_PARAMS wire version: 3' \
+    'Audio: ALSA default via muvm PulseAudio socket' \
+    "$work/mesa-runtime/usr/share/doc/mesa-aurora/virtio-params.txt"
 test -s "$work/mesa-runtime/usr/lib/x86_64-linux-gnu/libvulkan_asahi.so"
 test -s "$work/mesa-runtime/usr/lib/i386-linux-gnu/libvulkan_asahi.so"
 test -s "$work/mesa-runtime/usr/lib/x86_64-linux-gnu/libVkLayer_MESA_device_select.so"
 test -s "$work/mesa-runtime/usr/lib/i386-linux-gnu/libVkLayer_MESA_device_select.so"
 cp -a "$work/mesa-runtime/." "$root/"
+install -Dm644 "$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../fex-rootfs-debian-m4rch" && pwd)/asound.conf" "$root/etc/asound.conf"
 chroot "$root" ldconfig
 chroot "$root" dpkg-query -W -f='${binary:Package}\t${Version}\n' >"$out/debian-packages.txt"
 chroot "$root" apt-get clean
@@ -62,7 +66,10 @@ rm -rf "$root"/var/{tmp,run,lock}
 printf '%s\n' 'Debian 13 (trixie), amd64 + i386' \
     'Mesa: aurora-silicon/mesa f2c9dc3fb59c81fdaf51f19884175c856e3d1889' \
     'Graphics: asahi Vulkan/native-context and Zink OpenGL, both architectures' \
+    'Mesa virtio GET_PARAMS wire version: 3' \
+    'Audio: ALSA default via muvm PulseAudio socket' \
     'Debian package licenses: /usr/share/doc/*/copyright inside the image' \
     >"$out/debian-build-info.txt"
-mkfs.erofs -zlz4hc -T 1792972800 "$out/debian.erofs" "$root"
+# The image runs in muvm's 4 KiB guest, even when built on a 16 KiB host.
+mkfs.erofs -b4096 -zlz4hc -T 1792972800 "$out/debian.erofs" "$root"
 fsck.erofs "$out/debian.erofs"

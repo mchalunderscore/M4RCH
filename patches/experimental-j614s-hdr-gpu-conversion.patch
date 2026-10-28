@@ -1,0 +1,60 @@
+--- a/drivers/gpu/drm/apple/apple_drv.c
++++ b/drivers/gpu/drm/apple/apple_drv.c
+@@ -766,7 +766,8 @@
+ 			planes[zpos] = apple_plane_init(drm, 1U << num, surf,
+ 							supports_l10r,
+ 							supports_xrgb2101010,
+-							plane_type, interchange);
++							plane_type, interchange,
++							apple_j614s_hdr_test(dcp));
+ 		}
+ 		if (IS_ERR(planes[zpos]))
+ 			return PTR_ERR(planes[zpos]);
+@@ -797,6 +798,11 @@
+ 	if (!iomfb_is_m4(dcp_data)) {
+ 		unsigned int gamma_size = dcp_gamma_lut_size(dcp);
+ 
++		/* The desktop firmware's gamma table is unusable on this panel.
++		 * Do not let userspace offload a transfer curve we cannot apply.
++		 */
++		if (apple_j614s_hdr_test(dcp))
++			gamma_size = 0;
+ 		drm_crtc_enable_color_mgmt(&crtc->base, 0, true, gamma_size);
+ 		if (gamma_size)
+ 			drm_mode_crtc_set_gamma_size(&crtc->base, gamma_size);
+--- a/drivers/gpu/drm/apple/plane.h
++++ b/drivers/gpu/drm/apple/plane.h
+@@ -38,7 +38,7 @@
+ 				   bool supports_l10r,
+ 				   bool supports_xrgb2101010,
+ 				   enum drm_plane_type type,
+-				   bool interchange);
++				   bool interchange, bool hdr_test_10bit);
+ struct drm_plane *apple_plane_init_v14_7(struct drm_device *dev,
+ 					 unsigned long possible_crtcs,
+ 					 u32 iomfb_surf,
+--- a/drivers/gpu/drm/apple/plane.c
++++ b/drivers/gpu/drm/apple/plane.c
+@@ -742,7 +742,7 @@
+ 				   bool supports_l10r,
+ 				   bool supports_xrgb2101010,
+ 				   enum drm_plane_type type,
+-				   bool interchange)
++				   bool interchange, bool hdr_test_10bit)
+ {
+ 	struct apple_plane *plane;
+ 	const u32 *fmts;
+@@ -753,6 +753,13 @@
+ 		if (supports_l10r && supports_xrgb2101010) {
+ 			fmts = dcp_primary_formats;
+ 			num_fmts = ARRAY_SIZE(dcp_primary_formats);
++			/* The HDR experiment accepts only 10-bit RGB surfaces.
++			 * Avoid choosing the unqualified floating-point format.
++			 */
++			if (hdr_test_10bit) {
++				fmts++;
++				num_fmts--;
++			}
+ 		} else if (supports_l10r) {
+ 			fmts = dcp_primary_formats_h17p;
+ 			num_fmts = ARRAY_SIZE(dcp_primary_formats_h17p);

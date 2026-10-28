@@ -1,0 +1,41 @@
+--- a/drivers/hwmon/macsmc-hwmon.c
++++ b/drivers/hwmon/macsmc-hwmon.c
+@@ -199,7 +199,7 @@
+ #define MACSMC_FAN_MODE_SYSTEM	3
+ 
+ /* How long the firmware gets to leave or re-enter its system mode */
+-#define MACSMC_FAN_MODE_TIMEOUT_MS	10000
++#define MACSMC_FAN_MODE_TIMEOUT_MS	30000
+ #define MACSMC_FAN_MODE_POLL_MS		100
+ 
+ struct macsmc_hwmon_fans {
+@@ -569,7 +569,8 @@
+ 				   struct macsmc_hwmon_fan *fan)
+ {
+ 	unsigned long timeout;
+-	u8 mode;
++	u8 mode = 0xff, ftst = 0;
++	unsigned int attempts = 0;
+ 	int ret;
+ 
+ 	if (fan->manual)
+@@ -586,6 +587,7 @@
+ 			return ret;
+ 		}
+ 		hwmon->fan.unlocked = true;
++		msleep(3000);
+ 
+ 		/* Ask again once the fan has left system mode. */
+ 		timeout = jiffies + msecs_to_jiffies(MACSMC_FAN_MODE_TIMEOUT_MS);
+@@ -596,6 +598,11 @@
+ 			else if (!ret)
+ 				ret = macsmc_hwmon_write_key(hwmon->smc, &fan->mode,
+ 							     MACSMC_FAN_MODE_MANUAL);
++			if (!(attempts++ % 20)) {
++				int fr = apple_smc_read_u8(hwmon->smc, hwmon->fan.unlock_key, &ftst);
++				dev_info(hwmon->dev, "fan unlock trial %s mode=%u ret=%d Ftst=%d\n",
++					fan->label, mode, ret, fr ? fr : ftst);
++			}
+ 			if (ret >= 0 || time_after(jiffies, timeout))
+ 				break;
+ 			msleep(MACSMC_FAN_MODE_POLL_MS);

@@ -1,0 +1,238 @@
+--- a/drivers/gpu/drm/apple/apple_drv.c
++++ b/drivers/gpu/drm/apple/apple_drv.c
+@@ -12,6 +12,7 @@
+ #include <linux/delay.h>
+ #include <linux/dma-mapping.h>
+ #include <linux/jiffies.h>
++#include <linux/hdmi.h>
+ #include <linux/module.h>
+ #include <linux/mutex.h>
+ #include <linux/of_address.h>
+@@ -30,6 +31,7 @@
+ #include <drm/drm_drv.h>
+ #include <drm/drm_fb_helper.h>
+ #include <drm/drm_fbdev_dma.h>
++#include <drm/drm_framebuffer.h>
+ #include <drm/drm_fb_dma_helper.h>
+ #include <drm/drm_gem_dma_helper.h>
+ #include <drm/drm_gem_framebuffer_helper.h>
+@@ -53,6 +55,19 @@
+ #define DRIVER_DESC     "Apple display controller DRM driver"
+ 
+ #define MAX_COPROCESSORS 8
++
++/* Experimental only: never expose synthetic HDR on other boards or pipes. */
++static bool j614s_hdr_test;
++module_param(j614s_hdr_test, bool, 0444);
++MODULE_PARM_DESC(j614s_hdr_test, "Enable experimental J614s internal HDR test");
++
++bool apple_j614s_hdr_test(struct platform_device *pdev)
++{
++	return j614s_hdr_test && pdev && of_machine_is_compatible("apple,j614s") &&
++	       dcp_fw_compat_is_desktop(pdev) &&
++	       dcp_get_connector_type(pdev) == DRM_MODE_CONNECTOR_eDP;
++}
++
+ 
+ struct apple_drm_private {
+ 	struct drm_device drm;
+@@ -550,10 +565,64 @@
+ 	return NULL;
+ }
+ 
++static int apple_connector_hdr_check(struct drm_connector *connector,
++				     struct drm_atomic_commit *commit)
++{
++	struct apple_connector *ac = to_apple_connector(connector);
++	struct platform_device *pdev = READ_ONCE(ac->dcp);
++	struct drm_connector_state *old, *new;
++	struct drm_crtc_state *crtc;
++	struct drm_plane_state *primary;
++	const struct hdr_output_metadata *metadata;
++	int ret;
++
++	if (!apple_j614s_hdr_test(pdev))
++		return 0;
++	old = drm_atomic_get_old_connector_state(commit, connector);
++	new = drm_atomic_get_new_connector_state(commit, connector);
++	if (!new || !old)
++		return -EINVAL;
++	if (new->hdr_output_metadata) {
++		if (new->hdr_output_metadata->length != sizeof(*metadata) ||
++		    (new->colorspace != DRM_MODE_COLORIMETRY_BT2020_RGB &&
++		     new->colorspace != DRM_MODE_COLORIMETRY_DEFAULT))
++			return -EINVAL;
++		metadata = new->hdr_output_metadata->data;
++		if (metadata->metadata_type != HDMI_STATIC_METADATA_TYPE1 ||
++		    metadata->hdmi_metadata_type1.metadata_type != HDMI_STATIC_METADATA_TYPE1 ||
++		    metadata->hdmi_metadata_type1.eotf != HDMI_EOTF_SMPTE_ST2084)
++			return -EINVAL;
++		if (new->crtc) {
++			crtc = drm_atomic_get_crtc_state(commit, new->crtc);
++			if (IS_ERR(crtc))
++				return PTR_ERR(crtc);
++			if (crtc->active) {
++				primary = drm_atomic_get_plane_state(commit, new->crtc->primary);
++				if (IS_ERR(primary))
++					return PTR_ERR(primary);
++				if (!primary->fb ||
++				    (primary->fb->format->format != DRM_FORMAT_XRGB2101010 &&
++				     primary->fb->format->format != DRM_FORMAT_ARGB2101010))
++					return -EINVAL;
++			}
++		}
++	}
++	if (!new->crtc || (old->colorspace == new->colorspace &&
++	    drm_connector_atomic_hdr_metadata_equal(old, new)))
++		return 0;
++	crtc = drm_atomic_get_crtc_state(commit, new->crtc);
++	if (IS_ERR(crtc))
++		return PTR_ERR(crtc);
++	/* A property-only transition still needs a new surface swap. */
++	ret = drm_atomic_add_affected_planes(commit, new->crtc);
++	return ret;
++}
++
+ static const struct drm_connector_helper_funcs apple_connector_helper_funcs = {
+ 	.get_modes		= dcp_get_modes,
+ 	.mode_valid		= dcp_mode_valid,
+ 	.atomic_best_encoder	= apple_connector_atomic_best_encoder,
++	.atomic_check		= apple_connector_hdr_check,
+ };
+ 
+ static const struct drm_crtc_helper_funcs apple_crtc_helper_funcs = {
+@@ -595,6 +664,17 @@
+ 	ret = drm_connector_attach_vrr_capable_property(&connector->base);
+ 	if (ret)
+ 		goto err_cleanup;
++	if (apple_j614s_hdr_test(dcp)) {
++		ret = drm_mode_create_dp_colorspace_property(&connector->base,
++			BIT(DRM_MODE_COLORIMETRY_BT2020_RGB));
++		if (ret)
++			goto err_cleanup;
++		ret = drm_connector_attach_colorspace_property(&connector->base);
++		if (ret)
++			goto err_cleanup;
++		drm_connector_attach_hdr_output_metadata_property(&connector->base);
++	}
++
+ 
+ 	connector->base.polled = DRM_CONNECTOR_POLL_HPD;
+ 	connector->connected = false;
+--- a/drivers/gpu/drm/apple/dcp.c
++++ b/drivers/gpu/drm/apple/dcp.c
+@@ -1206,6 +1206,26 @@
+ 		return -EINVAL;
+ 
+ 	crtc_state = drm_atomic_get_new_crtc_state(commit, crtc);
++
++	/* Pin the connector state in every test CRTC commit, including flips. */
++	if (apple_j614s_hdr_test(pdev) && dcp->connector) {
++		struct drm_connector_state *cs;
++
++		cs = drm_atomic_get_connector_state(commit, &dcp->connector->base);
++		if (IS_ERR(cs))
++			return PTR_ERR(cs);
++		if (cs->hdr_output_metadata && crtc_state->active) {
++			struct drm_plane_state *primary;
++
++			primary = drm_atomic_get_plane_state(commit, crtc->primary);
++			if (IS_ERR(primary))
++				return PTR_ERR(primary);
++			if (!primary->fb ||
++			    (primary->fb->format->format != DRM_FORMAT_XRGB2101010 &&
++			     primary->fb->format->format != DRM_FORMAT_ARGB2101010))
++				return -EINVAL;
++		}
++	}
+ 
+ 	/* External H17P does not program adaptive sync. */
+ 	if (dcp->hw.iomfb_method_profile ==
+--- a/drivers/gpu/drm/apple/dcp.h
++++ b/drivers/gpu/drm/apple/dcp.h
+@@ -64,6 +64,7 @@
+ bool dcp_fw_compat_is_12_x(struct platform_device *pdev);
+ bool dcp_fw_compat_is_14_7(struct platform_device *pdev);
+ bool dcp_fw_compat_is_desktop(struct platform_device *pdev);
++bool apple_j614s_hdr_test(struct platform_device *pdev);
+ unsigned int dcp_gamma_lut_size(struct platform_device *pdev);
+ /* T6041 external display processors may join the DRM device. */
+ bool dcp_t6041_ext_enabled(void);
+--- a/drivers/gpu/drm/apple/iomfb.c
++++ b/drivers/gpu/drm/apple/iomfb.c
+@@ -24,6 +24,7 @@
+ #include <drm/drm_atomic_helper.h>
+ #include <drm/drm_drv.h>
+ #include <drm/drm_edid.h>
++#include "j614s-hdr-edid.h"
+ #include <drm/drm_fb_dma_helper.h>
+ #include <drm/drm_fourcc.h>
+ #include <drm/drm_framebuffer.h>
+@@ -1949,6 +1950,19 @@
+ 	}
+ 
+ edid_done:
++	/* Synthetic metadata is diagnostic only; timings remain firmware-derived. */
++	if (nr_modes && apple_j614s_hdr_test(pdev) && !apple_connector->drm_edid) {
++		const struct drm_edid *test_edid;
++
++		test_edid = drm_edid_alloc(j614s_hdr_edid, sizeof(j614s_hdr_edid));
++		if (test_edid) {
++			int err = drm_edid_connector_update(connector, test_edid);
++
++			drm_edid_free(test_edid);
++			if (err)
++				dev_warn(dcp->dev, "HDR test EDID failed: %d\n", err);
++		}
++	}
+ 	/* Publish after a possibly delayed raw read, under its physical generation. */
+ 	for (i = 0; i < nr_modes; ++i) {
+ 		mode = drm_mode_duplicate(dev, &modes[i].mode);
+--- a/drivers/gpu/drm/apple/iomfb_template.c
++++ b/drivers/gpu/drm/apple/iomfb_template.c
+@@ -3222,6 +3222,22 @@
+ 
+ 		req->surf_iova[l] = apple_state->iova;
+ 		req->surf[l].base = apple_state->surf;
++#if DCP_FW_DESKTOP_26(DCP_FW_VER)
++		if (plane->type == DRM_PLANE_TYPE_PRIMARY && dcp->connector &&
++		    apple_j614s_hdr_test(to_apple_crtc(crtc)->dcp)) {
++			struct drm_connector_state *cs = drm_atomic_get_new_connector_state(
++				commit, &dcp->connector->base);
++
++			/* The atomic check pins and validates this state. */
++			if (cs && cs->colorspace == DRM_MODE_COLORIMETRY_BT2020_RGB)
++				req->surf[l].base.colorspace = DCP_COLORSPACE_BG_BT2020;
++			if (cs && cs->hdr_output_metadata) {
++				req->surf[l].base.xfer_func = DCP_XFER_FUNC_HDR;
++				dev_info_once(dcp->dev,
++					"HDR test: submitting PQ primary surface\n");
++			}
++		}
++#endif
+ #if DCP_FW_H17(DCP_FW_VER)
+ 		req->surf[l].base.surface_id = 0;
+ #endif
+--- /dev/null
++++ b/drivers/gpu/drm/apple/j614s-hdr-edid.h
+@@ -0,0 +1,20 @@
++/* SPDX-License-Identifier: GPL-2.0-only OR MIT */
++/* Synthetic, opt-in J614s HDR diagnostic; see experiments/hdr-j614s. */
++static const u8 j614s_hdr_edid[] = {
++	0x00, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x00, 0x34, 0x92, 0x14, 0x06, 0x00, 0x00, 0x00, 0x00,
++	0x01, 0x22, 0x01, 0x04, 0xb5, 0x1e, 0x14, 0x78, 0x02, 0x0f, 0x91, 0xae, 0x52, 0x43, 0xb0, 0x26,
++	0x0f, 0x50, 0x54, 0x20, 0x00, 0x00, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01,
++	0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x24, 0x9d, 0xd0, 0x50, 0xb0, 0xac, 0xc4, 0x70, 0x08, 0x20,
++	0x68, 0x08, 0x2e, 0xc4, 0x10, 0x00, 0x00, 0x1a, 0x00, 0x00, 0x00, 0xfc, 0x00, 0x4a, 0x36, 0x31,
++	0x34, 0x73, 0x20, 0x48, 0x44, 0x52, 0x20, 0x6c, 0x61, 0x62, 0x00, 0x00, 0x00, 0x10, 0x00, 0x00,
++	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10,
++	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x1a,
++	0x02, 0x03, 0x12, 0x80, 0xe3, 0x05, 0x80, 0x00, 0xe6, 0x06, 0x05, 0x01, 0x72, 0x72, 0x00, 0xe2,
++	0x00, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
++	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
++	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
++	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
++	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
++	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
++	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x09,
++};

@@ -1,0 +1,46 @@
+pkgname=power-profiles-daemon-m4rch
+pkgver=0.30
+pkgrel=1
+pkgdesc='Power profiles daemon with J614s CPU frequency caps'
+arch=('aarch64')
+url='https://gitlab.freedesktop.org/upower/power-profiles-daemon'
+license=('GPL-3.0-only')
+depends=('gcc-libs' 'glib2' 'glibc' 'libgudev' 'polkit' 'upower')
+optdepends=('python-gobject: for powerprofilesctl')
+makedepends=('meson' 'ninja' 'glib2-devel')
+checkdepends=('python-dbusmock' 'umockdev')
+provides=("power-profiles-daemon=$pkgver")
+conflicts=('power-profiles-daemon')
+source=('power-profiles-daemon-0.30.tar.gz'
+        'power-profiles-daemon-0.30-1-aarch64.pkg.tar.xz'
+        'omarchy-nvidia.patch' 'omarchy-cpufreq-boost.patch'
+        'omarchy-cpufreq-caps.patch' 'j614s-caps.patch' 'j614s-cap-safety.patch')
+noextract=('power-profiles-daemon-0.30-1-aarch64.pkg.tar.xz')
+sha256sums=('6cce45f7b93af1563fe6842a1d2cb21dbc7434498f4a5f2cacb7b48d3c3175da'
+            'c1fe5080a573c73ed200217bbde3e11ba115568f810e260f004476929b3c7e64'
+            '5c3e350afd1baf668aca5d64d9692ec816f72d90ed93aec1f655aeb0d75b2bf1'
+            'd22145fec7c753f78b606a3de2437299d6ff74c33b8aa70b87cfd4ecda9225a0'
+            '79c6958cd8b5642a238300f89cb2e2549a6fcc323b1933bf8cad5b2479ffd6c9'
+            '97e7e3487b439b6c51a0db08e18df3555bf84d9d0bd2926f041fcf189002735e'
+            'fc5d2cef379fdb4f76ba5b4cc4c2d445307c9daa845af431ae0e64603295168c')
+prepare() {
+  cd "power-profiles-daemon-$pkgver"
+  for p in omarchy-nvidia.patch omarchy-cpufreq-boost.patch omarchy-cpufreq-caps.patch j614s-caps.patch j614s-cap-safety.patch; do
+    patch -Np1 -i "$srcdir/$p"
+  done
+}
+build() {
+  meson setup build "power-profiles-daemon-$pkgver" --prefix=/usr --libexecdir=lib \
+    -Dtests=true -Dmanpage=disabled -Dbashcomp=disabled -Dpylint=disabled
+  meson compile -C build
+}
+check() {
+  meson test -C build --no-rebuild 'Tests.test_j614s_*' --print-errorlogs
+}
+package() {
+  # Preserve Arch's unit, client, D-Bus policies, manual, and completions.
+  bsdtar -xpf "$srcdir/power-profiles-daemon-0.30-1-aarch64.pkg.tar.xz" -C "$pkgdir" usr
+  install -Dm755 build/src/power-profiles-daemon "$pkgdir/usr/lib/power-profiles-daemon"
+  install -Dm644 "$srcdir/j614s-cap-safety.patch" "$pkgdir/usr/share/doc/$pkgname/j614s-cap-safety.patch"
+  install -Dm644 "$srcdir/j614s-caps.patch" "$pkgdir/usr/share/doc/$pkgname/j614s-caps.patch"
+}

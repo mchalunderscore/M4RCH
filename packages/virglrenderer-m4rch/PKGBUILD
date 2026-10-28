@@ -1,0 +1,34 @@
+pkgname=virglrenderer-m4rch
+pkgver=1.3.0
+pkgrel=3
+pkgdesc='Virglrenderer with Aurora Asahi queue-limit and VM-status transport'
+arch=('aarch64')
+url='https://gitlab.freedesktop.org/virgl/virglrenderer'
+license=('MIT')
+depends=('glibc' 'libdrm' 'libepoxy' 'gcc-libs' 'mesa')
+makedepends=('meson' 'ninja' 'python' 'python-yaml')
+provides=("virglrenderer=$pkgver" 'libvirglrenderer.so')
+conflicts=('virglrenderer')
+options=('!lto' '!debug')
+source=('virglrenderer.tar.gz::https://gitlab.freedesktop.org/virgl/virglrenderer/-/archive/ca50e008863837e094747a69974dde3ae148aeaa/virglrenderer-ca50e008863837e094747a69974dde3ae148aeaa.tar.gz'
+        'asahi_drm.h::https://raw.githubusercontent.com/aurora-silicon/mesa/f2c9dc3fb59c81fdaf51f19884175c856e3d1889/include/drm-uapi/asahi_drm.h'
+        'virtio-params.patch')
+sha256sums=('e7c512469a207444103ead88a8992a7077173e21771623845d4567f8128b5dc1'
+            '0e9c01445f324914454cf2a8d4eaeb4254ef1c6ce27d4480691054f4030781a3'
+            'ab6891ab686edb297e1e37ae5169646e25f984ea25f09727e0e907c56fd041f4')
+prepare() {
+  cd "$srcdir/virglrenderer-ca50e008863837e094747a69974dde3ae148aeaa"
+  cp "$srcdir/asahi_drm.h" src/drm/drm-uapi/asahi_drm.h
+  patch -p1 < "$srcdir/virtio-params.patch"
+}
+build() {
+  cd "$srcdir/virglrenderer-ca50e008863837e094747a69974dde3ae148aeaa"
+  meson setup --reconfigure build --prefix=/usr --libdir=lib --buildtype=release \
+    -Ddrm-renderers=asahi -Dplatforms=egl -Dvideo=false -Dtests=false
+  ninja -C build -j6
+}
+package() {
+  cd "$srcdir/virglrenderer-ca50e008863837e094747a69974dde3ae148aeaa"
+  DESTDIR="$pkgdir" ninja -C build install
+  install -Dm644 COPYING "$pkgdir/usr/share/licenses/$pkgname/COPYING"
+}

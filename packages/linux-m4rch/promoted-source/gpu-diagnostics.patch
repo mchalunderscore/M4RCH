@@ -1,0 +1,79 @@
+--- a/drivers/gpu/drm/asahi/mmu/residency.rs
++++ b/drivers/gpu/drm/asahi/mmu/residency.rs
+@@ -8,6 +8,11 @@
+ use super::*;
+ use kernel::drm::gem::BaseObject;
+ use kernel::{new_condvar, sync::CondVar};
++
++// Diagnostic-only counters, implemented by the module's C sysfs shim.
++unsafe extern "C" {
++    fn asahi_diag_record_reclaim(target: u64, released: u64);
++}
+ 
+ /// Re-evicting backing that a job just had to restore only repeats the
+ /// restoration. After a restore, reclaim of this VM pauses for a backoff
+@@ -312,7 +317,10 @@
+         let owner = unsafe { &*((*raw).private_data as *const Self) };
+         // SAFETY: The shrinker core supplies a live initialized control.
+         let target = unsafe { (*sc).nr_to_scan };
+-        owner.vm.reclaim_idle_pages(target)
++        let released = owner.vm.reclaim_idle_pages(target);
++        // SAFETY: The shim contains only module-lifetime atomic counters.
++        unsafe { asahi_diag_record_reclaim(target as u64, released as u64) };
++        released
+     }
+ }
+ 
+--- a/drivers/gpu/drm/asahi/sysfs.c
++++ b/drivers/gpu/drm/asahi/sysfs.c
+@@ -4,6 +4,7 @@
+ // driver. The attribute wrapper is removed and its readers drained before
+ // that Arc is dropped. Atomic fields may reflect different sample instants.
+ 
++#include <linux/atomic.h>
+ #include <linux/device.h>
+ #include <linux/errno.h>
+ #include <linux/export.h>
+@@ -89,6 +90,18 @@
+  * and held by the GPU (resident), held kernel objects, the limits that admit
+  * user objects (0: none) and the number of refused creations.
+  */
++/* Diagnostic-only: cumulative shrinker scan outcomes, in host pages. */
++static atomic64_t diag_scan_calls = ATOMIC64_INIT(0);
++static atomic64_t diag_scan_target = ATOMIC64_INIT(0);
++static atomic64_t diag_scan_released = ATOMIC64_INIT(0);
++
++void asahi_diag_record_reclaim(u64 target, u64 released)
++{
++	atomic64_inc(&diag_scan_calls);
++	atomic64_add(target, &diag_scan_target);
++	atomic64_add(released, &diag_scan_released);
++}
++
+ static ssize_t gpu_memory_show(struct device *dev,
+ 			       struct device_attribute *attr, char *buf)
+ {
+@@ -109,6 +122,12 @@
+ 		       (unsigned long long)READ_ONCE(mem->client_limit));
+ 	n += scnprintf(buf + n, PAGE_SIZE - n, "refused %llu\n",
+ 		       (unsigned long long)READ_ONCE(mem->refused));
++	n += scnprintf(buf + n, PAGE_SIZE - n, "diag_scan_calls %llu\n",
++		       (unsigned long long)atomic64_read(&diag_scan_calls));
++	n += scnprintf(buf + n, PAGE_SIZE - n, "diag_scan_target_pages %llu\n",
++		       (unsigned long long)atomic64_read(&diag_scan_target));
++	n += scnprintf(buf + n, PAGE_SIZE - n, "diag_scan_released_pages %llu\n",
++		       (unsigned long long)atomic64_read(&diag_scan_released));
+ 
+ 	return n;
+ }
+--- a/drivers/gpu/drm/asahi/sysfs.h
++++ b/drivers/gpu/drm/asahi/sysfs.h
+@@ -5,6 +5,8 @@
+ 
+ struct device;
+ 
++void asahi_diag_record_reclaim(u64 target, u64 released);
++
+ int asahi_sysfs_register(struct device *dev, const void *snapshot,
+ 			 int export_enabled, const void *memory, void **handle);
+ int asahi_sysfs_register_idle(struct device *dev, u32 *word);

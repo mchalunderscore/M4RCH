@@ -1,6 +1,6 @@
 pkgname=mesa-m4rch
 pkgver=26.3.0.r20261026.f2c9dc3
-pkgrel=1
+pkgrel=5
 epoch=1
 pkgdesc='Mesa graphics drivers for Apple Silicon'
 arch=('aarch64')
@@ -11,8 +11,14 @@ makedepends=('base-devel' 'meson' 'ninja' 'python-mako' 'python-yaml' 'python-pa
 provides=("mesa=1:${pkgver}" "mesa-libgl=1:${pkgver}" 'opengl-driver' 'vulkan-driver' 'vulkan-asahi')
 conflicts=('mesa' 'vulkan-asahi' 'mesa-aurora-m4rch')
 options=('!lto' '!debug')
-source=('mesa-source.tar.gz::https://codeload.github.com/aurora-silicon/mesa/tar.gz/f2c9dc3fb59c81fdaf51f19884175c856e3d1889')
-sha256sums=('fc377579824a6f0e97947492009ba16f8173898a6966b83f906b5e5781e8e7c2')
+source=('mesa-source.tar.gz::https://codeload.github.com/aurora-silicon/mesa/tar.gz/f2c9dc3fb59c81fdaf51f19884175c856e3d1889' 'virtio-params.patch' 'submit-capture.patch' 'attachment-lifetime.patch')
+sha256sums=('fc377579824a6f0e97947492009ba16f8173898a6966b83f906b5e5781e8e7c2' '312c6d7379fed24586feb7084ced2f23c893ce7eff5982b27e802611d0617cd9' '4c0fab7c1349d541a2869296456b61072832f956d89b6986cbba6a656578249a' 'b558cb92e82e8b332b4157381c305caef86551a4b1db435adc588280cd1e300f')
+prepare() {
+  cd "$srcdir/mesa-f2c9dc3fb59c81fdaf51f19884175c856e3d1889"
+  patch -p1 < "$srcdir/virtio-params.patch"
+  patch -p1 < "$srcdir/submit-capture.patch"
+  patch -p1 < "$srcdir/attachment-lifetime.patch"
+}
 build() {
   cd "$srcdir/mesa-f2c9dc3fb59c81fdaf51f19884175c856e3d1889"
   meson setup --reconfigure build --prefix=/usr --libdir=lib --sysconfdir=/etc --buildtype=release \

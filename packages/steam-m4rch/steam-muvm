@@ -1,0 +1,8 @@
+#!/bin/bash
+set -euo pipefail
+if (( EUID == 0 )); then echo 'Run Steam as your normal desktop user.' >&2; exit 1; fi
+command='exec /bin/bash /usr/lib/steam/steam-arm64.sh'
+for argument in "$@"; do printf -v quoted '%q' "$argument"; command+=" $quoted"; done
+exec muvm --env=MESA_LOADER_DRIVER_OVERRIDE=zink --env=GALLIUM_DRIVER=zink \
+ --env=LIBGL_ALWAYS_SOFTWARE=0 --env=LIBGL_KOPPER_DISABLE=true \
+ -- dbus-run-session -- /bin/bash -c "$command"

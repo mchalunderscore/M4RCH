@@ -1,0 +1,51 @@
+--- a/drivers/gpu/drm/apple/apple_drv.c
++++ b/drivers/gpu/drm/apple/apple_drv.c
+@@ -69,6 +69,16 @@
+ bool apple_j614s_hdr_pq_tag(void)
+ {
+ 	return READ_ONCE(j614s_hdr_pq_tag);
++}
++
++/* 0 keeps the original zero ratio; 1 and 2 select bounded diagnostics. */
++static unsigned int j614s_hdr_edr_probe;
++module_param(j614s_hdr_edr_probe, uint, 0644);
++MODULE_PARM_DESC(j614s_hdr_edr_probe, "J614s HDR surface ratio diagnostic: 0=default, 1=1/2, 2=2/1");
++
++unsigned int apple_j614s_hdr_edr_probe(void)
++{
++	return READ_ONCE(j614s_hdr_edr_probe);
+ }
+ 
+ bool apple_j614s_hdr_test(struct platform_device *pdev)
+--- a/drivers/gpu/drm/apple/dcp.h
++++ b/drivers/gpu/drm/apple/dcp.h
+@@ -66,6 +66,7 @@
+ bool dcp_fw_compat_is_desktop(struct platform_device *pdev);
+ bool apple_j614s_hdr_test(struct platform_device *pdev);
+ bool apple_j614s_hdr_pq_tag(void);
++unsigned int apple_j614s_hdr_edr_probe(void);
+ unsigned int dcp_gamma_lut_size(struct platform_device *pdev);
+ /* T6041 external display processors may join the DRM device. */
+ bool dcp_t6041_ext_enabled(void);
+--- a/drivers/gpu/drm/apple/iomfb_template.c
++++ b/drivers/gpu/drm/apple/iomfb_template.c
+@@ -3233,6 +3233,19 @@
+ 				req->surf[l].base.colorspace = DCP_COLORSPACE_BG_BT2020;
+ 			if (cs && cs->hdr_output_metadata && apple_j614s_hdr_pq_tag()) {
+ 				req->surf[l].base.xfer_func = DCP_XFER_FUNC_HDR;
++				/* The firmware treats these packed fields as a ratio.
++				 * Retain zero/zero unless an attended probe is selected.
++				 */
++				switch (apple_j614s_hdr_edr_probe()) {
++				case 1:
++					req->surf[l].base.unk_num = 1;
++					req->surf[l].base.unk_denom = 2;
++					break;
++				case 2:
++					req->surf[l].base.unk_num = 2;
++					req->surf[l].base.unk_denom = 1;
++					break;
++				}
+ 				dev_info_once(dcp->dev,
+ 					"HDR test: submitting PQ primary surface\n");
+ 			}

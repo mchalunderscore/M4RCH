@@ -8,7 +8,7 @@ here=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
     echo 'Mount the ESP at /boot first.' >&2; exit 1;
 }
 (cd "$here"; sha256sum -c SHA256SUMS)
-names=(linux-m4rch mesa-m4rch m1n1-m4rch u-boot-m4rch
+names=(linux-m4rch mesa-m4rch virglrenderer-m4rch m1n1-m4rch u-boot-m4rch
        linux-firmware-vendor-m4rch alsa-ucm-conf-m4rch asahi-scripts-m4rch
        mesa-flatpak-m4rch muvm-m4rch fex-emu-m4rch avd-fw-m4rch
        fex-rootfs-debian-m4rch steam-m4rch mbpfan-m4rch vesktop-m4rch)
@@ -22,7 +22,7 @@ packages+=("$here"/dependencies/*.pkg.tar.zst "$here"/dependencies/*.pkg.tar.xz)
 backup=/root/boot-backup-$(date +%Y%m%d-%H%M%S)
 mkdir -p "$backup"
 cp -a /boot/boot.bin /boot/grub/grub.cfg "$backup/"
-# The existing 'Previous working system' GRUB entry is retained by grub-mkconfig.
+# Keep a copy of the current bootloader and GRUB configuration before updating.
 pacman -U --noconfirm --ask=4 "${packages[@]}"
 systemctl enable mbpfan.service
 # GL.host supplies the paired Mesa inside Flatpak, using Flatpak's own extension

@@ -1,0 +1,21 @@
+#!/bin/bash
+# Valve's launcher manages the client and games in the user's home directory.
+set -euo pipefail
+if (( EUID == 0 )); then
+    echo 'Run Steam as your normal desktop user.' >&2
+    exit 1
+fi
+mkdir -p "$HOME/.steam"
+ln -sfn "$HOME/.local/share/Steam/steamrt64" "$HOME/.steam/bin64"
+# muvm reserves -h/--help even among command arguments. Keep Steam's full
+# argument vector in one shell argument, quoting it for the explicit Bash.
+steam_command='exec /bin/bash /usr/lib/steam/steam-fex.sh'
+for argument in "$@"; do
+    printf -v quoted '%q' "$argument"
+    steam_command+=" $quoted"
+done
+exec muvm --emu=fex \
+    --env=MESA_LOADER_DRIVER_OVERRIDE=zink --env=GALLIUM_DRIVER=zink \
+    --env=LIBGL_ALWAYS_SOFTWARE=0 --env=LIBGL_KOPPER_DISABLE=true \
+    --env="STEAM_FORCE_CLIENT=${STEAM_FORCE_CLIENT:-steamrt64}" \
+    -- dbus-run-session -- FEXBash -c 'exec /bin/bash -c "$1"' steam "$steam_command"

@@ -1,0 +1,766 @@
+diff --git a/Source/Tools/LinuxEmulation/CMakeLists.txt b/Source/Tools/LinuxEmulation/CMakeLists.txt
+index 715a8f132..ac0187de7 100644
+--- a/Source/Tools/LinuxEmulation/CMakeLists.txt
++++ b/Source/Tools/LinuxEmulation/CMakeLists.txt
+@@ -15,6 +15,7 @@ add_library(LinuxEmulation STATIC
+   LinuxSyscalls/Seccomp/BPFEmitter.cpp
+   LinuxSyscalls/Seccomp/Dumper.cpp
+   LinuxSyscalls/SignalDelegator.cpp
++  LinuxSyscalls/GuestDataLimit.cpp
+   LinuxSyscalls/Syscalls.cpp
+   LinuxSyscalls/SyscallsSMCTracking.cpp
+   LinuxSyscalls/SyscallsVMATracking.cpp
+diff --git a/Source/Tools/LinuxEmulation/LinuxSyscalls/FileManagement.cpp b/Source/Tools/LinuxEmulation/LinuxSyscalls/FileManagement.cpp
+index 71724606e..40bbce2c0 100644
+--- a/Source/Tools/LinuxEmulation/LinuxSyscalls/FileManagement.cpp
++++ b/Source/Tools/LinuxEmulation/LinuxSyscalls/FileManagement.cpp
+@@ -40,6 +40,7 @@ $end_info$
+ #include <syscall.h>
+ #include <system_error>
+ #include <unistd.h>
++#include <sched.h>
+ #include <utility>
+ 
+ #include <tiny-json.h>
+@@ -695,6 +696,7 @@ uint64_t FileManager::Open(const char* pathname, int flags, uint32_t mode) {
+ }
+ 
+ uint64_t FileManager::Close(int fd) {
++  if (fd == ProtectedDataLimitFD) { errno = EBADF; return -1; }
+ #if defined(ASSERTIONS_ENABLED) && ASSERTIONS_ENABLED
+   if (CheckIfFDInTrackedSet(fd)) {
+     LogMan::Msg::EFmt("{} closing FEX FD {}", __func__, fd);
+@@ -716,6 +718,15 @@ uint64_t FileManager::CloseRange(unsigned int first, unsigned int last, unsigned
+   }
+ #endif
+ 
++  if (ProtectedDataLimitFD >= 0 && first <= static_cast<unsigned>(ProtectedDataLimitFD) && static_cast<unsigned>(ProtectedDataLimitFD) <= last) {
++    if (flags & ~(CLOSE_RANGE_CLOEXEC | CLOSE_RANGE_UNSHARE)) { errno = EINVAL; return -1; }
++    if (first < ProtectedDataLimitFD && ::syscall(SYSCALL_DEF(close_range), first, ProtectedDataLimitFD - 1, flags) == -1) return -1;
++    // Unsharing once is sufficient for both subranges.
++    if (first < ProtectedDataLimitFD) flags &= ~CLOSE_RANGE_UNSHARE;
++    if (last > ProtectedDataLimitFD) return ::syscall(SYSCALL_DEF(close_range), ProtectedDataLimitFD + 1, last, flags);
++    if (first == ProtectedDataLimitFD && (flags & CLOSE_RANGE_UNSHARE)) return ::unshare(CLONE_FILES);
++    return 0;
++  }
+   return ::syscall(SYSCALL_DEF(close_range), first, last, flags);
+ }
+ 
+diff --git a/Source/Tools/LinuxEmulation/LinuxSyscalls/FileManagement.h b/Source/Tools/LinuxEmulation/LinuxSyscalls/FileManagement.h
+index b11f096f7..b01c37939 100644
+--- a/Source/Tools/LinuxEmulation/LinuxSyscalls/FileManagement.h
++++ b/Source/Tools/LinuxEmulation/LinuxSyscalls/FileManagement.h
+@@ -96,8 +96,10 @@ public:
+   void UpdatePID(uint32_t PID);
+   // Helper to detect FEX-internal files from their inode and parent directory FD.
+   // This is useful to deal with Chromium/CEF, which closes any FDs reported in /proc/self/fd/.
++  int ProtectedDataLimitFD {-1};
+   bool IsProtectedFile(int ParentDirFD, uint64_t inode) const;
+   void SetProtectedCodeMapFD(int FD);
++  void SetProtectedDataLimitFD(int FD) { ProtectedDataLimitFD = FD; }
+ 
+   fextl::string GetEmulatedPath(const char* pathname, bool FollowSymlink = false) const;
+   fextl::string GetHostPath(fextl::string& Path, bool AliasedOnly) const;
+diff --git a/Source/Tools/LinuxEmulation/LinuxSyscalls/Syscalls.cpp b/Source/Tools/LinuxEmulation/LinuxSyscalls/Syscalls.cpp
+index a7a432bbd..0316a64ad 100644
+--- a/Source/Tools/LinuxEmulation/LinuxSyscalls/Syscalls.cpp
++++ b/Source/Tools/LinuxEmulation/LinuxSyscalls/Syscalls.cpp
+@@ -269,10 +269,12 @@ uint64_t ExecveHandler(FEXCore::Core::CpuStateFrame* Frame, const char* pathname
+   char* const* EnvpPtr = envp;
+   bool FDExecCopy {};
+ 
++  int DataLimitExecFD = -1;
+   auto SeccompFD = SyscallHandler->SeccompEmulator.SerializeFilters(Frame);
+   const auto HasSeccomp = SeccompFD.has_value() && *SeccompFD != -1;
+ 
+-  auto CloseSeccompFD = [&HasSeccomp, &SeccompFD]() {
++  auto CloseSeccompFD = [&HasSeccomp, &SeccompFD, &DataLimitExecFD]() {
++    if (DataLimitExecFD != -1) { close(DataLimitExecFD); DataLimitExecFD = -1; }
+     if (HasSeccomp) {
+       close(*SeccompFD);
+     }
+@@ -332,23 +334,40 @@ uint64_t ExecveHandler(FEXCore::Core::CpuStateFrame* Frame, const char* pathname
+   // - seccomp inheritance
+   // - FEXServer FD inheritance (unshare(CLONE_NEWNET))
+   // - FD_CLOEXEC set on FD on anonymous file FD.
+-  const bool NeedsEnvpCopy = (IsFDExec && !(IsBinfmtCompatible || IsOtherELF)) || HasSeccomp || NeedsFDCopy || NeedsLoaderFD;
++  const bool IsForeignShebang = (IsShebang && InterpreterType == ELFLoader::ELFContainer::ELFType::TYPE_OTHER_ELF);
++  if (IsOtherELF || IsForeignShebang) {
++    // A failed native exec must not irreversibly lower the host hard limit.
++    // Reject a handoff which cannot enforce the virtual limit atomically.
++    auto Guard = FEXCore::GuardSignalDeferringSection(SyscallHandler->VMATracking.Mutex, Frame->Thread);
++    auto Guest = SyscallHandler->ReadDataLimit();
++    struct rlimit Host {};
++    getrlimit(RLIMIT_DATA, &Host);
++    if (Guest.rlim_cur != Host.rlim_cur || Guest.rlim_max != Host.rlim_max) {
++      CloseSeccompFD();
++      return -EOPNOTSUPP;
++    }
++  } else {
++    DataLimitExecFD = SyscallHandler->SerializeDataLimit(Frame->Thread);
++    if (DataLimitExecFD == -1) { auto Error = errno; CloseSeccompFD(); return -Error; }
++  }
++  fextl::string DataLimitEnv = fextl::fmt::format("FEX_DATA_LIMIT_FD={}", DataLimitExecFD);
++  const bool NeedsEnvpCopy = true;
+ 
+   // We are trying to execute a shebang handled by a different architecture interpreter (e.g. /usr/bin/python from the host FS).
+   // In this case we just defer to the kernel.
+-  const bool IsForeignShebang = (IsShebang && InterpreterType == ELFLoader::ELFContainer::ELFType::TYPE_OTHER_ELF);
++
+ 
+   if (NeedsEnvpCopy) {
+     if (envp) {
+       auto OldEnvp = envp;
+       while (*OldEnvp) {
+         ///< Copy the pointers to our own vector of environment variables.
+-        EnvpArgs.emplace_back(*OldEnvp);
++        if (!std::string_view(*OldEnvp).starts_with("FEX_DATA_LIMIT_FD=")) EnvpArgs.emplace_back(*OldEnvp);
+         ++OldEnvp;
+       }
+     }
+ 
+-    if (!IsBinfmtCompatible || NeedsFDCopy) {
++    if ((!IsBinfmtCompatible || NeedsFDCopy) && (IsFDExec || NeedsFDCopy || NeedsLoaderFD)) {
+       if (NeedsFDCopy) {
+         // FEX needs the FD to live past execve when binfmt_misc isn't used,
+         // so duplicate the FD if FD_CLOEXEC is set, which removes the FD_CLOEXEC flag.
+@@ -389,6 +408,8 @@ uint64_t ExecveHandler(FEXCore::Core::CpuStateFrame* Frame, const char* pathname
+       EnvpArgs.emplace_back(FDSeccompEnv.data());
+     }
+ 
++    if (DataLimitExecFD != -1) EnvpArgs.emplace_back(DataLimitEnv.data());
++
+     // Emplace nullptr at the end to stop
+     EnvpArgs.emplace_back(nullptr);
+ 
+@@ -454,6 +475,8 @@ uint64_t ExecveHandler(FEXCore::Core::CpuStateFrame* Frame, const char* pathname
+       ExecveArgs.emplace_back(NullString);
+     }
+ 
++    if (DataLimitExecFD != -1) EnvpArgs.emplace_back(DataLimitEnv.data());
++
+     // Emplace nullptr at the end to stop
+     ExecveArgs.emplace_back(nullptr);
+   }
+@@ -808,6 +831,7 @@ SyscallHandler::SyscallHandler(FEXCore::Context::Context* _CTX, FEX::HLE::Signal
+   , SignalDelegation {_SignalDelegation}
+   , ThunkHandler {ThunkHandler} {
+   FEX::HLE::_SyscallHandler = this;
++  InitializeDataLimit();
+   HostKernelVersion = LinuxVersion::CalculateHostKernelVersion();
+   GuestKernelVersion = CalculateGuestKernelVersion();
+   Alloc32Handler = FEX::HLE::Create32BitAllocator();
+@@ -818,6 +842,7 @@ SyscallHandler::SyscallHandler(FEXCore::Context::Context* _CTX, FEX::HLE::Signal
+ }
+ 
+ SyscallHandler::~SyscallHandler() {
++  if (DataLimitFD != -1) close(DataLimitFD);
+   FEXCore::Allocator::munmap(reinterpret_cast<void*>(DataSpace), DataSpaceMappedSize);
+ }
+ 
+@@ -953,6 +978,7 @@ void SyscallHandler::LockBeforeFork(FEXCore::Core::InternalThreadState* Thread)
+     TM.LockBeforeFork();
+     Thread->CTX->LockBeforeFork(Thread);
+     if (std::try_lock(CodeCachePatchingMutex, VMATracking.Mutex) == -1) {
++      LockDataLimitForFork();
+       break;
+     }
+ 
+@@ -965,7 +991,9 @@ void SyscallHandler::LockBeforeFork(FEXCore::Core::InternalThreadState* Thread)
+ }
+ 
+ void SyscallHandler::UnlockAfterFork(FEXCore::Core::InternalThreadState* LiveThread, bool Child) {
++  UnlockDataLimitForFork();
+   if (Child) {
++    ForkDataLimit();
+     // Code maps are closed upon fork in the child
+     FM.SetProtectedCodeMapFD(-1);
+ 
+diff --git a/Source/Tools/LinuxEmulation/LinuxSyscalls/Syscalls.h b/Source/Tools/LinuxEmulation/LinuxSyscalls/Syscalls.h
+index 4721fc3b2..482fc553d 100644
+--- a/Source/Tools/LinuxEmulation/LinuxSyscalls/Syscalls.h
++++ b/Source/Tools/LinuxEmulation/LinuxSyscalls/Syscalls.h
+@@ -31,6 +31,7 @@ $end_info$
+ #include <FEXCore/fextl/string.h>
+ #include <FEXCore/fextl/vector.h>
+ 
++#include <sys/resource.h>
+ #include <mutex>
+ #include <shared_mutex>
+ 
+@@ -81,6 +82,7 @@ class ThunkHandler;
+ void RegisterEpoll(FEX::HLE::SyscallHandler* Handler);
+ void RegisterFD(FEX::HLE::SyscallHandler* Handler);
+ void RegisterFS(FEX::HLE::SyscallHandler* Handler);
++bool CopyResourceMemory(void* Destination, const void* Source, size_t Size, bool ToUser);
+ void RegisterInfo(FEX::HLE::SyscallHandler* Handler);
+ void RegisterIO(FEX::HLE::SyscallHandler* Handler);
+ void RegisterMemory(FEX::HLE::SyscallHandler* Handler);
+@@ -181,6 +183,19 @@ public:
+                                   void* SyscallHandler, int ArgumentCount) {
+   }
+ 
++  // Guest RLIMIT_DATA is independent of the emulator's host allocations.
++  int GuestPrlimit(FEXCore::Core::InternalThreadState*, pid_t, int, const struct rlimit*, struct rlimit*);
++  int SerializeDataLimit(FEXCore::Core::InternalThreadState* Thread);
++  bool IsDataLimitFD(int FD) const { return FD == DataLimitFD; }
++  int GuestDup(FEXCore::Core::InternalThreadState*, int, int, int, bool);
++  struct rlimit ReadDataLimit(); // Caller holds VMATracking.Mutex.
++  void InitializeDataLimit(int InheritedFD = -1, const struct rlimit* InitialLimit = nullptr);
++  void ForkDataLimit();
++  void LockDataLimitForFork();
++  void UnlockDataLimitForFork();
++  bool DataLimitAllows(uint64_t Added, uint64_t Removed = 0);
++  uint64_t DataUsage(uint64_t Start = 0, uint64_t Length = ~0ULL) const;
++
+   uint64_t HandleBRK(FEXCore::Core::CpuStateFrame* Frame, void* Addr);
+ 
+   FEX::HLE::FileManager FM;
+@@ -357,6 +372,8 @@ private:
+ 
+   fextl::unordered_map<fextl::string, FEX::VolatileMetadata::ExtendedVolatileMetadata> ExtendedMetaData {};
+ 
++  int DataLimitFD {-1};
++  struct rlimit ForkDataLimitSnapshot {};
+   std::mutex FutexMutex;
+   std::mutex SyscallMutex;
+   // std::mutex CodeCachePatchingMutex;
+diff --git a/Source/Tools/LinuxEmulation/LinuxSyscalls/Syscalls/FD.cpp b/Source/Tools/LinuxEmulation/LinuxSyscalls/Syscalls/FD.cpp
+index 9acf01ff5..de8858e62 100644
+--- a/Source/Tools/LinuxEmulation/LinuxSyscalls/Syscalls/FD.cpp
++++ b/Source/Tools/LinuxEmulation/LinuxSyscalls/Syscalls/FD.cpp
+@@ -44,6 +44,7 @@ void RegisterFD(FEX::HLE::SyscallHandler* Handler) {
+   });
+ 
+   REGISTER_SYSCALL_IMPL(close, [](FEXCore::Core::CpuStateFrame* Frame, int fd) -> uint64_t {
++    auto Guard = FEXCore::GuardSignalDeferringSection(FEX::HLE::_SyscallHandler->VMATracking.Mutex, Frame->Thread);
+     uint64_t Result = FEX::HLE::_SyscallHandler->FM.Close(fd);
+     SYSCALL_ERRNO();
+   });
+@@ -70,7 +71,7 @@ void RegisterFD(FEX::HLE::SyscallHandler* Handler) {
+ 
+   REGISTER_SYSCALL_IMPL(dup3, [](FEXCore::Core::CpuStateFrame* Frame, int oldfd, int newfd, int flags) -> uint64_t {
+     flags = FEX::HLE::RemapFromX86Flags(flags);
+-    uint64_t Result = ::dup3(oldfd, newfd, flags);
++    uint64_t Result = FEX::HLE::_SyscallHandler->GuestDup(Frame->Thread, oldfd, newfd, flags, true);
+     SYSCALL_ERRNO();
+   });
+ 
+@@ -130,6 +131,7 @@ void RegisterFD(FEX::HLE::SyscallHandler* Handler) {
+     });
+ 
+   REGISTER_SYSCALL_IMPL(close_range, [](FEXCore::Core::CpuStateFrame* Frame, unsigned int first, unsigned int last, unsigned int flags) -> uint64_t {
++    auto Guard = FEXCore::GuardSignalDeferringSection(FEX::HLE::_SyscallHandler->VMATracking.Mutex, Frame->Thread);
+     uint64_t Result = FEX::HLE::_SyscallHandler->FM.CloseRange(first, last, flags);
+     SYSCALL_ERRNO();
+   });
+diff --git a/Source/Tools/LinuxEmulation/LinuxSyscalls/Syscalls/Info.cpp b/Source/Tools/LinuxEmulation/LinuxSyscalls/Syscalls/Info.cpp
+index 1b61282d3..da8de6ee0 100644
+--- a/Source/Tools/LinuxEmulation/LinuxSyscalls/Syscalls/Info.cpp
++++ b/Source/Tools/LinuxEmulation/LinuxSyscalls/Syscalls/Info.cpp
+@@ -34,6 +34,25 @@ using cap_user_header_t = void*;
+ using cap_user_data_t = void*;
+ 
+ void RegisterInfo(FEX::HLE::SyscallHandler* Handler) {
++  REGISTER_SYSCALL_IMPL(prlimit_64, [](FEXCore::Core::CpuStateFrame* Frame, pid_t pid, int resource, const struct rlimit* incoming, struct rlimit* outgoing) -> uint64_t {
++    struct rlimit next; struct rlimit previous;
++    if (incoming && !CopyResourceMemory(&next, incoming, sizeof(next), false)) return -EFAULT;
++    uint64_t Result = FEX::HLE::_SyscallHandler->GuestPrlimit(Frame->Thread, pid, resource, incoming ? &next : nullptr, outgoing ? &previous : nullptr);
++    if (Result != -1 && outgoing && !CopyResourceMemory(outgoing, &previous, sizeof(previous), true)) return -EFAULT;
++    SYSCALL_ERRNO();
++  });
++  REGISTER_SYSCALL_IMPL_X64(getrlimit, [](FEXCore::Core::CpuStateFrame* Frame, int resource, struct rlimit* outgoing) -> uint64_t {
++    struct rlimit previous;
++    uint64_t Result = FEX::HLE::_SyscallHandler->GuestPrlimit(Frame->Thread, 0, resource, nullptr, &previous);
++    if (Result != -1 && !CopyResourceMemory(outgoing, &previous, sizeof(previous), true)) return -EFAULT;
++    SYSCALL_ERRNO();
++  });
++  REGISTER_SYSCALL_IMPL_X64(setrlimit, [](FEXCore::Core::CpuStateFrame* Frame, int resource, const struct rlimit* incoming) -> uint64_t {
++    struct rlimit next;
++    if (!CopyResourceMemory(&next, incoming, sizeof(next), false)) return -EFAULT;
++    uint64_t Result = FEX::HLE::_SyscallHandler->GuestPrlimit(Frame->Thread, 0, resource, &next, nullptr);
++    SYSCALL_ERRNO();
++  });
+   REGISTER_SYSCALL_IMPL(uname, [](FEXCore::Core::CpuStateFrame* Frame, struct utsname* buf) -> uint64_t {
+     auto Thread = FEX::HLE::ThreadManager::GetStateObjectFromCPUState(Frame);
+ 
+diff --git a/Source/Tools/LinuxEmulation/LinuxSyscalls/Syscalls/Passthrough.cpp b/Source/Tools/LinuxEmulation/LinuxSyscalls/Syscalls/Passthrough.cpp
+index 11ff1635f..bf554bc55 100644
+--- a/Source/Tools/LinuxEmulation/LinuxSyscalls/Syscalls/Passthrough.cpp
++++ b/Source/Tools/LinuxEmulation/LinuxSyscalls/Syscalls/Passthrough.cpp
+@@ -334,7 +334,7 @@ static void RegisterCommon(FEX::HLE::SyscallHandler* Handler) {
+   REGISTER_SYSCALL_IMPL(inotify_init1, SyscallPassthrough1<SYSCALL_DEF(inotify_init1)>);
+   REGISTER_SYSCALL_IMPL(fanotify_init, SyscallPassthrough2<SYSCALL_DEF(fanotify_init)>);
+   REGISTER_SYSCALL_IMPL(fanotify_mark, SyscallPassthrough5<SYSCALL_DEF(fanotify_mark)>);
+-  REGISTER_SYSCALL_IMPL(prlimit_64, SyscallPassthrough4<SYSCALL_DEF(prlimit_64)>);
++
+   REGISTER_SYSCALL_IMPL(name_to_handle_at, SyscallPassthrough5<SYSCALL_DEF(name_to_handle_at)>);
+   REGISTER_SYSCALL_IMPL(open_by_handle_at, SyscallPassthrough3<SYSCALL_DEF(open_by_handle_at)>);
+   REGISTER_SYSCALL_IMPL(syncfs, SyscallPassthrough1<SYSCALL_DEF(syncfs)>);
+@@ -421,7 +421,12 @@ namespace x64 {
+     REGISTER_SYSCALL_IMPL_X64(pwrite_64, SyscallPassthrough4<SYSCALL_DEF(pwrite_64)>);
+     REGISTER_SYSCALL_IMPL_X64(readv, SyscallPassthrough3<SYSCALL_DEF(readv)>);
+     REGISTER_SYSCALL_IMPL_X64(writev, SyscallPassthrough3<SYSCALL_DEF(writev)>);
+-    REGISTER_SYSCALL_IMPL_X64(dup, SyscallPassthrough1<SYSCALL_DEF(dup)>);
++    REGISTER_SYSCALL_IMPL_X64(dup, [](FEXCore::Core::CpuStateFrame* Frame, int fd) -> uint64_t {
++      auto Guard = FEXCore::GuardSignalDeferringSection(FEX::HLE::_SyscallHandler->VMATracking.Mutex, Frame->Thread);
++      if (FEX::HLE::_SyscallHandler->IsDataLimitFD(fd)) return -EBADF;
++      uint64_t Result = ::dup(fd);
++      SYSCALL_ERRNO();
++    });
+     REGISTER_SYSCALL_IMPL_X64(nanosleep, SyscallPassthrough2<SYSCALL_DEF(nanosleep)>);
+     REGISTER_SYSCALL_IMPL_X64(getitimer, SyscallPassthrough2<SYSCALL_DEF(getitimer)>);
+     REGISTER_SYSCALL_IMPL_X64(setitimer, SyscallPassthrough3<SYSCALL_DEF(setitimer)>);
+@@ -433,7 +438,7 @@ namespace x64 {
+     REGISTER_SYSCALL_IMPL_X64(getsockopt, SyscallPassthrough5<SYSCALL_DEF(getsockopt)>);
+     REGISTER_SYSCALL_IMPL_X64(wait4, SyscallPassthrough4<SYSCALL_DEF(wait4)>);
+     REGISTER_SYSCALL_IMPL_X64(semop, SyscallPassthrough3<SYSCALL_DEF(semop)>);
+-    REGISTER_SYSCALL_IMPL_X64(getrlimit, SyscallPassthrough2<SYSCALL_DEF(getrlimit)>);
++
+     REGISTER_SYSCALL_IMPL_X64(getrusage, SyscallPassthrough2<SYSCALL_DEF(getrusage)>);
+     REGISTER_SYSCALL_IMPL_X64(sysinfo, SyscallPassthrough1<SYSCALL_DEF(sysinfo)>);
+     REGISTER_SYSCALL_IMPL_X64(times, SyscallPassthrough1<SYSCALL_DEF(times)>);
+@@ -443,7 +448,7 @@ namespace x64 {
+     REGISTER_SYSCALL_IMPL_X64(mlockall, SyscallPassthrough1<SYSCALL_DEF(mlockall)>);
+     REGISTER_SYSCALL_IMPL_X64(munlockall, SyscallPassthrough0<SYSCALL_DEF(munlockall)>);
+     REGISTER_SYSCALL_IMPL_X64(adjtimex, SyscallPassthrough1<SYSCALL_DEF(adjtimex)>);
+-    REGISTER_SYSCALL_IMPL_X64(setrlimit, SyscallPassthrough2<SYSCALL_DEF(setrlimit)>);
++
+     REGISTER_SYSCALL_IMPL_X64(settimeofday, SyscallPassthrough2<SYSCALL_DEF(settimeofday)>);
+     REGISTER_SYSCALL_IMPL_X64(readahead, SyscallPassthrough3<SYSCALL_DEF(readahead)>);
+     REGISTER_SYSCALL_IMPL_X64(futex, SyscallPassthrough6<SYSCALL_DEF(futex)>);
+diff --git a/Source/Tools/LinuxEmulation/LinuxSyscalls/SyscallsSMCTracking.cpp b/Source/Tools/LinuxEmulation/LinuxSyscalls/SyscallsSMCTracking.cpp
+index 94bdd378b..2417846c0 100644
+--- a/Source/Tools/LinuxEmulation/LinuxSyscalls/SyscallsSMCTracking.cpp
++++ b/Source/Tools/LinuxEmulation/LinuxSyscalls/SyscallsSMCTracking.cpp
+@@ -319,6 +319,11 @@ void* SyscallHandler::GuestMmap(bool Is64Bit, FEXCore::Core::InternalThreadState
+     //       us to be more optimal by using GuardSignalDeferringSection instead
+     auto lk = FEXCore::GuardSignalDeferringSectionWithFallback(VMATracking.Mutex, Thread);
+ 
++    if (length && Size >= length && (prot & PROT_WRITE) && !(flags & (MAP_SHARED | MAP_GROWSDOWN))) {
++      const auto Removed = (flags & MAP_FIXED) ? DataUsage(reinterpret_cast<uint64_t>(addr), Size) : 0;
++      if (!DataLimitAllows(Size, Removed)) return reinterpret_cast<void*>(-ENOMEM);
++    }
++
+     bool Map32Bit = !Is64Bit || (flags & FEX::HLE::X86_64_MAP_32BIT);
+     if (Map32Bit) {
+       Result = (uint64_t)Get32BitAllocator()->Mmap((void*)addr, length, prot, flags, fd, offset);
+@@ -396,6 +401,16 @@ uint64_t SyscallHandler::GuestMremap(bool Is64Bit, FEXCore::Core::InternalThread
+ 
+   {
+     auto lk = FEXCore::GuardSignalDeferringSection(VMATracking.Mutex, Thread);
++    auto Old = VMATracking.FindVMAEntry(reinterpret_cast<uint64_t>(old_address));
++    if (Old != VMATracking.VMAs.end() && Old->second.Prot.Writable && !Old->second.Flags.Shared && !Old->second.Flags.GrowsDown) {
++      auto OldSize = FEXCore::AlignUp(old_size, FEXCore::Utils::FEX_PAGE_SIZE);
++      auto NewSize = FEXCore::AlignUp(new_size, FEXCore::Utils::FEX_PAGE_SIZE);
++      if (NewSize >= new_size && OldSize >= old_size) {
++        uint64_t Removed = (flags & MREMAP_DONTUNMAP) ? 0 : DataUsage(reinterpret_cast<uint64_t>(old_address), OldSize);
++        if (flags & MREMAP_FIXED) Removed += DataUsage(reinterpret_cast<uint64_t>(new_address), NewSize);
++        if (!DataLimitAllows(NewSize, Removed)) return -ENOMEM;
++      }
++    }
+     if (Is64Bit) {
+       Result = reinterpret_cast<uint64_t>(::mremap(old_address, old_size, new_size, flags, new_address));
+       if (Result == -1) {
+@@ -473,15 +488,42 @@ uint64_t SyscallHandler::GuestMprotect(FEXCore::Core::InternalThreadState* Threa
+ 
+   {
+     auto lk = FEXCore::GuardSignalDeferringSection(VMATracking.Mutex, Thread);
+-    Result = ::mprotect(addr, len, prot);
+-    if (Result == -1) {
+-      return -errno;
++    uint64_t Base = reinterpret_cast<uint64_t>(addr);
++    uint64_t Size = FEXCore::AlignUp(len, FEXCore::Utils::FEX_PAGE_SIZE);
++    if ((Base & (FEXCore::Utils::FEX_PAGE_SIZE - 1)) || Size < len || Base + Size < Base) return -EINVAL;
++    if (prot & (PROT_GROWSDOWN | PROT_GROWSUP)) {
++      // Stack protection expansion is handled by the kernel. Stack VMAs are not data_vm.
++      uint64_t Added = 0;
++      if (prot & PROT_WRITE) {
++        for (auto& [MapBase, VMA] : VMATracking.VMAs) {
++          if (MapBase >= Base + Size) break;
++          if (VMA.Flags.Shared || VMA.Flags.GrowsDown || MapBase + VMA.Length <= Base) continue;
++          Added += std::min(Base + Size, MapBase + VMA.Length) - std::max(Base, MapBase);
++        }
++      }
++      if (!DataLimitAllows(Added, DataUsage(Base, Size))) return -ENOMEM;
++      Result = ::mprotect(addr, len, prot);
++      if (Result == -1) return -errno;
++      TrackMprotect(Thread, addr, len, prot);
++    } else {
++      // Linux may modify a prefix before encountering a hole or a later VMA
++      // that exceeds the limit. Commit tracking for each successful segment.
++      for (uint64_t Cursor = Base; Cursor < Base + Size;) {
++        auto Entry = VMATracking.FindVMAEntry(Cursor);
++        if (Entry == VMATracking.VMAs.end()) { Result = -ENOMEM; break; }
++        const auto& VMA = Entry->second;
++        uint64_t End = std::min(Base + Size, VMA.Base + VMA.Length);
++        uint64_t Added = (prot & PROT_WRITE) && !VMA.Flags.Shared && !VMA.Flags.GrowsDown ? End - Cursor : 0;
++        if (!DataLimitAllows(Added, DataUsage(Cursor, End - Cursor))) { Result = -ENOMEM; break; }
++        if (::mprotect(reinterpret_cast<void*>(Cursor), End - Cursor, prot) == -1) { Result = -errno; break; }
++        TrackMprotect(Thread, reinterpret_cast<void*>(Cursor), End - Cursor, prot);
++        Cursor = End;
++      }
+     }
+-
+-    TrackMprotect(Thread, addr, len, prot);
+   }
+ 
+   InvalidateCodeRangeIfNecessary(Thread, reinterpret_cast<uint64_t>(addr), len, false);
++  if (FEX::HLE::HasSyscallError(Result)) return Result;
+ 
+   // Prepare for delayed code cache load after ld/Wine is done applying relocations.
+   // Hooking into mprotect is a reliable heuristic that matches behavior of ld (for ELF) and Wine (for PE).
+diff --git a/Source/Tools/LinuxEmulation/LinuxSyscalls/SyscallsVMATracking.cpp b/Source/Tools/LinuxEmulation/LinuxSyscalls/SyscallsVMATracking.cpp
+index 62490bfdc..298dd88bb 100644
+--- a/Source/Tools/LinuxEmulation/LinuxSyscalls/SyscallsVMATracking.cpp
++++ b/Source/Tools/LinuxEmulation/LinuxSyscalls/SyscallsVMATracking.cpp
+@@ -41,6 +41,7 @@ auto VMAProt::fromSHM(int SHMFlg) -> VMAProt {
+ auto VMAFlags::fromFlags(int Flags) -> VMAFlags {
+   return VMAFlags {
+     .Shared = (Flags & MAP_SHARED) != 0, // also includes MAP_SHARED_VALIDATE
++    .GrowsDown = (Flags & MAP_GROWSDOWN) != 0,
+   };
+ }
+ 
+diff --git a/Source/Tools/LinuxEmulation/LinuxSyscalls/SyscallsVMATracking.h b/Source/Tools/LinuxEmulation/LinuxSyscalls/SyscallsVMATracking.h
+index 8998fdb84..540bf1630 100644
+--- a/Source/Tools/LinuxEmulation/LinuxSyscalls/SyscallsVMATracking.h
++++ b/Source/Tools/LinuxEmulation/LinuxSyscalls/SyscallsVMATracking.h
+@@ -80,6 +80,7 @@ union VMAProt {
+ 
+ struct VMAFlags {
+   bool Shared : 1;
++  bool GrowsDown : 1;
+ 
+   static VMAFlags fromFlags(int Flags);
+ };
+diff --git a/Source/Tools/LinuxEmulation/LinuxSyscalls/x32/FD.cpp b/Source/Tools/LinuxEmulation/LinuxSyscalls/x32/FD.cpp
+index c5dad94e5..110d5b888 100644
+--- a/Source/Tools/LinuxEmulation/LinuxSyscalls/x32/FD.cpp
++++ b/Source/Tools/LinuxEmulation/LinuxSyscalls/x32/FD.cpp
+@@ -66,6 +66,8 @@ constexpr int OP_SETLK64_32 = 13;
+ constexpr int OP_SETLKW64_32 = 14;
+ 
+ auto fcntlHandler = [](FEXCore::Core::CpuStateFrame* Frame, int fd, int cmd, uint64_t arg) -> uint64_t {
++  auto Guard = FEXCore::GuardSignalDeferringSection(FEX::HLE::_SyscallHandler->VMATracking.Mutex, Frame->Thread);
++  if (FEX::HLE::_SyscallHandler->IsDataLimitFD(fd)) return -EBADF;
+   // fcntl64 struct directly matches the 64bit fcntl op
+   // cmd just needs to be fixed up
+ 
+@@ -479,6 +481,8 @@ void RegisterFD(FEX::HLE::SyscallHandler* Handler) {
+   REGISTER_SYSCALL_IMPL_X32(fcntl64, fcntlHandler);
+ 
+   REGISTER_SYSCALL_IMPL_X32(dup, [](FEXCore::Core::CpuStateFrame* Frame, int oldfd) -> uint64_t {
++    auto Guard = FEXCore::GuardSignalDeferringSection(FEX::HLE::_SyscallHandler->VMATracking.Mutex, Frame->Thread);
++    if (FEX::HLE::_SyscallHandler->IsDataLimitFD(oldfd)) return -EBADF;
+     uint64_t Result = ::dup(oldfd);
+     if (Result != -1) {
+       CheckAndAddFDDuplication(Frame, oldfd, Result);
+@@ -487,7 +491,7 @@ void RegisterFD(FEX::HLE::SyscallHandler* Handler) {
+   });
+ 
+   REGISTER_SYSCALL_IMPL_X32(dup2, [](FEXCore::Core::CpuStateFrame* Frame, int oldfd, int newfd) -> uint64_t {
+-    uint64_t Result = ::dup2(oldfd, newfd);
++    uint64_t Result = FEX::HLE::_SyscallHandler->GuestDup(Frame->Thread, oldfd, newfd, 0, false);
+     if (Result != -1) {
+       CheckAndAddFDDuplication(Frame, oldfd, newfd);
+     }
+diff --git a/Source/Tools/LinuxEmulation/LinuxSyscalls/x32/Info.cpp b/Source/Tools/LinuxEmulation/LinuxSyscalls/x32/Info.cpp
+index 899de9b62..ca085df55 100644
+--- a/Source/Tools/LinuxEmulation/LinuxSyscalls/x32/Info.cpp
++++ b/Source/Tools/LinuxEmulation/LinuxSyscalls/x32/Info.cpp
+@@ -98,10 +98,11 @@ void RegisterInfo(FEX::HLE::SyscallHandler* Handler) {
+   REGISTER_SYSCALL_IMPL_X32(
+     getrlimit, [](FEXCore::Core::CpuStateFrame* Frame, int resource, compat_ptr<FEX::HLE::x32::rlimit32<true>> rlim) -> uint64_t {
+       struct rlimit rlim64 {};
+-      uint64_t Result = ::getrlimit(resource, &rlim64);
++      uint64_t Result = FEX::HLE::_SyscallHandler->GuestPrlimit(Frame->Thread, 0, resource, nullptr, &rlim64);
+       if (Result != -1) {
+-        FaultSafeUserMemAccess::VerifyIsWritable(rlim, sizeof(*rlim));
+-        *rlim = rlim64;
++        using LegacyLimit = std::remove_reference_t<decltype(*rlim)>;
++        LegacyLimit Converted = rlim64;
++        if (!CopyResourceMemory(&*rlim, &Converted, sizeof(Converted), true)) return -EFAULT;
+       }
+       SYSCALL_ERRNO();
+     });
+@@ -109,10 +110,11 @@ void RegisterInfo(FEX::HLE::SyscallHandler* Handler) {
+   REGISTER_SYSCALL_IMPL_X32(
+     ugetrlimit, [](FEXCore::Core::CpuStateFrame* Frame, int resource, compat_ptr<FEX::HLE::x32::rlimit32<false>> rlim) -> uint64_t {
+       struct rlimit rlim64 {};
+-      uint64_t Result = ::getrlimit(resource, &rlim64);
++      uint64_t Result = FEX::HLE::_SyscallHandler->GuestPrlimit(Frame->Thread, 0, resource, nullptr, &rlim64);
+       if (Result != -1) {
+-        FaultSafeUserMemAccess::VerifyIsWritable(rlim, sizeof(*rlim));
+-        *rlim = rlim64;
++        using LegacyLimit = std::remove_reference_t<decltype(*rlim)>;
++        LegacyLimit Converted = rlim64;
++        if (!CopyResourceMemory(&*rlim, &Converted, sizeof(Converted), true)) return -EFAULT;
+       }
+       SYSCALL_ERRNO();
+     });
+@@ -120,9 +122,11 @@ void RegisterInfo(FEX::HLE::SyscallHandler* Handler) {
+   REGISTER_SYSCALL_IMPL_X32(
+     setrlimit, [](FEXCore::Core::CpuStateFrame* Frame, int resource, const compat_ptr<FEX::HLE::x32::rlimit32<false>> rlim) -> uint64_t {
+       struct rlimit rlim64 {};
+-      FaultSafeUserMemAccess::VerifyIsReadable(rlim, sizeof(*rlim));
+-      rlim64 = *rlim;
+-      uint64_t Result = ::setrlimit(resource, &rlim64);
++      using LegacyLimit = std::remove_reference_t<decltype(*rlim)>;
++      LegacyLimit Converted = rlim64;
++      if (!CopyResourceMemory(&Converted, &*rlim, sizeof(Converted), false)) return -EFAULT;
++      rlim64 = Converted;
++      uint64_t Result = FEX::HLE::_SyscallHandler->GuestPrlimit(Frame->Thread, 0, resource, &rlim64, nullptr);
+       SYSCALL_ERRNO();
+     });
+ 
+diff --git a/Source/Tools/LinuxEmulation/LinuxSyscalls/x64/FD.cpp b/Source/Tools/LinuxEmulation/LinuxSyscalls/x64/FD.cpp
+index 703c875f7..2e913cb49 100644
+--- a/Source/Tools/LinuxEmulation/LinuxSyscalls/x64/FD.cpp
++++ b/Source/Tools/LinuxEmulation/LinuxSyscalls/x64/FD.cpp
+@@ -43,6 +43,8 @@ void RegisterFD(FEX::HLE::SyscallHandler* Handler) {
+     });
+ 
+   REGISTER_SYSCALL_IMPL_X64(fcntl, [](FEXCore::Core::CpuStateFrame* Frame, int fd, int cmd, uint64_t arg) -> uint64_t {
++    auto Guard = FEXCore::GuardSignalDeferringSection(FEX::HLE::_SyscallHandler->VMATracking.Mutex, Frame->Thread);
++    if (FEX::HLE::_SyscallHandler->IsDataLimitFD(fd)) return -EBADF;
+     uint64_t Result {};
+     switch (cmd) {
+     case F_GETFL:
+@@ -128,7 +130,7 @@ void RegisterFD(FEX::HLE::SyscallHandler* Handler) {
+   });
+ 
+   REGISTER_SYSCALL_IMPL_X64(dup2, [](FEXCore::Core::CpuStateFrame* Frame, int oldfd, int newfd) -> uint64_t {
+-    uint64_t Result = ::dup2(oldfd, newfd);
++    uint64_t Result = FEX::HLE::_SyscallHandler->GuestDup(Frame->Thread, oldfd, newfd, 0, false);
+     SYSCALL_ERRNO();
+   });
+ 
+diff --git a/Source/Tools/LinuxEmulation/LinuxSyscalls/GuestDataLimit.cpp b/Source/Tools/LinuxEmulation/LinuxSyscalls/GuestDataLimit.cpp
+new file mode 100644
+--- /dev/null
++++ b/Source/Tools/LinuxEmulation/LinuxSyscalls/GuestDataLimit.cpp
+@@ -0,0 +1,223 @@
++// SPDX-License-Identifier: MIT
++#include "LinuxSyscalls/Syscalls.h"
++#include <FEXCore/Utils/MathUtils.h>
++#include <dirent.h>
++#include <charconv>
++#include <cstdlib>
++#include <sys/file.h>
++#include <sys/uio.h>
++#include <sys/mman.h>
++#include <sys/stat.h>
++#include <unistd.h>
++
++namespace FEX::HLE {
++namespace {
++void Require(bool Condition, const char* Message) { if (!Condition) { LogMan::Msg::EFmt("Guest data limit: {}", Message); std::abort(); } }
++constexpr uint64_t Magic = 0x3141544144584546ULL; // FEXDATA1
++struct State { uint64_t MagicNumber; struct rlimit Limit; };
++struct FileLock {
++  int FD;
++  explicit FileLock(int FD) : FD {FD} { int Result; do { Result = flock(FD, LOCK_EX); } while (Result && errno == EINTR); Require(Result == 0, "Cannot lock guest data limit"); }
++  ~FileLock() { flock(FD, LOCK_UN); }
++};
++State Read(int FD) {
++  State S {};
++  Require(pread(FD, &S, sizeof(S), 0) == sizeof(S) && S.MagicNumber == Magic, "Invalid guest data limit state");
++  return S;
++}
++void Write(int FD, State S) {
++  Require(pwrite(FD, &S, sizeof(S), 0) == sizeof(S), "Cannot save guest data limit");
++}
++int FindState(pid_t PID) {
++  auto ExePath = fextl::fmt::format("/proc/{}/exe", PID);
++  char Exe[4096]; auto ExeSize = readlink(ExePath.c_str(), Exe, sizeof(Exe));
++  if (ExeSize < 0 && (errno == EACCES || errno == EPERM)) return -2;
++  if (ExeSize == sizeof(Exe)) { errno = EAGAIN; return -2; }
++  bool IsFEX = ExeSize > 0 && (std::string_view(Exe, ExeSize).ends_with("/FEX") || std::string_view(Exe, ExeSize).ends_with("/FEX (deleted)"));
++  auto StatusPath = fextl::fmt::format("/proc/{}/status", PID);
++  int StatusFD = open(StatusPath.c_str(), O_RDONLY | O_CLOEXEC);
++  char Status[8192] {};
++  auto StatusSize = StatusFD == -1 ? -1 : read(StatusFD, Status, sizeof(Status) - 1);
++  if (StatusFD != -1) close(StatusFD);
++  if (StatusSize < 0) return IsFEX ? -2 : -1;
++  pid_t InnerPID = PID;
++  if (const char* Field = strstr(Status, "\nNStgid:")) {
++    Field += strlen("\nNStgid:");
++    while (*Field && *Field != '\n') {
++      while (*Field == ' ' || *Field == '\t') ++Field;
++      if (*Field == '\n') break;
++      auto [End, Error] = std::from_chars(Field, Status + StatusSize, InnerPID);
++      if (Error != std::errc()) break;
++      Field = End;
++    }
++  }
++  auto Expected = fextl::fmt::format("/memfd:FEX-guest-data-limit.{} (deleted)", InnerPID);
++  auto Folder = fextl::fmt::format("/proc/{}/fd", PID);
++  // A fork child must publish its own state before a remote prlimit can use it.
++  // Never modify the parent's inherited record during this short startup window.
++  for (unsigned Retry = 0; Retry < 100; ++Retry) {
++    DIR* Dir = opendir(Folder.c_str());
++    if (!Dir) return IsFEX ? -2 : -1;
++    int Result = -1;
++    bool PendingChild = IsFEX;
++    while (auto Entry = readdir(Dir)) {
++      auto Path = Folder + "/" + Entry->d_name;
++      char Name[128];
++      auto Size = readlink(Path.c_str(), Name, sizeof(Name));
++      if (Size < 0) continue;
++      std::string_view Target {Name, static_cast<size_t>(Size)};
++      bool Legacy = Target == "/memfd:FEX-guest-data-limit (deleted)";
++      if (Target != Expected && !Legacy) {
++        PendingChild |= Target.starts_with("/memfd:FEX-guest-data-limit.");
++        continue;
++      }
++      Result = open(Path.c_str(), O_RDWR | O_CLOEXEC);
++      if (Result != -1) {
++        State Probe {};
++        if (pread(Result, &Probe, sizeof(Probe), 0) == sizeof(Probe) && Probe.MagicNumber == Magic) break;
++        close(Result); Result = -1; PendingChild = true;
++      }
++    }
++    closedir(Dir);
++    if (Result != -1) return Result;
++    if (!PendingChild) return -1;
++    usleep(1000);
++  }
++  errno = EAGAIN;
++  return -2;
++}
++}
++
++bool CopyResourceMemory(void* Destination, const void* Source, size_t Size, bool ToUser) {
++  iovec Local {ToUser ? const_cast<void*>(Source) : Destination, Size};
++  iovec Remote {ToUser ? Destination : const_cast<void*>(Source), Size};
++  return (ToUser ? process_vm_writev(getpid(), &Local, 1, &Remote, 1, 0) : process_vm_readv(getpid(), &Local, 1, &Remote, 1, 0)) == Size;
++}
++
++void SyscallHandler::InitializeDataLimit(int InheritedFD, const struct rlimit* InitialLimit) {
++  const char* Value = getenv("FEX_DATA_LIMIT_FD");
++  if (InheritedFD == -1 && Value) {
++    auto End = Value + strlen(Value);
++    auto [Parsed, Error] = std::from_chars(Value, End, InheritedFD);
++    Require(Error == std::errc() && Parsed == End && InheritedFD >= 0, "Invalid inherited data limit FD");
++    unsetenv("FEX_DATA_LIMIT_FD");
++  }
++  State Initial {Magic, {}};
++  if (InheritedFD != -1) {
++    Initial = Read(InheritedFD);
++    DataLimitFD = InheritedFD;
++    Require(fcntl(DataLimitFD, F_SETFD, FD_CLOEXEC) == 0, "Cannot protect inherited data limit");
++    FM.SetProtectedDataLimitFD(DataLimitFD);
++    return;
++  } else {
++    if (InitialLimit) Initial.Limit = *InitialLimit;
++    else Require(getrlimit(RLIMIT_DATA, &Initial.Limit) == 0, "Cannot read host data limit");
++  }
++  auto Name = fextl::fmt::format("FEX-guest-data-limit.{}", getpid());
++  DataLimitFD = memfd_create(Name.c_str(), MFD_CLOEXEC | MFD_ALLOW_SEALING);
++  Require(DataLimitFD != -1 && ftruncate(DataLimitFD, sizeof(State)) == 0, "Cannot create guest data limit state");
++  // Publish the magic last so remote readers cannot accept an incomplete record.
++  Initial.MagicNumber = 0;
++  Write(DataLimitFD, Initial);
++  Require(pwrite(DataLimitFD, &Magic, sizeof(Magic), 0) == sizeof(Magic), "Cannot publish guest data limit");
++  Require(fcntl(DataLimitFD, F_ADD_SEALS, F_SEAL_GROW | F_SEAL_SHRINK | F_SEAL_SEAL) == 0, "Cannot seal data limit state size");
++  FM.SetProtectedDataLimitFD(DataLimitFD);
++}
++
++void SyscallHandler::LockDataLimitForFork() {
++  int Result;
++  do { Result = flock(DataLimitFD, LOCK_EX); } while (Result && errno == EINTR);
++  Require(Result == 0, "Cannot lock data limit for fork");
++  ForkDataLimitSnapshot = Read(DataLimitFD).Limit;
++}
++
++void SyscallHandler::UnlockDataLimitForFork() {
++  Require(flock(DataLimitFD, LOCK_UN) == 0, "Cannot unlock data limit after fork");
++}
++
++void SyscallHandler::ForkDataLimit() {
++  State Initial {Magic, ForkDataLimitSnapshot};
++  close(DataLimitFD);
++  DataLimitFD = -1;
++  InitializeDataLimit(-1, &Initial.Limit);
++}
++
++struct rlimit SyscallHandler::ReadDataLimit() {
++  FileLock Lock {DataLimitFD};
++  return Read(DataLimitFD).Limit;
++}
++
++int SyscallHandler::SerializeDataLimit(FEXCore::Core::InternalThreadState* Thread) {
++  auto Guard = FEXCore::GuardSignalDeferringSection(VMATracking.Mutex, Thread);
++  // The fresh descriptor is only exposed to the next interpreter at exec time.
++  // The persistent state descriptor stays CLOEXEC and is hidden from guest close.
++  return dup(DataLimitFD);
++}
++
++int SyscallHandler::GuestDup(FEXCore::Core::InternalThreadState* Thread, int Source, int Target, int Flags, bool Dup3) {
++  auto Guard = FEXCore::GuardSignalDeferringSection(VMATracking.Mutex, Thread);
++  if (IsDataLimitFD(Source)) { errno = EBADF; return -1; }
++  if (!Dup3 && Source == Target) return dup2(Source, Target);
++  if (Dup3 && (Flags & ~O_CLOEXEC || Source == Target)) { errno = EINVAL; return -1; }
++  bool Relocated = false;
++  if (IsDataLimitFD(Target)) {
++    if (fcntl(Source, F_GETFD) == -1) return -1;
++    int Replacement = fcntl(DataLimitFD, F_DUPFD_CLOEXEC, 0);
++    if (Replacement == -1) return -1;
++    DataLimitFD = Replacement;
++    FM.SetProtectedDataLimitFD(DataLimitFD);
++    Relocated = true;
++  }
++  int Result = Dup3 ? dup3(Source, Target, Flags) : dup2(Source, Target);
++  if (Result == -1 && Relocated) { int Error = errno; close(Target); errno = Error; }
++  return Result;
++}
++
++int SyscallHandler::GuestPrlimit(FEXCore::Core::InternalThreadState* Thread, pid_t PID, int Resource,
++                                const struct rlimit* Next, struct rlimit* Previous) {
++  if (Resource != RLIMIT_DATA) return prlimit(PID, static_cast<__rlimit_resource>(Resource), Next, Previous);
++  if (PID < 0) { errno = EINVAL; return -1; }
++  // Use the kernel's PID lookup and credential checks, even though data_vm is emulated.
++  if (prlimit(PID, RLIMIT_DATA, nullptr, nullptr)) return -1;
++  auto Guard = FEXCore::GuardSignalDeferringSectionWithFallback(VMATracking.Mutex, Thread);
++  bool Own = PID == 0 || PID == getpid() || PID == gettid();
++  int FD = Own ? DataLimitFD : FindState(PID);
++  if (FD == -2) return -1;
++  if (FD == -1) return prlimit(PID, RLIMIT_DATA, Next, Previous); // Native target.
++  int Result = 0;
++  {
++    FileLock Lock {FD};
++    State Old = Read(FD);
++    if (Next && Next->rlim_cur > Next->rlim_max) { errno = EINVAL; Result = -1; }
++    // FEX is an unprivileged emulator: never silently grant a hard-limit increase.
++    else if (Next && Next->rlim_max > Old.Limit.rlim_max) { errno = EPERM; Result = -1; }
++    else {
++      if (Next) Write(FD, State {Magic, *Next});
++      if (Previous) *Previous = Old.Limit;
++    }
++  }
++  int Error = errno;
++  if (!Own) close(FD);
++  errno = Error;
++  return Result;
++}
++
++uint64_t SyscallHandler::DataUsage(uint64_t Start, uint64_t Length) const {
++  uint64_t End = Length > ~0ULL - Start ? ~0ULL : Start + Length;
++  uint64_t Bytes = 0;
++  for (auto& [Base, VMA] : VMATracking.VMAs) {
++    if (Base >= End) break;
++    if (!VMA.Prot.Writable || VMA.Flags.Shared || VMA.Flags.GrowsDown || Base + VMA.Length <= Start) continue;
++    Bytes += std::min(End, Base + VMA.Length) - std::max(Start, Base);
++  }
++  return Bytes;
++}
++
++bool SyscallHandler::DataLimitAllows(uint64_t Added, uint64_t Removed) {
++  if (Added <= Removed) return true; // Shrinks/replacements remain possible after lowering a limit.
++  auto Values = ReadDataLimit();
++  auto Limit = Values.rlim_cur == 0 ? Values.rlim_max : Values.rlim_cur;
++  uint64_t Used = DataUsage();
++  return Used <= Limit && Added - Removed <= Limit - Used;
++}
++} // namespace FEX::HLE

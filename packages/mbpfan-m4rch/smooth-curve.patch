@@ -1,0 +1,89 @@
+--- a/src/mbpfan.c
++++ b/src/mbpfan.c
+@@ -704,8 +704,8 @@
+ 
+ void mbpfan()
+ {
+-    int old_temp, new_temp, fan_speed, steps;
+-    int temp_change;
++    int old_temp, new_temp, fan_speed;
++    double filtered_temp;
+ 
+     sensors = retrieve_sensors();
+     fans = retrieve_fans();
+@@ -722,7 +722,7 @@
+         fan = fan->next;
+     }
+ 
+-    if (low_temp > high_temp || high_temp > max_temp) {
++    if (low_temp > high_temp || high_temp >= max_temp) {
+         mbp_log(LOG_ERR, "Invalid temperatures: %d %d %d", low_temp, high_temp, max_temp);
+         exit(EXIT_FAILURE);
+     }
+@@ -730,16 +730,12 @@
+     set_fans_man(fans);
+ 
+     new_temp = get_temp(sensors);
+-    set_fan_minimum_speed(fans);
+-
+-    fan = fans;
+-    while (fan != NULL) {
+-
+-        fan->step_up = (float)(fan->fan_max_speed - fan->fan_min_speed) / (float)((max_temp - high_temp) * (max_temp - high_temp + 1) / 2.0);
+-
+-        fan->step_down = (float)(fan->fan_max_speed - fan->fan_min_speed) / (float)((max_temp - low_temp) * (max_temp - low_temp + 1) / 2.0);
+-        fan = fan->next;
+-    }
++    filtered_temp = new_temp;
++    if (new_temp < max_temp)
++        set_fan_minimum_speed(fans);
++    else
++        for (t_fans *f = fans; f; f = f->next)
++            set_fan_speed(f, f->fan_max_speed);
+ 
+ recalibrate:
+     if (verbose) {
+@@ -761,30 +757,27 @@
+ 
+         old_temp = new_temp;
+         new_temp = get_temp(sensors);
++        /* Smooth ordinary spikes; raw high temperatures bypass the filter. */
++        filtered_temp += (new_temp - filtered_temp) *
++                         (1.0 - exp(-(double)polling_interval / 8.0));
++        if (new_temp >= max_temp)
++            filtered_temp = max_temp;
+ 
+         fan = fans;
+ 
+         while (fan != NULL) {
+             fan_speed = fan->old_speed;
+ 
+-            if (new_temp >= max_temp && fan->old_speed != fan->fan_max_speed) {
++            /* Linear curve after the smoothed high threshold. Emergency and
++             * invalid sensor readings request maximum without delay. */
++            if (new_temp >= max_temp || filtered_temp >= max_temp) {
+                 fan_speed = fan->fan_max_speed;
+-            }
+-
+-            if (new_temp <= low_temp && fan_speed != fan->fan_min_speed) {
++            } else if (filtered_temp <= high_temp) {
+                 fan_speed = fan->fan_min_speed;
+-            }
+-
+-            temp_change = new_temp - old_temp;
+-
+-            if (temp_change > 0 && new_temp > high_temp && new_temp < max_temp) {
+-                steps = (new_temp - high_temp) * (new_temp - high_temp + 1) / 2;
+-                fan_speed = max(fan_speed, ceil(fan->fan_min_speed + steps * fan->step_up));
+-            }
+-
+-            if (temp_change < 0 && new_temp > low_temp && new_temp < max_temp) {
+-                steps = (max_temp - new_temp) * (max_temp - new_temp + 1) / 2;
+-                fan_speed = min(fan_speed, floor(fan->fan_max_speed - steps * fan->step_down));
++            } else {
++                double fraction = (filtered_temp - high_temp) / (max_temp - high_temp);
++                fan_speed = ceil(fan->fan_min_speed + fraction *
++                                 (fan->fan_max_speed - fan->fan_min_speed));
+             }
+ 
+             if (verbose) {

@@ -1,17 +1,25 @@
 pkgname=fex-rootfs-debian-m4rch
 pkgver=20261026
-pkgrel=2
+pkgrel=6
 pkgdesc='Debian 13 x86 root filesystem with paired Aurora Mesa for FEX and muvm'
 arch=('any')
 url='https://www.debian.org/'
 license=('LicenseRef-Debian-packages')
-depends=('fex-emu' 'mesa-m4rch=1:26.3.0.r20261026.f2c9dc3')
+depends=('fex-emu' 'muvm-m4rch>=0.7.0-4' 'mesa-m4rch=1:26.3.0.r20261026.f2c9dc3' 'mesa-m4rch>=1:26.3.0.r20261026.f2c9dc3-2')
 provides=('fex-rootfs')
 conflicts=('fex-rootfs')
 options=('!strip' '!debug')
 source=('debian.erofs' 'packages.txt' 'build-info.txt')
 noextract=('debian.erofs')
 package() {
+  # EROFS block-size log2 is byte 12 of the superblock at offset 1024.
+  # Reject host-page-size defaults that cannot mount in muvm's 4 KiB guest.
+  [[ $(od -An -tu1 -j1036 -N1 "$srcdir/debian.erofs") -eq 12 ]] || {
+    echo 'FEX rootfs must use 4096-byte EROFS blocks.' >&2
+    return 1
+  }
+  grep -qx "Mesa virtio GET_PARAMS wire version: 3" "$srcdir/build-info.txt"
+  grep -qx "Audio: ALSA default via muvm PulseAudio socket" "$srcdir/build-info.txt"
   install -Dm644 "$srcdir/debian.erofs" "$pkgdir/usr/share/fex-emu/RootFS/default.erofs"
   install -Dm644 "$srcdir/packages.txt" "$pkgdir/usr/share/doc/$pkgname/packages.txt"
   install -Dm644 "$srcdir/build-info.txt" "$pkgdir/usr/share/doc/$pkgname/build-info.txt"

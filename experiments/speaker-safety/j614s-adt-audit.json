@@ -1,0 +1,106 @@
+{
+  "source": "saved J614s ADT; no live hardware access",
+  "speakers": [
+    {
+      "index": 0,
+      "adt_path": "/device-tree/arm-io/i2c1/audio-speaker",
+      "i2c_address": 56,
+      "rx_slot": 0,
+      "amp_gain_raw": 15,
+      "raw_sense_slot_3": 0,
+      "raw_sense_slot_4": 2
+    },
+    {
+      "index": 1,
+      "adt_path": "/device-tree/arm-io/i2c3/audio-speaker-right-woofer-1",
+      "i2c_address": 59,
+      "rx_slot": 1,
+      "amp_gain_raw": 15,
+      "raw_sense_slot_3": 4,
+      "raw_sense_slot_4": 6
+    },
+    {
+      "index": 2,
+      "adt_path": "/device-tree/arm-io/i2c1/audio-speaker-left-woofer-2",
+      "i2c_address": 57,
+      "rx_slot": 2,
+      "amp_gain_raw": 15,
+      "raw_sense_slot_3": 8,
+      "raw_sense_slot_4": 10
+    },
+    {
+      "index": 3,
+      "adt_path": "/device-tree/arm-io/i2c3/audio-speaker-right-woofer-2",
+      "i2c_address": 60,
+      "rx_slot": 3,
+      "amp_gain_raw": 15,
+      "raw_sense_slot_3": 12,
+      "raw_sense_slot_4": 14
+    },
+    {
+      "index": 4,
+      "adt_path": "/device-tree/arm-io/i2c1/audio-speaker-left-tweeter",
+      "i2c_address": 58,
+      "rx_slot": 4,
+      "amp_gain_raw": 15,
+      "raw_sense_slot_3": 16,
+      "raw_sense_slot_4": 18
+    },
+    {
+      "index": 5,
+      "adt_path": "/device-tree/arm-io/i2c3/audio-speaker-right-tweeter",
+      "i2c_address": 61,
+      "rx_slot": 5,
+      "amp_gain_raw": 15,
+      "raw_sense_slot_3": 20,
+      "raw_sense_slot_4": 22
+    }
+  ],
+  "thiele_small_records": [
+    {
+      "index": 0,
+      "name_fourcc": "spA0",
+      "r_mohm_per_m1n1": 3666,
+      "temperature_raw": 3209
+    },
+    {
+      "index": 1,
+      "name_fourcc": "spA1",
+      "r_mohm_per_m1n1": 3695,
+      "temperature_raw": 3169
+    },
+    {
+      "index": 2,
+      "name_fourcc": "spA2",
+      "r_mohm_per_m1n1": 3753,
+      "temperature_raw": 3209
+    },
+    {
+      "index": 3,
+      "name_fourcc": "spA3",
+      "r_mohm_per_m1n1": 3756,
+      "temperature_raw": 3169
+    },
+    {
+      "index": 4,
+      "name_fourcc": "spA4",
+      "r_mohm_per_m1n1": 3704,
+      "temperature_raw": 3209
+    },
+    {
+      "index": 5,
+      "name_fourcc": "spA5",
+      "r_mohm_per_m1n1": 3715,
+      "temperature_raw": 3169
+    }
+  ],
+  "speaker_config_interpretation": "m1n1 labels bytes 3/4 vsense/isense; Aurora J616 DTS assigns corresponding slots imon/vmon; polarity requires reconciliation",
+  "speaker_protection_adt": 1,
+  "reset_raw": "f80000004f4950473600000001000100",
+  "interrupts_raw": "3700000001000000",
+  "idle_mask_rows_raw": "f0f0f0ff000000000f0f0fff00000000",
+  "limitations": [
+    "Calibrated resistance does not establish speakersafetyd thermal model",
+    "Slot polarity and mapping require independent validation"
+  ]
+}

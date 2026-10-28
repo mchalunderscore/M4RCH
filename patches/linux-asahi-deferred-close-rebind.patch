@@ -1,0 +1,157 @@
+--- a/drivers/gpu/drm/asahi/mmu.rs
++++ b/drivers/gpu/drm/asahi/mmu.rs
+@@ -2554,8 +2554,16 @@
+         // Mapping needs a complete context
+         let mut ctx = StepContext::new(Some(device.as_ref().as_ref()), prot, &mut resources)?;
+ 
+-        let mut vm_exec = unsafe {
+-            self.gpuvm.exec_lock(/*Some(&gem)*/ None, false)?
++        let (mut vm_exec, commit) = loop {
++            let vm_exec = unsafe { self.gpuvm.exec_lock(None, false)? };
++            match self.mapping_commit() {
++                Ok(commit) => break (vm_exec, commit),
++                Err(error) if error == EAGAIN => {
++                    drop(vm_exec);
++                    self.wait_for_user_map_admission()?;
++                }
++                Err(error) => return Err(error),
++            }
+         };
+         let inner = vm_exec.unique_gpuvm.data();
+ 
+@@ -2587,8 +2595,6 @@
+             size,
+             addr
+         );
+-        let _commit = self.mapping_commit()?;
+-
+         let req = OpMapRequest {
+             addr,
+             range: size,
+@@ -2598,7 +2604,12 @@
+             context: &mut ctx,
+             flags,
+         };
+-        vm_exec.unique_gpuvm.sm_map(req)
++        let result = vm_exec.unique_gpuvm.sm_map(req);
++        let superseded = result.is_ok().then(|| self.supersede_pending_close(gem)).flatten();
++        drop(vm_exec);
++        drop(commit);
++        drop(superseded);
++        result
+     }
+ 
+     /// Spend the binding generation only for an incarnation exposed to firmware.
+@@ -2730,23 +2741,23 @@
+         let mut resources = VmOpResources::for_unmap()?;
+         let mut ctx = StepContext::new(dev, Prot::default(), &mut resources)?;
+ 
+-        let mut vm_exec = unsafe { self.gpuvm.exec_lock(None, false)? };
+-
+-        mod_dev_dbg!(self.dev, "MMU: sm_unmap: {:#x}:{:#x}\n", iova, size);
+-        let _commit = if user {
++        let (mut vm_exec, _commit) = loop {
++            let vm_exec = unsafe { self.gpuvm.exec_lock(None, false)? };
++            if !user { break (vm_exec, None); }
+             match self.mapping_commit() {
+-                Ok(guard) => guard,
++                Ok(guard) => break (vm_exec, guard),
++                Err(error) if error == EAGAIN => {
++                    drop(vm_exec);
++                    self.wait_for_user_map_admission()?;
++                }
+                 Err(error) => {
+                     drop(vm_exec);
+-                    if self.defer_unmap(iova, size)? {
+-                        return Ok(());
+-                    }
++                    if self.defer_unmap(iova, size)? { return Ok(()); }
+                     return Err(error);
+                 }
+             }
+-        } else {
+-            None
+-        };
++        };
++        mod_dev_dbg!(self.dev, "MMU: sm_unmap: {:#x}:{:#x}\n", iova, size);
+         vm_exec.unique_gpuvm.sm_unmap(iova, size, &mut ctx)?;
+         self.untrack_shared_range(iova, size);
+         Ok(())
+--- a/drivers/gpu/drm/asahi/mmu/bind.rs
++++ b/drivers/gpu/drm/asahi/mmu/bind.rs
+@@ -152,6 +152,7 @@
+                                 context: &mut ctx,
+                                 flags,
+                             });
++                            let superseded = result.is_ok().then(|| self.supersede_pending_close(&map.gem)).flatten();
+                             let retired = result.is_ok().then(|| {
+                                 let retired = self.commit_context_binding(&map.gem, &map.context);
+                                 self.track_shared_binding(
+@@ -166,7 +167,13 @@
+                             drop(inner);
+                             drop(commit);
+                             drop(retired);
++                            drop(superseded);
+                             Some(result)
++                        }
++                        Err(error) if error == EAGAIN => {
++                            drop(inner);
++                            self.wait_for_user_map_admission()?;
++                            None
+                         }
+                         Err(error) if error == EIO => {
+                             drop(inner);
+@@ -198,6 +205,11 @@
+                             drop(retired);
+                             Some(result)
+                         }
++                        Err(error) if error == EAGAIN => {
++                            drop(inner);
++                            self.wait_for_user_map_admission()?;
++                            None
++                        }
+                         Err(error) if error == EIO => {
+                             drop(inner);
+                             None
+--- a/drivers/gpu/drm/asahi/mmu/lifetime.rs
++++ b/drivers/gpu/drm/asahi/mmu/lifetime.rs
+@@ -397,6 +397,15 @@
+         }
+     }
+ 
++    /// A successful rebind supersedes an older pending handle-close cleanup.
++    /// Preserve the object reference until after the caller drops the VM lock.
++    pub(super) fn supersede_pending_close(&self, gem: &gem::Object) -> Option<ARef<gem::Object>> {
++        let lifetime = self.lifetime.as_ref()?;
++        let mut state = lifetime.state.lock();
++        let index = state.objects.iter().position(|object| core::ptr::eq(&**object, gem))?;
++        Some(state.objects.swap_remove(index))
++    }
++
+     /// Acquires a job reference without imposing a VM-wide limit on healthy work.
+     pub(crate) fn retain_job(&self) -> Result<VmJobGuard> {
+         let residency = self.enter_residency()?;
+@@ -459,6 +468,11 @@
+         }
+         if state.blocked {
+             return Err(EIO);
++        }
++        // A drain owns its cleanup list outside this lock. A mapping must
++        // wait until that list has finished before it can become visible.
++        if state.draining {
++            return Err(EAGAIN);
+         }
+         state.commits = state.commits.checked_add(1).ok_or(EOVERFLOW)?;
+         Ok(Some(MappingCommit {
+@@ -656,6 +670,11 @@
+         let mut state = lifetime.state.lock();
+         let mut failure = None;
+         loop {
++            // Commits admitted before draining may rebind a queued object.
++            // Let them finish and supersede that cleanup before taking the list.
++            while state.commits != 0 {
++                lifetime.changed.wait(&mut state);
++            }
+             let close = state.close_ranges.take();
+             let unmaps = core::mem::take(&mut state.unmaps);
+             let objects = core::mem::take(&mut state.objects);
