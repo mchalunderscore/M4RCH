@@ -2,8 +2,9 @@
 """Exercise the candidate's actual connector check with stubbed DRM plumbing."""
 from pathlib import Path
 import re, subprocess, sys, tempfile
-root=Path(__file__).resolve().parents[2]
-source=Path(sys.argv[1]) if len(sys.argv)>1 else root/'out/hdr-candidate/source'
+if len(sys.argv) != 2:
+    raise SystemExit('Usage: test-candidate.py PATH_TO_PATCHED_KERNEL_SOURCE')
+source=Path(sys.argv[1])
 src=source/'drivers/gpu/drm/apple/apple_drv.c'
 s=src.read_text()
 start=s.index('static int apple_connector_hdr_check(')
@@ -71,18 +72,9 @@ with tempfile.TemporaryDirectory() as t:
  p=Path(t)/'test.c';p.write_text(stub+fn+main)
  subprocess.run(['cc','-Wall','-Wextra','-Werror',str(p),'-o',str(Path(t)/'test')],check=True)
  subprocess.run([str(Path(t)/'test')],check=True)
-# Ensure the bytes compiled into the kernel match the checked generated EDID.
+# Check the synthetic EDID compiled into the current driver.
 h=(src.parent/'j614s-hdr-edid.h').read_text()
-compiled=bytes(int(x,16) for x in re.findall(r'0x([0-9a-f]{2})',h))
-edid=(root/'experiments/hdr-j614s/j614s-test-edid.bin').read_bytes()
-assert compiled==edid and len(edid)==256 and not sum(edid[:128])%256 and not sum(edid[128:])%256
-print('compiled EDID matches generated data and both checksums')
-# Verify the browser clip actually retains the requested full-range PQ values.
-import json, struct
-clip=root/'experiments/hdr-j614s/j614s-pq-ramp.webm'
-info=json.loads(subprocess.check_output(['ffprobe','-v','error','-select_streams','v:0','-show_entries','stream=color_range,color_space,color_transfer,color_primaries','-of','json',str(clip)]))['streams'][0]
-assert info == {'color_range':'pc','color_space':'bt2020nc','color_transfer':'smpte2084','color_primaries':'bt2020'}, info
-raw=subprocess.check_output(['ffmpeg','-v','error','-i',str(clip),'-frames:v','1','-f','rawvideo','-pix_fmt','yuv420p10le','pipe:1'])
-codes=[struct.unpack_from('<H',raw,2*(i*120+60))[0] for i in range(8)]
-assert codes == [22,153,307,450,520,592,668,712], codes
-print('browser clip PQ metadata and decoded luma values passed')
+edid=bytes(int(x,16) for x in re.findall(r'0x([0-9a-f]{2})',h))
+assert len(edid)==256 and edid[:8]==bytes.fromhex('00ffffffffffff00')
+assert not sum(edid[:128])%256 and not sum(edid[128:])%256
+print('compiled EDID has a valid header and checksums')

@@ -23,6 +23,26 @@ def archive(path, source, arcname):
         tar.add(source, arcname=arcname)
 
 
+def collect_alsa(target, destination):
+    """Copy stock UCM and replace Apple board profiles with J614s profiles."""
+    owner = next((target/'var/lib/pacman/local').glob('alsa-ucm-conf-*/files'))
+    for name in owner.read_text().split('%FILES%\n', 1)[1].split('\n\n', 1)[0].splitlines():
+        if not name.startswith('usr/share/alsa/') or name.endswith('/'):
+            continue
+        if name.startswith(('usr/share/alsa/ucm2/conf.d/aop_audio/',
+                            'usr/share/alsa/ucm2/conf.d/macaudio/',
+                            'usr/share/alsa/ucm2/conf.d/t8140-aop-audio/')):
+            continue
+        source = target/name
+        dest = destination/str(Path(name).relative_to('usr/share/alsa'))
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        if source.is_symlink():
+            dest.symlink_to(source.readlink())
+        else:
+            shutil.copy2(source, dest)
+    shutil.copytree(ROOT/'packages/alsa-ucm-conf-m4rch/files', destination, dirs_exist_ok=True)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--root', type=Path, default=Path('/Volumes/ARCHROOT'))
@@ -100,19 +120,7 @@ def main():
     if alsa.exists():
         shutil.rmtree(alsa)
     # Copy only package-owned UCM files, including symlinks; never user policy.
-    owner = next((target/'var/lib/pacman/local').glob('alsa-ucm-conf-*/files'))
-    for name in owner.read_text().split('%FILES%\n', 1)[1].split('\n\n', 1)[0].splitlines():
-        if not name.startswith('usr/share/alsa/') or name.endswith('/'):
-            continue
-        source = target/name
-        dest = alsa/str(Path(name).relative_to('usr/share/alsa'))
-        dest.parent.mkdir(parents=True, exist_ok=True)
-        if source.is_symlink():
-            dest.symlink_to(source.readlink())
-        else:
-            shutil.copy2(source, dest)
-    # Add the Apple profiles to the stock ALSA profiles.
-    shutil.copytree(ROOT/'packages/alsa-ucm-conf-m4rch/files', alsa, dirs_exist_ok=True)
+    collect_alsa(target, alsa)
     archive(recipes/'alsa-ucm-conf-m4rch/alsa.tar.gz', alsa, 'alsa')
     scripts = recipes/'asahi-scripts-m4rch'
     archive(scripts/'files.tar.gz', scripts/'files', 'files')

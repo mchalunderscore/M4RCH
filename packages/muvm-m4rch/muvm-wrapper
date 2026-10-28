@@ -1,8 +1,0 @@
-#!/bin/sh
-# A user service forwards DNS on host loopback, where interface scopes and
-# local resolver stubs have their normal host meaning.
-systemctl --user start muvm-dns-forward.service >/dev/null 2>&1 || :
-exec /usr/lib/muvm/muvm-real \
-    --env="MUVM_DNS_HOST_UID=$(id -u)" \
-    --passt-args='--map-host-loopback 169.254.2.2' \
-    --execute-pre /usr/lib/muvm/muvm-dns-sync "$@"

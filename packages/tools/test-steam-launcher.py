@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Round-trip real launcher arguments through a mock muvm and its POSIX shell."""
+"""Check argument forwarding through the current native Steam launcher."""
 from pathlib import Path
 import json
 import os
@@ -12,43 +12,45 @@ ROOT = Path(__file__).resolve().parents[2]
 def main():
     with tempfile.TemporaryDirectory() as directory:
         base = Path(directory)
-        capture = base/'arguments.json'
-        receiver = base/'valve-launcher'
-        receiver.write_text("""#!/bin/bash
-exec /usr/bin/python3 -c 'import json,os,sys; open(os.environ["STEAM_TEST_CAPTURE"],"w").write(json.dumps(sys.argv[1:]))' "$@"
-""")
-        receiver.chmod(0o755)
-        mock = base/'muvm'
-        mock.write_text('''#!/usr/bin/python3
-import subprocess,sys
-args=sys.argv[1:]
-assert "-h" not in args and "--help" not in args, args
-args=args[args.index("FEXBash")+1:]
-sys.exit(subprocess.call(["/bin/sh",*args]))
+        root = base / 'steam-root'
+        binary = root / 'steamrtarm64/steam'
+        binary.parent.mkdir(parents=True)
+        binary.write_text('#!/bin/sh\nexit 0\n')
+        binary.chmod(0o755)
+        userpages = base / 'userpages'
+        userpages.write_text('#!/bin/sh\nprintf "%s\\n" "${TEST_PAGE_SIZE:-4096}"\n')
+        userpages.chmod(0o755)
+        receiver = base / 'launch-loop'
+        receiver.write_text('''#!/usr/bin/python3
+import json, os, sys
+with open(os.environ['STEAM_TEST_CAPTURE'], 'w') as f:
+    json.dump(sys.argv[1:], f)
 ''')
-        mock.chmod(0o755)
-        source = (ROOT/'packages/steam-m4rch/steam-x86').read_text()
-        target = '/usr/lib/steam/steam-fex.sh'
-        assert source.count(target) == 1, 'Expected one x86 guest launcher'
-        source = source.replace(target, str(receiver))
-        # This test targets argv transport, not the independent privilege guard.
+        receiver.chmod(0o755)
+        source = (ROOT / 'packages/steam-m4rch/steam').read_text()
+        for old, new in [('/usr/libexec/aurora/userpages', str(userpages)),
+                         ('/usr/lib/steam/steam-native4k-launch-loop.sh', str(receiver))]:
+            assert source.count(old) == 1
+            source = source.replace(old, new)
         if os.geteuid() == 0:
             source = source.replace('if (( EUID == 0 )); then', 'if false; then')
-        wrapper = base/'steam'
+        wrapper = base / 'steam'
         wrapper.write_text(source)
-        arguments = ['-h', '--help', '-applaunch', '4000', '', 'two words',
-                     "apostrophe'", '"quoted"', '$(touch SHOULD_NOT_EXIST)',
-                     '`touch SHOULD_NOT_EXIST`', 'line\nbreak', 'Zażółć']
-        subprocess.run(['/bin/bash', str(wrapper), *arguments], cwd=base,
-                       env=dict(os.environ, HOME=str(base), PATH=str(base)+':'+os.environ['PATH'],
-                                STEAM_TEST_CAPTURE=str(capture)), check=True)
-        assert json.loads(capture.read_text()) == arguments
-        assert not (base/'SHOULD_NOT_EXIST').exists()
-        subprocess.run(['/bin/bash', str(wrapper)], cwd=base,
-                       env=dict(os.environ, HOME=str(base), PATH=str(base)+':'+os.environ['PATH'],
-                                STEAM_TEST_CAPTURE=str(capture)), check=True)
-        assert json.loads(capture.read_text()) == []
-    print('PASS: Steam help/game flags, empty args, quotes, unicode and shell metacharacters')
+        capture = base / 'arguments.json'
+        env = dict(os.environ, HOME=str(base), AURORA_STEAM_ROOT=str(root),
+                   STEAM_TEST_CAPTURE=str(capture))
+        args = ['--help', '-applaunch', '4000', '', 'two words', "apostrophe'",
+                '$(touch SHOULD_NOT_EXIST)', '`touch SHOULD_NOT_EXIST`', 'line\nbreak', 'Zażółć']
+        subprocess.run(['/bin/bash', str(wrapper), *args], cwd=base, env=env, check=True)
+        assert json.loads(capture.read_text()) == ['-noverifyfiles', *args]
+        assert not (base / 'SHOULD_NOT_EXIST').exists()
+        wrong_page = dict(env, TEST_PAGE_SIZE='16384')
+        result = subprocess.run(['/bin/bash', str(wrapper)], cwd=base, env=wrong_page, capture_output=True)
+        assert result.returncode != 0 and b'4 KiB' in result.stderr
+        binary.unlink()
+        result = subprocess.run(['/bin/bash', str(wrapper)], cwd=base, env=env, capture_output=True)
+        assert result.returncode != 0 and b'not installed' in result.stderr
+    print('PASS: native Steam argument forwarding, page-size guard and missing-client guard')
 
 
 if __name__ == '__main__':

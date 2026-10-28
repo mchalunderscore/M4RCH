@@ -3,16 +3,14 @@
 This guide describes the local packages for the 14-inch M4 Pro J614s. As of
 27 October 2026, the installed package versions include `linux-m4rch 7.3.0-9`,
 `m1n1-m4rch 20261025-2`, `u-boot-m4rch 2026.07-3`, and
-`power-profiles-daemon-m4rch 0.30-1`. The current running session is the
-successful external-display trial kernel `7.3.0-m4rch-vrr-ext`; the promoted
-standard GRUB entry uses the matching tested boot stack but has not been
-booted separately. Built-in speakers remain disabled. See
+`power-profiles-daemon-m4rch 0.30-1`. The normal GRUB entry booted with the
+promoted `7.3.0-m4rch-vrr-ext` stack. Built-in speakers remain disabled. See
 [external-display promotion](../docs/external-display-investigation.md) and
 [power profiles](../docs/power-profiles-investigation.md).
 
 The normal GRUB entry now permits device-driven driver autoloading. The running
-session passed the one-boot autoload trial and a lid wake; the newly promoted
-normal entry and external output have not yet been tested. Installed
+session passed the one-boot autoload trial and a lid wake; the normal entry
+also booted, while external output under autoload remains untested. Installed
 `asahi-scripts-m4rch 20261026-3` and `mbpfan-m4rch 2.4.0-4` remove the old
 service and fan dependency. See the [driver-autoload record](../docs/driver-autoload-investigation.md).
 
@@ -25,7 +23,7 @@ service and fan dependency. See the [driver-autoload record](../docs/driver-auto
 | u-boot-m4rch | Aurora U-Boot |
 | linux-firmware-vendor-m4rch | Locally extracted firmware and ALS calibration |
 | avd-fw-m4rch | Asahi open-source AVD v5 tier 1 firmware |
-| alsa-ucm-conf-m4rch | Stock ALSA profiles plus Apple profiles |
+| alsa-ucm-conf-m4rch | Stock ALSA profiles plus J614 microphone and J616-labelled jack profiles |
 | asahi-scripts-m4rch | Upstream update-m1n1 and hardware configuration |
 | virglrenderer-m4rch | Asahi native-context backend paired with Aurora Mesa |
 | steam-m4rch | Native ARM64 Steam launcher using 4 KiB user processes |
@@ -36,9 +34,10 @@ service and fan dependency. See the [driver-autoload record](../docs/driver-auto
 | paru-m4rch | AUR helper |
 | grub-m4rch | GRUB EFI boot manager |
 
-Recipes for `muvm-m4rch`, `fex-emu-m4rch` and `fex-rootfs-debian-m4rch`
-describe an older Steam setup; those packages were not installed at this review.
-The current Steam package does not depend on them.
+The retired muvm/FEX guest recipes for the older Steam setup are available in
+Git at `e7baa0e`; the current Steam package does not depend on them. The
+separate installed custom ARM64 Proton compatibility tool remains documented
+in [its source notes](proton-arm64-sme/README.md).
 
 The existing GRUB package and enrolled first-stage loader remain installed.
 The bootloader pair uses the previous native-working m1n1 and U-Boot binaries.
@@ -148,30 +147,19 @@ the installed power-profiles daemon and omit the retired muvm/FEX guest set.
 `validate.sh` targets `7.3.0-m4rch-vrr-ext`, the current boot options and the
 speaker-module blacklist. The 14-package installer and boot hooks passed a
 disposable reinstall test with the limitations described in the [maintenance
-inventory](../docs/installation-maintenance.md); the macOS bulk builder and a
-fresh install have not been qualified. Local build inputs
+inventory](../docs/installation-maintenance.md). The newer audio and platform
+configuration package candidates have been built but not installed or tested
+in that transaction; the macOS bulk builder and a fresh install have not been
+qualified. Local build inputs
 are under `out/packages/source/`; firmware inputs are machine-local. Kernel
 configuration and patches are included in the kernel package. The Flatpak
 build helper uses Freedesktop SDK 25.08/26.08 and LLVM 22; its pinned Mesa and
 SPIR-V source inputs were recorded under `out/candidate-20261026/`.
 Some local build inputs, including `out/packages/source/`, are absent; prepare
-the required source archives, firmware and guest rootfs again before running
+the required source archives and firmware again before running
 `make packages`. Some promoted boot artifacts remain under
 `out/external-investigation/promotion/`. The repository alone does not contain these machine-local inputs.
-The optional historical Steam guest rootfs inputs are built using `packages/tools/build-fex-mesa.sh` and
-`packages/tools/build-fex-rootfs.sh` in disposable Debian 13 amd64 build VMs.
-The first needs Mesa's native and i386 development dependencies plus LLVM 19;
-the second needs debootstrap, erofs-utils and permission to mount procfs.
-The runtime tree produced by the first script is passed to the second at
-`/work/mesa-runtime`. The resulting EROFS image, Debian package manifest and
-build information belong in `out/packages/source/` before `make packages`.
-Debian packages retain their copyright/license files inside the image.
-
 `make check` checks host helper syntax and runs the retained Python unit tests.
 Standalone tests in `packages/tools/` may need patched upstream source trees or
 local socket access; they are not part of this check. Linux hardware behavior is
 validated by booting the candidate, separately from the container build checks.
-
-The [FEX package notes](fex-emu-m4rch/README.md) describe the older guest
-candidate and its compatibility limits. It is not part of the current native
-Steam package.

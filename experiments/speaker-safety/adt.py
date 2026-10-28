@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
-"""Decode loader-reserved Apple device-tree metadata, not firmware code."""
-import argparse,json,struct
-from pathlib import Path
+"""Decode saved Apple device-tree metadata for the speaker-safety audit."""
+import struct
 
 def parse(data):
     result={};offset=0;budget=10000
@@ -35,19 +34,3 @@ def parse(data):
         result[path]=props
         for _ in range(children):node(path.rstrip('/'),depth+1)
     node('',0);return result
-
-def selected(tree):
-    result={}
-    for path,props in tree.items():
-        if path.rstrip('/').endswith('/chosen'):
-            result[path]={k:v.hex() for k,v in props.items() if k in ('firmware-version','system-firmware-version','iboot-stage-one-tag','iboot-stage-two-tag','chip-id','board-id')}
-        elif path.rstrip('/').endswith('/sgx') or '/sgx/' in path or path.rstrip('/').endswith('/arm-io'):
-            result[path]={k:v.hex() for k,v in props.items() if k not in ('AAPL,phandle',)}
-    return result
-
-def main():
-    p=argparse.ArgumentParser();p.add_argument('--input',type=Path,required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args()
-    if a.input.stat().st_size>16*1024*1024:raise ValueError('ADT size limit')
-    tree=parse(a.input.read_bytes());report={'schema':'m4rch.selected-adt.v1','node_count':len(tree),'nodes':selected(tree)}
-    with a.output.open('x') as f:json.dump(report,f,indent=2);f.write('\n')
-if __name__=='__main__':main()

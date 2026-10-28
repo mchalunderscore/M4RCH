@@ -40,7 +40,7 @@ macOS-hosted container workflow that still needs local inputs and validation
 updates; it is not a one-command rebuild of the installed system. See the
 [package guide](packages/README.md) before building or installing packages.
 
-For the extensive uncommitted work, see the [worktree review](docs/worktree-review.md).
+For maintenance, build limitations and recovery status, see the [maintenance inventory](docs/installation-maintenance.md).
 
 The old SD-card implementation and dependent Aurora trial workflows have been
 retired. Historical tracked sources are available in Git history at `bce491f`;

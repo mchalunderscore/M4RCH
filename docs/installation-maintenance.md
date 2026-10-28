@@ -16,8 +16,18 @@ update. Package recipes and current build limitations are in the
 2:2.16-1.1`, `steam-m4rch 1.0.0.81-11`, `paru-m4rch 2.1.0-1`,
 `signal-desktop-m4rch 8.32.0-1` and `vesktop-m4rch 1.6.8-1`.
 The old `muvm-m4rch`, `fex-emu-m4rch` and `fex-rootfs-debian-m4rch` packages
-were not installed. Their recipes and experiments still need review before
-retirement; they may contain useful historical or future maintenance work.
+were not installed; their retired recipes are available in Git at `e7baa0e`.
+The separate custom ARM64 Proton compatibility tool remains installed and its
+source notes are retained under `packages/proton-arm64-sme/`.
+
+The repository's `alsa-ucm-conf-m4rch 1.2.16.1-3` candidate removes other
+Apple-board profiles from package preparation while retaining the current
+J614 microphone and J616-labelled jack profiles. It built and those four
+profile files matched the installed package, but the candidate has not been
+installed; the headphone jack still awaits a physical test. The audio and
+platform configuration candidates resolved successfully in a database-only
+transaction against a disposable copy of the package database; no files or
+hooks were installed on the running system.
 
 ## System services
 
@@ -27,6 +37,18 @@ The current installation uses device-driven module loading. The packaged
 28 October; the attended autoload trial also passed desktop and lid wake checks.
 Fans tracked their requested targets. External output with autoload is still
 untested; see the [autoload record](driver-autoload-investigation.md).
+
+The installed `asahi-scripts-m4rch 20261026-3` still supplies a lower-priority
+sleep drop-in that disables suspend. The machine-local
+`/etc/systemd/sleep.conf.d/90-m4rch-suspend.conf` overrides it to enable the
+tested s2idle behavior. The repository's `20261026-4` candidate corrects the
+packaged default while retaining the hibernation restrictions; it built and its
+package contents were checked, but has not been installed or boot-tested. The
+previous isolated installer test used release 3 and its existing local override.
+
+The repository's audio and platform configuration candidates are stored locally
+under `out/alsa-ucm-candidate/` and `out/asahi-scripts-candidate/`; they are not
+part of the previously tested installer kit.
 
 The initial M4RCH SD-image builder explicitly masked `sshd.service` and
 `sshd.socket`, along with `systemd-networkd`, `systemd-resolved` and their
@@ -103,14 +125,11 @@ boot; it is no longer a recovery option. Keep independent, current backups for
 recovery: GRUB keyboard input is unavailable on this machine. Upstream's
 `update-m1n1` may create a new `/boot/boot.bin.old` on a future bundle update.
 
-The retained `lib/card*.py`, `lib/internal_*.py`, `lib/gpt.py`,
-`lib/stub_payload.py`, `lib/firmware.py` and `lib/nvme_handoff.py` contain
-macOS disk/enrollment, image and firmware support from the retired installer.
-They have no maintained recovery entry point and their old tests do not qualify
-them as a current recovery procedure. The former target-specific stub-policy
-repair and loader trial collector were retired because they referenced obsolete
-transactions; their sources remain available at Git commit `173c1dc`. A
-usable current recovery workflow remains to be designed and tested separately.
+The old macOS disk, firmware and enrollment helper libraries and their legacy
+tests had no maintained recovery entry point and were retired. Their earlier
+versions are available in Git at `e7baa0e`; they are not a verified current
+recovery procedure. A usable recovery workflow still needs to be designed and
+tested for this installation.
 
 ## Limited native package qualification, 28 October
 

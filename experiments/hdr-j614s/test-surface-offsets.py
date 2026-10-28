@@ -5,8 +5,9 @@ import subprocess
 import sys
 import tempfile
 
-root = Path(__file__).resolve().parents[2]
-source = Path(sys.argv[1]) if len(sys.argv) > 1 else root / 'out/hdr-candidate/source'
+if len(sys.argv) != 2:
+    raise SystemExit('Usage: test-surface-offsets.py PATH_TO_PATCHED_KERNEL_SOURCE')
+source = Path(sys.argv[1])
 header = (source / 'drivers/gpu/drm/apple/iomfb_plane.h').read_text()
 header = header.replace('#include <drm/drm_fourcc.h>', '')
 header = header.replace('#include <linux/types.h>', '')

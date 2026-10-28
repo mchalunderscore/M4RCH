@@ -1,8 +1,0 @@
-{
-  "boot_id": "980452e8-5213-462d-a43c-ce775c1caf41",
-  "running_release": "7.1.3-m4rch",
-  "wfi": "Y",
-  "one_shot_consumed": false,
-  "trial_booted": false,
-  "cause": "Unqualified: environment selection was not consumed; do not infer kernel trial failure."
-}

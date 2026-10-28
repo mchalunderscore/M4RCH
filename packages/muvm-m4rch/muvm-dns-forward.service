@@ -1,7 +1,0 @@
-[Unit]
-Description=DNS forwarding for muvm guests
-
-[Service]
-ExecStart=/usr/bin/python3 /usr/lib/muvm/muvm-dns-forward.py
-Restart=on-failure
-RestartSec=1

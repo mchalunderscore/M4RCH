@@ -1,6 +1,6 @@
 pkgname=asahi-scripts-m4rch
 pkgver=20261026
-pkgrel=3
+pkgrel=4
 pkgdesc='Apple Silicon boot integration and hardware configuration'
 arch=('aarch64')
 url='https://github.com/AsahiLinux/asahi-scripts'
