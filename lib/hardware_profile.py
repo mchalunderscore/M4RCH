@@ -227,7 +227,7 @@ MODULE_COMPATIBLES = {
     "tps6598x": "usbc,sn201202x,spmi",
 }
 
-# These supplement the normal userspace/driver profile in boot.py. Keep modules
+# Historical driver-profile metadata retained for provenance. Keep modules
 # as modules: compiling them in defeats the ability to initiate a trial from a
 # running desktop after recording the baseline and synchronizing SD storage.
 BUILTIN = """

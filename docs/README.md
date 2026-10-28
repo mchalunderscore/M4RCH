@@ -35,8 +35,8 @@ following guides preserve historical evidence, not current operating procedures:
   [setup](setup.md), [stub upgrade](stub-upgrade.md) and [NVMe root migration](nvme-root.md).
 - [CPU experiments](cpu-performance.md), [left USB trial](left-usb-trial.md),
   [USB provenance](usb-patchset-provenance.md) and [GPU register mappings](gpu-register-map.md).
-- [Native-agent instructions](native-agent-instructions.md),
-  [follow-up](native-agent-followup.md) and the historical [handover](../HANDOVER.md).
+- The historical [handover](../HANDOVER.md). The retired native-agent guides
+  remain available in Git at `3e5fb15`.
 
 Dated evidence receipts remain under [evidence/](evidence/). The historical
 GPU trial receipts from 8–11 October have been retired from the working tree; the

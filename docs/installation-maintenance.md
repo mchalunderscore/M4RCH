@@ -83,8 +83,9 @@ SHA-256 values of the matching local binaries and module archive:
 other local package inputs. It verifies that preserved source records match
 the promotion directory. The existing `make packages` and cached installer
 remain unqualified for the installed stack; do not run the installer blindly.
-The bulk workflow omits power profiles and its validator targets an older
-kernel. Firmware and calibration are machine-local and must be backed up
+The bulk package lists now include power profiles and omit the retired guest
+packages, and the validator targets the current kernel and boot options. These
+changes still need an end-to-end disposable build and transaction. Firmware and calibration are machine-local and must be backed up
 separately rather than added to Git.
 
 ## Boot recovery

@@ -10,8 +10,8 @@ here=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
 (cd "$here"; sha256sum -c SHA256SUMS)
 names=(linux-m4rch mesa-m4rch virglrenderer-m4rch m1n1-m4rch u-boot-m4rch
        linux-firmware-vendor-m4rch alsa-ucm-conf-m4rch asahi-scripts-m4rch
-       mesa-flatpak-m4rch muvm-m4rch fex-emu-m4rch avd-fw-m4rch
-       fex-rootfs-debian-m4rch steam-m4rch mbpfan-m4rch vesktop-m4rch)
+       mesa-flatpak-m4rch avd-fw-m4rch steam-m4rch mbpfan-m4rch vesktop-m4rch
+       power-profiles-daemon-m4rch)
 packages=()
 for name in "${names[@]}"; do
     matches=("$here/$name"-*.pkg.tar.zst)

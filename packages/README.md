@@ -143,9 +143,12 @@ installed Steam package's default path.
 The historical `make packages` workflow uses a macOS `container` command and
 an Arch ARM build VM. It prepares and builds ordinary PKGBUILDs and runs
 validation against a mounted root; it is not a native Linux one-command build.
-The existing `validate.sh` also checks the older `7.3.0-m4rch` release and
-speaker-module exclusion, so it must be updated and requalified for the current
-`7.3.0-m4rch-vrr-ext` release before it can validate the promoted stack. Local build inputs
+The bulk preparation, build, validation and installer package lists now include
+the installed power-profiles daemon and omit the retired muvm/FEX guest set.
+`validate.sh` targets `7.3.0-m4rch-vrr-ext`, the current boot options and the
+speaker-module blacklist. These script changes have not been exercised in the
+macOS container or through a disposable package transaction, and do not qualify
+the installer for use. Local build inputs
 are under `out/packages/source/`; firmware inputs are machine-local. Kernel
 configuration and patches are included in the kernel package. The Flatpak
 build helper uses Freedesktop SDK 25.08/26.08 and LLVM 22; its pinned Mesa and
@@ -154,7 +157,7 @@ Some local build inputs, including `out/packages/source/`, are absent; prepare
 the required source archives, firmware and guest rootfs again before running
 `make packages`. Some promoted boot artifacts remain under
 `out/external-investigation/promotion/`. The repository alone does not contain these machine-local inputs.
-The Steam rootfs inputs are built using `packages/tools/build-fex-mesa.sh` and
+The optional historical Steam guest rootfs inputs are built using `packages/tools/build-fex-mesa.sh` and
 `packages/tools/build-fex-rootfs.sh` in disposable Debian 13 amd64 build VMs.
 The first needs Mesa's native and i386 development dependencies plus LLVM 19;
 the second needs debootstrap, erofs-utils and permission to mount procfs.

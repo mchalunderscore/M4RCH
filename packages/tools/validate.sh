@@ -26,7 +26,7 @@ if ((${#obsolete[@]})); then
 fi
 ln -s /dev/null "$root/etc/pacman.d/hooks/95-m1n1-install.hook"
 pacman --root "$root" --config /work/package-check.conf --gpgdir /etc/pacman.d/gnupg -U --noconfirm --ask=4 --noscriptlet "${packages[@]}"
-for name in linux-m4rch mesa-m4rch virglrenderer-m4rch m1n1-m4rch u-boot-m4rch linux-firmware-vendor-m4rch alsa-ucm-conf-m4rch asahi-scripts-m4rch mesa-flatpak-m4rch muvm-m4rch fex-emu-m4rch avd-fw-m4rch fex-rootfs-debian-m4rch steam-m4rch mbpfan-m4rch vesktop-m4rch; do
+for name in linux-m4rch mesa-m4rch virglrenderer-m4rch m1n1-m4rch u-boot-m4rch linux-firmware-vendor-m4rch alsa-ucm-conf-m4rch asahi-scripts-m4rch mesa-flatpak-m4rch avd-fw-m4rch steam-m4rch mbpfan-m4rch vesktop-m4rch power-profiles-daemon-m4rch; do
     pacman --root "$root" -Qk "$name"
 done
 echo 'PASS: target package dependencies and ownership'
@@ -39,18 +39,19 @@ cp "$out/source/previous-boot.bin" /boot/boot.bin
 pacman -U --noconfirm --ask=4 "${packages[@]}"
 test -s /boot/vmlinuz-linux-m4rch
 test -s /boot/initramfs-linux-m4rch.img
-cmp /boot/vmlinuz-linux-m4rch /usr/lib/modules/7.3.0-m4rch/vmlinuz
-grep -aq 'Linux version 7.3.0-m4rch ' /boot/vmlinuz-linux-m4rch
+cmp /boot/vmlinuz-linux-m4rch /usr/lib/modules/7.3.0-m4rch-vrr-ext/vmlinuz
+grep -aq 'Linux version 7.3.0-m4rch-vrr-ext ' /boot/vmlinuz-linux-m4rch
 grep -q '^CONFIG_KVM=y$' /usr/share/doc/linux-m4rch/config
 test -s /usr/lib/firmware/apple/aop-als-cal.bin
 test -s /usr/lib/firmware/apple/avd-fw-v5-t1.bin
 lsinitcpio /boot/initramfs-linux-m4rch.img >"$out/initramfs-files.txt"
 grep -q 'apple-silicon.conf' "$out/initramfs-files.txt"
+grep -q 'plymouth' "$out/initramfs-files.txt"
 ! grep -Eq 'm4rch-root|m4rch-drivers|aurora-direct|aurora-userspace' "$out/initramfs-files.txt"
 test -s /boot/boot.bin.old
 test "$(stat -c %s /boot/boot.bin)" -lt "$((4587520 - 32768))"
 test "$(fdtget /usr/lib/asahi-boot/apple-j614s.dtb / model)" = 'Apple MacBook Pro (14-inch, M4 Pro)'
-! find /usr/lib/modules/7.3.0-m4rch -name '*tas2764.ko*' -o -name '*tas2770.ko*' | grep -q .
+grep -q 'modprobe.blacklist=snd_soc_tas2764,snd_soc_tas2770' /etc/default/grub.d/apple-silicon.cfg
 # The fan service loads its own hwmon module; other devices use normal discovery.
 ! test -e /usr/lib/systemd/system/apple-silicon.service
 systemd-analyze verify /usr/lib/systemd/system/mbpfan.service
@@ -60,12 +61,15 @@ grep -q 'vmlinuz-linux-m4rch' /boot/grub/grub.cfg
 grep -q 'initramfs-linux-m4rch.img' /boot/grub/grub.cfg
 # This kernel enables the J614s display nodes only with this early parameter.
 grep -Eq 'linux[[:space:]]+/boot/vmlinuz-linux-m4rch .*m4rch.dcp=1' /boot/grub/grub.cfg
+for option in 'mem_sleep_default=s2idle' 'user4k=on' 'appledrm.j614s_vrr=1' 'm4rch.extdisp=1' 'appledrm.t6041_dcpext=1' 'quiet splash'; do
+    grep -Fq "$option" /boot/grub/grub.cfg
+done
 grep -qx 'terminal_output console' /boot/grub/grub.cfg
 ! grep -Eq 'm4rch.packaged=|aurora_gpu' /boot/grub/grub.cfg
 
 # A subsequent ordinary kernel transaction must refresh the same boot files.
 pacman -U --noconfirm "$out"/linux-m4rch-*.pkg.tar.zst
-cmp /boot/vmlinuz-linux-m4rch /usr/lib/modules/7.3.0-m4rch/vmlinuz
+cmp /boot/vmlinuz-linux-m4rch /usr/lib/modules/7.3.0-m4rch-vrr-ext/vmlinuz
 for file in /usr/lib/libvulkan_asahi.so /usr/lib/libEGL_mesa.so.0 /usr/lib/libGLX_mesa.so.0 /usr/lib/libgbm.so.1; do
     ! ldd "$file" | grep -q 'not found'
     ! readelf -d "$file" | grep -E '(RPATH|RUNPATH).*aurora-direct'

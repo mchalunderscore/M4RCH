@@ -95,8 +95,8 @@ Compare a privileged read with the attribute's existence and access mode.
 
 Keep `idle=nop arm64.nowfxt`. SavedWFI is a shallow state; counters prove
 completed calls, not physical sleep depth or a calibrated power saving.
-Follow the [native-agent follow-up](native-agent-followup.md) for the pending
-post-boot checks and bounded cooling capture.
+The retired native-agent follow-up recorded post-boot checks and bounded cooling
+capture; its historical version is available in Git at `3e5fb15`.
 
 ## Compare placement
 

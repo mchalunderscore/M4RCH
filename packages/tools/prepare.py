@@ -14,8 +14,8 @@ OUT = ROOT / 'out/packages'
 SOURCE = OUT / 'source'
 NAMES = ('linux-m4rch', 'mesa-m4rch', 'virglrenderer-m4rch', 'm1n1-m4rch', 'u-boot-m4rch',
          'linux-firmware-vendor-m4rch', 'alsa-ucm-conf-m4rch', 'asahi-scripts-m4rch',
-         'mesa-flatpak-m4rch', 'muvm-m4rch', 'fex-emu-m4rch', 'avd-fw-m4rch',
-         'fex-rootfs-debian-m4rch', 'steam-m4rch', 'mbpfan-m4rch', 'vesktop-m4rch')
+         'mesa-flatpak-m4rch', 'avd-fw-m4rch', 'steam-m4rch', 'mbpfan-m4rch',
+         'vesktop-m4rch', 'power-profiles-daemon-m4rch')
 
 
 def archive(path, source, arcname):
@@ -35,7 +35,11 @@ def main():
         dest = recipes / name
         if dest.exists():
             shutil.rmtree(dest)
-        shutil.copytree(ROOT / 'packages' / name, dest)
+        shutil.copytree(ROOT / 'packages' / name, dest,
+                        ignore=shutil.ignore_patterns('src', 'pkg', '__pycache__', '*.pkg.tar.*'))
+        if name == 'power-profiles-daemon-m4rch':
+            stock = ROOT / 'packages' / name / 'power-profiles-daemon-0.30-1-aarch64.pkg.tar.xz'
+            shutil.copy2(stock, dest / stock.name)
 
     kernel = recipes / 'linux-m4rch'
     kernel_inputs = ROOT / 'out/external-investigation/promotion/linux'
@@ -113,14 +117,7 @@ def main():
     scripts = recipes/'asahi-scripts-m4rch'
     archive(scripts/'files.tar.gz', scripts/'files', 'files')
     shutil.copy2(SOURCE/'asahi-scripts.tar.gz', scripts/'asahi-scripts.tar.gz')
-    for package, filename in [('mesa-flatpak-m4rch', 'flatpak-extensions.tar.gz'),
-                              ('muvm-m4rch', 'muvm-source.tar.gz'),
-                              ('fex-emu-m4rch', 'fex-source.tar.gz')]:
-        shutil.copy2(SOURCE/filename, recipes/package/filename)
-    for source, name in [('debian.erofs', 'debian.erofs'),
-                         ('debian-packages.txt', 'packages.txt'),
-                         ('debian-build-info.txt', 'build-info.txt')]:
-        shutil.copy2(SOURCE/source, recipes/'fex-rootfs-debian-m4rch'/name)
+    shutil.copy2(SOURCE/'flatpak-extensions.tar.gz', recipes/'mesa-flatpak-m4rch/flatpak-extensions.tar.gz')
     shutil.copy2(SOURCE/'steam-launcher.deb', recipes/'steam-m4rch/steam-launcher.deb')
     shutil.copy2(SOURCE/'mbpfan-source.tar.gz', recipes/'mbpfan-m4rch/mbpfan-source.tar.gz')
     for filename in ('electron45.zip', 'vesktop-app.tar.gz'):
@@ -134,9 +131,6 @@ def main():
         'alsa-ucm-conf-m4rch': ['alsa.tar.gz'],
         'asahi-scripts-m4rch': ['asahi-scripts.tar.gz', 'files.tar.gz'],
         'mesa-flatpak-m4rch': ['flatpak-extensions.tar.gz'],
-        'muvm-m4rch': ['muvm-source.tar.gz', 'muvm-wrapper', 'muvm-dns-sync', 'muvm-dns-forward.py', 'muvm-dns-proxy.py', 'muvm-dns-forward.service'],
-        'fex-emu-m4rch': ['fex-source.tar.gz', 'guest-data-limit.patch'],
-        'fex-rootfs-debian-m4rch': ['debian.erofs', 'packages.txt', 'build-info.txt'],
         'steam-m4rch': ['steam-launcher.deb', 'steam', 'steam-native4k-launch-loop.sh', 'userpages.c', 'userpages-prctl.h'],
         'mbpfan-m4rch': ['mbpfan-source.tar.gz', 'macsmc.patch', 'smooth-curve.patch', 'mbpfan.service', 'mbpfan.conf'],
         'vesktop-m4rch': ['electron45.zip', 'vesktop-app.tar.gz'],
