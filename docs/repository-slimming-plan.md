@@ -26,9 +26,16 @@ See the [maintenance inventory](installation-maintenance.md) for the current
 boot, tested behavior and build limitations. See [worktree review](worktree-review.md)
 for publication and backup considerations.
 
-Git's current branch is traversable, but `git fsck` still reports empty objects
-and invalid or incomplete Codex-owned historical checkpoint references. They
-are not needed to build the current branch; reconstruct the missing checkpoint
-data or preserve it before changing those app-owned references.
+Git's current branch is traversable. A `git fsck` audit found empty objects
+and invalid or incomplete Codex-owned historical checkpoint references. The
+two empty capture refs and eleven empty loose object placeholders were saved in
+`out/git-damaged-metadata-20261028.tar.gz` and removed. One historical Codex
+checkpoint still refers to a missing Mesa tree and test blob; those contents
+have not been recovered. The current branch and remote-tracking history are
+traversable without missing objects.
+
+An extracted upstream U-Boot review tree was removed after all 38,034 files
+and symlinks matched the retained `out/boot-upstream-review/aurora-pr16-head.tar.gz`.
+Other local builds and captures remain pending dependency and provenance review.
 
 Upstream review on 28 October: [Aurora distribution catalogs](https://github.com/aurora-silicon/aurora-distributions) document signed distribution delivery and private calibration handling, while [Asahi update-m1n1](https://github.com/AsahiLinux/asahi-scripts/blob/main/update-m1n1) assembles the boot bundle and keeps an old copy when it changes. Neither establishes a qualified replacement for this J614s package workflow.

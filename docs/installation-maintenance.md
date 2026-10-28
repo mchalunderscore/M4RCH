@@ -101,3 +101,25 @@ request. Their temporary boot archive was retired after the successful normal
 boot; it is no longer a recovery option. Keep independent, current backups for
 recovery: GRUB keyboard input is unavailable on this machine. Upstream's
 `update-m1n1` may create a new `/boot/boot.bin.old` on a future bundle update.
+
+The retained `lib/card*.py`, `lib/internal_*.py`, `lib/gpt.py`,
+`lib/stub_payload.py`, `lib/firmware.py` and `lib/nvme_handoff.py` contain
+macOS disk/enrollment, image and firmware support from the retired installer.
+They have no maintained recovery entry point and their old tests do not qualify
+them as a current recovery procedure. The former target-specific stub-policy
+repair and loader trial collector were retired because they referenced obsolete
+transactions; their sources remain available at Git commit `173c1dc`. A
+usable current recovery workflow remains to be designed and tested separately.
+
+## Limited native package qualification, 28 October
+
+In temporary directories on this Arch ARM system, the current kernel, m1n1,
+U-Boot and power-profiles recipes built successfully. The kernel image, J614s
+DTB, m1n1 and U-Boot package payloads matched the installed files byte for
+byte; the kernel package contained 250 modules. The five J614s power-profile
+mock integration tests passed. Its freshly built executable differed from the
+installed binary, so this test does not establish byte-for-byte reproducibility.
+An isolated `pacman --dbonly --noscriptlet` transaction against a copy of the
+installed database resolved and reinstalled those four package records. It did
+not install files, run hooks, validate boot-bundle generation or test the full
+bulk package set. The full installer remains unqualified.
