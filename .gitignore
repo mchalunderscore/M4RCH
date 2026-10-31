@@ -3,7 +3,6 @@
 /config.local.json
 __pycache__/
 *.pyc
-/sdboot/config.local.json
 
 # macOS and editor files
 .DS_Store

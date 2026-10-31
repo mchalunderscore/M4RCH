@@ -11,23 +11,30 @@ provides=("signal-desktop=$pkgver")
 conflicts=('signal-desktop')
 options=('!strip' '!debug')
 install=signal.install
-source=('signal-original.pkg.tar.xz' 'electron45-runtime.tar.zst' 'copy-fuses.py')
-noextract=('signal-original.pkg.tar.xz' 'electron45-runtime.tar.zst')
+source=('signal-original.pkg.tar.xz' 'vesktop-runtime.pkg.tar.zst' 'copy-fuses.py')
+noextract=('signal-original.pkg.tar.xz' 'vesktop-runtime.pkg.tar.zst')
 sha256sums=('015e13c818193b9f97543870207b593e4418021325c821663c3bb51d4083d0c4'
-            '701d26b30b11ab6b8d3f12a32432812f315a1338ee3e9e94f46c0d8fc0193f69'
+            '134e8bc3c086a95a4dc1f75911ac51604832976c6db5cd13af8942e0fb453f96'
             'cfd43a6d6a08b0e79269adc04bf43216a66051d8b9c0d8f470ebaf80b740f754')
 
 package() {
+  local runtime="$srcdir/runtime" resources="$srcdir/signal-resources" path
+  for path in "$runtime" "$resources"; do
+    if [[ -e "$path" || -L "$path" ]]; then
+      printf 'Build input directory already exists: %s\n' "$path" >&2
+      return 1
+    fi
+  done
   bsdtar --no-same-owner -xf "$srcdir/signal-original.pkg.tar.xz" -C "$pkgdir" usr
-  local runtime="$srcdir/runtime"
-  mkdir -p "$runtime"
-  bsdtar --no-same-owner -xf "$srcdir/electron45-runtime.tar.zst" -C "$runtime"
+  mkdir "$runtime"
+  bsdtar --no-same-owner -xf "$srcdir/vesktop-runtime.pkg.tar.zst" -C "$runtime" --strip-components=3 usr/lib/vesktop
+  rm -rf "$runtime/resources"
   python "$srcdir/copy-fuses.py" "$pkgdir/usr/lib/signal-desktop/signal-desktop" "$runtime/vesktop"
-  mv "$pkgdir/usr/lib/signal-desktop/resources" "$srcdir/signal-resources"
+  mv "$pkgdir/usr/lib/signal-desktop/resources" "$resources"
   rm -rf "$pkgdir/usr/lib/signal-desktop"
   install -d "$pkgdir/usr/lib/signal-desktop"
   cp -a --no-preserve=ownership "$runtime/." "$pkgdir/usr/lib/signal-desktop/"
   mv "$pkgdir/usr/lib/signal-desktop/vesktop" "$pkgdir/usr/lib/signal-desktop/signal-desktop"
-  mv "$srcdir/signal-resources" "$pkgdir/usr/lib/signal-desktop/resources"
+  mv "$resources" "$pkgdir/usr/lib/signal-desktop/resources"
   chmod 4755 "$pkgdir/usr/lib/signal-desktop/chrome-sandbox"
 }

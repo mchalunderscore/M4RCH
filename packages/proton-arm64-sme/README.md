@@ -16,6 +16,11 @@ This is a pinned, locally compiled component, not an official Valve build.
 Steam does not automatically update custom tools. Do not replace its ntdll
 with one from a different Wine version; rebuild and test against the exact
 Wine submodule of the desired Proton release. Preserve its license.
+The retained Wine patch states LGPL-2.1-or-later and attributes the target
+source to André Hentschel. `COPYING.LIB` is Wine's LGPL text at the pinned
+Wine revision; `COPYING` contains the accompanying GPL-2.0 text. These notices
+cover the patch/source terms and do not replace the licenses included with the
+Valve Proton tool or its other components.
 
 ## Reconstruction
 
@@ -34,4 +39,5 @@ Validation so far: all 289 exported dynamic symbol names and glibc symbol
 version requirements match the Valve ntdll; a 4 KiB userspace x86-64 Windows
 command wrote a verified marker in a disposable prefix; the owner loaded and
 played Shinri in the lobby. This is not comprehensive compatibility testing.
-Logs and build configuration reside under `out/user4k-test/`.
+The historical `out/user4k-test/` logs and build configuration were removed
+at the owner’s request.

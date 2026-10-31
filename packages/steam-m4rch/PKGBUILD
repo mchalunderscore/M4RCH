@@ -1,16 +1,28 @@
 pkgname=steam-m4rch
 pkgver=1.0.0.81
-pkgrel=11
+pkgrel=13
 pkgdesc='Native ARM64 Steam launcher for 4 KiB userspace on Apple Silicon'
 arch=('aarch64')
 url='https://store.steampowered.com/'
-license=('LicenseRef-Valve-Steam')
+license=('LicenseRef-Valve-Steam' 'GPL-2.0-only' 'GPL-2.0-only WITH Linux-syscall-note' 'MIT')
 depends=('bash' 'coreutils' 'grep' 'python' 'xdg-utils' 'hicolor-icon-theme')
 makedepends=('binutils')
 provides=("steam=$pkgver")
-conflicts=('steam' 'steam-x86' 'steam-arm64.sh' 'steam-fex.sh')
+conflicts=('steam' 'steam-x86' 'steam-arm64.sh')
 options=('!strip' '!debug')
-source=("steam-launcher.deb::https://repo.steampowered.com/steam/archive/stable/steam-launcher_${pkgver}_all.deb" 'steam' 'steam-native4k-launch-loop.sh' 'userpages.c' 'userpages-prctl.h')
+source=("steam-launcher.deb::https://repo.steampowered.com/steam/archive/stable/steam-launcher_${pkgver}_all.deb" 'steam' 'steam-native4k-launch-loop.sh' 'userpages.c' 'userpages-prctl.h' 'GPL-2.0-only.txt' 'Linux-syscall-note.txt' 'MIT-aurora-steam-native.txt' 'ATTRIBUTION.md')
+# The Debian archive digest was recorded during the 2026-10-31 package build.
+# Aurora's client installer separately verifies Valve client archive manifests:
+# https://github.com/aurora-silicon/aurora-steam-native/pull/6
+sha256sums=('afd2b922f9771a9ca7ee0cb416bdd4fceabf3e75a2c5b65f654a10419762960d'
+            'dd505a73dce24f2a2a7ffd3a83d52252e460372d96b43d1f889825b5dc51778e'
+            '708ebbdd0eb582209aef1ba8a14614052a5a3ff6b0a9a19cf36b76c99040a825'
+            '2877051ea47269166ddd0d386ed5e6c6c300cf77455b1a4c9a05c78892c51ec8'
+            '77b2f619bbdaea0ed01310fc17b65c789902d8811cff72d01e316f6d415eb739'
+            '0babccc806836e61267516151fae4d433cf90048b5e182b55ff889317a275afb'
+            '5bcef4fedbfc08776630e65d5d0d074dd31208037eddb167ca46a9ec4f737764'
+            'c17a746c8c71529334e38588938dd2d57996060d758cae516645c0d44e2e25f2'
+            'd6c53312f0c33405b0a41f676c1630c092d6bb4adae9f7ef3e78a4e74f0bf169')
 build() {
   cd "$srcdir"
   ${CC:-cc} ${CPPFLAGS} ${CFLAGS} -Wall -Wextra -Wl,-z,max-page-size=65536 ${LDFLAGS} userpages.c -o userpages
@@ -26,4 +38,10 @@ package() {
   gzip -dc "$pkgdir/usr/share/doc/steam/steam_subscriber_agreement.txt.gz" \
     > "$pkgdir/usr/share/licenses/$pkgname/steam_subscriber_agreement.txt"
   install -m644 "$pkgdir/usr/share/doc/steam-launcher/copyright" "$pkgdir/usr/share/licenses/$pkgname/copyright"
+  for notice in GPL-2.0-only.txt Linux-syscall-note.txt MIT-aurora-steam-native.txt; do
+    install -m644 "$srcdir/$notice" "$pkgdir/usr/share/licenses/$pkgname/$notice"
+  done
+  install -Dm644 "$srcdir/ATTRIBUTION.md" "$pkgdir/usr/share/doc/$pkgname/ATTRIBUTION.md"
+  install -Dm644 "$srcdir/userpages.c" "$pkgdir/usr/share/doc/$pkgname/userpages/userpages.c"
+  install -Dm644 "$srcdir/userpages-prctl.h" "$pkgdir/usr/share/doc/$pkgname/userpages/userpages-prctl.h"
 }

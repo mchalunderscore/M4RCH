@@ -1,0 +1,76 @@
+--- a/drivers/iommu/apple-dart.c
++++ b/drivers/iommu/apple-dart.c
+@@ -4214,6 +4214,36 @@
+ 		(of_device_is_compatible(dev->of_node, "apple,t6041-dart") ||
+ 		 of_device_is_compatible(dev->of_node, "apple,t8140-dart") ||
+ 		 of_device_is_compatible(dev->of_node, "apple,t8142-dart"));
++	/* J614s may arrive with the MTP live after the boot keyboard used it.
++	 * Do not reset its DART unless there is no advertised handoff. */
++	if (of_machine_is_compatible("apple,j614s") &&
++	    res->start == 0x514800000ULL) {
++		struct device_node *mtp, *iommu;
++		const char *handoff;
++		bool live, advertised;
++
++		mtp = of_find_node_by_path("/mtp@514600000");
++		iommu = mtp ? of_parse_phandle(mtp, "iommus", 0) : NULL;
++		advertised = mtp && of_find_property(mtp, "apple,rtkit-handoff", NULL);
++		live = advertised && of_device_is_compatible(mtp, "apple,t6041-mtp") &&
++		       !of_property_read_string(mtp, "apple,rtkit-handoff", &handoff) &&
++		       !strcmp(handoff, "mtp-live-v1");
++		if (advertised && (!live || iommu != dev->of_node || dart->hw->type != DART_T8110 ||
++			     dart->locked || tunneled || !dart->supports_bypass ||
++			     !apple_dart_streams_bypassed(dart))) {
++			of_node_put(iommu);
++			of_node_put(mtp);
++			dev_err(dev, "Refusing invalid J614s live MTP DART handoff\n");
++			ret = -EINVAL;
++			goto err_clk_disable;
++		}
++		if (live) {
++			dart->retained_mtp = true;
++			dev_info(dev, "Retaining the live J614s MTP bypass\n");
++		}
++		of_node_put(iommu);
++		of_node_put(mtp);
++	}
+ 	if (of_machine_is_compatible("apple,j713") &&
+ 	    of_machine_is_compatible("apple,t8132") &&
+ 	    res->start == 0x394800000ULL && dart->hw->type == DART_T8110 &&
+--- a/drivers/soc/apple/rtkit-helper.c
++++ b/drivers/soc/apple/rtkit-helper.c
+@@ -185,7 +185,9 @@
+ 	/* T8140 producers predating the buffer inventory remain compatible. */
+ 	inventory = of_find_property(np, "apple,rtkit-buffers", &length);
+ 	if (!inventory) {
+-		if (of_device_is_compatible(np, "apple,t8132-mtp"))
++		if (of_device_is_compatible(np, "apple,t8132-mtp") ||
++		    (of_machine_is_compatible("apple,j614s") &&
++		     of_device_is_compatible(np, "apple,t6041-mtp")))
+ 			return -EINVAL;
+ 		return 0;
+ 	}
+@@ -273,8 +275,10 @@
+ 		count = apple_rtkit_helper_inherit_buffers(helper, buffers);
+ 		if (count < 0)
+ 			return dev_err_probe(dev, count, "Invalid inherited RTKit buffers\n");
+-		if (of_machine_is_compatible("apple,j713") &&
+-		    of_device_is_compatible(dev->of_node, "apple,t8132-mtp"))
++		if ((of_machine_is_compatible("apple,j713") &&
++		     of_device_is_compatible(dev->of_node, "apple,t8132-mtp")) ||
++		    (of_machine_is_compatible("apple,j614s") &&
++		     of_device_is_compatible(dev->of_node, "apple,t6041-mtp")))
+ 			helper->preserved = true;
+ 	}
+ 
+@@ -321,7 +325,9 @@
+ 		 */
+ 		helper->adopted = true;
+ 		helper->strict_buffers = count > 0 ||
+-			of_device_is_compatible(dev->of_node, "apple,t8132-mtp");
++			of_device_is_compatible(dev->of_node, "apple,t8132-mtp") ||
++			(of_machine_is_compatible("apple,j614s") &&
++			 of_device_is_compatible(dev->of_node, "apple,t6041-mtp"));
+ 		helper->rtk = apple_rtkit_init_adopted_with_buffers(
+ 			dev, helper, NULL, 0, &apple_rtkit_helper_ops, buffers, count);
+ 		if (IS_ERR(helper->rtk))

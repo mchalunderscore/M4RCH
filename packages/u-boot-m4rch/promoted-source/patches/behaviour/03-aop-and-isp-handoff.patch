@@ -1,0 +1,196 @@
+--- /dev/null
++++ b/arch/arm/mach-apple/aop_standard_handoff.c
+@@ -0,0 +1,53 @@
++/* SPDX-License-Identifier: GPL-2.0-only OR MIT */
++/* Validate m1n1's same-tree AOP code and log reservations. */
++static int aop_standard_handoff(void *out, const void *live, u32 ready)
++{
++    fdt32_t handles[8];
++    int source = find_compatible(live, "apple,t6041-aop"), dest;
++    int len, count = 0, code = 0, log = 0;
++    const fdt32_t *refs;
++
++    if (!(ready & 1)) return BAD;
++    CHECK(source);
++    refs = fdt_getprop(live, source, "memory-region", &len);
++    if (!refs || len <= 0 || len > sizeof(handles) || len % 4) return BAD;
++    for (int i = 0; i < len / 4; i++) {
++        char path[160];
++        int node = fdt_node_offset_by_phandle(live, fdt32_ld(refs + i)), bytes, target;
++        const fdt32_t *maps;
++        const fdt64_t *reg;
++        u64 phys, size, iova, span;
++        CHECK(node);
++        CHECK(fdt_get_path(live, node, path, sizeof(path)));
++        reg = fdt_getprop(live, node, "reg", &bytes);
++        if (!reg || bytes != 16 || !fdt_getprop(live, node, "no-map", NULL)) return BAD;
++        phys = fdt64_ld(reg); size = fdt64_ld(reg + 1);
++        maps = fdt_getprop(live, node, "iommu-addresses", &bytes);
++        if (!maps || bytes != 20 || fdt32_ld(maps) != fdt_get_phandle(live, source)) return BAD;
++        iova = fdt64_ld((const fdt64_t *)(maps + 1));
++        span = fdt64_ld((const fdt64_t *)(maps + 3));
++        if (!size || size != span || (phys & 0x3fff) || (size & 0x3fff) ||
++            (iova & 0x3fff) || phys > ~0ULL - size || iova > ~0ULL - size) return BAD;
++        target = fdt_path_offset(out, path); CHECK(target);
++        if (fdt_get_phandle(out, target) != fdt32_ld(refs + i)) return BAD;
++        /* Unused calibration RAM stays reserved without a stale consumer. */
++        if (iova != 0x10000000000ULL && iova != phys) {
++            int r = fdt_delprop(out, target, "iommu-addresses");
++            if (r != -FDT_ERR_NOTFOUND) CHECK(r);
++            continue;
++        }
++        code += iova == 0x10000000000ULL;
++        log += iova == phys;
++        handles[count++] = refs[i];
++    }
++    if (code != 1 || log != 1 || count != 2) return BAD;
++    dest = find_compatible(out, "apple,t6041-aop"); CHECK(dest);
++    CHECK(fdt_setprop(out, dest, "memory-region", handles, count * sizeof(handles[0])));
++    CHECK(set_enabled(out, "apple,t6041-aop"));
++    dest = find_compatible(out, "apple,t6041-aop");
++    refs = fdt_getprop(out, dest, "iommus", &len);
++    if (!refs || len < 8) return BAD;
++    dest = fdt_node_offset_by_phandle(out, fdt32_ld(refs)); CHECK(dest);
++    printf("AUMI013: m1n1 AOP code/log reservations validated\n");
++    return fdt_setprop_string(out, dest, "status", "okay");
++}
+--- /dev/null
++++ b/arch/arm/mach-apple/peripheral_handoff.c
+@@ -0,0 +1,125 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++/* FDT representation follows aurora-silicon/m1n1 PR 41: apple,asc-mem,
++ * memory-region and iommu-addresses. Addresses always come from this boot.
++ * This file performs no MMIO; the earlier loader publishes DMA preparation. */
++static int firmware_25g83(struct adt_view a)
++{
++    u32 len;
++    int chosen = adt_named(a, "chosen");
++    const char *p = adt_prop(a, chosen, "firmware-version", &len);
++    return p && len >= sizeof("mBoot-18000.161.10") && len <= 256 &&
++        !memcmp(p, "mBoot-18000.161.10", sizeof("mBoot-18000.161.10"));
++}
++
++static int dram_segment(struct adt_view a, const u8 *raw, u64 maximum,
++                        u64 *physical, u64 *iova, u64 *span)
++{
++    u32 len;
++    int chosen = adt_named(a, "chosen");
++    const u8 *p = adt_prop(a, chosen, "dram-base", &len);
++    u64 base, size;
++    if (!p || len != 8) return BAD;
++    base = le64(p);
++    p = adt_prop(a, chosen, "dram-size", &len);
++    if (!p || len != 8) return BAD;
++    size = le64(p);
++    *physical = le64(raw);
++    *iova = le64(raw + 16); /* ADT remap, matching dt_reserve_asc_segments */
++    *span = ((u64)le32(raw + 24) + 0x3fff) & ~0x3fffULL;
++    if (!*span || *span > maximum || (*physical & 0x3fff) || (*iova & 0x3fff) ||
++        *physical < base || *span > size || *physical - base > size - *span ||
++        *iova > ~0ULL - *span)
++        return BAD;
++    return 0;
++}
++
++static int set_enabled(void *dt, const char *compatible)
++{
++    int n = find_compatible(dt, compatible);
++    CHECK(n);
++    return fdt_setprop_string(dt, n, "status", "okay");
++}
++
++static int asc_region(void *dt, const char *name, u32 device,
++                      u64 physical, u64 iova, u64 size, u32 *handle)
++{
++    int parent = fdt_path_offset(dt, "/reserved-memory"), n;
++    fdt64_t reg[] = {cpu_to_fdt64(physical), cpu_to_fdt64(size)};
++    fdt32_t map[] = {cpu_to_fdt32(device), cpu_to_fdt32(iova >> 32),
++        cpu_to_fdt32(iova), cpu_to_fdt32(size >> 32), cpu_to_fdt32(size)};
++    CHECK(parent);
++    n = fdt_subnode_offset(dt, parent, name);
++    if (n == -FDT_ERR_NOTFOUND) n = fdt_add_subnode(dt, parent, name);
++    CHECK(n);
++    CHECK(fdt_setprop(dt, n, "reg", reg, sizeof(reg)));
++    CHECK(fdt_setprop_string(dt, n, "compatible", "apple,asc-mem"));
++    CHECK(fdt_setprop(dt, n, "no-map", NULL, 0));
++    CHECK(fdt_setprop(dt, n, "iommu-addresses", map, sizeof(map)));
++    *handle = fdt_get_phandle(dt, n);
++    if (!*handle) {
++        CHECK(fdt_generate_phandle(dt, handle));
++        CHECK(fdt_setprop_u32(dt, n, "phandle", *handle));
++    }
++    return 0;
++}
++
++#line 210 "arch/arm/mach-apple/peripheral_handoff.c"
++static int isp_handoff(void *dt, struct adt_view a, u32 ready)
++{
++    static const char names[] = "__TEXT;__DATA";
++    static const char regions[][32] = {"isp-firmware-text", "isp-firmware-data"};
++    const u8 *p, *raw;
++    u64 physical[2], iova[2], size[2];
++    u32 len, device;
++    const fdt32_t *refs, *heapmap;
++    static const char names_expected[] = "text\0data\0heap";
++    static const char *const paths[] = {"/reserved-memory/isp-firmware-text",
++        "/reserved-memory/isp-firmware-data", "/reserved-memory/isp-heap"};
++    int source = adt_named(a, "isp0"), n = find_compatible(dt, "apple,t6041-isp"), map_len;
++    if (!(ready & 2) || !firmware_25g83(a)) return BAD;
++    CHECK(source); CHECK(n);
++    p = fdt_getprop(dt, n, "memory-region-names", &map_len);
++    if (!p || map_len != sizeof(names_expected) || memcmp(p, names_expected, map_len)) return BAD;
++    refs = fdt_getprop(dt, n, "memory-region", &map_len);
++    if (!refs || map_len != 3 * sizeof(*refs)) return BAD;
++    for (int i = 0; i < 3; i++)
++        if (fdt_node_offset_by_phandle(dt, fdt32_ld(refs + i)) != fdt_path_offset(dt, paths[i]) ||
++            fdt_path_offset(dt, paths[i]) < 0) return BAD;
++    int heap = fdt_path_offset(dt, paths[2]);
++    heapmap = fdt_getprop(dt, heap, "iommu-addresses", &map_len);
++    if (!heapmap || map_len != 5 * sizeof(*heapmap) ||
++        fdt32_ld(heapmap) != fdt_get_phandle(dt, n) || fdt32_ld(heapmap + 1) != 0x100 ||
++        fdt32_ld(heapmap + 2) || fdt32_ld(heapmap + 3) ||
++        fdt32_ld(heapmap + 4) != 0x02000000) return BAD;
++    device = fdt_get_phandle(dt, n);
++    if (!device) return BAD;
++    p = adt_prop(a, source, "segment-names", &len);
++    if (!p || len != sizeof(names) || memcmp(p, names, sizeof(names))) return BAD;
++    raw = adt_prop(a, source, "segment-ranges", &len);
++    if (!raw || len != 64) return BAD;
++    for (int i = 0; i < 2; i++)
++        CHECK(dram_segment(a, raw + i * 32, 32 * 1024 * 1024,
++                           &physical[i], &iova[i], &size[i]));
++    if (iova[0] != 0x10000000000ULL || iova[1] != iova[0] + size[0] ||
++        size[0] + size[1] > 32 * 1024 * 1024 ||
++        (physical[0] < physical[1] + size[1] && physical[1] < physical[0] + size[0])) return BAD;
++    for (int i = 0; i < 2; i++) {
++        u32 handle;
++        CHECK(asc_region(dt, regions[i], device, physical[i], iova[i], size[i], &handle));
++    }
++    n = find_compatible(dt, "apple,t6041-isp");
++    fdt32_t version[] = {cpu_to_fdt32(26), cpu_to_fdt32(6), cpu_to_fdt32(2)};
++    CHECK(fdt_setprop(dt, n, "apple,firmware-version", version, sizeof(version)));
++    CHECK(set_enabled(dt, "apple,t6041-isp"));
++    /* Only the ISP's three DARTs; unrelated DARTs retain their status. */
++    n = find_compatible(dt, "apple,t6041-isp");
++    p = fdt_getprop(dt, n, "iommus", &map_len);
++    if (!p || map_len != 3 * 8) return BAD;
++    u32 darts[3];
++    for (int i = 0; i < 3; i++) darts[i] = fdt32_ld((const fdt32_t *)p + i * 2);
++    for (int i = 0; i < 3; i++) {
++        n = fdt_node_offset_by_phandle(dt, darts[i]); CHECK(n);
++        CHECK(fdt_setprop_string(dt, n, "status", "okay"));
++    }
++    return 0;
++}
+--- a/arch/arm/mach-apple/aurora-handoff.c
++++ b/arch/arm/mach-apple/aurora-handoff.c
+@@ -158,5 +158,9 @@
+ 	return 0;
+ }
+ 
++#include "peripheral_handoff.c"
++#include "aop_standard_handoff.c"
++#include "ext_bridge.c"
++
+ #include "shared-tree.c"
+ 

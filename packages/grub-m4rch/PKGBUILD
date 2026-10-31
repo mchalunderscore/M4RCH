@@ -1,10 +1,11 @@
 # Derived from Arch Linux ARM core/grub at the revision in source.json.
 # Maintainers of that recipe: Christian Hesse, Tobias Powalowski,
-# Kevin Mihelich and Vasily Khoruzhick. See README.md for the local changes.
+# Kevin Mihelich and Vasily Khoruzhick; contributors Ronald van Haren and
+# Keshav Amburay. See README.md for the local changes.
 pkgname=grub-m4rch
 epoch=2
 pkgver=2.16
-pkgrel=1.1
+pkgrel=1.2
 pkgdesc='GNU GRand Unified Bootloader (upstream ARM64 high-memory fix)'
 arch=('aarch64')
 url='https://gnu-grub.freedesktop.org/'
@@ -44,6 +45,7 @@ source=(
   'grub.install'
   'sbat.csv'
   'source.json'
+  'COPYING'
 )
 sha256sums=(
   'f0db0104927df0b9a48bc41b735c702936190d17eb2d73d3018fa77474a0cabe'
@@ -56,7 +58,8 @@ sha256sums=(
   '7df3f5cb5df7d2dfb17f4c9b5c5dedc9519ddce6f8d2c6cd43d1be17cecb65cb'
   'b13045c9001ec618ed3d666501f14fee016b290b46234b09b8a67b30d0a0b419'
   '2448f41911a6c1eb80cdbccb72cc10721293ed4811c9526330f373e91df7a3f0'
-  '4e49a431c48041cb36a2bc27a18b5aa82e4b0d071eab7f81fea77ec430b6a033'
+  'bb6edafb9b8ec864d96a1fdc2d74050fc50f45cdc332a859c99f70f46b2abaab'
+  '8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903'
 )
 
 prepare() {
@@ -119,6 +122,7 @@ package() {
   install -Dm644 "${srcdir}/grub.default" "${pkgdir}/etc/default/grub"
   sed "s/%PKGVER%/${epoch}:${pkgver}-${pkgrel}/" "${srcdir}/sbat.csv" \
     > "${pkgdir}/usr/share/grub/sbat.csv"
+  install -Dm644 "${srcdir}/COPYING" "${pkgdir}/usr/share/licenses/${pkgname}/COPYING"
   install -Dm644 "${srcdir}/source.json" \
     "${pkgdir}/usr/share/doc/grub-m4rch/build-source.json"
   install -Dm644 "${srcdir}/0005-arm64-restore-high-memory.patch" \

@@ -1,46 +1,41 @@
 pkgname=power-profiles-daemon-m4rch
-pkgver=0.30
-pkgrel=1
-pkgdesc='Power profiles daemon with J614s CPU frequency caps'
+pkgver=0.30.r20261028.1a151cc
+pkgrel=2
+pkgdesc='Upstream power profiles daemon with J614s CPU frequency caps'
 arch=('aarch64')
 url='https://gitlab.freedesktop.org/upower/power-profiles-daemon'
 license=('GPL-3.0-only')
 depends=('gcc-libs' 'glib2' 'glibc' 'libgudev' 'polkit' 'upower')
 optdepends=('python-gobject: for powerprofilesctl')
 makedepends=('meson' 'ninja' 'glib2-devel')
-checkdepends=('python-dbusmock' 'umockdev')
-provides=("power-profiles-daemon=$pkgver")
+provides=('power-profiles-daemon=0.30')
 conflicts=('power-profiles-daemon')
-source=('power-profiles-daemon-0.30.tar.gz'
-        'power-profiles-daemon-0.30-1-aarch64.pkg.tar.xz'
-        'omarchy-nvidia.patch' 'omarchy-cpufreq-boost.patch'
-        'omarchy-cpufreq-caps.patch' 'j614s-caps.patch' 'j614s-cap-safety.patch')
+options=('!strip' '!debug')
+source=('power-profiles-daemon-source.tar.gz' 'power-profiles-daemon-0.30-1-aarch64.pkg.tar.xz' 'omarchy-cpufreq-caps.patch' 'j614s-caps.patch' 'j614s-cap-safety.patch' 'COPYING')
 noextract=('power-profiles-daemon-0.30-1-aarch64.pkg.tar.xz')
-sha256sums=('6cce45f7b93af1563fe6842a1d2cb21dbc7434498f4a5f2cacb7b48d3c3175da'
-            'c1fe5080a573c73ed200217bbde3e11ba115568f810e260f004476929b3c7e64'
-            '5c3e350afd1baf668aca5d64d9692ec816f72d90ed93aec1f655aeb0d75b2bf1'
-            'd22145fec7c753f78b606a3de2437299d6ff74c33b8aa70b87cfd4ecda9225a0'
-            '79c6958cd8b5642a238300f89cb2e2549a6fcc323b1933bf8cad5b2479ffd6c9'
-            '97e7e3487b439b6c51a0db08e18df3555bf84d9d0bd2926f041fcf189002735e'
-            'fc5d2cef379fdb4f76ba5b4cc4c2d445307c9daa845af431ae0e64603295168c')
 prepare() {
-  cd "power-profiles-daemon-$pkgver"
-  for p in omarchy-nvidia.patch omarchy-cpufreq-boost.patch omarchy-cpufreq-caps.patch j614s-caps.patch j614s-cap-safety.patch; do
+  cd "$srcdir/power-profiles-daemon-1a151ccd8bb42c050960f65ca3dee31effde6b36"
+  for p in omarchy-cpufreq-caps.patch j614s-caps.patch j614s-cap-safety.patch; do
     patch -Np1 -i "$srcdir/$p"
   done
 }
 build() {
-  meson setup build "power-profiles-daemon-$pkgver" --prefix=/usr --libexecdir=lib \
-    -Dtests=true -Dmanpage=disabled -Dbashcomp=disabled -Dpylint=disabled
-  meson compile -C build
-}
-check() {
-  meson test -C build --no-rebuild 'Tests.test_j614s_*' --print-errorlogs
+  # Meson retains an existing build directory's source; never silently reuse it.
+  # https://github.com/mesonbuild/meson/issues/13651
+  if ! mkdir -- "$srcdir/build"; then
+    printf '%s\n' 'Build directory already exists; use a fresh makepkg work directory.' >&2
+    return 1
+  fi
+  meson setup "$srcdir/build" "$srcdir/power-profiles-daemon-1a151ccd8bb42c050960f65ca3dee31effde6b36" --prefix=/usr --libexecdir=lib \
+    -Dtests=false -Dmanpage=disabled -Dbashcomp=disabled -Dpylint=disabled
+  meson compile -C "$srcdir/build" -j2
 }
 package() {
-  # Preserve Arch's unit, client, D-Bus policies, manual, and completions.
-  bsdtar -xpf "$srcdir/power-profiles-daemon-0.30-1-aarch64.pkg.tar.xz" -C "$pkgdir" usr
-  install -Dm755 build/src/power-profiles-daemon "$pkgdir/usr/lib/power-profiles-daemon"
+  bsdtar -xf "$srcdir/power-profiles-daemon-0.30-1-aarch64.pkg.tar.xz" --no-same-owner -C "$pkgdir" usr
+  install -Dm755 "$srcdir/build/src/power-profiles-daemon" "$pkgdir/usr/lib/power-profiles-daemon"
   install -Dm644 "$srcdir/j614s-cap-safety.patch" "$pkgdir/usr/share/doc/$pkgname/j614s-cap-safety.patch"
   install -Dm644 "$srcdir/j614s-caps.patch" "$pkgdir/usr/share/doc/$pkgname/j614s-caps.patch"
+  install -Dm644 "$srcdir/COPYING" "$pkgdir/usr/share/licenses/$pkgname/COPYING"
 }
+
+sha256sums=('a0c3514a84f43df2b6b331d11ec2497fe83e2e9db666a7ff1336cfefae63020d' 'c1fe5080a573c73ed200217bbde3e11ba115568f810e260f004476929b3c7e64' '79c6958cd8b5642a238300f89cb2e2549a6fcc323b1933bf8cad5b2479ffd6c9' '97e7e3487b439b6c51a0db08e18df3555bf84d9d0bd2926f041fcf189002735e' 'fc5d2cef379fdb4f76ba5b4cc4c2d445307c9daa845af431ae0e64603295168c' '8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903')

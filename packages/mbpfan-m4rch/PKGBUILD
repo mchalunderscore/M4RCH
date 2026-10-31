@@ -1,6 +1,6 @@
 pkgname=mbpfan-m4rch
 pkgver=2.4.0
-pkgrel=4
+pkgrel=5
 pkgdesc='MacBook fan controller with Apple Silicon macsmc hwmon support'
 arch=('aarch64')
 url='https://github.com/linux-on-mac/mbpfan'
@@ -10,7 +10,7 @@ provides=("mbpfan=$pkgver")
 conflicts=('mbpfan')
 backup=('etc/mbpfan.conf')
 # Upstream afb8bbb83dd8de85856e297e267581dab4f3f201, plus macsmc sysfs support.
-source=('mbpfan-source.tar.gz' 'macsmc.patch' 'smooth-curve.patch' 'mbpfan.service' 'mbpfan.conf')
+source=('mbpfan-source.tar.gz' 'macsmc.patch' 'smooth-curve.patch' 'mbpfan.service' 'mbpfan.conf' 'COPYING')
 prepare() {
   patch -d mbpfan -Np1 < "$srcdir/macsmc.patch"
   patch -d mbpfan -Np1 < "$srcdir/smooth-curve.patch"
@@ -23,4 +23,5 @@ package() {
   install -Dm644 mbpfan.service "$pkgdir/usr/lib/systemd/system/mbpfan.service"
   install -Dm644 macsmc.patch "$pkgdir/usr/share/doc/$pkgname/macsmc.patch"
   install -Dm644 smooth-curve.patch "$pkgdir/usr/share/doc/$pkgname/smooth-curve.patch"
+  install -Dm644 COPYING "$pkgdir/usr/share/licenses/$pkgname/COPYING"
 }

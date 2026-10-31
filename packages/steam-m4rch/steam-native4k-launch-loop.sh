@@ -18,14 +18,6 @@ export AURORA_STEAM_ROOT
 # user unit the soft limit is 1024, and current clients exhaust it while starting
 # ("socket(): Too many open files"), then crash.
 ulimit -Sn "$(ulimit -Hn)" 2>/dev/null || true
-# FEX titles render through the guest graphics provider. The stock guest rootfs
-# carries a Mesa without Apple G17P support (every GPU job fails with EINVAL);
-# prefer the Aurora provider, built from the same Mesa source as the host
-# driver, when it is installed and the caller did not choose one.
-AURORA_FEX_GRAPHICS_PROVIDER=${AURORA_FEX_GRAPHICS_PROVIDER:-/usr/share/guestos/aurora-fex-mesa/graphics_provider.json}
-if [ -z "${STEAM_COMPAT_GRAPHICS_PROVIDER:-}" ] && [ -r "$AURORA_FEX_GRAPHICS_PROVIDER" ]; then
- export STEAM_COMPAT_GRAPHICS_PROVIDER=$AURORA_FEX_GRAPHICS_PROVIDER
-fi
 # The session can retain an older deprecated ICD override after the Steam
 # wrapper selects a newer prefix. Keep one source of Vulkan driver selection
 # for Steam and every runtime child; older loaders use their default catalog.

@@ -1,0 +1,105 @@
+--- a/src/display.c
++++ b/src/display.c
+@@ -764,7 +764,8 @@
+     else
+         printf("display: Display is internal\n");
+ 
+-    if (chip_id == T8140 || chip_id == T8132) {
++    if (chip_id == T8140 || chip_id == T8132 ||
++        (chip_id == T6040 && board_id == 4 && adt_is_compatible(adt, 0, "J614sAP"))) {
+         printf("display: preserving inherited display (%ldx%ld)\n", cur_boot_args.video.width,
+                cur_boot_args.video.height);
+         return 0;
+--- a/src/kboot_display_handoff.c
++++ b/src/kboot_display_handoff.c
+@@ -76,7 +76,7 @@
+  *
+  * T6041 display block of the M4 Pro (chip T6040, J616s only), with the desktop 26.6.2 DCP firmware:
+  * the T6031 handoff with T6041 values. There is no /chosen opt-in: the handoff is attempted on
+- * every boot whose chip is T6040, whose root is apple,j616s, whose OS firmware matches the known
++ * every J616s and J614s boot whose OS firmware matches the known
+  * profile, and whose device tree describes the T6041 display block (aliases dcp and disp0,
+  * compatible apple,t6041-dcp and apple,display-subsystem). Anything else gets nothing at all: no
+  * __OS_LOG reservation, no register access, no DT edit. On a supported boot the __OS_LOG
+@@ -386,14 +386,14 @@
+  * the kernel accepts only the 26.6.2 firmware. No opt-in: nothing happens unless the device tree
+  * describes this display block (dcp6_dt_describes()), and the display nodes stay disabled.
+  */
+-static const char *const dcp_boards_t6041[] = {"apple,j616s", NULL};
++static const char *const dcp_boards_t6041[] = {"apple,j616s", "apple,j614s", NULL};
+ 
+ static const struct dcp_soc dcp_soc_t6041 = {
+     .name = "T6041",
+     .chip = T6040,
+     .compat = "apple,t6040",
+     .boards = dcp_boards_t6041,
+-    .boards_desc = "J616s",
++    .boards_desc = "J616s/J614s",
+     .dcp_compat = "apple,t6041-dcp",
+     .disp_compat = "apple,display-subsystem",
+     .marker = "apple,t6041-handoff",
+--- a/tests/python/test_t6041_display_handoff.py
++++ b/tests/python/test_t6041_display_handoff.py
+@@ -89,8 +89,10 @@
+     "stale-optin-zero": PUBLISHED,
+     "repeat": "handoff already published",
+     "oslog-in-memreserve": "lies inside /memreserve/",
+-    "wrong-chip": "not a J616s (chip 0x6041): nothing done",
+-    "wrong-board": "not a J616s (chip 0x6040): nothing done",
++    "wrong-chip": "not a J616s/J614s (chip 0x6041): nothing done",
++    "wrong-board": "not a J616s/J614s (chip 0x6040): nothing done",
++    "j614-no-optin": PUBLISHED,
++    "j614-optin": PUBLISHED,
+     "no-display-dt": NOT_DESCRIBED,
+     "no-dcp-alias": NOT_DESCRIBED,
+     "wrong-dcp-compat": NOT_DESCRIBED,
+@@ -156,7 +158,7 @@
+     start = source.index("static const struct dcp_soc dcp_soc_t6041 = {")
+     record = source[start:source.index("\n};", start)]
+     assert ".optin" not in record
+-    assert "asahi,t6041-dcp" not in source
++    assert 'optin_name = "asahi,t6041-dcp"' not in source
+     assert "asahi,t6041-dcp" not in (ROOT / "src/kboot.c").read_text()
+ 
+ 
+--- a/tests/t6041_display_host.c
++++ b/tests/t6041_display_host.c
+@@ -703,6 +703,7 @@
+ }
+ 
+ static const char J616S[] = "apple,j616s\0apple,t6040\0apple,arm-platform";
++static const char OTHER[] = "apple,j999s\0apple,t6040\0apple,arm-platform";
+ static const char J614S[] = "apple,j614s\0apple,t6040\0apple,arm-platform";
+ 
+ /* ---- checks ---- */
+@@ -983,7 +984,9 @@
+     {"oslog-in-memreserve", PUBLISH, "an __OS_LOG wholly inside a /memreserve/ is still described"},
+     /* chip, board and device tree */
+     {"wrong-chip", NOTHING, "chip T6041 with a T6040 device tree"},
+-    {"wrong-board", NOTHING, "a T6040 board other than the J616s"},
++    {"wrong-board", NOTHING, "an unsupported T6040 board"},
++    {"j614-no-optin", PUBLISH, "J614s publishes without an explicit opt-in"},
++    {"j614-optin", PUBLISH, "J614s ignores a stale explicit opt-in"},
+     {"no-display-dt", NOTHING, "a J616s device tree without the display block"},
+     {"no-dcp-alias", NOTHING, "a J616s device tree without the dcp alias"},
+     {"wrong-dcp-compat", NOTHING, "dcp is not apple,t6041-dcp"},
+@@ -1056,7 +1059,9 @@
+     world_j616s(&o);
+ 
+     static u8 dt[DT_SIZE], in[DT_SIZE];
+-    build_dt(dt, is(s, "wrong-board") ? J614S : J616S, sizeof(J616S));
++    const char *board = is(s, "wrong-board") ? OTHER :
++                        (is(s, "j614-no-optin") || is(s, "j614-optin")) ? J614S : J616S;
++    build_dt(dt, board, sizeof(J616S));
+     if (is(s, "external") || is(s, "external-refuse")) {
+         for (int i = 0; i < 2; i++) {
+             build_ext(dt, i);
+@@ -1133,7 +1138,7 @@
+     if (is(s, "oslog-straddles"))
+         OK(fdt_add_mem_rsv(dt, segs[SEG_OSLOG].phys + 0x4000, seg_size(SEG_OSLOG)));
+     int chosen = fdt_path_offset(dt, "/chosen");
+-    if (is(s, "stale-optin") || is(s, "stale-optin-no-dcp") || is(s, "stale-optin-wrong-disp") ||
++    if (is(s, "j614-optin") || is(s, "stale-optin") || is(s, "stale-optin-no-dcp") || is(s, "stale-optin-wrong-disp") ||
+         is(s, "stale-optin-wrong-os"))
+         OK(fdt_setprop_string(dt, chosen, OPTIN, "1"));
+     if (is(s, "stale-optin-zero"))

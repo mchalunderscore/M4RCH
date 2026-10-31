@@ -1,10 +1,12 @@
 # grub-m4rch
 
-A complete AArch64 GRUB **2:2.16-1.1** package with the upstream ARM64
-high-memory allocation fix. It provides versioned `grub`, replaces/conflicts
+The AArch64 GRUB **2:2.16-1.2** recipe carries the upstream ARM64
+high-memory allocation fix and a package-local license. The currently installed
+package remains `2:2.16-1.1`; this recipe has not yet been built or installed. It provides versioned `grub`, replaces/conflicts
 with the ordinary package, and retains the familiar GRUB tools and modules.
-The `config-m4rch` boot hook generates the SD EFI application after upgrades;
-GRUB installation does not change the internal loader or Apple's boot policy.
+The formerly used `config-m4rch` SD boot hook was retired. The current
+internal boot chain and recovery procedure are documented in the
+[recovery guide](../../docs/recovery.md).
 
 ## Allocation fix
 
@@ -20,18 +22,24 @@ and AArch64 flags. Local changes include the `grub-m4rch` package identity,
 higher release, allocator fix, provenance and use of the official release
 archive. Generated configure/gnulib files already exist in that archive;
 font-path adjustments apply directly to generated `configure`.
+The pinned ALARM `sbat.csv` and the installed package both contain a malformed
+GNU project URL; the source is retained unchanged from ALARM.
 
 Inputs have SHA-256 pins, with archive/support-file BLAKE2 checks against the
 pinned ALARM recipe. [source.json](source.json) records URLs, hashes, release
 and fix commits. Pinned inputs do not promise identical package bytes across
-different compiler or dependency versions. GRUB is GPL-3.0-or-later; copied
-recipe/support-file grant scope remains unresolved as recorded in
-[third-party attribution](../../THIRD_PARTY.md).
+different compiler or dependency versions. GRUB is GPL-3.0-or-later; its license is retained in `COPYING` and installed
+with the package. The ALARM recipe records maintainers Christian Hesse, Tobias
+Powalowski, Kevin Mihelich and Vasily Khoruzhick, plus contributors Ronald van
+Haren and Keshav Amburay. No explicit recipe-level grant was found in the
+pinned ALARM root or contribution notes; the package license field alone does
+not establish a grant for copied recipe/support files. Preserve those notices
+and resolve their scope before making a publication-clearance claim.
 
 ## Build and validate
 
-The project builds this package through `make packages` or `make image`.
-For the standalone recipe, use a disposable AArch64 Arch Linux ARM environment
+This recipe is not yet integrated into the current four-package native build
+workflow. For the standalone recipe, use a disposable AArch64 Arch Linux ARM environment
 with `base-devel` and its declared `makedepends`, then run as an ordinary user:
 
 ```sh
@@ -39,8 +47,8 @@ cd /path/to/packages/grub-m4rch
 SOURCE_DATE_EPOCH=1790082997 PKGEXT=.pkg.tar.zst makepkg --syncdeps --cleanbuild
 ```
 
-The recipe check generates an ARM64 EFI application from its built modules.
-Executable allocator regressions cover high addresses; QEMU and native boot
-remain separate checks. Installing GRUB updates the existing SD EFI binary
-only when the project's hook completes successfully with the right ESP
-mounted at `/boot`.
+The recipe check verifies the address constant and generates an ARM64 EFI
+application from its built modules. It does not exercise high-address
+allocations, QEMU or native boot. The earlier SD EFI update hook is not part of
+the current workflow. Verify the installed GRUB and boot configuration before
+any update.

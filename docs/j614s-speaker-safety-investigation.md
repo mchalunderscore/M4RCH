@@ -1,6 +1,6 @@
 # J614s speaker safety assessment
 
-Assessment on 2026-10-27. This is a read-only comparison, not speaker enablement or a hardware safety certification. The raw Apple device tree (ADT) used here was captured earlier from this machine and is retained privately under `out/external-investigation/private/current.adt`. The [audit](../experiments/speaker-safety/audit-adt.py) extracts only audio-related metadata; its [result](../experiments/speaker-safety/j614s-adt-audit.json) excludes the rest of the ADT. No amp, GPIO, mixer or PCM was changed and no audio was played.
+Assessment on 2026-10-27. This is a read-only comparison, not speaker enablement or a hardware safety certification. The raw Apple device tree (ADT) used here was captured from this machine; its former `out/external-investigation/private/current.adt` copy was later removed. No amp, GPIO, mixer or PCM was changed and no audio was played.
 
 ## J614s hardware and J616s comparison
 
@@ -27,9 +27,9 @@ Aurora's [J616s safetyd profile](https://github.com/aurora-silicon/fedora-aurora
 
 Aurora's [J616s tests and discussion](https://github.com/aurora-silicon/linux/pull/406) report a low current sense on one unit's left woofer while two others read normally. The test profile links gains and its graph duplicates the left woofer signal; that mitigation depends on the routing and cannot be assumed to cover an arbitrary mismatch on J614s. The actual amplifier-fault shutdown was checked by code and probe rules, not a real amp fault. Aurora also reports a [warm-restart issue and fix](https://github.com/aurora-silicon/fedora-aurora/pull/23): a daemon restart must not incorrectly initialize a hot speaker as cold.
 
-## Current live configuration
+## Observed configuration on 27 October
 
-The current Linux DT has all six amp nodes, the shared shutdown regulator and speaker sound card **disabled**. The AOP audio node exposes only `dma`, `cout`, `cin`, without `spkr` and `sense`; the live ALSA cards are the internal microphone and headphone jack. The amp module is blacklisted and `snd_soc_macaudio.please_blow_up_my_speakers` reads `0`. The loaded macaudio module serves the separate headphone card; its presence alone does not mean the speaker card is active.
+The observed Linux DT had all six amp nodes, the shared shutdown regulator and speaker sound card **disabled**. The AOP audio node exposes only `dma`, `cout`, `cin`, without `spkr` and `sense`; the observed ALSA cards were the internal microphone and headphone jack. The amp module is blacklisted and `snd_soc_macaudio.please_blow_up_my_speakers` reads `0`. The loaded macaudio module serves the separate headphone card; its presence alone does not mean the speaker card is active.
 
 The local tree already contains Aurora's speaker stream code and a disabled J616-shaped speaker node. However, the sound card is labelled J616 and its sound identity, UCM, graph, daemon profile and speaker/sense DMA must not be enabled as-is merely because wiring looks similar. The AOP handoff and separate jack/microphone services must remain intact.
 

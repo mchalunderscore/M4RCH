@@ -1,0 +1,64 @@
+--- a/src/kboot.c
++++ b/src/kboot.c
+@@ -5,6 +5,7 @@
+ #include <stdint.h>
+ 
+ #include "kboot.h"
++#include "smc.h"
+ #include "adt.h"
+ #include "asc.h"
+ #include "assert.h"
+@@ -6916,6 +7000,43 @@
+     return 0;
+ }
+ 
++/* J614s's ADT describes the SD-reader supply through this SMC key.
++ * Match the complete action before writing; never guess on another board. */
++static int sdboot_power_reader(void)
++{
++    if (chip_id != T6040 || fdt_node_check_compatible(dt, 0, "apple,j614s")) {
++        printf("SDBOOT: unsupported machine\n");
++        return -1;
++    }
++    int node = adt_path_offset(adt, "/arm-io/apcie0/pci-bridge1/pcie-sdreader");
++    u32 len = 0, action[4], smc_phandle = 0;
++    const void *prop = node < 0 ? NULL : adt_getprop(adt, node, "function-sd_pwr_en", &len);
++    if (!prop || len != sizeof(action)) {
++        printf("SDBOOT: missing SD power action\n");
++        return -1;
++    }
++    memcpy(action, prop, sizeof(action));
++    int pmu = adt_path_offset(adt, "/arm-io/smc/iop-smc-nub/smc-pmu");
++    if (pmu < 0 || adt_getprop_copy(adt, pmu, "AAPL,phandle", &smc_phandle,
++                                  sizeof(smc_phandle)) < 0 || !smc_phandle ||
++        action[0] != smc_phandle || action[1] != 0x704b5734 ||
++        action[2] != 0x67503139 || action[3]) {
++        printf("SDBOOT: unexpected SD power action\n");
++        return -1;
++    }
++    smc_dev_t *smc = smc_init();
++    if (!smc)
++        return -1;
++    int ret = smc_write_u32(smc, 0x67503139, 0x01000001);
++    smc_shutdown(smc);
++    if (ret) {
++        printf("SDBOOT: SD power write failed (%d)\n", ret);
++        return -1;
++    }
++    mdelay(100);
++    return 0;
++}
++
+ int kboot_boot(void *kernel)
+ {
+     if (smp_has_pending_calls()) {
+@@ -6934,6 +7055,9 @@
+         printf("kboot: normal USB init skipped on T8140\n");
+     else
+         usb_init();
++    if (chip_id == T6040 && !fdt_node_check_compatible(dt, 0, "apple,j614s") &&
++        sdboot_power_reader())
++        return -1;
+     int described = chip_id == T8132 ? pcie_prepare_fdt(dt) : 0;
+     bool j713 = chip_id == T8132 && !fdt_node_check_compatible(dt, 0, "apple,j713");
+     if (described < 0) {

@@ -1,0 +1,97 @@
+// SPDX-License-Identifier: GPL-2.0+ OR MIT
+/*
+ * Working draft based on Aurora's T6040 J616s device tree. A version booted on
+ * J614s, but inherited board-specific nodes still need source and hardware
+ * review before sharing code between the two boards.
+ *
+ * The included source retains its original copyright and SPDX notices.
+ */
+#include "t6040-j616s.dts"
+
+/ {
+	compatible = "apple,j614s", "apple,t6040", "apple,arm-platform";
+	model = "Apple MacBook Pro (14-inch, M4 Pro, 2024)";
+
+	aliases {
+		/* J614s has not yet been qualified for the SEP firmware handoff. */
+		/delete-property/ sep;
+	};
+
+};
+
+&dcp {
+	panel {
+		compatible = "apple,panel-j614", "apple,panel-mini-led", "apple,panel";
+		width-mm = <302>;
+		height-mm = <196>;
+		/delete-property/ adj-height-mm;
+	};
+};
+
+&aop_audio {
+	dmas = <&admac0 1>, <&admac1 4>, <&admac1 5>;
+	dma-names = "dma", "cout", "cin";
+	apple,chassis-name = "J614";
+};
+
+/* Firmware selectors for the J614s input and radio hardware. */
+&mtp_hid {
+	multi-touch {
+		firmware-name = "apple/tpmtfw-j614s.bin";
+	};
+};
+
+&{/pcie@1cb0000000/pci@0,0/wifi@0,0} {
+	brcm,board-type = "apple,mriya";
+};
+
+&{/pcie@1cb0000000/pci@0,0/bluetooth@0,1} {
+	brcm,board-type = "apple,mriya";
+};
+
+/* J616s Touch ID wiring and per-device firmware are not qualified here. */
+&spi2 { status = "disabled"; };
+&mesa {
+	/delete-property/ firmware-name;
+	status = "disabled";
+};
+
+/* The current J614s bootloader fills ISP regions from this boot's ADT. */
+&isp {
+	memory-region = <&isp_j614_text>, <&isp_j614_data>, <&isp_j614_heap>;
+	status = "disabled";
+};
+
+/delete-node/ &isp_fw_text;
+/delete-node/ &isp_fw_data;
+/delete-node/ &isp_heap;
+
+/ {
+	/* The bootloader fills text/data addresses from this boot's ADT. */
+	reserved-memory {
+		isp_j614_text: isp-firmware-text { };
+		isp_j614_data: isp-firmware-data { };
+		isp_j614_heap: isp-heap {
+			iommu-addresses = <&isp 0x100 0x0 0x0 0x2000000>;
+		};
+	};
+};
+
+/* These providers are enabled by the current loader once its handoff succeeds. */
+&aop_dart { status = "disabled"; };
+&isp_dart0 { status = "disabled"; };
+&isp_dart1 { status = "disabled"; };
+&isp_dart2 { status = "disabled"; };
+&atcphy0 { status = "disabled"; };
+&atcphy1 { status = "disabled"; };
+&atcphy2 { status = "disabled"; };
+
+/* J616s speaker wiring and amplifier layout are not J614s board data. */
+/delete-node/ &sound;
+/delete-node/ &speaker_sdz;
+/delete-node/ &speaker_left_woof1;
+/delete-node/ &speaker_left_woof2;
+/delete-node/ &speaker_left_tweet;
+/delete-node/ &speaker_right_woof1;
+/delete-node/ &speaker_right_woof2;
+/delete-node/ &speaker_right_tweet;

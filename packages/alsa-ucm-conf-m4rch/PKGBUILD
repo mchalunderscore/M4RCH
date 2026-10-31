@@ -1,6 +1,6 @@
 pkgname=alsa-ucm-conf-m4rch
 pkgver=1.2.16.1
-pkgrel=3
+pkgrel=4
 pkgdesc='ALSA Use Case Manager profiles with Apple Silicon support'
 arch=('any')
 url='https://github.com/aurora-silicon/alsa-ucm-conf'

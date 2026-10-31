@@ -1,0 +1,41 @@
+--- a/drivers/gpu/drm/asahi/asahi_core.rs
++++ b/drivers/gpu/drm/asahi/asahi_core.rs
+@@ -112,6 +112,10 @@
+             // permissions: 0o644,
+             description: "Debug flags",
+         },
++        t6040_16core: u32 {
++            default: 0,
++            description: "Experimental J614s 16-core T6040 full rendering (0: strict upstream layout)",
++        },
+         compute_preempt: i32 {
+             default: -1,
+             description: "Compute preemption (-1: M2 Max or Debug0; 0: off; nonzero: on)",
+--- a/drivers/gpu/drm/asahi/g17/mod.rs
++++ b/drivers/gpu/drm/asahi/g17/mod.rs
+@@ -1175,10 +1175,25 @@
+         let reclaim = runtime::teardown::ReclaimBatch::new()?;
+         let feed = feed::Feed::new()?;
+         let active_cores = id.core_masks.iter().map(|mask| mask.count_ones()).sum();
++        // Same physical two-by-ten topology as T6040, with two fused cores per
++        // cluster. Keep the existing physical-slot buffers as an experimental
++        // hypothesis; their use on this SKU still requires native rendering.
++        let experimental_16core = crate::module_parameters::t6040_16core.value() == 1
++            && cfg.chip_id == 0x6040
++            && id.num_dies == 1
++            && id.num_clusters == 2
++            && id.num_cores == 10
++            && active_cores == 16
++            && id.core_masks.as_slice() == &[0x3db, 0x3db];
++        if experimental_16core {
++            dev_warn!(dev.as_ref(),
++                "Experimental J614s 16-core T6040: two-by-ten physical-slot buffers; full rendering enabled\n");
++        }
+         if cfg
+             .core_layout
+             .cores
+             .is_some_and(|cores| cores != (id.num_clusters, active_cores))
++            && !experimental_16core
+         {
+             dev_err!(
+                 dev.as_ref(),

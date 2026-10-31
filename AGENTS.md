@@ -16,6 +16,24 @@ and recovery through external media when necessary. Preserve known-working
 boot artifacts and user data, communicate material risks and uncertainties, and
 follow higher-priority instructions and any explicit constraints for the task.
 
+# Promoting a boot change
+
+When the owner asks to promote a boot change as the new default, complete the
+promotion to the normal package-managed boot paths and persistent GRUB default;
+do not leave it selected only through a trial or one-shot entry. Once the new
+setup is verified, remove other boot entries and superseded trial kernels,
+initramfs files, loader copies and GRUB configurations from `/boot`, and clear
+obsolete `out/` artifacts. Preserve the information and known-working boot
+artifacts needed for recovery and source provenance outside the active boot
+menu, verifying backups and accounting for unique modified, untracked or
+machine-local material before removing anything. Keep one clear recovery path.
+Regenerate and check GRUB, confirm the sole entry selects the intended kernel
+and initramfs, and report whether the final default has actually been booted.
+
+# Testing
+
+NEVER perform synthetic tests that prove nothing in reality.
+
 # Keep the active tree current
 
 When code, helpers, experiments, documentation or evidence are superseded or no

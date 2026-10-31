@@ -3,11 +3,8 @@
 *.sh text eol=lf
 *.md text eol=lf
 *.json text eol=lf
-# Preserve byte-pinned imported patches and signing-key files.
+# Preserve byte-pinned imported patches.
 # Diff context has intentional prefix spaces; validate added code with git apply.
 *.patch -text -whitespace
-*.asc -text
-*.dtsi text eol=lf
-*.dtso text eol=lf
 Makefile* text eol=lf
 LICENSE text eol=lf
