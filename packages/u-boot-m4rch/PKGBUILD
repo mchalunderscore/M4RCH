@@ -1,6 +1,6 @@
 pkgname=u-boot-m4rch
 pkgver=2026.07
-pkgrel=19
+pkgrel=21
 pkgdesc='U-Boot for Apple Silicon'
 arch=('aarch64')
 url='https://github.com/aurora-silicon/u-boot'
@@ -8,10 +8,10 @@ license=('GPL-2.0-or-later')
 provides=('u-boot')
 conflicts=('u-boot' 'bootloader-aurora-m4rch')
 options=('!strip' '!debug')
-source=('u-boot-nodtb.bin' 'behaviour.patch' 'source-stack.md' 'uboot.config' 'COPYING')
+source=('u-boot-nodtb.bin' 'behaviour.patch' 'reservation.patch' 'sd-handoff.patch' 'source-stack.md' 'uboot.config' 'COPYING')
 package() {
   install -Dm644 "$srcdir/u-boot-nodtb.bin" "$pkgdir/usr/lib/asahi-boot/u-boot-nodtb.bin"
-  for input in behaviour.patch source-stack.md uboot.config; do
+  for input in behaviour.patch reservation.patch sd-handoff.patch source-stack.md uboot.config; do
     install -Dm644 "$srcdir/$input" "$pkgdir/usr/share/doc/$pkgname/$input"
   done
   install -Dm644 "$srcdir/COPYING" "$pkgdir/usr/share/licenses/$pkgname/COPYING"

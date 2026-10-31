@@ -1,0 +1,8 @@
+#%PAM-1.0
+# Fingerprint first for sudo; failure or timeout falls back to system-auth.
+auth            requisite       pam_faillock.so preauth
+auth            sufficient      pam_fprintd.so max-tries=2 timeout=10
+auth            include         system-auth
+account         include         system-auth
+session         include         system-auth
+session         optional        pam_systemd.so class=none

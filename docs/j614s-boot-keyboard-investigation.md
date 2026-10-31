@@ -3,9 +3,8 @@
 On 31 October 2026 the owner confirmed the internal J614s keyboard worked in
 U-Boot and GRUB, and that keyboard and trackpad worked in Linux after an MTP
 handoff trial. The running trial log showed retained MTP DART bypass, adoption
-of three RTKit buffers, and keyboard and multi-touch readiness. The rebuilt
-`7.3.0-m4rch` package-managed default has not yet booted: the owner chose to
-promote it without rebooting.
+of three RTKit buffers, and keyboard and multi-touch readiness. The later package-managed `7.3.0-m4rch-touchid` default has since booted;
+the keyboard handoff observation above is from the earlier trial.
 
 m1n1 passes a device tree to U-Boot, which initializes input and presents the
 UEFI console to GRUB. M1 MacBooks use U-Boot's SPI keyboard driver; M2 and

@@ -1,7 +1,7 @@
 # Sources are the locally built kernel and modules; see ../tools/native.py.
 pkgname=linux-m4rch
 pkgver=7.3.0
-pkgrel=26
+pkgrel=28
 pkgdesc='Linux kernel for Apple Silicon'
 arch=('aarch64')
 url='https://github.com/aurora-silicon/linux'
@@ -10,22 +10,24 @@ depends=('coreutils' 'kmod' 'mkinitcpio')
 provides=('linux')
 conflicts=('linux-aurora-m4rch')
 options=('!strip' '!debug' '!lto')
-source=('Image' 'modules.tar.gz' 'linux-m4rch.preset' 'apple-j614s.dtb' 'kernel.config' 'upstream-integration.patch' 'mtp-handoff.patch' 'source-stack.md' 't6040-j614s.dts' 'GPL-2.0')
+source=('Image' 'modules.tar.gz' 'linux-m4rch.preset' 'apple-j614s.dtb' 'kernel.config' 'upstream-integration.patch' 'mtp-handoff.patch' 'touchid.patch' 'jack.patch' 'source-stack.md' 't6040-j614s.dts' 'GPL-2.0')
 # native.py appends checksums to the generated build directory.
 package() {
   local modules=("$srcdir"/lib/modules/*)
-  [[ ${#modules[@]} == 1 && ${modules[0]##*/} == 7.3.0-m4rch ]]
-  grep -aq 'Linux version 7.3.0-m4rch ' "$srcdir/Image"
+  [[ ${#modules[@]} == 1 && ${modules[0]##*/} == 7.3.0-m4rch-touchid ]]
+  grep -aq 'Linux version 7.3.0-m4rch-touchid ' "$srcdir/Image"
   install -d "$pkgdir/usr"
   cp -a --no-preserve=ownership "$srcdir/lib" "$pkgdir/usr/"
-  rm -f "$pkgdir/usr/lib/modules/7.3.0-m4rch/build"
-  install -Dm644 "$srcdir/Image" "$pkgdir/usr/lib/modules/7.3.0-m4rch/vmlinuz"
-  echo "$pkgname" > "$pkgdir/usr/lib/modules/7.3.0-m4rch/pkgbase"
+  rm -f "$pkgdir/usr/lib/modules/7.3.0-m4rch-touchid/build"
+  install -Dm644 "$srcdir/Image" "$pkgdir/usr/lib/modules/7.3.0-m4rch-touchid/vmlinuz"
+  echo "$pkgname" > "$pkgdir/usr/lib/modules/7.3.0-m4rch-touchid/pkgbase"
   install -Dm644 "$srcdir/linux-m4rch.preset" "$pkgdir/etc/mkinitcpio.d/linux-m4rch.preset"
   install -Dm644 "$srcdir/apple-j614s.dtb" "$pkgdir/usr/lib/asahi-boot/apple-j614s.dtb"
   install -Dm644 "$srcdir/kernel.config" "$pkgdir/usr/share/doc/$pkgname/config"
   install -Dm644 "$srcdir/upstream-integration.patch" "$pkgdir/usr/share/doc/$pkgname/upstream-integration.patch"
   install -Dm644 "$srcdir/mtp-handoff.patch" "$pkgdir/usr/share/doc/$pkgname/mtp-handoff.patch"
+  install -Dm644 "$srcdir/touchid.patch" "$pkgdir/usr/share/doc/$pkgname/touchid.patch"
+  install -Dm644 "$srcdir/jack.patch" "$pkgdir/usr/share/doc/$pkgname/jack.patch"
   install -Dm644 "$srcdir/source-stack.md" "$pkgdir/usr/share/doc/$pkgname/source-stack.md"
   install -Dm644 "$srcdir/t6040-j614s.dts" "$pkgdir/usr/share/doc/$pkgname/t6040-j614s.dts"
   install -Dm644 "$srcdir/GPL-2.0" "$pkgdir/usr/share/licenses/$pkgname/GPL-2.0"

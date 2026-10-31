@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """Prepare or build a maintained package on native Arch Linux ARM.
 
-The boot packages repackage locally retained artifacts; the final kernel has
-not yet been booted. This is not a kernel or bootloader source build. No command installs a package.
+The boot packages repackage locally retained artifacts; the retained inputs have been booted in a qualification trial. This is not a kernel or bootloader source build. No command installs a package.
 
 Aurora's ALARM scripts/build-package supplies the native makepkg pattern:
 https://github.com/aurora-silicon/alarm-aurora/blob/main/scripts/build-package
@@ -26,23 +25,25 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parents[2]
 CACHE = ROOT / 'cache/installed-20261031'
-PROMOTED_CACHE = ROOT / 'cache/mtp-promotion/inputs'
+PROMOTED_CACHE = ROOT / 'cache/touchid-promotion/inputs'
+JACK_PROMOTED_MODULES = ROOT / 'cache/jack-promotion/inputs/linux-package/modules.tar.gz'
+SD_PROMOTED_UBOOT = ROOT / 'cache/jack-promotion/inputs/u-boot-nodtb.bin'
 RECIPES = ('linux-m4rch', 'm1n1-m4rch', 'u-boot-m4rch', 'mesa-m4rch')
-LINUX_PATCHES = ('upstream-integration.patch', 'mtp-handoff.patch')
+LINUX_PATCHES = ('upstream-integration.patch', 'mtp-handoff.patch', 'touchid.patch', 'jack.patch')
 LINUX_SOURCES = (
     'Image', 'modules.tar.gz', 'linux-m4rch.preset', 'apple-j614s.dtb',
-    'kernel.config', 'upstream-integration.patch', 'mtp-handoff.patch',
+    'kernel.config', 'upstream-integration.patch', 'mtp-handoff.patch', 'touchid.patch', 'jack.patch',
     'source-stack.md', 't6040-j614s.dts', 'GPL-2.0',
 )
 M1_SOURCES = ('m1n1.bin', 'upstream-integration.patch', 'source-stack.md', 'LICENSE', 'licenses.tar.gz')
-UBOOT_SOURCES = ('u-boot-nodtb.bin', 'behaviour.patch', 'source-stack.md', 'uboot.config', 'COPYING')
+UBOOT_SOURCES = ('u-boot-nodtb.bin', 'behaviour.patch', 'reservation.patch', 'sd-handoff.patch', 'source-stack.md', 'uboot.config', 'COPYING')
 PINNED_INPUTS = {
-    'linux-package/Image': '6aee846f2c60a6362c86f241941444adcff984dbe4f3fdbc0762281430b25ec3',
-    'linux-package/modules.tar.gz': 'dbbc0fb2506091c3f5991d0bb9e88059da0c26f3e65bf7f6664250465822d43b',
-    'linux-package/apple-j614s.dtb': '5ef0aec63e8bb4b0deb9343f17de11dcc35a2c00815d1209cf283a69e87c42c6',
-    'linux-package/kernel.config': '6dc33a6b9d8083489f730832c66efcec0c06f86112b9451a558e66b6ff9bfc0c',
+    'linux-package/Image': 'f66f222657422dbcbcc31162eec96f68fef382f6c2586b8860995762b9f0b791',
+    'linux-package/modules.tar.gz': '08e969d02fc54e74081fbd68e40220d595e8f97502495ec48e27082c2569341f',
+    'linux-package/apple-j614s.dtb': 'e2435554bfda78178d4427fc2645b8f024885048e1946ae74cd619094365efc8',
+    'linux-package/kernel.config': '9420e2be2a500fe240e2cf8ec1e520ca55dd5b327ca97932f366bf62d49b11e4',
     'm1n1.bin': 'fe9571af510cec542852e88a21928be29a855c66b2937fc3938a6cdedb3fc501',
-    'u-boot-nodtb.bin': 'da769992da67d86c0e946e9af9930384046ef8d232194b0d202318e752370d1c',
+    'u-boot-nodtb.bin': 'b25192d5f2f4c07f49ee0cc6f15d2c9ec5199cf201cc608c1a651c249ba0b018',
 }
 
 
@@ -71,7 +72,12 @@ def digest(path: Path) -> str:
 
 
 def verify(name: str) -> Path:
-    path = (CACHE if name == "m1n1.bin" else PROMOTED_CACHE) / name
+    if name == 'linux-package/modules.tar.gz':
+        path = JACK_PROMOTED_MODULES
+    elif name == 'u-boot-nodtb.bin':
+        path = SD_PROMOTED_UBOOT
+    else:
+        path = (CACHE if name == 'm1n1.bin' else PROMOTED_CACHE) / name
     if not path.is_file():
         raise ValueError(f'missing required retained input: {path}')
     if digest(path) != PINNED_INPUTS[name]:
@@ -124,6 +130,8 @@ def prepare_boot(name: str, work: Path) -> None:
         for filename in ('source-stack.md', 'uboot.config'):
             copy(source_record / filename, work / filename)
         assemble_patch(name, 'behaviour.patch', work / 'behaviour.patch')
+        assemble_patch(name, 'reservation.patch', work / 'reservation.patch')
+        assemble_patch(name, 'sd-handoff.patch', work / 'sd-handoff.patch')
         copying = package / 'COPYING'
         if digest(copying) != '8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643':
             raise ValueError('U-Boot COPYING does not match the pinned upstream license')

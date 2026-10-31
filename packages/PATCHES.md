@@ -8,7 +8,7 @@ The package-root symlinks let makepkg find the policy patches by their usual
 source names; the canonical patch contents live in `patches/m4rch/`.
 
 Linux, m1n1 and U-Boot packages use prebuilt inputs, not a fresh source build.
-The new final Linux binary has not yet booted; its handoff trial did. Their source records identify the base, ordered deltas,
+The package-managed default has booted. The source records identify the base, ordered deltas,
 configuration and limits of the evidence:
 
 - [Linux source record](linux-m4rch/promoted-source/source-stack.md): apply

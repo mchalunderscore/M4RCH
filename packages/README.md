@@ -10,6 +10,7 @@ Recipes may include subsequent packaging-only changes that have not been install
 | m1n1-m4rch, u-boot-m4rch, grub-m4rch | Boot chain |
 | mesa-m4rch | Native Mesa graphics drivers |
 | linux-firmware-vendor-m4rch, avd-fw-m4rch | Machine firmware and AVD firmware |
+| libva-v4l2-request-m4rch | VA-API bridge for Apple AVD; [qualification and usage](libva-v4l2-request-m4rch/README.md) |
 | alsa-ucm-conf-m4rch, asahi-scripts-m4rch | Audio configuration and hardware setup |
 | mbpfan-m4rch, power-profiles-daemon-m4rch | Fan and CPU power policy |
 | steam-m4rch, proton-arm64-sme | Native Steam launcher and installed Proton compatibility tool |
@@ -50,8 +51,10 @@ The Signal recipe uses the cached Signal and Vesktop binary packages as inputs;
 see its [package notes](signal-desktop-m4rch/README.md).
 
 The boot package commands verify and repackage retained binaries. The current
-kernel and U-Boot inputs are in `cache/mtp-promotion/inputs/`; m1n1 remains in
-`cache/installed-20261031/`. They do not compile a new kernel or bootloader.
+kernel Image, DTB and config remain in `cache/touchid-promotion/inputs/`,
+while the jack-updated modules archive and SD U-Boot are in
+`cache/jack-promotion/inputs/`; m1n1 remains in `cache/installed-20261031/`.
+They do not compile a new kernel or bootloader.
 The previous kernel's historical source tree was not fully reconstructed.
 Mesa instead builds its pinned Aurora source. Check dependencies and disk space
 before building. `make check` checks recipe syntax, recorded patch digests and
@@ -63,3 +66,10 @@ The native workflow follows Aurora's [package builder](https://github.com/aurora
 its [Mesa pin](https://github.com/aurora-silicon/alarm-aurora/pull/65) contains
 the packaged Mesa revision. The local preparer supplies the machine-specific
 boot artifacts and source records.
+
+The fingerprint stack recipes `libfprint-aurora`, `fprintd-aurora`, and
+`aurora-sep` are retained from Aurora ALARM at commit
+`b5333caead8b23290235eaff6dde1106206a3856`; package-local provenance records
+identify their upstream patch sources. All three packages are installed. The local `aurora-sep-m4rch` recipe refuses to create a missing keybag automatically and loads the SEP once with the xART guard enabled. Its firmware is this Mac's own root-only material,
+not a distributable package input. These recipes are built with `makepkg` in
+separate build directories; they are not yet part of `native.py`.

@@ -2,30 +2,31 @@
 
 This is a snapshot of the J614s machine on 31 October 2026, not a general
 support matrix. Check the installed versions and running kernel before an
-update. The owner confirmed the retained-input trial booted and worked
-normally; the newly installed default has not yet booted. Peripheral and
-workload checks below are limited to the stated runs.
+update. The package-managed SD and jack promotion booted on 31 October (boot ID
+`c7c08627-2c0d-4806-bf4b-3933df129d1b`). Peripheral and workload checks below are limited to the
+stated runs.
 
 | Component | Installed package or running release |
 | --- | --- |
-| Linux | `linux-m4rch 7.3.0-26`; running `7.3.0-m4rch-mtp-trial` |
+| Linux | `linux-m4rch 7.3.0-28`; running `7.3.0-m4rch-touchid` |
 | m1n1 | `m1n1-m4rch 20261031-1` |
-| U-Boot | `u-boot-m4rch 2026.07-19` |
+| U-Boot | `u-boot-m4rch 2026.07-21`; package-managed default booted |
 | Native Mesa | `mesa-m4rch 1:26.3.0.r20261031.c208afc-1` |
 | Platform configuration | `asahi-scripts-m4rch 20261026-3` |
 | Audio profiles | `alsa-ucm-conf-m4rch 1.2.16.1-4` |
+| Video decode | `libva-v4l2-request-m4rch 1.3.r11-2`; package-managed session default, H.264 and VP9 tested |
 | Fans | `mbpfan-m4rch 2.4.0-4` |
 | Power profiles | `power-profiles-daemon-m4rch 0.30.r20261028.1a151cc-1` |
 | Steam launcher | `steam-m4rch 1.0.0.81-12` |
 
-`/boot/boot.bin` contains m1n1, the J614s device tree and U-Boot. The owner
-confirmed GRUB keyboard input and Linux keyboard and trackpad on the retained
-MTP trial. The rebuilt final `7.3.0-m4rch` kernel and U-Boot are installed in
-package-managed paths. The owner chose promotion without a verification reboot,
-so the final default has not yet been booted. GRUB has
-one entry selecting `/boot/vmlinuz-linux-m4rch` and
-`/boot/initramfs-linux-m4rch.img`. See the [recovery guide](recovery.md) and
-package source records for provenance.
+`/boot/boot.bin` contains m1n1, the J614s device tree and the newly packaged
+SD U-Boot. The SD root port and card enumerated without the prior PIN1 conflict,
+and the packaged jack card registered. The prior default booted with SEP active
+and fingerprint login and sudo working; the SD and jack trials worked as
+recorded in [FEATURES](../FEATURES.md).
+GRUB has one persistent entry selecting the package-managed kernel and
+initramfs. See the [recovery guide](recovery.md) and
+[SEP/DCP investigation](j614s-sep-dcp-reservations.md).
 
 Native Mesa `c208afc` enumerated the actual M4 Pro GPU and completed a short
 Vulkan rendering run; OpenGL reported Zink on that GPU. Steam and longer

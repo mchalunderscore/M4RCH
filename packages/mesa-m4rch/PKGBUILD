@@ -1,6 +1,6 @@
 pkgname=mesa-m4rch
 pkgver=26.3.0.r20261031.c208afc
-pkgrel=1
+pkgrel=2
 epoch=1
 pkgdesc='Mesa graphics drivers for Apple Silicon'
 arch=('aarch64')
@@ -11,8 +11,14 @@ makedepends=('base-devel' 'meson' 'ninja' 'python-mako' 'python-yaml' 'python-pa
 provides=("mesa=1:${pkgver}" "mesa-libgl=1:${pkgver}" 'opengl-driver' 'vulkan-driver' 'vulkan-asahi')
 conflicts=('mesa' 'vulkan-asahi' 'mesa-aurora-m4rch')
 options=('!lto' '!debug')
-source=('mesa-source.tar.gz::https://codeload.github.com/aurora-silicon/mesa/tar.gz/c208afc352e9d4c10ee71c883a369a9079dd7d84')
-sha256sums=('a8ca816b201673a9e2cf5aeafefdfa1bdffe2e14cd125b3bffd1cfe5040a3b0b')
+source=('mesa-source.tar.gz::https://codeload.github.com/aurora-silicon/mesa/tar.gz/c208afc352e9d4c10ee71c883a369a9079dd7d84'
+        '0001-zink-wayland-drawable-lifetime.patch')
+sha256sums=('a8ca816b201673a9e2cf5aeafefdfa1bdffe2e14cd125b3bffd1cfe5040a3b0b'
+            '2d2d0abab03e34e93133770bfde6680c098b6bd9d9e37c67cc34baf936c9cfa2')
+prepare() {
+  cd "$srcdir/mesa-c208afc352e9d4c10ee71c883a369a9079dd7d84"
+  patch -Np1 -i "$srcdir/0001-zink-wayland-drawable-lifetime.patch"
+}
 build() {
   cd "$srcdir/mesa-c208afc352e9d4c10ee71c883a369a9079dd7d84"
   meson setup build --prefix=/usr --libdir=lib --sysconfdir=/etc --buildtype=release \

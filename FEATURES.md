@@ -42,7 +42,7 @@ explicitly below.
 | Feature | Status | Evidence and remaining work |
 | --- | --- | --- |
 | Boot | Functional, needs more work | The owner reported a normal package-managed boot on the earlier stack. The newer [kernel](packages/linux-m4rch/promoted-source/source-stack.md) and [U-Boot](packages/u-boot-m4rch/promoted-source/source-stack.md) records describe a successful input handoff trial. Resolve the documented source/DTB reconstruction limits, verify the intended final boot stack, and prepare a scoped patch series and reproducible hardware report. A PMP parent-domain failure remains in the earlier boot log. |
-| All CPU cores | Functional, needs more work | The owner observed work on all cores in btop and Geekbench scores within roughly 10–15% of macOS. Record the exact configuration, benchmark runs and results for a submission. |
+| All CPU cores | Functional, needs more work | Active in btop; [Geekbench result](https://browser.geekbench.com/v7/cpu/768366) reported within roughly 10–15% of macOS. |
 | Internal storage | Functional, needs more work | The normal installed system booted from internal storage; record the exact storage configuration and test evidence for a submission. |
 
 ## Display and input
@@ -56,7 +56,7 @@ explicitly below.
 | Keyboard | Functional, needs more work | The owner confirmed GRUB and Linux keyboard input in the handoff trial. Package a reviewable cross-project change and document repeat boots, failure paths and sleep behavior. See the [U-Boot source record](packages/u-boot-m4rch/promoted-source/source-stack.md). |
 | Keyboard backlight | Functional, needs more work | The owner reports responsive, reliable adjustment and persistence across reboot. Record the software revision and test steps for a submission. |
 | Trackpad | Functional, needs more work | The owner confirmed Linux input after the handoff trial. Test repeat boots and sleep, and document firmware and handoff requirements. |
-| Touch ID | Not recorded | No J614s test is recorded. |
+| Touch ID | Functional, needs more work | The package-managed J614s boot and guarded SEP service restore enrollment after reboot. Fingerprint authentication worked in SDDM and sudo; KDE lock-screen authentication remains untested. An earlier boot returned an enclave error after interrupted attempts, so reliability needs further observation. See the [SEP/DCP reservation investigation](docs/j614s-sep-dcp-reservations.md). |
 
 ## Media
 
@@ -65,16 +65,16 @@ explicitly below.
 | Speakers | Not working | Internal amplifiers remain disabled pending device-specific protection evidence. See the [speaker safety assessment](docs/j614s-speaker-safety-investigation.md) for the mapping, model and interlock work required. |
 | Microphone | Functional, needs more work | The owner reported operation on an earlier build. Retest capture on the intended stack and record formats, steps and results. |
 | Camera | Functional, needs more work | The owner reported operation on an earlier build. Retest on the intended stack and record mode and results. |
-| Headset jack | Not recorded | A card being present does not establish playback or headset microphone operation. |
+| Headset jack | Functional, needs more work | The [upstream-based jack fix](experiments/jack/README.md) is integrated into `linux-m4rch 7.3.0-28`; the identical trial module passed left/right playback, headset-microphone playback and plug/unplug routing. Its five-second capture had a low measured peak. The packaged driver registered the jack card after reboot; qualify capture level, repeat boots and sleep. |
 
 ## Connectivity
 
 | Feature | Status | Evidence and remaining work |
 | --- | --- | --- |
 | USB-C | Functional, needs more work | The owner tested all three ports in all three orientations at USB 3 speeds. Record the devices, software revision, test steps and results for a submission. |
-| Thunderbolt / USB4 | Not recorded | No J614s test is recorded. |
+| Thunderbolt / USB4 | Not recorded | No J614s device test is recorded. See the [test plan](docs/media-and-usb4-tests.md) for suitable hardware and the baseline. |
 | HDMI | Functional, needs more work | Display output works; the owner confirmed that the earlier flicker and scaling issues were KWin issues. Record the display mode, software revisions and results for a submission. |
-| SDXC card slot | Not recorded | No distinct test is recorded. |
+| SDXC card slot | Functional, needs more work | The SD trial detected a 117 GiB SDXC card at UHS-I SDR104; the owner reports hotplug, reads and writes work. The package-managed bootloader now includes the handoff and a correction for the trial's duplicate CLKREQ pin claim, and booted successfully: the SD root port binds and the card is detected at SDR104 without the prior pin conflict. Longer-term reliability and the older flush/I/O error remain unqualified. See the [SD reader investigation](docs/j614s-sd-reader.md). |
 | Wi-Fi | Functional, needs more work | The owner reports using Wi-Fi for this session. Record the adapter, software revision and connection test for a submission. |
 | Bluetooth | Functional, needs more work | The owner regularly uses a Bluetooth headset. Record the headset, software revision and pairing and audio results for a submission. |
 
@@ -92,5 +92,5 @@ explicitly below.
 | --- | --- | --- |
 | GPU acceleration | Functional, needs more work | Native Mesa enumerated the M4 Pro GPU and OpenGL reported Zink on it. Qualify longer workloads and the intended final stack; preserve exact revisions and logs. |
 | Vulkan | Functional, needs more work | A short Vulkan rendering run passed on Mesa `c208afc`. Longer workloads and the newer boot stack remain unqualified. |
-| Ray tracing | Not recorded | No J614s test is recorded. |
-| Video decoding | Not recorded | No J614s hardware decoding test is recorded. |
+| Ray tracing | Not working | The M4 Pro completed a small Vulkan acceleration-structure build, but the kernel refuses ray traversal on its 25G83 GPU firmware and Borealis does not expose Vulkan ray query or ray-tracing pipelines. A traversal stall can wedge the GPU; a firmware/recovery solution is still needed. See the [investigation](docs/media-and-usb4-tests.md). |
+| Video decoding | Functional, needs more work | The [VA-API bridge](packages/libva-v4l2-request-m4rch/README.md) is installed. H.264 Main at 720p (90 frames) and 1080p (240 frames), and VP9 profile 0 at 360p (60 frames) decoded on the Apple AVD with every frame matching software. A three-minute 720p H.264 stream matched all 5,400 frames; the bridge is the package-managed system-wide session default. Browser integration, other profiles and AV1 are unqualified; HEVC is disabled. |

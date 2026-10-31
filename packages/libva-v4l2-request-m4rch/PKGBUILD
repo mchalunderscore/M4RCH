@@ -1,0 +1,25 @@
+pkgname=libva-v4l2-request-m4rch
+pkgver=1.3.r11
+pkgrel=2
+pkgdesc='VA-API bridge for the Apple stateless video decoder'
+arch=('aarch64')
+url='https://github.com/omacom/libva-v4l2_request'
+license=('GPL-3.0-or-later')
+depends=('libva' 'libdrm')
+makedepends=('meson' 'ninja' 'pkgconf')
+conflicts=('libva-v4l2-request' 'libva-v4l2-request-avd')
+source=('v4l2-request-source.tar.gz::https://codeload.github.com/omacom/libva-v4l2_request/tar.gz/4f60c51f7841dd74bb61c94a4ad31e630bbdab01' 'm4rch-vaapi' '60-m4rch-video.conf')
+sha256sums=('826fda7396374daea1c39c08e2057dd2b4775cf0205c59bce2d30ce2bfd212a4' 'a435503be813eab20d4ade35f0f5deb93cadbcaf2d8ab33a9ea763d313b6c286' 'f56c6685086eb4674741c32e73344d330ae21b5fb824fb08d3a1b79ba23bbc2c')
+build() {
+  cd "$srcdir/libva-v4l2_request-4f60c51f7841dd74bb61c94a4ad31e630bbdab01"
+  meson setup build --prefix=/usr --libdir=lib --buildtype=release \
+    -Dcodec_av1=disabled -Dcodec_hevc=disabled -Dcodec_mpeg2=disabled -Dcodec_vp8=disabled
+  ninja -C build src/v4l2_request_drv_video.so
+}
+package() {
+  cd "$srcdir/libva-v4l2_request-4f60c51f7841dd74bb61c94a4ad31e630bbdab01"
+  install -Dm755 build/src/v4l2_request_drv_video.so "$pkgdir/usr/lib/dri/v4l2_request_drv_video.so"
+  install -Dm755 "$srcdir/m4rch-vaapi" "$pkgdir/usr/bin/m4rch-vaapi"
+  install -Dm644 "$srcdir/60-m4rch-video.conf" "$pkgdir/usr/lib/environment.d/60-m4rch-video.conf"
+  install -Dm644 COPYING "$pkgdir/usr/share/licenses/$pkgname/COPYING"
+}

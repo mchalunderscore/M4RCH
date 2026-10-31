@@ -3,14 +3,13 @@
 This guide describes the installed J614s setup as checked on 31 October 2026.
 Use [current status](status.md) for versions and qualification, and verify
 live package and boot state before an update. Earlier installation records and
-temporary recovery artifacts are retained until the promoted default has booted.
+recovery artifacts are retained outside the active boot partition.
 
 ## Boot and package records
 
 The owner reported a successful keyboard handoff trial in GRUB and Linux.
-The final `7.3.0-m4rch` kernel was rebuilt to remove the trial release suffix,
-installed with the m1n1/U-Boot bundle, and has not yet been booted. The owner
-chose to complete promotion without rebooting. The sole GRUB entry selects
+The current `7.3.0-m4rch-touchid` kernel and m1n1/U-Boot bundle booted
+after the SD and jack packages were promoted. The sole GRUB entry selects
 `/boot/vmlinuz-linux-m4rch` and `/boot/initramfs-linux-m4rch.img`; the ESP
 loader is `/boot/boot.bin`. `update-m1n1` assembles the bundle from the
 installed second-stage m1n1, J614s DTB and U-Boot. The DTB and loader form a
@@ -26,8 +25,8 @@ recorded patches. The preceding kernel's historical build tree was removed at th
 request; its exact source reconstruction and a reproducible build have not
 been established. The package records must not be read as proof otherwise.
 
-Current kernel and U-Boot package inputs are machine-local under
-`cache/mtp-promotion/inputs/`; m1n1 inputs and prior package archives remain in
+Current kernel and U-Boot promotion inputs are machine-local under
+`cache/jack-promotion/`; m1n1 inputs and prior package archives remain in
 `cache/installed-20261031/`. Firmware and per-device calibration must remain
 private and be backed up separately; they are not supplied by this repository.
 The old installer and deleted `out/` artifacts are not the current installation

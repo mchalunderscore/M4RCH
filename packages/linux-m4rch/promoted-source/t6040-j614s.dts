@@ -13,8 +13,7 @@
 	model = "Apple MacBook Pro (14-inch, M4 Pro, 2024)";
 
 	aliases {
-		/* J614s has not yet been qualified for the SEP firmware handoff. */
-		/delete-property/ sep;
+		sep = &sep;
 	};
 
 };
@@ -49,11 +48,11 @@
 	brcm,board-type = "apple,mriya";
 };
 
-/* J616s Touch ID wiring and per-device firmware are not qualified here. */
-&spi2 { status = "disabled"; };
+/* J614s firmware selectors; the qualification DTB was edited as a binary. */
+&spi2 { status = "okay"; };
 &mesa {
-	/delete-property/ firmware-name;
-	status = "disabled";
+	firmware-name = "apple/mesacal-j614s.bin", "apple/msrk-j614s.bin";
+	status = "okay";
 };
 
 /* The current J614s bootloader fills ISP regions from this boot's ADT. */

@@ -1,0 +1,11 @@
+# Zink Wayland drawable lifetime patch
+
+The installed Aurora Mesa source is pinned to `c208afc352e9d4c10ee71c883a369a9079dd7d84`; the source archive checksum is recorded in the PKGBUILD. Noctalia 5.4.0 on Umbriel reproduced a Wayland protocol disconnect when a newly created OSD surface reused the pointer of a destroyed surface and Zink reused its old display target. The Wayland/EGL trace showed a swap on the new EGL surface using the old surface's explicit-sync object.
+
+Current upstream Mesa Zink code was checked on 2026-10-31: it still indexes Wayland display targets by the `wl_surface` pointer. Mesa issue search and Aurora Mesa sources did not identify a matching fix; issue search is not exhaustive. The local patch detaches the cache entry when the last live EGL/Kopper drawable for the surface is released, preserving outstanding target references and avoiding removal of a newer entry. A lock protects lookup/refcount and final removal. It is experimental and not yet upstream-reviewed.
+
+An isolated build passed three repeated Noctalia OSD reproductions, including reuse of the same client pointer, and a two-EGL-drawable shared-Wayland-surface test. These checks do not cover all multi-threaded and graphics workloads. The diagnostic source, trace and test programs are in `~/noctalia-investigation/`.
+
+The previous package is retained at `~/Projects/m4rch/cache/installed-20261031/packages/mesa-m4rch-1:26.3.0.r20261031.c208afc-1-aarch64.pkg.tar.xz`. To roll back, install that package with `sudo pacman -U` and restart the graphical session. If the shell cannot start before rollback, disable its OSDs in `~/.local/state/noctalia/settings.toml` by setting `[osd] enabled = false` on separate TOML lines.
+
+On 2026-10-31 the patched full package `1:26.3.0.r20261031.c208afc-2` was installed with pacman. Its package file list matched release 1, and the installed Gallium library hash matched the built package. Noctalia was restarted against `/usr/lib/libgallium-26.3.0-devel.so` with OSDs enabled; five OSD requests and a control-center open/close completed while the AirPods plugin was enabled. This is a short functional check, not long-term qualification. Existing processes may retain the old Mesa libraries until restarted.

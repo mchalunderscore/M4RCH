@@ -1,0 +1,16 @@
+--- a/drivers/soc/apple/profile.rs
++++ b/drivers/soc/apple/profile.rs
+@@ -613,9 +613,10 @@
+     if machine_has(b"apple,t8122") && (machine_has(b"apple,j613") || machine_has(b"apple,j615")) {
+         return Ok(&T8122);
+     }
+-    // Only the board whose ADT was read: J616s. The other T6040 Macs share
+-    // the SoC but their sensor wiring is unchecked.
+-    if machine_has(b"apple,t6040") && machine_has(b"apple,j616s") {
++    // J614s has the same SEP aperture and Mesa 0x3356 wiring as J616s.
++    if machine_has(b"apple,t6040")
++        && (machine_has(b"apple,j616s") || machine_has(b"apple,j614s"))
++    {
+         return Ok(&T6040);
+     }
+     Err(ENODEV)

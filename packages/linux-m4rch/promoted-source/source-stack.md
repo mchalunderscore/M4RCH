@@ -1,35 +1,32 @@
-# Linux source record — linux-m4rch 7.3.0-26
+# Linux source record — linux-m4rch 7.3.0-28
 
-The owner confirmed GRUB keyboard input and working Linux keyboard and
-trackpad on the J614s handoff trial on 31 October 2026. Its boot log showed
-retained MTP DART bypass, adoption of three RTKit buffers, and keyboard and
-multi-touch readiness. This final Image and its modules were rebuilt from the
-same source and configuration with LOCALVERSION changed to `-m4rch`. The
-release is `7.3.0-m4rch`. See `docs/status.md` for final boot verification.
+Aurora Linux `23827fe87f4ffbabf5b7907a5907f9316286ce55`, archive SHA-256 `9bd85c8add7473dcab7f8306c3bf7ba21651f429d50d584d5c7337dffbb798e0`, with the ordered upstream-integration, mtp-handoff, touchid and jack patch series. The Touch ID changes add the J614s profile and default xART writes and first provisioning to off. The integration package explicitly enables guarded writes for the previously provisioned identity.
 
-Source: Aurora Linux `23827fe87f4ffbabf5b7907a5907f9316286ce55`, source archive
-SHA-256 `9bd85c8add7473dcab7f8306c3bf7ba21651f429d50d584d5c7337dffbb798e0`,
-followed by the ordered `upstream-integration` and `mtp-handoff` series in
-`patches/`. The J614s DTB is the previously boot-tested input, built from the
-separately retained J614s DTS and its Aurora J616s base; it was not rebuilt with
-this kernel. The baseline configuration was the installed 7.3.0-25 config,
-with only LOCALVERSION changed. Full `LLVM=1` Image and modules build used the
-Aurora corrected bindgen 0.73.2, SHA-256
-`2c0e9db67a20ce1a802d850c8820150a6df134e5371662d13119c58821cf0d00`,
-with Rust layout checks enabled. The build reported inherited NVMe and
-Bluetooth thread-safety warnings and Rust deprecation warnings.
+The `7.3.0-m4rch-touchid` Image and matching modules booted in the qualification trial on 31 October 2026. The user confirmed display, keyboard and trackpad operation; SEP restored the enrolled identity. The configuration differs from the previous trial in LOCALVERSION. Built with LLVM and Aurora corrected bindgen 0.73.2 (SHA-256 `2c0e9db67a20ce1a802d850c8820150a6df134e5371662d13119c58821cf0d00`).
 
-Image SHA-256: `6aee846f2c60a6362c86f241941444adcff984dbe4f3fdbc0762281430b25ec3`.
-Config SHA-256: `6dc33a6b9d8083489f730832c66efcec0c06f86112b9451a558e66b6ff9bfc0c`.
-Stripped module input archive SHA-256:
-`dbbc0fb2506091c3f5991d0bb9e88059da0c26f3e65bf7f6664250465822d43b`.
-DTB SHA-256: `5ef0aec63e8bb4b0deb9343f17de11dcc35a2c00815d1209cf283a69e87c42c6`.
-The previous kernel's full historical source tree was not retained, so this
-new source reconstruction cannot be claimed identical to it apart from the
-handoff. GPU, suspend and other peripherals are not comprehensively qualified
-by the keyboard test.
+Image SHA-256 `f66f222657422dbcbcc31162eec96f68fef382f6c2586b8860995762b9f0b791`; config `9420e2be2a500fe240e2cf8ec1e520ca55dd5b327ca97932f366bf62d49b11e4`; release-27 modules archive `6de87ff30ad8c0b716e7110d872e3ae0ba48b8a31756475a9cc53ab92266eeec`; DTB `e2435554bfda78178d4427fc2645b8f024885048e1946ae74cd619094365efc8`. The DTB was edited from the previously boot-tested binary to enable the SEP alias and sensor and set J614s firmware names; the retained DTS documents those changes but is not a byte-reproducible source for that binary.
 
-Machine-local source archive, generator, build logs, previous boot pair and the
-pre-promotion working-tree archive are in `cache/mtp-promotion/`; see
-`docs/recovery.md`. Previous binary package archives and their historical source
-records remain in `cache/installed-20261031/` and the pre-promotion archive.
+Build inputs and logs are in `cache/touchid-candidate/` and `cache/touchid-promotion/`. The preceding source records are preserved in `cache/touchid-candidate/pre-touchid-package-sources.tar.gz`. This does not qualify suspend or all peripherals.
+
+Release 28 incorporates the tested AOP audio module into the kernel package.
+It applies Erik Bourget's [Aurora commit acdfd796](https://github.com/aurora-silicon/linux/commit/acdfd796a37d9ebcc3b7c50c42d6a4131f6a4a1c),
+also carried by open [PR 437](https://github.com/aurora-silicon/linux/pull/437),
+as the `jack` patch series. The common registration fix allows the jack when
+`cout`/`cin` exist independently of `spkr`; J614s speaker DMA and amplifiers
+remain disabled. On this machine the identical module was booted via the
+temporary override: the owner confirmed stereo headset playback and clear
+headset-microphone playback, and plug/unplug changed PipeWire routes correctly.
+The sample's capture peak was low; repeated boots, sleep and longer use are
+not yet qualified. See `experiments/jack/README.md`.
+
+This is a module-only package refresh: the kernel Image, release, config,
+DTB and every other module are unchanged. The new module has SHA-256
+`d7dc1cd66cd0ccac8bd2497d85f74afcd223f5ffaa31b4384cbee0d5a7bce5bb`;
+the reconstructed modules archive has SHA-256
+`08e969d02fc54e74081fbd68e40220d595e8f97502495ec48e27082c2569341f`.
+The archive builder compared all 389 entries with the retained release-27
+archive and found only that module's contents changed. It is retained under
+`cache/jack-promotion/inputs/`; original build inputs remain under
+`cache/touchid-promotion/inputs/`. Source and build evidence for the module
+are in `cache/jack-trial/`. This record does not claim a fresh full kernel
+build or a boot after the package refresh.
