@@ -1,0 +1,306 @@
+#if os(macOS)
+  import Foundation
+
+  public struct InstallerAssetPreparationRequest: Sendable {
+    public let host: AppleSiliconHostInspection
+    public let catalogPayload: Data
+    public let catalogSignature: Data
+    public let trustRoot: AppOwnedTrustRoot
+    public let validationTime: Date
+    public let previouslyAcceptedCatalog: AcceptedCatalogIdentity?
+    public let installerVersion: InstallerVersion?
+    public let stagingDirectory: URL
+    /// See `InstallerReleasePreparationRequest.experimental`.
+    public var experimental: ExperimentalAdmissionRecord? = nil
+
+    public init(
+      host: AppleSiliconHostInspection,
+      catalogPayload: Data,
+      catalogSignature: Data,
+      trustRoot: AppOwnedTrustRoot,
+      validationTime: Date,
+      previouslyAcceptedCatalog: AcceptedCatalogIdentity? = nil,
+      installerVersion: InstallerVersion? = nil,
+      stagingDirectory: URL
+    ) {
+      self.host = host
+      self.catalogPayload = catalogPayload
+      self.catalogSignature = catalogSignature
+      self.trustRoot = trustRoot
+      self.validationTime = validationTime
+      self.previouslyAcceptedCatalog = previouslyAcceptedCatalog
+      self.installerVersion = installerVersion
+      self.stagingDirectory = stagingDirectory
+    }
+  }
+
+  public struct PreparedInstallerAssets: Sendable {
+    public let catalogIdentity: AcceptedCatalogIdentity
+    public let installer: PinnedInstallerRecord
+    public let metadata: StagedInstallerArtifact
+    public let payload: StagedInstallerArtifact
+    public let installerCompatibility: InstallerCompatibility?
+
+    /// Room beyond the staged downloads for the app handoff's full-copy
+    /// fallback and the helper's verified copy, both of which remain on macOS
+    /// while the engine checks resize limits.
+    public var additionalHandoffBytes: UInt64 {
+      var total: UInt64 = 0
+      for staged in [metadata, payload] {
+        let (copies, copyOverflow) = staged.artifact.expectedSizeBytes.multipliedReportingOverflow(
+          by: 2)
+        let (sum, sumOverflow) = total.addingReportingOverflow(copies)
+        guard !copyOverflow, !sumOverflow else {
+          return UInt64.max
+        }
+        total = sum
+      }
+      return total
+    }
+
+    /// What planning withholds from Linux. The payload downloads while the
+    /// engine inspects the disk, so the part not yet on the volume is reserved
+    /// too; otherwise the ceiling would depend on how far the download got.
+    public func planningReserveBytes(payloadBytesOnDisk: UInt64) -> UInt64 {
+      let size = payload.artifact.expectedSizeBytes
+      let outstanding = size - min(size, payloadBytesOnDisk)
+      let (total, overflow) = additionalHandoffBytes.addingReportingOverflow(outstanding)
+      return overflow ? UInt64.max : total
+    }
+
+    public init(
+      catalogIdentity: AcceptedCatalogIdentity,
+      installer: PinnedInstallerRecord,
+      metadata: StagedInstallerArtifact,
+      payload: StagedInstallerArtifact,
+      installerCompatibility: InstallerCompatibility? = nil
+    ) {
+      self.catalogIdentity = catalogIdentity
+      self.installer = installer
+      self.metadata = metadata
+      self.payload = payload
+      self.installerCompatibility = installerCompatibility
+    }
+  }
+
+  public enum InstallerAssetPreparationError: Error, Equatable, Sendable {
+    case hostBlocked(String)
+    case unsupportedDevice(String)
+    /// The channel's verified catalog admits no Mac at all: the channel has
+    /// no Mac release yet, whatever this Mac is.
+    case noMacRelease
+    /// The signed catalog does not list this Mac. Carries the Mac's model
+    /// identifier (hw.model) and the catalog's admitted device identifiers so
+    /// the app can say which Macs this release supports.
+    case notInCatalog(
+      deviceIdentifier: String,
+      modelIdentifier: String,
+      supportedDeviceIdentifiers: [String]
+    )
+    case deliveryMetadataUnavailable
+    case installerOutdated(
+      current: InstallerVersion,
+      minimum: InstallerVersion,
+      downloadURL: URL
+    )
+  }
+
+  public struct InstallerAssetPreparer: Sendable {
+    private static let explicitlyUnsupportedDevices = ["apple,j614s"]
+
+    private let trustCore: AppleInstallerTrustCore
+    private let stager: VerifiedArtifactStager
+
+    public init() {
+      trustCore = AppleInstallerTrustCore()
+      stager = VerifiedArtifactStager()
+    }
+
+    init(stager: VerifiedArtifactStager) {
+      trustCore = AppleInstallerTrustCore()
+      self.stager = stager
+    }
+
+    public func prepare(
+      _ request: InstallerAssetPreparationRequest,
+      progress: ArtifactStagingProgressHandler? = nil,
+      previouslyPrepared: PreparedInstallerAssets? = nil,
+      includePayload: Bool = true
+    ) async throws -> PreparedInstallerAssets {
+      let deviceIdentifier = try validateHost(request.host, experimental: request.experimental)
+
+      let catalog = try trustCore.validateSupportCatalog(
+        payload: request.catalogPayload,
+        signature: request.catalogSignature,
+        trustRoot: request.trustRoot,
+        now: request.validationTime,
+        previouslyAccepted: request.previouslyAcceptedCatalog
+      )
+      if let compatibility = catalog.installerCompatibility,
+        let current = request.installerVersion,
+        !compatibility.accepts(current)
+      {
+        throw InstallerAssetPreparationError.installerOutdated(
+          current: current,
+          minimum: compatibility.minimumVersion,
+          downloadURL: compatibility.downloadURL
+        )
+      }
+      guard !catalog.deviceIdentifiers.isEmpty else {
+        throw InstallerAssetPreparationError.noMacRelease
+      }
+      let admission =
+        request.experimental == nil
+        ? catalog.admission(for: deviceIdentifier)
+        : catalog.experimentalAdmission(for: deviceIdentifier)
+      guard
+        case .admitted(let installer) = admission
+      else {
+        throw InstallerAssetPreparationError.notInCatalog(
+          deviceIdentifier: deviceIdentifier,
+          modelIdentifier: request.host.identity.model,
+          supportedDeviceIdentifiers: catalog.deviceIdentifiers
+        )
+      }
+      guard let delivery = installer.delivery else {
+        throw InstallerAssetPreparationError.deliveryMetadataUnavailable
+      }
+      // Two releases can name an artifact identically (every channel ships an
+      // installer_data.json) with different bytes. Staging by release keeps a
+      // channel switch from tripping over the previous channel's download.
+      let stagingDirectory = try Self.releaseStagingDirectory(
+        for: installer,
+        in: request.stagingDirectory
+      )
+
+      if let previous = previouslyPrepared, previous.installer == installer {
+        var artifacts = [previous.metadata]
+        if includePayload {
+          artifacts.append(previous.payload)
+        }
+        let available = artifacts.allSatisfy { staged in
+          guard
+            staged.fileURL.deletingLastPathComponent().standardizedFileURL
+              == stagingDirectory.standardizedFileURL,
+            let values = try? staged.fileURL.resourceValues(forKeys: [
+              .isRegularFileKey, .fileSizeKey,
+            ]),
+            values.isRegularFile == true,
+            let size = values.fileSize, size >= 0
+          else { return false }
+          return UInt64(size) == staged.artifact.expectedSizeBytes
+        }
+        if available {
+          // Reuse for planning only. Handoff and root import still verify bytes.
+          return PreparedInstallerAssets(
+            catalogIdentity: catalog.acceptedIdentity, installer: installer,
+            metadata: previous.metadata, payload: previous.payload,
+            installerCompatibility: catalog.installerCompatibility
+          )
+        }
+      }
+
+      async let metadata = stager.stage(
+        delivery.metadata,
+        in: stagingDirectory,
+        progress: progress
+      )
+      if includePayload {
+        async let payload = stager.stage(
+          delivery.payload,
+          in: stagingDirectory,
+          progress: progress
+        )
+        return PreparedInstallerAssets(
+          catalogIdentity: catalog.acceptedIdentity,
+          installer: installer,
+          metadata: try await metadata,
+          payload: try await payload,
+          installerCompatibility: catalog.installerCompatibility
+        )
+      }
+
+      let stagedPayload: StagedInstallerArtifact
+      if let previous = previouslyPrepared, previous.installer == installer,
+        payloadFileIsPresent(previous.payload)
+      {
+        stagedPayload = previous.payload
+      } else {
+        stagedPayload = StagedInstallerArtifact(
+          artifact: delivery.payload,
+          fileURL: stagingDirectory.appendingPathComponent(
+            delivery.payload.fileName,
+            isDirectory: false
+          ),
+          reusedExistingFile: false
+        )
+      }
+      return PreparedInstallerAssets(
+        catalogIdentity: catalog.acceptedIdentity,
+        installer: installer,
+        metadata: try await metadata,
+        payload: stagedPayload,
+        installerCompatibility: catalog.installerCompatibility
+      )
+    }
+
+    static func releaseStagingDirectory(
+      for installer: PinnedInstallerRecord,
+      in stagingDirectory: URL
+    ) throws -> URL {
+      let revision = installer.evidenceRevision
+      guard revision.range(of: "^[0-9a-z][0-9a-z.-]*$", options: .regularExpression) != nil,
+        revision != ".", revision != ".."
+      else {
+        throw InstallerAssetPreparationError.deliveryMetadataUnavailable
+      }
+      return stagingDirectory.appendingPathComponent(revision, isDirectory: true)
+    }
+
+    public func stagePayload(
+      _ artifact: PinnedInstallerArtifact,
+      in stagingDirectory: URL,
+      progress: ArtifactStagingProgressHandler? = nil
+    ) async throws -> StagedInstallerArtifact {
+      try await stager.stage(
+        artifact,
+        in: stagingDirectory,
+        progress: progress
+      )
+    }
+
+    private func payloadFileIsPresent(_ staged: StagedInstallerArtifact) -> Bool {
+      guard
+        let values = try? staged.fileURL.resourceValues(forKeys: [
+          .isRegularFileKey, .fileSizeKey,
+        ]),
+        values.isRegularFile == true,
+        let size = values.fileSize, size >= 0
+      else {
+        return false
+      }
+      return UInt64(size) == staged.artifact.expectedSizeBytes
+    }
+
+    func validateHost(
+      _ host: AppleSiliconHostInspection, experimental: ExperimentalAdmissionRecord? = nil
+    ) throws -> String {
+      let deviceIdentifier = host.identity.deviceIdentifier
+      // The model refusal is the one block an experimental choice lifts, and
+      // only for the Mac it names. Every other host block still applies.
+      let lifted =
+        experimental?.deviceIdentifier == deviceIdentifier
+        && Self.explicitlyUnsupportedDevices.contains(deviceIdentifier)
+      if case .blocked(let reason) = host.eligibility, !(lifted && host.storage.isInternal) {
+        throw InstallerAssetPreparationError.hostBlocked(reason)
+      }
+      guard lifted || !Self.explicitlyUnsupportedDevices.contains(deviceIdentifier) else {
+        throw InstallerAssetPreparationError.unsupportedDevice(deviceIdentifier)
+      }
+      if let experimental, experimental.deviceIdentifier != deviceIdentifier {
+        throw InstallerAssetPreparationError.unsupportedDevice(deviceIdentifier)
+      }
+      return deviceIdentifier
+    }
+  }
+#endif

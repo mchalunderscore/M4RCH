@@ -1,7 +1,7 @@
-# Sources are the locally built kernel and modules; see ../tools/native.py.
+# Package the native-booted M4RCH kernel; native.py pins the staged inputs.
 pkgname=linux-m4rch
 pkgver=7.3.0
-pkgrel=28
+pkgrel=30
 pkgdesc='Linux kernel for Apple Silicon'
 arch=('aarch64')
 url='https://github.com/aurora-silicon/linux'
@@ -10,18 +10,28 @@ depends=('coreutils' 'kmod' 'mkinitcpio')
 provides=('linux')
 conflicts=('linux-aurora-m4rch')
 options=('!strip' '!debug' '!lto')
-source=('Image' 'modules.tar.gz' 'linux-m4rch.preset' 'apple-j614s.dtb' 'kernel.config' 'upstream-integration.patch' 'mtp-handoff.patch' 'touchid.patch' 'jack.patch' 'source-stack.md' 't6040-j614s.dts' 'GPL-2.0')
-# native.py appends checksums to the generated build directory.
+backup=('etc/default/update-m1n1' 'etc/default/grub.d/50-m4rch.cfg' 'etc/mkinitcpio-m4rch.conf')
+source=('Image' 'modules.tar.gz' 'linux-m4rch.preset' 'mkinitcpio-m4rch.conf' 'm4rch-j614s.conf' 'update-m1n1' '50-m4rch.cfg' 'apple-j614s.dtb' 'kernel.config' 'upstream-integration.patch' 'mtp-handoff.patch' 'touchid.patch' 'jack.patch' 'source-stack.md' 't6040-j614s.dts' 'GPL-2.0')
+# Do not run makepkg until exact staged source checksums are appended.
 package() {
   local modules=("$srcdir"/lib/modules/*)
-  [[ ${#modules[@]} == 1 && ${modules[0]##*/} == 7.3.0-m4rch-touchid ]]
-  grep -aq 'Linux version 7.3.0-m4rch-touchid ' "$srcdir/Image"
+  [[ ${#modules[@]} == 1 && ${modules[0]##*/} == 7.3.0-m4rch-aurora1 ]]
+  grep -aq 'Linux version 7.3.0-m4rch-aurora1 ' "$srcdir/Image"
   install -d "$pkgdir/usr"
   cp -a --no-preserve=ownership "$srcdir/lib" "$pkgdir/usr/"
-  rm -f "$pkgdir/usr/lib/modules/7.3.0-m4rch-touchid/build"
-  install -Dm644 "$srcdir/Image" "$pkgdir/usr/lib/modules/7.3.0-m4rch-touchid/vmlinuz"
-  echo "$pkgname" > "$pkgdir/usr/lib/modules/7.3.0-m4rch-touchid/pkgbase"
+  rm -f "$pkgdir/usr/lib/modules/7.3.0-m4rch-aurora1/build"
+  install -Dm644 "$srcdir/Image" "$pkgdir/usr/lib/modules/7.3.0-m4rch-aurora1/vmlinuz"
+  echo "$pkgname" > "$pkgdir/usr/lib/modules/7.3.0-m4rch-aurora1/pkgbase"
   install -Dm644 "$srcdir/linux-m4rch.preset" "$pkgdir/etc/mkinitcpio.d/linux-m4rch.preset"
+  install -Dm644 "$srcdir/mkinitcpio-m4rch.conf" "$pkgdir/etc/mkinitcpio-m4rch.conf"
+  install -Dm644 "$srcdir/m4rch-j614s.conf" "$pkgdir/usr/lib/modprobe.d/m4rch-j614s.conf"
+  install -Dm644 "$srcdir/update-m1n1" "$pkgdir/etc/default/update-m1n1"
+  install -Dm644 "$srcdir/50-m4rch.cfg" "$pkgdir/etc/default/grub.d/50-m4rch.cfg"
+  # The stock Aurora loader explicitly enables xART writes and provisioning.
+  # Keep it disabled until the J614s-specific guarded SEP stack is integrated.
+  install -d "$pkgdir/etc/systemd/system"
+  ln -s /dev/null "$pkgdir/etc/systemd/system/aurora-sep.service"
+  ln -s /dev/null "$pkgdir/etc/systemd/system/aurora-sep.timer"
   install -Dm644 "$srcdir/apple-j614s.dtb" "$pkgdir/usr/lib/asahi-boot/apple-j614s.dtb"
   install -Dm644 "$srcdir/kernel.config" "$pkgdir/usr/share/doc/$pkgname/config"
   install -Dm644 "$srcdir/upstream-integration.patch" "$pkgdir/usr/share/doc/$pkgname/upstream-integration.patch"

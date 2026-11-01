@@ -4,9 +4,10 @@ Arch Linux ARM packages and hardware enablement for the Apple MacBook Pro
 14-inch M4 Pro (Mac16,8 / J614s / T6040). The Linux, m1n1, U-Boot and Mesa
 work builds on [Aurora Silicon](https://github.com/aurora-silicon).
 
-The owner confirmed the MTP keyboard handoff in GRUB and Linux on a trial
-kernel. The final package-managed `7.3.0-m4rch` kernel is the default but
-has not yet been booted; the owner chose promotion without a reboot. Mesa's Vulkan driver rendered on the M4 Pro;
+The local [Aurora-based installer](installer/macOS/Development/J614s/README.md) installed and booted a fresh ALARM Minimal system on this Mac. The owner reported Wi-Fi working after a local firmware repair. The standard kernel recipe now targets the booted `7.3.0-m4rch-aurora1` release; see [current status](docs/status.md) for the limits of that evidence.
+
+On the previous installation, the owner confirmed the MTP keyboard handoff in GRUB and Linux on a trial
+kernel. Mesa's Vulkan driver rendered on the M4 Pro;
 the owner also reported that the system works in ordinary use. Earlier builds had
 successful camera, microphone, sleep and external-display trials, but those
 results do not independently qualify every feature of the current build.

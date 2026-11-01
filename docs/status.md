@@ -1,6 +1,8 @@
 # Current system status
 
-This is a snapshot of the J614s machine on 31 October 2026, not a general
+On 31 October 2026 the owner installed and booted a fresh Aurora ALARM Minimal system using the J614s developer installer. Its kernel is `7.3.0-m4rch-aurora1`. Wi-Fi initially failed because the vendor firmware archive lacked the Mriya BCM4388 C2 files; after a local firmware repair and initramfs rebuild the owner reported that Wi-Fi worked. The current repository defaults now describe that kernel. Installed package and peripheral versions on the fresh system have not been independently inventoried.
+
+The following is a snapshot of the **previous** J614s installation on 31 October 2026, not a general
 support matrix. Check the installed versions and running kernel before an
 update. The package-managed SD and jack promotion booted on 31 October (boot ID
 `c7c08627-2c0d-4806-bf4b-3933df129d1b`). Peripheral and workload checks below are limited to the

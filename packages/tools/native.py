@@ -26,22 +26,23 @@ import tempfile
 ROOT = Path(__file__).resolve().parents[2]
 CACHE = ROOT / 'cache/installed-20261031'
 PROMOTED_CACHE = ROOT / 'cache/touchid-promotion/inputs'
-JACK_PROMOTED_MODULES = ROOT / 'cache/jack-promotion/inputs/linux-package/modules.tar.gz'
 SD_PROMOTED_UBOOT = ROOT / 'cache/jack-promotion/inputs/u-boot-nodtb.bin'
+LINUX_PROMOTED_CACHE = ROOT / 'cache/aurora1-promotion/linux-package'
 RECIPES = ('linux-m4rch', 'm1n1-m4rch', 'u-boot-m4rch', 'mesa-m4rch')
 LINUX_PATCHES = ('upstream-integration.patch', 'mtp-handoff.patch', 'touchid.patch', 'jack.patch')
 LINUX_SOURCES = (
-    'Image', 'modules.tar.gz', 'linux-m4rch.preset', 'apple-j614s.dtb',
+    'Image', 'modules.tar.gz', 'linux-m4rch.preset', 'mkinitcpio-m4rch.conf',
+    'm4rch-j614s.conf', 'update-m1n1', '50-m4rch.cfg', 'apple-j614s.dtb',
     'kernel.config', 'upstream-integration.patch', 'mtp-handoff.patch', 'touchid.patch', 'jack.patch',
     'source-stack.md', 't6040-j614s.dts', 'GPL-2.0',
 )
 M1_SOURCES = ('m1n1.bin', 'upstream-integration.patch', 'source-stack.md', 'LICENSE', 'licenses.tar.gz')
 UBOOT_SOURCES = ('u-boot-nodtb.bin', 'behaviour.patch', 'reservation.patch', 'sd-handoff.patch', 'source-stack.md', 'uboot.config', 'COPYING')
 PINNED_INPUTS = {
-    'linux-package/Image': 'f66f222657422dbcbcc31162eec96f68fef382f6c2586b8860995762b9f0b791',
-    'linux-package/modules.tar.gz': '08e969d02fc54e74081fbd68e40220d595e8f97502495ec48e27082c2569341f',
+    'linux-package/Image': '1ef76fe0a222fb9caa2c03efc63986a7c1c0209158519b9e6a793be92c78b071',
+    'linux-package/modules.tar.gz': '10e02c338089df27008f9420e1a95f984b64c0ebf9354bbc321e2f3e79b38d5e',
     'linux-package/apple-j614s.dtb': 'e2435554bfda78178d4427fc2645b8f024885048e1946ae74cd619094365efc8',
-    'linux-package/kernel.config': '9420e2be2a500fe240e2cf8ec1e520ca55dd5b327ca97932f366bf62d49b11e4',
+    'linux-package/kernel.config': '80d5c60810efbd76d60e419e12c10465dd7dc491e381bbf8c644c921d5b6c16e',
     'm1n1.bin': 'fe9571af510cec542852e88a21928be29a855c66b2937fc3938a6cdedb3fc501',
     'u-boot-nodtb.bin': 'b25192d5f2f4c07f49ee0cc6f15d2c9ec5199cf201cc608c1a651c249ba0b018',
 }
@@ -72,8 +73,8 @@ def digest(path: Path) -> str:
 
 
 def verify(name: str) -> Path:
-    if name == 'linux-package/modules.tar.gz':
-        path = JACK_PROMOTED_MODULES
+    if name.startswith('linux-package/'):
+        path = LINUX_PROMOTED_CACHE / name.removeprefix('linux-package/')
     elif name == 'u-boot-nodtb.bin':
         path = SD_PROMOTED_UBOOT
     else:
@@ -110,6 +111,9 @@ def prepare_boot(name: str, work: Path) -> None:
             copy(verify('linux-package/' + filename), work / filename)
         if digest(source_record / 'upstream-integration.config') != PINNED_INPUTS['linux-package/kernel.config']:
             raise ValueError('recorded kernel config does not match the booted input')
+        for filename in ('mkinitcpio-m4rch.conf', 'm4rch-j614s.conf',
+                         'update-m1n1', '50-m4rch.cfg'):
+            copy(package / 'promoted-inputs' / filename, work / filename)
         for filename in ('linux-m4rch.preset', 'GPL-2.0'):
             copy(package / filename, work / filename)
         for filename in ('source-stack.md', 't6040-j614s.dts'):

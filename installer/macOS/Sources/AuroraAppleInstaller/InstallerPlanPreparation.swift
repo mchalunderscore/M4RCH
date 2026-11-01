@@ -1,0 +1,180 @@
+#if os(macOS)
+  import Foundation
+
+  public enum InstallerPlanPreparationError:
+    Error, Equatable, Sendable
+  {
+    case unsupportedDevice(String)
+    case inventoryUnavailable
+    case freshInspectionRequired
+    case engineVersionUnavailable
+    case preservedReinstallUnavailable
+    /// The space chosen on the Partitions screen is gone, changed, or would
+    /// reach an installation that stays.
+    case targetUnavailable
+  }
+
+  public protocol InstallerPlanExecuting: Sendable {
+    func plan(
+      inspection: ValidatedEngineTranscript,
+      request: PinnedAsahiPlanRequest,
+      identity: PinnedAsahiPlanIdentity
+    ) async throws -> Data
+    /// The plan with an experimental record bound into its digest.
+    func plan(
+      inspection: ValidatedEngineTranscript,
+      request: PinnedAsahiPlanRequest,
+      identity: PinnedAsahiPlanIdentity,
+      experimental: ExperimentalAdmissionRecord?
+    ) async throws -> Data
+  }
+
+  extension InstallerPlanExecuting {
+    /// Planners that cannot bind a record refuse an experimental plan.
+    public func plan(
+      inspection: ValidatedEngineTranscript,
+      request: PinnedAsahiPlanRequest,
+      identity: PinnedAsahiPlanIdentity,
+      experimental: ExperimentalAdmissionRecord?
+    ) async throws -> Data {
+      guard experimental == nil else { throw ExperimentalAdmissionError.notOffered }
+      return try await plan(inspection: inspection, request: request, identity: identity)
+    }
+  }
+
+  public struct InstallerPlanPreparationRequest: Sendable {
+    public let host: AppleSiliconHostInspection
+    public let release: PreparedInstallerRelease
+    public let configuration: InstallerReleaseConfiguration
+    public let inspectionTranscript: Data
+    public let candidate: ValidatedEngineCandidate
+    public let requestedLengthBytes: UInt64
+    public let validationTime: Date
+    public let previouslyAcceptedCatalog: AcceptedCatalogIdentity?
+    /// The owner's experimental choice, already checked by the inspection;
+    /// the planner binds it into the plan digest. Nil on a supported Mac.
+    public var experimental: ExperimentalAdmissionRecord? = nil
+
+    public init(
+      host: AppleSiliconHostInspection,
+      release: PreparedInstallerRelease,
+      configuration: InstallerReleaseConfiguration,
+      inspectionTranscript: Data,
+      candidate: ValidatedEngineCandidate,
+      requestedLengthBytes: UInt64,
+      validationTime: Date,
+      previouslyAcceptedCatalog: AcceptedCatalogIdentity? = nil
+    ) {
+      self.host = host
+      self.release = release
+      self.configuration = configuration
+      self.inspectionTranscript = inspectionTranscript
+      self.candidate = candidate
+      self.requestedLengthBytes = requestedLengthBytes
+      self.validationTime = validationTime
+      self.previouslyAcceptedCatalog = previouslyAcceptedCatalog
+    }
+  }
+
+  public struct PreparedInstallerPlanExecution: Sendable {
+    public let review: InstallerPlanReview
+    public let candidateRequest: ClosedEngineCandidateRequest
+
+    fileprivate init(
+      review: InstallerPlanReview,
+      candidateRequest: ClosedEngineCandidateRequest
+    ) {
+      self.review = review
+      self.candidateRequest = candidateRequest
+    }
+  }
+
+  public struct InstallerPlanPreparationCoordinator: Sendable {
+    private let trustCore: AppleInstallerTrustCore
+    private let planner: any InstallerPlanExecuting
+    private let reviewCoordinator: InstallerPlanReviewCoordinator
+
+    public init() {
+      trustCore = AppleInstallerTrustCore()
+      planner = NativeInstallerPlanner()
+      reviewCoordinator = InstallerPlanReviewCoordinator()
+    }
+
+    init(planner: any InstallerPlanExecuting) {
+      trustCore = AppleInstallerTrustCore()
+      self.planner = planner
+      reviewCoordinator = InstallerPlanReviewCoordinator()
+    }
+
+    public func prepare(
+      _ request: InstallerPlanPreparationRequest
+    ) async throws -> InstallerPlanReview {
+      try await prepareExecution(request).review
+    }
+
+    public func prepareExecution(
+      _ request: InstallerPlanPreparationRequest
+    ) async throws -> PreparedInstallerPlanExecution {
+      let inspection = try trustCore.validateEngineTranscript(
+        request.inspectionTranscript
+      )
+      let deviceIdentifier = request.host.identity.deviceIdentifier
+      guard inspection.deviceIdentifier == deviceIdentifier,
+        inspection.support == .supported
+      else {
+        throw InstallerPlanPreparationError.unsupportedDevice(
+          deviceIdentifier
+        )
+      }
+      guard let inventory = inspection.inventory else {
+        throw InstallerPlanPreparationError.inventoryUnavailable
+      }
+      guard inspection.plan == nil, inspection.checkpoints.isEmpty,
+        inspection.completion == nil
+      else { throw InstallerPlanPreparationError.freshInspectionRequired }
+      guard let engineVersion = request.release.assets.installer.engineVersion
+      else {
+        throw InstallerPlanPreparationError.engineVersionUnavailable
+      }
+
+      let planRequest = try PinnedAsahiPlanRequest(
+        inventory: inventory,
+        candidate: request.candidate,
+        requestedLengthBytes: request.requestedLengthBytes
+      )
+      let planIdentity = try PinnedAsahiPlanIdentity(
+        engineVersion: engineVersion,
+        installer: request.release.assets.installer
+      )
+      let planningTranscript =
+        request.experimental == nil
+        ? try await planner.plan(
+          inspection: inspection, request: planRequest, identity: planIdentity)
+        : try await planner.plan(
+          inspection: inspection, request: planRequest, identity: planIdentity,
+          experimental: request.experimental)
+      let review = try reviewCoordinator.prepare(
+        InstallerPlanReviewRequest(
+          host: request.host,
+          release: request.release,
+          configuration: request.configuration,
+          planningTranscript: planningTranscript,
+          validationTime: request.validationTime,
+          previouslyAcceptedCatalog: request.previouslyAcceptedCatalog
+        )
+      )
+      let candidateRequest = ClosedEngineCandidateRequest(
+        planningTranscript: planningTranscript,
+        catalogPayload: request.release.catalogDocuments.payload,
+        catalogSignature: request.release.catalogDocuments.signature,
+        trustRoot: request.configuration.trustRoot,
+        validationTime: request.validationTime,
+        previouslyAcceptedCatalog: request.previouslyAcceptedCatalog
+      )
+      return PreparedInstallerPlanExecution(
+        review: review,
+        candidateRequest: candidateRequest
+      )
+    }
+  }
+#endif

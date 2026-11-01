@@ -50,12 +50,13 @@ not independently verified during this audit.
 The Signal recipe uses the cached Signal and Vesktop binary packages as inputs;
 see its [package notes](signal-desktop-m4rch/README.md).
 
-The boot package commands verify and repackage retained binaries. The current
-kernel Image, DTB and config remain in `cache/touchid-promotion/inputs/`,
-while the jack-updated modules archive and SD U-Boot are in
+The boot package commands verify and repackage retained binaries. The booted
+`7.3.0-m4rch-aurora1` kernel Image, modules, DTB and config are in
+`cache/aurora1-promotion/linux-package/`. The matching SD U-Boot is in
 `cache/jack-promotion/inputs/`; m1n1 remains in `cache/installed-20261031/`.
 They do not compile a new kernel or bootloader.
-The previous kernel's historical source tree was not fully reconstructed.
+The previous kernel's historical source tree was not fully reconstructed; the
+Aurora installer candidate was rebuilt from the recorded source and patches.
 Mesa instead builds its pinned Aurora source. Check dependencies and disk space
 before building. `make check` checks recipe syntax, recorded patch digests and
 Steam launcher behavior; it does not check that every recipe has the inputs and

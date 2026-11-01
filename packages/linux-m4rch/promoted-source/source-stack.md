@@ -1,4 +1,12 @@
-# Linux source record — linux-m4rch 7.3.0-28
+# Linux source record — linux-m4rch 7.3.0-30
+
+The `7.3.0-m4rch-aurora1` kernel and the installer-assembled J614s stage 2 were booted on the target Mac after a fresh Aurora ALARM Minimal installation on 31 October 2026, as reported by the owner. Wi-Fi initially lacked BCM4388 C2 firmware; the owner reported success after provisioning the Mac's own Mriya firmware and rebuilding the initramfs. This is boot and Wi-Fi evidence, not complete peripheral, recovery or encryption qualification.
+
+Release 30 retains those kernel and module bytes, preserves the package-owned initramfs configuration on upgrade, and includes locally provisioned Mriya firmware in subsequent initramfs builds when it is present. Release 30 has not been installed or booted; the installer used release 29.
+
+The candidate rebuild used the same Aurora source commit and promoted patch series described below, with `CONFIG_SND_SEQUENCER=m`, `CONFIG_DM_INTEGRITY=m`, and `CONFIG_LOCALVERSION="-m4rch-aurora1"`. The kernel Image SHA-256 is `1ef76fe0a222fb9caa2c03efc63986a7c1c0209158519b9e6a793be92c78b071`, modules archive `10e02c338089df27008f9420e1a95f984b64c0ebf9354bbc321e2f3e79b38d5e`, config `80d5c60810efbd76d60e419e12c10465dd5b327ca97932f366bf62d49b11e4`, and unchanged J614s DTB `e2435554bfda78178d4427fc2645b8f024885048e1946ae74cd619094365efc8`. These inputs are retained locally under `cache/aurora1-promotion/linux-package/`. They are not tracked or published.
+
+The following is the historical release-28 record.
 
 Aurora Linux `23827fe87f4ffbabf5b7907a5907f9316286ce55`, archive SHA-256 `9bd85c8add7473dcab7f8306c3bf7ba21651f429d50d584d5c7337dffbb798e0`, with the ordered upstream-integration, mtp-handoff, touchid and jack patch series. The Touch ID changes add the J614s profile and default xART writes and first provisioning to off. The integration package explicitly enables guarded writes for the previously provisioned identity.
 
