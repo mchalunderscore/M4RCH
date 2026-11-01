@@ -268,12 +268,21 @@
       else { throw NativeStubFileError.changedFile }
       try Task.checkCancellation()
       if renameatx_np(parent, temporary, parent, leaf, UInt32(RENAME_EXCL)) != 0 {
-        guard errno == EEXIST else { throw NativeStubFileError.writeFailed }
-        let existing = openat(parent, leaf, O_RDONLY | O_NOFOLLOW | O_CLOEXEC | O_NONBLOCK)
-        guard existing >= 0 else { throw NativeHandoffValidationError.unsafePath }
-        defer { close(existing) }
-        guard try identity(existing, maximum: bytes) == expected else {
-          throw NativeStubFileError.changedFile
+        let renameError = errno
+        if [ENOTSUP, EOPNOTSUPP].contains(renameError) {
+          var destination = stat()
+          guard fstatat(parent, leaf, &destination, AT_SYMLINK_NOFOLLOW) != 0,
+            errno == ENOENT,
+            renameat(parent, temporary, parent, leaf) == 0
+          else { throw NativeStubFileError.writeFailed }
+        } else {
+          guard renameError == EEXIST else { throw NativeStubFileError.writeFailed }
+          let existing = openat(parent, leaf, O_RDONLY | O_NOFOLLOW | O_CLOEXEC | O_NONBLOCK)
+          guard existing >= 0 else { throw NativeHandoffValidationError.unsafePath }
+          defer { close(existing) }
+          guard try identity(existing, maximum: bytes) == expected else {
+            throw NativeStubFileError.changedFile
+          }
         }
       }
       guard fsync(parent) == 0 else { throw NativeStubFileError.writeFailed }
