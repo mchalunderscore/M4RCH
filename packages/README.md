@@ -2,7 +2,6 @@
 
 The current J614s installation uses packages built from the Aurora ALARM fork and selected Aurora packages. See [current status](../docs/status.md) and the [update workflow](../docs/aurora-update-workflow.md).
 
-- `dozor-sudo-m4rch/` contains the installed graphical sudo integration. Follow its recovery instructions before removing it.
 - `linux-m4rch/`, `m1n1-m4rch/` and `u-boot-m4rch/` retain older packaging and source references used in hardware investigation notes. They do not describe the current boot stack.
 - `mesa-m4rch/` retains earlier build inputs; it is not the installed Aurora fork recipe. The firmware staging helper remains available for private Wi-Fi recovery.
 

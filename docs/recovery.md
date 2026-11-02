@@ -42,6 +42,6 @@ and restore `vmlinuz-linux-aurora`, `initramfs-linux-aurora.img`, `grub.cfg`
 and `grubenv` from the archive to their normal `/boot` locations. Restoring
 the loader alone does not restore the previous kernel. Before booting the old kernel, restore the archived `running-modules` directory to `/usr/lib/modules/7.3.0-j614s-pr1-ARCH`. After booting, move that unowned tree aside and reinstall the archived old kernel, headers, config and boot packages with pacman to restore package ownership.
 
-## Graphical sudo recovery
+## Sudo authentication
 
-To remove only the graphical sudo bridge and retain the prior authentication stack, restore `/var/lib/m4rch/dozor-sudo-20261101/sudo.before` to `/etc/pam.d/sudo` with mode 0644 from a root shell. Restore this before uninstalling `dozor-sudo-m4rch`. See [the package notes](../packages/dozor-sudo-m4rch/README.md).
+The custom graphical sudo bridge is uninstalled. `/etc/pam.d/sudo` uses the prior fingerprint and password stack. The user's zsh alias invokes `run0`, which authenticates through polkit and the configured desktop agent.
