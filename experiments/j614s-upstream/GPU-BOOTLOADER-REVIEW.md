@@ -13,9 +13,9 @@ offset is correct.
 Review branches and proposed PR descriptions:
 
 - Linux `aurora-wip` base `52f0a6bee13b`: [GPU branch](https://github.com/mchalunderscore/linux/tree/codex/t6040-16core-layout),
-  commit `c6665bed9ad1dce905ee35c4cebaf44054792ebb`; [description](PR-GPU.md).
+  commit `c6665bed9ad1dce905ee35c4cebaf44054792ebb`; [PR description](https://github.com/aurora-silicon/linux/pull/804).
 - Aura `main` base `212e3d10173f`: [MCC branch](https://github.com/mchalunderscore/aura/tree/codex/j614s-mcc-admission),
-  commit `31d511f8d77a0f37df100287ccda54736a7452e9`; [description](PR-MCC.md).
+  commit `31d511f8d77a0f37df100287ccda54736a7452e9`; [PR description](https://github.com/aurora-silicon/aura/pull/43).
 
 Each branch contains one commit. The GPU branch's three file blobs match the
 hardware-tested source; the MCC branch's file matches the candidate patch
@@ -217,7 +217,7 @@ requires the `J616sAP` ADT compatible on the existing board ID 6 path; that
 additional restriction changes Aurora's J616s behavior and is unnecessary to
 add J614s.
 
-[`aura-mcc-j614s-proposal.patch`](aura-mcc-j614s-proposal.patch) leaves the
+[The MCC proposal](https://github.com/aurora-silicon/aura/pull/43) leaves the
 existing J616s admission unchanged and admits board ID 4 only when the ADT
 also identifies `J614sAP`. All Aurora geometry, register-range and cache-status
 checks remain in place. The J614s condition is identical to that in the

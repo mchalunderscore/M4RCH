@@ -2,10 +2,11 @@
 
 > Historical cache paths below refer to retired trial artifacts; the cache now retains only inputs needed by two current test helpers. For the current boot recovery path, see [recovery](../../docs/recovery.md).
 
-Reviewed against upstream on 1 November 2026. These are proposed submissions,
-not changes to the installed system. Hardware evidence comes from the combined
-J614s stack; it does not establish that every prerequisite is available in an
-unmodified upstream installation.
+Reviewed against upstream on 1 November 2026. This report records proposals
+and dated experiments; several submitted changes were later installed through
+the Aurora forks. See [current status](../../docs/status.md) for the installed
+stack. Combined-stack evidence does not establish that every prerequisite is
+available in an unmodified upstream installation.
 
 ## SEP profile
 
@@ -43,8 +44,7 @@ unmodified Aurora installation. The J614s DT is proposed separately in #795.
 
 Submitted as [ALSA UCM PR #9](https://github.com/aurora-silicon/alsa-ucm-conf-asahi/pull/9)
 and [audio DSP PR #16](https://github.com/aurora-silicon/asahi-audio/pull/16).
-The UCM candidate is [`ucm-j614-hpai.patch`](ucm-j614-hpai.patch), adding the exact
-profile included in the forked UCM source.
+The UCM proposal adds the exact profile included in the forked UCM source.
 
 - Target: Aurora `alsa-ucm-conf-asahi` `main` at
   `b9b2d0c82cbb46025e586b2dc9f2cae644d29999`. The J614 entry was absent at

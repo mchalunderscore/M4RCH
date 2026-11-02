@@ -40,7 +40,9 @@ correctness. These tests do not prove every possible EGL or compositor
 lifetime. Mesa upstream's GitLab issue/MR pages were unavailable behind an
 access challenge, so a matching upstream report cannot be ruled out. Aurora's
 GitHub issue and PR searches did not identify a matching surface-lifetime fix.
-The installed system Mesa has not been replaced by the submission candidate.
+At the time of those tests, the submission candidate had not replaced the
+installed Mesa. The fork-based candidate was installed subsequently; see
+[current status](../../docs/status.md).
 
 The signed stock and locally patched
 Gallium library SHA-256 values are respectively

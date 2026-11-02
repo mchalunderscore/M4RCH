@@ -157,7 +157,7 @@ on the cool-load A/B test.
 
 ### Experimental two-trip candidate
 
-`experiments/j614s-upstream/gpu-thermal/gpu-thermal-two-trip-experiment.patch`
+[The experimental change](https://github.com/aurora-silicon/linux/pull/852)
 adds a passive 100 C switch-on trip before the existing 101 C target in each
 of the seven GPU zones. The 100 C value is a provisional choice, not a
 measured or qualified threshold; it starts control 1 C before the firmware

@@ -1,6 +1,6 @@
 # J614s hardware status
 
-This is a concise summary of observations on the combined J614s Aurora stack, not qualification of an unmodified upstream installation. The persistent GRUB default has booted successfully with the forked kernel and Aurora's default initramfs configuration. See the linked reports for exact software, tests and limitations.
+This is a concise summary of observations on the combined J614s Aurora stack, not qualification of an unmodified upstream installation. The forked kernel booted successfully with Aurora's default initramfs configuration; the persistent GRUB configuration was regenerated afterward and has not yet been booted. See the linked reports for exact software, tests and limitations.
 
 | Area | Evidence and remaining work |
 | --- | --- |

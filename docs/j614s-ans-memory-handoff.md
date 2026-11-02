@@ -47,7 +47,7 @@ inspection of this Mac's firmware ADT on 2 November found exactly one
 which Aura's `sart_init()` supports. This does not establish the live SART
 entries or prove that later U-Boot allocations lie in the ranges Aura observes.
 
-The small [J614s ANS SART experiment](../experiments/j614s-upstream/aura-j614s-ans-sart-experiment.patch)
+The small [J614s ANS SART experiment](https://github.com/aurora-silicon/aura/pull/51)
 extends the existing Aura SART reservation branch to the J614s root compatible.
 The changed `kboot.o` compiled against Aura's 2 November source; the candidate
 has not been booted and does not replace either the late Aura heap reservation or

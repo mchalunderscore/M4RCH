@@ -37,10 +37,6 @@ __pycache__/
 *.heic
 *.HEIC
 
-# makepkg work directories
-/packages/*/src/
-/packages/*/pkg/
-
 # Local Apple disassembly and raw GPU capture artifacts
 *.dis
 *.gputrace/
