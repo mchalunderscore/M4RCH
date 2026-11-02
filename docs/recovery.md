@@ -9,11 +9,15 @@ transition package has been uninstalled. `user4k=on` and
 `appledrm.show_notch=1` are host-local in
 `/etc/default/grub.d/60-local-preferences.cfg`.
 
-GRUB now has one persistent entry for `/boot/vmlinuz-linux-aurora` and
-`/boot/initramfs-linux-aurora.img`. The regenerated default has not yet been
-booted. Earlier trial entries, initramfs images and duplicate EFI loaders were
-removed after their backups were verified. The prior working full-stack stage
-two remains at `/boot/efi/m1n1/boot.bin.m4rch-recovery`; its matching kernel,
+At promotion GRUB had one persistent entry for `/boot/vmlinuz-linux-aurora`
+and `/boot/initramfs-linux-aurora.img`. A later GPU observation trial added a
+separate custom entry and trial artifacts. On boot
+`eea111e7-575a-4fa4-87f8-8525d7c5b60a`, the running command line reported
+`BOOT_IMAGE=/vmlinuz-linux-aurora`; the exact GRUB entry and initramfs used
+were not independently checked in this cleanup. Inspect the live configuration
+before changing it. Earlier trial entries, initramfs images and duplicate EFI
+loaders had been removed after their backups were verified. The prior working
+full-stack stage two remains at `/boot/efi/m1n1/boot.bin.m4rch-recovery`; its matching kernel,
 initramfs and module tree are in the full-stack recovery archive below.
 
 The verified promotion snapshot is

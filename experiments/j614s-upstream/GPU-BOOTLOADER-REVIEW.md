@@ -1,6 +1,6 @@
 # J614s GPU and bootloader review
 
-> Historical cache paths below refer to retired trial artifacts; the cache now retains only inputs needed by two current test helpers. For the current boot recovery path, see [recovery](../../docs/recovery.md).
+> Historical cache paths below describe past trials and are not current recovery instructions; most of those artifacts are no longer in the checkout. For the current boot recovery path, see [recovery](../../docs/recovery.md).
 
 Reviewed 1 November 2026. The GPU candidate booted successfully for one
 trial; the existing kernel remains the default. The MCC loader candidate was
@@ -23,6 +23,16 @@ used in the loader build. The complete branch trees have not separately been
 built or booted, and the PR descriptions identify the combined stack and
 remaining test limitations.
 
+## Context-save observability check — 2 November 2026
+
+The running package kernel `7.3.0-1-14-ARCH` includes #804 and reports the experimental GPU layout. The actual GPU was not reset or stressed during this inspection. The current `asahi_g17` trace events expose host scheduling, command publication/completion, firmware messages and raw reports; none is an identified, decoded GPU context-save or restore event. The readable `/sys/kernel/debug/aurora-g17/firmware_reports` exposes raw firmware report tags and words, but their meaning is not established here. Neither changing a report count nor overlapping fences alone establishes preemption.
+
+In the pinned Linux source `24bfd5ba2c182bf67d40c7d02f4947d124f04fa4`, `g17/queue/compute.rs` allocates the separate preemption and operand-state buffers as firmware-shared, write-combined CPU mappings. `g17/object.rs` has bounded word readers, while its mutable byte view explicitly requires that firmware not be accessing the object. These provide a possible observation route in a disposable instrumented kernel after the relevant queue is demonstrably idle; they do not establish that the buffers are written, which bytes are saved state, that a save and restore happened, or that the layout is correct.
+
+A useful follow-up needs both a discriminating control and an independently observable event: capture per-queue buffer change summaries at a properly synchronized idle boundary, compare otherwise equivalent work with and without a demonstrable interruption, and confirm a resumed workload's results. Establish GPU-to-CPU visibility and queue lifetime before reading; do not print firmware memory or GPU addresses. A host-visible progress signal or decoded firmware event would need separate qualification as proof that the original dispatch had actually started and was interrupted. If the timer-disabled firmware and available priority policy cannot produce or identify such an event, the test must report inconclusive rather than infer preemption from overlap. A passing compute experiment would not independently validate render deflake or every offset; comparison with a trusted 16-core reference or maintainer analysis remains necessary.
+
+The instrumented follow-up boot and bounded workload have now run on the target. Both operand banks and the preemption buffer changed during solo calibration before the competing queue was submitted, so writes to these buffers do not by themselves demonstrate a context switch. The trace did not identify a save/restore event; results and controls are described in [the context-observation experiment](../j614s-gpu-context/README.md). The 16-core offsets and preemption remain unverified.
+
 ## GPU trial result
 
 ### Follow-up validation prepared
@@ -34,7 +44,7 @@ and 30 seconds of bounded compute load with readback. Its log is
 `cache/j614s-gpu-trial/baseline-native-gl46.log`; this is a baseline, not a
 run of the PR candidate.
 
-The [priority experiment](gpu-priority-check.c) submits real Vulkan compute
+The [priority experiment](https://github.com/mchalunderscore/M4RCH/blob/f87ee7e694f9fdd893add08a2f427442cf1c45c9/experiments/j614s-upstream/gpu-priority-check.c) submits real Vulkan compute
 work to distinct queues, waits for a GPU start timestamp, and compares a
 low-versus-medium run with a same-priority control. On the baseline kernel,
 the contender finished while the background fence was unfinished in 5/5
@@ -176,7 +186,7 @@ been removed from the active source stack; the original promoted-source patch
 is preserved in the compressed provenance archive. It did not change loader
 behavior or establish Linux PR #804's firmware layout.
 
-[`gpu-t6040-layout-proposal.patch`](gpu-t6040-layout-proposal.patch) puts the
+[`gpu-t6040-layout-proposal.patch`](https://github.com/mchalunderscore/M4RCH/blob/f87ee7e694f9fdd893add08a2f427442cf1c45c9/experiments/j614s-upstream/gpu-t6040-layout-proposal.patch) puts the
 observed masks and slot count in T6040's `CoreLayout`, with generic matching in
 G17 and no board-specific exception in the common driver. The existing
 measured 20-core path remains unchanged; T8140 has no alternate. The proposed

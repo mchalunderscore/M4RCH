@@ -1,6 +1,6 @@
 # J614s SEP and DCP reservations
 
-> Historical cache paths below refer to retired trial artifacts; the cache now retains only inputs needed by two current test helpers. For the current boot recovery path, see [recovery](recovery.md).
+> Historical cache paths below describe past trials and are not current recovery instructions; most of those artifacts are no longer in the checkout. For the current boot recovery path, see [recovery](recovery.md).
 
 On the Touch ID trial, Linux reported two overlapping reserved-memory pairs and
 refused to mark two DCP OS-log nodes `no-map`. The pre-Touch ID boot had no
@@ -65,7 +65,7 @@ does not resolve a later overlapping SEP reservation.
 
 ## Aura ownership prototype — 1 November 2026
 
-The [experimental Aura change](../experiments/j614s-upstream/aura-j614s-sep-overlap-experiment.patch)
+The [experimental Aura change](https://github.com/mchalunderscore/M4RCH/blob/f87ee7e694f9fdd893add08a2f427442cf1c45c9/experiments/j614s-upstream/aura-j614s-sep-overlap-experiment.patch)
 ports the existing local split into a final device-tree pass, after Aura has
 published its other firmware reservations. It is restricted to J614s and keeps
 the existing DCP/ASC nodes and their phandles. Where no overlap exists it

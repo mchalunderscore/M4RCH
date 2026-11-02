@@ -1,0 +1,105 @@
+--- a/drivers/gpu/drm/asahi/g17/trace.c
++++ b/drivers/gpu/drm/asahi/g17/trace.c
+@@ -1,5 +1,17 @@
+ // SPDX-License-Identifier: GPL-2.0-only OR MIT
+ #include <linux/dma-fence.h>
++#include <linux/moduleparam.h>
++
++static unsigned int m4_context_pid;
++module_param_named(m4_context_pid, m4_context_pid, uint, 0600);
++MODULE_PARM_DESC(m4_context_pid, "Experimental: observe retired compute buffers for one PID");
++
++u32 asahi_g17_m4_context_pid(void);
++
++u32 asahi_g17_m4_context_pid(void)
++{
++	return READ_ONCE(m4_context_pid);
++}
+ #include <asm/arch_timer.h>
+ 
+ #include "trace_api.h"
+--- a/drivers/gpu/drm/asahi/g17/queue/compute.rs
++++ b/drivers/gpu/drm/asahi/g17/queue/compute.rs
+@@ -24,6 +24,27 @@
+ 
+ use crate::g17::now_ns;
+ 
++unsafe extern "C" {
++    fn asahi_g17_m4_context_pid() -> u32;
++}
++
++// Observation only: never print buffer contents or addresses. The caller must
++// have proved the queue idle; a fingerprint does not identify a context save.
++fn m4_buffer_summary(obj: &KernelObject, start: usize, end: usize) -> Result<(u32, u64)> {
++    if start > end || end > obj.size() || start % 4 != 0 || end % 4 != 0 {
++        return Err(EINVAL);
++    }
++    let mut nonzero = 0u32;
++    let mut digest = 0xcbf29ce484222325u64;
++    for offset in (start..end).step_by(4) {
++        let [word] = obj.read_words::<1>(offset)?;
++        nonzero += u32::from(word != 0);
++        digest = (digest ^ u64::from(word)).wrapping_mul(0x100000001b3);
++    }
++    Ok((nonzero, digest))
++}
++
++
+ /// Descriptor slots per queue. A kick's descriptor is rewritten when the kick 32 slots later
+ /// is published; with IN_FLIGHT kicks outstanding at most, that kick has completed by then.
+ const DESCRIPTORS: usize = 32;
+@@ -148,6 +169,31 @@
+ }
+ 
+ impl Graph {
++    fn m4_context_observe(&self, phase: &str, qid: u8, context: &Context, seq: u64) {
++        // SAFETY: C getter reads an integer module parameter using READ_ONCE.
++        let target = unsafe { asahi_g17_m4_context_pid() };
++        if target == 0 || target != context.owner_pid() { return; }
++        if self.operand.size() != 0x44000 || self.preempt.size() != 0x4000 {
++            pr_warn!("m4gpu: unsupported buffer layout; observation skipped\n");
++            return;
++        }
++        for (name, obj, start, end) in [
++            ("preempt", &self.preempt, 0, 0x4000),
++            ("bank0", &self.operand, 0, 0x1e000),
++            ("between", &self.operand, 0x1e000, 0x1e400),
++            ("bank1", &self.operand, 0x1e400, 0x3c400),
++            ("tails", &self.operand, 0x3c400, 0x3d800),
++            ("remaining", &self.operand, 0x3d800, 0x44000),
++        ] {
++            match m4_buffer_summary(obj, start, end) {
++                Ok((nonzero, digest)) => pr_info!(
++                    "m4gpu: phase={} pid={} ctx={} qid={} seq={} region={} words={} nonzero={} digest={:016x}\n",
++                    phase, target, context.id(), qid, seq, name, (end-start)/4, nonzero, digest),
++                Err(_) => pr_warn!("m4gpu: buffer observation failed\n"),
++            }
++        }
++    }
++
+     fn new(
+         alloc: &Allocator<'_>,
+         objects: &Arc<Pool>,
+@@ -1070,6 +1116,10 @@
+                     }
+                     drop(self.previous.take());
+                     self.retirement_ready = self.active.len == 0;
++                    if self.retirement_ready && self.exit.is_none() {
++                        self.graph.m4_context_observe(
++                            "after", self.qid(), &active.packet.context, active.packet.order.sequence);
++                    }
+                     if self.released && self.retirement_ready {
+                         self.owner = None;
+                         self.released_at = now_ns();
+@@ -2187,6 +2237,11 @@
+             kick::{KickArgs, KickQos},
+         };
+         let (epoch, addresses) = self.publication_preflight(&packet, host)?;
++        if self.active.len == 0 && (self.retirement_ready || self.unpublished_binding)
++            && !self.quarantined && self.exit.is_none()
++        {
++            self.graph.m4_context_observe("before", self.qid(), &packet.context, packet.order.sequence);
++        }
+         let crate::g17::command::Validated::Compute {
+             intersection,
+             scratch,

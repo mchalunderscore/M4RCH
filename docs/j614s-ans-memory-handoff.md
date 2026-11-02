@@ -1,6 +1,6 @@
 # ANS memory handoff review
 
-> Historical cache paths below refer to retired trial artifacts; the cache now retains only inputs needed by two current test helpers. For the current boot recovery path, see [recovery](recovery.md).
+> Historical cache paths below describe past trials and are not current recovery instructions; most of those artifacts are no longer in the checkout. For the current boot recovery path, see [recovery](recovery.md).
 
 Aurora Aura's [PR #8](https://github.com/aurora-silicon/aura/pull/8)
 reserves the retained stage-two heap and ANS SART ranges for selected chips.
@@ -59,10 +59,7 @@ SHA-256 is `c6ebe7c70105f51589ad02b74dc0730883d8cfafad06609e2b6cc50248a09b40`;
 the component checksums are in the machine-local receipt at
 `cache/j614s-ans-live-trial/receipt.json`.
 The trial was selected on 2 November after verifying the package-managed
-default and the EFI recovery copy. The helper restores the default with
-`cache/j614s-ans-live-trial/trial-stage2.sh restore`. If a future trial does
-not boot, copy `m1n1/boot.bin.m4rch-before-sd-gpio` over `m1n1/boot.bin`
-from macOS or recoveryOS, keeping the recovery copy.
+default and the EFI recovery copy. The trial helper and its old recovery instructions are historical. For the current recovery path, see [recovery](recovery.md).
 
 On boot `f616c770-5f9c-4054-8927-4f8f293099fc`, Linux started from NVMe;
 Aura logged three ANS buffer reservations (32, 16 and 16 KiB) and no SART

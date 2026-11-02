@@ -1,8 +1,11 @@
-/* Real GPU scheduling experiment; a prior query marker does not prove that the
- * following long dispatch began, and fence overlap alone cannot prove preemption. */
+/* Hardware experiment: an in-dispatch GPU marker precedes the work. A live
+ * host observation is diagnostic, not a Vulkan-guaranteed cross-device
+ * synchronization primitive; a missing marker or mere overlap is inconclusive. */
 #define _POSIX_C_SOURCE 200809L
 #include <vulkan/vulkan.h>
 #include <inttypes.h>
+#include <fcntl.h>
+#include <unistd.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,6 +13,12 @@
 #include <time.h>
 
 enum { GROUPS = 1024, LOCAL = 64, ITEMS = GROUPS * LOCAL };
+static int marker_fd = -1;
+static void mark(const char *phase, unsigned control, unsigned round)
+{
+    if (marker_fd >= 0) dprintf(marker_fd, "M4GPU phase=%s control=%u round=%u pid=%d", phase, control, round, getpid());
+}
+
 #define CHECK(x) do { VkResult r_ = (x); if (r_ != VK_SUCCESS) { fprintf(stderr, "%s: VkResult %d\n", #x, r_); exit(1); } } while (0)
 
 struct context {
@@ -37,7 +46,7 @@ static void init(struct context *c, VkPhysicalDevice physical, uint32_t family,
     VkPhysicalDeviceHostQueryResetFeatures reset = { .sType = VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_HOST_QUERY_RESET_FEATURES, .hostQueryReset = VK_TRUE };
     VkDeviceCreateInfo dci = { .sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO, .pNext = &reset, .queueCreateInfoCount = 1, .pQueueCreateInfos = &qci, .enabledExtensionCount = 1, .ppEnabledExtensionNames = ext };
     CHECK(vkCreateDevice(physical, &dci, NULL, &c->dev)); vkGetDeviceQueue(c->dev, family, 0, &c->queue);
-    VkBufferCreateInfo bci = { .sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO, .size = ITEMS * sizeof(uint32_t), .usage = VK_BUFFER_USAGE_STORAGE_BUFFER_BIT, .sharingMode = VK_SHARING_MODE_EXCLUSIVE };
+    VkBufferCreateInfo bci = { .sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO, .size = (ITEMS + 1) * sizeof(uint32_t), .usage = VK_BUFFER_USAGE_STORAGE_BUFFER_BIT, .sharingMode = VK_SHARING_MODE_EXCLUSIVE };
     CHECK(vkCreateBuffer(c->dev, &bci, NULL, &c->buffer));
     VkMemoryRequirements req; VkPhysicalDeviceMemoryProperties mem; vkGetBufferMemoryRequirements(c->dev, c->buffer, &req); vkGetPhysicalDeviceMemoryProperties(physical, &mem);
     uint32_t type = UINT32_MAX;
@@ -73,6 +82,7 @@ static void init(struct context *c, VkPhysicalDevice physical, uint32_t family,
 
 static void submit(struct context *c, uint32_t iterations, uint32_t seed)
 {
+    __atomic_store_n(&c->map[ITEMS], 0u, __ATOMIC_SEQ_CST);
     CHECK(vkResetFences(c->dev, 1, &c->fence)); CHECK(vkResetCommandBuffer(c->command, 0));
     /* Reset before submission so an earlier result cannot masquerade as start. */
     vkResetQueryPool(c->dev, c->query, 0, 2);
@@ -102,10 +112,8 @@ static void finish(struct context *c, uint32_t iterations, uint32_t seed, int fu
 
 static int started(struct context *c)
 {
-    uint64_t q[2] = {0, 0};
-    VkResult r = vkGetQueryPoolResults(c->dev, c->query, 0, 1, sizeof(q), q, sizeof(q), VK_QUERY_RESULT_64_BIT | VK_QUERY_RESULT_WITH_AVAILABILITY_BIT);
-    if (r != VK_SUCCESS && r != VK_NOT_READY) { fprintf(stderr, "query status %d\n", r); exit(1); }
-    return q[1] != 0;
+    /* See header: only a positive observation before fence completion counts. */
+    return __atomic_load_n(&c->map[ITEMS], __ATOMIC_SEQ_CST) == 0x4d344750u;
 }
 
 static void destroy(struct context *c)
@@ -121,6 +129,8 @@ static void destroy(struct context *c)
 int main(int argc, char **argv)
 {
     if (argc != 2) { fprintf(stderr, "usage: %s shader.spv\n", argv[0]); return 2; }
+    const char *marker_descriptor = getenv("M4_GPU_TRACE_FD");
+    if (marker_descriptor) { marker_fd = atoi(marker_descriptor); if (marker_fd < 3) return 1; }
     FILE *f = fopen(argv[1], "rb"); if (!f || fseek(f, 0, SEEK_END)) return 1; long n = ftell(f);
     if (n <= 0 || (n % 4) || fseek(f, 0, SEEK_SET)) return 1;
     uint32_t *code = malloc((size_t)n); if (!code || fread(code, 1, (size_t)n, f) != (size_t)n) return 1; fclose(f);
@@ -151,29 +161,34 @@ int main(int argc, char **argv)
     const char *delay_text = getenv("M4_GPU_CONTENDER_DELAY_US");
     long contender_delay = delay_text ? strtol(delay_text, NULL, 10) : 0;
     if (contender_delay < 0 || contender_delay > 100000) { fputs("Invalid contender delay\n", stderr); return 1; }
-    printf("contender delay after marker: %ld us\n", contender_delay);
+    printf("contender delay after in-dispatch marker: %ld us\n", contender_delay);
     for (unsigned control = 0; control < 2; control++) {
         struct context *background = control ? &medium_bg : &low;
         unsigned overlap = 0, valid = 0;
         for (unsigned round = 0; round < 5; round++) {
+            mark("begin", control, round);
             submit(background, loops, 3 + round);
             double limit = now() + 1.0;
             while (!started(background) && vkGetFenceStatus(background->dev, background->fence) == VK_NOT_READY && now() < limit) delay_us(100);
             if (vkGetFenceStatus(background->dev, background->fence) != VK_NOT_READY || !started(background)) {
                 finish(background, loops, 3 + round, 0); puts("round: INCONCLUSIVE background finished before contender"); continue;
             }
+            mark("gpu_started", control, round);
             if (contender_delay) delay_us(contender_delay);
             if (vkGetFenceStatus(background->dev, background->fence) != VK_NOT_READY) {
                 finish(background, loops, 3 + round, 0); puts("round: INCONCLUSIVE background finished during delay"); continue;
             }
-            valid++; submit(&medium, 64, 100 + round); finish(&medium, 64, 100 + round, 1);
+            valid++; mark("contender_submit", control, round);
+            submit(&medium, 64, 100 + round); finish(&medium, 64, 100 + round, 1);
+            mark("contender_done", control, round);
             int running = vkGetFenceStatus(background->dev, background->fence) == VK_NOT_READY;
             overlap += running; finish(background, loops, 3 + round, 0);
+            mark("background_done", control, round);
             printf("%s round=%u contender_finished_while_background_unfinished=%d\n", control ? "same-priority" : "low-vs-medium", round, running); fflush(stdout);
         }
         printf("%s valid=%u overlap=%u/5\n", control ? "same-priority" : "low-vs-medium", valid, overlap);
     }
-    puts("INCONCLUSIVE for preemption: a start query can be submitted separately from the long dispatch; trace the dispatch itself before interpreting fence overlap.");
+    puts("INCONCLUSIVE for preemption: marker and fence overlap show progress, not a context save/restore. Compare synchronized GPU traces and buffer summaries.");
     destroy(&low); destroy(&medium_bg); destroy(&medium); vkDestroyInstance(instance, NULL);
     return 0;
 }

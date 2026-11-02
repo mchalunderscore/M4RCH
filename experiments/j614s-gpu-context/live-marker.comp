@@ -1,0 +1,15 @@
+#version 450
+layout(local_size_x = 64) in;
+layout(std430, binding = 0) coherent buffer Output { uint value[]; } output_data;
+layout(push_constant) uniform Params { uint iterations; uint seed; } params;
+void main() {
+    uint id = gl_GlobalInvocationID.x;
+    if (id == 0u) {
+        atomicExchange(output_data.value[65536], 0x4d344750u);
+        memoryBarrierBuffer();
+    }
+    uint x = id ^ params.seed;
+    for (uint j = 0u; j < params.iterations; j++)
+        x = (x ^ (x >> 13)) * 1664525u + 1013904223u + j;
+    output_data.value[id] = x;
+}

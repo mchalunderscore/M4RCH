@@ -1,6 +1,6 @@
 # J614s SD reader investigation
 
-> Historical cache paths below refer to retired trial artifacts; the cache now retains only inputs needed by two current test helpers. For the current boot recovery path, see [recovery](recovery.md).
+> Historical cache paths below describe past trials and are not current recovery instructions; most of those artifacts are no longer in the checkout. For the current boot recovery path, see [recovery](recovery.md).
 
 On 2 November 2026 the owner clarified that during the source-built SD
 board-tree trial without the local SD power action and U-Boot rewrite, they

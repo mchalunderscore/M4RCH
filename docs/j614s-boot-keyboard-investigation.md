@@ -1,6 +1,6 @@
 # J614s boot keyboard
 
-> Historical cache paths below refer to retired trial artifacts; the cache now retains only inputs needed by two current test helpers. For the current boot recovery path, see [recovery](recovery.md).
+> Historical cache paths below describe past trials and are not current recovery instructions; most of those artifacts are no longer in the checkout. For the current boot recovery path, see [recovery](recovery.md).
 
 On 31 October 2026 the owner confirmed the internal J614s keyboard worked in
 U-Boot and GRUB, and that keyboard and trackpad worked in Linux after an MTP

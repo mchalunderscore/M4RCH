@@ -1,6 +1,6 @@
 # J614s DAPF handoff
 
-> Historical cache paths below refer to retired trial artifacts; the cache now retains only inputs needed by two current test helpers. For the current boot recovery path, see [recovery](recovery.md).
+> Historical cache paths below describe past trials and are not current recovery instructions; most of those artifacts are no longer in the checkout. For the current boot recovery path, see [recovery](recovery.md).
 
 ## DAPF handoff review — 1 November 2026
 
@@ -98,7 +98,7 @@ J614s ISP DAPF handoff can be removed.
 
 ## AOP ownership experiment
 
-[`aura-aop-ownership-experiment.patch`](../experiments/j614s-upstream/aura-aop-ownership-experiment.patch)
+[`aura-aop-ownership-experiment.patch`](https://github.com/mchalunderscore/M4RCH/blob/f87ee7e694f9fdd893add08a2f427442cf1c45c9/experiments/j614s-upstream/aura-aop-ownership-experiment.patch)
 is an isolated source experiment against the corrected local Aura overlay.
 It moves the existing AOP reservation checks, extra mapping removal and DART
 enablement into Aura after the local DAPF result is known. The affected
@@ -113,7 +113,7 @@ DART and rejected a missing readiness bit. That is not a test of the earlier
 Aura-to-U-Boot tree or of the transactional failure path. The temporary FDT
 capture was removed after the check.
 
-The matching [U-Boot experiment](../experiments/j614s-upstream/uboot-aop-ownership-experiment.patch)
+The matching [U-Boot experiment](https://github.com/mchalunderscore/M4RCH/blob/f87ee7e694f9fdd893add08a2f427442cf1c45c9/experiments/j614s-upstream/uboot-aop-ownership-experiment.patch)
 removes the AOP producer and relies on Aura's readiness result. It builds
 against the exact pinned Aurora source and retained local overlay, with the
 installed `.config` and no compiler warnings. The trial binary is
@@ -158,8 +158,8 @@ AOP operation before considering it ready for review.
 
 ## AOP marker-free trial
 
-The subsequent [Aura](../experiments/j614s-upstream/aura-aop-no-marker-experiment.patch)
-and [U-Boot](../experiments/j614s-upstream/uboot-aop-no-marker-experiment.patch)
+The subsequent [Aura](https://github.com/mchalunderscore/M4RCH/blob/f87ee7e694f9fdd893add08a2f427442cf1c45c9/experiments/j614s-upstream/aura-aop-no-marker-experiment.patch)
+and [U-Boot](https://github.com/mchalunderscore/M4RCH/blob/f87ee7e694f9fdd893add08a2f427442cf1c45c9/experiments/j614s-upstream/uboot-aop-no-marker-experiment.patch)
 experiments remove the AOP readiness bit from the inter-loader tree property.
 Aura still uses the validated DAPF result internally to prepare or disable the
 AOP; U-Boot leaves Aura's resulting AOP status alone. The ISP's separate bit
@@ -177,7 +177,7 @@ operation was confirmed by the owner on this second trial.
 
 ## Separated Aura source experiment
 
-[`aura-j614s-aop-upstream-experiment.patch`](../experiments/j614s-upstream/aura-j614s-aop-upstream-experiment.patch)
+[`aura-j614s-aop-upstream-experiment.patch`](https://github.com/mchalunderscore/M4RCH/blob/f87ee7e694f9fdd893add08a2f427442cf1c45c9/experiments/j614s-upstream/aura-j614s-aop-upstream-experiment.patch)
 applies to the pinned Aurora source without the local ISP marker or U-Boot
 overlay. It keeps the validated AOP DAPF result inside Aura and uses that
 result for the AOP tree handoff. It also retains the tested J614s DAPF path
@@ -196,7 +196,7 @@ and no longer requires the local ISP validation. It was superseded by the
 integration trial and review candidate described below.
 
 An integration trial layers the retained display, MCC, SD and other boot
-prerequisites plus a separate [local ISP/memory delta](../experiments/j614s-upstream/aura-aop-integration-prerequisites.patch)
+prerequisites plus a separate [local ISP/memory delta](https://github.com/mchalunderscore/M4RCH/blob/f87ee7e694f9fdd893add08a2f427442cf1c45c9/experiments/j614s-upstream/aura-aop-integration-prerequisites.patch)
 onto the separated AOP source. Its adapted AOP DAPF contract and J713 AOP
 regression checks pass, and the complete image builds with the retained Clang
 23 toolchain and Rust library. The combined bundle
@@ -214,14 +214,14 @@ evidence rather than an unmodified standalone upstream image.
 
 The review candidate was rebased onto Aurora Aura main `212e3d1`, built, and
 submitted as [Aura PR #47](https://github.com/aurora-silicon/aura/pull/47).
-The [review patch](../experiments/j614s-upstream/aura-j614s-aop-review.patch)
+The [review patch](https://github.com/mchalunderscore/M4RCH/blob/f87ee7e694f9fdd893add08a2f427442cf1c45c9/experiments/j614s-upstream/aura-j614s-aop-review.patch)
 adapts the existing test fixtures instead of adding duplicate modules. The PR
 records the combined-stack hardware coverage and the fact that its exact
 current-main standalone image has not been booted separately.
 
 ## Initial ISP ownership prototype
 
-The [ISP ownership experiment](../experiments/j614s-upstream/aura-j614s-isp-ownership-experiment.patch)
+The [ISP ownership experiment](https://github.com/mchalunderscore/M4RCH/blob/f87ee7e694f9fdd893add08a2f427442cf1c45c9/experiments/j614s-upstream/aura-j614s-isp-ownership-experiment.patch)
 is based on the #47 source. It keeps the ISP DAPF result private to Aura,
 validates the two ADT segments and existing J614s text/data/heap references,
 and uses Aura's existing reservation helpers on a scratch tree before enabling
@@ -243,9 +243,9 @@ to the temporary prototype source; it is not a hardware or actual-ADT test.
 The tested AOP integration's Aura source was reconstructed from its recorded
 pin and patches; its rebuilt image exactly matched the previously booted image
 SHA-256 `ea2e2cc131ece3b3214198c88917ff4ba709545be201a8ea28375611fac52f09`.
-The [camera trial delta](../experiments/j614s-upstream/aura-isp-integrated-trial.patch)
+The [camera trial delta](https://github.com/mchalunderscore/M4RCH/blob/f87ee7e694f9fdd893add08a2f427442cf1c45c9/experiments/j614s-upstream/aura-isp-integrated-trial.patch)
 adds the ISP ownership change to that baseline while retaining the other local
-boot prerequisites. The matching [U-Boot delta](../experiments/j614s-upstream/uboot-isp-aura-ownership-experiment.patch)
+boot prerequisites. The matching [U-Boot delta](https://github.com/mchalunderscore/M4RCH/blob/f87ee7e694f9fdd893add08a2f427442cf1c45c9/experiments/j614s-upstream/uboot-isp-aura-ownership-experiment.patch)
 removes its separate ISP producer. Both components built; the same ISP helper
 passed the real-DTB check described above. The assembled bundle is
 `cache/j614s-isp-ownership-experiment/boot.bin`, SHA-256

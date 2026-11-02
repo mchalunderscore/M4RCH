@@ -1,6 +1,6 @@
 # J614s USB and HDMI tuning handoff
 
-> Historical cache paths below refer to retired trial artifacts; the cache now retains only inputs needed by two current test helpers. For the current boot recovery path, see [recovery](recovery.md).
+> Historical cache paths below describe past trials and are not current recovery instructions; most of those artifacts are no longer in the checkout. For the current boot recovery path, see [recovery](recovery.md).
 
 The package-managed U-Boot overlay copies per-device ADT tuning into the
 Linux tree for three USB-C PHYs and controllers, and for the HDMI PHY. Its
@@ -89,15 +89,15 @@ and independently verify that an internal-only display still starts.
 
 ## Combined ownership trial — 1 November 2026
 
-The local [Aura prototype](../experiments/j614s-upstream/aura-j614s-atc-experiment.patch)
+The local [Aura prototype](https://github.com/mchalunderscore/M4RCH/blob/f87ee7e694f9fdd893add08a2f427442cf1c45c9/experiments/j614s-upstream/aura-j614s-atc-experiment.patch)
 reuses Aura's ATC parser and validates each output against the corresponding
 kernel register window. It stages each port on a scratch tree. The HDMI PHY
 must start disabled and stays disabled for the existing display power gate;
 if HDMI tuning fails, the external DCP is denied its firmware handoff. The
-[board-tree experiment](../experiments/j614s-upstream/j614s-atc-dts-experiment.patch)
+[board-tree experiment](https://github.com/mchalunderscore/M4RCH/blob/f87ee7e694f9fdd893add08a2f427442cf1c45c9/experiments/j614s-upstream/j614s-atc-dts-experiment.patch)
 adds aliases and disables the devices before the loader prepares them. This
 requires a coordinated loader transition and is not safe to merge alone on
-systems with an older loader. The matching [U-Boot experiment](../experiments/j614s-upstream/uboot-atc-aura-ownership-experiment.patch)
+systems with an older loader. The matching [U-Boot experiment](https://github.com/mchalunderscore/M4RCH/blob/f87ee7e694f9fdd893add08a2f427442cf1c45c9/experiments/j614s-upstream/uboot-atc-aura-ownership-experiment.patch)
 removes only its duplicate USB and HDMI producers.
 
 A combined trial was built from the package-managed Aura and U-Boot sources,
@@ -129,7 +129,7 @@ upstream submission.
 The updated #795 tree already contains all seven expected fixed device paths;
 its three USB PHYs and controllers start enabled and its HDMI PHY starts
 disabled. The local
-[alias-free Aura prototype](../experiments/j614s-upstream/aura-j614s-atc-no-alias-experiment.patch)
+[alias-free Aura prototype](https://github.com/mchalunderscore/M4RCH/blob/f87ee7e694f9fdd893add08a2f427442cf1c45c9/experiments/j614s-upstream/aura-j614s-atc-no-alias-experiment.patch)
 uses those already-checked paths directly instead of requiring seven new DT
 aliases. It compiles as `kboot_atc.o` and removes the need for the proposed
 DT-only coordination change if the rest of the handoff proves correct. An older
@@ -151,13 +151,7 @@ the USB-C failure case or be coordinated with removal of the older producer
 before claiming a safe transition. This is a source-level edge case; the
 captured tuning on this Mac passed the proposed resource bounds.
 
-After the selected trial boots, run
-`python experiments/j614s-upstream/check-atc-ownership.py` from the project
-root. It refuses to treat the prior boot as the trial, checks the staged
-aliases and current node status, and compares all 57 properties with the saved
-baseline hashes. It prints only the names of missing or changed properties,
-not calibration data. A match needs the separate physical USB port test and
-is not proof of HDMI operation.
+The historical [ownership checker](https://github.com/mchalunderscore/M4RCH/blob/f87ee7e694f9fdd893add08a2f427442cf1c45c9/experiments/j614s-upstream/check-atc-ownership.py) compared 57 properties against the trial baseline without printing calibration data. Its saved baseline hashes are in the private cleanup archive. A match needs separate physical USB testing and is not proof of HDMI operation.
 
 ## Selected alias-free trial
 
@@ -168,13 +162,7 @@ its receipt and exact Aura binary are in `cache/j614s-atc-no-alias-trial/`.
 It uses the previously booted #795-derived board DTB without added aliases,
 and the U-Boot trial image without the duplicate USB/HDMI producer. The EFI
 known-good recovery copy and both trial bundles were verified and archived
-when this candidate was selected. It was restored to the package-managed default after boot. The restoration script is
-`cache/j614s-atc-no-alias-trial/trial-no-alias-stage2.sh restore`.
-
-After the boot, run the comparison with `--no-alias`, and check a USB device in
-each port. No HDMI display is currently available, so this trial cannot by
-itself qualify HDMI. Recovery remains `m1n1/boot.bin.m4rch-before-sd-gpio`
-copied over `m1n1/boot.bin` from macOS or recoveryOS if needed.
+when this candidate was selected. The package-managed default was restored after boot. The old restoration helper and recovery instructions are historical; see [current recovery](recovery.md). This trial did not by itself qualify HDMI.
 
 The alias-free trial reached Linux on boot
 `962a0ea0-87ed-48f1-a5d3-e4f00aabb210`. All 57 live tuning properties
