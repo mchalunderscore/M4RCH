@@ -1,35 +1,26 @@
 # Boot and authentication recovery
 
-## Promoted Aurora-default boot (2 November 2026)
+## Current boot and recovery
 
-The kernel, Aura and U-Boot from the ALARM fork booted with Aurora's standard
-initramfs and updater-generated multi-DTB stage two. The final candidate boot
-ID was `e6a81654-428a-48c5-bb2d-e3a84209ac03`. The metadata-only J614s
-transition package has been uninstalled. `user4k=on` and
-`appledrm.show_notch=1` are host-local in
-`/etc/default/grub.d/60-local-preferences.cfg`.
+The persistent GRUB configuration selects `/boot/vmlinuz-linux-aurora` and
+`/boot/initramfs-linux-aurora.img` by default. The GPU observation trial entry,
+kernel, initramfs and modules were removed after a verified archive was made at
+`/var/lib/m4rch/gpuobs-retired-20261102/trial.tar.zst` (SHA-256
+`f381c026a39782295499902f1933013123f04a7b103ed228713343490b98181f`).
+That archive is for trial provenance, not normal boot recovery.
 
-At promotion GRUB had one persistent entry for `/boot/vmlinuz-linux-aurora`
-and `/boot/initramfs-linux-aurora.img`. A later GPU observation trial added a
-separate custom entry and trial artifacts. On boot
-`eea111e7-575a-4fa4-87f8-8525d7c5b60a`, the running command line reported
-`BOOT_IMAGE=/vmlinuz-linux-aurora`; the exact GRUB entry and initramfs used
-were not independently checked in this cleanup. Inspect the live configuration
-before changing it. Earlier trial entries, initramfs images and duplicate EFI
-loaders had been removed after their backups were verified. The prior working
-full-stack stage two remains at `/boot/efi/m1n1/boot.bin.m4rch-recovery`; its matching kernel,
-initramfs and module tree are in the full-stack recovery archive below.
+The running kernel was booted from `/vmlinuz-linux-aurora`; the normal
+initramfs currently on disk has not been independently verified as the one
+used for this boot. `user4k=on` and `appledrm.show_notch=1` are host-local in
+`/etc/default/grub.d/60-local-preferences.cfg`. The normal kernel, initramfs,
+GRUB configuration and environment, and EFI loaders were unchanged when the
+trial was retired. The GRUB configuration passed `grub-script-check`.
 
-The verified promotion snapshot is
-`/var/lib/m4rch/j614s-stock-promotion-20261102/`. Earlier experiment and
-boot evidence are in `/var/lib/m4rch/j614s-aurora-defaults-trial-20261102/`.
-The EFI and filesystem recovery copies are on the same disk. Their hashes were
-verified at promotion; recheck them with appropriate privileges before relying
-on them for a new boot change.
 The standard updater has no local DTB override; check its selected kernel DTB
-set before future kernel updates. Suspend and external displays have not been
-qualified on this final trial. The live J614s tree disables the speaker card
-and all six amplifier nodes, and the J614 driver keeps speakers disabled.
+set before future kernel updates. The EFI and filesystem recovery copies below
+are on the same disk; keep independent recovery media available. Their saved
+checksums were verified on 2 November 2026, including the 2,137 entries in
+the full-stack recovery archive. Check them again before a boot change.
 
 ## Earlier booted full-stack recovery
 
