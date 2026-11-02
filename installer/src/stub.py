@@ -451,7 +451,17 @@ class StubInstaller(PackageInstaller):
                        check=True)
         logging.info("Collecting WiFi firmware")
         col = WiFiFWCollection("recovery/usr/share/firmware/wifi/")
-        pkg.add_files(sorted(col.files()))
+        wifi_files = sorted(col.files())
+        if self.identity["Info"]["DeviceClass"].lower() == "j614sap":
+            names = {name for name, _ in wifi_files}
+            prefix = "brcm/brcmfmac4388c2-pcie.apple,mriya"
+            required = {prefix + ext for ext in (".bin", ".clm_blob", ".txcap_blob", ".sig")}
+            if not required <= names or not any(
+                name.startswith(prefix + "-") and name.endswith(".txt") for name in names
+            ):
+                subprocess.run(["hdiutil", "detach", "-quiet", "recovery"], check=True)
+                raise RuntimeError("Recovery image lacks complete J614s Mriya Wi-Fi firmware")
+        pkg.add_files(wifi_files)
         logging.info("Collecting Bluetooth firmware")
         col = BluetoothFWCollection("recovery/usr/share/firmware/bluetooth/")
         pkg.add_files(sorted(col.files()))

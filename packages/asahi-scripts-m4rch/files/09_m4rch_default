@@ -1,6 +1,0 @@
-#!/bin/sh
-# Keep the package-managed kernel as the persistent default.
-cat <<'GRUB'
-set default=0
-set next_entry=
-GRUB

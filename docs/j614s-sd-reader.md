@@ -1,11 +1,38 @@
 # J614s SD reader investigation
 
-**Current status:** The SD handoff and a correction for the duplicate CLKREQ
-pin claim are installed in `u-boot-m4rch 2026.07-21` and the normal
-`/boot/boot.bin`. The default booted on 31 October: the SD root port binds,
-the earlier pin conflict is absent, and the 117 GiB card enumerates at SDR104.
-The owner previously confirmed hotplug, reads and writes on the earlier trial.
-See the [recovery guide](recovery.md) for the previous boot files.
+> Historical cache paths below refer to retired trial artifacts; the cache now retains only inputs needed by two current test helpers. For the current boot recovery path, see [recovery](recovery.md).
+
+On 2 November 2026 the owner clarified that during the source-built SD
+board-tree trial without the local SD power action and U-Boot rewrite, they
+mounted the card and edited files successfully. This adds real read/write
+evidence; suspend remains untested.
+
+**Current status:** The package-managed default retains the SD handoff in
+Aurora U-Boot. A source-built J614s device-tree trial has also detected the
+reader without that rewrite or Aura's SD-specific power action; see the
+upstream trial below. The previous package-managed stage 2 has been restored
+for the next boot. See the [recovery guide](recovery.md) for boot recovery.
+
+## Upstream device-tree trial — 1 November 2026
+
+[Linux PR #818](https://github.com/aurora-silicon/linux/pull/818) describes the
+reader with the existing PCIe and SMC GPIO bindings, based on J614s DT PR
+#795. The observed firmware action writes active-high GPIO `gP19`; in Linux,
+that is `pwren-gpios = <&smc_gpio 0x19 GPIO_ACTIVE_HIGH>` on the SD port.
+Moving both CLKREQ pins to the controller also avoids the duplicate claim.
+
+Two trial boots used a local Aura with the SD power write removed. The first
+used U-Boot to add the GPIO and enabled-port properties; inserting the card
+created the SDXC block device and its partitions. The second boot used a
+source-built DT with those properties, PR #816's board facts and the local
+loader compatibility include, and U-Boot with its SD-specific tree rewrite
+removed. The GL9755 bound to `sdhci-pci`, the card appeared at SDR104 and its
+partition table was read. Wi-Fi and Bluetooth PCI functions enumerated and no
+SD pin conflict was logged. Its exact upstream-only PR branch was not booted;
+write-protect behavior, sustained writes, suspend, and whether earlier firmware
+left power on remain unqualified. The known-good package-managed stage 2 was
+restored for the next boot. Trial receipts and exact inputs are in
+`cache/j614s-sd-gpio-trial/` and `cache/j614s-sd-static-trial/`.
 
 ## Current observation — 31 October 2026
 
@@ -114,3 +141,16 @@ package-managed default fixes the pin conflict. On boot ID
 `c7c08627-2c0d-4806-bf4b-3933df129d1b`, `pcieport` bound to `00:01.0`,
 `sdhci-pci` bound to `02:00.0`, and the 117 GiB card enumerated at SDR104.
 The prior image is retained for recovery.
+
+## Upstream integration update
+
+On 1 November, [PR #818](https://github.com/aurora-silicon/linux/pull/818)
+was merged into the J614s board branch for
+[PR #795](https://github.com/aurora-silicon/linux/pull/795). The board PR
+remains open against `aurora-wip`, so this does not yet mean the SD-reader
+change is present in Aurora's main kernel branch. The board branch also
+incorporated [the board identifiers in #816](https://github.com/aurora-silicon/linux/pull/816)
+and includes the SEP profile proposed in
+[#813](https://github.com/aurora-silicon/linux/pull/813). The board maintainer
+retained a 189 mm panel `adj-height-mm` rather than the deletion proposed in
+#816; that difference needs to be accounted for in later board validation.

@@ -187,6 +187,13 @@
           }
           let wifi = try BroadcomFirmware.wifi(
             subtree(radio.files, "wifi/"), links: sublinks(radio.links, "wifi/"))
+          if source.machine == "j614s" {
+            let prefix = "brcm/brcmfmac4388c2-pcie.apple,mriya"
+            let required = [".bin", ".clm_blob", ".txcap_blob", ".sig"]
+            guard required.allSatisfy({ wifi[prefix + $0] != nil }),
+              wifi.keys.contains(where: { $0.hasPrefix(prefix + "-") && $0.hasSuffix(".txt") })
+            else { throw NativeFirmwareInputFailure.invalidSource }
+          }
           let bluetooth = try BroadcomFirmware.bluetooth(
             subtree(radio.files, "bluetooth/"), links: sublinks(radio.links, "bluetooth/"))
           guard package.deviceIdentifier == "apple,j700" || (!wifi.isEmpty && !bluetooth.isEmpty)

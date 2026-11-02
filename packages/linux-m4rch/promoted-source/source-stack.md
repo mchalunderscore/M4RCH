@@ -1,5 +1,7 @@
 # Linux source record — linux-m4rch 7.3.0-30
 
+> Historical cache paths below refer to retired trial artifacts; the cache now retains only inputs needed by two current test helpers. For the current boot recovery path, see [recovery](../../../docs/recovery.md).
+
 The `7.3.0-m4rch-aurora1` kernel and the installer-assembled J614s stage 2 were booted on the target Mac after a fresh Aurora ALARM Minimal installation on 31 October 2026, as reported by the owner. Wi-Fi initially lacked BCM4388 C2 firmware; the owner reported success after provisioning the Mac's own Mriya firmware and rebuilding the initramfs. This is boot and Wi-Fi evidence, not complete peripheral, recovery or encryption qualification.
 
 Release 30 retains those kernel and module bytes, preserves the package-owned initramfs configuration on upgrade, and includes locally provisioned Mriya firmware in subsequent initramfs builds when it is present. Release 30 has not been installed or booted; the installer used release 29.
@@ -9,6 +11,10 @@ The candidate rebuild used the same Aurora source commit and promoted patch seri
 The following is the historical release-28 record.
 
 Aurora Linux `23827fe87f4ffbabf5b7907a5907f9316286ce55`, archive SHA-256 `9bd85c8add7473dcab7f8306c3bf7ba21651f429d50d584d5c7337dffbb798e0`, with the ordered upstream-integration, mtp-handoff, touchid and jack patch series. The Touch ID changes add the J614s profile and default xART writes and first provisioning to off. The integration package explicitly enables guarded writes for the previously provisioned identity.
+
+That historical Touch ID patch series is preserved exactly in
+`provenance/touchid.patch.gz` for repackaging the recorded kernel. The active
+patch series no longer changes Aurora's xART and provisioning defaults.
 
 The `7.3.0-m4rch-touchid` Image and matching modules booted in the qualification trial on 31 October 2026. The user confirmed display, keyboard and trackpad operation; SEP restored the enrolled identity. The configuration differs from the previous trial in LOCALVERSION. Built with LLVM and Aurora corrected bindgen 0.73.2 (SHA-256 `2c0e9db67a20ce1a802d850c8820150a6df134e5371662d13119c58821cf0d00`).
 
@@ -25,7 +31,7 @@ remain disabled. On this machine the identical module was booted via the
 temporary override: the owner confirmed stereo headset playback and clear
 headset-microphone playback, and plug/unplug changed PipeWire routes correctly.
 The sample's capture peak was low; repeated boots, sleep and longer use are
-not yet qualified. See `experiments/jack/README.md`.
+not yet qualified; this records the earlier jack trial.
 
 This is a module-only package refresh: the kernel Image, release, config,
 DTB and every other module are unchanged. The new module has SHA-256

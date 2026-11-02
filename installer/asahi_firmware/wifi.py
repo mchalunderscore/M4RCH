@@ -34,6 +34,19 @@ class WiFiFWCollection(object):
         "sig": "sig",
     }
     DIMS = ["C", "s", "P", "M", "V", "m", "A"]
+    @staticmethod
+    def _complete_mriya(path):
+        # Older Recovery images contain incomplete BCM4388 C2 data. Admit
+        # only the Mriya family when this source has all its required files.
+        extensions = set()
+        with os.scandir(path) as entries:
+            for entry in entries:
+                if not entry.name.startswith(("mriya", "P-mriya")):
+                    continue
+                if entry.is_file() and entry.stat().st_size:
+                    extensions.add(os.path.splitext(entry.name)[1])
+        return {".trx", ".txt", ".clmb", ".txcb", ".sig"} <= extensions
+
     def __init__(self, source_path):
         self.root = FWNode()
         self.load(source_path)
@@ -45,11 +58,20 @@ class WiFiFWCollection(object):
                 dirnames.remove("perf")
             if "assert" in dirnames:
                 dirnames.remove("assert")
-            # remove broken firmware dir in 14.6.1 IPSW
+            # The 14.6.1 IPSW has incomplete C2 firmware. Newer complete
+            # Mriya data is needed by J614s; keep other C2 boards excluded.
             if "C-4388__s-C2" in dirnames:
-                dirnames.remove("C-4388__s-C2")
+                if not self._complete_mriya(os.path.join(dirpath, "C-4388__s-C2")):
+                    dirnames.remove("C-4388__s-C2")
             subpath = os.path.relpath(dirpath, source_path)
+            c2_source = "C-4388__s-C2" in os.path.normpath(dirpath).split(os.sep)
+            if c2_source and (os.path.basename(dirpath) != "C-4388__s-C2"
+                              or not self._complete_mriya(dirpath)):
+                dirnames.clear()
+                continue
             for name in sorted(filenames):
+                if c2_source and not name.startswith(("mriya", "P-mriya")):
+                    continue
                 if not any(name.endswith("." + i) for i in self.EXTMAP):
                     continue
                 # macOS 14.6/14.8 contains {java,sumatra}_gen* files, possible

@@ -1,0 +1,75 @@
+--- a/arch/arm/mach-apple/aurora-handoff.c
++++ b/arch/arm/mach-apple/aurora-handoff.c
+@@ -29,11 +29,6 @@
+ 	return (u32)b[0] | (u32)b[1] << 8 | (u32)b[2] << 16 | (u32)b[3] << 24;
+ }
+ 
+-static u64 le64(const void *p)
+-{
+-	return le32(p) | (u64)le32((const u8 *)p + 4) << 32;
+-}
+-
+ struct adt_view { const u8 *data; u32 size; };
+ 
+ /* Fully bound each node before interpreting names or recursing. */
+@@ -114,19 +109,6 @@
+ 	return adt_find(a, 0, name, &end, 0, &budget);
+ }
+ 
+-static int find_compatible(const void *dt, const char *compat)
+-{
+-	return fdt_node_offset_by_compatible(dt, -1, compat);
+-}
+-
+-static int disable_compatible(void *dt, const char *compat)
+-{
+-	int n = -1;
+-	while ((n = fdt_node_offset_by_compatible(dt, n, compat)) >= 0)
+-		CHECK(fdt_setprop_string(dt, n, "status", "disabled"));
+-	return 0;
+-}
+-
+ /* Keep all boot-stage ANS queue/RTKit DMA allocations reserved, including
+  * buffers allocated while GRUB reads the disk. U-Boot adds its environment
+  * allocation to SYS_MALLOC_LEN: use TOTAL_MALLOC_LEN, as mem_malloc_init does.
+@@ -158,7 +140,6 @@
+ 	return 0;
+ }
+ 
+-#include "peripheral_handoff.c"
+ #include "ext_bridge.c"
+ 
+ static int tunable(void *dt, const char *path, struct adt_view adt,
+@@ -234,8 +215,7 @@
+ int aurora_j614s_handoff(const void *live, void *out, int capacity,
+                         struct adt_view adt, u64 boot_mpidr)
+ {
+-    int n, port, isp_error;
+-    u32 ready = 0;
++    int port;
+     CHECK(shared_prepare(out, live, capacity, boot_mpidr));
+     /* If admission or an FDT edit fails, retain the original live tree. */
+     if (j614s_sep_reservations(out)) {
+@@ -243,12 +223,6 @@
+         CHECK(shared_prepare(out, live, capacity, boot_mpidr));
+     }
+ 	/* Speaker topology and codec availability belong to the board tree. */
+-	n = fdt_path_offset(live, "/chosen");
+-	int prepared_len;
+-	const fdt32_t *prepared = fdt_getprop(live, n, "m4rch,dapf-ready", &prepared_len);
+-	if (prepared && prepared_len == 4) ready = fdt32_ld(prepared);
+-	isp_error = isp_handoff(out, adt, ready);
+-	if (isp_error) CHECK(disable_compatible(out, "apple,t6041-isp"));
+ 	int phy = ext_phy_handoff(out, adt);
+ 	if (phy) {
+ 		printf("J614s: HDMI PHY handoff failed: %d\n", phy);
+@@ -260,7 +234,5 @@
+ 		if (ret)
+ 			printf("J614s: USB port %d handoff failed: %d\n", port, ret);
+ 	}
+-	if (isp_error)
+-		printf("J614s: ISP handoff failed: %d\n", isp_error);
+-	return 0;
+-}
++	return 0;
++}

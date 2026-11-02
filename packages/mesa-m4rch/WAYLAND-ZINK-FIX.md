@@ -1,10 +1,12 @@
 # Zink Wayland drawable lifetime patch
 
+> Historical cache paths below refer to retired trial artifacts; the cache now retains only inputs needed by two current test helpers. For the current boot recovery path, see [recovery](../../docs/recovery.md).
+
 The installed Aurora Mesa source is pinned to `c208afc352e9d4c10ee71c883a369a9079dd7d84`; the source archive checksum is recorded in the PKGBUILD. Noctalia 5.4.0 on Umbriel reproduced a Wayland protocol disconnect when a newly created OSD surface reused the pointer of a destroyed surface and Zink reused its old display target. The Wayland/EGL trace showed a swap on the new EGL surface using the old surface's explicit-sync object.
 
 Current upstream Mesa Zink code was checked on 2026-10-31: it still indexes Wayland display targets by the `wl_surface` pointer. Mesa issue search and Aurora Mesa sources did not identify a matching fix; issue search is not exhaustive. The local patch detaches the cache entry when the last live EGL/Kopper drawable for the surface is released, preserving outstanding target references and avoiding removal of a newer entry. A lock protects lookup/refcount and final removal. It is experimental and not yet upstream-reviewed.
 
-An isolated build passed three repeated Noctalia OSD reproductions, including reuse of the same client pointer, and a two-EGL-drawable shared-Wayland-surface test. These checks do not cover all multi-threaded and graphics workloads. The diagnostic source, trace and test programs are in `~/noctalia-investigation/`.
+An isolated build passed three repeated Noctalia OSD reproductions, including reuse of the same client pointer, and a two-EGL-drawable shared-Wayland-surface test. These checks do not cover all multi-threaded and graphics workloads. The earlier `~/noctalia-investigation/` trace and programs were not found on this installation. The issue was subsequently reproduced outside Noctalia with the standalone [Wayland/EGL client](../../experiments/mesa-zink-surface/README.md); a smaller eviction-only variant failed the shared-drawable case. The candidate and evidence were sent to [Aurora issue #137](https://github.com/aurora-silicon/mesa/issues/137) and [draft PR #138](https://github.com/aurora-silicon/mesa/pull/138).
 
 The previous package is retained at `~/Projects/m4rch/cache/installed-20261031/packages/mesa-m4rch-1:26.3.0.r20261031.c208afc-1-aarch64.pkg.tar.xz`. To roll back, install that package with `sudo pacman -U` and restart the graphical session. If the shell cannot start before rollback, disable its OSDs in `~/.local/state/noctalia/settings.toml` by setting `[osd] enabled = false` on separate TOML lines.
 

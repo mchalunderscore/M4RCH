@@ -4,5 +4,4 @@
 04-prune-cpu-cooling-references.patch
 05-pmp-tree-capacity.patch
 06-sd-reader-power.patch
-07-gpu-calibration-tests.patch
 08-mcc-board-admission.patch

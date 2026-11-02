@@ -1,0 +1,77 @@
+--- a/src/dapf.c
++++ b/src/dapf.c
+@@ -398,6 +398,7 @@
+ }
+ 
+ static bool j614s_aop_ready;
++u32 m4rch_isp_ready;
+ 
+ bool dapf_j614s_aop_ready(void)
+ {
+@@ -426,7 +427,8 @@
+         return -1;
+     }
+ 
+-    bool required = dapf_is_j614s() && !strcmp(path, "/arm-io/dart-aop");
++    bool required = dapf_is_j614s() && (!strcmp(path, "/arm-io/dart-aop") ||
++                                        !strcmp(path, "/arm-io/dart-isp0"));
+     u32 pwr;
+     if (!adt_getprop(adt, node, "clock-gates", &pwr))
+         pwr = 0;
+@@ -603,6 +605,7 @@
+ int dapf_init_fdt(const void *fdt)
+ {
+     j614s_aop_ready = false;
++    m4rch_isp_ready = 0;
+     if (chip_id == T8132) {
+         if (!fdt || fdt_node_check_compatible(fdt, 0, "apple,j713"))
+             return 0; /* No other M4 board's power/DAPF contract is qualified. */
+@@ -648,8 +651,11 @@
+         }
+         if (dapf_init(entry->path, entry->index) < 0) {
+             ret = -1;
+-        } else if (dapf_is_j614s() && !strcmp(entry->path, "/arm-io/dart-aop")) {
+-            j614s_aop_ready = true;
++        } else if (dapf_is_j614s()) {
++            if (!strcmp(entry->path, "/arm-io/dart-aop"))
++                j614s_aop_ready = true;
++            if (!strcmp(entry->path, "/arm-io/dart-isp0"))
++                m4rch_isp_ready = 2;
+         }
+         entry++;
+         count += 1;
+--- a/src/kboot.c
++++ b/src/kboot.c
+@@ -8448,6 +8448,8 @@
+ 
+     if (chip_id == T6040 && board_id == 4 && adt_is_compatible(adt, 0, "J614sAP") &&
+         !fdt_node_check_compatible(dt, 0, "apple,j614s")) {
++        if (ret < 0)
++            return -1;
+         if (fdt_open_into(dt, dt, dt_bufsize))
+             return -1;
+         void *aop_tree = malloc(dt_bufsize);
+@@ -8467,7 +8469,22 @@
+             printf("FDT: J614s AOP handoff failed, keeping AOP disabled\n");
+         }
+         free(aop_tree);
+-        if (fdt_pack(dt))
++        /* Local trial prerequisites: retain stage-two allocations and pass
++         * only the ISP readiness bit to the existing U-Boot ISP handoff. */
++        extern u32 m4rch_isp_ready;
++        u64 ram_end = cur_boot_args.phys_base + cur_boot_args.mem_size;
++        u64 start = ALIGN_DOWN((u64)_base, SZ_16K);
++        u64 high = max(heapblock_high_water(), cur_boot_args.top_of_kernel_data);
++        if (!cur_boot_args.mem_size || ram_end < cur_boot_args.phys_base ||
++            start < cur_boot_args.phys_base || high > UINT64_MAX - (SZ_16K - 1))
++            return -1;
++        u64 end = ALIGN_UP(high, SZ_16K);
++        if (end <= start || end > ram_end || fdt_add_mem_rsv(dt, start, end - start) ||
++            dt_set_memory())
++            return -1;
++        int chosen = fdt_path_offset(dt, "/chosen");
++        if (chosen < 0 || fdt_setprop_u32(dt, chosen, "m4rch,dapf-ready", m4rch_isp_ready) ||
++            fdt_pack(dt))
+             return -1;
+     }
+     printf("Setting SMP mode to WFE...\n");

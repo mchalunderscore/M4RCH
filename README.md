@@ -1,32 +1,14 @@
 # m4rch
 
-Arch Linux ARM packages and hardware enablement for the Apple MacBook Pro
-14-inch M4 Pro (Mac16,8 / J614s / T6040). The Linux, m1n1, U-Boot and Mesa
-work builds on [Aurora Silicon](https://github.com/aurora-silicon).
+J614s (MacBook Pro 14-inch M4 Pro) hardware enablement, installer development and Aurora-based package integration. The work builds on [Aurora Silicon](https://github.com/aurora-silicon).
 
-The local [Aurora-based installer](installer/macOS/Development/J614s/README.md) installed and booted a fresh ALARM Minimal system on this Mac. The owner reported Wi-Fi working after a local firmware repair. The standard kernel recipe now targets the booted `7.3.0-m4rch-aurora1` release; see [current status](docs/status.md) for the limits of that evidence.
+The machine runs the forked Aurora kernel, Aura, U-Boot, Mesa and audio packages. Aurora's shared boot configuration and standard stage-two updater booted successfully without a J614s configuration package. Internal speakers remain disabled pending board-specific protection and qualification.
 
-On the previous installation, the owner confirmed the MTP keyboard handoff in GRUB and Linux on a trial
-kernel. Mesa's Vulkan driver rendered on the M4 Pro;
-the owner also reported that the system works in ordinary use. Earlier builds had
-successful camera, microphone, sleep and external-display trials, but those
-results do not independently qualify every feature of the current build.
-Internal speakers remain disabled pending protection evidence.
+The [Aurora ALARM fork](https://github.com/mchalunderscore/alarm-aurora/tree/j614s/full) maintains the modified component recipes. M4RCH retains the J614s installer adaptation, graphical sudo integration, recovery notes and hardware investigation material.
 
-Start with [current status](docs/status.md) for installed versions, tested
-behavior and remaining gaps. For maintenance, use the [package guide](packages/README.md)
-and [installation and maintenance](docs/installation-maintenance.md). Read
-[boot recovery](docs/recovery.md) before changing the boot chain. The internal
-keyboard worked in GRUB on the MTP handoff trial.
+- [Current status](docs/status.md) and [hardware evidence](FEATURES.md)
+- [Setup reproduction inventory](docs/setup-reproduction.md), [package guide](packages/README.md) and [update workflow](docs/aurora-update-workflow.md)
+- [Boot and authentication recovery](docs/recovery.md)
+- [Installer upstream comparison and fork](docs/installer-upstream.md)
 
-The boot chain uses upstream EFI/NVMe discovery together with a local J614s
-handoff. The earlier `archnvme` and forced VRR/HDR experiments are historical;
-their successful trials do not establish the behavior of the current stack.
-Per-package source records describe the retained patches, provenance and
-the kernel reconstruction limitation.
-
-On native Arch Linux ARM, `make` lists the package commands. For example,
-`make packages PACKAGE=mesa-m4rch` builds the pinned Mesa recipe without
-installing it. The kernel and bootloader packages currently repackage retained
-boot-tested binaries rather than rebuilding from source; see the package guide
-for prerequisites and limitations.
+Boot components, board device tree and firmware handoffs must be reviewed as a coordinated set. Machine-specific firmware and retained build inputs are not distributed in this repository. Check the recovery instructions before changing the boot chain.

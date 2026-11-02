@@ -1,0 +1,32 @@
+/* SPDX-License-Identifier: GPL-2.0+ OR MIT */
+/* Compatibility with the currently installed J614s Aura/U-Boot handoff.
+ * The loader supplies this boot's ISP reservations and enables providers after
+ * its handoff checks; this file is not part of the upstream board proposal.
+ */
+
+&isp {
+	memory-region = <&isp_j614_text>, <&isp_j614_data>, <&isp_j614_heap>;
+	status = "disabled";
+};
+
+/delete-node/ &isp_fw_text;
+/delete-node/ &isp_fw_data;
+/delete-node/ &isp_heap;
+
+/ {
+	reserved-memory {
+		isp_j614_text: isp-firmware-text { };
+		isp_j614_data: isp-firmware-data { };
+		isp_j614_heap: isp-heap {
+			iommu-addresses = <&isp 0x100 0x0 0x0 0x2000000>;
+		};
+	};
+};
+
+&aop_dart { status = "disabled"; };
+&isp_dart0 { status = "disabled"; };
+&isp_dart1 { status = "disabled"; };
+&isp_dart2 { status = "disabled"; };
+&atcphy0 { status = "disabled"; };
+&atcphy1 { status = "disabled"; };
+&atcphy2 { status = "disabled"; };

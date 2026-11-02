@@ -4,4 +4,4 @@ This directory vendors the source from Aurora installer commit `704f585` and inc
 
 The root repository pins Aurora's original `aura` and Asahi `artwork` submodules at their prior revisions. Obtain them with `git submodule update --init installer/aura installer/artwork` when using the legacy installer build. They are not required for the native macOS Swift build.
 
-See [J614s integration](macOS/Development/J614s/README.md) for the native build, actual boot evidence, private inputs and remaining limitations. No device firmware, device calibration, generated signing key, sealed developer catalog, installation image or boot artifact is part of this source tree.
+The vendored source predates current Aurora J614s support. See the [installer comparison](../docs/installer-upstream.md) for the current fork, historical development tools and validation limits. No device firmware, device calibration, generated signing key, sealed developer catalog, installation image or boot artifact is part of this source tree.

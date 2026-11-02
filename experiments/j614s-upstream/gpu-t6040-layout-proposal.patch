@@ -1,0 +1,73 @@
+--- a/drivers/gpu/drm/asahi/g17/mod.rs
++++ b/drivers/gpu/drm/asahi/g17/mod.rs
+@@ -207,9 +207,10 @@
+ 
+ /// Layouts of the firmware command buffers that follow a SoC's GPU core layout.
+ pub(crate) struct CoreLayout {
+-    /// The cluster and enabled core counts the layouts were measured on, which the GPU must
+-    /// report at probe; `None` where the layouts hold for every configuration of the SoC.
++    /// The measured cluster and enabled core counts; `None` admits every configuration.
+     pub(crate) cores: Option<(u32, u32)>,
++    /// An additional observed layout: core slots per cluster and enabled masks.
++    pub(crate) alternate_core_masks: Option<(u32, &'static [u32])>,
+     /// A compute queue's operand-state buffer.
+     pub(crate) operand_state: fw::compute::OperandState,
+     /// A render's deflake buffer.
+@@ -1208,10 +1209,18 @@
+         let reclaim = runtime::teardown::ReclaimBatch::new()?;
+         let feed = feed::Feed::new()?;
+         let active_cores = id.core_masks.iter().map(|mask| mask.count_ones()).sum();
++        let alternate = cfg.core_layout.cores.is_some_and(|(clusters, cores)| {
++            clusters == id.num_clusters
++                && cores != active_cores
++                && cfg.core_layout.alternate_core_masks.is_some_and(|(slots, masks)| {
++                    id.num_cores == slots && id.core_masks.as_slice() == masks
++                })
++        });
+         if cfg
+             .core_layout
+             .cores
+             .is_some_and(|cores| cores != (id.num_clusters, active_cores))
++            && !alternate
+         {
+             dev_err!(
+                 dev.as_ref(),
+@@ -1220,6 +1229,12 @@
+                 active_cores
+             );
+             return Err(ENODEV);
++        }
++        if alternate {
++            dev_warn!(
++                dev.as_ref(),
++                "Experimental GPU layout: command-buffer offsets are not yet validated\n"
++            );
+         }
+         let shared = Arc::pin_init(
+             pin_init!(Shared {
+--- a/drivers/gpu/drm/asahi/hw/t6040.rs
++++ b/drivers/gpu/drm/asahi/hw/t6040.rs
+@@ -99,9 +99,12 @@
+         ],
+         variant: &fw::variant::V25G83,
+     }]),
+-    // Measured on the 20-core M4 Pro; other core counts are refused at probe.
++    // Measured on the 20-core M4 Pro; the alternative below remains experimental.
+     core_layout: CoreLayout {
+         cores: Some((2, 20)),
++        // The observed 16-core M4 Pro reports two clusters with ten slots each.
++        // Reusing the measured 20-core buffers on it remains experimental.
++        alternate_core_masks: Some((10, &[0x3db, 0x3db])),
+         operand_state: fw::compute::OperandState::TWO_BY_TEN,
+         deflake: fw::render::Deflake::TWO_CLUSTERS,
+     },
+--- a/drivers/gpu/drm/asahi/hw/t8140.rs
++++ b/drivers/gpu/drm/asahi/hw/t8140.rs
+@@ -57,6 +57,7 @@
+     // The layouts the A18 Pro has always run with.
+     core_layout: crate::g17::CoreLayout {
+         cores: None,
++        alternate_core_masks: None,
+         operand_state: crate::g17::fw::compute::OperandState::ONE_BY_SIX,
+         deflake: crate::g17::fw::render::Deflake::ONE_CLUSTER,
+     },

@@ -1,0 +1,20 @@
+--- a/arch/arm/mach-apple/aurora-handoff.c
++++ b/arch/arm/mach-apple/aurora-handoff.c
+@@ -159,7 +159,6 @@
+ }
+ 
+ #include "peripheral_handoff.c"
+-#include "aop_standard_handoff.c"
+ #include "ext_bridge.c"
+ 
+ static int tunable(void *dt, const char *path, struct adt_view adt,
+@@ -248,7 +247,8 @@
+ 	int prepared_len;
+ 	const fdt32_t *prepared = fdt_getprop(live, n, "m4rch,dapf-ready", &prepared_len);
+ 	if (prepared && prepared_len == 4) ready = fdt32_ld(prepared);
+-	aop_error = aop_standard_handoff(out, live, ready);
++	/* Aura owns AOP tree preparation in this trial. */
++	aop_error = !(ready & 1);
+ 	isp_error = isp_handoff(out, adt, ready);
+ 	if (aop_error) CHECK(disable_compatible(out, "apple,t6041-aop"));
+ 	if (isp_error) CHECK(disable_compatible(out, "apple,t6041-isp"));

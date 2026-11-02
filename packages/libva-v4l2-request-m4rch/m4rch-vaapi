@@ -1,8 +1,0 @@
-#!/bin/sh
-# Select the AVD bridge only for the requested application.
-if [ "$#" -eq 0 ]; then
-    echo "Usage: m4rch-vaapi COMMAND [ARG ...]" >&2
-    exit 2
-fi
-export LIBVA_DRIVER_NAME=v4l2_request
-exec "$@"

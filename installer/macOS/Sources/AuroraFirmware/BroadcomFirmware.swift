@@ -44,13 +44,33 @@ public enum BroadcomFirmware {
     ]
     let dimensions = ["C", "s", "P", "M", "V", "m", "A"]
     let root = Node()
+    // Earlier Recovery images have incomplete C2 data. Only admit the
+    // Mriya family when all of its required firmware types are present.
+    var mriyaTypes: [String: Set<String>] = [:]
+    for path in Array(inputs.keys) + Array(links.keys) {
+      let pieces = path.split(separator: "/").map(String.init)
+      guard pieces.count >= 2, pieces[pieces.count - 2] == "C-4388__s-C2",
+        let name = pieces.last, name.hasPrefix("mriya") || name.hasPrefix("P-mriya"),
+        let dot = name.lastIndex(of: "."), let data = inputs[links[path] ?? path], !data.isEmpty
+      else { continue }
+      let parent = pieces.dropLast().joined(separator: "/")
+      mriyaTypes[parent, default: []].insert(String(name[name.index(after: dot)...]))
+    }
+    let requiredMriya: Set<String> = ["trx", "txt", "clmb", "txcb", "sig"]
     for path in (Array(inputs.keys) + Array(links.keys)).sorted() {
       try Task.checkCancellation()
       let pieces = path.split(separator: "/").map(String.init)
       guard let filename = pieces.last, !filename.contains("_gen"),
-        !pieces.dropLast().contains(where: { ["perf", "assert", "C-4388__s-C2"].contains($0) }),
+        !pieces.dropLast().contains(where: { ["perf", "assert"].contains($0) }),
         let dot = filename.lastIndex(of: ".")
       else { continue }
+      if pieces.dropLast().contains("C-4388__s-C2") {
+        let parent = pieces.dropLast().joined(separator: "/")
+        guard pieces.count >= 2, pieces[pieces.count - 2] == "C-4388__s-C2",
+          filename.hasPrefix("mriya") || filename.hasPrefix("P-mriya"),
+          requiredMriya.isSubset(of: mriyaTypes[parent, default: []])
+        else { continue }
+      }
       let ext = String(filename[filename.index(after: dot)...])
       guard extensions[ext] != nil else { continue }
       let name = (ext == "txt" ? "" : "P-") + String(filename[..<dot])
