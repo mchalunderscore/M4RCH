@@ -16,8 +16,9 @@ used for this boot. `user4k=on` and `appledrm.show_notch=1` are host-local in
 GRUB configuration and environment, and EFI loaders were unchanged when the
 trial was retired. The GRUB configuration passed `grub-script-check`.
 
-The standard updater has no local DTB override; check its selected kernel DTB
-set before future kernel updates. The EFI and filesystem recovery copies below
+The root-owned `/var/lib/m4rch/README.txt` indexes the recovery, firmware and
+provenance records. The standard updater has no local DTB override; check its
+selected kernel DTB set before future kernel updates. The EFI and filesystem recovery copies below
 are on the same disk; keep independent recovery media available. Their saved
 checksums were verified on 2 November 2026, including the 2,137 entries in
 the full-stack recovery archive. Check them again before a boot change.
@@ -39,6 +40,16 @@ and EFI (UUID `E8DC-7E45`). Restore `boot.bin` from the EFI recovery copy,
 and restore `vmlinuz-linux-aurora`, `initramfs-linux-aurora.img`, `grub.cfg`
 and `grubenv` from the archive to their normal `/boot` locations. Restoring
 the loader alone does not restore the previous kernel. Before booting the old kernel, restore the archived `running-modules` directory to `/usr/lib/modules/7.3.0-j614s-pr1-ARCH`. After booting, move that unowned tree aside and reinstall the archived old kernel, headers, config and boot packages with pacman to restore package ownership.
+
+## Retired Wi-Fi repair kit
+
+The old EFI Wi-Fi repair kit was moved to
+`/var/lib/m4rch/efi-cleanup-20261102/wifi-repair/`. Its `FSCK0000.000` was
+identified by SHA-256 as the missing `mriya-WLMT-u.txt` file and restored
+under that name in the preserved copy; all six recorded firmware checksums
+pass. Its script is for the retired `linux-m4rch` installation and refuses the
+current Aurora kernel. The exact original EFI files are also archived at
+`/var/lib/m4rch/efi-cleanup-20261102/efi-retired-original.tar.zst`.
 
 ## Sudo authentication
 
