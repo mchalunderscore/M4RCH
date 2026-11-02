@@ -63,7 +63,7 @@ workflow became legacy during the 26 October Aurora package migration and
 was retired from the active tree on 28 October after the move to internal
 storage.
 
-The current [m1n1 power patch](../packages/m1n1-m4rch/promoted-source/patches/upstream-integration/06-sd-reader-power.patch)
+The historical [m1n1 power patch](https://github.com/mchalunderscore/M4RCH/blob/99a6c07/packages/m1n1-m4rch/promoted-source/patches/upstream-integration/06-sd-reader-power.patch)
 retains a J614s-guarded SMC action. Its presence in the documented installed
 binary does not prove the reader's current power or link state. The current
 Linux tree describes port 1 and an IOMMU mapping for bus 2, but explicitly
@@ -82,7 +82,7 @@ identified in this investigation.
 
 ## Historical trial preparation — 31 October 2026
 
-The experimental [handoff](../packages/u-boot-m4rch/promoted-source/patches/sd-handoff/01-j614s-sd-handoff.patch) is built into a
+The experimental [handoff](https://github.com/mchalunderscore/M4RCH/blob/99a6c07/packages/u-boot-m4rch/promoted-source/patches/sd-handoff/01-j614s-sd-handoff.patch) was built into a
 separate U-Boot, using the current U-Boot configuration and the booted
 Touch ID source tree. m1n1 still initializes PCIe and applies the existing
 guarded SD power action. U-Boot's own PCI scan still sees the port disabled.

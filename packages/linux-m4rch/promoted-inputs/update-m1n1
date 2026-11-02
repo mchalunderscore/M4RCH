@@ -1,3 +1,0 @@
-# The installer supplies a J614s-specific stage 2. Aurora's generic updater
-# does not yet reproduce that verified payload and must not overwrite it.
-M1N1_UPDATE_DISABLED=1

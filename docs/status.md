@@ -12,4 +12,4 @@ session without requesting it; the new driver's interface-start path requests
 the firmware if it must start the interface. Trackpad recovery from a failed
 handoff is therefore unqualified. An external mouse remains a useful fallback if that handoff fails.
 
-See [hardware status](../FEATURES.md) for observations and gaps, [package guide](../packages/README.md) for source records, and [update workflow](aurora-update-workflow.md) before refreshing Aurora components. Package versions and runtime behavior can change; check the live system before acting on this snapshot.
+See [hardware status](../FEATURES.md) for observations and gaps and the [update workflow](aurora-update-workflow.md) before refreshing Aurora components. Package versions and runtime behavior can change; check the live system before acting on this snapshot.

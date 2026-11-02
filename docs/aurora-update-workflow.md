@@ -25,9 +25,11 @@ unchanged and cannot automatically fall back if stage two fails.
 Aura, U-Boot, the kernel, the four Mesa split packages, audio and UCM are held
 in pacman's `IgnorePkg` pending reviewed updates. Aurora's current Mesa package
 version compares newer than the local build, so without that hold a normal
-upgrade would replace the tested graphics stack. `python packages/tools/aurora-update-report.py`
-compares versions in the locally synced databases, including held packages; it
-does not verify live upstream sources or signatures.
+upgrade would replace the tested graphics stack. To compare a package, use
+`pacman -Q <package>` for the installed version and `pacman -Si <package>` for
+the version in the locally synced databases; `vercmp <repo-version> <installed-version>`
+compares their ordering. `pacman-conf IgnorePkg` lists
+the held packages. These checks do not verify live upstream sources or signatures.
 
 The earlier PR-stack snapshot and staging tools are historical; their source and
 qualification notes are available in Git at commit `dc600bb`. They are not the

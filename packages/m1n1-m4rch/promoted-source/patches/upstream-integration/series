@@ -1,7 +1,0 @@
-01-dapf-readiness-and-ram-handoff.patch
-02-flat-root-address-translation.patch
-03-inherited-display-handoff.patch
-04-prune-cpu-cooling-references.patch
-05-pmp-tree-capacity.patch
-06-sd-reader-power.patch
-08-mcc-board-admission.patch

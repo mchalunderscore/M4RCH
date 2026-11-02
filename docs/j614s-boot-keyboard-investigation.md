@@ -24,8 +24,7 @@ Stopping and restarting newer MTP helpers is not assumed safe; related failures
 are documented in [Aurora U-Boot #4](https://github.com/aurora-silicon/u-boot/pull/4)
 and [#1](https://github.com/aurora-silicon/u-boot/pull/1).
 
-The [Linux source record](../packages/linux-m4rch/promoted-source/source-stack.md)
-and [U-Boot source record](../packages/u-boot-m4rch/promoted-source/source-stack.md)
-identify the patches and exact binaries. The complete pre-promotion experiment
-and its unique files are preserved in `cache/mtp-promotion/pre-promotion-worktree.tar.gz`.
+The historical [Linux source record](https://github.com/mchalunderscore/M4RCH/blob/99a6c07/packages/linux-m4rch/promoted-source/source-stack.md)
+and [U-Boot source record](https://github.com/mchalunderscore/M4RCH/blob/99a6c07/packages/u-boot-m4rch/promoted-source/source-stack.md)
+identify the earlier patches and binaries. The old cached experiment was removed.
 The temporary tested fallback and instructions are in [recovery](recovery.md).

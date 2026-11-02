@@ -1,6 +1,0 @@
-01-shared-tree-and-memory-reservation.patch
-02-bounded-firmware-tree-parser.patch
-03-aop-and-isp-handoff.patch
-04-usb-and-hdmi-tunables.patch
-05-board-handoff-integration.patch
-06-j614s-retained-input.patch

@@ -1,6 +1,0 @@
-# Install as part of a rebuilt linux-m4rch package, not over a package-owned
-# file after installation; package upgrades must retain the custom config.
-ALL_config='/etc/mkinitcpio-m4rch.conf'
-ALL_kver='/boot/vmlinuz-linux-m4rch'
-PRESETS=('default')
-default_image='/boot/initramfs-linux-m4rch.img'
