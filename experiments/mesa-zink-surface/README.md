@@ -51,4 +51,4 @@ Gallium library SHA-256 values are respectively
 
 The reproducer, candidate patch, results and limitations were submitted to
 [Aurora Mesa issue #137](https://github.com/aurora-silicon/mesa/issues/137).
-The candidate is also submitted for review as [draft PR #138](https://github.com/aurora-silicon/mesa/pull/138).
+The candidate is also submitted for review as [PR #138](https://github.com/aurora-silicon/mesa/pull/138).

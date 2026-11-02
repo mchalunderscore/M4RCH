@@ -11,5 +11,5 @@ This is a concise summary of observations on the combined J614s Aurora stack, no
 | Speakers | Disabled pending J614s-specific protection and qualification. See [speaker safety](docs/j614s-speaker-safety-investigation.md). |
 | SD reader | A combined trial detected an SDXC card and the owner mounted and edited files. Suspend and long-term I/O remain unqualified. See [SD report](docs/j614s-sd-reader.md). |
 | USB and displays | USB 3 read checks passed on all three ports in both orientations in a combined trial. HDMI worked on an older loader; HDMI with the newer handoff and USB-C display remain untested. See [ATC handoff](docs/j614s-atc-handoff.md). |
-| Headphone jack | The replacement PR-stack kernel has not been tested with wired headphones. See [upstream preparation](experiments/j614s-upstream/README.md). |
+| Headphone jack | The replacement PR-stack kernel has not been tested with wired headphones. See the [historical investigation](https://github.com/mchalunderscore/M4RCH/blob/f87ee7e694f9fdd893add08a2f427442cf1c45c9/experiments/j614s-upstream/README.md#headphone-jack-on-the-795-derived-tree). |
 | Thermal | The GPU allocator behavior was investigated on hardware; candidate trips and full thermal limits require further review. See [thermal investigation](docs/j614s-smc-thermal-investigation.md). |

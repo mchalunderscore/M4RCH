@@ -1,10 +1,15 @@
 # J614s DAPF handoff
 
-> Historical cache paths below describe past trials and are not current recovery instructions; most of those artifacts are no longer in the checkout. For the current boot recovery path, see [recovery](recovery.md).
+> This is a chronological investigation. Statements about the installed stack,
+> selected trials and recovery files refer to the recorded time unless a later
+> update says otherwise. Historical cache artifacts are mostly unavailable.
+> For the present boot recovery path, see [recovery](recovery.md).
 
 ## DAPF handoff review — 1 November 2026
 
-The installed Aura's `dapf_init_all()` calls `dapf_init_fdt(NULL)`, so the
+This section describes the earlier installed stack. The later forked Aura
+package uses the integrated AOP and ISP handoffs; see [current status](status.md)
+and the combined trial below. The earlier Aura's `dapf_init_all()` calls `dapf_init_fdt(NULL)`, so the
 J614s path whitelist and ready bits in that function are active when booted.
 The inspected 1 November boot's `/chosen/m4rch,dapf-ready` had both AOP and ISP bits set, and the
 subsequent local U-Boot code uses those bits when admitting its handoffs.
@@ -29,8 +34,8 @@ owner subsequently confirmed a live image from the built-in camera on that
 same boot. The kernel reported that sensor tuning file
 `apple/isp_2224_01XX.dat` was missing and streamed without it; this confirms
 image capture, not fully tuned image quality. The known-good package-managed stage two
-was restored and its hash verified for the next boot; the running session
-continues to use the trial. The trial also removes
+was restored and its hash verified for the next boot; that trial session
+continued to use the trial. The trial also removes
 the PMP tree-space allowance tested separately. The corrected source is in
 the next local staging recipe while the upstream handoff design is reviewed.
 
@@ -146,8 +151,8 @@ recovery copy matched their expected hashes after boot. The kernel reported
 the AOP ready, and the final tree had two AOP firmware references. The owner
 confirmed the internal microphone works and was in use on this boot. The
 verified previous loader has
-now been restored as the default for the next boot; the running session still
-uses the trial. Recovery copies remain at
+been restored as the default for the next boot; that trial session still
+used the trial. Recovery copies remain at
 `/boot/efi/m1n1/boot.bin.m4rch-before-sd-gpio` and in
 `/var/lib/m4rch/j614s-aop-ownership-trial-20261101/`.
 
@@ -255,10 +260,8 @@ The trial booted as `6e3dd16a-5678-4b1c-9ac4-b87710c13f3e`; the ISP driver
 bound, registered `video1`, and the owner confirmed a live camera image. The
 verification script restored the package-managed loader for the next boot.
 This tests the combined Aura, U-Boot, device-tree and kernel stack, not a
-standalone upstream branch. The verified package-managed default is backed up on EFI at
-`m1n1/boot.bin.m4rch-before-sd-gpio` and in
-`/var/lib/m4rch/isp-ownership-trial-20261101/`. If Linux cannot boot, use
-macOS or recoveryOS to copy that EFI backup over `m1n1/boot.bin`.
+standalone upstream branch. The recovery copies recorded for this old trial
+are historical; use [current recovery](recovery.md) for the present stack.
 
 On 2 November a further combined trial was built and selected to test Aura's
 ordinary DAPF initializer in place of the J614s-specific readiness gate and
@@ -279,9 +282,9 @@ The package-managed loader was restored for the next boot. Aura PRs
 generic DAPF discovery instead of the J614s-specific validation and whitelist;
 their descriptions distinguish the combined hardware test from standalone PR
 testing. Their updated DAPF code and existing AOP/DAPF fixtures were checked
-in a reconstructed source tree. The installed package still carries the
-earlier local implementation until a package-managed replacement is built and
-promoted.
+in a reconstructed source tree. The later installed Aura source contains the integrated handoffs, including
+the changes associated with #47 and #48. The independently submitted PR heads
+have not been established as separately boot-tested.
 
 The matching device-tree change is submitted as [Linux PR #821](https://github.com/aurora-silicon/linux/pull/821)
 and the Aura handoff as [Aura PR #48](https://github.com/aurora-silicon/aura/pull/48).

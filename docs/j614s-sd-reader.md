@@ -1,17 +1,21 @@
 # J614s SD reader investigation
 
-> Historical cache paths below describe past trials and are not current recovery instructions; most of those artifacts are no longer in the checkout. For the current boot recovery path, see [recovery](recovery.md).
+> This is a chronological investigation. Statements about the installed stack,
+> selected trials and recovery files refer to the recorded time unless a later
+> update says otherwise. Historical cache artifacts are mostly unavailable.
+> For the present boot recovery path, see [recovery](recovery.md).
 
 On 2 November 2026 the owner clarified that during the source-built SD
 board-tree trial without the local SD power action and U-Boot rewrite, they
 mounted the card and edited files successfully. This adds real read/write
 evidence; suspend remains untested.
 
-**Current status:** The package-managed default retains the SD handoff in
-Aurora U-Boot. A source-built J614s device-tree trial has also detected the
-reader without that rewrite or Aura's SD-specific power action; see the
-upstream trial below. The previous package-managed stage 2 has been restored
-for the next boot. See the [recovery guide](recovery.md) for boot recovery.
+**Status as of 2 November 2026:** The installed forked kernel includes the
+merged J614s board and SD descriptions. In an earlier combined-stack trial,
+the source-built board tree detected the reader without the former U-Boot SD
+rewrite or Aura SD-specific power action; the owner mounted and edited files.
+This does not qualify suspend, sustained writes or every independent upstream
+component. See [current status](status.md) and [recovery](recovery.md).
 
 ## Upstream device-tree trial — 1 November 2026
 
@@ -34,7 +38,7 @@ left power on remain unqualified. The known-good package-managed stage 2 was
 restored for the next boot. Trial receipts and exact inputs are in
 `cache/j614s-sd-gpio-trial/` and `cache/j614s-sd-static-trial/`.
 
-## Current observation — 31 October 2026
+## Earlier observation — 31 October 2026
 
 On the package-managed `7.3.0-m4rch-touchid` boot, the owner inserted an SD
 card into the built-in slot. No new block device or kernel message appeared;
@@ -76,9 +80,9 @@ on bus 1 and SD on bus 2; those requester IDs must not be swapped.
 Aurora's [T6040/J616s device-tree series](https://github.com/aurora-silicon/linux/pull/396)
 describes the Wi-Fi PCIe path and notes that the SD helper remains disabled;
 it does not establish J614s SD operation. [Asahi's M4 support table](https://asahilinux.org/docs/platform/feature-support/m4/)
-lists the M4 Pro/Max MacBook SD slot as TBA. The local J614s bring-up remains
-necessary; no reviewed upstream solution for this exact current handoff was
-identified in this investigation.
+lists the M4 Pro/Max MacBook SD slot as TBA. At the time of the earlier
+investigation no reviewed upstream solution for that handoff had been
+identified; the later board-tree trial is above.
 
 ## Historical trial preparation — 31 October 2026
 
@@ -146,9 +150,9 @@ The prior image is retained for recovery.
 
 On 1 November, [PR #818](https://github.com/aurora-silicon/linux/pull/818)
 was merged into the J614s board branch for
-[PR #795](https://github.com/aurora-silicon/linux/pull/795). The board PR
-remains open against `aurora-wip`, so this does not yet mean the SD-reader
-change is present in Aurora's main kernel branch. The board branch also
+[PR #795](https://github.com/aurora-silicon/linux/pull/795). The board PR was
+subsequently merged into `aurora-wip` on 2 November. This does not establish
+that every downstream installation has updated. The board branch also
 incorporated [the board identifiers in #816](https://github.com/aurora-silicon/linux/pull/816)
 and includes the SEP profile proposed in
 [#813](https://github.com/aurora-silicon/linux/pull/813). The board maintainer

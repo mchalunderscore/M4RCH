@@ -1,6 +1,9 @@
 # ANS memory handoff review
 
-> Historical cache paths below describe past trials and are not current recovery instructions; most of those artifacts are no longer in the checkout. For the current boot recovery path, see [recovery](recovery.md).
+> This is a chronological investigation. Statements about the installed stack,
+> selected trials and recovery files refer to the recorded time unless a later
+> update says otherwise. Historical cache artifacts are mostly unavailable.
+> For the present boot recovery path, see [recovery](recovery.md).
 
 Aurora Aura's [PR #8](https://github.com/aurora-silicon/aura/pull/8)
 reserves the retained stage-two heap and ANS SART ranges for selected chips.
@@ -49,9 +52,10 @@ entries or prove that later U-Boot allocations lie in the ranges Aura observes.
 
 The small [J614s ANS SART experiment](https://github.com/aurora-silicon/aura/pull/51)
 extends the existing Aura SART reservation branch to the J614s root compatible.
-The changed `kboot.o` compiled against Aura's 2 November source; the candidate
-has not been booted and does not replace either the late Aura heap reservation or
-the U-Boot allocator reservation. A complete candidate was built from the
+The changed `kboot.o` compiled against Aura's 2 November source. The subsequent
+combined trial is described below; the exact upstream branch was not booted
+independently. The proposal does not replace either the late Aura heap
+reservation or the U-Boot allocator reservation. A complete candidate was built from the
 previously booted corrected SEP trial's Aura source, using its release,
 chainloading and ESP stage-two configuration and the same compiler version.
 The candidate preserves that trial's board DTB and U-Boot byte-for-byte. Its
@@ -139,12 +143,15 @@ register snapshot establishes safety during the earlier interval. SART alone
 does not filter every DMA transaction from a device. Any instrumentation is
 for a trial, not part of the upstream patch.
 
-## Remaining wrapper ownership
+## Earlier wrapper ownership assessment
 
-The current package must keep its existing wrapper until the replacement
-producers and the device tree are selected together. The following upstream
-work provides a path to remove pieces, not proof that the installed package
-already contains equivalent behavior:
+This assessment describes the earlier locally wrapped stack, not the current
+forked packages. The later installed Aura source includes the combined #43–#51
+and #53 handoffs, and the installed U-Boot source is #29; the board source
+includes merged #795. See the [package pin inventory](https://github.com/mchalunderscore/alarm-aurora/blob/j614s/full/docs/j614s-stack.md)
+and [current status](status.md). The historical table records the migration
+risks as assessed before that promotion; it is not an inventory of installed
+behavior or proof that every handoff has been independently qualified:
 
 | Local U-Boot handoff | Upstream work | Remaining constraint |
 | --- | --- | --- |
@@ -152,13 +159,14 @@ already contains equivalent behavior:
 | ISP firmware and ownership | [Aura #48](https://github.com/aurora-silicon/aura/pull/48) | Stacked on #47; preserve camera behavior until both producers are present. |
 | Three USB controller/PHY tunings | [Aura #49](https://github.com/aurora-silicon/aura/pull/49) | USB 2 was tested on all three ports; USB 3 data remains untested. |
 | SEP/display reservations | [Aura #50](https://github.com/aurora-silicon/aura/pull/50) | Use a matching tree and Aura build; the newer upstream-based variant has not had its own hardware boot. |
-| SD board-tree rewrite | [Linux #795](https://github.com/aurora-silicon/linux/pull/795) | The updated board tree supplies the needed topology; the installed older tree still depends on the local rewrite. |
+| SD board-tree rewrite | [Linux #795](https://github.com/aurora-silicon/linux/pull/795) | The updated board tree supplies the needed topology; the earlier tree depended on the local rewrite. |
 | HDMI PHY handoff | No equivalent established yet | An HDMI display test remains outstanding. |
 | U-Boot allocator reservation | No equivalent established yet | Resolve allocations through EFI and Linux adoption, including late GRUB reads. |
 
-The wrapper starts from Aura's live tree, applies these fixups, then reserves
-the U-Boot allocator in the outgoing EFI tree. Removing the wrapper as a whole
-before all of those responsibilities have replacements would discard behavior.
+The earlier wrapper started from Aura's live tree, applied these fixups and
+reserved the U-Boot allocator. Its responsibilities were evaluated together
+when the later integrated stack was promoted; the reduced-reservation trial
+above does not prove all DMA-lifetime risks are resolved.
 
 Upstream comparison: [U-Boot #16](https://github.com/aurora-silicon/u-boot/pull/16)
 describes the T6040 wake and adoption paths in the `aurora-wip` production
@@ -171,11 +179,11 @@ that an outstanding command is safely contained when reset fails. As checked
 on 1 November 2026, neither PR had conversation comments or inline review
 threads clarifying that failure path.
 
-Before replacing the broad reservation, establish which buffers remain
+Before changing reservation coverage, establish which buffers remain
 controller- or firmware-accessible on each wake/adoption path, including the
 failure path when retiring I/O queues fails, and verify coverage through Linux
-adoption. A targeted reservation can then be compared on real hardware with
-the known-working boot chain. Until then retain the existing protection.
+adoption. Compare any targeted reservation on real hardware with a known-working
+boot chain. The reduced-reservation observation above is not a proof of DMA safety.
 
 There is an additional failure-path concern in that source revision:
 `nvme_retire_io_queues()` reports an error if a timed-out I/O cannot be

@@ -1,17 +1,20 @@
 # J614s USB and HDMI tuning handoff
 
-> Historical cache paths below describe past trials and are not current recovery instructions; most of those artifacts are no longer in the checkout. For the current boot recovery path, see [recovery](recovery.md).
+> This is a chronological investigation. Statements about the installed stack,
+> selected trials and recovery files refer to the recorded time unless a later
+> update says otherwise. Historical cache artifacts are mostly unavailable.
+> For the present boot recovery path, see [recovery](recovery.md).
 
-The package-managed U-Boot overlay copies per-device ADT tuning into the
+The earlier package-managed U-Boot overlay copied per-device ADT tuning into the
 Linux tree for three USB-C PHYs and controllers, and for the HDMI PHY. Its
-HDMI path stages tuning while leaving the PHY disabled for Aurora's display
-power gate; the final Linux tree on the DAPF trial has all four PHY nodes
+HDMI path staged tuning while leaving the PHY disabled for Aurora's display
+power gate; the final Linux tree on the DAPF trial had all four PHY nodes
 enabled and their expected tuning property names present. This observation
 does not independently test the USB-C ports or validate the tuning values.
 
-The pinned Aura calls `kboot_setup_atc()`, but its existing path first resolves
+In that earlier stack, Aura called `kboot_setup_atc()`, but its path first resolved
 `atcphy0` through `atcphy3` aliases. None of those aliases is present in the
-running J614s tree. Moreover, Aura's fallback ATC table writes a different
+trial J614s tree. Moreover, that Aura fallback ATC table wrote a different
 set of property names and offsets from the local T6040 U-Boot handoff. Adding
 aliases alone therefore does not establish equivalence. Aurora's current
 [`kboot_atc.c`](https://github.com/aurora-silicon/aura/blob/main/src/kboot_atc.c)
@@ -19,7 +22,10 @@ also lacks the local T6040-specific lane tuning names as checked on 1 November
 2026. This comparison is of code and property presence, not a byte-for-byte
 comparison of per-device tuning data.
 
-The natural upstream direction is to adapt Aura's existing ATC exporter for
+The later installed Aura pin contains the J614s USB and HDMI exporter associated
+with [#49](https://github.com/aurora-silicon/aura/pull/49) and [#53](https://github.com/aurora-silicon/aura/pull/53); the installed U-Boot pin is
+[#29](https://github.com/aurora-silicon/u-boot/pull/29). The following analysis describes the earlier U-Boot handoff and remains useful for review.
+The upstream direction was to adapt Aura's existing ATC exporter for
 the actual T6040 DT binding and then remove the U-Boot duplication, preserving
 its fail-closed behavior and the separate HDMI display gate. Before trying
 that, compare every source property, destination, bias, range check and
@@ -46,9 +52,9 @@ and checks offsets against a table-specific resource size before appending
 big-endian tuples. The local U-Boot converter checks 32-bit records, alignment
 and a generic offset bound, then applies each destination's bias. A migration
 must compare these limits to each actual resource rather than assume that the
-two validators are interchangeable. The current HDMI helper stages changes in
-a scratch tree and refuses the display handoff on failure; the USB loop logs
-an error and relies on the input PHY starting disabled. These distinct failure
+two validators are interchangeable. The earlier HDMI helper staged changes in
+a scratch tree and refused the display handoff on failure; its USB loop logged
+an error and relied on the input PHY starting disabled. These distinct failure
 paths need explicit tests before either implementation is replaced.
 
 On the 1 November DAPF trial boot, a read-only check decoded the live tree's
@@ -63,7 +69,7 @@ with their driver's global, debug, link and `drd-cfg` subranges; all were
 aligned and within bounds. No device access or boot change was made for these
 checks.
 
-The compiled board DTB bundled into the current trial is available at
+The compiled board DTB bundled into the historical trial was recorded at
 `cache/j614s-pr795-trial/board.dtb`. Inspecting it without extracting or
 printing calibration data shows that all four PHY nodes start disabled but
 already contain nonempty tuning properties; the three USB controller nodes
@@ -83,7 +89,7 @@ the display handoff, but the existing external-DCP admission validates its
 firmware and reserved-memory descriptors, not the local HDMI tuning result.
 An Aura implementation must explicitly connect those outcomes: a failed PHY
 export cannot simply leave the existing external-DCP handoff eligible. The
-current U-Boot code removes the relevant DCP's `memory-region` after export
+earlier U-Boot code removed the relevant DCP's `memory-region` after export
 failure; preserve the resulting admission behavior while moving ownership,
 and independently verify that an internal-only display still starts.
 
@@ -109,10 +115,9 @@ Its component hashes and the unbooted status are recorded in
 loader and recovery copy were verified during staging. For comparison after
 boot, `baseline-property-hashes.json` contains hashes of all 57 tuning
 properties from the prior running tree, without their calibration values.
-The alias-based trial was replaced before boot. The known-good EFI copy
-is `m1n1/boot.bin.m4rch-before-sd-gpio`; it can be copied over `m1n1/boot.bin`
-from macOS or recoveryOS if Linux cannot boot. USB-C and HDMI need hardware
-testing on this candidate; HDMI is not currently available for testing.
+The alias-based trial was replaced before boot. Its old recovery copy and
+instructions are historical; see [current recovery](recovery.md). USB-C and
+HDMI needed hardware testing on that candidate.
 
 The device-tree experiment has also been refreshed onto board PR #795 head
 `dc054fb02bfb002e41f2dd8f43a3dce2983cf537`. It compiled using that revision's
@@ -171,17 +176,17 @@ The owner confirmed a USB device was detected in all three USB-C ports; kernel
 logs show USB 2.0 enumeration through each corresponding PHY. Although the
 USB3 PHYs reported tuning, the full-speed device did not test USB 3 data or
 USB-C display output. The package-managed stage two was restored and verified
-for the next boot; this does not interrupt the running trial. HDMI remains
+for the next boot; the restoration did not interrupt that trial session. HDMI remains
 untested on this candidate.
 
 ## Submitted USB-only change
 
 [Aura PR #53](https://github.com/aurora-silicon/aura/pull/53) extends the
-USB proposal with the HDMI PHY handoff as a draft. The integrated trial above
+USB proposal with the HDMI PHY handoff. The integrated trial above
 confirmed that the HDMI tuning properties were copied, but it did not test a
 connected display. The changed files compiled and linked in a reconstructed
 Aura tree; the complete exact PR branch has not been built or booted. HDMI
-output still needs a cable and display before the draft can be qualified.
+output still needs a cable and display before the change can be qualified.
 
 [Aura PR #49](https://github.com/aurora-silicon/aura/pull/49) proposes the
 three USB-C ports without the separate HDMI handoff. Its only changed file is

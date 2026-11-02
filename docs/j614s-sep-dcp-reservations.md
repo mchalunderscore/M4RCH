@@ -1,6 +1,9 @@
 # J614s SEP and DCP reservations
 
-> Historical cache paths below describe past trials and are not current recovery instructions; most of those artifacts are no longer in the checkout. For the current boot recovery path, see [recovery](recovery.md).
+> This is a chronological investigation. References to the installed stack,
+> selected trials and recovery files describe their recorded time unless a later
+> update says otherwise. For the present stack see [status](status.md) and
+> [recovery](recovery.md); historical cache artifacts are mostly unavailable.
 
 On the Touch ID trial, Linux reported two overlapping reserved-memory pairs and
 refused to mark two DCP OS-log nodes `no-map`. The pre-Touch ID boot had no
@@ -24,7 +27,7 @@ publishes the whole descriptor as one mapped `sep-firmware` reservation. Its
 the DCP log nodes independently; its discussion contained no resolution of the
 combined SEP case when checked on 31 October. Current `aurora-wip` still uses
 the same SEP reservation approach. No corresponding upstream combined fix was
-found. The local J614s U-Boot handoff therefore splits the SEP *reservation*,
+found at that time. The earlier local J614s U-Boot handoff split the SEP *reservation*,
 not the firmware or the DCP buffers: existing intersecting `no-map` ASC/DCP
 nodes retain their addresses and phandles, and the remaining pieces of the
 full SEPFW range get their own reserved-memory nodes. The unneeded `sepfw`
@@ -45,6 +48,10 @@ user confirmed the display, keyboard and trackpad worked, and the enrolled
 right index finger matched. This evidence does not
 prove suspend reliability, external display behavior, or the meaning of every
 byte of the Apple firmware descriptor.
+
+The later installed Aura source contains the J614s reservation handling
+associated with [Aura #50](https://github.com/aurora-silicon/aura/pull/50);
+its combined-stack evidence does not qualify every firmware lifetime.
 
 ## Upstream design constraint — 1 November 2026
 
@@ -79,14 +86,14 @@ warnings. This is only an ownership prototype: it has not been run on the
 actual pre-U-Boot device tree or booted, and a J614s board check alone does not
 prove what an arbitrary future kernel's SEP bootstrap requires. Review the
 warm-attach contract and all reservations added by downstream U-Boot before
-considering an upstream submission. The current USB/HDMI trial is independent
-and does not contain this prototype.
+considering an upstream submission. The USB/HDMI trial then selected was independent
+and did not contain this prototype.
 
 The currently installed kernel selects the T6040 profile for `apple,j614s`;
 that profile inherits T8140's warm-register bootstrap. This supports the
 prototype's premise for the present stack, but does not establish a contract
-for every kernel a user might boot. The package-managed U-Boot still adds ISP
-reserved-memory nodes and may add ANS RTKit `no-map` nodes after Aura's pass,
+for every kernel a user might boot. The earlier package-managed U-Boot added ISP
+reserved-memory nodes and could add ANS RTKit `no-map` nodes after Aura's pass,
 as well as an ANS malloc-arena `/memreserve/`. On the running camera-trial
 tree, a read-only comparison found neither ISP firmware region overlapping a
 `sep-retained` or other reserved-memory node. The observed tree has no
@@ -132,13 +139,10 @@ split; the full boot stack still carries other J614s integration changes.
 The bundle SHA-256 is
 `ecc61d152bcffa61e1cfe3d8989a95e7fbcd413428cef89b4e43c220d3a18ed4`.
 It was selected after verifying and archiving the prior package-managed loader
-and EFI recovery copy. The candidate remains selected until explicitly
-restored. After boot inspect the reserved-memory errors as well as Touch ID
-and internal display behavior. Previous unsplit boots reported DCP no-map
-failures, so working devices alone would not establish that the reservations
-are safe. If it cannot boot, from macOS or recoveryOS copy
-`m1n1/boot.bin.m4rch-before-sd-gpio` over `m1n1/boot.bin` on EFI; do not move
-or delete the recovery copy.
+and EFI recovery copy. The candidate was selected for that trial. Previous
+unsplit boots reported DCP no-map failures, so working devices alone would not
+establish that the reservations are safe. The trial has ended; use
+[current recovery](recovery.md) for the present stack.
 
 The first unsplit trial reached U-Boot but failed with `FDT_ERR_BADVALUE`
 during the local J614s runtime device-tree import, before Linux. The new
@@ -189,9 +193,7 @@ No live device tree was modified or saved. The corrected loader and the current
 `6d48c2747e7891bb377256e776e888d5f335eace435e594ef5a62c4fb67f2a85`.
 The obsolete U-Boot SD rewrite and its old SEP split are absent. The
 package-managed loader and EFI recovery copy were verified before selection.
-This trial stays selected until explicitly restored; if it fails, use macOS or
-recoveryOS to copy `m1n1/boot.bin.m4rch-before-sd-gpio` over `m1n1/boot.bin`
-on EFI, keeping the recovery copy.
+That trial has ended; use [current recovery](recovery.md) for the present stack.
 
 The corrected candidate booted Linux on
 `aacc45f5-45d2-4047-9871-8c9131cff55a` with the updated board model. Linux

@@ -1,7 +1,12 @@
 # J614s SMC and thermal investigation
 
-2026-11-02. No-reboot investigation complete within the documented guards; maximum thermal budgets are not qualified. Hardware is a J614s MacBook Pro 14-inch M4 Pro,
-running `7.3.0-j614s-pr1-ARCH`, based on Aurora Linux #795 head
+> This is a record of hardware trials, not current boot or recovery instructions.
+> See [status](status.md) and [recovery](recovery.md) for the present setup.
+
+2026-11-02. The investigation was completed within the documented guards;
+maximum thermal budgets are not qualified. During the recorded trials the
+J614s MacBook Pro 14-inch M4 Pro ran `7.3.0-j614s-pr1-ARCH`, based on Aurora
+Linux #795 head
 `dc054fb02bfb002e41f2dd8f43a3dce2983cf537` with #804, #817 and #821 on
 top (merge `c6af520e2920e3b5b2b604b23e89b2fcede369e3`). The normal
 package-managed kernel entry has booted. Its J614s DT reuses the J616s sensor
@@ -168,12 +173,12 @@ its `manage` callback, and below that temperature resets its PID state and
 allows maximum power for the target-trip actors. Its switch-on comparison
 does not use the new trip's hysteresis.
 
-The candidate is proposed for discussion in draft [Aurora Linux #852](https://github.com/aurora-silicon/linux/pull/852),
+The candidate is proposed for discussion in [Aurora Linux #852](https://github.com/aurora-silicon/linux/pull/852),
 based on #795. The submitted tree matches local experimental branch
 `codex/j614-j616-gpu-thermal-experiment`; the public commit is
-`2bffe0c131924b078cfbe0b460c207f463d80823`. It remains a draft pending review
-of the threshold and sustainable power and testing on J616s and near the
-actual switch-on temperature.
+`2bffe0c131924b078cfbe0b460c207f463d80823`. As checked on 2 November, the
+PR is open and ready for review; the threshold and sustainable power still need
+review and testing on J616s and near the actual switch-on temperature.
 
 The owner confirmed that only the J614s is available locally; J616s hardware
 testing must come from another tester. Aurora #511's discussion explicitly
@@ -190,8 +195,8 @@ On 2026-11-02 the candidate was selected for a trial. The previously booted
 loader was verified and preserved as `/boot/efi/m1n1/boot.bin.m4rch-before-gpu-thermal`
 and under `/var/lib/m4rch/gpu-thermal-before-20261102T081733Z`. The candidate
 booted successfully (boot ID `18f0bfc9-9e32-4d9d-8c68-9fa6ac42f514`), and
-the verified normal loader was restored for the next boot while the trial
-continues running.
+the verified normal loader was restored for the next boot while that trial
+session continued running.
 
 At and above 100 C, this changes the controller's PID gain as well as its
 activation: with the present estimated 4.62 W sustainable power, the initial
@@ -217,7 +222,7 @@ reported target/actual frequencies were 4.512/4.091 GHz in this trial and
 as a controlled performance claim. Private trace and telemetry are stored as
 `gpu-two-trip-after-reboot-trace.txt` and `gpu-two-trip-p0-after-reboot.jsonl`
 in the root-only evidence directory. The diagnostic module and trace instance
-were removed after capture; the diagnostic module tainted this running kernel.
+were removed after capture; the diagnostic module tainted that trial kernel.
 
 To exercise the real control path without heating the hardware to 100 C, a
 second test temporarily lowered **only gpu0**'s switch-on and target trips
@@ -294,7 +299,7 @@ target. Accumulated negative integral error can reduce it sooner. Thus the
 proposal can reach zero allocated CPU power near 102 C even though the earlier
 single-trip estimate was much less aggressive there. This is a code-derived
 expectation, corroborated at the lowered test temperatures, not a physical
-measurement at 102 C. The upstream draft calls out this design tradeoff.
+measurement at 102 C. The upstream proposal calls out this design tradeoff.
 
 ### Five-degree gap comparison
 
@@ -367,7 +372,7 @@ maximum power; other zones may still limit CPUs.
 
 | Switch / target | 100 C | 101 C | 102 C | 103 C |
 |---|---:|---:|---:|---:|
-| 100 / 101 C (draft) | 13.86 W | 4.62 W | ~0 W | 0 W |
+| 100 / 101 C (proposal) | 13.86 W | 4.62 W | ~0 W | 0 W |
 | 101 / 102 C | inactive | 13.86 W | 4.62 W | ~0 W |
 | 96 / 101 C | 6.47 W | 4.62 W | 3.70 W | 2.77 W |
 
@@ -639,8 +644,8 @@ budget. Full fit output remains in the private working cache.
   procedure requires further evidence and supervision; a reboot alone would
   not establish them.
 - The temporary diagnostic module and all test sleep inhibitors were removed.
-  Loading an out-of-tree module taints this kernel for the remainder of this
-  boot. The normal package-managed GRUB entry is the one that actually booted.
+  Loading an out-of-tree module tainted that kernel for the remainder of that
+  boot. The normal package-managed GRUB entry was the one used in that trial.
 
 A guarded 1.800 GHz all-core midpoint measurement completed to narrow the
 range between the completed 1.512 GHz point and the interrupted 2.088 GHz run.

@@ -23,7 +23,9 @@ initramfs and module tree are in the full-stack recovery archive below.
 The verified promotion snapshot is
 `/var/lib/m4rch/j614s-stock-promotion-20261102/`. Earlier experiment and
 boot evidence are in `/var/lib/m4rch/j614s-aurora-defaults-trial-20261102/`.
-The EFI and filesystem recovery copies are on the same disk.
+The EFI and filesystem recovery copies are on the same disk. Their hashes were
+verified at promotion; recheck them with appropriate privileges before relying
+on them for a new boot change.
 The standard updater has no local DTB override; check its selected kernel DTB
 set before future kernel updates. Suspend and external displays have not been
 qualified on this final trial. The live J614s tree disables the speaker card

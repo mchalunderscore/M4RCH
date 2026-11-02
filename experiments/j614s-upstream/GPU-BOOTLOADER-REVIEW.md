@@ -1,11 +1,14 @@
 # J614s GPU and bootloader review
 
-> Historical cache paths below describe past trials and are not current recovery instructions; most of those artifacts are no longer in the checkout. For the current boot recovery path, see [recovery](../../docs/recovery.md).
+> This is a chronological investigation. Statements about the installed stack,
+> selected trials and recovery files refer to the recorded time unless a later
+> update says otherwise. Historical cache artifacts are mostly unavailable.
+> For the present boot recovery path, see [recovery](../../docs/recovery.md).
 
 Reviewed 1 November 2026. The GPU candidate booted successfully for one
-trial; the existing kernel remains the default. The MCC loader candidate was
-selected for a separate boot, then the previous package-managed loader was
-restored. The [GPU draft PR #804](https://github.com/aurora-silicon/linux/pull/804)
+trial; at that point the existing kernel remained the default. The MCC loader
+candidate was selected for a separate boot, then the previous package-managed loader was
+restored. The [GPU PR #804](https://github.com/aurora-silicon/linux/pull/804)
 and [MCC PR #43](https://github.com/aurora-silicon/aura/pull/43) are open.
 A successful build or short GPU run does not establish that every firmware
 offset is correct.
@@ -73,8 +76,9 @@ commands before the recorded GPU start of the long background compute command.
 The query used as a start marker was a separate GPU command, so availability
 of that marker did not show that the long dispatch had begun. The reported
 fence overlap is therefore not evidence that a running dispatch was interrupted.
-Raw local results and trace are under
-`cache/j614s-gpu-trial/validation/6c6016fd-a269-49a6-bc89-ee1037fa01f4/`.
+Raw results and trace were recorded under the historical
+`cache/j614s-gpu-trial/validation/6c6016fd-a269-49a6-bc89-ee1037fa01f4/`
+directory; only the `native-gl46` record remains in the private cleanup archive.
 No GPU or DART errors were found in the checked kernel log. The tracepoints
 report firmware timestamps, not a decoded preemption or context-save event.
 
@@ -83,10 +87,10 @@ completed the contender with the background fence unfinished in 5/5 rounds
 for each priority condition. In all ten traced rounds, the firmware timestamps
 still placed both contender commands before the reported background-dispatch
 start. This did not establish a preemption event or make the prior marker a
-reliable proxy for dispatch start. Those results are in the `delay40/`
-subdirectory. The active test source now labels the result inconclusive; an
-exact copy of the original source used in the first trace is retained beside
-its hash manifest. Mesa rejects HIGH priority on this GPU, and its current
+reliable proxy for dispatch start. Those results were recorded in the `delay40/`
+subdirectory. The historical test source was updated to label the result
+inconclusive; those cached trace files and their manifest are no longer in the
+checkout. Mesa rejects HIGH priority on this GPU, and its current
 kernel/firmware tracepoints do not decode a context-save event. No scheduling
 override or unsupported priority was enabled.
 
@@ -142,15 +146,11 @@ initialized. The loader version string is the same as the earlier build, so
 the boot log alone does not independently identify the exact loader binary.
 After the trial, the package-managed bundle was verified and restored as the next default.
 
-Aura stage two does not automatically revert on failure: the previous bundle is at
-`/boot/efi/m1n1/boot.bin.m4rch-pre-mcc` and in
-`/var/lib/m4rch/j614s-mcc-trial-20261101/`. The EFI backup has SHA-256
-`7faa2fa33f05f4020e3bb1bd39af3100ca6bffa3812c1f23dcb77e2960af85bd`.
-From macOS or recoveryOS, mount EFI partition `E8DC-7E45` (PARTUUID
-`f4c270bd-b482-43e3-880c-b60541cf8e78`), then in its `m1n1` directory verify
-the backup hash, copy `boot.bin.m4rch-pre-mcc` over `boot.bin`, sync and verify
-the destination hash. These notes describe an older trial; use the current
-[recovery guide](../../docs/recovery.md) for the installed default.
+Aura stage two does not automatically revert on failure. The earlier MCC trial
+recorded a recovery bundle with SHA-256
+`7faa2fa33f05f4020e3bb1bd39af3100ca6bffa3812c1f23dcb77e2960af85bd`
+under `/var/lib/m4rch/j614s-mcc-trial-20261101/`. These are historical trial
+notes; use the [recovery guide](../../docs/recovery.md) for the installed default.
 
 ## GPU: describe the observed alternative in the SoC configuration
 
@@ -164,7 +164,7 @@ upstream `hw/t6040.rs` documents that the existing values were measured on a
 describes the firmware-version and calibration checks. None of that establishes
 the correct 16-core layout.
 
-The running patch adds a module parameter plus a match on chip, die count,
+The earlier installed patch added a module parameter plus a match on chip, die count,
 cluster count, reported core slots, active-core count and both fuse masks.
 For the observed match it retains Aurora's `TWO_BY_TEN` operand buffer and
 `TWO_CLUSTERS` deflake configuration. The operand buffer has two preemption
@@ -256,8 +256,8 @@ initialization trace or an independently measured booted-binary hash.
   the internal display and HDMI on the combined loader. The standalone branch
   built as an ESP stage-two image; it has not itself been booted. The existing
   host harness passed 44 guard scenarios with ASan and UBSan.
-- **SD:** The package-managed loader still makes the J614s-specific Aura
-  power call and applies the U-Boot tree rewrite. Two later combined-stack
+- **SD:** The earlier package-managed loader made the J614s-specific Aura
+  power call and applied the U-Boot tree rewrite. Two later combined-stack
   trials omitted the Aura power action; the second also omitted the U-Boot
   rewrite and used the source-built board description. It detected an SDXC
   card and read its partition table. Those tests support moving the power
