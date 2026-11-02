@@ -1,0 +1,17 @@
+pkgname=mesa-aurora-fex-guest
+epoch=1
+pkgver=26.3.0_devel.202610310638.c208afc352e
+pkgrel=1.1
+pkgdesc='Aurora stock FEX Mesa guest layer with dependencies adjusted for M4RCH host Mesa'
+arch=('any')
+url='https://github.com/aurora-silicon/mesa'
+license=('MIT')
+depends=("mesa-aurora=$epoch:$pkgver-$pkgrel" "vulkan-aurora=$epoch:$pkgver-$pkgrel" 'util-linux')
+options=('!strip' '!debug')
+install=aurora-fex.install
+source=('aurora-stock-fex.pkg.tar.zst')
+noextract=('aurora-stock-fex.pkg.tar.zst')
+sha256sums=('1bcdc7b033ea89d7f3a315a7f989757650b5500ff818325770c3b34e76c6a38a')
+package() {
+  bsdtar -xpf "$srcdir/aurora-stock-fex.pkg.tar.zst" --no-same-owner -C "$pkgdir" --exclude .PKGINFO --exclude .BUILDINFO --exclude .MTREE --exclude .INSTALL
+}

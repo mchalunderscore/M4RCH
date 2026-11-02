@@ -1,0 +1,614 @@
+From 3fa56dc04b8b31a63b210fc7dc4320f4ace53ba8 Mon Sep 17 00:00:00 2001
+From: Eryk Wieliczko <eryk@wieliczko.ninja>
+Date: Sun, 25 Oct 2026 16:33:14 +0100
+Subject: [PATCH 1/4] drm/gpuvm: initialize BO unmap result
+
+Return success when a VM BO has no mappings instead of returning an
+uninitialized stack value. Deferred-close cleanup can reach this case;
+a garbage error return marks cleanup failed and blocks the VM.
+
+Signed-off-by: Eryk Wieliczko <eryk@wieliczko.ninja>
+(cherry picked from commit 2151a3442ee9e60f096ee1c6b7770fcd5ba1e879)
+Assisted-by: LLM
+Signed-off-by: Ryan Murray <ryan@aurorasilicon.org>
+---
+ drivers/gpu/drm/drm_gpuvm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/drm_gpuvm.c b/drivers/gpu/drm/drm_gpuvm.c
+index b6aa52428a4e64..3b4f9c5e502210 100644
+--- a/drivers/gpu/drm/drm_gpuvm.c
++++ b/drivers/gpu/drm/drm_gpuvm.c
+@@ -3258,7 +3258,7 @@ drm_gpuvm_bo_unmap(struct drm_gpuvm_bo *vm_bo, void *priv)
+ {
+ 	struct drm_gpuva_ops *ops;
+ 	struct drm_gpuva_op *op;
+-	int ret;
++	int ret = 0;
+ 
+ 	if (unlikely(!vm_bo->vm))
+ 		return -EINVAL;
+
+From 6b00531a31e719ed7db1d63871fc8a3f47ee3b00 Mon Sep 17 00:00:00 2001
+From: Eryk Wieliczko <eryk@wieliczko.ninja>
+Date: Sun, 25 Oct 2026 14:49:13 +0100
+Subject: [PATCH 2/4] rust: drm: gpuvm: add filtered object unmap
+
+Allow immediate-mode drivers to remove selected mappings of one GEM
+without allocating an operation list.
+
+Signed-off-by: Eryk Wieliczko <eryk@wieliczko.ninja>
+(cherry picked from commit a8f459d96480e49bc2ae3ee0f9a78e18d9f6389c)
+Assisted-by: LLM
+Signed-off-by: Ryan Murray <ryan@aurorasilicon.org>
+---
+ rust/kernel/drm/gpuvm/mod.rs | 26 ++++++++++++++++++++++----
+ 1 file changed, 22 insertions(+), 4 deletions(-)
+
+diff --git a/rust/kernel/drm/gpuvm/mod.rs b/rust/kernel/drm/gpuvm/mod.rs
+index 146f3c9ed8362e..6c4d24e759b5a0 100644
+--- a/rust/kernel/drm/gpuvm/mod.rs
++++ b/rust/kernel/drm/gpuvm/mod.rs
+@@ -688,24 +688,38 @@ impl<T: DriverGpuVm> GpuVmInnerGuard<'_, T> {
+     /// node or operation list is allocated. Call [`GpuVm::deferred_cleanup`] after releasing this
+     /// guard, including when a callback failed after earlier mappings were removed.
+     pub fn unmap_all(&mut self, unmap: impl FnMut(&mut T, &GpuVa<T>) -> Result) -> Result {
+-        self.unmap_matching(None, unmap)
++        self.unmap_matching(None, |_| true, unmap)
+     }
+ 
+     /// Allocation-free whole-node removal for one GEM object in an immediate-mode VM.
+     ///
+     /// Uses the same translation-removal and deferred-put contract as [`Self::unmap_all`]. This
+-    /// scans the VM list and is intended as a low-memory cleanup fallback.
++    /// scans the VM list and can be used when the per-object operation list is unavailable.
+     pub fn unmap_object(
+         &mut self,
+         object: &T::Object,
+         unmap: impl FnMut(&mut T, &GpuVa<T>) -> Result,
+     ) -> Result {
+-        self.unmap_matching(Some(object), unmap)
++        self.unmap_object_where(object, |_| true, unmap)
++    }
++
++    /// Remove only mappings of an object selected by `matches`, without allocating.
++    ///
++    /// This scans the whole VM and uses the same translation-removal and deferred-put contract as
++    /// [`Self::unmap_all`]. If a callback fails, mappings already visited remain removed.
++    pub fn unmap_object_where(
++        &mut self,
++        object: &T::Object,
++        matches: impl FnMut(&GpuVa<T>) -> bool,
++        unmap: impl FnMut(&mut T, &GpuVa<T>) -> Result,
++    ) -> Result {
++        self.unmap_matching(Some(object), matches, unmap)
+     }
+ 
+     fn unmap_matching(
+         &mut self,
+         object: Option<&T::Object>,
++        mut matches: impl FnMut(&GpuVa<T>) -> bool,
+         mut unmap: impl FnMut(&mut T, &GpuVa<T>) -> Result,
+     ) -> Result {
+         let vm = self.gpuvm.as_raw();
+@@ -729,7 +743,11 @@ impl<T: DriverGpuVm> GpuVmInnerGuard<'_, T> {
+                 if object.is_some_and(|object| (*va).gem.obj != object.as_raw()) {
+                     continue;
+                 }
+-                unmap(&mut *self.gpuvm.data.get(), GpuVa::<T>::from_raw(va))?;
++                let typed_va = GpuVa::<T>::from_raw(va);
++                if !matches(typed_va) {
++                    continue;
++                }
++                unmap(&mut *self.gpuvm.data.get(), typed_va)?;
+                 // Remove it as `OpUnmap::remove()` does.
+                 let op = bindings::drm_gpuva_op_unmap { va, keep: false };
+                 bindings::drm_gpuva_unmap(&op);
+
+From bbe1524be50115e6842668b9f704d1841b7e7efa Mon Sep 17 00:00:00 2001
+From: Eryk Wieliczko <eryk@wieliczko.ninja>
+Date: Sun, 25 Oct 2026 16:33:14 +0100
+Subject: [PATCH 3/4] drm/asahi: keep new bindings after deferred GEM close
+
+A dma-buf reimport can return the same GEM while cleanup for a closed
+handle is queued. Stamp each binding and remove only mappings covered by
+the close-time sequence, preserving later maps instead of unmapping them.
+
+Keep the indexed BO path when no newer binding exists. A map step that
+takes its sequence after the close snapshot survives deferred cleanup.
+
+[ryan: the VmBoData initialisers follow our SG lease and
+prepare_sgt_segments() setup; drop_mappings_before() gains the SAFETY
+comment its exec_lock() call carries elsewhere]
+
+Signed-off-by: Eryk Wieliczko <eryk@wieliczko.ninja>
+(cherry picked from commit 13c3371ce23dceabad0fffd1d16ee121adb93dff)
+Assisted-by: LLM
+Signed-off-by: Ryan Murray <ryan@aurorasilicon.org>
+---
+ drivers/gpu/drm/asahi/mmu.rs          | 104 +++++++++++++++++++++++++-
+ drivers/gpu/drm/asahi/mmu/bind.rs     |  12 ++-
+ drivers/gpu/drm/asahi/mmu/context.rs  |  10 ++-
+ drivers/gpu/drm/asahi/mmu/lifetime.rs |  30 +++++---
+ drivers/gpu/drm/asahi/mmu/shared.rs   |   9 ++-
+ 5 files changed, 148 insertions(+), 17 deletions(-)
+
+diff --git a/drivers/gpu/drm/asahi/mmu.rs b/drivers/gpu/drm/asahi/mmu.rs
+index 12b0a7457fff3e..f3c0d511f36ae0 100644
+--- a/drivers/gpu/drm/asahi/mmu.rs
++++ b/drivers/gpu/drm/asahi/mmu.rs
+@@ -366,6 +366,7 @@ struct VmInner {
+     va_range: Range<u64>,
+     page_table: UatPageTable,
+     mapping_epoch: Option<Arc<MappingEpoch>>,
++    bind_sequence: Arc<AtomicU64>,
+     epoch: Option<u64>,
+     mm: mm::Allocator<(), KernelMappingInner>,
+     uat_inner: Arc<UatInner>,
+@@ -424,6 +425,11 @@ struct VmBinding {
+ /// Data associated with a VM <=> BO pairing
+ #[pin_data]
+ struct VmBoData {
++    /// Highest sequence assigned to a GPUVA linked to this VM/BO pair.
++    ///
++    /// Map steps update this monotonically under the VM reservation before
++    /// linking the GPUVA. Remap pieces keep their original sequence.
++    newest_bind: AtomicU64,
+     #[pin]
+     segments: Mutex<Option<SgSegments>>,
+ }
+@@ -479,6 +485,9 @@ struct StepContext<'ctx> {
+ 
+     /// Preallocated resources that can be used when executing the request.
+     resources: &'ctx mut VmOpResources,
++
++    /// Sequence assigned by the successful map for its related metadata.
++    bind_sequence: u64,
+ }
+ 
+ impl<'ctx> StepContext<'ctx> {
+@@ -491,6 +500,7 @@ impl<'ctx> StepContext<'ctx> {
+             dev,
+             prot,
+             resources,
++            bind_sequence: 0,
+         })
+     }
+ 
+@@ -521,6 +531,7 @@ impl<'ctx> StepContext<'ctx> {
+ #[derive(Default, Clone)]
+ struct VmGpuVa {
+     prot: Option<Prot>,
++    bind_sequence: u64,
+ }
+ 
+ impl gpuvm::DriverGpuVm for VmInner {
+@@ -539,6 +550,11 @@ impl gpuvm::DriverGpuVm for VmInner {
+         op: OpMap<'op, Self>,
+         ctx: &mut Self::SmContext<'ctx>,
+     ) -> Result<OpMapped<'op, Self>, Error> {
++        let bind_sequence = self.bind_sequence.fetch_update(
++            Ordering::AcqRel,
++            Ordering::Acquire,
++            |value| value.checked_add(1),
++        ).map_err(|_| EOVERFLOW)? + 1;
+         let _mutation = self.mapping_mutation();
+         let (map_addr, map_length) = (op.addr(), op.length() as usize);
+         let mut iova = op.addr();
+@@ -611,12 +627,18 @@ impl gpuvm::DriverGpuVm for VmInner {
+                 return Err(error);
+             }
+         };
++        op.vm_bo()
++            .data()
++            .newest_bind
++            .fetch_max(bind_sequence, Ordering::Relaxed);
+         let op = op.insert(
+             gpuva,
+             VmGpuVa {
+                 prot: Some(ctx.prot),
++                bind_sequence,
+             },
+         );
++        ctx.bind_sequence = bind_sequence;
+ 
+         self.tlbi_contexts_naming_root(map_addr, map_length);
+         Ok(op)
+@@ -642,6 +664,7 @@ impl gpuvm::DriverGpuVm for VmInner {
+         ctx: &mut Self::SmContext<'ctx>,
+     ) -> Result<OpRemapped<'op, Self>, Error> {
+         let orig_prot = op.va_to_unmap().data().prot.ok_or(EINVAL)?;
++        let orig_bind_sequence = op.va_to_unmap().data().bind_sequence;
+         let orig_invalidated = op.va_to_unmap().flags().contains(GpuVaFlag::INVALIDATED);
+ 
+         // Only unmap the hole between prev/next, if they exist
+@@ -707,9 +730,11 @@ impl gpuvm::DriverGpuVm for VmInner {
+             [prev_gpuva, next_gpuva],
+             VmGpuVa {
+                 prot: Some(orig_prot),
++                bind_sequence: orig_bind_sequence,
+             },
+             VmGpuVa {
+                 prot: Some(orig_prot),
++                bind_sequence: orig_bind_sequence,
+             },
+         );
+ 
+@@ -994,6 +1019,7 @@ pub(crate) struct Vm {
+     dev: ARef<device::Device>,
+     id: u64,
+     mapping_epoch: Option<Arc<MappingEpoch>>,
++    bind_sequence: Arc<AtomicU64>,
+     lifetime: Option<Arc<lifetime::VmLifetime>>,
+     residency: Option<Arc<residency::Gate>>,
+     context_bindings: Option<Arc<context::ContextBindings>>,
+@@ -2114,6 +2140,7 @@ impl Vm {
+         } else {
+             None
+         };
++        let bind_sequence = Arc::new(AtomicU64::new(0), GFP_KERNEL)?;
+         let unique_gpuvm = gpuvm::GpuVm::new::<Error, _>(
+             c"Asahi::GpuVm",
+             &dev,
+@@ -2126,6 +2153,7 @@ impl Vm {
+                 va_range: va_range.clone(),
+                 page_table,
+                 mapping_epoch: mapping_epoch.clone(),
++                bind_sequence: bind_sequence.clone(),
+                 epoch: Some(0),
+                 mm,
+                 uat_inner,
+@@ -2142,6 +2170,7 @@ impl Vm {
+             id,
+             gpuvm,
+             mapping_epoch,
++            bind_sequence,
+             lifetime: None,
+             residency: None,
+             context_bindings: None,
+@@ -2310,6 +2339,10 @@ impl Vm {
+         self.mapping_epoch.as_ref()?.snapshot()
+     }
+ 
++    fn current_bind_sequence(&self) -> u64 {
++        self.bind_sequence.load(Ordering::Acquire)
++    }
++
+     /// Get the translation table base for this Vm
+     fn ttb(&self) -> u64 {
+         self.binding.lock().ttb
+@@ -2410,7 +2443,8 @@ impl Vm {
+             let bo = self.gpuvm.obtain(
+                 gem,
+                 pin_init!(VmBoData {
+-                    segments <- new_mutex!(None)
++                    newest_bind: AtomicU64::new(0),
++                    segments <- new_mutex!(None),
+                 }),
+             )?;
+             prepare_sgt_segments(dev, gem, &bo, &lease)?;
+@@ -2498,7 +2532,8 @@ impl Vm {
+             let bo = self.gpuvm.obtain(
+                 gem,
+                 pin_init!(VmBoData {
+-                    segments <- new_mutex!(None)
++                    newest_bind: AtomicU64::new(0),
++                    segments <- new_mutex!(None),
+                 }),
+             )?;
+             prepare_sgt_segments(dev, gem, &bo, &lease)?;
+@@ -2581,7 +2616,10 @@ impl Vm {
+         let _bind_lease = crate::gem::held_sg_table(gem, dev)?.into_lease();
+         let vm_bo = self
+             .gpuvm
+-            .obtain(gem, pin_init!(VmBoData { segments <- new_mutex!(None) }))?;
++            .obtain(gem, pin_init!(VmBoData {
++                newest_bind: AtomicU64::new(0),
++                segments <- new_mutex!(None),
++            }))?;
+         prepare_sgt_segments(dev, gem, &vm_bo, &_bind_lease)?;
+ 
+         let mut resources = VmOpResources {
+@@ -2835,6 +2873,66 @@ impl Vm {
+         Ok(())
+     }
+ 
++    fn drop_mappings_before(&self, gem: &gem::Object, sequence: u64) -> Result {
++        let _residency = self.enter_retirement_residency();
++        // Removing whole mappings only does unmaps, so no preallocated VAs
++        // are needed for the indexed path.
++        let mut resources = VmOpResources {
++            preallocated_gpuvas: [None, None, None],
++        };
++        let mut ctx = StepContext::new(None, Prot::default(), &mut resources)?;
++
++        // The BO's newest sequence is checked under the same lock as binds. If
++        // it is not newer than the close, every mapping belongs to that close
++        // and the per-object list is safe and substantially cheaper to walk.
++        // SAFETY: See `lock_vm()`.
++        let mut vm_exec = match unsafe { self.gpuvm.exec_lock(None, false) } {
++            Err(error) if error == ENOMEM => {
++                return self.drop_mappings_filtered(gem, sequence);
++            }
++            result => result?,
++        };
++        let Some(bo) = vm_exec.unique_gpuvm.find_bo(gem) else {
++            return Ok(());
++        };
++        if bo.data().newest_bind.load(Ordering::Relaxed) > sequence {
++            drop(vm_exec);
++            drop(bo);
++            return self.drop_mappings_filtered(gem, sequence);
++        }
++
++        mod_dev_dbg!(self.dev, "MMU: deferred bo_unmap\n");
++        let result = vm_exec.unique_gpuvm.bo_unmap(&mut ctx, &bo);
++        if result.is_ok() {
++            self.untrack_context_object_before(gem, sequence);
++            self.untrack_shared_object_before(gem, sequence);
++        }
++        drop(vm_exec);
++        drop(bo);
++        if result == Err(ENOMEM) {
++            return self.drop_mappings_filtered(gem, sequence);
++        }
++        result
++    }
++
++    /// A newer binding shares the BO list, so select the closed generation by
++    /// walking the VM without allocating. This is also the ENOMEM fallback.
++    fn drop_mappings_filtered(&self, gem: &gem::Object, sequence: u64) -> Result {
++        let mut inner = self.gpuvm.lock_inner();
++        let result = inner.unmap_object_where(
++            gem,
++            |va| va.data().bind_sequence <= sequence,
++            VmInner::unmap_gpuva,
++        );
++        if result.is_ok() {
++            self.untrack_context_object_before(gem, sequence);
++            self.untrack_shared_object_before(gem, sequence);
++        }
++        drop(inner);
++        self.bo_deferred_cleanup();
++        result
++    }
++
+     /// Preserve the indexed fast path normally; memory pressure must not lose
+     /// accepted object cleanup just because an exec or operation list failed.
+     fn drop_mappings_low_memory(&self, gem: &gem::Object) -> Result {
+diff --git a/drivers/gpu/drm/asahi/mmu/bind.rs b/drivers/gpu/drm/asahi/mmu/bind.rs
+index 0b3d85077aacbd..e222c7cd8e6a98 100644
+--- a/drivers/gpu/drm/asahi/mmu/bind.rs
++++ b/drivers/gpu/drm/asahi/mmu/bind.rs
+@@ -84,7 +84,10 @@ impl Vm {
+         let sg_lease = crate::gem::held_sg_table(gem, dev)?.into_lease();
+         let vm_bo = self
+             .gpuvm
+-            .obtain(gem, pin_init!(VmBoData { segments <- new_mutex!(None) }))?;
++            .obtain(gem, pin_init!(VmBoData {
++                newest_bind: AtomicU64::new(0),
++                segments <- new_mutex!(None),
++            }))?;
+         prepare_sgt_segments(dev, gem, &vm_bo, &sg_lease)?;
+         if (addr | size | offset) & UAT_PGMSK as u64 != 0 {
+             return Err(EINVAL);
+@@ -153,13 +156,18 @@ impl Vm {
+                                 flags,
+                             });
+                             let retired = result.is_ok().then(|| {
+-                                let retired = self.commit_context_binding(&map.gem, &map.context);
++                                let retired = self.commit_context_binding(
++                                    &map.gem,
++                                    &map.context,
++                                    ctx.bind_sequence,
++                                );
+                                 self.track_shared_binding(
+                                     &map.gem,
+                                     map.addr,
+                                     map.size,
+                                     map.offset,
+                                     map.single_page,
++                                    ctx.bind_sequence,
+                                 );
+                                 retired
+                             });
+diff --git a/drivers/gpu/drm/asahi/mmu/context.rs b/drivers/gpu/drm/asahi/mmu/context.rs
+index d459a3a91afce4..0b11394aa408c6 100644
+--- a/drivers/gpu/drm/asahi/mmu/context.rs
++++ b/drivers/gpu/drm/asahi/mmu/context.rs
+@@ -14,6 +14,7 @@ use kernel::drm::gem::BaseObject;
+ struct Binding {
+     gem: ARef<gem::Object>,
+     offset: usize,
++    bind_sequence: u64,
+ }
+ struct Bindings {
+     generation: u64,
+@@ -115,6 +116,7 @@ impl Vm {
+         &self,
+         gem: &ARef<gem::Object>,
+         update: &PreparedBinding,
++        bind_sequence: u64,
+     ) -> RetiredBindings {
+         let mut retired = RetiredBindings::new();
+         if update.touched == 0 {
+@@ -136,6 +138,7 @@ impl Vm {
+                 *slot = Some(Binding {
+                     gem: gem.clone(),
+                     offset,
++                    bind_sequence,
+                 });
+             }
+         }
+@@ -173,6 +176,10 @@ impl Vm {
+     }
+ 
+     pub(crate) fn untrack_context_object(&self, gem: &gem::Object) {
++        self.untrack_context_object_before(gem, u64::MAX);
++    }
++
++    pub(super) fn untrack_context_object_before(&self, gem: &gem::Object, sequence: u64) {
+         let Some(context) = self.context_bindings.as_ref() else {
+             return;
+         };
+@@ -181,7 +188,8 @@ impl Vm {
+         for slot in &mut bindings.slots {
+             if slot
+                 .as_ref()
+-                .is_some_and(|binding| core::ptr::eq(&*binding.gem, gem))
++                .is_some_and(|binding| core::ptr::eq(&*binding.gem, gem)
++                    && binding.bind_sequence <= sequence)
+             {
+                 *slot = None;
+                 touched = true;
+diff --git a/drivers/gpu/drm/asahi/mmu/lifetime.rs b/drivers/gpu/drm/asahi/mmu/lifetime.rs
+index 8cf37b37e2e0a1..66d507c2d76949 100644
+--- a/drivers/gpu/drm/asahi/mmu/lifetime.rs
++++ b/drivers/gpu/drm/asahi/mmu/lifetime.rs
+@@ -47,6 +47,12 @@ impl DriverMappings {
+     }
+ }
+ 
++struct ClosedObject {
++    gem: ARef<gem::Object>,
++    /// Highest binding sequence covered by the close or merged closes.
++    bind_sequence: u64,
++}
++
+ struct State {
+     active: usize,
+     commits: usize,
+@@ -57,7 +63,7 @@ struct State {
+     cleanup_failed: bool,
+     close_ranges: Option<(Range<u64>, Range<u64>)>,
+     unmaps: KVec<super::bind::PreparedUserUnmap>,
+-    objects: KVec<ARef<gem::Object>>,
++    objects: KVec<ClosedObject>,
+ }
+ 
+ #[pin_data]
+@@ -578,18 +584,22 @@ impl Vm {
+             return self.drop_mappings_now(gem);
+         };
+         let mut state = lifetime.state.lock();
+-        if !state
+-            .objects
+-            .iter()
+-            .any(|object| core::ptr::eq(&**object, gem))
+-        {
+-            state.objects.push(gem.into(), GFP_KERNEL)?;
++        let bind_sequence = self.current_bind_sequence();
++        if let Some(object) = state.objects.iter_mut().find(|object| {
++            core::ptr::eq(&*object.gem, gem)
++        }) {
++            object.bind_sequence = object.bind_sequence.max(bind_sequence);
++        } else {
++            state.objects.push(ClosedObject {
++                gem: gem.into(),
++                bind_sequence,
++            }, GFP_KERNEL)?;
+         }
+         if state.active != 0 || state.draining {
+             // Stop new jobs from selecting this accepted cleanup candidate.
+             // The queued object retains its GEM while the candidate is removed.
+-            // Actual unmap repeats this under exec to order any intervening bind.
+-            self.untrack_context_object(gem);
++            // Preserve a context view installed by a later bind.
++            self.untrack_context_object_before(gem, bind_sequence);
+             return Ok(());
+         }
+         state.draining = true;
+@@ -674,7 +684,7 @@ impl Vm {
+                 }
+             }
+             for object in objects {
+-                if let Err(error) = self.drop_mappings_now(&object) {
++                if let Err(error) = self.drop_mappings_before(&object.gem, object.bind_sequence) {
+                     failure.get_or_insert(error);
+                     pr_err!("MMU: deferred object unmap failed\n");
+                 }
+diff --git a/drivers/gpu/drm/asahi/mmu/shared.rs b/drivers/gpu/drm/asahi/mmu/shared.rs
+index a0c05e3d5c3032..fec7a6b61ad8fb 100644
+--- a/drivers/gpu/drm/asahi/mmu/shared.rs
++++ b/drivers/gpu/drm/asahi/mmu/shared.rs
+@@ -14,6 +14,7 @@ struct Binding {
+     end: u64,
+     object: usize,
+     offset: u64,
++    bind_sequence: u64,
+ }
+ 
+ #[pin_data]
+@@ -43,6 +44,7 @@ impl Vm {
+         size: u64,
+         offset: u64,
+         single_page: bool,
++        bind_sequence: u64,
+     ) {
+         let Some(shared) = &self.shared_bindings else {
+             return;
+@@ -63,6 +65,7 @@ impl Vm {
+                     end,
+                     object: core::ptr::from_ref(gem) as usize,
+                     offset,
++                    bind_sequence,
+                 },
+                 GFP_KERNEL,
+             );
+@@ -86,6 +89,10 @@ impl Vm {
+     }
+ 
+     pub(crate) fn untrack_shared_object(&self, gem: &gem::Object) {
++        self.untrack_shared_object_before(gem, u64::MAX);
++    }
++
++    pub(super) fn untrack_shared_object_before(&self, gem: &gem::Object, sequence: u64) {
+         let Some(shared) = &self.shared_bindings else {
+             return;
+         };
+@@ -94,7 +101,7 @@ impl Vm {
+         }
+         let object = core::ptr::from_ref(gem) as usize;
+         let mut bindings = shared.bindings.lock();
+-        bindings.retain(|entry| entry.object != object);
++        bindings.retain(|entry| entry.object != object || entry.bind_sequence > sequence);
+         shared.count.store(bindings.len() as u32, Ordering::Relaxed);
+     }
+ 
+
+From 2d5d141e229376869a205ec81e887e929bdc2d18 Mon Sep 17 00:00:00 2001
+From: Ryan Murray <ryan@aurorasilicon.org>
+Date: Sun, 1 Nov 2026 14:07:55 +1100
+Subject: [PATCH 4/4] drm/asahi: take only the VM reservation in
+ drop_mappings_before()
+
+aurora-wip now takes GpuVm::exec_lock_vm() for every VA update, and
+drop_mappings_now() unmaps under the VM reservation alone (f3cc4a691438,
+"drm/asahi: lock only the VM reservation for VA updates"). The deferred
+close path from omacom 13c3371ce23d was written against the full
+exec_lock(), which also locks the reservation of every external object,
+and the merge kept that call.
+
+Use exec_lock_vm() there too. The newest-binding check still runs under
+the lock every bind takes, and the unmap needs nothing more than the VM
+reservation and each object's gpuva lock, as in drop_mappings_now().
+
+Assisted-by: LLM
+Signed-off-by: Ryan Murray <ryan@aurorasilicon.org>
+---
+ drivers/gpu/drm/asahi/mmu.rs | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/gpu/drm/asahi/mmu.rs b/drivers/gpu/drm/asahi/mmu.rs
+index f20237aba7e453..3572f26ec7dad4 100644
+--- a/drivers/gpu/drm/asahi/mmu.rs
++++ b/drivers/gpu/drm/asahi/mmu.rs
+@@ -2880,7 +2880,7 @@ impl Vm {
+         // it is not newer than the close, every mapping belongs to that close
+         // and the per-object list is safe and substantially cheaper to walk.
+         // SAFETY: See `lock_vm()`.
+-        let mut vm_exec = match unsafe { self.gpuvm.exec_lock(None, false) } {
++        let mut vm_exec = match unsafe { self.gpuvm.exec_lock_vm(None, false) } {
+             Err(error) if error == ENOMEM => {
+                 return self.drop_mappings_filtered(gem, sequence);
+             }

@@ -1,0 +1,81 @@
+--- a/drivers/soc/apple/display-gate.c
++++ b/drivers/soc/apple/display-gate.c
+@@ -2603,6 +2603,65 @@
+ }
+ static struct notifier_block staged_pmp_nb = { .notifier_call = staged_pmp_bound };
+ 
++/*
++ * Adapt the upstream DISPEXT1 power-domain links for older J614s stage-2
++ * device trees. Aurora PR 628 requires these links alongside the multi-parent
++ * PMGR fix; without them genpd can switch off a live display processor.
++ * Run before devices are populated and never replace a conflicting property.
++ */
++static struct of_changeset j614s_dispext1_cs;
++
++static int __init j614s_dispext1_power_links(void)
++{
++	static const char *const paths[] = {
++		"/iommu@602300000", "/iommu@602340000",
++		"/mailbox@602e08000", "/dcp@602e00000",
++	};
++	struct device_node *domain, *np;
++	u32 cells, val;
++	unsigned int i;
++	int ret = 0;
++
++	if (!of_machine_is_compatible("apple,j614s"))
++		return 0;
++	domain = of_find_node_by_path("/power-management@502800000/power-controller@498");
++	if (!domain || !domain->phandle ||
++	    !of_device_is_compatible(domain, "apple,t6041-pmgr-pwrstate") ||
++	    of_property_read_u32(domain, "#power-domain-cells", &cells) || cells) {
++		ret = -EINVAL;
++		goto out;
++	}
++	of_changeset_init(&j614s_dispext1_cs);
++	for (i = 0; i < ARRAY_SIZE(paths); i++) {
++		np = of_find_node_by_path(paths[i]);
++		if (!np || of_device_is_available(np)) {
++			of_node_put(np);
++			ret = -EINVAL;
++			break;
++		}
++		if (of_find_property(np, "power-domains", NULL)) {
++			ret = of_property_count_u32_elems(np, "power-domains") == 1 &&
++			      !of_property_read_u32(np, "power-domains", &val) &&
++			      val == domain->phandle ? 0 : -EINVAL;
++		} else {
++			ret = of_changeset_add_prop_u32(&j614s_dispext1_cs, np,
++						     "power-domains", domain->phandle);
++		}
++		of_node_put(np);
++		if (ret)
++			break;
++	}
++	if (!ret)
++		ret = of_changeset_apply(&j614s_dispext1_cs);
++	if (ret)
++		of_changeset_destroy(&j614s_dispext1_cs);
++	else
++		staged_info("J614s: DISPEXT1 power-domain links verified\n");
++ out:
++	of_node_put(domain);
++	return ret;
++}
++
+ static void __init gate_t6041_staged(void)
+ {
+ 	unsigned int i;
+@@ -2622,6 +2681,12 @@
+ 		return;
+ 	}
+ 
++	ret = j614s_dispext1_power_links();
++	if (ret) {
++		staged_err("J614s DISPEXT1 power-domain links invalid: %d, nothing enabled\n", ret);
++		return;
++	}
++
+ 	/* No device exists yet: routes on, display subsystem held back until the power-up. */
+ 	ret = staged_set(staged_display, false, NULL, true, "okay", "disabled");
+ 	if (ret) {
