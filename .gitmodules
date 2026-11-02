@@ -1,6 +1,0 @@
-[submodule "installer-artwork"]
-	path = installer/artwork
-	url = https://github.com/AsahiLinux/artwork.git
-[submodule "installer-aura"]
-	path = installer/aura
-	url = https://github.com/aurora-silicon/aura.git
