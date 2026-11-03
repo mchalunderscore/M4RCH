@@ -6,6 +6,8 @@ The machine runs the forked Aurora kernel, Aura, U-Boot, Mesa and audio packages
 
 The [Aurora ALARM fork](https://github.com/mchalunderscore/alarm-aurora/tree/j614s/full) maintains the modified component recipes. M4RCH retains recovery notes and current hardware limitations. Installer development is in the [Aurora installer fork](https://github.com/mchalunderscore/aurora-installer/tree/j614s/full).
 
+The [Aurora NixOS fork](https://github.com/mchalunderscore/nixos-aurora/tree/j614s/full) pins the same experimental component stack. Its NixOS configuration and installer have not been hardware qualified; the branch is based on an older Aurora revision and its image builder is disabled pending boot and update review.
+
 - [Current status](docs/status.md) and [hardware evidence](FEATURES.md)
 - [Setup reproduction inventory](docs/setup-reproduction.md) and [update workflow](docs/aurora-update-workflow.md)
 - [Boot and authentication recovery](docs/recovery.md)
